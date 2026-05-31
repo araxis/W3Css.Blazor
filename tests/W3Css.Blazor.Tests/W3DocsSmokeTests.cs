@@ -1,5 +1,6 @@
 using Bunit;
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using AppBarPage = W3Css.Blazor.Docs.Pages.ComponentTopics.AppBarPage;
 using AppShellPage = W3Css.Blazor.Docs.Pages.ComponentTopics.AppShellPage;
@@ -491,6 +492,42 @@ public sealed class W3DocsSmokeTests
         Assert.Contains("Surface and Black", bottomNavigationPage.Markup);
         Assert.Contains("Primary and White", bottomNavigationPage.Markup);
         Assert.Contains("Extra attributes on the nav root", bottomNavigationPage.Markup);
+    }
+
+    [Fact]
+    public void FeedbackAndOverlayApiPagesDocumentCurrentParameterRows()
+    {
+        using var context = new BunitContext();
+        context.JSInterop.Mode = JSRuntimeMode.Loose;
+        context.Services.AddW3CssBlazor();
+
+        var alertPage = context.Render<W3Css.Blazor.Docs.Pages.ComponentTopics.AlertPage>();
+        Assert.Contains("Extra attributes on the alert panel", alertPage.Markup);
+        Assert.Contains("ARIA role", alertPage.Markup);
+
+        var toastPage = context.Render<ToastPage>();
+        Assert.Contains("Extra attributes on the toast root", toastPage.Markup);
+        Assert.Contains("Extra provider classes, style, and root attributes", toastPage.Markup);
+
+        var overlayPage = context.Render<OverlayPage>();
+        Assert.Contains("Extra attributes on the overlay element", overlayPage.Markup);
+        Assert.Contains("Clicking overlay sets", overlayPage.Markup);
+
+        var popoverPage = context.Render<PopoverPage>();
+        Assert.Contains("Surface / Black", popoverPage.Markup);
+        Assert.Contains("Extra attributes on the root wrapper", popoverPage.Markup);
+
+        var focusTrapPage = context.Render<FocusTrapPage>();
+        Assert.Contains("Extra attributes on the trap root", focusTrapPage.Markup);
+        Assert.Contains("Fallback focus target on the trap root", focusTrapPage.Markup);
+
+        var spinnerPage = context.Render<SpinnerPage>();
+        Assert.Contains("Extra attributes on the status root", spinnerPage.Markup);
+        Assert.Contains("W3.CSS text size class", spinnerPage.Markup);
+
+        var skeletonPage = context.Render<SkeletonPage>();
+        Assert.Contains("Extra attributes on the skeleton root", skeletonPage.Markup);
+        Assert.Contains("Component-scoped pulse animation", skeletonPage.Markup);
     }
 
     [Fact]

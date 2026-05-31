@@ -831,6 +831,8 @@ public sealed class W3DocsSmokeTests
         Assert.Contains("Extra attributes on the EditForm element", formPage.Markup);
 
         var fieldPage = context.Render<FieldPage>();
+        Assert.Contains("Validation Feedback", fieldPage.Markup);
+        Assert.Contains("ValidationClass", fieldPage.Markup);
         Assert.Contains("Extra attributes on the field root", fieldPage.Markup);
 
         var selectPage = context.Render<SelectPage>();

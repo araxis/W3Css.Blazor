@@ -16,6 +16,19 @@ Last updated: 2026-05-31
   - `dotnet pack src/W3Css.Blazor/W3Css.Blazor.csproj --configuration Release --no-build --output artifacts/packages /nr:false`;
   - hygiene scans found no blocked naming additions, no comparison naming matches, no tool/provider traces in project-visible paths, and no exact package key matches;
   - browser-verified `/components/text-area` after restarting the docs server on port 5016: two text areas render, live draft updates while typing, no visible error, and no horizontal overflow.
+- Continued the form-control UX audit on `W3Field`:
+  - added stable `w3-field`, `w3-field-label`, `w3-field-help`, and `w3-field-validation` hooks;
+  - added component-scoped label/help/validation spacing without modifying the bundled W3.CSS source;
+  - added `ValidationClass` for custom validation message styling;
+  - added a validation feedback docs example and documented the new API row;
+  - added focused field rendering and validation-message coverage plus docs smoke coverage.
+- Verification:
+  - focused field/docs tests: 120 passing;
+  - `dotnet build W3Css.Blazor.slnx --configuration Release /nr:false` (0 warnings, 0 errors);
+  - `dotnet test tests/W3Css.Blazor.Tests/W3Css.Blazor.Tests.csproj --configuration Release --no-build /nr:false` (420 passing);
+  - `dotnet pack src/W3Css.Blazor/W3Css.Blazor.csproj --configuration Release --no-build --output artifacts/packages /nr:false`;
+  - hygiene scans found no blocked naming additions, no comparison naming matches, no tool/provider traces in project-visible paths, and no exact package key matches;
+  - browser-verified `/components/field` after restarting the docs server on port 5016: validation feedback renders after submit, label/control/help spacing is readable, no visible error, no horizontal overflow, and no recent browser errors from the page load.
 - Re-synced memory folder with current source state after major component/parity/theming work already on `main`.
 - Verified again:
   - `dotnet build W3Css.Blazor.slnx --configuration Release` (0 warnings, 0 errors).

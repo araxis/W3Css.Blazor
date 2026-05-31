@@ -1,5 +1,8 @@
 # W3Css.Blazor
 
+[![Package Version](https://img.shields.io/nuget/v/W3Css.Blazor?label=package)](https://www.nuget.org/packages/W3Css.Blazor)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
 Lightweight Blazor components built on W3.CSS.
 
 ## Goals

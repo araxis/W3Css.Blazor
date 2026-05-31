@@ -691,3 +691,7 @@ Last updated: 2026-05-31
 - Verified `dotnet test tests\W3Css.Blazor.Tests\W3Css.Blazor.Tests.csproj --no-restore /nr:false` with 156 passing tests.
 - Verified `dotnet pack src\W3Css.Blazor\W3Css.Blazor.csproj --no-restore --configuration Release`.
 - Verified `/components/app-bar` in the in-app browser: App Bar renders three demos, menu icon/text spacing is visible, W3 bar items are flex-aligned with `float: none`, no slot overlap appears, and no horizontal overflow appears. The in-app browser was refreshed to `/components/app-bar` after the round.
+- Started package automation work on `release/package-automation`.
+- Added README package version and MIT license badges.
+- Updated the release workflow so version-tag releases restore, build, test, pack with the resolved package version, create release artifacts, validate publishing configuration, and publish packages automatically.
+- Configured the remote package publishing secret name `NUGET_API_KEY`; the secret value must not be committed or logged, and should be rotated after the first successful package release because the initial value was shared in chat.

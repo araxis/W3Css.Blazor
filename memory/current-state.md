@@ -4,7 +4,7 @@ Last updated: 2026-05-31
 
 ## Repository
 
-- Current branch: `main`.
+- Current branch: `release/package-automation`.
 - Local tag `v0.1.0` points at current `HEAD`; it has not been pushed.
 - Solution: `W3Css.Blazor.slnx`.
 - SDK: `.NET 10.0.300` (`global.json`).
@@ -39,6 +39,8 @@ Last updated: 2026-05-31
   - Version `0.1.0`.
   - `Directory.Build.props` repository URL + type (`https://github.com/araxis/W3Css.Blazor`).
   - `PackageProjectUrl`, `RepositoryUrl`, `RepositoryType`, and release notes in `src/W3Css.Blazor/W3Css.Blazor.csproj`.
+- README includes package version and MIT license badges.
+- Release workflow builds, tests, packs, creates release artifacts, and publishes packages on `v*` tag pushes when the publishing secret is configured.
 
 ## Current Progress
 

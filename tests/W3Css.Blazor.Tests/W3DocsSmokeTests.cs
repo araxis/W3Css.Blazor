@@ -14,6 +14,8 @@ using ChatPage = W3Css.Blazor.Docs.Pages.ComponentTopics.ChatPage;
 using CollapsePage = W3Css.Blazor.Docs.Pages.ComponentTopics.CollapsePage;
 using ChipPage = W3Css.Blazor.Docs.Pages.ComponentTopics.ChipPage;
 using ChipSetPage = W3Css.Blazor.Docs.Pages.ComponentTopics.ChipSetPage;
+using ColumnPage = W3Css.Blazor.Docs.Pages.ComponentTopics.ColumnPage;
+using ContainerPage = W3Css.Blazor.Docs.Pages.ComponentTopics.ContainerPage;
 using SelectItemPage = W3Css.Blazor.Docs.Pages.ComponentTopics.SelectItemPage;
 using ColorInputPage = W3Css.Blazor.Docs.Pages.ComponentTopics.ColorInputPage;
 using ComponentsIndexPage = W3Css.Blazor.Docs.Pages.Components;
@@ -27,7 +29,9 @@ using FabPage = W3Css.Blazor.Docs.Pages.ComponentTopics.FabPage;
 using ProgressCircularPage = W3Css.Blazor.Docs.Pages.ComponentTopics.ProgressCircularPage;
 using FileInputPage = W3Css.Blazor.Docs.Pages.ComponentTopics.FileInputPage;
 using FiltersPage = W3Css.Blazor.Docs.Pages.ComponentTopics.FiltersPage;
+using FlexPage = W3Css.Blazor.Docs.Pages.ComponentTopics.FlexPage;
 using FocusTrapPage = W3Css.Blazor.Docs.Pages.ComponentTopics.FocusTrapPage;
+using GridPage = W3Css.Blazor.Docs.Pages.ComponentTopics.GridPage;
 using HighlighterPage = W3Css.Blazor.Docs.Pages.ComponentTopics.HighlighterPage;
 using IconButtonPage = W3Css.Blazor.Docs.Pages.ComponentTopics.IconButtonPage;
 using ImageListPage = W3Css.Blazor.Docs.Pages.ComponentTopics.ImageListPage;
@@ -40,9 +44,11 @@ using RadioGroupPage = W3Css.Blazor.Docs.Pages.ComponentTopics.RadioGroupPage;
 using NumberInputPage = W3Css.Blazor.Docs.Pages.ComponentTopics.NumberInputPage;
 using DateRangePickerPage = W3Css.Blazor.Docs.Pages.ComponentTopics.DateRangePickerPage;
 using PaperPage = W3Css.Blazor.Docs.Pages.ComponentTopics.PaperPage;
+using PanelPage = W3Css.Blazor.Docs.Pages.ComponentTopics.PanelPage;
 using ToggleIconButtonPage = W3Css.Blazor.Docs.Pages.ComponentTopics.ToggleIconButtonPage;
 using PopoverPage = W3Css.Blazor.Docs.Pages.ComponentTopics.PopoverPage;
 using RatingPage = W3Css.Blazor.Docs.Pages.ComponentTopics.RatingPage;
+using RowPage = W3Css.Blazor.Docs.Pages.ComponentTopics.RowPage;
 using SliderPage = W3Css.Blazor.Docs.Pages.ComponentTopics.SliderPage;
 using SkeletonPage = W3Css.Blazor.Docs.Pages.ComponentTopics.SkeletonPage;
 using SpinnerPage = W3Css.Blazor.Docs.Pages.ComponentTopics.SpinnerPage;
@@ -89,6 +95,12 @@ public sealed class W3DocsSmokeTests
     [InlineData(typeof(ThemingPage), "/components/theming")]
     [InlineData(typeof(SpacerPage), "/components/spacer")]
     [InlineData(typeof(FooterPage), "/components/footer")]
+    [InlineData(typeof(ContainerPage), "/components/container")]
+    [InlineData(typeof(PanelPage), "/components/panel")]
+    [InlineData(typeof(RowPage), "/components/row")]
+    [InlineData(typeof(ColumnPage), "/components/column")]
+    [InlineData(typeof(GridPage), "/components/grid")]
+    [InlineData(typeof(FlexPage), "/components/flex")]
     [InlineData(typeof(AvatarGroupPage), "/components/avatar-group")]
     [InlineData(typeof(DividerPage), "/components/divider")]
     [InlineData(typeof(IconButtonPage), "/components/icon-button")]
@@ -404,6 +416,53 @@ public sealed class W3DocsSmokeTests
         Assert.Contains("ActiveValueChanged", navbarPage.Markup);
         Assert.Contains("callback", navbarPage.Markup);
         Assert.Contains("Primary", navbarPage.Markup);
+    }
+
+    [Fact]
+    public void ChartAndLayoutApiPagesDocumentCurrentParameterRows()
+    {
+        using var context = new BunitContext();
+
+        var chartPage = context.Render<ChartPage>();
+        Assert.Contains("Root background color class", chartPage.Markup);
+        Assert.Contains("AdditionalAttributes", chartPage.Markup);
+        Assert.Contains("script-free SVG chart supporting", chartPage.Markup);
+
+        var collapsePage = context.Render<CollapsePage>();
+        Assert.Contains("Alternative State Binding", collapsePage.Markup);
+        Assert.Contains("ChildContent", collapsePage.Markup);
+        Assert.Contains("Alternative expanded state", collapsePage.Markup);
+        Assert.Contains("Extra attributes on the wrapper", collapsePage.Markup);
+
+        var paperPage = context.Render<PaperPage>();
+        Assert.Contains("paper-like surfaces", paperPage.Markup);
+        Assert.Contains("Surface", paperPage.Markup);
+        Assert.Contains("Surface body content", paperPage.Markup);
+        Assert.Contains("Extra attributes on the paper root", paperPage.Markup);
+
+        var panelPage = context.Render<PanelPage>();
+        Assert.Contains("Panel body content", panelPage.Markup);
+        Assert.Contains("Extra attributes on the panel root", panelPage.Markup);
+
+        var containerPage = context.Render<ContainerPage>();
+        Assert.Contains("Container body content", containerPage.Markup);
+        Assert.Contains("Extra attributes on the container root", containerPage.Markup);
+
+        var rowPage = context.Render<RowPage>();
+        Assert.Contains("Row column content", rowPage.Markup);
+        Assert.Contains("Extra attributes on the row root", rowPage.Markup);
+
+        var columnPage = context.Render<ColumnPage>();
+        Assert.Contains("Column body content", columnPage.Markup);
+        Assert.Contains("Extra attributes on the column root", columnPage.Markup);
+
+        var gridPage = context.Render<GridPage>();
+        Assert.Contains("Grid item content", gridPage.Markup);
+        Assert.Contains("Extra attributes on the grid root", gridPage.Markup);
+
+        var flexPage = context.Render<FlexPage>();
+        Assert.Contains("Flex item content", flexPage.Markup);
+        Assert.Contains("Extra attributes on the flex root", flexPage.Markup);
     }
 
     [Fact]

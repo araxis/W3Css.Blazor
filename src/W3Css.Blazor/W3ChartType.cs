@@ -1,7 +1,7 @@
 namespace W3Css.Blazor;
 
 /// <summary>
-/// Chart variants supported by <c>W3Chart</c> (MudBlazor <c>MudChart</c> parity).
+/// Chart variants supported by <c>W3Chart</c>.
 /// </summary>
 public enum W3ChartType
 {

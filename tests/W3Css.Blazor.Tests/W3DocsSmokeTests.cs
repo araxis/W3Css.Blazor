@@ -847,13 +847,16 @@ public sealed class W3DocsSmokeTests
         Assert.Contains("Extra attributes on the option element", selectItemPage.Markup);
 
         var checkboxPage = context.Render<CheckboxPage>();
+        Assert.Contains("Required Checkbox", checkboxPage.Markup);
         Assert.Contains("Extra attributes on the checkbox input", checkboxPage.Markup);
 
         var radioGroupPage = context.Render<RadioGroupPage>();
         Assert.Contains("EventCallback&lt;TValue?&gt;", radioGroupPage.Markup);
+        Assert.Contains("Required Radio Group", radioGroupPage.Markup);
         Assert.Contains("Extra attributes on the radio group wrapper", radioGroupPage.Markup);
 
         var radioPage = context.Render<RadioPage>();
+        Assert.Contains("Use `W3RadioGroup` when you need form validation", radioPage.Markup);
         Assert.Contains("Extra attributes on the radio input", radioPage.Markup);
 
         var maskPage = context.Render<MaskPage>();

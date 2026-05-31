@@ -1,13 +1,17 @@
 @typeparam TValue
-@using System.Collections.Generic
-@inherits W3ComponentBase
+@using System.Globalization
+@using Microsoft.AspNetCore.Components.Forms
+@using W3Css.Blazor.Internal
+@inherits InputBase<TValue?>
 
 <CascadingValue Value="this" Name="W3RadioGroup" IsFixed="false">
     <div @attributes="AdditionalAttributes"
-         class="@CssClass"
+         class="@GroupCssClass"
          style="@Style"
          role="radiogroup"
-         aria-label="@Label">
+         aria-label="@Label"
+         aria-required="@AriaRequired"
+         aria-invalid="@AriaInvalid">
         @ChildContent
     </div>
 </CascadingValue>
@@ -16,13 +20,29 @@
     private const string GroupNamePrefix = "w3-radio-group";
     private string? _name;
 
-    private string CssClass => BuildClass("w3-radio-group");
+    private string GroupCssClass => new W3ClassBuilder()
+        .Add("w3-radio-group")
+        .Add(CssClass)
+        .Add(Class)
+        .ToString();
+
+    private string? AriaRequired => Required ? "true" : null;
+    private string? AriaInvalid => EditContext?.GetValidationMessages(FieldIdentifier).Any() == true ? "true" : null;
+
     private string NameValue => !string.IsNullOrWhiteSpace(_name)
         ? _name
+        : !string.IsNullOrWhiteSpace(NameAttributeValue)
+            ? NameAttributeValue
         : $"{GroupNamePrefix}-{GetHashCode()}";
 
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public string? Class { get; set; }
+
+    [Parameter]
+    public string? Style { get; set; }
 
     [Parameter]
     public string Label { get; set; } = "Radio Group";
@@ -31,15 +51,12 @@
     public bool Disabled { get; set; }
 
     [Parameter]
+    public bool Required { get; set; }
+
+    [Parameter]
     public string? Name { get; set; }
 
-    [Parameter]
-    public TValue? Value { get; set; }
-
-    [Parameter]
-    public EventCallback<TValue?> ValueChanged { get; set; }
-
-    internal bool IsSelected(TValue? value) => EqualityComparer<TValue>.Default.Equals(Value, value);
+    internal bool IsSelected(TValue? value) => EqualityComparer<TValue?>.Default.Equals(CurrentValue, value);
 
     internal void NotifySelection(TValue? value)
     {
@@ -48,8 +65,7 @@
             return;
         }
 
-        Value = value;
-        _ = ValueChanged.InvokeAsync(value);
+        CurrentValue = value;
         InvokeAsync(StateHasChanged);
     }
 
@@ -62,5 +78,19 @@
         _name = string.IsNullOrWhiteSpace(Name)
             ? null
             : Name.Trim();
+    }
+
+    protected override bool TryParseValueFromString(string? value, out TValue? result, out string validationErrorMessage)
+    {
+        if (BindConverter.TryConvertTo<TValue?>(value, CultureInfo.CurrentCulture, out var parsedValue))
+        {
+            result = parsedValue;
+            validationErrorMessage = string.Empty;
+            return true;
+        }
+
+        result = default;
+        validationErrorMessage = $"The {FieldIdentifier.FieldName} field is not valid.";
+        return false;
     }
 }

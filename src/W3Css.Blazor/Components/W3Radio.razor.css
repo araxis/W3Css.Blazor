@@ -1,0 +1,15 @@
+.w3-choice-label {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.w3-choice-label .w3-radio {
+    flex: 0 0 auto;
+    top: 0;
+}
+
+.w3-choice-label-text {
+    line-height: 1.4;
+}

@@ -1,4 +1,5 @@
 @page "/components/radio-group"
+@using System.ComponentModel.DataAnnotations
 
 <PageTitle>W3RadioGroup</PageTitle>
 
@@ -7,7 +8,7 @@
     <DocPager PreviousHref="components/radio" PreviousText="Radio" NextHref="components/text-area" NextText="Text Area" />
 
     <p class="w3-large">`W3RadioGroup&lt;TValue&gt;` manages a set of `W3Radio` options so your model only stores one selected value.</p>
-    <p>Use &#64;bind-Value on the group and OptionValue on each W3Radio option.</p>
+    <p>Use &#64;bind-Value on the group and OptionValue on each W3Radio option. The group participates in `EditForm` validation through `ValueExpression`; add `novalidate` on the form when Blazor messages should handle required feedback.</p>
 
     <DocExample Title="Contact Method" Description="Shared value updates when one radio option is selected." Code="@RadioGroupCode">
         <EditForm Model="@RadioModel">
@@ -17,6 +18,19 @@
                 <W3Radio TValue="string" OptionValue="@ChatOption" Disabled="true">In-app chat</W3Radio>
             </W3RadioGroup>
             <p class="w3-small">Selected method: <strong>@RadioModel.Contact</strong></p>
+        </EditForm>
+    </DocExample>
+
+    <DocExample Title="Required Radio Group" Description="Required cascades to child radios and the group reports validation state to W3Field." Code="@RequiredRadioGroupCode">
+        <EditForm Model="@RequiredRadioModel" OnValidSubmit="HandleRequiredSubmit" OnInvalidSubmit="HandleRequiredSubmit" novalidate>
+            <DataAnnotationsValidator />
+            <W3Field TValue="string" Label="Contact method" ForId="required-contact-email" For="@(() => RequiredRadioModel.Contact)" HelpText="Choose one option before continuing.">
+                <W3RadioGroup TValue="string" Label="Required contact method" @bind-Value="RequiredRadioModel.Contact" Name="required-contact" Required="true">
+                    <W3Radio TValue="string" Id="required-contact-email" OptionValue="@EmailOption">Email</W3Radio>
+                    <W3Radio TValue="string" Id="required-contact-sms" OptionValue="@SmsOption">SMS</W3Radio>
+                </W3RadioGroup>
+            </W3Field>
+            <W3Button Type="submit" Color="W3Color.Teal" TextColor="W3Color.White">Validate</W3Button>
         </EditForm>
     </DocExample>
 
@@ -30,9 +44,11 @@
                 <tr><td>TValue</td><td>type</td><td>required</td><td>Bound value type for the radio group.</td></tr>
                 <tr><td>Value</td><td>TValue?</td><td>default</td><td>Current group value.</td></tr>
                 <tr><td>ValueChanged</td><td>EventCallback&lt;TValue?&gt;</td><td>none</td><td>Raised when selected value changes.</td></tr>
+                <tr><td>ValueExpression</td><td>Expression&lt;Func&lt;TValue&gt;&gt;?</td><td>null</td><td>Validation expression for EditForm scenarios.</td></tr>
                 <tr><td>Label</td><td>string</td><td>Radio Group</td><td>Accessibility label for the radio wrapper.</td></tr>
                 <tr><td>Name</td><td>string?</td><td>null</td><td>Shared radio `name` value when child radios omit `Name`.</td></tr>
                 <tr><td>Disabled</td><td>bool</td><td>false</td><td>Disables all child radios.</td></tr>
+                <tr><td>Required</td><td>bool</td><td>false</td><td>`aria-required` on the group and `required` on child radios.</td></tr>
                 <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Collection of `W3Radio` children.</td></tr>
                 <tr><td>Class</td><td>string?</td><td>null</td><td>Additional wrapper classes.</td></tr>
                 <tr><td>Style</td><td>string?</td><td>null</td><td>Inline styles on the wrapper.</td></tr>
@@ -54,6 +70,7 @@
     private const string SmsOption = "sms";
     private const string ChatOption = "chat";
     private readonly RadioGroupExampleModel RadioModel = new();
+    private readonly RequiredRadioGroupExampleModel RequiredRadioModel = new();
 
     private const string RadioGroupCode = """
 <W3RadioGroup TValue="string" Label="Contact method" @bind-Value="model.Contact" Name="contact">
@@ -63,8 +80,47 @@
 </W3RadioGroup>
 """;
 
+    private const string RequiredRadioGroupCode = """
+@using System.ComponentModel.DataAnnotations
+
+<EditForm Model="@model" OnValidSubmit="HandleSubmit" OnInvalidSubmit="HandleSubmit" novalidate>
+    <DataAnnotationsValidator />
+    <W3Field TValue="string" Label="Contact method" ForId="required-contact-email" For="@(() => model.Contact)" HelpText="Choose one option before continuing.">
+        <W3RadioGroup TValue="string" Label="Required contact method" @bind-Value="model.Contact" Name="required-contact" Required="true">
+            <W3Radio TValue="string" Id="required-contact-email" OptionValue="email">Email</W3Radio>
+            <W3Radio TValue="string" Id="required-contact-sms" OptionValue="sms">SMS</W3Radio>
+        </W3RadioGroup>
+    </W3Field>
+    <W3Button Type="submit" Color="W3Color.Teal" TextColor="W3Color.White">Validate</W3Button>
+</EditForm>
+
+@code {
+    private readonly RequiredRadioGroupExampleModel model = new();
+
+    private void HandleSubmit()
+    {
+    }
+
+    private sealed class RequiredRadioGroupExampleModel
+    {
+        [Required(ErrorMessage = "Choose a contact method.")]
+        public string Contact { get; set; } = string.Empty;
+    }
+}
+""";
+
     private sealed class RadioGroupExampleModel
     {
         public string Contact { get; set; } = EmailOption;
+    }
+
+    private sealed class RequiredRadioGroupExampleModel
+    {
+        [Required(ErrorMessage = "Choose a contact method.")]
+        public string Contact { get; set; } = string.Empty;
+    }
+
+    private void HandleRequiredSubmit()
+    {
     }
 }

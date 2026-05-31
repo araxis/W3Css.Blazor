@@ -1,4 +1,5 @@
 @page "/components/checkbox"
+@using System.ComponentModel.DataAnnotations
 
 <PageTitle>W3Checkbox</PageTitle>
 
@@ -7,11 +8,24 @@
     <DocPager PreviousHref="components/select" PreviousText="Select" NextHref="components/radio" NextText="Radio" />
 
     <p class="w3-large">`W3Checkbox` renders a Blazor boolean input with the W3.CSS `w3-check` class.</p>
-    <p>Use `Label` or child content to render a simple clickable label.</p>
+    <p>Use `Label` or child content to render a simple clickable label. Add `novalidate` on the form when Blazor validation messages should handle required feedback.</p>
 
     <DocExample Title="Checkbox With Label" Code="@BasicCode">
         <EditForm Model="@CheckboxModel">
             <W3Checkbox @bind-Value="CheckboxModel.Accepted" Label="I accept the terms" />
+        </EditForm>
+    </DocExample>
+
+    <DocExample Title="Required Checkbox" Description="Use Required with a validation attribute when a workflow needs an explicit yes." Code="@RequiredCode">
+        <EditForm Model="@RequiredCheckboxModel" OnValidSubmit="HandleRequiredSubmit" OnInvalidSubmit="HandleRequiredSubmit" novalidate>
+            <DataAnnotationsValidator />
+            <W3Field TValue="bool" For="@(() => RequiredCheckboxModel.Accepted)" HelpText="Required before continuing.">
+                <W3Checkbox Id="required-terms"
+                            @bind-Value="RequiredCheckboxModel.Accepted"
+                            Label="I accept the terms"
+                            Required="true" />
+            </W3Field>
+            <W3Button Type="submit" Color="W3Color.Teal" TextColor="W3Color.White">Validate</W3Button>
         </EditForm>
     </DocExample>
 
@@ -34,6 +48,7 @@
                 <tr><td>Id</td><td>string?</td><td>null</td><td>`id` attribute</td></tr>
                 <tr><td>Label</td><td>string?</td><td>null</td><td>Label text</td></tr>
                 <tr><td>LabelClass</td><td>string?</td><td>null</td><td>Additional wrapper label classes</td></tr>
+                <tr><td>Required</td><td>bool</td><td>false</td><td>`required` and `aria-required` attributes</td></tr>
                 <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Custom label content</td></tr>
                 <tr><td>Disabled</td><td>bool</td><td>false</td><td>`disabled` attribute</td></tr>
                 <tr><td>Border</td><td>bool</td><td>false</td><td>`w3-border`</td></tr>
@@ -52,9 +67,39 @@
 
 @code {
     private readonly CheckboxExampleModel CheckboxModel = new();
+    private readonly RequiredCheckboxExampleModel RequiredCheckboxModel = new();
 
     private const string BasicCode = """
 <W3Checkbox @bind-Value="model.Accepted" Label="I accept the terms" />
+""";
+
+    private const string RequiredCode = """
+@using System.ComponentModel.DataAnnotations
+
+<EditForm Model="@model" OnValidSubmit="HandleSubmit" OnInvalidSubmit="HandleSubmit" novalidate>
+    <DataAnnotationsValidator />
+    <W3Field TValue="bool" For="@(() => model.Accepted)" HelpText="Required before continuing.">
+        <W3Checkbox Id="required-terms"
+                    @bind-Value="model.Accepted"
+                    Label="I accept the terms"
+                    Required="true" />
+    </W3Field>
+    <W3Button Type="submit" Color="W3Color.Teal" TextColor="W3Color.White">Validate</W3Button>
+</EditForm>
+
+@code {
+    private readonly RequiredCheckboxExampleModel model = new();
+
+    private void HandleSubmit()
+    {
+    }
+
+    private sealed class RequiredCheckboxExampleModel
+    {
+        [Range(typeof(bool), "true", "true", ErrorMessage = "Accept terms to continue.")]
+        public bool Accepted { get; set; }
+    }
+}
 """;
 
     private const string CustomCode = """
@@ -67,5 +112,15 @@
     {
         public bool Accepted { get; set; }
         public bool Updates { get; set; } = true;
+    }
+
+    private sealed class RequiredCheckboxExampleModel
+    {
+        [Range(typeof(bool), "true", "true", ErrorMessage = "Accept terms to continue.")]
+        public bool Accepted { get; set; }
+    }
+
+    private void HandleRequiredSubmit()
+    {
     }
 }

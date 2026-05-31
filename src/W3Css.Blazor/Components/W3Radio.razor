@@ -8,7 +8,7 @@
 {
     <label class="@LabelCssClass">
         @Control
-        <span>@LabelContent</span>
+        <span class="w3-choice-label-text">@LabelContent</span>
     </label>
 }
 else
@@ -23,7 +23,8 @@ else
         ? Owner.IsSelected(OptionValue)
         : EqualityComparer<TValue>.Default.Equals(Value, OptionValue);
     private string RadioName => Name ?? Owner?.GroupName ?? "Value";
-    private string LabelCssClass => new W3Css.Blazor.Internal.W3ClassBuilder().Add("w3-block").Add(LabelClass).ToString();
+    private bool IsRequired => Required || Owner?.Required == true;
+    private string LabelCssClass => new W3Css.Blazor.Internal.W3ClassBuilder().Add("w3-block").Add("w3-choice-label").Add("w3-radio-label").Add(LabelClass).ToString();
     private RenderFragment LabelContent => ChildContent ?? (builder => builder.AddContent(0, Label));
 
     private RenderFragment Control => builder =>
@@ -38,7 +39,12 @@ else
         builder.AddAttribute(7, "disabled", Disabled || Owner?.Disabled == true);
         builder.AddAttribute(8, "value", OptionValue?.ToString());
         builder.AddAttribute(9, "checked", IsChecked);
-        builder.AddAttribute(10, "onchange", EventCallback.Factory.Create<ChangeEventArgs>(this, SelectOption));
+        builder.AddAttribute(10, "required", IsRequired);
+        if (IsRequired)
+        {
+            builder.AddAttribute(11, "aria-required", "true");
+        }
+        builder.AddAttribute(12, "onchange", EventCallback.Factory.Create<ChangeEventArgs>(this, SelectOption));
         builder.CloseElement();
     };
 
@@ -75,6 +81,9 @@ else
 
     [Parameter]
     public bool Disabled { get; set; }
+
+    [Parameter]
+    public bool Required { get; set; }
 
     [Parameter]
     public bool Border { get; set; }

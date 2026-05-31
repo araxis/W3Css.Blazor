@@ -704,3 +704,6 @@ Last updated: 2026-05-31
 - Started public API consistency review.
 - Found `W3Slide` was the only rendered component-like public surface with hand-rolled `Class`/`Style` and no unmatched attribute capture. `W3DataColumn`, `W3Step`, and `W3TabPanel` are logical child descriptors and intentionally do not own standalone DOM roots.
 - Updated `W3Slide` to inherit the shared component base and updated `W3Slideshow` to forward slide-level unmatched attributes to the rendered active slide root, preserving `Class` and `Style` compatibility.
+- Continued the documentation/API consistency review with the tab and toggle-group docs.
+- Added an add/close tabs docs example, documented the current `W3Tabs` add/close parameters, corrected the tabs default color rows, documented `W3TabPanel.Closeable`, and added a docs smoke test for the rendered add/close workflow.
+- Updated `W3ToggleGroup` docs to include the `SelectedValueChanged` and `SelectedValuesChanged` bind callbacks, corrected the selected-color default row, and kept the page text W3.CSS-focused.

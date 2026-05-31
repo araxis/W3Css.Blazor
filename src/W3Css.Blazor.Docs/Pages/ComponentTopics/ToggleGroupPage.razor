@@ -6,7 +6,7 @@
     <h1>W3ToggleGroup</h1>
     <DocPager PreviousHref="components/switch" PreviousText="Switch" NextHref="components/color-input" NextText="Color Input" />
 
-    <p class="w3-large">`W3ToggleGroup` and `W3ToggleItem` are the MudBlazor-compatible segmented selector (`MudToggleGroup` / `MudToggleItem`).</p>
+    <p class="w3-large">`W3ToggleGroup` and `W3ToggleItem` render a segmented selector with W3.CSS bar and button classes.</p>
     <p>Use it for a small set of mutually exclusive options (single-select) or a set of independent flags (multi-select). Selection state stays in Blazor — no script.</p>
 
     <DocExample Title="Single Select (View Mode)" Code="@SingleCode">
@@ -40,12 +40,14 @@
             </thead>
             <tbody>
                 <tr><td>SelectedValue</td><td>TValue?</td><td>default</td><td>Single-select value (<code>@@bind-SelectedValue</code>)</td></tr>
+                <tr><td>SelectedValueChanged</td><td>EventCallback&lt;TValue?&gt;</td><td>empty</td><td>Single-select change callback</td></tr>
                 <tr><td>SelectedValues</td><td>IReadOnlyCollection&lt;TValue&gt;</td><td>empty</td><td>Multi-select values (<code>@@bind-SelectedValues</code>)</td></tr>
+                <tr><td>SelectedValuesChanged</td><td>EventCallback&lt;IReadOnlyCollection&lt;TValue&gt;&gt;</td><td>empty</td><td>Multi-select change callback</td></tr>
                 <tr><td>MultiSelect</td><td>bool</td><td>false</td><td>Enables multi-select</td></tr>
                 <tr><td>Vertical</td><td>bool</td><td>false</td><td>Stacks items with <code>w3-bar-block</code></td></tr>
                 <tr><td>Border</td><td>bool</td><td>true</td><td>Group border</td></tr>
                 <tr><td>Round</td><td>W3Round</td><td>None</td><td>Group corner rounding</td></tr>
-                <tr><td>ActiveColor / ActiveTextColor</td><td>W3Color</td><td>Teal / White</td><td>Selected item colors</td></tr>
+                <tr><td>ActiveColor / ActiveTextColor</td><td>W3Color</td><td>Primary / White</td><td>Selected item colors</td></tr>
                 <tr><td>Color / TextColor</td><td>W3Color</td><td>None</td><td>Unselected item colors</td></tr>
                 <tr><td>Disabled</td><td>bool</td><td>false</td><td>Disables the whole group</td></tr>
             </tbody>

@@ -33,6 +33,7 @@ using IconButtonPage = W3Css.Blazor.Docs.Pages.ComponentTopics.IconButtonPage;
 using ImageListPage = W3Css.Blazor.Docs.Pages.ComponentTopics.ImageListPage;
 using ListItemPage = W3Css.Blazor.Docs.Pages.ComponentTopics.ListItemPage;
 using MenuPage = W3Css.Blazor.Docs.Pages.ComponentTopics.MenuPage;
+using ModalPage = W3Css.Blazor.Docs.Pages.ComponentTopics.ModalPage;
 using NavMenuPage = W3Css.Blazor.Docs.Pages.ComponentTopics.NavMenuPage;
 using NavbarPage = W3Css.Blazor.Docs.Pages.ComponentTopics.NavbarPage;
 using RadioGroupPage = W3Css.Blazor.Docs.Pages.ComponentTopics.RadioGroupPage;
@@ -135,6 +136,7 @@ public sealed class W3DocsSmokeTests
     [InlineData(typeof(MaskPage), "/components/mask")]
     [InlineData(typeof(SpinnerPage), "/components/spinner")]
     [InlineData(typeof(ToastPage), "/components/toast")]
+    [InlineData(typeof(ModalPage), "/components/modal")]
     [InlineData(typeof(PopoverPage), "/components/popover")]
     [InlineData(typeof(FocusTrapPage), "/components/focus-trap")]
     [InlineData(typeof(OverlayPage), "/components/overlay")]
@@ -371,6 +373,37 @@ public sealed class W3DocsSmokeTests
         Assert.Contains("AccessibilityLabel", progressPage.Markup);
         Assert.Contains("Progressbar accessible label", progressPage.Markup);
         Assert.Contains("circular progress indicator in two modes", progressPage.Markup);
+    }
+
+    [Fact]
+    public void MoreApiGapPagesDocumentCurrentParameterRows()
+    {
+        using var context = new BunitContext();
+
+        var dataTablePage = context.Render<DataTablePage>();
+        Assert.Contains("SelectedItems", dataTablePage.Markup);
+        Assert.Contains("Surface", dataTablePage.Markup);
+        Assert.Contains("Primary", dataTablePage.Markup);
+
+        var dateRangePage = context.Render<DateRangePickerPage>();
+        Assert.Contains("ValueExpression", dateRangePage.Markup);
+        Assert.Contains("Color / TextColor", dateRangePage.Markup);
+        Assert.Contains("Blazor-owned range state", dateRangePage.Markup);
+
+        var messageBoxPage = context.Render<MessageBoxPage>();
+        Assert.Contains("VisibleChanged", messageBoxPage.Markup);
+        Assert.Contains("ChildContent", messageBoxPage.Markup);
+        Assert.Contains("confirm and alert prompt", messageBoxPage.Markup);
+
+        var modalPage = context.Render<ModalPage>();
+        Assert.Contains("Actions", modalPage.Markup);
+        Assert.Contains("Surface and None", modalPage.Markup);
+        Assert.Contains("AdditionalAttributes", modalPage.Markup);
+
+        var navbarPage = context.Render<NavbarPage>();
+        Assert.Contains("ActiveValueChanged", navbarPage.Markup);
+        Assert.Contains("callback", navbarPage.Markup);
+        Assert.Contains("Primary", navbarPage.Markup);
     }
 
     [Fact]

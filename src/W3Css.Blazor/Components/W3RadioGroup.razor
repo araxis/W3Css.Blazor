@@ -1,0 +1,66 @@
+@typeparam TValue
+@using System.Collections.Generic
+@inherits W3ComponentBase
+
+<CascadingValue Value="this" Name="W3RadioGroup" IsFixed="false">
+    <div @attributes="AdditionalAttributes"
+         class="@CssClass"
+         style="@Style"
+         role="radiogroup"
+         aria-label="@Label">
+        @ChildContent
+    </div>
+</CascadingValue>
+
+@code {
+    private const string GroupNamePrefix = "w3-radio-group";
+    private string? _name;
+
+    private string CssClass => BuildClass("w3-radio-group");
+    private string NameValue => !string.IsNullOrWhiteSpace(_name)
+        ? _name
+        : $"{GroupNamePrefix}-{GetHashCode()}";
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public string Label { get; set; } = "Radio Group";
+
+    [Parameter]
+    public bool Disabled { get; set; }
+
+    [Parameter]
+    public string? Name { get; set; }
+
+    [Parameter]
+    public TValue? Value { get; set; }
+
+    [Parameter]
+    public EventCallback<TValue?> ValueChanged { get; set; }
+
+    internal bool IsSelected(TValue? value) => EqualityComparer<TValue>.Default.Equals(Value, value);
+
+    internal void NotifySelection(TValue? value)
+    {
+        if (Disabled)
+        {
+            return;
+        }
+
+        Value = value;
+        _ = ValueChanged.InvokeAsync(value);
+        InvokeAsync(StateHasChanged);
+    }
+
+    internal string GroupName => NameValue;
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+
+        _name = string.IsNullOrWhiteSpace(Name)
+            ? null
+            : Name.Trim();
+    }
+}

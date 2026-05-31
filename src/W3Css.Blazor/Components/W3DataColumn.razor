@@ -1,0 +1,85 @@
+@typeparam TItem
+@implements IDisposable
+@using System.Globalization
+@using W3Css.Blazor.Internal
+
+@code {
+    [CascadingParameter]
+    internal W3DataTable<TItem>? Owner { get; set; }
+
+    [Parameter, EditorRequired]
+    public string Title { get; set; } = string.Empty;
+
+    [Parameter]
+    public RenderFragment? HeaderContent { get; set; }
+
+    [Parameter]
+    public RenderFragment<TItem>? CellTemplate { get; set; }
+
+    [Parameter]
+    public Func<TItem, object?>? CellText { get; set; }
+
+    [Parameter]
+    public Func<TItem, object?>? SortKey { get; set; }
+
+    [Parameter]
+    public Func<TItem, string?>? SearchValue { get; set; }
+
+    [Parameter]
+    public bool Sortable { get; set; } = true;
+
+    [Parameter]
+    public bool Visible { get; set; } = true;
+
+    [Parameter]
+    public W3TextAlignment Align { get; set; } = W3TextAlignment.None;
+
+    [Parameter]
+    public string? HeaderClass { get; set; }
+
+    [Parameter]
+    public string? CellClass { get; set; }
+
+    [Parameter]
+    public string? HeaderStyle { get; set; }
+
+    [Parameter]
+    public string? CellStyle { get; set; }
+
+    internal bool CanSort => Visible && Sortable && (SortKey is not null || CellText is not null);
+
+    internal string HeaderCssClass => new W3ClassBuilder()
+        .Add(Align.ToClass())
+        .Add(HeaderClass)
+        .ToString();
+
+    internal string CellCssClass => new W3ClassBuilder()
+        .Add(Align.ToClass())
+        .Add(CellClass)
+        .ToString();
+
+    internal object? GetSortValue(TItem item)
+    {
+        return SortKey?.Invoke(item) ?? CellText?.Invoke(item);
+    }
+
+    internal string GetCellText(TItem item)
+    {
+        return Convert.ToString(CellText?.Invoke(item), CultureInfo.CurrentCulture) ?? string.Empty;
+    }
+
+    internal string GetSearchText(TItem item)
+    {
+        return SearchValue?.Invoke(item) ?? GetCellText(item);
+    }
+
+    protected override void OnInitialized()
+    {
+        Owner?.Register(this);
+    }
+
+    public void Dispose()
+    {
+        Owner?.Unregister(this);
+    }
+}

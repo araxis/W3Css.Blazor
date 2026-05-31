@@ -1,0 +1,120 @@
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+<figure @attributes="AdditionalAttributes"
+        class="@FigureCssClass"
+        style="@StyleValue"
+        role="listitem">
+    <img src="@Src"
+         alt="@Alt"
+         loading="@Loading"
+         class="@ImageCssClass" />
+
+    @if (CaptionContent is not null || !string.IsNullOrWhiteSpace(Title) || !string.IsNullOrWhiteSpace(Subtitle))
+    {
+        <figcaption class="@CaptionCssClass">
+            @if (CaptionContent is not null)
+            {
+                @CaptionContent
+            }
+            else
+            {
+                @if (!string.IsNullOrWhiteSpace(Title))
+                {
+                    <strong>@Title</strong>
+                }
+                @if (!string.IsNullOrWhiteSpace(Subtitle))
+                {
+                    <span>@Subtitle</span>
+                }
+            }
+        </figcaption>
+    }
+</figure>
+
+@code {
+    [CascadingParameter]
+    internal W3ImageList? Owner { get; set; }
+
+    private string FigureCssClass => BuildClass(
+        "w3-image-list-item",
+        EffectiveRound.ToClass(),
+        Border ? "w3-border" : null);
+
+    private string ImageCssClass => new W3ClassBuilder()
+        .Add("w3-image")
+        .Add("w3-image-list-image")
+        .Add(Effect.ToClass())
+        .AddIf(HoverOpacity, "w3-hover-opacity")
+        .ToString();
+
+    private string CaptionCssClass => new W3ClassBuilder()
+        .Add("w3-image-list-caption")
+        .Add(EffectiveCaptionColor.ToBackgroundClass())
+        .Add(EffectiveCaptionTextColor.ToTextClass())
+        .ToString();
+
+    private string? StyleValue => CombineStyle(
+        string.IsNullOrWhiteSpace(AspectRatio) ? null : $"--w3-image-list-aspect:{AspectRatio}",
+        Style);
+
+    private W3Color EffectiveCaptionColor => CaptionColor == W3Color.None
+        ? Owner?.EffectiveCaptionColor ?? W3Color.White
+        : CaptionColor;
+
+    private W3Color EffectiveCaptionTextColor => CaptionTextColor == W3Color.None
+        ? Owner?.EffectiveCaptionTextColor ?? W3Color.Black
+        : CaptionTextColor;
+
+    private W3Round EffectiveRound => Round == W3Round.None
+        ? Owner?.EffectiveRound ?? W3Round.Medium
+        : Round;
+
+    [Parameter, EditorRequired]
+    public string Src { get; set; } = string.Empty;
+
+    [Parameter]
+    public string Alt { get; set; } = string.Empty;
+
+    [Parameter]
+    public string? Title { get; set; }
+
+    [Parameter]
+    public string? Subtitle { get; set; }
+
+    [Parameter]
+    public RenderFragment? CaptionContent { get; set; }
+
+    [Parameter]
+    public string? Loading { get; set; } = "lazy";
+
+    [Parameter]
+    public string AspectRatio { get; set; } = "4 / 3";
+
+    [Parameter]
+    public bool Border { get; set; } = true;
+
+    [Parameter]
+    public bool HoverOpacity { get; set; }
+
+    [Parameter]
+    public W3ImageEffect Effect { get; set; } = W3ImageEffect.None;
+
+    [Parameter]
+    public W3Color CaptionColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color CaptionTextColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Round Round { get; set; } = W3Round.None;
+
+    private static string? CombineStyle(params string?[] styles)
+    {
+        var style = string.Join(';', styles
+            .Where(value => !string.IsNullOrWhiteSpace(value))
+            .Select(value => value!.Trim().TrimEnd(';')));
+
+        return string.IsNullOrWhiteSpace(style) ? null : style;
+    }
+}

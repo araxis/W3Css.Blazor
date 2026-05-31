@@ -1,0 +1,122 @@
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+<div @attributes="AdditionalAttributes"
+     class="@CssClass"
+     style="@Style">
+    <button type="button"
+            class="@ButtonCssClass"
+            aria-expanded="@AriaExpanded"
+            disabled="@Disabled"
+            @onclick="ToggleAsync">
+        @if (ButtonContent is not null)
+        {
+            @ButtonContent
+        }
+        else
+        {
+            @Label
+        }
+    </button>
+
+    @if (CloseOnOutsideClick && Open)
+    {
+        <div class="w3-dropdown-close-layer"
+             aria-hidden="true"
+             @onclick="CloseAsync"></div>
+    }
+
+    <div class="@ContentCssClass">
+        @ChildContent
+    </div>
+</div>
+
+@code {
+    private string CssClass => BuildClass(
+        "w3-dropdown-click",
+        Open ? "w3-dropdown-open" : null,
+        Mobile ? "w3-mobile" : null);
+
+    private string ButtonCssClass => new W3ClassBuilder()
+        .Add("w3-button")
+        .Add(ButtonColor.ToBackgroundClass())
+        .Add(ButtonTextColor.ToTextClass())
+        .AddIf(Disabled, "w3-disabled")
+        .ToString();
+
+    private string ContentCssClass => new W3ClassBuilder()
+        .Add("w3-dropdown-content")
+        .Add("w3-bar-block")
+        .AddIf(Card, "w3-card-4")
+        .AddIf(Open, "w3-show")
+        .AddIf(Animate, "w3-animate-opacity")
+        .Add(ContentColor.ToBackgroundClass())
+        .Add(ContentTextColor.ToTextClass())
+        .ToString();
+
+    private string AriaExpanded => Open ? "true" : "false";
+
+    [Parameter]
+    public string Label { get; set; } = "Menu";
+
+    [Parameter]
+    public RenderFragment? ButtonContent { get; set; }
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public bool Open { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> OpenChanged { get; set; }
+
+    [Parameter]
+    public bool Disabled { get; set; }
+
+    [Parameter]
+    public bool Mobile { get; set; }
+
+    [Parameter]
+    public bool Card { get; set; } = true;
+
+    [Parameter]
+    public bool Animate { get; set; }
+
+    [Parameter]
+    public bool CloseOnOutsideClick { get; set; } = true;
+
+    [Parameter]
+    public W3Color ButtonColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color ButtonTextColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color ContentColor { get; set; } = W3Color.Surface;
+
+    [Parameter]
+    public W3Color ContentTextColor { get; set; } = W3Color.Black;
+
+    private async Task ToggleAsync()
+    {
+        if (Disabled)
+        {
+            return;
+        }
+
+        Open = !Open;
+        await OpenChanged.InvokeAsync(Open);
+    }
+
+    private async Task CloseAsync()
+    {
+        if (!Open)
+        {
+            return;
+        }
+
+        Open = false;
+        await OpenChanged.InvokeAsync(false);
+    }
+}

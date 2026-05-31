@@ -1,0 +1,139 @@
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+<div @attributes="AdditionalAttributes"
+     class="@CssClass"
+     style="@StyleValue"
+     role="radiogroup"
+     aria-label="@Label"
+     aria-readonly="@AriaReadOnly"
+     aria-disabled="@AriaDisabled">
+    @for (var index = 1; index <= SafeMax; index++)
+    {
+        var rating = index;
+        <button type="button"
+                class="@GetButtonClass(rating)"
+                role="radio"
+                aria-checked="@GetAriaChecked(rating)"
+                aria-label="@GetRatingLabel(rating)"
+                disabled="@IsInteractionDisabled"
+                @onclick="() => SetValueAsync(rating)">
+            <span class="@GetIconClass(rating)" aria-hidden="true"></span>
+        </button>
+    }
+    @if (ShowValue)
+    {
+        <span class="w3-rating-value" aria-hidden="true">@ClampedValue / @SafeMax</span>
+    }
+</div>
+
+@code {
+    private int SafeMax => Max < 1 ? 1 : Max;
+
+    private int ClampedValue => Math.Clamp(Value, 0, SafeMax);
+
+    private bool IsInteractionDisabled => Disabled || ReadOnly;
+
+    private string AriaReadOnly => ReadOnly ? "true" : "false";
+
+    private string AriaDisabled => Disabled ? "true" : "false";
+
+    private string CssClass => BuildClass(
+        "w3-rating",
+        ReadOnly ? "w3-rating-readonly" : null,
+        Disabled ? "w3-rating-disabled" : null);
+
+    private string? StyleValue => CombineStyle(Gap >= 0 ? $"--w3-rating-gap:{Gap}px" : null, Style);
+
+    private string GetButtonClass(int rating)
+    {
+        var selected = rating <= ClampedValue;
+
+        return new W3ClassBuilder()
+            .Add("w3-button")
+            .Add("w3-rating-button")
+            .Add(selected ? Color.ToTextClass() : EmptyColor.ToTextClass())
+            .Add(Size.ToClass())
+            .AddIf(!IsInteractionDisabled, "w3-hover-opacity")
+            .AddIf(IsInteractionDisabled, "w3-disabled")
+            .ToString();
+    }
+
+    private string GetIconClass(int rating)
+    {
+        return rating <= ClampedValue ? IconClass : EmptyIconClass;
+    }
+
+    private string GetAriaChecked(int rating)
+    {
+        return rating == ClampedValue ? "true" : "false";
+    }
+
+    private string GetRatingLabel(int rating)
+    {
+        return $"{rating} of {SafeMax}";
+    }
+
+    private async Task SetValueAsync(int rating)
+    {
+        if (IsInteractionDisabled)
+        {
+            return;
+        }
+
+        var nextValue = Clearable && rating == ClampedValue ? 0 : rating;
+        Value = nextValue;
+        await ValueChanged.InvokeAsync(nextValue);
+    }
+
+    [Parameter]
+    public int Value { get; set; }
+
+    [Parameter]
+    public EventCallback<int> ValueChanged { get; set; }
+
+    [Parameter]
+    public int Max { get; set; } = 5;
+
+    [Parameter]
+    public string Label { get; set; } = "Rating";
+
+    [Parameter]
+    public bool ReadOnly { get; set; }
+
+    [Parameter]
+    public bool Disabled { get; set; }
+
+    [Parameter]
+    public bool Clearable { get; set; }
+
+    [Parameter]
+    public bool ShowValue { get; set; }
+
+    [Parameter]
+    public string IconClass { get; set; } = "fa fa-star";
+
+    [Parameter]
+    public string EmptyIconClass { get; set; } = "fa fa-star-o";
+
+    [Parameter]
+    public W3Color Color { get; set; } = W3Color.Amber;
+
+    [Parameter]
+    public W3Color EmptyColor { get; set; } = W3Color.Grey;
+
+    [Parameter]
+    public W3Size Size { get; set; } = W3Size.Large;
+
+    [Parameter]
+    public int Gap { get; set; } = 2;
+
+    private static string? CombineStyle(params string?[] styles)
+    {
+        var style = string.Join(';', styles
+            .Where(value => !string.IsNullOrWhiteSpace(value))
+            .Select(value => value!.Trim().TrimEnd(';')));
+
+        return string.IsNullOrWhiteSpace(style) ? null : style;
+    }
+}

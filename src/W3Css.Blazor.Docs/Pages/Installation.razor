@@ -1,0 +1,32 @@
+@page "/installation"
+
+<PageTitle>Installation</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>Installation</h1>
+    <p class="w3-large">Add the package, import the namespace, and include the bundled W3.CSS file.</p>
+
+    <section class="doc-section">
+        <h2>Package</h2>
+        <pre><code>dotnet add package W3Css.Blazor</code></pre>
+    </section>
+
+    <section class="doc-section">
+        <h2>Imports</h2>
+        <pre><code>@("@using W3Css.Blazor")
+@("@using W3Css.Blazor.Components")</code></pre>
+    </section>
+
+    <section class="doc-section">
+        <h2>Stylesheet</h2>
+        <p>One file is all you need:</p>
+        <pre><code>&lt;link rel="stylesheet" href="_content/W3Css.Blazor/w3css-blazor.css" /&gt;</code></pre>
+        <W3Alert Kind="W3AlertKind.Note" Round="W3Round.Medium">
+            <code>w3css-blazor.css</code> ships in the library package as a static web asset. It bundles the base W3.CSS framework <strong>and</strong> the design-token layer (CSS variables + token classes), so themed colors and dark mode resolve out of the box.
+        </W3Alert>
+        <p>Prefer the two files separately? The bundle is just these concatenated — link them individually for finer control:</p>
+        <pre><code>&lt;link rel="stylesheet" href="_content/W3Css.Blazor/w3css/5/w3.css" /&gt;
+&lt;link rel="stylesheet" href="_content/W3Css.Blazor/w3-theme.css" /&gt;</code></pre>
+        <p><NavLink href="components/theming">Theming guidance</NavLink> shows how to brand the whole app from one place with <code>W3ThemeProvider</code>. <NavLink href="components/versions">Versions guidance</NavLink> explains the bundled W3.CSS file and optional pro stylesheet.</p>
+    </section>
+</W3Container>

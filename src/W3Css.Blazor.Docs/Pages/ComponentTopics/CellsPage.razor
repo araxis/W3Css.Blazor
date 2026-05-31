@@ -1,0 +1,87 @@
+@page "/components/cells"
+
+<PageTitle>W3CellRow and W3Cell</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3CellRow and W3Cell</h1>
+    <DocPager PreviousHref="components/flex" PreviousText="Flex" NextHref="components/display" NextText="Display" />
+
+    <p class="w3-large">`W3CellRow` and `W3Cell` render the W3.CSS table-cell layout helpers.</p>
+    <p>Use cells when you want W3.CSS vertical alignment behavior instead of grid or flex layout.</p>
+
+    <DocExample Title="Aligned Cells" Code="@AlignedCode">
+        <W3CellRow Class="w3-white">
+            <W3Cell Color="W3Color.PaleBlue" Alignment="W3CellAlignment.Middle" Style="width: 96px;">
+                <W3Badge Color="W3Color.Teal" TextColor="W3Color.White">1</W3Badge>
+            </W3Cell>
+            <W3Cell Class="w3-padding">
+                <h3>Middle aligned cell</h3>
+                <p>The left cell keeps its content vertically centered.</p>
+            </W3Cell>
+        </W3CellRow>
+    </DocExample>
+
+    <DocExample Title="Mobile Cells" Code="@MobileCode">
+        <W3CellRow Class="w3-white">
+            <W3Cell Mobile="true" Color="W3Color.LightGrey" Class="w3-padding">First cell</W3Cell>
+            <W3Cell Mobile="true" Class="w3-padding">Second cell</W3Cell>
+        </W3CellRow>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>W3CellRow Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Color</td><td>W3Color</td><td>None</td><td>Background color class</td></tr>
+                <tr><td>TextColor</td><td>W3Color</td><td>None</td><td>Text color class</td></tr>
+                <tr><td>Class</td><td>string</td><td>null</td><td>Additional root cell-row classes</td></tr>
+                <tr><td>Style</td><td>string</td><td>null</td><td>Root cell-row inline style</td></tr>
+                <tr><td>ChildContent</td><td>RenderFragment</td><td>null</td><td>Content inside `w3-cell-row`</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>W3Cell Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Alignment</td><td>W3CellAlignment</td><td>Default</td><td>`w3-cell-top`, `w3-cell-middle`, or `w3-cell-bottom`</td></tr>
+                <tr><td>Mobile</td><td>bool</td><td>false</td><td>`w3-mobile`</td></tr>
+                <tr><td>Color</td><td>W3Color</td><td>None</td><td>Background color class</td></tr>
+                <tr><td>TextColor</td><td>W3Color</td><td>None</td><td>Text color class</td></tr>
+                <tr><td>Class</td><td>string</td><td>null</td><td>Additional root cell classes</td></tr>
+                <tr><td>Style</td><td>string</td><td>null</td><td>Root cell inline style</td></tr>
+                <tr><td>ChildContent</td><td>RenderFragment</td><td>null</td><td>Content inside `w3-cell`</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <DocPager PreviousHref="components/flex" PreviousText="Flex" NextHref="components/display" NextText="Display" />
+</W3Container>
+
+@code {
+    private const string AlignedCode = """
+<W3CellRow>
+    <W3Cell Color="W3Color.PaleBlue" Alignment="W3CellAlignment.Middle" Style="width: 96px;">
+        <W3Badge Color="W3Color.Teal" TextColor="W3Color.White">1</W3Badge>
+    </W3Cell>
+    <W3Cell Class="w3-padding">
+        <h3>Middle aligned cell</h3>
+        <p>The left cell keeps its content vertically centered.</p>
+    </W3Cell>
+</W3CellRow>
+""";
+
+    private const string MobileCode = """
+<W3CellRow>
+    <W3Cell Mobile="true">First cell</W3Cell>
+    <W3Cell Mobile="true">Second cell</W3Cell>
+</W3CellRow>
+""";
+}

@@ -1,0 +1,15 @@
+.w3-chat {
+    display: flex;
+    flex-direction: column;
+    gap: var(--w3-chat-gap, 12px);
+    max-height: var(--w3-chat-max-height, none);
+    overflow-y: auto;
+}
+
+.w3-chat-reverse {
+    flex-direction: column-reverse;
+}
+
+.w3-chat-dense {
+    font-size: 0.95rem;
+}

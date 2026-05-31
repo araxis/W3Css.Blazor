@@ -1,0 +1,208 @@
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+<CascadingValue Value="this" IsFixed="true">
+    <section @attributes="AdditionalAttributes"
+             class="@CssClass"
+             style="@Style">
+        <div class="@BarCssClass" role="tablist">
+            @foreach (var panel in panels)
+            {
+                var active = IsActive(panel);
+                <button type="button"
+                        class="@GetTabButtonClass(active)"
+                        role="tab"
+                        aria-selected="@ToAriaBool(active)"
+                        aria-controls="@panel.PanelId"
+                        id="@panel.TabId"
+                        disabled="@panel.Disabled"
+                        @onclick="() => ActivateAsync(panel)">
+                    @panel.Title
+                </button>
+                @if (ShowCloseButtons && (Closeable || panel.Closeable))
+                {
+                    <button type="button"
+                            class="w3-bar-item w3-button w3-tab-close"
+                            aria-label="@($"{CloseButtonLabel} {panel.Title}")"
+                            @onclick="() => CloseAsync(panel)">&times;</button>
+                }
+            }
+            @if (ShowAddButton)
+            {
+                <button type="button"
+                        class="w3-bar-item w3-button"
+                        aria-label="@AddButtonLabel"
+                        @onclick="AddAsync">+</button>
+            }
+        </div>
+
+        @if (ActivePanel is not null)
+        {
+            <div class="@PanelCssClass"
+                 id="@ActivePanel.PanelId"
+                 role="tabpanel"
+                 aria-labelledby="@ActivePanel.TabId">
+                @ActivePanel.ChildContent
+            </div>
+        }
+    </section>
+
+    @ChildContent
+</CascadingValue>
+
+@code {
+    private readonly List<W3TabPanel> panels = [];
+
+    private W3TabPanel? ActivePanel => panels.FirstOrDefault(IsActive) ?? panels.FirstOrDefault(panel => !panel.Disabled);
+
+    private string CssClass => BuildClass("w3-section");
+
+    private string BarCssClass => new W3ClassBuilder()
+        .Add("w3-bar")
+        .AddIf(Border, "w3-border")
+        .Add(Color.ToBackgroundClass())
+        .Add(TextColor.ToTextClass())
+        .ToString();
+
+    private string PanelCssClass => new W3ClassBuilder()
+        .Add("w3-container")
+        .AddIf(PanelBorder, "w3-border")
+        .Add(PanelColor.ToBackgroundClass())
+        .Add(PanelTextColor.ToTextClass())
+        .ToString();
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public string? ActiveValue { get; set; }
+
+    [Parameter]
+    public EventCallback<string> ActiveValueChanged { get; set; }
+
+    [Parameter]
+    public bool Border { get; set; } = true;
+
+    [Parameter]
+    public bool PanelBorder { get; set; } = true;
+
+    [Parameter]
+    public W3Color Color { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color TextColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color ActiveColor { get; set; } = W3Color.Primary;
+
+    [Parameter]
+    public W3Color ActiveTextColor { get; set; } = W3Color.Black;
+
+    [Parameter]
+    public W3Color PanelColor { get; set; } = W3Color.Surface;
+
+    [Parameter]
+    public W3Color PanelTextColor { get; set; } = W3Color.None;
+
+    /// <summary>
+    /// Shows a trailing add (+) button. Handle <see cref="OnAddTab"/> to append a panel.
+    /// </summary>
+    [Parameter]
+    public bool ShowAddButton { get; set; }
+
+    /// <summary>
+    /// Shows a close (×) button on every tab. Individual panels can also opt in via <c>W3TabPanel.Closeable</c>.
+    /// </summary>
+    [Parameter]
+    public bool ShowCloseButtons { get; set; } = true;
+
+    /// <summary>
+    /// Marks all tabs closeable (combined with <see cref="ShowCloseButtons"/>).
+    /// </summary>
+    [Parameter]
+    public bool Closeable { get; set; }
+
+    /// <summary>
+    /// Accessible label for the add button.
+    /// </summary>
+    [Parameter]
+    public string AddButtonLabel { get; set; } = "Add tab";
+
+    /// <summary>
+    /// Accessible label prefix for close buttons.
+    /// </summary>
+    [Parameter]
+    public string CloseButtonLabel { get; set; } = "Close";
+
+    /// <summary>
+    /// Invoked when the add (+) button is clicked.
+    /// </summary>
+    [Parameter]
+    public EventCallback OnAddTab { get; set; }
+
+    /// <summary>
+    /// Invoked with the tab value when a tab's close (×) button is clicked.
+    /// </summary>
+    [Parameter]
+    public EventCallback<string> OnCloseTab { get; set; }
+
+    internal void Register(W3TabPanel panel)
+    {
+        if (panels.Contains(panel))
+        {
+            return;
+        }
+
+        panels.Add(panel);
+
+        if (string.IsNullOrWhiteSpace(ActiveValue) && !panel.Disabled)
+        {
+            ActiveValue = panel.Value;
+        }
+
+        _ = InvokeAsync(StateHasChanged);
+    }
+
+    internal void Unregister(W3TabPanel panel)
+    {
+        if (panels.Remove(panel))
+        {
+            _ = InvokeAsync(StateHasChanged);
+        }
+    }
+
+    private bool IsActive(W3TabPanel panel)
+    {
+        return string.Equals(ActiveValue, panel.Value, StringComparison.Ordinal);
+    }
+
+    private string GetTabButtonClass(bool active)
+    {
+        return new W3ClassBuilder()
+            .Add("w3-bar-item")
+            .Add("w3-button")
+            .AddIf(active, ActiveColor.ToBackgroundClass())
+            .AddIf(active, ActiveTextColor.ToTextClass())
+            .ToString();
+    }
+
+    private static string ToAriaBool(bool value)
+    {
+        return value ? "true" : "false";
+    }
+
+    private async Task ActivateAsync(W3TabPanel panel)
+    {
+        if (panel.Disabled)
+        {
+            return;
+        }
+
+        ActiveValue = panel.Value;
+        await ActiveValueChanged.InvokeAsync(panel.Value);
+    }
+
+    private Task CloseAsync(W3TabPanel panel) => OnCloseTab.InvokeAsync(panel.Value);
+
+    private Task AddAsync() => OnAddTab.InvokeAsync();
+}

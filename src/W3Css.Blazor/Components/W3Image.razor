@@ -1,0 +1,54 @@
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+<img @attributes="AdditionalAttributes"
+     src="@Src"
+     alt="@Alt"
+     width="@Width"
+     height="@Height"
+     loading="@Loading"
+     class="@CssClass"
+     style="@Style" />
+
+@code {
+    private string CssClass => BuildClass(
+        Responsive ? "w3-image" : null,
+        Effect.ToClass(),
+        HoverOpacity ? "w3-hover-opacity" : null,
+        Round.ToClass(),
+        Circle ? "w3-circle" : null,
+        Border ? "w3-border" : null);
+
+    [Parameter, EditorRequired]
+    public string Src { get; set; } = string.Empty;
+
+    [Parameter]
+    public string Alt { get; set; } = string.Empty;
+
+    [Parameter]
+    public int? Width { get; set; }
+
+    [Parameter]
+    public int? Height { get; set; }
+
+    [Parameter]
+    public string? Loading { get; set; } = "lazy";
+
+    [Parameter]
+    public bool Responsive { get; set; } = true;
+
+    [Parameter]
+    public bool HoverOpacity { get; set; }
+
+    [Parameter]
+    public bool Border { get; set; }
+
+    [Parameter]
+    public bool Circle { get; set; }
+
+    [Parameter]
+    public W3Round Round { get; set; } = W3Round.None;
+
+    [Parameter]
+    public W3ImageEffect Effect { get; set; } = W3ImageEffect.None;
+}

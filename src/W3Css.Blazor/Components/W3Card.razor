@@ -1,0 +1,77 @@
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+<div @attributes="AdditionalAttributes"
+     class="@CssClass"
+     style="@Style">
+    @if (Header is not null)
+    {
+        <div class="@HeaderCssClass">
+            @Header
+        </div>
+    }
+    <div class="@BodyCssClass">
+        @ChildContent
+    </div>
+    @if (Footer is not null)
+    {
+        <div class="@FooterCssClass">
+            @Footer
+        </div>
+    }
+</div>
+
+@code {
+    private string CssClass => BuildClass(Depth.ToClass(), Round.ToClass());
+
+    private string HeaderCssClass => new W3ClassBuilder()
+        .Add("w3-container")
+        .Add(HeaderColor.ToBackgroundClass())
+        .Add(HeaderClass)
+        .ToString();
+
+    private string BodyCssClass => new W3ClassBuilder()
+        .Add("w3-container")
+        .Add(BodyColor.ToBackgroundClass())
+        .Add(BodyClass)
+        .ToString();
+
+    private string FooterCssClass => new W3ClassBuilder()
+        .Add("w3-container")
+        .Add(FooterColor.ToBackgroundClass())
+        .Add(FooterClass)
+        .ToString();
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public RenderFragment? Header { get; set; }
+
+    [Parameter]
+    public RenderFragment? Footer { get; set; }
+
+    [Parameter]
+    public W3CardDepth Depth { get; set; } = W3CardDepth.Default;
+
+    [Parameter]
+    public W3Round Round { get; set; } = W3Round.None;
+
+    [Parameter]
+    public W3Color HeaderColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color BodyColor { get; set; } = W3Color.Surface;
+
+    [Parameter]
+    public W3Color FooterColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public string? HeaderClass { get; set; }
+
+    [Parameter]
+    public string? BodyClass { get; set; }
+
+    [Parameter]
+    public string? FooterClass { get; set; }
+}

@@ -1,0 +1,78 @@
+@page "/components/stack"
+
+<PageTitle>W3Stack</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3Stack</h1>
+    <DocPager PreviousHref="components/toolbar" PreviousText="Toolbar" NextHref="components/divider" NextText="Divider" />
+
+    <p class="w3-large">`W3Stack` provides a small flex-based spacing primitive for app layouts.</p>
+    <p>Use it when repeated content needs predictable vertical or horizontal rhythm without writing one-off wrapper CSS.</p>
+
+    <DocExample Title="Vertical Stack" Code="@VerticalCode">
+        <W3Stack Gap="12">
+            <W3Card BodyClass="w3-padding" Class="w3-white w3-border">
+                <strong>Profile</strong>
+                <p class="doc-muted">Owner details and account state.</p>
+            </W3Card>
+            <W3Card BodyClass="w3-padding" Class="w3-white w3-border">
+                <strong>Permissions</strong>
+                <p class="doc-muted">Roles and access controls.</p>
+            </W3Card>
+        </W3Stack>
+    </DocExample>
+
+    <DocExample Title="Horizontal Stack" Code="@HorizontalCode">
+        <W3Stack Horizontal="true" Wrap="true" AlignCenter="true" Gap="8">
+            <W3Tag Color="W3Color.Teal" TextColor="W3Color.White" Round="W3Round.Medium">Live</W3Tag>
+            <span>Production workspace</span>
+            <W3Button Size="W3Size.Small" Border="true">Open</W3Button>
+        </W3Stack>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Stacked content</td></tr>
+                <tr><td>Horizontal</td><td>bool</td><td>false</td><td>Row direction instead of column direction</td></tr>
+                <tr><td>Wrap</td><td>bool</td><td>false</td><td>Allows row content to wrap</td></tr>
+                <tr><td>AlignCenter</td><td>bool</td><td>false</td><td>Centers children on the cross axis</td></tr>
+                <tr><td>JustifyBetween</td><td>bool</td><td>false</td><td>Spaces children across the main axis</td></tr>
+                <tr><td>Gap</td><td>int</td><td>16</td><td>Gap in pixels</td></tr>
+                <tr><td>Color</td><td>W3Color</td><td>None</td><td>Background color class</td></tr>
+                <tr><td>TextColor</td><td>W3Color</td><td>None</td><td>Text color class</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional stack classes</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline styles on the stack</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <DocPager PreviousHref="components/toolbar" PreviousText="Toolbar" NextHref="components/divider" NextText="Divider" />
+</W3Container>
+
+@code {
+    private const string VerticalCode = """
+<W3Stack Gap="12">
+    <W3Card BodyClass="w3-padding" Class="w3-white w3-border">
+        <strong>Profile</strong>
+        <p>Owner details and account state.</p>
+    </W3Card>
+    <W3Card BodyClass="w3-padding" Class="w3-white w3-border">
+        <strong>Permissions</strong>
+        <p>Roles and access controls.</p>
+    </W3Card>
+</W3Stack>
+""";
+
+    private const string HorizontalCode = """
+<W3Stack Horizontal="true" Wrap="true" AlignCenter="true" Gap="8">
+    <W3Tag Color="W3Color.Teal" TextColor="W3Color.White" Round="W3Round.Medium">Live</W3Tag>
+    <span>Production workspace</span>
+    <W3Button Size="W3Size.Small" Border="true">Open</W3Button>
+</W3Stack>
+""";
+}

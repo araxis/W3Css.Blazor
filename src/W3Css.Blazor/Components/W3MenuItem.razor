@@ -1,0 +1,194 @@
+@using Microsoft.AspNetCore.Components.Web
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+@if (Disabled)
+{
+    <span @attributes="AdditionalAttributes"
+          class="@CssClass"
+          style="@Style"
+          role="menuitem"
+          aria-disabled="true">
+        @ItemContent
+    </span>
+}
+else if (!string.IsNullOrWhiteSpace(Href))
+{
+    <a @attributes="AdditionalAttributes"
+       href="@Href"
+       target="@Target"
+       class="@CssClass"
+       style="@Style"
+       role="menuitem"
+       @onclick="HandleClickAsync">
+        @ItemContent
+    </a>
+}
+else
+{
+    <button @attributes="AdditionalAttributes"
+            type="@Type"
+            class="@CssClass"
+            style="@Style"
+            role="menuitem"
+            @onclick="HandleClickAsync">
+        @ItemContent
+    </button>
+}
+
+@code {
+    [CascadingParameter]
+    internal W3Menu? Owner { get; set; }
+
+    private string CssClass => BuildClass(
+        "w3-bar-item",
+        "w3-button",
+        "w3-menu-item",
+        Dense ? "w3-menu-item-dense" : null,
+        Destructive ? "w3-menu-item-destructive" : null,
+        Disabled ? "w3-disabled" : null,
+        Color.ToBackgroundClass(),
+        ResolveTextColor().ToTextClass(),
+        ResolveHoverCssClass());
+
+    private string IconCssClass => new W3ClassBuilder()
+        .Add("w3-menu-item-icon")
+        .Add(IconClass)
+        .ToString();
+
+    private RenderFragment ItemContent => builder =>
+    {
+        var sequence = 0;
+
+        if (!string.IsNullOrWhiteSpace(IconClass))
+        {
+            builder.OpenElement(sequence++, "span");
+            builder.AddAttribute(sequence++, "class", IconCssClass);
+            builder.AddAttribute(sequence++, "aria-hidden", "true");
+            builder.CloseElement();
+        }
+
+        builder.OpenElement(sequence++, "span");
+        builder.AddAttribute(sequence++, "class", "w3-menu-item-body");
+
+        builder.OpenElement(sequence++, "span");
+        builder.AddAttribute(sequence++, "class", "w3-menu-item-label");
+        if (ChildContent is not null)
+        {
+            builder.AddContent(sequence++, ChildContent);
+        }
+        else
+        {
+            builder.AddContent(sequence++, Text);
+        }
+        builder.CloseElement();
+
+        if (!string.IsNullOrWhiteSpace(Description))
+        {
+            builder.OpenElement(sequence++, "span");
+            builder.AddAttribute(sequence++, "class", "w3-menu-item-description");
+            builder.AddContent(sequence++, Description);
+            builder.CloseElement();
+        }
+
+        builder.CloseElement();
+
+        if (!string.IsNullOrWhiteSpace(Shortcut))
+        {
+            builder.OpenElement(sequence++, "kbd");
+            builder.AddAttribute(sequence++, "class", "w3-menu-item-shortcut");
+            builder.AddContent(sequence++, Shortcut);
+            builder.CloseElement();
+        }
+
+        if (EndContent is not null)
+        {
+            builder.OpenElement(sequence++, "span");
+            builder.AddAttribute(sequence++, "class", "w3-menu-item-end");
+            builder.AddContent(sequence++, EndContent);
+            builder.CloseElement();
+        }
+    };
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public RenderFragment? EndContent { get; set; }
+
+    [Parameter]
+    public string? Text { get; set; }
+
+    [Parameter]
+    public string? Description { get; set; }
+
+    [Parameter]
+    public string? Shortcut { get; set; }
+
+    [Parameter]
+    public string? Href { get; set; }
+
+    [Parameter]
+    public string? Target { get; set; }
+
+    [Parameter]
+    public string? IconClass { get; set; }
+
+    [Parameter]
+    public bool Dense { get; set; }
+
+    [Parameter]
+    public bool Destructive { get; set; }
+
+    [Parameter]
+    public bool Disabled { get; set; }
+
+    [Parameter]
+    public bool CloseOnClick { get; set; } = true;
+
+    [Parameter]
+    public string Type { get; set; } = "button";
+
+    [Parameter]
+    public W3Color Color { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color TextColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color HoverColor { get; set; } = W3Color.LightGrey;
+
+    [Parameter]
+    public W3Color HoverTextColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnClick { get; set; }
+
+    private W3Color ResolveTextColor()
+    {
+        return TextColor != W3Color.None ? TextColor : Destructive ? W3Color.Red : W3Color.None;
+    }
+
+    private string ResolveHoverCssClass()
+    {
+        return new W3ClassBuilder()
+            .Add(HoverColor.ToHoverBackgroundClass())
+            .Add(HoverTextColor.ToHoverTextClass())
+            .ToString();
+    }
+
+    private async Task HandleClickAsync(MouseEventArgs args)
+    {
+        if (Disabled)
+        {
+            return;
+        }
+
+        await OnClick.InvokeAsync(args);
+
+        if (CloseOnClick && Owner?.CloseOnSelect == true)
+        {
+            await Owner.CloseAsync();
+        }
+    }
+}

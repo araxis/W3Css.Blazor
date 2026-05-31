@@ -1,0 +1,131 @@
+@page "/components/chat"
+
+<PageTitle>W3Chat</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3Chat</h1>
+    <DocPager PreviousHref="components/chart" PreviousText="Chart" NextHref="components/badge" NextText="Badge" />
+
+    <p class="w3-large">`W3Chat` renders conversation-style message streams for support, comments, assistants, and activity discussions.</p>
+    <p>Use `W3ChatMessage` for avatar, author, time, message body, own-message alignment, and delivery status while keeping the data model in your app.</p>
+
+    <DocExample Title="Support Thread" Code="@SupportCode">
+        <W3Chat Label="Support thread" MaxHeight="28rem" Class="w3-padding w3-border w3-white">
+            <W3ChatMessage Author="Mira"
+                           Initials="MI"
+                           Time="09:12"
+                           DateTime="2026-05-26T09:12:00"
+                           Text="The checkout stepper is aligned now. I am checking the mobile spacing next."
+                           AvatarColor="W3Color.Indigo"
+                           AvatarTextColor="W3Color.White" />
+            <W3ChatMessage Author="You"
+                           Initials="YO"
+                           Time="09:14"
+                           Text="Nice. Please keep the docs page refreshed after each round."
+                           Own="true"
+                           Status="Seen"
+                           AvatarColor="W3Color.Teal"
+                           AvatarTextColor="W3Color.White" />
+            <W3ChatMessage Author="Mira"
+                           Initials="MI"
+                           Time="09:18"
+                           AvatarColor="W3Color.Indigo"
+                           AvatarTextColor="W3Color.White">
+                <strong>Done.</strong> The docs app is running and the browser is on the current component page.
+            </W3ChatMessage>
+        </W3Chat>
+    </DocExample>
+
+    <DocExample Title="Compact Comment Stream" Code="@CompactCode">
+        <W3Chat Label="Comment stream"
+                Dense="true"
+                ShowAvatars="false"
+                MessageColor="W3Color.PaleBlue"
+                OwnMessageColor="W3Color.PaleGreen"
+                OwnMessageTextColor="W3Color.Black">
+            <W3ChatMessage Author="Design" Time="10:20" Text="Use a denser stream for table comments or audit notes." Compact="true" />
+            <W3ChatMessage Author="Build" Time="10:22" Text="The component stays presentation-only, so the app owns persistence and sending." Own="true" Compact="true" />
+        </W3Chat>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>W3Chat Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>`W3ChatMessage` children</td></tr>
+                <tr><td>Label</td><td>string</td><td>Chat</td><td>`aria-label` on the message list</td></tr>
+                <tr><td>Dense</td><td>bool</td><td>false</td><td>Compact text sizing</td></tr>
+                <tr><td>Reverse</td><td>bool</td><td>false</td><td>Column reverse order for newest-first streams</td></tr>
+                <tr><td>Gap</td><td>int</td><td>12</td><td>Gap in pixels between messages</td></tr>
+                <tr><td>MaxHeight</td><td>string?</td><td>null</td><td>Scrollable chat max height</td></tr>
+                <tr><td>ShowAvatars</td><td>bool</td><td>true</td><td>Default avatar visibility</td></tr>
+                <tr><td>AvatarSize</td><td>int</td><td>36</td><td>Default avatar size in pixels</td></tr>
+                <tr><td>Color, TextColor</td><td>W3Color</td><td>None</td><td>Root list colors</td></tr>
+                <tr><td>MessageColor, MessageTextColor</td><td>W3Color</td><td>LightGrey / Black</td><td>Default received message bubble colors</td></tr>
+                <tr><td>OwnMessageColor, OwnMessageTextColor</td><td>W3Color</td><td>Teal / White</td><td>Default own message bubble colors</td></tr>
+                <tr><td>Round</td><td>W3Round</td><td>Large</td><td>Default bubble roundness</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional classes on the message list</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline styles on the message list</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>W3ChatMessage Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Author</td><td>string?</td><td>null</td><td>Message author label and avatar label</td></tr>
+                <tr><td>Time</td><td>string?</td><td>null</td><td>Visible `time` text</td></tr>
+                <tr><td>DateTime</td><td>string?</td><td>null</td><td>`datetime` attribute on the `time` element</td></tr>
+                <tr><td>Text</td><td>string?</td><td>null</td><td>Message text when no child content is supplied</td></tr>
+                <tr><td>Status</td><td>string?</td><td>null</td><td>Optional delivery/read status footer</td></tr>
+                <tr><td>AvatarSrc, AvatarAlt</td><td>string?</td><td>null / empty</td><td>Avatar image source and alt text</td></tr>
+                <tr><td>Initials</td><td>string?</td><td>null</td><td>Avatar initials fallback</td></tr>
+                <tr><td>AvatarSize</td><td>int</td><td>0</td><td>Per-message avatar size override</td></tr>
+                <tr><td>ShowAvatar</td><td>bool?</td><td>null</td><td>Per-message avatar visibility override</td></tr>
+                <tr><td>Own</td><td>bool</td><td>false</td><td>Right-aligned own message layout</td></tr>
+                <tr><td>Compact</td><td>bool</td><td>false</td><td>Compact bubble padding</td></tr>
+                <tr><td>Border</td><td>bool</td><td>false</td><td>`w3-border` on the bubble</td></tr>
+                <tr><td>AvatarColor, AvatarTextColor</td><td>W3Color</td><td>LightGrey / Black</td><td>Avatar colors</td></tr>
+                <tr><td>Color, TextColor</td><td>W3Color</td><td>None</td><td>Received bubble colors</td></tr>
+                <tr><td>OwnColor, OwnTextColor</td><td>W3Color</td><td>None</td><td>Own bubble color overrides</td></tr>
+                <tr><td>Round</td><td>W3Round</td><td>None</td><td>Bubble roundness override</td></tr>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Custom message body content</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional classes on the message article</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline styles on the message article</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <DocPager PreviousHref="components/chart" PreviousText="Chart" NextHref="components/badge" NextText="Badge" />
+</W3Container>
+
+@code {
+    private const string SupportCode = """
+<W3Chat Label="Support thread" MaxHeight="28rem" Class="w3-padding w3-border w3-white">
+    <W3ChatMessage Author="Mira" Initials="MI" Time="09:12" Text="The checkout stepper is aligned now." />
+    <W3ChatMessage Author="You" Initials="YO" Time="09:14" Text="Nice. Please keep the docs page refreshed." Own="true" Status="Seen" />
+    <W3ChatMessage Author="Mira" Initials="MI" Time="09:18">
+        <strong>Done.</strong> The docs app is running.
+    </W3ChatMessage>
+</W3Chat>
+""";
+
+    private const string CompactCode = """
+<W3Chat Label="Comment stream"
+        Dense="true"
+        ShowAvatars="false"
+        MessageColor="W3Color.PaleBlue"
+        OwnMessageColor="W3Color.PaleGreen"
+        OwnMessageTextColor="W3Color.Black">
+    <W3ChatMessage Author="Design" Time="10:20" Text="Use a denser stream for table comments." Compact="true" />
+    <W3ChatMessage Author="Build" Time="10:22" Text="The app owns persistence and sending." Own="true" Compact="true" />
+</W3Chat>
+""";
+}

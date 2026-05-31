@@ -1,0 +1,18 @@
+.w3-chip {
+    align-items: center;
+    display: inline-flex;
+    gap: 6px;
+    line-height: 1.2;
+    max-width: 100%;
+    min-height: 2rem;
+}
+
+.w3-chip-label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.w3-chip-selected {
+    font-weight: 600;
+}

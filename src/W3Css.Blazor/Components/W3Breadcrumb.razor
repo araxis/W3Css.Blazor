@@ -1,0 +1,63 @@
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+<CascadingValue Value="this" IsFixed="true">
+    <nav @attributes="AdditionalAttributes"
+         class="@CssClass"
+         style="@Style"
+         aria-label="@Label">
+        <ol class="@ListCssClass">
+            @ChildContent
+        </ol>
+    </nav>
+</CascadingValue>
+
+@code {
+    private string CssClass => BuildClass(
+        "w3-breadcrumb",
+        Border ? "w3-border" : null,
+        Card ? CardDepth.ToClass() : null,
+        Round.ToClass(),
+        Color.ToBackgroundClass(),
+        TextColor.ToTextClass());
+
+    private string ListCssClass => new W3ClassBuilder()
+        .Add("w3-breadcrumb-list")
+        .Add("w3-bar")
+        .AddIf(Small, "w3-small")
+        .Add(ListClass)
+        .ToString();
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public string Label { get; set; } = "Breadcrumb";
+
+    [Parameter]
+    public string Separator { get; set; } = "/";
+
+    [Parameter]
+    public string? ListClass { get; set; }
+
+    [Parameter]
+    public bool Small { get; set; } = true;
+
+    [Parameter]
+    public bool Border { get; set; }
+
+    [Parameter]
+    public bool Card { get; set; }
+
+    [Parameter]
+    public W3CardDepth CardDepth { get; set; } = W3CardDepth.Two;
+
+    [Parameter]
+    public W3Round Round { get; set; } = W3Round.None;
+
+    [Parameter]
+    public W3Color Color { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color TextColor { get; set; } = W3Color.None;
+}

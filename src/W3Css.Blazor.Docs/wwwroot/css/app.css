@@ -1,0 +1,204 @@
+html,
+body {
+    font-family: Verdana, sans-serif;
+    /* Page background/text come from the theme tokens; the W3ThemeProvider
+       wrapper paints the visible page, so dark mode needs no per-mode CSS. */
+    background: var(--w3-background, #f6f7f9);
+    color: var(--w3-on-background, #1f2933);
+}
+
+a {
+    color: var(--w3-primary, #00695c);
+}
+
+a:focus,
+button:focus {
+    outline: 3px solid #ffb300;
+    outline-offset: 2px;
+}
+
+h1:focus {
+    outline: none;
+}
+
+.valid.modified:not([type=checkbox]) {
+    outline: 1px solid #26b050;
+}
+
+.invalid {
+    outline: 1px solid red;
+}
+
+.validation-message {
+    color: red;
+}
+
+#blazor-error-ui {
+    background: #fff8c5;
+    bottom: 0;
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+    display: none;
+    left: 0;
+    padding: 0.6rem 1.25rem 0.7rem 1.25rem;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+#blazor-error-ui .dismiss {
+    cursor: pointer;
+    position: absolute;
+    right: 0.75rem;
+    top: 0.5rem;
+}
+
+.blazor-error-boundary {
+    background: #b32121;
+    padding: 1rem;
+    color: white;
+}
+
+.blazor-error-boundary::after {
+    content: "An error has occurred.";
+}
+
+.loading-progress {
+    position: absolute;
+    display: block;
+    width: 8rem;
+    height: 8rem;
+    inset: 20vh 0 auto 0;
+    margin: 0 auto 0 auto;
+}
+
+.loading-progress circle {
+    fill: none;
+    stroke: #e0e0e0;
+    stroke-width: 0.6rem;
+    transform-origin: 50% 50%;
+    transform: rotate(-90deg);
+}
+
+.loading-progress circle:last-child {
+    stroke: #009688;
+    stroke-dasharray: calc(3.141 * var(--blazor-load-percentage, 0%) * 0.8), 500%;
+    transition: stroke-dasharray 0.05s ease-in-out;
+}
+
+.loading-progress-text {
+    position: absolute;
+    text-align: center;
+    font-weight: bold;
+    inset: calc(20vh + 3.25rem) 0 auto 0.2rem;
+}
+
+.loading-progress-text::after {
+    content: var(--blazor-load-percentage-text, "Loading");
+}
+
+code {
+    color: var(--w3-primary, #8a2d3b);
+    overflow-wrap: anywhere;
+}
+
+pre {
+    padding: 16px;
+    overflow: auto;
+    background: #182026;
+    color: #f5f7fa;
+}
+
+.doc-shell {
+    min-height: 100vh;
+}
+
+.doc-main {
+    margin-left: 260px;
+}
+
+.doc-content {
+    max-width: 1080px;
+    padding: 32px 28px 64px;
+}
+
+.doc-section {
+    margin-top: 28px;
+}
+
+.doc-page-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: space-between;
+    margin: 18px 0 28px;
+}
+
+.doc-grid {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.doc-example {
+    padding: 16px;
+    border: 1px solid var(--w3-border, #d9e2ec);
+    background: var(--w3-surface, #fff);
+    color: var(--w3-on-surface, inherit);
+}
+
+.doc-example-section {
+    margin-top: 32px;
+}
+
+.doc-example-preview {
+    padding: 16px;
+    border: 1px solid var(--w3-border, #d9e2ec);
+    background: var(--w3-surface, #fff);
+    color: var(--w3-on-surface, inherit);
+}
+
+.doc-code {
+    margin-top: 0;
+}
+
+.doc-reference-table th {
+    text-align: left;
+}
+
+.doc-muted {
+    color: var(--w3-on-background, #52616f);
+    opacity: 0.66;
+}
+
+.doc-logo {
+    width: 42px;
+    height: 42px;
+}
+
+@media (max-width: 760px) {
+    .doc-main {
+        margin-left: 0;
+    }
+
+    .doc-content {
+        padding: 20px 14px 48px;
+    }
+}
+
+/* Theme toggle button — themed purely through the variables, so it flips with
+   light/dark automatically. No per-mode rules anywhere in this file. */
+.doc-theme-toggle {
+    position: fixed;
+    top: 12px;
+    right: 16px;
+    z-index: 5;
+    border: 1px solid var(--w3-border, #d9e2ec);
+    background: var(--w3-surface, #fff);
+    color: var(--w3-on-surface, #1f2933);
+    border-radius: 999px;
+    padding: 6px 14px;
+    cursor: pointer;
+    font-size: 13px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}

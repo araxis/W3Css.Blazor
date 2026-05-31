@@ -1,0 +1,45 @@
+@page "/components/note"
+
+<PageTitle>W3Note</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3Note</h1>
+    <DocPager PreviousHref="components/filters" PreviousText="Filters" NextHref="components/quote" NextText="Quote" />
+
+    <p class="w3-large">`W3Note` renders the W3.CSS semantic `w3-note` color in a panel.</p>
+    <p>Use notes for supporting guidance that is helpful but not an urgent alert.</p>
+
+    <DocExample Title="Basic Note" Code="@BasicCode">
+        <W3Note Title="Note" Round="W3Round.Medium" Border="true">
+            This library follows W3.CSS classes closely and keeps component APIs small.
+        </W3Note>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Title</td><td>string?</td><td>null</td><td>Strong title text</td></tr>
+                <tr><td>Role</td><td>string</td><td>note</td><td>ARIA role</td></tr>
+                <tr><td>Border</td><td>bool</td><td>false</td><td>`w3-border`</td></tr>
+                <tr><td>Round</td><td>W3Round</td><td>None</td><td>Rounded corner class</td></tr>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Note body</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional classes on the note panel</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline styles on the note panel</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <DocPager PreviousHref="components/filters" PreviousText="Filters" NextHref="components/quote" NextText="Quote" />
+</W3Container>
+
+@code {
+    private const string BasicCode = """
+<W3Note Title="Note" Round="W3Round.Medium" Border="true">
+    This library follows W3.CSS classes closely and keeps component APIs small.
+</W3Note>
+""";
+}

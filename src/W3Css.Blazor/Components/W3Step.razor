@@ -1,0 +1,82 @@
+@implements IDisposable
+
+@code {
+    private bool hasParameterSnapshot;
+    private string? previousValue;
+    private string? previousTitle;
+    private string? previousDescription;
+    private bool previousCompleted;
+    private bool previousError;
+    private bool previousDisabled;
+
+    [CascadingParameter]
+    internal W3Stepper? Owner { get; set; }
+
+    [Parameter, EditorRequired]
+    public string Value { get; set; } = string.Empty;
+
+    [Parameter, EditorRequired]
+    public string Title { get; set; } = string.Empty;
+
+    [Parameter]
+    public string? Description { get; set; }
+
+    [Parameter]
+    public bool Completed { get; set; }
+
+    [Parameter]
+    public bool Error { get; set; }
+
+    [Parameter]
+    public bool Disabled { get; set; }
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    internal string StepId => $"w3-step-{IdValue}";
+
+    internal string PanelId => $"w3-step-panel-{IdValue}";
+
+    private string IdValue
+    {
+        get
+        {
+            var value = string.IsNullOrWhiteSpace(Value) ? GetHashCode().ToString() : Value;
+            return new string(value.Select(character => char.IsLetterOrDigit(character) ? character : '-').ToArray());
+        }
+    }
+
+    protected override void OnInitialized()
+    {
+        Owner?.Register(this);
+    }
+
+    protected override void OnParametersSet()
+    {
+        var changed = !hasParameterSnapshot
+            || !string.Equals(previousValue, Value, StringComparison.Ordinal)
+            || !string.Equals(previousTitle, Title, StringComparison.Ordinal)
+            || !string.Equals(previousDescription, Description, StringComparison.Ordinal)
+            || previousCompleted != Completed
+            || previousError != Error
+            || previousDisabled != Disabled;
+
+        previousValue = Value;
+        previousTitle = Title;
+        previousDescription = Description;
+        previousCompleted = Completed;
+        previousError = Error;
+        previousDisabled = Disabled;
+        hasParameterSnapshot = true;
+
+        if (changed)
+        {
+            Owner?.NotifyStepChanged();
+        }
+    }
+
+    public void Dispose()
+    {
+        Owner?.Unregister(this);
+    }
+}

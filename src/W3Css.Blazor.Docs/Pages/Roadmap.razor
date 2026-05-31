@@ -1,0 +1,60 @@
+@page "/roadmap"
+
+<PageTitle>Roadmap</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>Roadmap</h1>
+    <p class="w3-large">Development moves in small tested slices that keep W3.CSS as the styling source of truth.</p>
+
+    <ol class="w3-ul w3-white w3-border">
+        <li>Foundation: static W3.CSS asset, class builder, shared style enums.</li>
+        <li>Core content: buttons, alerts, cards, containers, badges, tags.</li>
+        <li>Layout: rows, columns, grid, flex, bar, and responsive wrappers.</li>
+        <li>Navigation and feedback: tabs, pagination, accordions, dropdowns, and progress.</li>
+        <li>Forms: inputs, selects, checkboxes, radios, text areas, and validation-friendly field wrappers.</li>
+        <li>Overlays: modal, tooltip, sidebar, and supporting disclosure state components.</li>
+        <li>Content extras: image, code, note, and quote components.</li>
+        <li>Release: package validation, docs publish, examples, compatibility notes.</li>
+    </ol>
+
+    <section class="doc-section">
+        <h2>Component Category Model</h2>
+        <p>The catalog is organized for both sites and apps: foundation and themes, site composition, layout and surfaces, actions and content, data display, inputs and forms, navigation, feedback and overlays, and utilities.</p>
+        <p><NavLink href="components">Components</NavLink> shows the current category map and product-readiness backlog.</p>
+    </section>
+
+    <section class="doc-section">
+        <h2>Product Readiness Expansion</h2>
+        <W3Table Striped="true" Bordered="true" Hoverable="true" Responsive="true" aria-label="Product readiness roadmap">
+            <thead>
+                <tr>
+                    <th>Phase</th>
+                    <th>Focus</th>
+                    <th>Candidate Components</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Shells and navigation</td>
+                    <td>Make complete app and site frames fast to assemble.</td>
+                    <td><code>W3AppShell</code>, <code>W3AppBar</code>, <code>W3Breadcrumb</code>, and <code>W3NavMenu</code> implemented first, followed by <code>W3Toolbar</code>.</td>
+                </tr>
+                <tr>
+                    <td>Richer inputs</td>
+                    <td>Fill common form gaps while staying native and validation-friendly.</td>
+                    <td><code>W3NumberInput</code>, <code>W3DateInput</code>, <code>W3TimeInput</code>, <code>W3Slider</code>, <code>W3Switch</code>, <code>W3ColorInput</code>, <code>W3FileInput</code>, and <code>W3Autocomplete</code> implemented first.</td>
+                </tr>
+                <tr>
+                    <td>Data and workflow</td>
+                    <td>Support dashboards, admin apps, activity feeds, and step-based flows.</td>
+                    <td><code>W3DataTable</code>, <code>W3TreeView</code>, and <code>W3Stepper</code> implemented first, followed by <code>W3Timeline</code>.</td>
+                </tr>
+                <tr>
+                    <td>Feedback and app polish</td>
+                    <td>Improve loading, transient messages, people/content markers, and grouped actions.</td>
+                    <td><code>W3Spinner</code> and <code>W3Toast</code> implemented first, followed by <code>W3Skeleton</code>, <code>W3Avatar</code>, <code>W3ChipSet</code>, and <code>W3ButtonGroup</code>.</td>
+                </tr>
+            </tbody>
+        </W3Table>
+    </section>
+</W3Container>

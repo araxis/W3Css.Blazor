@@ -1,0 +1,42 @@
+@namespace W3Css.Blazor.Tests
+@using System.ComponentModel.DataAnnotations
+@using Microsoft.AspNetCore.Components.Forms
+@using W3Css.Blazor.Components
+
+<EditForm EditContext="@EditContext">
+    <DataAnnotationsValidator />
+    <W3Field TValue="string"
+             Label="Name"
+             ForId="name"
+             For="@(() => Model.Name)"
+             HelpText="Required field"
+             LabelClass="field-label"
+             HelpClass="field-help"
+             Compact="true"
+             Class="field-shell"
+             Style="margin-bottom: 1rem;">
+        <W3Input Id="name" @bind-Value="Model.Name" />
+    </W3Field>
+</EditForm>
+
+@code {
+    public ValidationModel Model { get; } = new();
+
+    public EditContext EditContext { get; private set; } = default!;
+
+    protected override void OnInitialized()
+    {
+        EditContext = new EditContext(Model);
+    }
+
+    public bool Validate()
+    {
+        return EditContext.Validate();
+    }
+
+    public sealed class ValidationModel
+    {
+        [Required]
+        public string Name { get; set; } = string.Empty;
+    }
+}

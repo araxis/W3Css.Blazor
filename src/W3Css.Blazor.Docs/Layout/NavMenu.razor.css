@@ -1,0 +1,132 @@
+.mobile-top {
+    display: none;
+}
+
+.brand {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    padding: 18px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    width: 260px;
+    padding: 10px 0;
+    overflow-y: auto;
+    background: #263238;
+    color: #fff;
+}
+
+.nav-search-wrap {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    padding: 6px 12px 8px;
+    background: #263238;
+}
+
+.nav-search {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 9px 30px 9px 12px;
+    border: 1px solid #3a4b53;
+    border-radius: 6px;
+    background: #1b2429;
+    color: #e8eef2;
+    font-size: 14px;
+}
+
+.nav-search-key {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    pointer-events: none;
+    min-width: 16px;
+    padding: 1px 6px;
+    border: 1px solid #3a4b53;
+    border-radius: 4px;
+    background: #2c3a42;
+    color: #9fb2bb;
+    font-size: 12px;
+    line-height: 1.4;
+    text-align: center;
+}
+
+/* Hide the hint once the field has focus or text, where it would overlap input. */
+.nav-search:focus + .nav-search-key {
+    opacity: 0;
+}
+
+.nav-search::placeholder {
+    color: #8aa0aa;
+}
+
+.nav-search:focus {
+    outline: 2px solid #ffb300;
+    outline-offset: 1px;
+    border-color: #ffb300;
+}
+
+.nav-empty {
+    padding: 14px;
+    color: #b8c7ce;
+    font-size: 13px;
+}
+
+.nav-links {
+    display: grid;
+    gap: 4px;
+    padding: 8px 12px;
+}
+
+.nav-group-title {
+    padding: 18px 14px 4px;
+    color: #b8c7ce;
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+.nav-links ::deep a {
+    padding: 12px 14px;
+    color: #e8eef2;
+    text-decoration: none;
+    border-left: 4px solid transparent;
+}
+
+.nav-links ::deep a.active,
+.nav-links ::deep a:hover {
+    border-left-color: #ffb300;
+    background: #00695c;
+    color: #fff;
+}
+
+@media (max-width: 760px) {
+    .mobile-top {
+        position: sticky;
+        top: 0;
+        z-index: 3;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .desktop-brand {
+        display: none;
+    }
+
+    .sidebar {
+        position: static;
+        width: 100%;
+        padding: 0;
+    }
+
+    .sidebar.collapsed {
+        display: none;
+    }
+}

@@ -1,0 +1,110 @@
+@page "/components/message-box"
+
+<PageTitle>W3MessageBox</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3MessageBox</h1>
+    <DocPager PreviousHref="components/overlay" PreviousText="Overlay" NextHref="components/tooltip" NextText="Tooltip" />
+
+    <p class="w3-large">`W3MessageBox` is the MudBlazor-compatible confirm/alert prompt (`MudMessageBox`).</p>
+    <p>Control it with <code>@@bind-Visible</code>. The result is reported as <code>bool?</code> — <code>true</code> for Yes, <code>false</code> for No, and <code>null</code> when the user cancels or dismisses, matching MudBlazor.</p>
+
+    <DocExample Title="Confirm Before Deleting" Code="@ConfirmCode">
+        <W3Button Color="W3Color.Red" TextColor="W3Color.White" OnClick="() => confirmVisible = true">Delete item</W3Button>
+        <p class="doc-muted">Last result: @ResultText</p>
+
+        <W3MessageBox @bind-Visible="confirmVisible"
+                      Title="Delete item?"
+                      Message="This action cannot be undone."
+                      YesText="Delete"
+                      YesColor="W3Color.Red"
+                      NoText="Keep"
+                      CancelText="Cancel"
+                      OnResult="HandleResult" />
+    </DocExample>
+
+    <DocExample Title="Simple Acknowledgement" Code="@AckCode">
+        <W3Button Color="W3Color.Teal" TextColor="W3Color.White" OnClick="() => infoVisible = true">Show notice</W3Button>
+
+        <W3MessageBox @bind-Visible="infoVisible"
+                      Title="Heads up"
+                      Message="Your export finished and is ready to download."
+                      YesText="Got it" />
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Visible</td><td>bool</td><td>false</td><td>Two-way visibility (<code>@@bind-Visible</code>)</td></tr>
+                <tr><td>Title</td><td>string?</td><td>null</td><td>Dialog header text</td></tr>
+                <tr><td>Message</td><td>string?</td><td>null</td><td>Plain-text body</td></tr>
+                <tr><td>MessageContent</td><td>RenderFragment?</td><td>null</td><td>Rich body that overrides Message</td></tr>
+                <tr><td>YesText</td><td>string</td><td>"OK"</td><td>Confirm button label</td></tr>
+                <tr><td>NoText</td><td>string?</td><td>null</td><td>Decline button label (hidden when null)</td></tr>
+                <tr><td>CancelText</td><td>string?</td><td>null</td><td>Cancel button label (hidden when null)</td></tr>
+                <tr><td>OnResult</td><td>EventCallback&lt;bool?&gt;</td><td>—</td><td>true / false / null result</td></tr>
+                <tr><td>OnYes / OnNo / OnCancel</td><td>EventCallback</td><td>—</td><td>Per-button callbacks</td></tr>
+                <tr><td>YesColor / YesTextColor</td><td>W3Color</td><td>Teal / White</td><td>Confirm button colors</td></tr>
+                <tr><td>ShowCloseButton</td><td>bool</td><td>true</td><td>Dialog × button</td></tr>
+                <tr><td>DisableBackdropClick</td><td>bool</td><td>false</td><td>Blocks backdrop dismissal</td></tr>
+                <tr><td>DisableEscapeKeyDown</td><td>bool</td><td>false</td><td>Blocks Escape dismissal</td></tr>
+            </tbody>
+        </W3Table>
+        <p class="doc-muted">Composes <code>W3Modal</code> (via its <code>Actions</code> footer); backdrop, Escape, and × dismissal all report a <code>null</code> (cancel) result.</p>
+    </section>
+
+    <DocPager PreviousHref="components/overlay" PreviousText="Overlay" NextHref="components/tooltip" NextText="Tooltip" />
+</W3Container>
+
+@code {
+    private bool confirmVisible;
+    private bool infoVisible;
+    private bool? lastResult;
+    private bool hasResult;
+
+    private string ResultText => !hasResult
+        ? "none yet"
+        : lastResult switch
+        {
+            true => "deleted (Yes)",
+            false => "kept (No)",
+            _ => "cancelled"
+        };
+
+    private void HandleResult(bool? result)
+    {
+        lastResult = result;
+        hasResult = true;
+    }
+
+    private const string ConfirmCode = """
+<W3Button Color="W3Color.Red" TextColor="W3Color.White" OnClick="() => confirmVisible = true">Delete item</W3Button>
+
+<W3MessageBox @bind-Visible="confirmVisible"
+              Title="Delete item?"
+              Message="This action cannot be undone."
+              YesText="Delete"
+              YesColor="W3Color.Red"
+              NoText="Keep"
+              CancelText="Cancel"
+              OnResult="HandleResult" />
+
+@code {
+    private bool confirmVisible;
+    private void HandleResult(bool? result) { /* true=Yes, false=No, null=Cancel */ }
+}
+""";
+
+    private const string AckCode = """
+<W3Button Color="W3Color.Teal" TextColor="W3Color.White" OnClick="() => infoVisible = true">Show notice</W3Button>
+
+<W3MessageBox @bind-Visible="infoVisible"
+              Title="Heads up"
+              Message="Your export finished and is ready to download."
+              YesText="Got it" />
+""";
+}

@@ -1,0 +1,60 @@
+@inherits LayoutComponentBase
+@using Microsoft.JSInterop
+@inject IJSRuntime JS
+
+<W3ThemeProvider Theme="DocsTheme" Dark="isDark">
+    <button type="button"
+            class="doc-theme-toggle"
+            aria-label="Toggle dark mode"
+            aria-pressed="@(isDark ? "true" : "false")"
+            @onclick="ToggleThemeAsync">
+        @(isDark ? "☀ Light" : "🌙 Dark")
+    </button>
+
+    <div class="doc-shell">
+        <NavMenu />
+        <main class="doc-main">
+            <article class="doc-content">
+                @Body
+            </article>
+        </main>
+    </div>
+</W3ThemeProvider>
+
+<W3ToastProvider />
+
+@code {
+    private bool isDark;
+
+    // One place: the whole docs app is themed by this provider. The library's
+    // themed-by-default components reskin automatically; the custom shell follows
+    // because app.css wires its elements to the theme variables (no per-mode CSS).
+    private static readonly W3Theme DocsTheme = new()
+    {
+        Primary = "#00897b",
+        Secondary = "#5e35b1",
+        Accent = "#ff7043"
+    };
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender)
+        {
+            return;
+        }
+
+        var saved = await JS.InvokeAsync<string?>("localStorage.getItem", "w3-docs-theme");
+
+        if (saved == "dark")
+        {
+            isDark = true;
+            StateHasChanged();
+        }
+    }
+
+    private async Task ToggleThemeAsync()
+    {
+        isDark = !isDark;
+        await JS.InvokeVoidAsync("localStorage.setItem", "w3-docs-theme", isDark ? "dark" : "light");
+    }
+}

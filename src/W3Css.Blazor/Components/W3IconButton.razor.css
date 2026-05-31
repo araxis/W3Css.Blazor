@@ -1,0 +1,25 @@
+.w3-icon-button {
+    align-items: center;
+    display: inline-flex !important;
+    justify-content: center;
+    line-height: 1;
+    min-height: 2.25rem;
+    min-width: 2.25rem;
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+    vertical-align: middle;
+}
+
+.w3-icon-button-circle {
+    aspect-ratio: 1 / 1;
+    padding: 0 !important;
+}
+
+.w3-icon-button-icon {
+    line-height: 1;
+    pointer-events: none;
+}
+
+.w3-icon-button-pressed {
+    box-shadow: inset 0 0 0 2px currentColor;
+}

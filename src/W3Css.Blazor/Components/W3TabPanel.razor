@@ -1,0 +1,37 @@
+@implements IDisposable
+
+@code {
+    [CascadingParameter]
+    internal W3Tabs? Owner { get; set; }
+
+    [Parameter, EditorRequired]
+    public string Value { get; set; } = string.Empty;
+
+    [Parameter, EditorRequired]
+    public string Title { get; set; } = string.Empty;
+
+    [Parameter]
+    public bool Disabled { get; set; }
+
+    /// <summary>
+    /// Shows a close (×) button on this tab when the owning <c>W3Tabs</c> has close buttons enabled.
+    /// </summary>
+    [Parameter]
+    public bool Closeable { get; set; }
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    internal string TabId => $"w3-tab-{Value}";
+    internal string PanelId => $"w3-tab-panel-{Value}";
+
+    protected override void OnInitialized()
+    {
+        Owner?.Register(this);
+    }
+
+    public void Dispose()
+    {
+        Owner?.Unregister(this);
+    }
+}

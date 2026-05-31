@@ -1,0 +1,378 @@
+@typeparam TValue
+@using W3Css.Blazor.Internal
+@inherits W3FormComponentBase<TValue?>
+
+<div class="@RootCssClass" style="@Style">
+    <input @attributes="AdditionalAttributes"
+           id="@Id"
+           name="@NameAttributeValue"
+           type="text"
+           class="@InputCssClass"
+           style="@InputStyle"
+           placeholder="@Placeholder"
+           disabled="@Disabled"
+           readonly="@ReadOnly"
+           role="combobox"
+           autocomplete="off"
+           aria-autocomplete="list"
+           aria-expanded="@AriaExpanded"
+           aria-controls="@ListboxId"
+           aria-activedescendant="@ActiveDescendantId"
+           value="@SearchText"
+           @onfocus="HandleFocusAsync"
+           @oninput="HandleInputAsync"
+           @onkeydown="HandleKeyDownAsync" />
+
+    @if (CloseOnOutsideClick && IsOpen)
+    {
+        <div class="w3-autocomplete-close-layer"
+             aria-hidden="true"
+             @onclick="CloseAsync"></div>
+    }
+
+    @if (IsOpen)
+    {
+        <div id="@ListboxId"
+             class="@MenuCssClass"
+             role="listbox">
+            @if (Loading)
+            {
+                <div class="w3-autocomplete-empty">@LoadingText</div>
+            }
+            else if (VisibleItems.Count == 0)
+            {
+                <div class="w3-autocomplete-empty">@NoResultsText</div>
+            }
+            else
+            {
+                @for (var index = 0; index < VisibleItems.Count; index++)
+                {
+                    var item = VisibleItems[index];
+                    var active = index == activeIndex;
+                    var selected = IsSelected(item);
+                    <button type="button"
+                            id="@GetOptionId(index)"
+                            class="@GetOptionCssClass(active, selected)"
+                            role="option"
+                            aria-selected="@(selected ? "true" : "false")"
+                            @key="item"
+                            @onclick="() => SelectItemAsync(item)">
+                        @if (ItemTemplate is not null)
+                        {
+                            @ItemTemplate(item)
+                        }
+                        else
+                        {
+                            @GetItemText(item)
+                        }
+                    </button>
+                }
+            }
+        </div>
+    }
+</div>
+
+@code {
+    private string? searchText;
+    private bool isOpen;
+    private int activeIndex = -1;
+
+    private string SearchText => searchText ?? GetItemText(Value);
+    private string ListboxId => $"{ResolvedId}-listbox";
+    private string? ActiveDescendantId => IsOpen && activeIndex >= 0 ? GetOptionId(activeIndex) : null;
+    private string ResolvedId => Id ?? $"w3-autocomplete-{FieldIdentifier.FieldName}";
+    private string AriaExpanded => IsOpen ? "true" : "false";
+    private bool IsOpen => isOpen && !Disabled && !ReadOnly;
+
+    private IReadOnlyList<TValue> VisibleItems => GetVisibleItems();
+
+    private string RootCssClass => new W3ClassBuilder()
+        .Add("w3-autocomplete")
+        .AddIf(IsOpen, "w3-autocomplete-open")
+        .AddIf(Disabled, "w3-disabled")
+        .Add(Class)
+        .ToString();
+
+    private string InputCssClass => new W3ClassBuilder()
+        .Add("w3-input")
+        .Add(Color.ToBackgroundClass())
+        .Add(TextColor.ToTextClass())
+        .Add(Round.ToClass())
+        .AddIf(Border, "w3-border")
+        .Add(CssClass)
+        .Add(InputClass)
+        .ToString();
+
+    private string MenuCssClass => new W3ClassBuilder()
+        .Add("w3-autocomplete-menu")
+        .Add("w3-bar-block")
+        .AddIf(Card, "w3-card-4")
+        .Add(MenuColor.ToBackgroundClass())
+        .Add(MenuTextColor.ToTextClass())
+        .Add(MenuClass)
+        .ToString();
+
+    [Parameter]
+    public string? Id { get; set; }
+
+    [Parameter]
+    public string? Placeholder { get; set; }
+
+    [Parameter]
+    public string? InputClass { get; set; }
+
+    [Parameter]
+    public string? InputStyle { get; set; }
+
+    [Parameter]
+    public string? MenuClass { get; set; }
+
+    [Parameter]
+    public IEnumerable<TValue> Items { get; set; } = [];
+
+    [Parameter]
+    public Func<TValue, string>? TextSelector { get; set; }
+
+    [Parameter]
+    public Func<TValue, string, bool>? Filter { get; set; }
+
+    [Parameter]
+    public RenderFragment<TValue>? ItemTemplate { get; set; }
+
+    [Parameter]
+    public EventCallback<TValue> ItemSelected { get; set; }
+
+    [Parameter]
+    public bool ReadOnly { get; set; }
+
+    [Parameter]
+    public bool OpenOnFocus { get; set; } = true;
+
+    [Parameter]
+    public bool CloseOnOutsideClick { get; set; } = true;
+
+    [Parameter]
+    public bool Loading { get; set; }
+
+    [Parameter]
+    public string LoadingText { get; set; } = "Loading...";
+
+    [Parameter]
+    public string NoResultsText { get; set; } = "No results";
+
+    [Parameter]
+    public int MaxItems { get; set; } = 8;
+
+    [Parameter]
+    public int MinSearchLength { get; set; }
+
+    [Parameter]
+    public bool Card { get; set; } = true;
+
+    [Parameter]
+    public W3Color MenuColor { get; set; } = W3Color.Surface;
+
+    [Parameter]
+    public W3Color MenuTextColor { get; set; } = W3Color.Black;
+
+    [Parameter]
+    public W3Color ActiveColor { get; set; } = W3Color.LightGrey;
+
+    protected override void OnParametersSet()
+    {
+        if (!isOpen)
+        {
+            searchText = GetItemText(Value);
+        }
+    }
+
+    private async Task HandleFocusAsync()
+    {
+        if (OpenOnFocus)
+        {
+            await OpenAsync();
+        }
+    }
+
+    private async Task HandleInputAsync(ChangeEventArgs args)
+    {
+        searchText = args.Value?.ToString() ?? string.Empty;
+        await OpenAsync();
+    }
+
+    private async Task HandleKeyDownAsync(KeyboardEventArgs args)
+    {
+        if (Disabled || ReadOnly)
+        {
+            return;
+        }
+
+        switch (args.Key)
+        {
+            case "ArrowDown":
+                await OpenAsync();
+                MoveActive(1);
+                break;
+            case "ArrowUp":
+                await OpenAsync();
+                MoveActive(-1);
+                break;
+            case "Enter":
+                if (IsOpen && activeIndex >= 0 && activeIndex < VisibleItems.Count)
+                {
+                    await SelectItemAsync(VisibleItems[activeIndex]);
+                }
+                break;
+            case "Escape":
+                await CloseAsync();
+                break;
+        }
+    }
+
+    private async Task OpenAsync()
+    {
+        if (Disabled || ReadOnly)
+        {
+            return;
+        }
+
+        isOpen = true;
+        EnsureActiveIndex();
+        await Task.CompletedTask;
+    }
+
+    private async Task CloseAsync()
+    {
+        isOpen = false;
+        activeIndex = -1;
+        await Task.CompletedTask;
+    }
+
+    private async Task SelectItemAsync(TValue item)
+    {
+        CurrentValue = item;
+        searchText = GetItemText(item);
+        isOpen = false;
+        activeIndex = -1;
+
+        if (ItemSelected.HasDelegate)
+        {
+            await ItemSelected.InvokeAsync(item);
+        }
+    }
+
+    private void MoveActive(int offset)
+    {
+        var items = VisibleItems;
+
+        if (items.Count == 0)
+        {
+            activeIndex = -1;
+            return;
+        }
+
+        if (activeIndex < 0)
+        {
+            activeIndex = offset > 0 ? 0 : items.Count - 1;
+            return;
+        }
+
+        activeIndex = (activeIndex + offset + items.Count) % items.Count;
+    }
+
+    private void EnsureActiveIndex()
+    {
+        var items = VisibleItems;
+
+        if (items.Count == 0)
+        {
+            activeIndex = -1;
+            return;
+        }
+
+        if (activeIndex < 0 || activeIndex >= items.Count)
+        {
+            activeIndex = 0;
+        }
+    }
+
+    private IReadOnlyList<TValue> GetVisibleItems()
+    {
+        if (Loading)
+        {
+            return [];
+        }
+
+        var query = SearchText;
+
+        if (query.Length < MinSearchLength)
+        {
+            return [];
+        }
+
+        return Items
+            .Where(item => Matches(item, query))
+            .Take(Math.Max(1, MaxItems))
+            .ToArray();
+    }
+
+    private bool Matches(TValue item, string query)
+    {
+        if (Filter is not null)
+        {
+            return Filter(item, query);
+        }
+
+        if (string.IsNullOrWhiteSpace(query))
+        {
+            return true;
+        }
+
+        return GetItemText(item).Contains(query, StringComparison.OrdinalIgnoreCase);
+    }
+
+    private string GetOptionCssClass(bool active, bool selected)
+    {
+        return new W3ClassBuilder()
+            .Add("w3-button")
+            .Add("w3-block")
+            .Add("w3-left-align")
+            .Add("w3-autocomplete-option")
+            .AddIf(active, "w3-autocomplete-option-active")
+            .AddIf(selected, "w3-autocomplete-option-selected")
+            .AddIf(active, ActiveColor.ToBackgroundClass())
+            .ToString();
+    }
+
+    private bool IsSelected(TValue item)
+    {
+        return EqualityComparer<TValue?>.Default.Equals(item, CurrentValue);
+    }
+
+    private string GetItemText(TValue? item)
+    {
+        if (item is null)
+        {
+            return string.Empty;
+        }
+
+        return TextSelector?.Invoke(item) ?? item.ToString() ?? string.Empty;
+    }
+
+    private string GetOptionId(int index)
+    {
+        return $"{ListboxId}-option-{index}";
+    }
+
+    protected override string? FormatValueAsString(TValue? value)
+    {
+        return GetItemText(value);
+    }
+
+    protected override bool TryParseValueFromString(string? value, out TValue? result, out string validationErrorMessage)
+    {
+        result = default;
+        validationErrorMessage = $"The {FieldIdentifier.FieldName} field is not a valid selection.";
+        return false;
+    }
+}

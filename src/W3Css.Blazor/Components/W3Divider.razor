@@ -1,0 +1,55 @@
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+@if (ChildContent is null)
+{
+    <hr @attributes="AdditionalAttributes"
+        class="@CssClass"
+        style="@Style"
+        role="separator"
+        aria-orientation="@Orientation" />
+}
+else
+{
+    <div @attributes="AdditionalAttributes"
+         class="@CssClass"
+         style="@Style"
+         role="separator"
+         aria-orientation="@Orientation">
+        <span class="w3-divider-content">@ChildContent</span>
+    </div>
+}
+
+@code {
+    private string CssClass => BuildClass(
+        "w3-divider",
+        Vertical ? "w3-divider-vertical" : null,
+        Strong ? "w3-divider-strong" : null,
+        Margin.ToClass(),
+        Color.ToBackgroundClass(),
+        TextColor.ToTextClass(),
+        BorderColor.ToBorderClass());
+
+    private string Orientation => Vertical ? "vertical" : "horizontal";
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public bool Vertical { get; set; }
+
+    [Parameter]
+    public bool Strong { get; set; }
+
+    [Parameter]
+    public W3Margin Margin { get; set; } = W3Margin.Top | W3Margin.Bottom;
+
+    [Parameter]
+    public W3Color Color { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color TextColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color BorderColor { get; set; } = W3Color.LightGrey;
+}

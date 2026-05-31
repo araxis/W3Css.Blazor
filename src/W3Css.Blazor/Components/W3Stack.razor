@@ -1,0 +1,54 @@
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+<div @attributes="AdditionalAttributes"
+     class="@CssClass"
+     style="@StyleValue">
+    @ChildContent
+</div>
+
+@code {
+    private string CssClass => BuildClass(
+        "w3-stack",
+        Horizontal ? "w3-stack-horizontal" : "w3-stack-vertical",
+        Wrap ? "w3-stack-wrap" : null,
+        AlignCenter ? "w3-stack-align-center" : null,
+        JustifyBetween ? "w3-stack-justify-between" : null,
+        Color.ToBackgroundClass(),
+        TextColor.ToTextClass());
+
+    private string? StyleValue => CombineStyle(Gap >= 0 ? $"--w3-stack-gap:{Gap}px" : null, Style);
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public bool Horizontal { get; set; }
+
+    [Parameter]
+    public bool Wrap { get; set; }
+
+    [Parameter]
+    public bool AlignCenter { get; set; }
+
+    [Parameter]
+    public bool JustifyBetween { get; set; }
+
+    [Parameter]
+    public int Gap { get; set; } = 16;
+
+    [Parameter]
+    public W3Color Color { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color TextColor { get; set; } = W3Color.None;
+
+    private static string? CombineStyle(params string?[] styles)
+    {
+        var style = string.Join(';', styles
+            .Where(value => !string.IsNullOrWhiteSpace(value))
+            .Select(value => value!.Trim().TrimEnd(';')));
+
+        return string.IsNullOrWhiteSpace(style) ? null : style;
+    }
+}

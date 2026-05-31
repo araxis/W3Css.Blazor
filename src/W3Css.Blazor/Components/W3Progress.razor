@@ -1,0 +1,74 @@
+@using System.Globalization
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+<div @attributes="AdditionalAttributes"
+     class="@TrackCssClass"
+     style="@Style"
+     role="progressbar"
+     aria-valuemin="0"
+     aria-valuemax="@Max"
+     aria-valuenow="@ClampedValue">
+    <div class="@BarCssClass"
+         style="@BarStyle">
+        @if (ChildContent is not null)
+        {
+            @ChildContent
+        }
+        else if (ShowLabel)
+        {
+            @LabelText
+        }
+    </div>
+</div>
+
+@code {
+    private double SafeMax => Max <= 0 ? 100 : Max;
+    private double ClampedValue => Math.Clamp(Value, 0, SafeMax);
+    private double Percent => SafeMax <= 0 ? 0 : ClampedValue / SafeMax * 100;
+    private string LabelText => Label ?? $"{Percent:0}%";
+
+    private string TrackCssClass => BuildClass(
+        "w3-light-grey",
+        "w3-progress",
+        Round.ToClass(),
+        TrackColor.ToBackgroundClass());
+
+    private string BarCssClass => new W3ClassBuilder()
+        .Add("w3-container")
+        .Add("w3-progress-bar")
+        .Add(Color.ToBackgroundClass())
+        .Add(TextColor.ToTextClass())
+        .Add(Round.ToClass())
+        .AddIf(Percent <= 0, "w3-progress-bar-empty")
+        .ToString();
+
+    private string BarStyle => $"width:{Percent.ToString("0.##", CultureInfo.InvariantCulture)}%";
+
+    [Parameter]
+    public double Value { get; set; }
+
+    [Parameter]
+    public double Max { get; set; } = 100;
+
+    [Parameter]
+    public bool ShowLabel { get; set; }
+
+    [Parameter]
+    public string? Label { get; set; }
+
+    [Parameter]
+    public W3Color Color { get; set; } = W3Color.Primary;
+
+    [Parameter]
+    public W3Color TextColor { get; set; } = W3Color.White;
+
+    [Parameter]
+    public W3Color TrackColor { get; set; } = W3Color.LightGrey;
+
+    [Parameter]
+    public W3Round Round { get; set; } = W3Round.None;
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+}

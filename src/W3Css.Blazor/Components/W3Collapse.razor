@@ -1,0 +1,80 @@
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+<div @attributes="AdditionalAttributes"
+     class="@CollapseClass"
+     aria-expanded="@AriaExpanded"
+     aria-hidden="@AriaHidden"
+     style="@Style">
+    @if (IsExpandedResolved)
+    {
+        @ChildContent
+    }
+</div>
+
+@code {
+    private string CollapseClass => BuildClass(
+        "w3-collapse-content",
+        IsExpandedResolved ? "w3-show" : "w3-hide",
+        Animate ? "w3-animate-opacity" : null,
+        Border ? "w3-border" : null,
+        Round.ToClass(),
+        Color.ToBackgroundClass(),
+        TextColor.ToTextClass());
+
+    private bool IsExpandedResolved => IsExpanded ?? Expanded;
+
+    private string AriaExpanded => IsExpandedResolved ? "true" : "false";
+
+    private string AriaHidden => IsExpandedResolved ? "false" : "true";
+
+    [Parameter]
+    public bool Expanded { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> ExpandedChanged { get; set; }
+
+    [Parameter]
+    public bool? IsExpanded { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> IsExpandedChanged { get; set; }
+
+    [Parameter]
+    public bool Animate { get; set; } = true;
+
+    [Parameter]
+    public bool Border { get; set; }
+
+    [Parameter]
+    public W3Round Round { get; set; } = W3Round.None;
+
+    [Parameter]
+    public W3Color Color { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color TextColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    public async Task SetExpandedAsync(bool expanded)
+    {
+        if (IsExpanded.HasValue)
+        {
+            await IsExpandedChanged.InvokeAsync(expanded);
+            return;
+        }
+
+        if (Expanded != expanded)
+        {
+            Expanded = expanded;
+            await ExpandedChanged.InvokeAsync(expanded);
+        }
+    }
+
+    public Task ToggleAsync()
+    {
+        return SetExpandedAsync(!IsExpandedResolved);
+    }
+}

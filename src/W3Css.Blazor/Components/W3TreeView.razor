@@ -1,0 +1,454 @@
+@typeparam TItem
+@using System.Globalization
+@using Microsoft.AspNetCore.Components.Rendering
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+@{
+    var rootItems = RootItems;
+}
+
+<ul @attributes="AdditionalAttributes"
+    class="@CssClass"
+    style="@Style"
+    role="tree"
+    aria-label="@Label">
+    @if (rootItems.Count == 0)
+    {
+        <li class="w3-tree-view-empty" role="none">@EmptyText</li>
+    }
+    else
+    {
+        @RenderNodes(rootItems, 1)
+    }
+</ul>
+
+@code {
+    private readonly HashSet<string> expandedValues = new(StringComparer.Ordinal);
+    private IReadOnlyCollection<string>? previousExpandedValues;
+    private bool initializedExpansion;
+
+    private IReadOnlyList<TItem> RootItems => Items?.ToArray() ?? [];
+
+    private string CssClass => BuildClass(
+        "w3-tree-view",
+        Color.ToBackgroundClass(),
+        TextColor.ToTextClass(),
+        Border ? "w3-border" : null,
+        Card ? CardDepth.ToClass() : null,
+        Round.ToClass(),
+        Dense ? "w3-tree-view-dense" : null,
+        ShowLines ? null : "w3-tree-view-lines-disabled");
+
+    [Parameter]
+    public IEnumerable<TItem>? Items { get; set; }
+
+    [Parameter]
+    public Func<TItem, IEnumerable<TItem>?>? ChildrenSelector { get; set; }
+
+    [Parameter]
+    public Func<TItem, string>? TextSelector { get; set; }
+
+    [Parameter]
+    public Func<TItem, string?>? ValueSelector { get; set; }
+
+    [Parameter]
+    public Func<TItem, string?>? HrefSelector { get; set; }
+
+    [Parameter]
+    public Func<TItem, string?>? TargetSelector { get; set; }
+
+    [Parameter]
+    public Func<TItem, bool>? DisabledSelector { get; set; }
+
+    [Parameter]
+    public RenderFragment<TItem>? ItemTemplate { get; set; }
+
+    [Parameter]
+    public IReadOnlyCollection<string> ExpandedValues { get; set; } = [];
+
+    [Parameter]
+    public EventCallback<IReadOnlyCollection<string>> ExpandedValuesChanged { get; set; }
+
+    [Parameter]
+    public string? SelectedValue { get; set; }
+
+    [Parameter]
+    public EventCallback<string?> SelectedValueChanged { get; set; }
+
+    [Parameter]
+    public EventCallback<TItem> ItemSelected { get; set; }
+
+    [Parameter]
+    public string Label { get; set; } = "Tree view";
+
+    [Parameter]
+    public string EmptyText { get; set; } = "No items";
+
+    [Parameter]
+    public bool Selectable { get; set; } = true;
+
+    [Parameter]
+    public bool ExpandOnItemClick { get; set; }
+
+    [Parameter]
+    public bool DefaultExpanded { get; set; }
+
+    [Parameter]
+    public bool Dense { get; set; } = true;
+
+    [Parameter]
+    public bool ShowLines { get; set; } = true;
+
+    [Parameter]
+    public bool Border { get; set; }
+
+    [Parameter]
+    public bool Card { get; set; }
+
+    [Parameter]
+    public W3CardDepth CardDepth { get; set; } = W3CardDepth.Two;
+
+    [Parameter]
+    public W3Round Round { get; set; } = W3Round.None;
+
+    [Parameter]
+    public W3Color Color { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color TextColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color SelectedColor { get; set; } = W3Color.PaleBlue;
+
+    [Parameter]
+    public W3Color ToggleColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public string? ItemClass { get; set; }
+
+    [Parameter]
+    public string? LabelClass { get; set; }
+
+    [Parameter]
+    public string? ToggleClass { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        if (!initializedExpansion)
+        {
+            expandedValues.Clear();
+
+            if (ExpandedValues.Count > 0)
+            {
+                AddExpandedValues(ExpandedValues);
+            }
+            else if (DefaultExpanded)
+            {
+                AddExpandedNodes(RootItems);
+            }
+
+            initializedExpansion = true;
+            previousExpandedValues = ExpandedValues;
+            return;
+        }
+
+        if (!ReferenceEquals(previousExpandedValues, ExpandedValues))
+        {
+            expandedValues.Clear();
+            AddExpandedValues(ExpandedValues);
+            previousExpandedValues = ExpandedValues;
+        }
+    }
+
+    private RenderFragment RenderNodes(IEnumerable<TItem> items, int level)
+    {
+        return builder =>
+        {
+            var sequence = 0;
+
+            foreach (var item in items)
+            {
+                AddNode(builder, ref sequence, item, level);
+            }
+        };
+    }
+
+    private void AddNode(RenderTreeBuilder builder, ref int sequence, TItem item, int level)
+    {
+        var value = GetItemValue(item);
+        var text = GetItemText(item);
+        var children = GetChildren(item);
+        var hasChildren = children.Count > 0;
+        var expanded = hasChildren && expandedValues.Contains(value);
+        var selected = Selectable && IsSelected(value);
+        var disabled = IsDisabled(item);
+
+        builder.OpenElement(sequence++, "li");
+        builder.SetKey(value);
+        builder.AddAttribute(sequence++, "class", GetItemCssClass(hasChildren, expanded, selected, disabled));
+        builder.AddAttribute(sequence++, "role", "treeitem");
+        builder.AddAttribute(sequence++, "aria-level", level.ToString(CultureInfo.InvariantCulture));
+
+        if (hasChildren)
+        {
+            builder.AddAttribute(sequence++, "aria-expanded", expanded ? "true" : "false");
+        }
+
+        if (Selectable)
+        {
+            builder.AddAttribute(sequence++, "aria-selected", selected ? "true" : "false");
+        }
+
+        if (disabled)
+        {
+            builder.AddAttribute(sequence++, "aria-disabled", "true");
+        }
+
+        builder.OpenElement(sequence++, "div");
+        builder.AddAttribute(sequence++, "class", GetRowCssClass(selected, disabled));
+
+        if (hasChildren)
+        {
+            AddToggle(builder, ref sequence, item, text, expanded, disabled);
+        }
+        else
+        {
+            builder.OpenElement(sequence++, "span");
+            builder.AddAttribute(sequence++, "class", "w3-tree-view-spacer");
+            builder.AddAttribute(sequence++, "aria-hidden", "true");
+            builder.CloseElement();
+        }
+
+        AddLabel(builder, ref sequence, item, selected, disabled);
+
+        builder.CloseElement();
+
+        if (hasChildren && expanded)
+        {
+            builder.OpenElement(sequence++, "ul");
+            builder.AddAttribute(sequence++, "class", "w3-tree-view-group");
+            builder.AddAttribute(sequence++, "role", "group");
+
+            foreach (var child in children)
+            {
+                AddNode(builder, ref sequence, child, level + 1);
+            }
+
+            builder.CloseElement();
+        }
+
+        builder.CloseElement();
+    }
+
+    private void AddToggle(RenderTreeBuilder builder, ref int sequence, TItem item, string text, bool expanded, bool disabled)
+    {
+        builder.OpenElement(sequence++, "button");
+        builder.AddAttribute(sequence++, "type", "button");
+        builder.AddAttribute(sequence++, "class", GetToggleCssClass());
+        builder.AddAttribute(sequence++, "aria-label", $"{(expanded ? "Collapse" : "Expand")} {text}");
+        builder.AddAttribute(sequence++, "disabled", disabled);
+        builder.AddAttribute(sequence++, "onclick", EventCallback.Factory.Create<MouseEventArgs>(this, (_)
+            => ToggleExpandedAsync(item)));
+        builder.AddContent(sequence++, expanded ? "-" : "+");
+        builder.CloseElement();
+    }
+
+    private void AddLabel(RenderTreeBuilder builder, ref int sequence, TItem item, bool selected, bool disabled)
+    {
+        var href = HrefSelector?.Invoke(item);
+        var target = TargetSelector?.Invoke(item);
+        var shouldRenderLink = !disabled && !string.IsNullOrWhiteSpace(href);
+
+        builder.OpenElement(sequence++, shouldRenderLink ? "a" : "button");
+
+        if (shouldRenderLink)
+        {
+            builder.AddAttribute(sequence++, "href", href);
+            builder.AddAttribute(sequence++, "target", target);
+        }
+        else
+        {
+            builder.AddAttribute(sequence++, "type", "button");
+            builder.AddAttribute(sequence++, "disabled", disabled);
+        }
+
+        builder.AddAttribute(sequence++, "class", GetLabelCssClass(selected));
+        builder.AddAttribute(sequence++, "onclick", EventCallback.Factory.Create<MouseEventArgs>(this, (_)
+            => SelectItemAsync(item)));
+        AddLabelContent(builder, ref sequence, item);
+        builder.CloseElement();
+    }
+
+    private void AddLabelContent(RenderTreeBuilder builder, ref int sequence, TItem item)
+    {
+        builder.OpenElement(sequence++, "span");
+        builder.AddAttribute(sequence++, "class", "w3-tree-view-label-text");
+
+        if (ItemTemplate is not null)
+        {
+            builder.AddContent(sequence++, ItemTemplate(item));
+        }
+        else
+        {
+            builder.AddContent(sequence++, GetItemText(item));
+        }
+
+        builder.CloseElement();
+    }
+
+    private async Task ToggleExpandedAsync(TItem item)
+    {
+        if (IsDisabled(item))
+        {
+            return;
+        }
+
+        var value = GetItemValue(item);
+
+        if (!expandedValues.Add(value))
+        {
+            expandedValues.Remove(value);
+        }
+
+        await ExpandedValuesChanged.InvokeAsync(expandedValues.ToArray());
+    }
+
+    private async Task SelectItemAsync(TItem item)
+    {
+        if (IsDisabled(item))
+        {
+            return;
+        }
+
+        var value = GetItemValue(item);
+
+        if (ExpandOnItemClick && GetChildren(item).Count > 0)
+        {
+            if (!expandedValues.Add(value))
+            {
+                expandedValues.Remove(value);
+            }
+
+            await ExpandedValuesChanged.InvokeAsync(expandedValues.ToArray());
+        }
+
+        if (Selectable)
+        {
+            SelectedValue = value;
+            await SelectedValueChanged.InvokeAsync(value);
+        }
+
+        await ItemSelected.InvokeAsync(item);
+    }
+
+    private void AddExpandedValues(IEnumerable<string> values)
+    {
+        foreach (var value in values.Where(value => !string.IsNullOrWhiteSpace(value)))
+        {
+            expandedValues.Add(value);
+        }
+    }
+
+    private void AddExpandedNodes(IEnumerable<TItem> items)
+    {
+        foreach (var item in items)
+        {
+            var children = GetChildren(item);
+
+            if (children.Count == 0)
+            {
+                continue;
+            }
+
+            expandedValues.Add(GetItemValue(item));
+            AddExpandedNodes(children);
+        }
+    }
+
+    private IReadOnlyList<TItem> GetChildren(TItem item)
+    {
+        return ChildrenSelector?.Invoke(item)?.ToArray() ?? [];
+    }
+
+    private string GetItemText(TItem item)
+    {
+        if (TextSelector is not null)
+        {
+            return TextSelector.Invoke(item);
+        }
+
+        return item is null ? string.Empty : item.ToString() ?? string.Empty;
+    }
+
+    private string GetItemValue(TItem item)
+    {
+        var value = ValueSelector?.Invoke(item);
+
+        if (!string.IsNullOrWhiteSpace(value))
+        {
+            return value;
+        }
+
+        var text = GetItemText(item);
+
+        if (!string.IsNullOrWhiteSpace(text))
+        {
+            return text;
+        }
+
+        return item is null ? string.Empty : item.GetHashCode().ToString(CultureInfo.InvariantCulture);
+    }
+
+    private bool IsDisabled(TItem item)
+    {
+        return DisabledSelector?.Invoke(item) == true;
+    }
+
+    private bool IsSelected(string value)
+    {
+        return string.Equals(SelectedValue, value, StringComparison.Ordinal);
+    }
+
+    private string GetItemCssClass(bool hasChildren, bool expanded, bool selected, bool disabled)
+    {
+        return new W3ClassBuilder()
+            .Add("w3-tree-view-node")
+            .Add(ItemClass)
+            .AddIf(hasChildren, "w3-tree-view-parent")
+            .AddIf(expanded, "w3-tree-view-expanded")
+            .AddIf(selected, "w3-tree-view-selected")
+            .AddIf(disabled, "w3-tree-view-disabled")
+            .ToString();
+    }
+
+    private string GetRowCssClass(bool selected, bool disabled)
+    {
+        return new W3ClassBuilder()
+            .Add("w3-tree-view-row")
+            .AddIf(selected, SelectedColor.ToBackgroundClass())
+            .AddIf(disabled, "w3-disabled")
+            .ToString();
+    }
+
+    private string GetToggleCssClass()
+    {
+        return new W3ClassBuilder()
+            .Add("w3-tree-view-toggle")
+            .Add("w3-button")
+            .Add(ToggleColor.ToBackgroundClass())
+            .Add(ToggleClass)
+            .ToString();
+    }
+
+    private string GetLabelCssClass(bool selected)
+    {
+        return new W3ClassBuilder()
+            .Add("w3-tree-view-label")
+            .Add("w3-button")
+            .Add("w3-left-align")
+            .AddIf(selected, "w3-bold")
+            .Add(LabelClass)
+            .ToString();
+    }
+}

@@ -1,0 +1,139 @@
+@page "/components/text-fonts"
+
+<PageTitle>W3Text</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3Text</h1>
+    <DocPager PreviousHref="components/spacing" PreviousText="Spacing" NextHref="components/effects" NextText="Effects" />
+
+    <p class="w3-large">`W3Text` renders W3.CSS alignment, text style, font family, size, and text color utility classes.</p>
+    <p>Use it when text utility classes should stay typed, or set `Inline` when the wrapper should render a span.</p>
+
+    <DocExample Title="Alignment" Code="@AlignmentCode">
+        <W3Grid Padding="true" Style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));">
+            <W3Text Alignment="W3TextAlignment.Left" Class="@PaddingExampleClass">
+                Left aligned text
+            </W3Text>
+            <W3Text Alignment="W3TextAlignment.Center" Class="@PaddingExampleClass">
+                Center aligned text
+            </W3Text>
+            <W3Text Alignment="W3TextAlignment.Right" Class="@PaddingExampleClass">
+                Right aligned text
+            </W3Text>
+            <W3Text Alignment="W3TextAlignment.Justify" Class="@PaddingExampleClass">
+                Justified text stretches each line so the edges align across the available width.
+            </W3Text>
+        </W3Grid>
+    </DocExample>
+
+    <DocExample Title="Font Families" Code="@FontCode">
+        <W3Grid Padding="true" Style="grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));">
+            <W3Text Font="W3FontFamily.Serif" Size="W3Size.Large" Class="@PaddingExampleClass">Serif</W3Text>
+            <W3Text Font="W3FontFamily.SansSerif" Size="W3Size.Large" Class="@PaddingExampleClass">Sans serif</W3Text>
+            <W3Text Font="W3FontFamily.Cursive" Size="W3Size.Large" Class="@PaddingExampleClass">Cursive</W3Text>
+            <W3Text Font="W3FontFamily.Monospace" Size="W3Size.Large" Class="@PaddingExampleClass">Monospace</W3Text>
+        </W3Grid>
+    </DocExample>
+
+    <DocExample Title="Text Style And Inline Text" Code="@StyleCode">
+        <W3Text TextStyle="W3TextStyle.Wide | W3TextStyle.Bold" TextColor="W3Color.Teal" Size="W3Size.Large" Class="w3-margin-bottom">
+            Wide bold heading text
+        </W3Text>
+        <p>
+            This sentence contains
+            <W3Text Inline="true" TextStyle="W3TextStyle.Italic" Font="W3FontFamily.Monospace" TextColor="W3Color.Red">
+                inline italic monospace text
+            </W3Text>
+            inside normal content.
+        </p>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Inline</td><td>bool</td><td>false</td><td>Renders `span` instead of `div`</td></tr>
+                <tr><td>Alignment</td><td>W3TextAlignment</td><td>None</td><td>`w3-left-align`, `w3-right-align`, `w3-center`, or `w3-justify`</td></tr>
+                <tr><td>TextStyle</td><td>W3TextStyle</td><td>None</td><td>`w3-wide`, `w3-bold`, and `w3-italic`</td></tr>
+                <tr><td>Font</td><td>W3FontFamily</td><td>None</td><td>`w3-serif`, `w3-sans-serif`, `w3-cursive`, or `w3-monospace`</td></tr>
+                <tr><td>Size</td><td>W3Size</td><td>Default</td><td>Text size class</td></tr>
+                <tr><td>Color</td><td>W3Color</td><td>None</td><td>Background color class</td></tr>
+                <tr><td>TextColor</td><td>W3Color</td><td>None</td><td>Text color class</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional CSS classes</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline style</td></tr>
+                <tr><td>ChildContent</td><td>RenderFragment</td><td>null</td><td>Text or markup inside the wrapper</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Utility Values</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Enum</th><th>Values</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>W3TextAlignment</td><td>None, Left, Right, Center, Justify</td></tr>
+                <tr><td>W3TextStyle</td><td>None, Wide, Bold, Italic</td></tr>
+                <tr><td>W3FontFamily</td><td>None, Serif, SansSerif, Cursive, Monospace</td></tr>
+                <tr><td>W3Size</td><td>Default, Tiny, Small, Large, XLarge, XXLarge, XXXLarge, Jumbo</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Related W3.CSS</h2>
+        <p><NavLink href="components/fonts">Fonts guidance</NavLink></p>
+        <p><a href="https://www.w3schools.com/w3css/w3css_fonts.asp" target="_blank" rel="noopener">W3.CSS Fonts</a></p>
+        <p><a href="https://www.w3schools.com/W3CSS/w3css_fonts_google.asp" target="_blank" rel="noopener">W3.CSS Google Fonts</a></p>
+        <p><a href="https://www.w3schools.com/w3css/w3css_text.asp" target="_blank" rel="noopener">W3.CSS Text</a></p>
+    </section>
+
+    <DocPager PreviousHref="components/spacing" PreviousText="Spacing" NextHref="components/effects" NextText="Effects" />
+</W3Container>
+
+@code {
+    private const string PaddingExampleClass = "w3-padding w3-border w3-white";
+
+    private const string AlignmentCode = """
+<W3Text Alignment="W3TextAlignment.Left">
+    Left aligned text
+</W3Text>
+
+<W3Text Alignment="W3TextAlignment.Center">
+    Center aligned text
+</W3Text>
+
+<W3Text Alignment="W3TextAlignment.Right">
+    Right aligned text
+</W3Text>
+
+<W3Text Alignment="W3TextAlignment.Justify">
+    Justified text stretches each line so the edges align across the available width.
+</W3Text>
+""";
+
+    private const string FontCode = """
+<W3Text Font="W3FontFamily.Serif">Serif</W3Text>
+<W3Text Font="W3FontFamily.SansSerif">Sans serif</W3Text>
+<W3Text Font="W3FontFamily.Cursive">Cursive</W3Text>
+<W3Text Font="W3FontFamily.Monospace">Monospace</W3Text>
+""";
+
+    private const string StyleCode = """
+<W3Text TextStyle="W3TextStyle.Wide | W3TextStyle.Bold">
+    Wide bold heading text
+</W3Text>
+
+<p>
+    This sentence contains
+    <W3Text Inline="true" TextStyle="W3TextStyle.Italic" Font="W3FontFamily.Monospace" TextColor="W3Color.Red">
+        inline italic monospace text
+    </W3Text>
+    inside normal content.
+</p>
+""";
+}

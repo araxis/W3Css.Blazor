@@ -1,0 +1,63 @@
+@page "/components/radio"
+
+<PageTitle>W3Radio</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3Radio</h1>
+    <DocPager PreviousHref="components/checkbox" PreviousText="Checkbox" NextHref="components/radio-group" NextText="Radio Group" />
+
+    <p class="w3-large">`W3Radio` renders a typed radio option with the W3.CSS `w3-radio` class.</p>
+    <p>Bind multiple radios to the same value and share the same `Name` to create a group.</p>
+
+    <DocExample Title="Radio Options" Code="@BasicCode">
+        <EditForm Model="@RadioModel">
+            <W3Radio TValue="string" Name="contact" OptionValue="@EmailOption" @bind-Value="RadioModel.Contact" Label="Email" />
+            <W3Radio TValue="string" Name="contact" OptionValue="@SmsOption" @bind-Value="RadioModel.Contact" Label="SMS" />
+            <p class="w3-small w3-text-grey">Selected: @RadioModel.Contact</p>
+        </EditForm>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>TValue</td><td>type</td><td>required</td><td>Bound value type</td></tr>
+                <tr><td>Value</td><td>TValue</td><td>default</td><td>Current group value</td></tr>
+                <tr><td>Id</td><td>string?</td><td>null</td><td>`id` attribute</td></tr>
+                <tr><td>OptionValue</td><td>TValue</td><td>default</td><td>Value selected by this radio</td></tr>
+                <tr><td>Name</td><td>string?</td><td>field name</td><td>Radio group name</td></tr>
+                <tr><td>Label</td><td>string?</td><td>null</td><td>Label text</td></tr>
+                <tr><td>LabelClass</td><td>string?</td><td>null</td><td>Additional wrapper label classes</td></tr>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Custom label content</td></tr>
+                <tr><td>Disabled</td><td>bool</td><td>false</td><td>`disabled` attribute</td></tr>
+                <tr><td>Border</td><td>bool</td><td>false</td><td>`w3-border`</td></tr>
+                <tr><td>Color</td><td>W3Color</td><td>None</td><td>Background color class</td></tr>
+                <tr><td>TextColor</td><td>W3Color</td><td>None</td><td>Text color class</td></tr>
+                <tr><td>Round</td><td>W3Round</td><td>None</td><td>Rounded corner class</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional input classes</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline style on the input</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <DocPager PreviousHref="components/checkbox" PreviousText="Checkbox" NextHref="components/radio-group" NextText="Radio Group" />
+</W3Container>
+
+@code {
+    private const string EmailOption = "email";
+    private const string SmsOption = "sms";
+    private readonly RadioExampleModel RadioModel = new();
+
+    private const string BasicCode = """
+<W3Radio TValue="string" Name="contact" OptionValue="@EmailOption" @bind-Value="model.Contact" Label="Email" />
+<W3Radio TValue="string" Name="contact" OptionValue="@SmsOption" @bind-Value="model.Contact" Label="SMS" />
+""";
+
+    private sealed class RadioExampleModel
+    {
+        public string Contact { get; set; } = EmailOption;
+    }
+}

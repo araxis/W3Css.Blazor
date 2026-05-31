@@ -1,0 +1,87 @@
+@page "/components/table"
+
+<PageTitle>W3Table</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3Table</h1>
+    <DocPager PreviousHref="components/alert" PreviousText="Alert" NextHref="components/data-table" NextText="Data Table" />
+
+    <p class="w3-large">`W3Table` wraps standard table markup with W3.CSS table classes.</p>
+    <p>Keep table structure in normal HTML, then use parameters for striped, bordered, hoverable, centered, and responsive behavior.</p>
+
+    <DocExample Title="Striped Table" Code="@StripedCode">
+        <W3Table Striped="true" Bordered="true" Hoverable="true" Responsive="true" aria-label="Component status">
+            <thead>
+                <tr><th>Component</th><th>Status</th><th>Notes</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>W3Button</td><td>Implemented</td><td>Button class wrapper.</td></tr>
+                <tr><td>W3Badge</td><td>Implemented</td><td>Small count wrapper.</td></tr>
+                <tr><td>W3Table</td><td>Implemented</td><td>Responsive wrapper option.</td></tr>
+            </tbody>
+        </W3Table>
+    </DocExample>
+
+    <DocExample Title="Centered Table" Code="@CenteredCode">
+        <W3Table Border="true" Centered="true" Color="W3Color.White">
+            <thead>
+                <tr><th>Name</th><th>Kind</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Panel</td><td>Layout</td></tr>
+                <tr><td>Tag</td><td>Content</td></tr>
+            </tbody>
+        </W3Table>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Native table markup</td></tr>
+                <tr><td>Striped</td><td>bool</td><td>false</td><td>`w3-striped`</td></tr>
+                <tr><td>Bordered</td><td>bool</td><td>false</td><td>`w3-bordered`</td></tr>
+                <tr><td>Border</td><td>bool</td><td>false</td><td>`w3-border`</td></tr>
+                <tr><td>Hoverable</td><td>bool</td><td>false</td><td>`w3-hoverable`</td></tr>
+                <tr><td>Centered</td><td>bool</td><td>false</td><td>`w3-centered`</td></tr>
+                <tr><td>Responsive</td><td>bool</td><td>false</td><td>Wraps table in `w3-responsive`</td></tr>
+                <tr><td>Color</td><td>W3Color</td><td>None</td><td>Background color class</td></tr>
+                <tr><td>TextColor</td><td>W3Color</td><td>None</td><td>Text color class</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional classes on the table</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline styles on the table</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <DocPager PreviousHref="components/alert" PreviousText="Alert" NextHref="components/data-table" NextText="Data Table" />
+</W3Container>
+
+@code {
+    private const string StripedCode = """
+<W3Table Striped="true" Bordered="true" Hoverable="true" Responsive="true" aria-label="Component status">
+    <thead>
+        <tr><th>Component</th><th>Status</th><th>Notes</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>W3Button</td><td>Implemented</td><td>Button class wrapper.</td></tr>
+        <tr><td>W3Badge</td><td>Implemented</td><td>Small count wrapper.</td></tr>
+        <tr><td>W3Table</td><td>Implemented</td><td>Responsive wrapper option.</td></tr>
+    </tbody>
+</W3Table>
+""";
+
+    private const string CenteredCode = """
+<W3Table Border="true" Centered="true" Color="W3Color.White">
+    <thead>
+        <tr><th>Name</th><th>Kind</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>Panel</td><td>Layout</td></tr>
+        <tr><td>Tag</td><td>Content</td></tr>
+    </tbody>
+</W3Table>
+""";
+}

@@ -1,0 +1,270 @@
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+<div @attributes="AdditionalAttributes"
+     class="@RootCssClass"
+     style="@RootStyle">
+    @if (Header is not null)
+    {
+        <header class="@HeaderCssClass" style="@HeaderStyleValue">
+            @Header
+        </header>
+    }
+
+    <div class="@BodyCssClass" style="@BodyStyle">
+        @if (Sidebar is not null)
+        {
+            @if (SidebarOverlay && SidebarOpen)
+            {
+                <div class="@OverlayCssClass"
+                     style="@OverlayStyleValue"
+                     aria-hidden="true"
+                     @onclick="CloseSidebarAsync"></div>
+            }
+
+            <aside class="@SidebarCssClass"
+                   style="@SidebarStyleValue"
+                   aria-label="@SidebarLabel"
+                   aria-hidden="@SidebarAriaHidden">
+                @Sidebar
+            </aside>
+        }
+
+        <main id="@MainId"
+              class="@MainCssClass"
+              style="@MainStyleValue">
+            @ChildContent
+        </main>
+    </div>
+
+    @if (Footer is not null)
+    {
+        <footer class="@FooterCssClass" style="@FooterStyleValue">
+            @Footer
+        </footer>
+    }
+</div>
+
+@code {
+    private int EffectiveSidebarWidth => SidebarWidth <= 0 ? 200 : SidebarWidth;
+
+    private string RootCssClass => BuildClass(
+        "w3-app-shell",
+        Color.ToBackgroundClass(),
+        TextColor.ToTextClass());
+
+    private string? RootStyle => CombineStyle(Contained ? "position:relative;overflow:hidden" : null, Style);
+
+    private string HeaderCssClass => BuildSlotClass(
+        "w3-app-shell-header",
+        HeaderColor.ToBackgroundClass(),
+        HeaderTextColor.ToTextClass(),
+        HeaderClass);
+
+    private string BodyCssClass => BuildSlotClass("w3-app-shell-body", BodyClass);
+
+    private string SidebarCssClass => BuildSlotClass(
+        "w3-sidebar",
+        SidebarOpen ? "w3-show" : "w3-hide",
+        SidebarCollapse ? "w3-collapse" : null,
+        SidebarAnimate ? SidebarAnimationClass : null,
+        SidebarColor.ToBackgroundClass(),
+        SidebarTextColor.ToTextClass(),
+        SidebarClass);
+
+    private string OverlayCssClass => BuildSlotClass(
+        "w3-overlay",
+        "w3-show",
+        "w3-app-shell-overlay",
+        OverlayClass);
+
+    private string MainCssClass => BuildSlotClass(
+        "w3-main",
+        "w3-app-shell-main",
+        MainPadded ? "w3-container" : null,
+        MainClass);
+
+    private string FooterCssClass => BuildSlotClass(
+        "w3-app-shell-footer",
+        FooterColor.ToBackgroundClass(),
+        FooterTextColor.ToTextClass(),
+        FooterClass);
+
+    private string SidebarAnimationClass => SidebarPosition == W3SidebarPosition.Right
+        ? "w3-animate-right"
+        : "w3-animate-left";
+
+    private string SidebarPositionStyle => SidebarPosition == W3SidebarPosition.Right ? "right:0" : "left:0";
+
+    private string? SidebarStyleValue => CombineStyle(
+        $"width:{EffectiveSidebarWidth}px",
+        SidebarPositionStyle,
+        "z-index:3",
+        Contained ? "position:absolute!important;height:100%" : null,
+        SidebarOpen ? null : "display:none!important",
+        SidebarStyle);
+
+    private string? OverlayStyleValue => CombineStyle(
+        Contained ? "position:absolute!important" : null,
+        OverlayStyle);
+
+    private string? MainStyleValue => CombineStyle(MainOffsetStyle, MainStyle);
+
+    private string? MainOffsetStyle
+    {
+        get
+        {
+            if (Sidebar is null || !SidebarOpen)
+            {
+                return null;
+            }
+
+            return SidebarPosition == W3SidebarPosition.Right
+                ? $"margin-right:{EffectiveSidebarWidth}px"
+                : $"margin-left:{EffectiveSidebarWidth}px";
+        }
+    }
+
+    private string? HeaderStyleValue => CombineStyle(HeaderStyle);
+
+    private string? FooterStyleValue => CombineStyle(FooterStyle);
+
+    private string SidebarAriaHidden => SidebarOpen ? "false" : "true";
+
+    [Parameter]
+    public RenderFragment? Header { get; set; }
+
+    [Parameter]
+    public RenderFragment? Sidebar { get; set; }
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public RenderFragment? Footer { get; set; }
+
+    [Parameter]
+    public bool SidebarOpen { get; set; } = true;
+
+    [Parameter]
+    public EventCallback<bool> SidebarOpenChanged { get; set; }
+
+    [Parameter]
+    public bool SidebarOverlay { get; set; }
+
+    [Parameter]
+    public bool SidebarCollapse { get; set; } = true;
+
+    [Parameter]
+    public bool SidebarAnimate { get; set; } = true;
+
+    [Parameter]
+    public int SidebarWidth { get; set; } = 260;
+
+    [Parameter]
+    public W3SidebarPosition SidebarPosition { get; set; } = W3SidebarPosition.Left;
+
+    [Parameter]
+    public string SidebarLabel { get; set; } = "Sidebar";
+
+    [Parameter]
+    public string MainId { get; set; } = "main";
+
+    [Parameter]
+    public bool MainPadded { get; set; } = true;
+
+    [Parameter]
+    public bool Contained { get; set; }
+
+    [Parameter]
+    public W3Color Color { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color TextColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color HeaderColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color HeaderTextColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color SidebarColor { get; set; } = W3Color.White;
+
+    [Parameter]
+    public W3Color SidebarTextColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color FooterColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color FooterTextColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public string? HeaderClass { get; set; }
+
+    [Parameter]
+    public string? BodyClass { get; set; }
+
+    [Parameter]
+    public string? SidebarClass { get; set; }
+
+    [Parameter]
+    public string? OverlayClass { get; set; }
+
+    [Parameter]
+    public string? MainClass { get; set; }
+
+    [Parameter]
+    public string? FooterClass { get; set; }
+
+    [Parameter]
+    public string? HeaderStyle { get; set; }
+
+    [Parameter]
+    public string? BodyStyle { get; set; }
+
+    [Parameter]
+    public string? SidebarStyle { get; set; }
+
+    [Parameter]
+    public string? OverlayStyle { get; set; }
+
+    [Parameter]
+    public string? MainStyle { get; set; }
+
+    [Parameter]
+    public string? FooterStyle { get; set; }
+
+    private async Task CloseSidebarAsync()
+    {
+        if (!SidebarOpen)
+        {
+            return;
+        }
+
+        SidebarOpen = false;
+        await SidebarOpenChanged.InvokeAsync(false);
+    }
+
+    private static string BuildSlotClass(params string?[] classes)
+    {
+        var builder = new W3ClassBuilder();
+
+        foreach (var cssClass in classes)
+        {
+            builder.Add(cssClass);
+        }
+
+        return builder.ToString();
+    }
+
+    private static string? CombineStyle(params string?[] styles)
+    {
+        var style = string.Join(';', styles
+            .Where(value => !string.IsNullOrWhiteSpace(value))
+            .Select(value => value!.Trim().TrimEnd(';')));
+
+        return string.IsNullOrWhiteSpace(style) ? null : style;
+    }
+}

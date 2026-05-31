@@ -1,0 +1,53 @@
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+<button @attributes="AdditionalAttributes"
+        type="@Type"
+        class="@CssClass"
+        style="@Style"
+        disabled="@Disabled"
+        @onclick="OnClick">
+    @ChildContent
+</button>
+
+@code {
+    private string CssClass => BuildClass(
+        "w3-button",
+        Color.ToBackgroundClass(),
+        TextColor.ToTextClass(),
+        Size.ToClass(),
+        Round.ToClass(),
+        Border ? "w3-border" : null,
+        Block ? "w3-block" : null,
+        Disabled ? "w3-disabled" : null);
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public W3Color Color { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color TextColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Size Size { get; set; } = W3Size.Default;
+
+    [Parameter]
+    public W3Round Round { get; set; } = W3Round.None;
+
+    [Parameter]
+    public bool Border { get; set; }
+
+    [Parameter]
+    public bool Block { get; set; }
+
+    [Parameter]
+    public bool Disabled { get; set; }
+
+    [Parameter]
+    public string Type { get; set; } = "button";
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnClick { get; set; }
+}

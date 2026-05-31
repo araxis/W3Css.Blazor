@@ -1,0 +1,154 @@
+@page "/components/toast"
+@inject W3ToastService Toasts
+
+<PageTitle>W3Toast</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3Toast</h1>
+    <DocPager PreviousHref="components/skeleton" PreviousText="Skeleton" NextHref="components/modal" NextText="Modal" />
+
+    <p class="w3-large">`W3Toast` renders compact app notifications, while `W3ToastService` and `W3ToastProvider` handle transient messages from anywhere in a Blazor app.</p>
+    <p>Use toasts for short success, warning, info, and error messages that should not interrupt the current workflow.</p>
+
+    <DocExample Title="Standalone Toast" Description="Use the component directly when a toast-style message belongs in the current surface." Code="@StandaloneCode">
+        <W3Toast Title="Saved" Kind="W3AlertKind.Success" ShowCloseButton="false">
+            Project settings were saved.
+        </W3Toast>
+    </DocExample>
+
+    <DocExample Title="Service Notifications" Description="Register W3Css.Blazor services, render a provider once, and call the toast service from pages or components." Code="@ServiceCode">
+        <div class="w3-bar">
+            <W3Button Class="w3-bar-item" Color="W3Color.Teal" TextColor="W3Color.White" OnClick="@ShowSavedToast">Success</W3Button>
+            <W3Button Class="w3-bar-item" Color="W3Color.Amber" TextColor="W3Color.Black" OnClick="@ShowWarningToast">Warning</W3Button>
+            <W3Button Class="w3-bar-item" Color="W3Color.Red" TextColor="W3Color.White" OnClick="@ShowActionToast">Action</W3Button>
+        </div>
+        <p class="doc-muted">@LastAction</p>
+    </DocExample>
+
+    <DocExample Title="Provider Placement" Description="Choose where the fixed notification stack appears and whether messages auto-dismiss." Code="@ProviderCode">
+        <W3Panel Color="W3Color.PaleBlue" TextColor="W3Color.Black" LeftBar="true" Border="true" Round="W3Round.Medium">
+            <p>The docs layout renders `W3ToastProvider` once at the bottom right. Consumers can choose any corner or center placement.</p>
+        </W3Panel>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Toast Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Toast body content</td></tr>
+                <tr><td>Title</td><td>string?</td><td>null</td><td>Optional bold heading</td></tr>
+                <tr><td>Kind</td><td>W3AlertKind</td><td>Info</td><td>W3.CSS semantic color class</td></tr>
+                <tr><td>Round</td><td>W3Round</td><td>Medium</td><td>W3.CSS round class</td></tr>
+                <tr><td>Card</td><td>bool</td><td>true</td><td>`w3-card-4` shadow</td></tr>
+                <tr><td>Animate</td><td>bool</td><td>true</td><td>`w3-animate-right` entrance</td></tr>
+                <tr><td>ShowCloseButton</td><td>bool</td><td>true</td><td>Renders the dismiss button</td></tr>
+                <tr><td>CloseButtonLabel</td><td>string</td><td>Dismiss notification</td><td>Dismiss button aria-label</td></tr>
+                <tr><td>ActionText</td><td>string?</td><td>null</td><td>Optional action button</td></tr>
+                <tr><td>OnAction</td><td>EventCallback</td><td>empty</td><td>Action click callback</td></tr>
+                <tr><td>OnDismiss</td><td>EventCallback</td><td>empty</td><td>Close button callback</td></tr>
+                <tr><td>Role</td><td>string?</td><td>status/alert</td><td>ARIA live region role</td></tr>
+                <tr><td>AriaLive</td><td>string?</td><td>polite/assertive</td><td>ARIA live urgency</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional toast classes</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline style on the toast</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Provider And Service</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>API</th><th>Default</th><th>Use</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>AddW3CssBlazor()</td><td>n/a</td><td>Registers `W3ToastService` in dependency injection</td></tr>
+                <tr><td>W3ToastProvider.Position</td><td>BottomRight</td><td>Fixed viewport placement</td></tr>
+                <tr><td>W3ToastProvider.DefaultDuration</td><td>5 seconds</td><td>Auto-dismiss time; set null to keep until dismissed</td></tr>
+                <tr><td>W3ToastProvider.MaxVisible</td><td>5</td><td>Limits the visible stack</td></tr>
+                <tr><td>W3ToastProvider.ShowCloseButton</td><td>true</td><td>Controls close buttons on provider-rendered toasts</td></tr>
+                <tr><td>W3ToastProvider.AriaLive and Label</td><td>polite / Notifications</td><td>Provider live region accessibility text</td></tr>
+                <tr><td>W3ToastProvider.Class and Style</td><td>null</td><td>Additional provider classes and inline style</td></tr>
+                <tr><td>W3ToastService.Show(...)</td><td>Info</td><td>Creates a toast with full options</td></tr>
+                <tr><td>ShowInfo/ShowSuccess/ShowWarning/ShowDanger</td><td>n/a</td><td>Convenience methods for common statuses</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Related</h2>
+        <p><NavLink href="components/alert">Alert</NavLink> covers inline status messages that stay in the page flow.</p>
+        <p><NavLink href="components/spinner">Spinner</NavLink> covers indeterminate loading status.</p>
+        <p><NavLink href="components/modal">Modal</NavLink> covers interruptive confirmation and focused tasks.</p>
+    </section>
+
+    <DocPager PreviousHref="components/skeleton" PreviousText="Skeleton" NextHref="components/modal" NextText="Modal" />
+</W3Container>
+
+@code {
+    private string LastAction { get; set; } = "Click a button to send a toast through the provider.";
+
+    private void ShowSavedToast()
+    {
+        Toasts.ShowSuccess("Project settings were saved.", "Saved");
+        LastAction = "Sent a success toast.";
+    }
+
+    private void ShowWarningToast()
+    {
+        Toasts.ShowWarning("Two fields still need review before publishing.", "Review needed");
+        LastAction = "Sent a warning toast.";
+    }
+
+    private void ShowActionToast()
+    {
+        Toasts.Show("Draft restore point created.", new W3ToastOptions
+        {
+            Title = "Undo available",
+            Kind = W3AlertKind.Info,
+            ActionText = "Undo",
+            Duration = TimeSpan.FromSeconds(8),
+            OnAction = () =>
+            {
+                LastAction = "Undo action selected.";
+                return Task.CompletedTask;
+            }
+        });
+
+        LastAction = "Sent an action toast.";
+    }
+
+    private const string StandaloneCode = """
+<W3Toast Title="Saved" Kind="W3AlertKind.Success" ShowCloseButton="false">
+    Project settings were saved.
+</W3Toast>
+""";
+
+    private const string ServiceCode = """
+// Program.cs
+builder.Services.AddW3CssBlazor();
+
+// MainLayout.razor
+<W3ToastProvider />
+
+// Any page or component
+@inject W3ToastService Toasts
+
+<W3Button OnClick="@ShowSavedToast">Success</W3Button>
+
+@code {
+    private void ShowSavedToast()
+    {
+        Toasts.ShowSuccess("Project settings were saved.", "Saved");
+    }
+}
+""";
+
+    private const string ProviderCode = """
+<W3ToastProvider Position="W3ToastPosition.TopRight"
+                 DefaultDuration="TimeSpan.FromSeconds(6)"
+                 MaxVisible="3" />
+""";
+}

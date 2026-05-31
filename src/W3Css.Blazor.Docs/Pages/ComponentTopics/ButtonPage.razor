@@ -1,0 +1,60 @@
+@page "/components/button"
+
+<PageTitle>W3Button</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3Button</h1>
+    <DocPager PreviousHref="components/quote" PreviousText="Quote" NextHref="components/icon-button" NextText="Icon Button" />
+
+    <p class="w3-large">`W3Button` renders a standard HTML button with W3.CSS button classes.</p>
+    <p>Use the typed parameters for common W3.CSS button variants, and use `Class` for utility classes not yet surfaced as parameters.</p>
+
+    <DocExample Title="Basic Buttons" Code="@BasicCode">
+        <W3Button Color="W3Color.Teal" Round="W3Round.Medium" Class="w3-margin-right">Save</W3Button>
+        <W3Button Color="W3Color.Amber" TextColor="W3Color.Black" Round="W3Round.Medium" Class="w3-margin-right">Review</W3Button>
+        <W3Button Border="true" Round="W3Round.Medium">Cancel</W3Button>
+    </DocExample>
+
+    <DocExample Title="Full Width And Disabled" Code="@StateCode">
+        <W3Button Color="W3Color.Black" TextColor="W3Color.White" Block="true" Class="w3-margin-bottom">Full width</W3Button>
+        <W3Button Disabled="true" Border="true">Disabled</W3Button>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Button content</td></tr>
+                <tr><td>Color</td><td>W3Color</td><td>None</td><td>Background color class</td></tr>
+                <tr><td>TextColor</td><td>W3Color</td><td>None</td><td>Text color class</td></tr>
+                <tr><td>Size</td><td>W3Size</td><td>Default</td><td>Size class</td></tr>
+                <tr><td>Round</td><td>W3Round</td><td>None</td><td>Rounded corner class</td></tr>
+                <tr><td>Border</td><td>bool</td><td>false</td><td>`w3-border`</td></tr>
+                <tr><td>Block</td><td>bool</td><td>false</td><td>`w3-block`</td></tr>
+                <tr><td>Disabled</td><td>bool</td><td>false</td><td>`disabled` plus `w3-disabled`</td></tr>
+                <tr><td>Type</td><td>string</td><td>button</td><td>Button type attribute</td></tr>
+                <tr><td>OnClick</td><td>EventCallback&lt;MouseEventArgs&gt;</td><td>empty</td><td>Click callback</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional classes on the button</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline styles on the button</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <DocPager PreviousHref="components/quote" PreviousText="Quote" NextHref="components/icon-button" NextText="Icon Button" />
+</W3Container>
+
+@code {
+    private const string BasicCode = """
+<W3Button Color="W3Color.Teal" Round="W3Round.Medium">Save</W3Button>
+<W3Button Color="W3Color.Amber" TextColor="W3Color.Black" Round="W3Round.Medium">Review</W3Button>
+<W3Button Border="true" Round="W3Round.Medium">Cancel</W3Button>
+""";
+
+    private const string StateCode = """
+<W3Button Color="W3Color.Black" TextColor="W3Color.White" Block="true">Full width</W3Button>
+<W3Button Disabled="true" Border="true">Disabled</W3Button>
+""";
+}

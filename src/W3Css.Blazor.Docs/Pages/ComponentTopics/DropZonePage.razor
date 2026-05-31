@@ -1,0 +1,161 @@
+@page "/components/drop-zone"
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.AspNetCore.Components.Web
+
+<PageTitle>W3DropZone</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3DropZone</h1>
+    <DocPager PreviousHref="components/file-input" PreviousText="File Input" NextHref="components/autocomplete" NextText="Autocomplete" />
+
+    <p class="w3-large">`W3DropZone` renders a W3.CSS upload surface around Blazor's native `InputFile` component.</p>
+    <p>Use it for imports, asset pickers, attachment panels, and design tools where a larger browse and drop target is easier than a plain file input.</p>
+
+    <DocExample Title="Upload Intake" Description="Add files one at a time or as a batch; selections are bridged into the real InputFile before the normal OnChange event runs." Code="@UploadCode">
+        <W3DropZone Id="dropzone-assets"
+                    Accept=".png,.jpg,.svg"
+                    Multiple="true"
+                    AccumulateFiles="true"
+                    AcceptHint="PNG, JPG, or SVG"
+                    BorderColor="W3Color.Teal"
+                    ShowSelectedFiles="false"
+                    SelectedFilesChanged="HandleFiles" />
+        @if (LastSelectedFiles.Count > 0)
+        {
+            <div class="w3-small">
+                <strong>Selected batch: @LastSelectedFiles.Count</strong>
+                <ul class="w3-ul w3-border w3-margin-top">
+                    @foreach (var fileName in LastSelectedFiles)
+                    {
+                        <li>@fileName</li>
+                    }
+                </ul>
+            </div>
+        }
+    </DocExample>
+
+    <DocExample Title="Compact Import Zone" Description="Use compact mode and custom content when the drop area sits inside a form or settings panel." Code="@CompactCode">
+        <W3DropZone Id="dropzone-csv"
+                    Accept=".csv"
+                    Label="Import CSV"
+                    Description="Drop a CSV export or click to browse"
+                    AcceptHint="CSV only"
+                    Compact="true"
+                    Color="W3Color.PaleBlue"
+                    BorderColor="W3Color.Blue"
+                    ShowSelectedFiles="false" />
+    </DocExample>
+
+    <DocExample Title="Custom Content" Description="Replace the default label stack with your own lightweight markup while keeping the native input overlay." Code="@CustomCode">
+        <W3DropZone Id="dropzone-custom"
+                    Accept="image/*"
+                    Multiple="true"
+                    Color="W3Color.LightGrey"
+                    BorderColor="W3Color.Grey"
+                    ShowSelectedFiles="false">
+            <strong>Drop product photos</strong>
+            <span class="w3-small">Click anywhere in this panel to choose images.</span>
+        </W3DropZone>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>OnChange</td><td>EventCallback&lt;InputFileChangeEventArgs&gt;</td><td>none</td><td>Blazor file selection event</td></tr>
+                <tr><td>SelectedFilesChanged</td><td>EventCallback&lt;IReadOnlyList&lt;IBrowserFile&gt;&gt;</td><td>none</td><td>Normalized selected-file list after browse or drop</td></tr>
+                <tr><td>OnDragEnter / OnDragOver / OnDragLeave / OnDrop</td><td>EventCallback&lt;DragEventArgs&gt;</td><td>none</td><td>Drag state callbacks for UI behavior</td></tr>
+                <tr><td>Id</td><td>string?</td><td>generated</td><td>`id` attribute and label target</td></tr>
+                <tr><td>Name</td><td>string?</td><td>null</td><td>`name` attribute</td></tr>
+                <tr><td>Accept</td><td>string?</td><td>null</td><td>`accept` attribute</td></tr>
+                <tr><td>Multiple</td><td>bool</td><td>false</td><td>`multiple` attribute</td></tr>
+                <tr><td>AccumulateFiles</td><td>bool</td><td>true</td><td>Keeps adding files to multi-file zones across later browse or drop actions</td></tr>
+                <tr><td>Disabled</td><td>bool</td><td>false</td><td>`disabled`, `aria-disabled`, and `w3-disabled`</td></tr>
+                <tr><td>Label</td><td>string</td><td>Drop files here</td><td>Default visible title and input label</td></tr>
+                <tr><td>Description</td><td>string?</td><td>or click to browse</td><td>Default supporting text</td></tr>
+                <tr><td>AcceptHint</td><td>string?</td><td>null</td><td>Optional accepted file hint</td></tr>
+                <tr><td>AriaLabel</td><td>string?</td><td>Label</td><td>Input `aria-label` override</td></tr>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Custom drop-zone content</td></tr>
+                <tr><td>ShowBrowseButton</td><td>bool</td><td>true</td><td>Renders the visible browse button label</td></tr>
+                <tr><td>BrowseLabel</td><td>string</td><td>Choose files</td><td>Visible browse button text</td></tr>
+                <tr><td>BrowseButtonColor / BrowseButtonTextColor</td><td>W3Color</td><td>Teal / White</td><td>Browse button color classes</td></tr>
+                <tr><td>ShowSelectedFiles</td><td>bool</td><td>true</td><td>Renders selected-file list after change</td></tr>
+                <tr><td>ShowFileSize</td><td>bool</td><td>true</td><td>Shows file sizes in the selected-file list</td></tr>
+                <tr><td>MaximumFileCount</td><td>int</td><td>10</td><td>Maximum files read for selected-file display</td></tr>
+                <tr><td>Compact</td><td>bool</td><td>false</td><td>Reduced drop-zone height</td></tr>
+                <tr><td>Border</td><td>bool</td><td>true</td><td>`w3-border`</td></tr>
+                <tr><td>Round</td><td>W3Round</td><td>Medium</td><td>Rounded corner class</td></tr>
+                <tr><td>Color / TextColor</td><td>W3Color</td><td>White / Black</td><td>Background and text color classes</td></tr>
+                <tr><td>BorderColor</td><td>W3Color</td><td>Teal</td><td>Border color class</td></tr>
+                <tr><td>DragColor / DragTextColor</td><td>W3Color</td><td>PaleBlue / Black</td><td>Applied while dragging over the zone</td></tr>
+                <tr><td>BrowseButtonClass / ContentClass / SelectedFilesClass</td><td>string?</td><td>null</td><td>Additional scoped classes for rendered regions</td></tr>
+                <tr><td>Class / Style</td><td>string?</td><td>null</td><td>Additional root classes and inline style</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Related</h2>
+        <p><NavLink href="components/file-input">File Input</NavLink> covers the plain native input wrapper.</p>
+        <p><NavLink href="components/field">Field</NavLink> wraps upload controls with labels, help text, and validation messages.</p>
+        <p><NavLink href="components/button">Button</NavLink> covers follow-up upload and import commands.</p>
+    </section>
+
+    <DocPager PreviousHref="components/file-input" PreviousText="File Input" NextHref="components/autocomplete" NextText="Autocomplete" />
+</W3Container>
+
+@code {
+    private IReadOnlyList<string> LastSelectedFiles { get; set; } = [];
+
+    private void HandleFiles(IReadOnlyList<IBrowserFile> files)
+    {
+        LastSelectedFiles = files.Select(file => file.Name).ToArray();
+    }
+
+    private const string UploadCode = """
+<W3DropZone Id="dropzone-assets"
+            Accept=".png,.jpg,.svg"
+            Multiple="true"
+            AccumulateFiles="true"
+            AcceptHint="PNG, JPG, or SVG"
+            BorderColor="W3Color.Teal"
+            ShowSelectedFiles="false"
+            SelectedFilesChanged="HandleFiles" />
+
+@code {
+    private IReadOnlyList<string> selectedFileNames = [];
+
+    private void HandleFiles(IReadOnlyList<IBrowserFile> files)
+    {
+        selectedFileNames = files.Select(file => file.Name).ToArray();
+    }
+}
+""";
+
+    private const string CompactCode = """
+<W3DropZone Id="dropzone-csv"
+            Accept=".csv"
+            Label="Import CSV"
+            Description="Drop a CSV export or click to browse"
+            AcceptHint="CSV only"
+            Compact="true"
+            Color="W3Color.PaleBlue"
+            BorderColor="W3Color.Blue"
+            ShowSelectedFiles="false" />
+""";
+
+    private const string CustomCode = """
+<W3DropZone Id="dropzone-custom"
+            Accept="image/*"
+            Multiple="true"
+            Color="W3Color.LightGrey"
+            BorderColor="W3Color.Grey"
+            ShowSelectedFiles="false">
+    <strong>Drop product photos</strong>
+    <span class="w3-small">Click anywhere in this panel to choose images.</span>
+</W3DropZone>
+""";
+}

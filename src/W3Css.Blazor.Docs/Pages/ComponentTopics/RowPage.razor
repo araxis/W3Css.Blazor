@@ -1,0 +1,72 @@
+@page "/components/row"
+
+<PageTitle>W3Row</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3Row</h1>
+    <DocPager PreviousHref="components/paper" PreviousText="Paper" NextHref="components/column" NextText="Column" />
+
+    <p class="w3-large">`W3Row` renders a W3.CSS row wrapper for floated column layouts.</p>
+    <p>Use `Padding` when child columns should receive W3.CSS column gutters.</p>
+
+    <DocExample Title="Padded Row" Code="@PaddedCode">
+        <W3Row Padding="true">
+            <W3Column Small="12" Medium="6" Large="4">
+                <W3Panel Color="W3Color.PaleBlue" TextColor="W3Color.Black" Border="true">First column</W3Panel>
+            </W3Column>
+            <W3Column Small="12" Medium="6" Large="4">
+                <W3Panel Color="W3Color.PaleGreen" TextColor="W3Color.Black" Border="true">Second column</W3Panel>
+            </W3Column>
+            <W3Column Small="12" Medium="12" Large="4">
+                <W3Panel Color="W3Color.PaleYellow" TextColor="W3Color.Black" Border="true">Third column</W3Panel>
+            </W3Column>
+        </W3Row>
+    </DocExample>
+
+    <DocExample Title="Plain Row" Code="@PlainCode">
+        <W3Row Color="W3Color.LightGrey">
+            <W3Column Small="6"><W3Container Color="W3Color.White">Left</W3Container></W3Column>
+            <W3Column Small="6"><W3Container Color="W3Color.PaleBlue" TextColor="W3Color.Black">Right</W3Container></W3Column>
+        </W3Row>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Padding</td><td>bool</td><td>false</td><td>`w3-row-padding` instead of `w3-row`</td></tr>
+                <tr><td>Color</td><td>W3Color</td><td>None</td><td>Background color class</td></tr>
+                <tr><td>TextColor</td><td>W3Color</td><td>None</td><td>Text color class</td></tr>
+                <tr><td>Class</td><td>string</td><td>null</td><td>Additional root row classes</td></tr>
+                <tr><td>Style</td><td>string</td><td>null</td><td>Root row inline style</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Related</h2>
+        <p><NavLink href="components/case-study">Case Study</NavLink> shows rows inside a full page layout.</p>
+    </section>
+
+    <DocPager PreviousHref="components/paper" PreviousText="Paper" NextHref="components/column" NextText="Column" />
+</W3Container>
+
+@code {
+    private const string PaddedCode = """
+<W3Row Padding="true">
+    <W3Column Small="12" Medium="6" Large="4">First column</W3Column>
+    <W3Column Small="12" Medium="6" Large="4">Second column</W3Column>
+    <W3Column Small="12" Medium="12" Large="4">Third column</W3Column>
+</W3Row>
+""";
+
+    private const string PlainCode = """
+<W3Row Color="W3Color.LightGrey">
+    <W3Column Small="6">Left</W3Column>
+    <W3Column Small="6">Right</W3Column>
+</W3Row>
+""";
+}

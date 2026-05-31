@@ -1,0 +1,52 @@
+@inherits W3FormComponentBase<bool>
+
+@if (HasLabel)
+{
+    <label class="@LabelCssClass">
+        @Control
+        <span>@LabelContent</span>
+    </label>
+}
+else
+{
+    @Control
+}
+
+@code {
+    private string CheckboxCssClass => BuildControlClass("w3-check");
+    private bool HasLabel => ChildContent is not null || !string.IsNullOrWhiteSpace(Label);
+    private string LabelCssClass => new W3Css.Blazor.Internal.W3ClassBuilder().Add("w3-block").Add(LabelClass).ToString();
+    private RenderFragment LabelContent => ChildContent ?? (builder => builder.AddContent(0, Label));
+
+    private RenderFragment Control => builder =>
+    {
+        builder.OpenElement(0, "input");
+        builder.AddMultipleAttributes(1, AdditionalAttributes);
+        builder.AddAttribute(2, "id", Id);
+        builder.AddAttribute(3, "name", NameAttributeValue);
+        builder.AddAttribute(4, "type", "checkbox");
+        builder.AddAttribute(5, "class", CheckboxCssClass);
+        builder.AddAttribute(6, "style", Style);
+        builder.AddAttribute(7, "disabled", Disabled);
+        builder.AddAttribute(8, "checked", BindConverter.FormatValue(CurrentValue));
+        builder.AddAttribute(9, "onchange", EventCallback.Factory.CreateBinder<bool>(this, value => CurrentValue = value, CurrentValue));
+        builder.CloseElement();
+    };
+
+    [Parameter]
+    public string? Id { get; set; }
+
+    [Parameter]
+    public string? Label { get; set; }
+
+    [Parameter]
+    public string? LabelClass { get; set; }
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    protected override bool TryParseValueFromString(string? value, out bool result, out string validationErrorMessage)
+    {
+        throw new InvalidOperationException($"{GetType()} does not parse string values directly.");
+    }
+}

@@ -1,0 +1,35 @@
+@inherits W3FormComponentBase<string?>
+
+<textarea @attributes="AdditionalAttributes"
+          id="@Id"
+          name="@NameAttributeValue"
+          class="@TextAreaCssClass"
+          style="@Style"
+          placeholder="@Placeholder"
+          rows="@Rows"
+          disabled="@Disabled"
+          readonly="@ReadOnly"
+          @onchange="EventCallback.Factory.CreateBinder<string?>(this, value => CurrentValueAsString = value, CurrentValueAsString)">@CurrentValueAsString</textarea>
+
+@code {
+    private string TextAreaCssClass => BuildControlClass("w3-input");
+
+    [Parameter]
+    public string? Id { get; set; }
+
+    [Parameter]
+    public string? Placeholder { get; set; }
+
+    [Parameter]
+    public int? Rows { get; set; }
+
+    [Parameter]
+    public bool ReadOnly { get; set; }
+
+    protected override bool TryParseValueFromString(string? value, out string? result, out string validationErrorMessage)
+    {
+        result = value;
+        validationErrorMessage = string.Empty;
+        return true;
+    }
+}

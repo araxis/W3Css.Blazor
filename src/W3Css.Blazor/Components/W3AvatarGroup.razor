@@ -1,0 +1,56 @@
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+<div @attributes="AdditionalAttributes"
+     class="@CssClass"
+     style="@StyleValue"
+     role="group"
+     aria-label="@Label">
+    @ChildContent
+</div>
+
+@code {
+    // MudBlazor compatibility: mirrors MudAvatarGroup, overlapping a row of
+    // W3Avatar children. The overlap is applied through scoped CSS so the
+    // vendored w3.css file stays untouched.
+    private string CssClass => BuildClass(
+        "w3-avatar-group",
+        Outlined ? "w3-avatar-group-outlined" : null);
+
+    private string? StyleValue => CombineStyle(
+        $"--w3-avatar-group-overlap:-{Math.Abs(Spacing)}px",
+        Style);
+
+    /// <summary>
+    /// The avatars to group. Use <see cref="W3Avatar"/> children.
+    /// </summary>
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    /// <summary>
+    /// Overlap distance in pixels between adjacent avatars.
+    /// </summary>
+    [Parameter]
+    public int Spacing { get; set; } = 12;
+
+    /// <summary>
+    /// Adds a contrasting ring around each avatar to separate overlapping edges.
+    /// </summary>
+    [Parameter]
+    public bool Outlined { get; set; } = true;
+
+    /// <summary>
+    /// Accessible label for the avatar group.
+    /// </summary>
+    [Parameter]
+    public string Label { get; set; } = "Avatar group";
+
+    private static string? CombineStyle(params string?[] styles)
+    {
+        var style = string.Join(';', styles
+            .Where(value => !string.IsNullOrWhiteSpace(value))
+            .Select(value => value!.Trim().TrimEnd(';')));
+
+        return string.IsNullOrWhiteSpace(style) ? null : style;
+    }
+}

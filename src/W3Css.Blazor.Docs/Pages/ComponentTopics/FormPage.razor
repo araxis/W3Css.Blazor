@@ -1,0 +1,75 @@
+@page "/components/form"
+
+<PageTitle>W3Form</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3Form</h1>
+    <DocPager PreviousHref="components/mask" PreviousText="Mask" NextHref="components/number-input" NextText="Number Input" />
+
+    <p class="w3-large"><code>W3Form</code> is a MudBlazor-compatible form wrapper over Blazor <code>EditForm</code>.</p>
+    <p>Use it when migrating MudBlazor layouts that rely on <code>&lt;MudForm&gt;</code> while staying with W3.CSS-first components.</p>
+
+    <DocExample Title="Basic Mud-style form wrapper" Description="Submit callbacks receive the current edit context for standard Blazor validation workflows." Code="@BasicFormCode">
+        <W3Form Model="@_formModel" OnValidSubmit="HandleSubmit">
+            <W3Field TValue="string" Label="Full Name" For="@(() => _formModel.Name)" ForId="form-name">
+                <W3Input @bind-Value="_formModel.Name" Id="form-name" Placeholder="Jane Example" Border="true" />
+            </W3Field>
+            <div class="w3-margin-top">
+                <W3Button Type="submit" Color="W3Color.Teal" TextColor="W3Color.White">Submit</W3Button>
+            </div>
+        </W3Form>
+        <p class="w3-small w3-text-gray">Submit count: @_submitCount</p>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Model</td><td>object?</td><td>null</td><td>Creates a fallback <code>EditContext</code>.</td></tr>
+                <tr><td>Model</td><td>EditContext?</td><td>null</td><td>Overrides model-based context creation.</td></tr>
+                <tr><td>OnSubmit</td><td>EventCallback&lt;EditContext&gt;</td><td>none</td><td>Maps to <code>EditForm.OnSubmit</code>.</td></tr>
+                <tr><td>OnValidSubmit</td><td>EventCallback&lt;EditContext&gt;</td><td>none</td><td>Maps to <code>EditForm.OnValidSubmit</code>.</td></tr>
+                <tr><td>OnInvalidSubmit</td><td>EventCallback&lt;EditContext&gt;</td><td>none</td><td>Maps to <code>EditForm.OnInvalidSubmit</code>.</td></tr>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Form content and fields.</td></tr>
+            <tr><td>Class</td><td>string?</td><td>null</td><td>Additional CSS classes.</td></tr>
+            <tr><td>Style</td><td>string?</td><td>null</td><td>Inline style.</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Related</h2>
+        <p><NavLink href="components/field">Field</NavLink> pairs labels and messages for form inputs.</p>
+        <p><NavLink href="components/input">Input</NavLink> renders validated text field controls.</p>
+        <p><NavLink href="components/validation">Validation</NavLink> demonstrates a full validation workflow.</p>
+    </section>
+
+    <DocPager PreviousHref="components/mask" PreviousText="Mask" NextHref="components/number-input" NextText="Number Input" />
+</W3Container>
+
+@code {
+    private readonly FormModel _formModel = new();
+    private int _submitCount;
+
+    private string BasicFormCode => """
+<W3Form Model="@_formModel" OnValidSubmit="HandleSubmit">
+    <W3Field TValue="string" Label="Full Name" ForId="form-name">
+        <W3Input @bind-Value="_formModel.Name" Id="form-name" Placeholder="Jane Example" Border="true" />
+    </W3Field>
+    <W3Button Type="submit" Color="W3Color.Teal" TextColor="W3Color.White">Submit</W3Button>
+</W3Form>
+""";
+
+    private void HandleSubmit(Microsoft.AspNetCore.Components.Forms.EditContext _)
+    {
+        _submitCount++;
+    }
+
+    private sealed class FormModel
+    {
+        public string Name { get; set; } = "Jane";
+    }
+}

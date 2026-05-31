@@ -1,0 +1,57 @@
+@page "/components/pagination"
+
+<PageTitle>W3Pagination</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3Pagination</h1>
+    <DocPager PreviousHref="components/menu" PreviousText="Menu" NextHref="components/progress" NextText="Progress" />
+
+    <p class="w3-large">`W3Pagination` renders W3.CSS bar buttons for page navigation.</p>
+    <p>Bind `CurrentPage` when the parent component needs to react to page changes.</p>
+
+    <DocExample Title="Basic Pagination" Code="@BasicCode">
+        <W3Pagination PageCount="5" @bind-CurrentPage="CurrentPage" ActiveColor="W3Color.Teal" />
+        <p class="w3-small w3-text-grey">Current page: @CurrentPage</p>
+    </DocExample>
+
+    <DocExample Title="Numbered Only" Code="@NumberedCode">
+        <W3Pagination PageCount="4" CurrentPage="2" ShowPreviousNext="false" Center="true" />
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>PageCount</td><td>int</td><td>0</td><td>Number of page buttons</td></tr>
+                <tr><td>CurrentPage</td><td>int</td><td>1</td><td>Selected page</td></tr>
+                <tr><td>CurrentPageChanged</td><td>EventCallback&lt;int&gt;</td><td>none</td><td>Raised when a page is selected</td></tr>
+                <tr><td>ShowPreviousNext</td><td>bool</td><td>true</td><td>Previous and next buttons</td></tr>
+                <tr><td>Center</td><td>bool</td><td>false</td><td>`w3-center`</td></tr>
+                <tr><td>PreviousText</td><td>string</td><td>Previous</td><td>Previous button text</td></tr>
+                <tr><td>NextText</td><td>string</td><td>Next</td><td>Next button text</td></tr>
+                <tr><td>ActiveColor</td><td>W3Color</td><td>Teal</td><td>Active page background</td></tr>
+                <tr><td>ActiveTextColor</td><td>W3Color</td><td>White</td><td>Active page text color</td></tr>
+                <tr><td>AriaLabel</td><td>string</td><td>Pagination</td><td>Navigation label</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional nav classes</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline style on the nav</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <DocPager PreviousHref="components/menu" PreviousText="Menu" NextHref="components/progress" NextText="Progress" />
+</W3Container>
+
+@code {
+    private int CurrentPage { get; set; } = 2;
+
+    private const string BasicCode = """
+<W3Pagination PageCount="5" @bind-CurrentPage="currentPage" ActiveColor="W3Color.Teal" />
+""";
+
+    private const string NumberedCode = """
+<W3Pagination PageCount="4" CurrentPage="2" ShowPreviousNext="false" Center="true" />
+""";
+}

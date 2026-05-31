@@ -1,0 +1,52 @@
+@page "/components/badge"
+
+<PageTitle>W3Badge</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3Badge</h1>
+    <DocPager PreviousHref="components/chat" PreviousText="Chat" NextHref="components/tag" NextText="Tag" />
+
+    <p class="w3-large">`W3Badge` renders compact count and status markers with the W3.CSS `w3-badge` class.</p>
+    <p>Use badges for counts, compact status, and inline labels where a round shape is useful.</p>
+
+    <DocExample Title="Basic Badge" Code="@BasicCode">
+        <p class="w3-large">Messages <W3Badge Color="W3Color.Red" TextColor="W3Color.White">4</W3Badge></p>
+    </DocExample>
+
+    <DocExample Title="Badge Sizes" Code="@SizeCode">
+        <W3Badge Color="W3Color.Teal" TextColor="W3Color.White" Size="W3Size.Small" Class="w3-margin-right">1</W3Badge>
+        <W3Badge Color="W3Color.Teal" TextColor="W3Color.White" Class="w3-margin-right">2</W3Badge>
+        <W3Badge Color="W3Color.Teal" TextColor="W3Color.White" Size="W3Size.Large">3</W3Badge>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Badge content</td></tr>
+                <tr><td>Color</td><td>W3Color</td><td>None</td><td>Background color class</td></tr>
+                <tr><td>TextColor</td><td>W3Color</td><td>None</td><td>Text color class</td></tr>
+                <tr><td>Size</td><td>W3Size</td><td>Default</td><td>Size class</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional classes on the badge</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline styles on the badge</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <DocPager PreviousHref="components/chat" PreviousText="Chat" NextHref="components/tag" NextText="Tag" />
+</W3Container>
+
+@code {
+    private const string BasicCode = """
+<p class="w3-large">Messages <W3Badge Color="W3Color.Red" TextColor="W3Color.White">4</W3Badge></p>
+""";
+
+    private const string SizeCode = """
+<W3Badge Color="W3Color.Teal" TextColor="W3Color.White" Size="W3Size.Small">1</W3Badge>
+<W3Badge Color="W3Color.Teal" TextColor="W3Color.White">2</W3Badge>
+<W3Badge Color="W3Color.Teal" TextColor="W3Color.White" Size="W3Size.Large">3</W3Badge>
+""";
+}

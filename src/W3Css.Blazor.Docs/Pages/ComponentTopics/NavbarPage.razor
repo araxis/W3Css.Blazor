@@ -1,0 +1,204 @@
+@page "/components/navbar"
+
+<PageTitle>W3Navbar</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3Navbar</h1>
+    <DocPager PreviousHref="components/collapse" PreviousText="Collapse" NextHref="components/nav-menu" NextText="Nav Menu" />
+
+    <p class="w3-large">`W3Navbar` is a small navigation composition over W3.CSS bar, bar item, mobile, and dropdown patterns.</p>
+    <p>Use it when a page needs active-link state and inherited mobile behavior while still keeping `W3Bar`, `W3BarItem`, and `W3Dropdown` available for custom layouts.</p>
+
+    <DocExample Title="Basic Navbar" Description="Bind `ActiveValue` when the active item belongs to Blazor state." Code="@BasicCode">
+        <W3Navbar Label="Primary example navigation"
+                  @bind-ActiveValue="ActiveNav"
+                  Color="W3Color.Black"
+                  TextColor="W3Color.White"
+                  ActiveColor="W3Color.Green"
+                  ActiveTextColor="W3Color.White">
+            <W3NavbarItem Value="home" Href="components">Home</W3NavbarItem>
+            <W3NavbarItem Value="library" Href="components/button">Library</W3NavbarItem>
+            <W3NavbarItem Value="roadmap" Href="roadmap">Roadmap</W3NavbarItem>
+        </W3Navbar>
+    </DocExample>
+
+    <DocExample Title="Responsive Navbar" Description="Set `Mobile` on the navbar so each item receives the W3.CSS `w3-mobile` class." Code="@ResponsiveCode">
+        <W3Navbar Label="Responsive example navigation"
+                  Mobile="true"
+                  Border="true"
+                  Color="W3Color.LightGrey"
+                  ActiveValue="docs"
+                  ActiveColor="W3Color.Teal"
+                  ActiveTextColor="W3Color.White">
+            <W3NavbarItem Value="home" Href="components">Home</W3NavbarItem>
+            <W3NavbarItem Value="docs" Href="components/navbar">Docs</W3NavbarItem>
+            <W3NavbarItem Value="api" Href="components/bar">API</W3NavbarItem>
+        </W3Navbar>
+    </DocExample>
+
+    <DocExample Title="Navbar Dropdown" Description="Use `W3Dropdown` inside the navbar for click menus, and keep dropdown open state in Blazor." Code="@DropdownCode">
+        <W3Navbar Label="Dropdown example navigation"
+                  Mobile="true"
+                  Color="W3Color.Indigo"
+                  TextColor="W3Color.White"
+                  ActiveValue="colors">
+            <W3NavbarItem Value="home" Href="components">Home</W3NavbarItem>
+            <W3NavbarItem Value="layout" Href="components/grid">Layout</W3NavbarItem>
+            <W3Dropdown Label="More"
+                        Mobile="true"
+                        ButtonTextColor="W3Color.White"
+                        ContentColor="W3Color.White"
+                        ContentTextColor="W3Color.Black"
+                        @bind-Open="MoreOpen">
+                <W3NavbarItem Value="colors" Href="components/colors">Colors</W3NavbarItem>
+                <W3NavbarItem Value="versions" Href="components/versions">Versions</W3NavbarItem>
+                <W3NavbarItem Value="sidebar" Href="components/sidebar">Sidebar</W3NavbarItem>
+            </W3Dropdown>
+        </W3Navbar>
+    </DocExample>
+
+    <DocExample Title="Fixed Preview" Description="Wrap the navbar with `w3-top` or `w3-bottom` when the consuming page needs fixed navigation." Code="@FixedCode">
+        <div class="w3-border w3-light-grey" style="position:relative;height:140px;overflow:hidden;">
+            <div class="w3-top" style="position:absolute;">
+                <W3Navbar Label="Fixed preview navigation" Color="W3Color.White" Border="true" Card="true">
+                    <W3NavbarItem Active="true">Fixed Top</W3NavbarItem>
+                    <W3NavbarItem>Link 1</W3NavbarItem>
+                    <W3NavbarItem>Link 2</W3NavbarItem>
+                </W3Navbar>
+            </div>
+            <W3Container Class="w3-padding-32 w3-center">
+                Preview content
+            </W3Container>
+        </div>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>W3Navbar Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Label</td><td>string</td><td>Navigation</td><td>`aria-label` on the `nav` element</td></tr>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>`W3NavbarItem` and menu children</td></tr>
+                <tr><td>ActiveValue</td><td>string?</td><td>null</td><td>Matches child item `Value`</td></tr>
+                <tr><td>Mobile</td><td>bool</td><td>false</td><td>Inherited `w3-mobile` on navbar items</td></tr>
+                <tr><td>Block</td><td>bool</td><td>false</td><td>`w3-bar-block` instead of `w3-bar`</td></tr>
+                <tr><td>Border</td><td>bool</td><td>false</td><td>`w3-border`</td></tr>
+                <tr><td>Card</td><td>bool</td><td>false</td><td>Uses `CardDepth` to add a W3.CSS card class</td></tr>
+                <tr><td>CardDepth</td><td>W3CardDepth</td><td>Four</td><td>Card depth class when Card is true</td></tr>
+                <tr><td>Round</td><td>W3Round</td><td>None</td><td>Rounded utility class</td></tr>
+                <tr><td>Color</td><td>W3Color</td><td>None</td><td>Navbar background color</td></tr>
+                <tr><td>TextColor</td><td>W3Color</td><td>None</td><td>Navbar text color</td></tr>
+                <tr><td>ActiveColor</td><td>W3Color</td><td>Green</td><td>Inherited active item background</td></tr>
+                <tr><td>ActiveTextColor</td><td>W3Color</td><td>White</td><td>Inherited active item text color</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional nav classes</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline style on the nav</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>W3NavbarItem Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Item content</td></tr>
+                <tr><td>Value</td><td>string?</td><td>null</td><td>Active value comparison</td></tr>
+                <tr><td>Href</td><td>string?</td><td>null</td><td>Renders an anchor when set</td></tr>
+                <tr><td>Target</td><td>string?</td><td>null</td><td>Anchor target attribute</td></tr>
+                <tr><td>Type</td><td>string</td><td>button</td><td>Button type when Href is not set</td></tr>
+                <tr><td>Button</td><td>bool</td><td>true</td><td>`w3-button`</td></tr>
+                <tr><td>Mobile</td><td>bool</td><td>false</td><td>`w3-mobile` in addition to inherited mobile state</td></tr>
+                <tr><td>Active</td><td>bool</td><td>false</td><td>Manual active state</td></tr>
+                <tr><td>Disabled</td><td>bool</td><td>false</td><td>`w3-disabled` and disabled click behavior</td></tr>
+                <tr><td>Color</td><td>W3Color</td><td>None</td><td>Item background color</td></tr>
+                <tr><td>TextColor</td><td>W3Color</td><td>None</td><td>Item text color</td></tr>
+                <tr><td>ActiveColor</td><td>W3Color</td><td>None</td><td>Item-specific active background override</td></tr>
+                <tr><td>ActiveTextColor</td><td>W3Color</td><td>None</td><td>Item-specific active text override</td></tr>
+                <tr><td>OnClick</td><td>EventCallback&lt;MouseEventArgs&gt;</td><td>none</td><td>Raised after non-disabled item click</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional item classes</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline style on the item</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Related W3.CSS</h2>
+        <p><NavLink href="components/bar">Bar</NavLink></p>
+        <p><NavLink href="components/breadcrumb">Breadcrumb</NavLink></p>
+        <p><NavLink href="components/dropdown">Dropdown</NavLink></p>
+        <p><NavLink href="components/responsive">Responsive</NavLink></p>
+        <p><NavLink href="components/sidebar">Sidebar</NavLink></p>
+        <p><a href="https://www.w3schools.com/w3css/w3css_navigation.asp" target="_blank" rel="noopener">W3.CSS Navigation Bars</a></p>
+        <p><a href="https://www.w3schools.com/w3css/w3css_bars.asp" target="_blank" rel="noopener">W3.CSS Bars</a></p>
+        <p><a href="https://www.w3schools.com/w3css/w3css_dropdowns.asp" target="_blank" rel="noopener">W3.CSS Dropdowns</a></p>
+    </section>
+
+    <DocPager PreviousHref="components/collapse" PreviousText="Collapse" NextHref="components/nav-menu" NextText="Nav Menu" />
+</W3Container>
+
+@code {
+    private string ActiveNav { get; set; } = "home";
+    private bool MoreOpen { get; set; } = true;
+
+    private const string BasicCode = """
+<W3Navbar Label="Primary example navigation"
+          @bind-ActiveValue="activeNav"
+          Color="W3Color.Black"
+          TextColor="W3Color.White"
+          ActiveColor="W3Color.Green"
+          ActiveTextColor="W3Color.White">
+    <W3NavbarItem Value="home" Href="components">Home</W3NavbarItem>
+    <W3NavbarItem Value="library" Href="components/button">Library</W3NavbarItem>
+    <W3NavbarItem Value="roadmap" Href="roadmap">Roadmap</W3NavbarItem>
+</W3Navbar>
+""";
+
+    private const string ResponsiveCode = """
+<W3Navbar Label="Responsive example navigation"
+          Mobile="true"
+          Border="true"
+          Color="W3Color.LightGrey"
+          ActiveValue="docs"
+          ActiveColor="W3Color.Teal"
+          ActiveTextColor="W3Color.White">
+    <W3NavbarItem Value="home" Href="components">Home</W3NavbarItem>
+    <W3NavbarItem Value="docs" Href="components/navbar">Docs</W3NavbarItem>
+    <W3NavbarItem Value="api" Href="components/bar">API</W3NavbarItem>
+</W3Navbar>
+""";
+
+    private const string DropdownCode = """
+<W3Navbar Label="Dropdown example navigation"
+          Mobile="true"
+          Color="W3Color.Indigo"
+          TextColor="W3Color.White"
+          ActiveValue="colors">
+    <W3NavbarItem Value="home" Href="components">Home</W3NavbarItem>
+    <W3NavbarItem Value="layout" Href="components/grid">Layout</W3NavbarItem>
+    <W3Dropdown Label="More"
+                Mobile="true"
+                ButtonTextColor="W3Color.White"
+                ContentColor="W3Color.White"
+                ContentTextColor="W3Color.Black"
+                @bind-Open="moreOpen">
+        <W3NavbarItem Value="colors" Href="components/colors">Colors</W3NavbarItem>
+        <W3NavbarItem Value="versions" Href="components/versions">Versions</W3NavbarItem>
+        <W3NavbarItem Value="sidebar" Href="components/sidebar">Sidebar</W3NavbarItem>
+    </W3Dropdown>
+</W3Navbar>
+""";
+
+    private const string FixedCode = """
+<div class="w3-top">
+    <W3Navbar Label="Fixed preview navigation" Color="W3Color.White" Border="true" Card="true">
+        <W3NavbarItem Active="true">Fixed Top</W3NavbarItem>
+        <W3NavbarItem>Link 1</W3NavbarItem>
+        <W3NavbarItem>Link 2</W3NavbarItem>
+    </W3Navbar>
+</div>
+""";
+}

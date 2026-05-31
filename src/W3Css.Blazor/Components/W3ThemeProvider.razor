@@ -1,0 +1,68 @@
+@using System.Text
+@inherits W3ComponentBase
+
+@((MarkupString)StyleMarkup)
+
+<div @attributes="AdditionalAttributes"
+     class="@CssClass"
+     style="@Style"
+     data-w3-dark="@DarkAttribute">
+    <CascadingValue Value="ActiveTheme" IsFixed="false">
+        @ChildContent
+    </CascadingValue>
+</div>
+
+@code {
+    // Owns the token layer W3.CSS lacks: emits CSS custom properties from the
+    // theme and the small set of token utility classes (.w3-primary, .w3-surface,
+    // ...) that resolve those variables. One W3Theme drives every themed component.
+    private W3Theme ActiveTheme => Dark ? (Theme.Dark ?? W3Theme.DefaultDark) : Theme;
+
+    private string? DarkAttribute => Dark ? "true" : null;
+
+    private string CssClass => BuildClass("w3-theme-root");
+
+    /// <summary>
+    /// The theme tokens. Defaults to <see cref="W3Theme.Default"/>.
+    /// </summary>
+    [Parameter]
+    public W3Theme Theme { get; set; } = W3Theme.Default;
+
+    /// <summary>
+    /// Switches to the dark variant (<see cref="W3Theme.Dark"/>, or a sensible default).
+    /// </summary>
+    [Parameter]
+    public bool Dark { get; set; }
+
+    /// <summary>
+    /// The themed content.
+    /// </summary>
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    private string StyleMarkup
+    {
+        get
+        {
+            // Only the variable overrides are emitted here. The token utility
+            // classes that consume these variables live in the always-on bundled
+            // stylesheet (_content/W3Css.Blazor/w3-theme.css), so tokens also work
+            // with sensible defaults when no provider is present.
+            var dark = Theme.Dark ?? W3Theme.DefaultDark;
+            var builder = new StringBuilder();
+            builder.Append("<style>");
+            builder.Append(".w3-theme-root{").Append(Variables(Theme)).Append("font-family:").Append(Theme.FontFamily).Append(";}");
+            builder.Append(".w3-theme-root[data-w3-dark='true']{").Append(Variables(dark)).Append('}');
+            builder.Append("</style>");
+            return builder.ToString();
+        }
+    }
+
+    private static string Variables(W3Theme t) =>
+        $"--w3-primary:{t.Primary};--w3-on-primary:{t.OnPrimary};" +
+        $"--w3-secondary:{t.Secondary};--w3-on-secondary:{t.OnSecondary};" +
+        $"--w3-accent:{t.Accent};--w3-on-accent:{t.OnAccent};" +
+        $"--w3-surface:{t.Surface};--w3-on-surface:{t.OnSurface};" +
+        $"--w3-background:{t.Background};--w3-on-background:{t.OnBackground};" +
+        $"--w3-border:{t.Border};--w3-radius:{t.Radius};";
+}

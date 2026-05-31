@@ -1,0 +1,52 @@
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+<blockquote @attributes="AdditionalAttributes"
+            class="@CssClass"
+            style="@Style">
+    @ChildContent
+    @if (!string.IsNullOrWhiteSpace(Cite))
+    {
+        <footer class="@FooterCssClass">@Cite</footer>
+    }
+</blockquote>
+
+@code {
+    private string CssClass => BuildClass(
+        "w3-panel",
+        LeftBar ? "w3-leftbar" : null,
+        RightBar ? "w3-rightbar" : null,
+        Color.ToBackgroundClass(),
+        TextColor.ToTextClass(),
+        BorderColor.ToBorderClass(),
+        Round.ToClass());
+
+    private string FooterCssClass => new W3Css.Blazor.Internal.W3ClassBuilder()
+        .Add("w3-small")
+        .Add("w3-text-grey")
+        .ToString();
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public string? Cite { get; set; }
+
+    [Parameter]
+    public bool LeftBar { get; set; } = true;
+
+    [Parameter]
+    public bool RightBar { get; set; }
+
+    [Parameter]
+    public W3Color Color { get; set; } = W3Color.LightGrey;
+
+    [Parameter]
+    public W3Color TextColor { get; set; } = W3Color.Black;
+
+    [Parameter]
+    public W3Color BorderColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Round Round { get; set; } = W3Round.None;
+}

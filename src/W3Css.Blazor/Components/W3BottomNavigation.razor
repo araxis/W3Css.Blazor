@@ -1,0 +1,101 @@
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+<CascadingValue Value="this">
+    <nav @attributes="AdditionalAttributes"
+         class="@CssClass"
+         style="@Style"
+         aria-label="@Label">
+        @ChildContent
+    </nav>
+</CascadingValue>
+
+@code {
+    private string CssClass => BuildClass(
+        "w3-bar",
+        "w3-bottom-navigation",
+        Fixed ? "w3-bottom-navigation-fixed" : null,
+        Contained ? "w3-bottom-navigation-contained" : null,
+        EqualWidth ? "w3-bottom-navigation-equal" : null,
+        Dense ? "w3-bottom-navigation-dense" : null,
+        Border ? "w3-border" : null,
+        Card ? CardDepth.ToClass() : null,
+        Round.ToClass(),
+        Color.ToBackgroundClass(),
+        TextColor.ToTextClass());
+
+    [Parameter]
+    public string Label { get; set; } = "Bottom navigation";
+
+    [Parameter]
+    public string? Value { get; set; }
+
+    [Parameter]
+    public EventCallback<string?> ValueChanged { get; set; }
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public bool Fixed { get; set; }
+
+    [Parameter]
+    public bool Contained { get; set; }
+
+    [Parameter]
+    public bool EqualWidth { get; set; } = true;
+
+    [Parameter]
+    public bool Dense { get; set; }
+
+    [Parameter]
+    public bool ShowLabels { get; set; } = true;
+
+    [Parameter]
+    public bool Border { get; set; }
+
+    [Parameter]
+    public bool Card { get; set; }
+
+    [Parameter]
+    public W3CardDepth CardDepth { get; set; } = W3CardDepth.Two;
+
+    [Parameter]
+    public W3Round Round { get; set; } = W3Round.None;
+
+    [Parameter]
+    public W3Color Color { get; set; } = W3Color.Surface;
+
+    [Parameter]
+    public W3Color TextColor { get; set; } = W3Color.Black;
+
+    [Parameter]
+    public W3Color ActiveColor { get; set; } = W3Color.Primary;
+
+    [Parameter]
+    public W3Color ActiveTextColor { get; set; } = W3Color.White;
+
+    [Parameter]
+    public W3Color HoverColor { get; set; } = W3Color.LightGrey;
+
+    [Parameter]
+    public W3Color HoverTextColor { get; set; } = W3Color.None;
+
+    internal bool IsActive(string? value)
+    {
+        return !string.IsNullOrWhiteSpace(value)
+            && string.Equals(Value, value, StringComparison.Ordinal);
+    }
+
+    internal async Task SelectAsync(string? value)
+    {
+        if (string.Equals(Value, value, StringComparison.Ordinal))
+        {
+            return;
+        }
+
+        Value = value;
+        await ValueChanged.InvokeAsync(value);
+        await InvokeAsync(StateHasChanged);
+    }
+}

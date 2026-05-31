@@ -1,0 +1,99 @@
+@page "/components/date-range-picker"
+
+<PageTitle>W3DateRangePicker</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3DateRangePicker</h1>
+    <DocPager PreviousHref="components/number-input" PreviousText="Number Input" NextHref="components/date-input" NextText="Date Input" />
+
+    <p class="w3-large"><code>W3DateRangePicker</code> is a MudBlazor-style alias that composes two native date inputs into a reusable range picker surface.</p>
+    <p>Use it when forms require start and end dates and you want Mud-compatible naming with W3.CSS input styling.</p>
+
+    <DocExample Title="Basic Date Range" Description="Bind a single range value and let the component emit updates when start/end dates change." Code="@RangeCode">
+        <EditForm Model="@RangeModel">
+            <W3Field Label="Travel window" For="@(() => RangeModel.Range)" ForId="travel-range">
+                <W3DateRangePicker Id="travel-range"
+                                   FromLabel="From"
+                                   ToLabel="To"
+                                   @bind-Value="RangeModel.Range"
+                                   Min="@RangeMinimum"
+                                   Max="@RangeMaximum"
+                                   Border="true"
+                                   Round="W3Round.Small" />
+            </W3Field>
+        </EditForm>
+    </DocExample>
+
+    <DocExample Title="Immediate Range Updates" Description="Use <code>Immediate</code> for input-time change updates, which mirrors MudBlazor defaults in many date scenarios." Code="@ImmediateCode">
+        <W3DateRangePicker @bind-Value="AuditRange"
+                           Min="new DateOnly(2026, 1, 1)"
+                           Max="new DateOnly(2026, 12, 31)"
+                           Immediate="true"
+                           Border="true"
+                           Style="max-width: 32rem;" />
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Default</th>
+                    <th>Maps to</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Value</td><td>W3DateRange?</td><td>null</td><td>Range bound value</td></tr>
+                <tr><td>ValueChanged</td><td>EventCallback&lt;W3DateRange?&gt;</td><td>null</td><td>Two-way binding callback for range value</td></tr>
+                <tr><td>FromLabel</td><td>string</td><td>From</td><td>Left label</td></tr>
+                <tr><td>ToLabel</td><td>string</td><td>To</td><td>Right label</td></tr>
+                <tr><td>Min</td><td>DateOnly?</td><td>null</td><td>Common minimum bound</td></tr>
+                <tr><td>Max</td><td>DateOnly?</td><td>null</td><td>Common maximum bound</td></tr>
+                <tr><td>UpdateOnInput</td><td>bool</td><td>false</td><td>Native input update mode</td></tr>
+                <tr><td>Immediate</td><td>bool?</td><td>null</td><td>MudBlazor-compatible alias for <code>UpdateOnInput</code></td></tr>
+                <tr><td>ReadOnly</td><td>bool</td><td>false</td><td>Disables user editing</td></tr>
+                <tr><td>Disabled</td><td>bool</td><td>false</td><td>Disables both date pickers</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Related</h2>
+        <p><NavLink href="components/date-input">Date Input</NavLink> is the native input primitive for date entries.</p>
+        <p><NavLink href="components/date-input">Date Input</NavLink> is the native date primitive for each endpoint.</p>
+    </section>
+
+    <DocPager PreviousHref="components/number-input" PreviousText="Number Input" NextHref="components/date-input" NextText="Date Input" />
+</W3Container>
+
+@code {
+    private readonly DateRangePickerExampleModel RangeModel = new();
+    private W3DateRange? AuditRange { get; set; } = new(new DateOnly(2026, 3, 1), new DateOnly(2026, 3, 10));
+
+    private static readonly DateOnly RangeMinimum = new(2026, 1, 1);
+    private static readonly DateOnly RangeMaximum = new(2026, 12, 31);
+
+    private const string RangeCode = """
+<W3DateRangePicker @bind-Value="range"
+                   FromLabel="From"
+                   ToLabel="To"
+                   Min="new DateOnly(2026, 1, 1)"
+                   Max="new DateOnly(2026, 12, 31)"
+                   Border="true" />
+""";
+
+    private const string ImmediateCode = """
+<W3DateRangePicker @bind-Value="auditRange"
+                   Min="new DateOnly(2026, 1, 1)"
+                   Max="new DateOnly(2026, 12, 31)"
+                   Immediate="true"
+                   Style="max-width: 32rem;" />
+""";
+
+    private sealed class DateRangePickerExampleModel
+    {
+        public W3DateRange? Range { get; set; } = new(new DateOnly(2026, 6, 1), new DateOnly(2026, 6, 15));
+    }
+}

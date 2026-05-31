@@ -1,0 +1,73 @@
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+<footer @attributes="AdditionalAttributes"
+        class="@CssClass"
+        style="@StyleValue">
+    @ChildContent
+</footer>
+
+@code {
+    // MudBlazor compatibility: mirrors MudFooter, a page/app footer region.
+    // Stays W3.CSS-first by composing w3 color, border, and fixed-position classes.
+    private string CssClass => BuildClass(
+        "w3-footer",
+        Fixed ? "w3-bottom" : null,
+        Wrap ? "w3-footer-wrap" : null,
+        Border ? "w3-border-top w3-border" : null,
+        Color.ToBackgroundClass(),
+        TextColor.ToTextClass());
+
+    private string? StyleValue => CombineStyle(Gap >= 0 ? $"--w3-footer-gap:{Gap}px" : null, Style);
+
+    /// <summary>
+    /// Footer content such as links, copyright, and status text.
+    /// </summary>
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    /// <summary>
+    /// Pins the footer to the bottom of the viewport using <c>w3-bottom</c>.
+    /// </summary>
+    [Parameter]
+    public bool Fixed { get; set; }
+
+    /// <summary>
+    /// Allows footer content to wrap onto multiple rows on narrow screens.
+    /// </summary>
+    [Parameter]
+    public bool Wrap { get; set; } = true;
+
+    /// <summary>
+    /// Adds a top border to separate the footer from page content.
+    /// </summary>
+    [Parameter]
+    public bool Border { get; set; }
+
+    /// <summary>
+    /// Gap between footer items in pixels.
+    /// </summary>
+    [Parameter]
+    public int Gap { get; set; } = 16;
+
+    /// <summary>
+    /// Background color class.
+    /// </summary>
+    [Parameter]
+    public W3Color Color { get; set; } = W3Color.None;
+
+    /// <summary>
+    /// Text color class.
+    /// </summary>
+    [Parameter]
+    public W3Color TextColor { get; set; } = W3Color.None;
+
+    private static string? CombineStyle(params string?[] styles)
+    {
+        var style = string.Join(';', styles
+            .Where(value => !string.IsNullOrWhiteSpace(value))
+            .Select(value => value!.Trim().TrimEnd(';')));
+
+        return string.IsNullOrWhiteSpace(style) ? null : style;
+    }
+}

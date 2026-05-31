@@ -1,0 +1,62 @@
+@page "/components/mask"
+
+<PageTitle>W3Mask</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3Mask</h1>
+    <DocPager PreviousHref="components/input" PreviousText="Input" NextHref="components/form" NextText="Form" />
+
+    <p class="w3-large">`W3Mask` is the MudBlazor-compatible masked text input (`MudMask`).</p>
+    <p>Mask tokens: <code>0</code> = digit, <code>a</code> = letter, <code>*</code> = alphanumeric. Any other character is treated as a literal delimiter and inserted automatically as the user types.</p>
+
+    <DocExample Title="Phone Number" Code="@PhoneCode">
+        <W3Mask Mask="(000) 000-0000" InputMode="numeric" Placeholder="(___) ___-____" @bind-Value="phone" />
+        <p class="doc-muted">Value: <code>@(string.IsNullOrEmpty(phone) ? "(empty)" : phone)</code></p>
+    </DocExample>
+
+    <DocExample Title="License Key" Code="@KeyCode">
+        <W3Mask Mask="****-****-****" @bind-Value="key" />
+        <p class="doc-muted">Value: <code>@(string.IsNullOrEmpty(key) ? "(empty)" : key)</code></p>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Mask</td><td>string</td><td>required</td><td>Pattern (<code>0</code>/<code>a</code>/<code>*</code> + literals)</td></tr>
+                <tr><td>Value</td><td>string?</td><td>null</td><td>Masked text (<code>@@bind-Value</code>)</td></tr>
+                <tr><td>Placeholder</td><td>string?</td><td>null</td><td>Empty-state hint</td></tr>
+                <tr><td>InputMode</td><td>string?</td><td>null</td><td><code>inputmode</code> for on-screen keyboards</td></tr>
+                <tr><td>ReadOnly</td><td>bool</td><td>false</td><td>Read-only state</td></tr>
+                <tr><td>Disabled / Border / Round / Color / TextColor</td><td>—</td><td>—</td><td>Shared form-control styling</td></tr>
+            </tbody>
+        </W3Table>
+        <p class="doc-muted">Built on the validation-friendly form base, so it works inside <code>EditForm</code> with <code>@@bind-Value</code>.</p>
+    </section>
+
+    <DocPager PreviousHref="components/input" PreviousText="Input" NextHref="components/form" NextText="Form" />
+</W3Container>
+
+@code {
+    private string? phone;
+    private string? key;
+
+    private const string PhoneCode = """
+<W3Mask Mask="(000) 000-0000" InputMode="numeric" Placeholder="(___) ___-____" @bind-Value="phone" />
+
+@code {
+    private string? phone;
+}
+""";
+
+    private const string KeyCode = """
+<W3Mask Mask="****-****-****" @bind-Value="key" />
+
+@code {
+    private string? key;
+}
+""";
+}

@@ -1,0 +1,63 @@
+@page "/components/highlighter"
+
+<PageTitle>W3Highlighter</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3Highlighter</h1>
+    <DocPager PreviousHref="components/code" PreviousText="Code" NextHref="components/filters" NextText="Filters" />
+
+    <p class="w3-large">`W3Highlighter` emphasizes matching text in search results, command palettes, tables, and filter previews.</p>
+    <p>It renders plain text segments with W3.CSS color classes on matched ranges, so consumer text remains encoded by Blazor.</p>
+
+    <DocExample Title="Search Result Highlight" Code="@BasicCode">
+        <p class="w3-large">
+            <W3Highlighter Text="Blazor components should stay small, accessible, and easy to compose."
+                           Search="compose" />
+        </p>
+    </DocExample>
+
+    <DocExample Title="Limited Matches" Code="@LimitedCode">
+        <W3Highlighter Text="Data tables, tree data, and data filters all benefit from visible matches."
+                       Search="data"
+                       MaxMatches="2"
+                       Color="W3Color.PaleBlue"
+                       TextColor="W3Color.Black" />
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Text</td><td>string?</td><td>null</td><td>Text to render</td></tr>
+                <tr><td>Search</td><td>string?</td><td>null</td><td>Text to highlight</td></tr>
+                <tr><td>CaseSensitive</td><td>bool</td><td>false</td><td>Ordinal or ordinal-ignore-case matching</td></tr>
+                <tr><td>MaxMatches</td><td>int?</td><td>null</td><td>Optional cap on highlighted matches</td></tr>
+                <tr><td>Color</td><td>W3Color</td><td>Yellow</td><td>Highlight background color</td></tr>
+                <tr><td>TextColor</td><td>W3Color</td><td>Black</td><td>Highlight text color</td></tr>
+                <tr><td>Round</td><td>W3Round</td><td>Small</td><td>Rounded highlight class</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional classes on the root span</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline styles on the root span</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <DocPager PreviousHref="components/code" PreviousText="Code" NextHref="components/filters" NextText="Filters" />
+</W3Container>
+
+@code {
+    private const string BasicCode = """
+<W3Highlighter Text="Blazor components should stay small, accessible, and easy to compose."
+               Search="compose" />
+""";
+
+    private const string LimitedCode = """
+<W3Highlighter Text="Data tables, tree data, and data filters all benefit from visible matches."
+               Search="data"
+               MaxMatches="2"
+               Color="W3Color.PaleBlue"
+               TextColor="W3Color.Black" />
+""";
+}

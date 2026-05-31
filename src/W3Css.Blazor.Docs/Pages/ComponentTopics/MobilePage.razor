@@ -1,0 +1,112 @@
+@page "/components/mobile"
+
+<PageTitle>Mobile</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>Mobile</h1>
+    <DocPager PreviousHref="components/dark-mode" PreviousText="Dark Mode" NextHref="components/input" NextText="Input" />
+
+    <p class="w3-large">W3.CSS mobile behavior is mostly utility-class composition.</p>
+    <p>Use typed `Mobile` parameters where this library exposes them, and use `Class="w3-mobile"` for simple pass-through on other components.</p>
+
+    <DocExample Title="Mobile Bar Items" Code="@BarCode">
+        <W3Bar Color="W3Color.LightGrey" Class="w3-border">
+            <W3BarItem Href="" Mobile="true">Home</W3BarItem>
+            <W3BarItem Href="components" Mobile="true">Components</W3BarItem>
+            <W3BarItem Href="roadmap" Mobile="true">Roadmap</W3BarItem>
+            <W3Dropdown Label="More" Mobile="true" @bind-Open="mobileDropdownOpen">
+                <a class="w3-bar-item w3-button" href="components/table">Tables</a>
+                <a class="w3-bar-item w3-button" href="components/validation">Validation</a>
+            </W3Dropdown>
+        </W3Bar>
+    </DocExample>
+
+    <DocExample Title="Mobile Cells" Code="@CellsCode">
+        <W3CellRow>
+            <W3Cell Mobile="true" Color="W3Color.LightGrey" Class="w3-padding">
+                Navigation
+            </W3Cell>
+            <W3Cell Mobile="true" Class="w3-padding">
+                Content
+            </W3Cell>
+            <W3Cell Mobile="true" Color="W3Color.PaleBlue" Class="w3-padding">
+                Actions
+            </W3Cell>
+        </W3CellRow>
+    </DocExample>
+
+    <DocExample Title="Class Pass-through" Code="@PassThroughCode">
+        <W3Container Class="w3-padding w3-border">
+            <W3Button Color="W3Color.Teal" TextColor="W3Color.White" Class="w3-mobile w3-margin-right">
+                Save
+            </W3Button>
+            <W3Button Border="true" Class="w3-mobile">
+                Cancel
+            </W3Button>
+        </W3Container>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Usage Reference</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Need</th><th>Use</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Stack bar items, dropdowns, or cells on phones</td><td>`Mobile="true"` on `W3BarItem`, `W3Dropdown`, or `W3Cell`</td><td>`w3-mobile`</td></tr>
+                <tr><td>Apply mobile behavior to another component</td><td>`Class="w3-mobile"`</td><td>Class pass-through from `W3ComponentBase`</td></tr>
+                <tr><td>Keep wide content usable on small screens</td><td>`W3Responsive` or `W3Table Responsive="true"`</td><td>`w3-responsive` overflow wrapper</td></tr>
+                <tr><td>Change layout spans by breakpoint</td><td>`W3Column` small, medium, and large spans</td><td>`s1`-`s12`, `m1`-`m12`, and `l1`-`l12`</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Related W3.CSS</h2>
+        <p><a href="https://www.w3schools.com/w3css/w3css_responsive.asp" target="_blank" rel="noopener">W3.CSS Responsive Classes</a></p>
+        <p><a href="https://www.w3schools.com/w3css/w3css_mobile.asp" target="_blank" rel="noopener">W3.CSS Mobile</a></p>
+    </section>
+
+    <DocPager PreviousHref="components/dark-mode" PreviousText="Dark Mode" NextHref="components/input" NextText="Input" />
+</W3Container>
+
+@code {
+    private bool mobileDropdownOpen;
+
+    private const string BarCode = """
+<W3Bar Color="W3Color.LightGrey" Class="w3-border">
+    <W3BarItem Href="" Mobile="true">Home</W3BarItem>
+    <W3BarItem Href="components" Mobile="true">Components</W3BarItem>
+    <W3BarItem Href="roadmap" Mobile="true">Roadmap</W3BarItem>
+    <W3Dropdown Label="More" Mobile="true" @bind-Open="mobileDropdownOpen">
+        <a class="w3-bar-item w3-button" href="components/table">Tables</a>
+        <a class="w3-bar-item w3-button" href="components/validation">Validation</a>
+    </W3Dropdown>
+</W3Bar>
+""";
+
+    private const string CellsCode = """
+<W3CellRow>
+    <W3Cell Mobile="true" Color="W3Color.LightGrey" Class="w3-padding">
+        Navigation
+    </W3Cell>
+    <W3Cell Mobile="true" Class="w3-padding">
+        Content
+    </W3Cell>
+    <W3Cell Mobile="true" Color="W3Color.PaleBlue" Class="w3-padding">
+        Actions
+    </W3Cell>
+</W3CellRow>
+""";
+
+    private const string PassThroughCode = """
+<W3Container Class="w3-padding w3-border">
+    <W3Button Color="W3Color.Teal" TextColor="W3Color.White" Class="w3-mobile w3-margin-right">
+        Save
+    </W3Button>
+    <W3Button Border="true" Class="w3-mobile">
+        Cancel
+    </W3Button>
+</W3Container>
+""";
+}

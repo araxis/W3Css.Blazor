@@ -1,0 +1,61 @@
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+<div @attributes="AdditionalAttributes"
+     class="@CssClass"
+     style="@Style">
+    @ChildContent
+</div>
+
+@code {
+    private string CssClass => BuildClass(
+        ElevationClass,
+        Square ? null : W3Round.Medium.ToClass(),
+        Outlined ? "w3-border" : null,
+        Color.ToBackgroundClass(),
+        TextColor.ToTextClass(),
+        Class);
+
+    private string? ElevationClass => Elevation switch
+    {
+        <= 0 => null,
+        1 => W3CardDepth.Default.ToClass(),
+        2 => W3CardDepth.Two.ToClass(),
+        _ => W3CardDepth.Four.ToClass()
+    };
+
+    /// <summary>
+    /// MudBlazor-compatible paper elevation value.
+    /// 0 renders a flat surface; 1 uses <c>w3-card</c>; 2 uses <c>w3-card-2</c>; 3+ uses <c>w3-card-4</c>.
+    /// </summary>
+    [Parameter]
+    public int Elevation { get; set; } = 1;
+
+    /// <summary>
+    /// MudBlazor-compatible square mode; <see langword="true"/> disables rounded corners.
+    /// </summary>
+    [Parameter]
+    public bool Square { get; set; }
+
+    /// <summary>
+    /// MudBlazor-compatible outlined mode adds <c>w3-border</c>.
+    /// </summary>
+    [Parameter]
+    public bool Outlined { get; set; }
+
+    /// <summary>
+    /// Background surface color. Defaults to the theme <c>Surface</c> token so paper
+    /// looks branded with zero config and follows dark mode.
+    /// </summary>
+    [Parameter]
+    public W3Color Color { get; set; } = W3Color.Surface;
+
+    /// <summary>
+    /// MudBlazor-compatible foreground text color.
+    /// </summary>
+    [Parameter]
+    public W3Color TextColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+}

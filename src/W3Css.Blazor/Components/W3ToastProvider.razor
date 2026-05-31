@@ -1,0 +1,144 @@
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+@implements IDisposable
+@inject W3ToastService ToastService
+
+<div @attributes="AdditionalAttributes"
+     class="@CssClass"
+     style="@Style"
+     aria-live="@AriaLive"
+     aria-label="@Label">
+    @foreach (var toast in VisibleToasts)
+    {
+        <W3Toast @key="toast.Id"
+                 Title="@toast.Title"
+                 Kind="@toast.Kind"
+                 ShowCloseButton="@ShowCloseButton"
+                 ActionText="@toast.ActionText"
+                 OnAction="@(() => InvokeToastActionAsync(toast))"
+                 OnDismiss="@(() => DismissToast(toast.Id))">
+            @toast.Message
+        </W3Toast>
+    }
+</div>
+
+@code {
+    private readonly Dictionary<Guid, CancellationTokenSource> dismissalTimers = [];
+
+    private IReadOnlyList<W3ToastMessage> VisibleToasts => ToastService.Toasts
+        .TakeLast(MaxVisible)
+        .ToArray();
+
+    private string CssClass => BuildClass(
+        "w3-toast-provider",
+        Position.ToClass());
+
+    [Parameter]
+    public W3ToastPosition Position { get; set; } = W3ToastPosition.BottomRight;
+
+    [Parameter]
+    public int MaxVisible { get; set; } = 5;
+
+    [Parameter]
+    public TimeSpan? DefaultDuration { get; set; } = TimeSpan.FromSeconds(5);
+
+    [Parameter]
+    public bool ShowCloseButton { get; set; } = true;
+
+    [Parameter]
+    public string AriaLive { get; set; } = "polite";
+
+    [Parameter]
+    public string Label { get; set; } = "Notifications";
+
+    protected override void OnInitialized()
+    {
+        ToastService.ToastsChanged += HandleToastsChanged;
+        QueueAutoDismissals();
+    }
+
+    private void HandleToastsChanged()
+    {
+        QueueAutoDismissals();
+        _ = InvokeAsync(StateHasChanged);
+    }
+
+    private void QueueAutoDismissals()
+    {
+        foreach (var toast in ToastService.Toasts)
+        {
+            QueueAutoDismiss(toast);
+        }
+
+        foreach (var id in dismissalTimers.Keys.Except(ToastService.Toasts.Select(toast => toast.Id)).ToArray())
+        {
+            StopAutoDismiss(id);
+        }
+    }
+
+    private void QueueAutoDismiss(W3ToastMessage toast)
+    {
+        var duration = toast.Duration ?? DefaultDuration;
+
+        if (duration is null || duration <= TimeSpan.Zero || dismissalTimers.ContainsKey(toast.Id))
+        {
+            return;
+        }
+
+        var cts = new CancellationTokenSource();
+        dismissalTimers[toast.Id] = cts;
+        _ = AutoDismissAsync(toast.Id, duration.Value, cts.Token);
+    }
+
+    private async Task AutoDismissAsync(Guid id, TimeSpan duration, CancellationToken cancellationToken)
+    {
+        try
+        {
+            await Task.Delay(duration, cancellationToken);
+            await InvokeAsync(() => ToastService.Dismiss(id));
+        }
+        catch (OperationCanceledException)
+        {
+        }
+    }
+
+    private async Task InvokeToastActionAsync(W3ToastMessage toast)
+    {
+        if (toast.OnAction is not null)
+        {
+            await toast.OnAction();
+        }
+
+        DismissToast(toast.Id);
+    }
+
+    private void DismissToast(Guid id)
+    {
+        StopAutoDismiss(id);
+        ToastService.Dismiss(id);
+    }
+
+    private void StopAutoDismiss(Guid id)
+    {
+        if (!dismissalTimers.Remove(id, out var cts))
+        {
+            return;
+        }
+
+        cts.Cancel();
+        cts.Dispose();
+    }
+
+    public void Dispose()
+    {
+        ToastService.ToastsChanged -= HandleToastsChanged;
+
+        foreach (var cts in dismissalTimers.Values)
+        {
+            cts.Cancel();
+            cts.Dispose();
+        }
+
+        dismissalTimers.Clear();
+    }
+}

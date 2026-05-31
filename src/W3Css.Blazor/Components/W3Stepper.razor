@@ -1,0 +1,371 @@
+@using System.Globalization
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+<CascadingValue Value="this" IsFixed="true">
+    <section @attributes="AdditionalAttributes"
+             class="@CssClass"
+             style="@Style">
+        @if (ShowProgress && steps.Count > 1)
+        {
+            <W3Progress Value="@ProgressValue"
+                        ShowLabel="@ShowProgressLabel"
+                        Label="@ProgressLabel"
+                        Color="@ProgressColor"
+                        TextColor="@ProgressTextColor"
+                        TrackColor="@ProgressTrackColor"
+                        Round="@Round" />
+        }
+
+        <nav class="@NavCssClass" aria-label="@Label">
+            <ol class="@ListCssClass" role="list">
+                @for (var index = 0; index < steps.Count; index++)
+                {
+                    var step = steps[index];
+                    var active = IsActive(step);
+                    var completed = IsCompleted(step);
+                    var error = step.Error;
+                    var canActivate = CanActivate(step, index);
+
+                    <li @key="step"
+                        class="@GetItemCssClass(active, completed, error, step.Disabled, canActivate)"
+                        role="listitem">
+                        <button type="button"
+                                id="@step.StepId"
+                                class="@GetButtonCssClass(active, completed, error)"
+                                disabled="@(!canActivate)"
+                                aria-current="@GetAriaCurrent(active)"
+                                aria-controls="@step.PanelId"
+                                aria-disabled="@GetAriaDisabled(canActivate)"
+                                @onclick="() => ActivateAsync(step, index)">
+                            @if (ShowNumbers)
+                            {
+                                <span class="@GetMarkerCssClass(active, completed, error)" aria-hidden="true">
+                                    @(index + 1)
+                                </span>
+                            }
+
+                            <span class="w3-stepper-text">
+                                <span class="w3-stepper-title">@step.Title</span>
+                                @if (ShowDescriptions && !string.IsNullOrWhiteSpace(step.Description))
+                                {
+                                    <span class="w3-stepper-description">@step.Description</span>
+                                }
+                            </span>
+                        </button>
+                    </li>
+                }
+            </ol>
+        </nav>
+
+        @if (ShowPanels && ActiveStep is not null)
+        {
+            <div class="@PanelCssClass"
+                 id="@ActiveStep.PanelId"
+                 role="region"
+                 aria-labelledby="@ActiveStep.StepId">
+                @ActiveStep.ChildContent
+            </div>
+        }
+    </section>
+
+    @ChildContent
+</CascadingValue>
+
+@code {
+    private readonly List<W3Step> steps = [];
+
+    private W3Step? ActiveStep => steps.FirstOrDefault(IsActive) ?? steps.FirstOrDefault(step => !step.Disabled);
+
+    private int ActiveIndex => ActiveStep is null ? -1 : steps.IndexOf(ActiveStep);
+
+    private double ProgressValue
+    {
+        get
+        {
+            if (steps.Count <= 1)
+            {
+                return steps.Count == 1 ? 100 : 0;
+            }
+
+            var activeProgress = ActiveIndex <= 0
+                ? 0
+                : ActiveIndex / (double)(steps.Count - 1) * 100;
+            var completedProgress = steps.Count == 0
+                ? 0
+                : steps.Count(IsCompleted) / (double)steps.Count * 100;
+
+            return Math.Clamp(Math.Max(activeProgress, completedProgress), 0, 100);
+        }
+    }
+
+    private string ProgressLabel => ProgressLabelText ?? $"{ProgressValue.ToString("0", CultureInfo.InvariantCulture)}%";
+
+    private string CssClass => BuildClass(
+        "w3-stepper",
+        Vertical ? "w3-stepper-vertical" : "w3-stepper-horizontal",
+        Border ? "w3-border" : null,
+        Card ? CardDepth.ToClass() : null,
+        Round.ToClass(),
+        Color.ToBackgroundClass(),
+        TextColor.ToTextClass());
+
+    private string NavCssClass => new W3ClassBuilder()
+        .Add("w3-stepper-nav")
+        .AddIf(ShowProgress && steps.Count > 1, "w3-stepper-nav-after-progress")
+        .ToString();
+
+    private string ListCssClass => new W3ClassBuilder()
+        .Add("w3-stepper-list")
+        .AddIf(Compact, "w3-small")
+        .ToString();
+
+    private string PanelCssClass => new W3ClassBuilder()
+        .Add("w3-stepper-panel")
+        .Add("w3-container")
+        .AddIf(PanelBorder, "w3-border")
+        .Add(PanelColor.ToBackgroundClass())
+        .Add(PanelTextColor.ToTextClass())
+        .ToString();
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public string? ActiveValue { get; set; }
+
+    [Parameter]
+    public EventCallback<string> ActiveValueChanged { get; set; }
+
+    [Parameter]
+    public EventCallback<string> StepActivated { get; set; }
+
+    [Parameter]
+    public IReadOnlyCollection<string> CompletedValues { get; set; } = [];
+
+    [Parameter]
+    public string Label { get; set; } = "Stepper";
+
+    [Parameter]
+    public bool Linear { get; set; }
+
+    [Parameter]
+    public bool Vertical { get; set; }
+
+    [Parameter]
+    public bool Compact { get; set; }
+
+    [Parameter]
+    public bool ShowNumbers { get; set; } = true;
+
+    [Parameter]
+    public bool ShowDescriptions { get; set; } = true;
+
+    [Parameter]
+    public bool ShowPanels { get; set; } = true;
+
+    [Parameter]
+    public bool ShowProgress { get; set; }
+
+    [Parameter]
+    public bool ShowProgressLabel { get; set; }
+
+    [Parameter]
+    public string? ProgressLabelText { get; set; }
+
+    [Parameter]
+    public bool Border { get; set; }
+
+    [Parameter]
+    public bool PanelBorder { get; set; } = true;
+
+    [Parameter]
+    public bool Card { get; set; }
+
+    [Parameter]
+    public W3CardDepth CardDepth { get; set; } = W3CardDepth.Two;
+
+    [Parameter]
+    public W3Round Round { get; set; } = W3Round.None;
+
+    [Parameter]
+    public W3Color Color { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color TextColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color ActiveColor { get; set; } = W3Color.Primary;
+
+    [Parameter]
+    public W3Color ActiveTextColor { get; set; } = W3Color.White;
+
+    [Parameter]
+    public W3Color CompletedColor { get; set; } = W3Color.Green;
+
+    [Parameter]
+    public W3Color CompletedTextColor { get; set; } = W3Color.White;
+
+    [Parameter]
+    public W3Color ErrorColor { get; set; } = W3Color.Red;
+
+    [Parameter]
+    public W3Color ErrorTextColor { get; set; } = W3Color.White;
+
+    [Parameter]
+    public W3Color MarkerColor { get; set; } = W3Color.LightGrey;
+
+    [Parameter]
+    public W3Color MarkerTextColor { get; set; } = W3Color.Black;
+
+    [Parameter]
+    public W3Color PanelColor { get; set; } = W3Color.Surface;
+
+    [Parameter]
+    public W3Color PanelTextColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color ProgressColor { get; set; } = W3Color.Teal;
+
+    [Parameter]
+    public W3Color ProgressTextColor { get; set; } = W3Color.White;
+
+    [Parameter]
+    public W3Color ProgressTrackColor { get; set; } = W3Color.LightGrey;
+
+    internal void Register(W3Step step)
+    {
+        if (steps.Contains(step))
+        {
+            return;
+        }
+
+        steps.Add(step);
+
+        if (string.IsNullOrWhiteSpace(ActiveValue) && !step.Disabled)
+        {
+            ActiveValue = step.Value;
+        }
+
+        _ = InvokeAsync(StateHasChanged);
+    }
+
+    internal void Unregister(W3Step step)
+    {
+        if (steps.Remove(step))
+        {
+            _ = InvokeAsync(StateHasChanged);
+        }
+    }
+
+    internal void NotifyStepChanged()
+    {
+        _ = InvokeAsync(StateHasChanged);
+    }
+
+    private async Task ActivateAsync(W3Step step, int index)
+    {
+        if (!CanActivate(step, index))
+        {
+            return;
+        }
+
+        ActiveValue = step.Value;
+        await ActiveValueChanged.InvokeAsync(step.Value);
+        await StepActivated.InvokeAsync(step.Value);
+    }
+
+    private bool CanActivate(W3Step step, int index)
+    {
+        if (step.Disabled)
+        {
+            return false;
+        }
+
+        if (!Linear)
+        {
+            return true;
+        }
+
+        if (IsActive(step))
+        {
+            return true;
+        }
+
+        return index <= GetFirstIncompleteIndex();
+    }
+
+    private int GetFirstIncompleteIndex()
+    {
+        var firstIncomplete = steps.FindIndex(step => !IsCompleted(step));
+        return firstIncomplete < 0 ? steps.Count - 1 : firstIncomplete;
+    }
+
+    private bool IsActive(W3Step step)
+    {
+        return string.Equals(ActiveValue, step.Value, StringComparison.Ordinal);
+    }
+
+    private bool IsCompleted(W3Step step)
+    {
+        return step.Completed || CompletedValues.Contains(step.Value);
+    }
+
+    private static string? GetAriaCurrent(bool active)
+    {
+        return active ? "step" : null;
+    }
+
+    private static string? GetAriaDisabled(bool canActivate)
+    {
+        return canActivate ? null : "true";
+    }
+
+    private string GetItemCssClass(bool active, bool completed, bool error, bool disabled, bool canActivate)
+    {
+        return new W3ClassBuilder()
+            .Add("w3-stepper-item")
+            .AddIf(active, "w3-stepper-active")
+            .AddIf(active, ActiveColor.ToBackgroundClass())
+            .AddIf(active, ActiveTextColor.ToTextClass())
+            .AddIf(completed, "w3-stepper-completed")
+            .AddIf(error, "w3-stepper-error")
+            .AddIf(disabled || !canActivate, "w3-stepper-disabled")
+            .ToString();
+    }
+
+    private string GetButtonCssClass(bool active, bool completed, bool error)
+    {
+        return new W3ClassBuilder()
+            .Add("w3-stepper-button")
+            .Add("w3-left-align")
+            .AddIf(completed && !active, "w3-hover-light-grey")
+            .AddIf(error && !active, ErrorColor.ToHoverBackgroundClass())
+            .ToString();
+    }
+
+    private string GetMarkerCssClass(bool active, bool completed, bool error)
+    {
+        var color = error
+            ? ErrorColor
+            : active
+                ? ActiveColor
+                : completed
+                    ? CompletedColor
+                    : MarkerColor;
+        var textColor = error
+            ? ErrorTextColor
+            : active
+                ? ActiveTextColor
+                : completed
+                    ? CompletedTextColor
+                    : MarkerTextColor;
+
+        return new W3ClassBuilder()
+            .Add("w3-stepper-marker")
+            .Add("w3-badge")
+            .Add(color.ToBackgroundClass())
+            .Add(textColor.ToTextClass())
+            .ToString();
+    }
+}

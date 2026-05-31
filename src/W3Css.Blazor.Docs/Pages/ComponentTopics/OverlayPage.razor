@@ -1,0 +1,73 @@
+@page "/components/overlay"
+
+<PageTitle>W3Overlay</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3Overlay</h1>
+    <DocPager PreviousHref="components/modal" PreviousText="Modal" NextHref="components/message-box" NextText="Message Box" />
+
+    <p class="w3-large">`W3Overlay` renders the W3.CSS backdrop layer with optional auto-close behavior.</p>
+    <p>Use `Visible` or `@@bind-Visible` with a child layout that sets a relative container for contained overlays.</p>
+
+    <DocExample Title="Contained Demo Overlay" Code="@ContainedCode">
+        <W3Button Color="W3Color.Teal" TextColor="W3Color.White" Round="W3Round.Medium" OnClick="@(() => OverlayOpen = true)">Show overlay</W3Button>
+
+        <div class="w3-border w3-white" style="position:relative;min-height:160px;overflow:hidden;">
+            <W3Container Class="w3-padding">
+                <p>Use `Contained="true"` when the overlay should stay inside this surface.</p>
+                <p>State: <strong>@(OverlayOpen ? "Open" : "Closed")</strong> · Click count: <strong>@OverlayTapCount</strong></p>
+            </W3Container>
+
+            <W3Overlay @bind-Visible="OverlayOpen"
+                       Contained="true"
+                       Class="overlay-demo-layer"
+                       OnClick="@(() => OverlayTapCount++)" />
+        </div>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Visible</td><td>bool</td><td>false</td><td>Whether overlay is rendered via `w3-show`</td></tr>
+                <tr><td>VisibleChanged</td><td>EventCallback&lt;bool&gt;</td><td>none</td><td>Raised when auto-close or parent state changes</td></tr>
+                <tr><td>AutoClose</td><td>bool</td><td>true</td><td>Clicking overlay sets `Visible=false` when true</td></tr>
+                <tr><td>Contained</td><td>bool</td><td>false</td><td>Uses absolute positioning for parent-contained overlays</td></tr>
+                <tr><td>OnClick</td><td>EventCallback</td><td>none</td><td>Raised on every overlay click</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional overlay classes</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline style after contained positioning style</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Related</h2>
+        <p><NavLink href="components/modal">Modal</NavLink> and <NavLink href="components/message-box">Message Box</NavLink> both render their own content panels over an overlay.</p>
+        <p><NavLink href="components/drawer">Drawer</NavLink> and <NavLink href="components/app-shell">App Shell</NavLink> combine overlay behavior with shell/sidebar workflows.</p>
+    </section>
+
+    <DocPager PreviousHref="components/modal" PreviousText="Modal" NextHref="components/message-box" NextText="Message Box" />
+</W3Container>
+
+@code {
+    private bool OverlayOpen { get; set; }
+    private int OverlayTapCount { get; set; }
+
+    private const string ContainedCode = """
+<W3Button OnClick="@(() => overlayOpen = true)">Show overlay</W3Button>
+
+<div style="position:relative;min-height:160px;overflow:hidden;">
+    <W3Container Class="w3-padding">
+        <p>Use Contained="true" when the overlay should stay inside this surface.</p>
+        <p>State: @(overlayOpen ? "Open" : "Closed")</p>
+    </W3Container>
+
+    <W3Overlay @bind-Visible="overlayOpen"
+               Contained="true"
+               Class="overlay-demo-layer" />
+</div>
+""";
+}

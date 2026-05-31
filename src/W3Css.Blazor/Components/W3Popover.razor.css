@@ -1,0 +1,55 @@
+.w3-popover {
+    display: inline-block;
+    position: relative;
+}
+
+.w3-popover-content {
+    display: none;
+    min-width: 12rem;
+    position: absolute;
+    z-index: 31;
+    padding: 12px 16px;
+}
+
+.w3-popover-content.w3-show {
+    display: block;
+}
+
+.w3-popover-bottom .w3-popover-content {
+    left: 0;
+    top: calc(100% + 6px);
+}
+
+.w3-popover-top .w3-popover-content {
+    bottom: calc(100% + 6px);
+    left: 0;
+}
+
+.w3-popover-left .w3-popover-content {
+    right: calc(100% + 6px);
+    top: 0;
+}
+
+.w3-popover-right .w3-popover-content {
+    left: calc(100% + 6px);
+    top: 0;
+}
+
+.w3-popover-close-layer {
+    bottom: 0;
+    cursor: default;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 30;
+}
+
+@media (max-width: 600px) {
+    .w3-popover-content {
+        left: 0 !important;
+        max-width: min(90vw, 22rem);
+        right: auto !important;
+        top: calc(100% + 6px) !important;
+    }
+}

@@ -1,0 +1,76 @@
+.w3-menu {
+    display: inline-block;
+    position: relative;
+}
+
+.w3-menu-trigger {
+    align-items: center;
+    display: inline-flex !important;
+    gap: 0.45rem;
+    justify-content: center;
+    min-height: 2.25rem;
+    vertical-align: middle;
+}
+
+.w3-menu-trigger-icon,
+.w3-menu-caret {
+    line-height: 1;
+    pointer-events: none;
+}
+
+.w3-menu-trigger-icon-only {
+    aspect-ratio: 1 / 1;
+    min-width: 2.25rem;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+.w3-menu-panel {
+    min-width: var(--w3-menu-min-width, 192px);
+    overflow: hidden;
+    z-index: 30;
+}
+
+.w3-menu-panel-fixed {
+    bottom: auto !important;
+    overflow-y: auto;
+    position: fixed !important;
+    right: auto !important;
+}
+
+.w3-menu-open > .w3-menu-trigger {
+    position: relative;
+    z-index: 32;
+}
+
+.w3-menu-open > .w3-menu-panel {
+    z-index: 33;
+}
+
+.w3-menu-close-layer {
+    background: transparent;
+    cursor: default;
+    inset: 0;
+    position: fixed;
+    z-index: 31;
+}
+
+.w3-menu-bottom-start {
+    left: 0;
+    top: 100%;
+}
+
+.w3-menu-bottom-end {
+    right: 0;
+    top: 100%;
+}
+
+.w3-menu-top-start {
+    bottom: 100%;
+    left: 0;
+}
+
+.w3-menu-top-end {
+    bottom: 100%;
+    right: 0;
+}

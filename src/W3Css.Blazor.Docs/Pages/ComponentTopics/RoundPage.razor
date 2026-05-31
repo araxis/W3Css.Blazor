@@ -1,0 +1,115 @@
+@page "/components/round"
+
+<PageTitle>Round</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>Round</h1>
+    <DocPager PreviousHref="components/borders" PreviousText="Borders" NextHref="components/spacing" NextText="Spacing" />
+
+    <p class="w3-large">W3.CSS round utilities add border radius to buttons, panels, cards, images, tags, and ordinary HTML elements.</p>
+    <p>Use a typed `Round` parameter when the component exposes one, and use `Class` pass-through for `w3-circle` or raw round classes on plain markup.</p>
+
+    <DocExample Title="Rounded Components" Code="@ComponentsCode">
+        <W3Grid Padding="true" Style="grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));">
+            <W3Button Color="W3Color.Teal" TextColor="W3Color.White" Round="W3Round.Small">Small</W3Button>
+            <W3Button Color="W3Color.Blue" TextColor="W3Color.White" Round="W3Round.Medium">Medium</W3Button>
+            <W3Button Color="W3Color.Purple" TextColor="W3Color.White" Round="W3Round.Large">Large</W3Button>
+            <W3Button Color="W3Color.Black" TextColor="W3Color.White" Round="W3Round.XXLarge">XX Large</W3Button>
+        </W3Grid>
+    </DocExample>
+
+    <DocExample Title="Rounded Surfaces" Code="@SurfacesCode">
+        <W3Grid Padding="true" Style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
+            <W3Panel Color="W3Color.PaleBlue" TextColor="W3Color.Black" Border="true" Round="W3Round.Large">
+                Panel with a large radius
+            </W3Panel>
+            <W3Card Depth="W3CardDepth.Two" Round="W3Round.XLarge" BodyColor="W3Color.White">
+                <p>Card using typed round and card depth.</p>
+            </W3Card>
+            <W3Border Border="W3BorderSide.All" BorderColor="W3Color.Teal" Round="W3Round.XXLarge" Class="w3-padding w3-white">
+                Border wrapper with the largest radius
+            </W3Border>
+        </W3Grid>
+    </DocExample>
+
+    <DocExample Title="Circle Classes" Code="@CircleCode">
+        <W3Flex Style="gap: 1rem; align-items: center; flex-wrap: wrap;">
+            <W3Image Src="assets/w3css-blazor-mark.svg" Alt="Circular W3Css.Blazor mark" Width="112" Height="112" Circle="true" Border="true" />
+            <W3Container Color="W3Color.Red" TextColor="W3Color.White" Class="w3-padding-32 w3-circle w3-center" Style="width: 11rem; height: 11rem; display: flex; align-items: center; justify-content: center;">
+                Text inside a circle
+            </W3Container>
+        </W3Flex>
+    </DocExample>
+
+    <DocExample Title="Class Pass-through" Code="@PassThroughCode">
+        <W3Container Class="w3-padding w3-border w3-round-xlarge w3-pale-yellow">
+            Raw W3.CSS utility classes still work on components through the shared `Class` parameter.
+        </W3Container>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Usage Reference</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Need</th><th>Use</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>No radius</td><td>`W3Round.None`</td><td>No round class</td></tr>
+                <tr><td>Small radius</td><td>`Round="W3Round.Small"`</td><td>`w3-round-small`</td></tr>
+                <tr><td>Default radius</td><td>`Round="W3Round.Medium"`</td><td>`w3-round`</td></tr>
+                <tr><td>Raw medium utility</td><td>`Class="w3-round-medium"`</td><td>W3.CSS alternate medium radius class</td></tr>
+                <tr><td>Large radius</td><td>`Round="W3Round.Large"`</td><td>`w3-round-large`</td></tr>
+                <tr><td>Extra large radius</td><td>`Round="W3Round.XLarge"`</td><td>`w3-round-xlarge`</td></tr>
+                <tr><td>Largest radius</td><td>`Round="W3Round.XXLarge"`</td><td>`w3-round-xxlarge`</td></tr>
+                <tr><td>Circle content or a custom utility mix</td><td>`Circle="true"` on `W3Image`, or `Class="w3-circle"` / `Class="w3-round-xlarge"`</td><td>`w3-circle` or raw W3.CSS class pass-through</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Related W3.CSS</h2>
+        <p><a href="https://www.w3schools.com/w3css/w3css_round.asp" target="_blank" rel="noopener">W3.CSS Round Classes</a></p>
+    </section>
+
+    <DocPager PreviousHref="components/borders" PreviousText="Borders" NextHref="components/spacing" NextText="Spacing" />
+</W3Container>
+
+@code {
+    private const string ComponentsCode = """
+<W3Grid Padding="true" Style="grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));">
+    <W3Button Color="W3Color.Teal" TextColor="W3Color.White" Round="W3Round.Small">Small</W3Button>
+    <W3Button Color="W3Color.Blue" TextColor="W3Color.White" Round="W3Round.Medium">Medium</W3Button>
+    <W3Button Color="W3Color.Purple" TextColor="W3Color.White" Round="W3Round.Large">Large</W3Button>
+    <W3Button Color="W3Color.Black" TextColor="W3Color.White" Round="W3Round.XXLarge">XX Large</W3Button>
+</W3Grid>
+""";
+
+    private const string SurfacesCode = """
+<W3Grid Padding="true" Style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
+    <W3Panel Color="W3Color.PaleBlue" TextColor="W3Color.Black" Border="true" Round="W3Round.Large">
+        Panel with a large radius
+    </W3Panel>
+    <W3Card Depth="W3CardDepth.Two" Round="W3Round.XLarge" BodyColor="W3Color.White">
+        <p>Card using typed round and card depth.</p>
+    </W3Card>
+    <W3Border Border="W3BorderSide.All" BorderColor="W3Color.Teal" Round="W3Round.XXLarge" Class="w3-padding w3-white">
+        Border wrapper with the largest radius
+    </W3Border>
+</W3Grid>
+""";
+
+    private const string CircleCode = """
+<W3Flex Style="gap: 1rem; align-items: center; flex-wrap: wrap;">
+    <W3Image Src="assets/w3css-blazor-mark.svg" Alt="Circular W3Css.Blazor mark" Width="112" Height="112" Circle="true" Border="true" />
+    <W3Container Color="W3Color.Red" TextColor="W3Color.White" Class="w3-padding-32 w3-circle w3-center" Style="width: 11rem; height: 11rem; display: flex; align-items: center; justify-content: center;">
+        Text inside a circle
+    </W3Container>
+</W3Flex>
+""";
+
+    private const string PassThroughCode = """
+<W3Container Class="w3-padding w3-border w3-round-xlarge w3-pale-yellow">
+    Raw W3.CSS utility classes still work on components through the shared `Class` parameter.
+</W3Container>
+""";
+}

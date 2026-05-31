@@ -1,0 +1,97 @@
+@page "/components/borders"
+
+<PageTitle>W3Border</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3Border</h1>
+    <DocPager PreviousHref="components/visibility" PreviousText="Visibility" NextHref="components/round" NextText="Round" />
+
+    <p class="w3-large">`W3Border` renders W3.CSS border side, bar, color, and roundness utility classes.</p>
+    <p>Use it when a small wrapper is clearer than raw border class strings on another element.</p>
+
+    <DocExample Title="Border Sides" Code="@SideCode">
+        <W3Grid Padding="true">
+            <W3Border Border="W3BorderSide.All" BorderColor="W3Color.Teal" Round="W3Round.Medium" Class="w3-padding w3-white">
+                All sides
+            </W3Border>
+            <W3Border Border="W3BorderSide.Top | W3BorderSide.Bottom" BorderColor="W3Color.Blue" Class="w3-padding w3-white">
+                Top and bottom
+            </W3Border>
+            <W3Border Border="W3BorderSide.Remove" Color="W3Color.LightGrey" Class="w3-padding">
+                Border removed
+            </W3Border>
+        </W3Grid>
+    </DocExample>
+
+    <DocExample Title="Border Bars" Code="@BarCode">
+        <W3Grid Padding="true">
+            <W3Border Border="W3BorderSide.None" Bar="W3BorderBar.Left" BorderColor="W3Color.Red" Color="W3Color.PaleRed" Class="w3-padding">
+                Left bar
+            </W3Border>
+            <W3Border Border="W3BorderSide.None" Bar="W3BorderBar.Top | W3BorderBar.Right" BorderColor="W3Color.Green" Color="W3Color.PaleGreen" Class="w3-padding">
+                Top and right bars
+            </W3Border>
+        </W3Grid>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Border</td><td>W3BorderSide</td><td>All</td><td>`w3-border`, side classes, or `w3-border-0`</td></tr>
+                <tr><td>Bar</td><td>W3BorderBar</td><td>None</td><td>`w3-topbar`, `w3-rightbar`, `w3-bottombar`, and `w3-leftbar`</td></tr>
+                <tr><td>BorderColor</td><td>W3Color</td><td>None</td><td>Border color class</td></tr>
+                <tr><td>Color</td><td>W3Color</td><td>None</td><td>Background color class</td></tr>
+                <tr><td>TextColor</td><td>W3Color</td><td>None</td><td>Text color class</td></tr>
+                <tr><td>Round</td><td>W3Round</td><td>None</td><td>Rounded corner class</td></tr>
+                <tr><td>Class</td><td>string</td><td>null</td><td>Additional root border classes</td></tr>
+                <tr><td>Style</td><td>string</td><td>null</td><td>Root border inline style</td></tr>
+                <tr><td>ChildContent</td><td>RenderFragment</td><td>null</td><td>Content inside the border wrapper</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Utility Values</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Enum</th><th>Values</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>W3BorderSide</td><td>None, All, Top, Right, Bottom, Left, Remove</td></tr>
+                <tr><td>W3BorderBar</td><td>None, Top, Right, Bottom, Left</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <DocPager PreviousHref="components/visibility" PreviousText="Visibility" NextHref="components/round" NextText="Round" />
+</W3Container>
+
+@code {
+    private const string SideCode = """
+<W3Border Border="W3BorderSide.All" BorderColor="W3Color.Teal" Round="W3Round.Medium">
+    All sides
+</W3Border>
+
+<W3Border Border="W3BorderSide.Top | W3BorderSide.Bottom" BorderColor="W3Color.Blue">
+    Top and bottom
+</W3Border>
+
+<W3Border Border="W3BorderSide.Remove" Color="W3Color.LightGrey">
+    Border removed
+</W3Border>
+""";
+
+    private const string BarCode = """
+<W3Border Border="W3BorderSide.None" Bar="W3BorderBar.Left" BorderColor="W3Color.Red">
+    Left bar
+</W3Border>
+
+<W3Border Border="W3BorderSide.None" Bar="W3BorderBar.Top | W3BorderBar.Right" BorderColor="W3Color.Green">
+    Top and right bars
+</W3Border>
+""";
+}

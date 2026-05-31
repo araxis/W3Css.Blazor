@@ -1,0 +1,305 @@
+@using Microsoft.AspNetCore.Components.Web
+@using Microsoft.JSInterop
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+@implements IAsyncDisposable
+@inject IJSRuntime JS
+
+<div @attributes="AdditionalAttributes"
+     @ref="RootElement"
+     class="@CssClass"
+     style="@StyleValue">
+    <button type="@Type"
+            @ref="TriggerElement"
+            class="@TriggerCssClass"
+            aria-haspopup="menu"
+            aria-label="@Label"
+            aria-expanded="@AriaExpanded"
+            aria-controls="@MenuId"
+            disabled="@Disabled"
+            @onclick="ToggleAsync">
+        @if (TriggerContent is not null)
+        {
+            @TriggerContent
+        }
+        else
+        {
+            @if (!string.IsNullOrWhiteSpace(IconClass))
+            {
+                <span class="@IconCssClass" aria-hidden="true"></span>
+            }
+            @if (!HideTriggerLabel)
+            {
+                <span class="w3-menu-trigger-label">@Label</span>
+            }
+            @if (ShowCaret)
+            {
+                <span class="w3-menu-caret" aria-hidden="true">▾</span>
+            }
+        }
+    </button>
+
+    @if (CloseOnOutsideClick && currentOpen)
+    {
+        <div class="w3-menu-close-layer"
+             aria-hidden="true"
+             @onclick="CloseAsync"></div>
+    }
+
+    <CascadingValue Value="this" IsFixed="true">
+        <div id="@MenuId"
+             @ref="PanelElement"
+             class="@PanelCssClass"
+             role="menu"
+             aria-label="@EffectiveMenuLabel">
+            @ChildContent
+        </div>
+    </CascadingValue>
+</div>
+
+@code {
+    private readonly string menuId = $"w3-menu-{Guid.NewGuid():N}";
+
+    private ElementReference RootElement { get; set; }
+
+    private ElementReference TriggerElement { get; set; }
+
+    private ElementReference PanelElement { get; set; }
+
+    private IJSObjectReference? Module { get; set; }
+
+    private IJSObjectReference? MenuReference { get; set; }
+
+    private string CssClass => BuildClass(
+        "w3-menu",
+        "w3-dropdown-click",
+        currentOpen ? "w3-dropdown-open w3-menu-open" : null,
+        Disabled ? "w3-menu-disabled" : null);
+
+    private string TriggerCssClass => new W3ClassBuilder()
+        .Add("w3-button")
+        .Add("w3-menu-trigger")
+        .AddIf(IconOnly, "w3-menu-trigger-icon-only")
+        .Add(TriggerColor.ToBackgroundClass())
+        .Add(TriggerTextColor.ToTextClass())
+        .Add(TriggerRound.ToClass())
+        .AddIf(TriggerBorder, "w3-border")
+        .AddIf(Disabled, "w3-disabled")
+        .Add(TriggerClass)
+        .ToString();
+
+    private string PanelCssClass => new W3ClassBuilder()
+        .Add("w3-dropdown-content")
+        .Add("w3-bar-block")
+        .Add("w3-menu-panel")
+        .AddIf(FixedPosition, "w3-menu-panel-fixed")
+        .Add(Placement.ToClass())
+        .Add(Card ? CardDepth.ToClass() : null)
+        .Add(Round.ToClass())
+        .AddIf(currentOpen, "w3-show")
+        .AddIf(Animate, "w3-animate-opacity")
+        .Add(PanelColor.ToBackgroundClass())
+        .Add(PanelTextColor.ToTextClass())
+        .Add(PanelClass)
+        .ToString();
+
+    private string IconCssClass => new W3ClassBuilder()
+        .Add("w3-menu-trigger-icon")
+        .Add(IconClass)
+        .ToString();
+
+    private string? StyleValue => CombineStyle($"--w3-menu-min-width:{Math.Max(0, MinWidth)}px", Style);
+
+    private string MenuId => string.IsNullOrWhiteSpace(Id) ? menuId : Id;
+
+    private string AriaExpanded => currentOpen ? "true" : "false";
+
+    private string EffectiveMenuLabel => string.IsNullOrWhiteSpace(MenuLabel) ? Label : MenuLabel;
+
+    private bool HideTriggerLabel => IconOnly && !string.IsNullOrWhiteSpace(IconClass);
+
+    private bool currentOpen;
+    private bool? lastOpenParameter;
+
+    [Parameter]
+    public string? Id { get; set; }
+
+    [Parameter]
+    public string Label { get; set; } = "Menu";
+
+    [Parameter]
+    public string? MenuLabel { get; set; }
+
+    [Parameter]
+    public string? IconClass { get; set; }
+
+    [Parameter]
+    public RenderFragment? TriggerContent { get; set; }
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public bool Open { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> OpenChanged { get; set; }
+
+    [Parameter]
+    public bool Disabled { get; set; }
+
+    [Parameter]
+    public bool CloseOnOutsideClick { get; set; } = true;
+
+    [Parameter]
+    public bool CloseOnSelect { get; set; } = true;
+
+    [Parameter]
+    public bool ShowCaret { get; set; } = true;
+
+    [Parameter]
+    public bool IconOnly { get; set; }
+
+    [Parameter]
+    public bool FixedPosition { get; set; }
+
+    [Parameter]
+    public bool TriggerBorder { get; set; }
+
+    [Parameter]
+    public W3Round TriggerRound { get; set; } = W3Round.Medium;
+
+    [Parameter]
+    public W3Color TriggerColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color TriggerTextColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public string? TriggerClass { get; set; }
+
+    [Parameter]
+    public W3MenuPlacement Placement { get; set; } = W3MenuPlacement.BottomStart;
+
+    [Parameter]
+    public bool Card { get; set; } = true;
+
+    [Parameter]
+    public W3CardDepth CardDepth { get; set; } = W3CardDepth.Four;
+
+    [Parameter]
+    public W3Round Round { get; set; } = W3Round.Medium;
+
+    [Parameter]
+    public bool Animate { get; set; }
+
+    [Parameter]
+    public W3Color PanelColor { get; set; } = W3Color.Surface;
+
+    [Parameter]
+    public W3Color PanelTextColor { get; set; } = W3Color.Black;
+
+    [Parameter]
+    public string? PanelClass { get; set; }
+
+    [Parameter]
+    public int MinWidth { get; set; } = 192;
+
+    [Parameter]
+    public string Type { get; set; } = "button";
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!FixedPosition)
+        {
+            await DisposeMenuReferenceAsync();
+            return;
+        }
+
+        Module ??= await JS.InvokeAsync<IJSObjectReference>("import", "./_content/W3Css.Blazor/w3Menu.js");
+
+        var options = new
+        {
+            open = currentOpen,
+            placement = Placement.ToString()
+        };
+
+        if (MenuReference is null)
+        {
+            MenuReference = await Module.InvokeAsync<IJSObjectReference>("connect", RootElement, TriggerElement, PanelElement, options);
+            return;
+        }
+
+        await MenuReference.InvokeVoidAsync("update", options);
+    }
+
+    protected override void OnParametersSet()
+    {
+        if (lastOpenParameter is null || Open != lastOpenParameter.Value)
+        {
+            currentOpen = Open;
+            lastOpenParameter = Open;
+        }
+    }
+
+    private async Task ToggleAsync()
+    {
+        if (Disabled)
+        {
+            return;
+        }
+
+        await SetOpenAsync(!currentOpen);
+    }
+
+    internal async Task CloseAsync()
+    {
+        await SetOpenAsync(false);
+    }
+
+    private async Task SetOpenAsync(bool open)
+    {
+        if (currentOpen == open)
+        {
+            return;
+        }
+
+        currentOpen = open;
+        Open = open;
+        lastOpenParameter = open;
+
+        await OpenChanged.InvokeAsync(open);
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private static string? CombineStyle(params string?[] styles)
+    {
+        var style = string.Join(';', styles
+            .Where(value => !string.IsNullOrWhiteSpace(value))
+            .Select(value => value!.Trim().TrimEnd(';')));
+
+        return string.IsNullOrWhiteSpace(style) ? null : style;
+    }
+
+    private async ValueTask DisposeMenuReferenceAsync()
+    {
+        if (MenuReference is null)
+        {
+            return;
+        }
+
+        await MenuReference.InvokeVoidAsync("dispose");
+        await MenuReference.DisposeAsync();
+        MenuReference = null;
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        await DisposeMenuReferenceAsync();
+
+        if (Module is not null)
+        {
+            await Module.DisposeAsync();
+        }
+    }
+}

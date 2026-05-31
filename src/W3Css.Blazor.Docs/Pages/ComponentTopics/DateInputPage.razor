@@ -1,0 +1,87 @@
+@page "/components/date-input"
+
+<PageTitle>W3DateInput</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3DateInput</h1>
+    <DocPager PreviousHref="components/date-range-picker" PreviousText="Date Range Picker" NextHref="components/time-input" NextText="Time Input" />
+
+    <p class="w3-large">`W3DateInput` wraps the native browser date control for nullable `DateOnly` values.</p>
+    <p>Use it for booking dates, filters, deadlines, and schedule forms where native platform date entry is enough.</p>
+
+    <DocExample Title="Date Field" Description="Date values are formatted as `yyyy-MM-dd` for the native input and parsed back into `DateOnly?`." Code="@BasicCode">
+        <EditForm Model="@ScheduleModel">
+            <W3Field TValue="DateOnly?" Label="Start date" ForId="date-start" For="@(() => ScheduleModel.StartDate)" HelpText="Use native browser date entry.">
+                <W3DateInput Id="date-start"
+                             @bind-Value="ScheduleModel.StartDate"
+                             Min="@MinimumDate"
+                             Max="@MaximumDate"
+                             Border="true"
+                             Round="W3Round.Medium" />
+            </W3Field>
+        </EditForm>
+    </DocExample>
+
+    <DocExample Title="Compact Date Filter" Description="Date inputs compose with W3.CSS bars and panels for dense app filters." Code="@FilterCode">
+        <div class="w3-bar">
+            <span class="w3-bar-item">Due before</span>
+            <W3DateInput Class="w3-bar-item" @bind-Value="ScheduleModel.FilterDate" Border="true" />
+        </div>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Value</td><td>DateOnly?</td><td>null</td><td>Blazor input value</td></tr>
+                <tr><td>Id</td><td>string?</td><td>null</td><td>`id` attribute</td></tr>
+                <tr><td>Min</td><td>DateOnly?</td><td>null</td><td>`min` attribute in `yyyy-MM-dd` format</td></tr>
+                <tr><td>Max</td><td>DateOnly?</td><td>null</td><td>`max` attribute in `yyyy-MM-dd` format</td></tr>
+                <tr><td>UpdateOnInput</td><td>bool</td><td>false</td><td>Updates on `input` instead of `change`</td></tr>
+                <tr><td>ReadOnly</td><td>bool</td><td>false</td><td>`readonly` attribute</td></tr>
+                <tr><td>Disabled</td><td>bool</td><td>false</td><td>`disabled` attribute</td></tr>
+                <tr><td>Border</td><td>bool</td><td>false</td><td>`w3-border`</td></tr>
+                <tr><td>Color</td><td>W3Color</td><td>None</td><td>Background color class</td></tr>
+                <tr><td>TextColor</td><td>W3Color</td><td>None</td><td>Text color class</td></tr>
+                <tr><td>Round</td><td>W3Round</td><td>None</td><td>Rounded corner class</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional CSS classes</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline style</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <DocPager PreviousHref="components/date-range-picker" PreviousText="Date Range Picker" NextHref="components/time-input" NextText="Time Input" />
+</W3Container>
+
+@code {
+    private readonly DateInputExampleModel ScheduleModel = new();
+    private static readonly DateOnly MinimumDate = new(2026, 1, 1);
+    private static readonly DateOnly MaximumDate = new(2026, 12, 31);
+
+    private const string BasicCode = """
+<W3Field TValue="DateOnly?" Label="Start date" ForId="date-start" For="@(() => model.StartDate)" HelpText="Use native browser date entry.">
+    <W3DateInput Id="date-start"
+                 @bind-Value="model.StartDate"
+                 Min="new DateOnly(2026, 1, 1)"
+                 Max="new DateOnly(2026, 12, 31)"
+                 Border="true"
+                 Round="W3Round.Medium" />
+</W3Field>
+""";
+
+    private const string FilterCode = """
+<div class="w3-bar">
+    <span class="w3-bar-item">Due before</span>
+    <W3DateInput Class="w3-bar-item" @bind-Value="model.FilterDate" Border="true" />
+</div>
+""";
+
+    private sealed class DateInputExampleModel
+    {
+        public DateOnly? StartDate { get; set; } = new DateOnly(2026, 6, 15);
+        public DateOnly? FilterDate { get; set; } = new DateOnly(2026, 7, 1);
+    }
+}

@@ -1,0 +1,63 @@
+@page "/components/divider"
+
+<PageTitle>W3Divider</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3Divider</h1>
+    <DocPager PreviousHref="components/stack" PreviousText="Stack" NextHref="components/spacer" NextText="Spacer" />
+
+    <p class="w3-large">`W3Divider` separates dense panels, menus, forms, and grouped content.</p>
+    <p>Use it as a plain separator or add child content for a labeled divider.</p>
+
+    <DocExample Title="Plain Divider" Code="@PlainCode">
+        <W3Panel Color="W3Color.White" Border="true">
+            <strong>Billing</strong>
+            <W3Divider BorderColor="W3Color.Teal" Strong="true" />
+            <p class="doc-muted">Invoices, payment method, and tax profile.</p>
+        </W3Panel>
+    </DocExample>
+
+    <DocExample Title="Labeled Divider" Code="@LabelCode">
+        <W3Divider TextColor="W3Color.DarkGrey" BorderColor="W3Color.Grey">
+            Advanced options
+        </W3Divider>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Optional divider label</td></tr>
+                <tr><td>Vertical</td><td>bool</td><td>false</td><td>Vertical separator orientation</td></tr>
+                <tr><td>Strong</td><td>bool</td><td>false</td><td>Thicker separator rule</td></tr>
+                <tr><td>Margin</td><td>W3Margin</td><td>Top | Bottom</td><td>W3.CSS margin utility classes</td></tr>
+                <tr><td>Color</td><td>W3Color</td><td>None</td><td>Background color class</td></tr>
+                <tr><td>TextColor</td><td>W3Color</td><td>None</td><td>Text color class</td></tr>
+                <tr><td>BorderColor</td><td>W3Color</td><td>LightGrey</td><td>Border color class</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional divider classes</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline styles on the divider</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <DocPager PreviousHref="components/stack" PreviousText="Stack" NextHref="components/spacer" NextText="Spacer" />
+</W3Container>
+
+@code {
+    private const string PlainCode = """
+<W3Panel Color="W3Color.White" Border="true">
+    <strong>Billing</strong>
+    <W3Divider BorderColor="W3Color.Teal" Strong="true" />
+    <p>Invoices, payment method, and tax profile.</p>
+</W3Panel>
+""";
+
+    private const string LabelCode = """
+<W3Divider TextColor="W3Color.DarkGrey" BorderColor="W3Color.Grey">
+    Advanced options
+</W3Divider>
+""";
+}

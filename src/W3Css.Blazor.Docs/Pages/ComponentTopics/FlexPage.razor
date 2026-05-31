@@ -1,0 +1,60 @@
+@page "/components/flex"
+
+<PageTitle>W3Flex</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3Flex</h1>
+    <DocPager PreviousHref="components/grid" PreviousText="Grid" NextHref="components/cells" NextText="Cells" />
+
+    <p class="w3-large">`W3Flex` renders the W3.CSS flex display helper.</p>
+    <p>Use `Style` or W3.CSS utility classes for alignment, wrapping, and spacing decisions.</p>
+
+    <DocExample Title="Wrapped Flex Items" Code="@WrappedCode">
+        <W3Flex Style="gap: 8px; flex-wrap: wrap;">
+            <W3Tag Color="W3Color.Teal" TextColor="W3Color.White" Round="W3Round.Medium">Fast</W3Tag>
+            <W3Tag Color="W3Color.Black" TextColor="W3Color.White" Round="W3Round.Medium">CSS only</W3Tag>
+            <W3Tag Color="W3Color.Amber" TextColor="W3Color.Black" Round="W3Round.Medium">Small API</W3Tag>
+        </W3Flex>
+    </DocExample>
+
+    <DocExample Title="Aligned Flex Items" Code="@AlignedCode">
+        <W3Flex Style="align-items: center; gap: 12px;">
+            <W3Badge Color="W3Color.Red" TextColor="W3Color.White">3</W3Badge>
+            <span>Open tasks</span>
+        </W3Flex>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Color</td><td>W3Color</td><td>None</td><td>Background color class</td></tr>
+                <tr><td>TextColor</td><td>W3Color</td><td>None</td><td>Text color class</td></tr>
+                <tr><td>Class</td><td>string</td><td>null</td><td>Additional root flex classes</td></tr>
+                <tr><td>Style</td><td>string</td><td>null</td><td>Inline flex alignment and spacing</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <DocPager PreviousHref="components/grid" PreviousText="Grid" NextHref="components/cells" NextText="Cells" />
+</W3Container>
+
+@code {
+    private const string WrappedCode = """
+<W3Flex Style="gap: 8px; flex-wrap: wrap;">
+    <W3Tag>Fast</W3Tag>
+    <W3Tag>CSS only</W3Tag>
+    <W3Tag>Small API</W3Tag>
+</W3Flex>
+""";
+
+    private const string AlignedCode = """
+<W3Flex Style="align-items: center; gap: 12px;">
+    <W3Badge Color="W3Color.Red" TextColor="W3Color.White">3</W3Badge>
+    <span>Open tasks</span>
+</W3Flex>
+""";
+}

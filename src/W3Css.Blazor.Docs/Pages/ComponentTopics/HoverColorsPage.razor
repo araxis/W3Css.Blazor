@@ -1,0 +1,167 @@
+@page "/components/hover-colors"
+
+<PageTitle>W3HoverColor</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3HoverColor</h1>
+    <DocPager PreviousHref="components/animations" PreviousText="Animations" NextHref="components/direction" NextText="Direction" />
+
+    <p class="w3-large">`W3HoverColor` renders W3.CSS hover background, text, and border color utility classes.</p>
+    <p>Use it when the hover color belongs to a content wrapper, or set `Inline` when the wrapper should render a span.</p>
+
+    <DocExample Title="Hover Background Colors" Code="@HoverBackgroundCode">
+        <W3Grid Padding="true" Style="grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));">
+            <W3HoverColor Color="W3Color.PaleBlue" HoverColor="W3Color.Teal" HoverTextColor="W3Color.White" Round="W3Round.Medium" Class="@SampleClass">
+                Hover teal
+            </W3HoverColor>
+            <W3HoverColor Color="W3Color.PaleYellow" HoverColor="W3Color.Crimson" HoverTextColor="W3Color.White" Round="W3Round.Medium" Class="@SampleClass">
+                Hover crimson
+            </W3HoverColor>
+            <W3HoverColor Color="W3Color.LightGrey" HoverColor="W3Color.Cobalt" HoverTextColor="W3Color.White" Round="W3Round.Medium" Class="@SampleClass">
+                Hover cobalt
+            </W3HoverColor>
+        </W3Grid>
+    </DocExample>
+
+    <DocExample Title="Hover Text Colors" Code="@HoverTextCode">
+        <W3Grid Padding="true" Style="grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));">
+            <W3HoverColor TextColor="W3Color.Black" HoverTextColor="W3Color.Red" Round="W3Round.Medium" Class="@TextSampleClass">
+                Hover red text
+            </W3HoverColor>
+            <W3HoverColor TextColor="W3Color.Black" HoverTextColor="W3Color.Teal" Round="W3Round.Medium" Class="@TextSampleClass">
+                Hover teal text
+            </W3HoverColor>
+            <W3HoverColor TextColor="W3Color.Black" HoverTextColor="W3Color.Blue" Round="W3Round.Medium" Class="@TextSampleClass">
+                Hover blue text
+            </W3HoverColor>
+        </W3Grid>
+    </DocExample>
+
+    <DocExample Title="Hover Border Colors" Code="@HoverBorderCode">
+        <W3Grid Padding="true" Style="grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));">
+            <W3HoverColor Border="true" BorderColor="W3Color.LightGrey" HoverBorderColor="W3Color.Teal" Round="W3Round.Medium" Class="@BorderSampleClass">
+                Hover teal border
+            </W3HoverColor>
+            <W3HoverColor Border="true" BorderColor="W3Color.LightGrey" HoverBorderColor="W3Color.Red" Round="W3Round.Medium" Class="@BorderSampleClass">
+                Hover red border
+            </W3HoverColor>
+            <W3HoverColor Border="true" BorderColor="W3Color.LightGrey" HoverBorderColor="W3Color.Blue" Round="W3Round.Medium" Class="@BorderSampleClass">
+                Hover blue border
+            </W3HoverColor>
+        </W3Grid>
+    </DocExample>
+
+    <DocExample Title="Inline Hover Color" Code="@InlineCode">
+        <p>
+            Inline wrappers can mark
+            <W3HoverColor Inline="true" HoverTextColor="W3Color.Red" Class="w3-padding-small">
+                small text fragments
+            </W3HoverColor>
+            without adding a block element.
+        </p>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Inline</td><td>bool</td><td>false</td><td>Renders `span` instead of `div`</td></tr>
+                <tr><td>Color</td><td>W3Color</td><td>None</td><td>Background color class</td></tr>
+                <tr><td>TextColor</td><td>W3Color</td><td>None</td><td>Text color class</td></tr>
+                <tr><td>Border</td><td>bool</td><td>false</td><td>`w3-border`</td></tr>
+                <tr><td>BorderColor</td><td>W3Color</td><td>None</td><td>Border color class</td></tr>
+                <tr><td>HoverColor</td><td>W3Color</td><td>None</td><td>Hover background color class</td></tr>
+                <tr><td>HoverTextColor</td><td>W3Color</td><td>None</td><td>Hover text color class</td></tr>
+                <tr><td>HoverBorderColor</td><td>W3Color</td><td>None</td><td>Hover border color class</td></tr>
+                <tr><td>Size</td><td>W3Size</td><td>Default</td><td>Text size class</td></tr>
+                <tr><td>Round</td><td>W3Round</td><td>None</td><td>Rounded corner class</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional CSS classes</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline style</td></tr>
+                <tr><td>ChildContent</td><td>RenderFragment</td><td>null</td><td>Content inside the hover color wrapper</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Class Families</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Parameter</th><th>Class</th><th>Use</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>HoverColor</td><td>`w3-hover-{color}`</td><td>Background changes on hover</td></tr>
+                <tr><td>HoverTextColor</td><td>`w3-hover-text-{color}`</td><td>Text color changes on hover</td></tr>
+                <tr><td>HoverBorderColor</td><td>`w3-hover-border-{color}`</td><td>Border color changes on hover</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Related W3.CSS</h2>
+        <p><a href="https://www.w3schools.com/w3css/w3css_colors.asp" target="_blank" rel="noopener">W3.CSS Colors</a></p>
+        <p><a href="https://www.w3schools.com/w3css/w3css_borders.asp" target="_blank" rel="noopener">W3.CSS Borders</a></p>
+    </section>
+
+    <DocPager PreviousHref="components/animations" PreviousText="Animations" NextHref="components/direction" NextText="Direction" />
+</W3Container>
+
+@code {
+    private const string SampleClass = "w3-padding w3-border";
+    private const string TextSampleClass = "w3-padding w3-border w3-white";
+    private const string BorderSampleClass = "w3-padding w3-white";
+
+    private const string HoverBackgroundCode = """
+<W3HoverColor HoverColor="W3Color.Teal" HoverTextColor="W3Color.White">
+    Hover teal
+</W3HoverColor>
+
+<W3HoverColor HoverColor="W3Color.Crimson" HoverTextColor="W3Color.White">
+    Hover crimson
+</W3HoverColor>
+
+<W3HoverColor HoverColor="W3Color.Cobalt" HoverTextColor="W3Color.White">
+    Hover cobalt
+</W3HoverColor>
+""";
+
+    private const string HoverTextCode = """
+<W3HoverColor HoverTextColor="W3Color.Red">
+    Hover red text
+</W3HoverColor>
+
+<W3HoverColor HoverTextColor="W3Color.Teal">
+    Hover teal text
+</W3HoverColor>
+
+<W3HoverColor HoverTextColor="W3Color.Blue">
+    Hover blue text
+</W3HoverColor>
+""";
+
+    private const string HoverBorderCode = """
+<W3HoverColor Border="true" HoverBorderColor="W3Color.Teal">
+    Hover teal border
+</W3HoverColor>
+
+<W3HoverColor Border="true" HoverBorderColor="W3Color.Red">
+    Hover red border
+</W3HoverColor>
+
+<W3HoverColor Border="true" HoverBorderColor="W3Color.Blue">
+    Hover blue border
+</W3HoverColor>
+""";
+
+    private const string InlineCode = """
+<p>
+    Inline wrappers can mark
+    <W3HoverColor Inline="true" HoverTextColor="W3Color.Red">
+        small text fragments
+    </W3HoverColor>
+    without adding a block element.
+</p>
+""";
+}

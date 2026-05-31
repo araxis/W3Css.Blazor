@@ -1,0 +1,111 @@
+@using Microsoft.AspNetCore.Components.Web
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+<button @attributes="AdditionalAttributes"
+        type="@Type"
+        class="@CssClass"
+        style="@StyleValue"
+        aria-label="@EffectiveLabel"
+        title="@Title"
+        disabled="@Disabled"
+        @onclick="HandleClickAsync">
+    <W3Icon IconClass="@IconClass" Class="@IconCssClass">@IconContent</W3Icon>
+    @if (Extended && ChildContent is not null)
+    {
+        <span class="w3-fab-label">@ChildContent</span>
+    }
+</button>
+
+@code {
+    private string CssClass => BuildClass(
+        "w3-button",
+        "w3-fab",
+        Extended ? "w3-fab-extended w3-round-xxlarge" : "w3-circle",
+        Mini ? "w3-fab-mini" : null,
+        Fixed && Position != W3FabPosition.Inline ? "w3-fab-fixed" : null,
+        !Fixed && Position != W3FabPosition.Inline ? "w3-fab-absolute" : null,
+        Position.ToClass(),
+        Depth.ToClass(),
+        Color.ToBackgroundClass(),
+        TextColor.ToTextClass(),
+        Size.ToClass(),
+        Disabled ? "w3-disabled" : null);
+
+    private string? StyleValue => CombineStyle(Position != W3FabPosition.Inline ? $"--w3-fab-offset:{Math.Max(0, Offset)}px" : null, Style);
+
+    private string IconCssClass => new W3ClassBuilder()
+        .Add("w3-fab-icon")
+        .Add(IconElementClass)
+        .ToString();
+
+    private string EffectiveLabel => string.IsNullOrWhiteSpace(Label) ? "Floating action" : Label;
+
+    [Parameter]
+    public string Label { get; set; } = "Floating action";
+
+    [Parameter]
+    public string? Title { get; set; }
+
+    [Parameter]
+    public string? IconClass { get; set; }
+
+    [Parameter]
+    public string? IconElementClass { get; set; }
+
+    [Parameter]
+    public RenderFragment? IconContent { get; set; }
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public bool Extended { get; set; }
+
+    [Parameter]
+    public bool Mini { get; set; }
+
+    [Parameter]
+    public W3FabPosition Position { get; set; } = W3FabPosition.Inline;
+
+    [Parameter]
+    public bool Fixed { get; set; }
+
+    [Parameter]
+    public int Offset { get; set; } = 24;
+
+    [Parameter]
+    public W3Color Color { get; set; } = W3Color.Teal;
+
+    [Parameter]
+    public W3Color TextColor { get; set; } = W3Color.White;
+
+    [Parameter]
+    public W3Size Size { get; set; } = W3Size.Large;
+
+    [Parameter]
+    public W3CardDepth Depth { get; set; } = W3CardDepth.Four;
+
+    [Parameter]
+    public bool Disabled { get; set; }
+
+    [Parameter]
+    public string Type { get; set; } = "button";
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnClick { get; set; }
+
+    private Task HandleClickAsync(MouseEventArgs args)
+    {
+        return Disabled ? Task.CompletedTask : OnClick.InvokeAsync(args);
+    }
+
+    private static string? CombineStyle(params string?[] styles)
+    {
+        var style = string.Join(';', styles
+            .Where(value => !string.IsNullOrWhiteSpace(value))
+            .Select(value => value!.Trim().TrimEnd(';')));
+
+        return string.IsNullOrWhiteSpace(style) ? null : style;
+    }
+}

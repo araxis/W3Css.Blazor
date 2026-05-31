@@ -1,0 +1,92 @@
+@typeparam TValue
+@using System.Globalization
+@inherits W3FormComponentBase<TValue>
+
+<input @attributes="AdditionalAttributes"
+       id="@Id"
+       name="@NameAttributeValue"
+       type="number"
+       class="@NumberCssClass"
+       style="@Style"
+       placeholder="@Placeholder"
+       min="@MinAsString"
+       max="@MaxAsString"
+       step="@Step"
+       disabled="@Disabled"
+       readonly="@ReadOnly"
+       value="@CurrentValueAsString"
+       @oninput="HandleInput"
+       @onchange="HandleChange" />
+
+@code {
+    private string NumberCssClass => BuildControlClass("w3-input");
+    private string? MinAsString => FormatNumber(Min);
+    private string? MaxAsString => FormatNumber(Max);
+
+    [Parameter]
+    public string? Id { get; set; }
+
+    [Parameter]
+    public string? Placeholder { get; set; }
+
+    [Parameter]
+    public TValue? Min { get; set; }
+
+    [Parameter]
+    public TValue? Max { get; set; }
+
+    [Parameter]
+    public string? Step { get; set; }
+
+    [Parameter]
+    public bool ReadOnly { get; set; }
+
+    [Parameter]
+    public bool UpdateOnInput { get; set; }
+
+    private void HandleInput(ChangeEventArgs args)
+    {
+        if (UpdateOnInput)
+        {
+            CurrentValueAsString = args.Value?.ToString();
+        }
+    }
+
+    private void HandleChange(ChangeEventArgs args)
+    {
+        if (!UpdateOnInput)
+        {
+            CurrentValueAsString = args.Value?.ToString();
+        }
+    }
+
+    protected override string? FormatValueAsString(TValue? value)
+    {
+        return FormatNumber(value);
+    }
+
+    protected override bool TryParseValueFromString(string? value, out TValue result, out string validationErrorMessage)
+    {
+        if (BindConverter.TryConvertTo<TValue>(value, CultureInfo.InvariantCulture, out var parsedValue))
+        {
+            result = parsedValue;
+            validationErrorMessage = string.Empty;
+            return true;
+        }
+
+        result = default!;
+        validationErrorMessage = $"The {FieldIdentifier.FieldName} field is not a valid number.";
+        return false;
+    }
+
+    private static string? FormatNumber(TValue? value)
+    {
+        return value switch
+        {
+            null => null,
+            IFormattable formattable => formattable.ToString(null, CultureInfo.InvariantCulture),
+            _ => value.ToString()
+        };
+    }
+}
+

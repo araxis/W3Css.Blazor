@@ -1,0 +1,150 @@
+@page "/components/list-item"
+
+<PageTitle>W3ListItem</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3ListItem</h1>
+    <DocPager PreviousHref="components/list" PreviousText="List" NextHref="components/timeline" NextText="Timeline" />
+
+    <p class="w3-large">`W3ListItem` provides interactive, dense, and stateful list rows compatible with action menus, commands, and navigation.</p>
+    <p>Use it inside `W3List` with icon content, leading/trailing content, route links, active/selected states, and optional compact styling.</p>
+
+    <DocExample Title="Actionable Menu Items" Description="A flat action list keeps click handlers and disabled states local to each row." Code="@ActionsCode">
+        <W3List Border="true" Color="W3Color.White" Class="w3-padding-0">
+            <W3ListItem Text="Inbox" IconClass="fa fa-envelope-o" Divider="true" OnClick="SetInboxAction" />
+            <W3ListItem Text="Drafts" IconClass="fa fa-pencil" Divider="true" Active="true" />
+            <W3ListItem Text="Settings" IconClass="fa fa-cog" OnClick="SetSettingsAction" />
+        </W3List>
+        <p class="w3-small">Last action: <strong>@(string.IsNullOrWhiteSpace(ActiveAction) ? "None" : ActiveAction)</strong></p>
+    </DocExample>
+
+    <DocExample Title="Links and Commands" Description="Switch between link and command patterns with optional target and custom end content." Code="@LinksCode">
+        <W3List Border="true" Class="w3-margin-bottom">
+            <W3ListItem Href="components/list" Text="List docs" StartIconClassName="fa fa-list-ul">
+                <EndContent>
+                    <span class="w3-small w3-text-grey">/components/list</span>
+                </EndContent>
+            </W3ListItem>
+            <W3ListItem Href="components/tree-view" IconClass="fa fa-sitemap" Text="Tree view">
+                <EndContent>
+                    <span>Open</span>
+                </EndContent>
+            </W3ListItem>
+            <W3ListItem Text="Unavailable command" Disabled="true" IconClass="fa fa-ban">
+                <EndContent>
+                    <span class="w3-text-grey">Locked</span>
+                </EndContent>
+            </W3ListItem>
+        </W3List>
+    </DocExample>
+
+    <DocExample Title="Dense and Avatar-style Rows" Description="Combine start content and end content for compact information rows." Code="@DenseCode">
+        <W3List Border="true" Class="w3-padding-0">
+            <W3ListItem Dense="true" Text="Inbox" Divider="true">
+                <StartContent>
+                    <span class="w3-tag w3-blue w3-round-large w3-small">9</span>
+                </StartContent>
+            </W3ListItem>
+            <W3ListItem Dense="true" Text="Updates" IconClass="fa fa-bell">
+                <EndContent>
+                    <span class="w3-badge w3-teal">New</span>
+                </EndContent>
+            </W3ListItem>
+        </W3List>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Row label and rich text</td></tr>
+                <tr><td>Text</td><td>string?</td><td>null</td><td>Fallback row text when no child content</td></tr>
+                <tr><td>IconClass</td><td>string?</td><td>null</td><td>Start icon CSS class (alias: StartIconClassName)</td></tr>
+                <tr><td>StartIconClassName</td><td>string?</td><td>null</td><td>Alias for icon class on the start slot</td></tr>
+                <tr><td>StartContent</td><td>RenderFragment?</td><td>null</td><td>Custom start content</td></tr>
+                <tr><td>EndContent</td><td>RenderFragment?</td><td>null</td><td>Custom end content (badges, status chips)</td></tr>
+                <tr><td>Href</td><td>string?</td><td>null</td><td>Creates link mode</td></tr>
+                <tr><td>Target</td><td>string?</td><td>null</td><td>Link target attribute</td></tr>
+                <tr><td>Rel</td><td>string?</td><td>null</td><td>Link rel attribute</td></tr>
+                <tr><td>Dense</td><td>bool</td><td>false</td><td>Compact row height</td></tr>
+                <tr><td>Divider</td><td>bool</td><td>false</td><td>Bottom border separator</td></tr>
+                <tr><td>Active</td><td>bool</td><td>false</td><td>Active visual state</td></tr>
+                <tr><td>Disabled</td><td>bool</td><td>false</td><td>Disabled row state</td></tr>
+                <tr><td>Type</td><td>string</td><td>button</td><td>Button type when in button mode</td></tr>
+                <tr><td>Color</td><td>W3Color</td><td>None</td><td>Root background class</td></tr>
+                <tr><td>TextColor</td><td>W3Color</td><td>None</td><td>Default row text color</td></tr>
+                <tr><td>ActiveColor</td><td>W3Color</td><td>None</td><td>Active row background override</td></tr>
+                <tr><td>ActiveTextColor</td><td>W3Color</td><td>None</td><td>Active row text color override</td></tr>
+                <tr><td>HoverColor</td><td>W3Color</td><td>LightGrey</td><td>Hover background class</td></tr>
+                <tr><td>HoverTextColor</td><td>W3Color</td><td>None</td><td>Hover text class</td></tr>
+                <tr><td>OnClick</td><td>EventCallback&lt;MouseEventArgs&gt;</td><td>default</td><td>Command callback in button and command modes</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional root list-item class</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline styles on root list-item</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Related</h2>
+        <p><NavLink href="components/list">List</NavLink> provides the base list wrapper; place `W3ListItem` inside this container.</p>
+        <p><NavLink href="components/menu">Menu</NavLink> covers grouped command surfaces when rows require section actions and nested menus.</p>
+        <p><NavLink href="components/nav-menu">Nav Menu</NavLink> is useful for grouped route navigation with active route-aware states.</p>
+    </section>
+
+    <DocPager PreviousHref="components/list" PreviousText="List" NextHref="components/timeline" NextText="Timeline" />
+</W3Container>
+
+@code {
+    private string ActiveAction { get; set; } = string.Empty;
+
+    private void SetInboxAction() => ActiveAction = "Inbox";
+
+    private void SetSettingsAction() => ActiveAction = "Settings";
+
+    private const string ActionsCode = """
+<W3List Border="true" Color="W3Color.White" Class="w3-padding-0">
+    <W3ListItem Text="Inbox" IconClass="fa fa-envelope-o" Divider="true" OnClick="SetInboxAction" />
+    <W3ListItem Text="Drafts" IconClass="fa fa-pencil" Divider="true" Active="true" />
+    <W3ListItem Text="Settings" IconClass="fa fa-cog" OnClick="SetSettingsAction" />
+</W3List>
+""";
+
+    private const string LinksCode = """
+<W3List Border="true">
+<W3ListItem Href="components/list" Text="List docs" StartIconClassName="fa fa-list-ul">
+    <EndContent>
+        <span class="w3-small w3-text-grey">/components/list</span>
+    </EndContent>
+</W3ListItem>
+<W3ListItem Href="components/tree-view" IconClass="fa fa-sitemap" Text="Tree view">
+    <EndContent>
+        <span>Open</span>
+    </EndContent>
+</W3ListItem>
+    <W3ListItem Text="Unavailable command" Disabled="true" IconClass="fa fa-ban">
+        <span>Locked</span>
+        <EndContent>
+            <span>Locked</span>
+        </EndContent>
+    </W3ListItem>
+</W3List>
+""";
+
+    private const string DenseCode = """
+<W3List Border="true" Class="w3-padding-0">
+    <W3ListItem Dense="true" Text="Inbox" Divider="true">
+        <StartContent>
+            <span class="w3-tag w3-blue w3-round-large w3-small">9</span>
+        </StartContent>
+    </W3ListItem>
+    <W3ListItem Dense="true" Text="Updates" IconClass="fa fa-bell">
+        <EndContent>
+            <span class="w3-badge w3-teal">New</span>
+        </EndContent>
+    </W3ListItem>
+</W3List>
+""";
+}

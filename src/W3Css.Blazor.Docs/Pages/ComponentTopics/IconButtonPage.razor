@@ -1,0 +1,106 @@
+@page "/components/icon-button"
+
+<PageTitle>W3IconButton</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3IconButton</h1>
+    <DocPager PreviousHref="components/button" PreviousText="Button" NextHref="components/toggle-icon-button" NextText="Toggle Icon Button" />
+
+    <p class="w3-large">`W3IconButton` renders a compact icon-only command with W3.CSS button styling and an accessible label.</p>
+    <p>Use it for toolbar actions, table row commands, app bars, and editor controls where text labels would make the interface too dense.</p>
+
+    <DocExample Title="Toolbar Actions" Description="Every icon button needs a `Label`; the icon itself stays decorative for screen readers." Code="@ToolbarCode">
+        <W3Toolbar Label="Document actions" Border="true" Round="W3Round.Medium" Gap="4">
+            <W3IconButton Label="Save" Title="Save" IconClass="fa fa-save" Color="W3Color.Teal" TextColor="W3Color.White" />
+            <W3IconButton Label="Undo" Title="Undo" IconClass="fa fa-undo" Border="true" />
+            <W3IconButton Label="Redo" Title="Redo" IconClass="fa fa-repeat" Border="true" />
+            <W3IconButton Label="Delete" Title="Delete" IconClass="fa fa-trash" TextColor="W3Color.Red" Border="true" />
+        </W3Toolbar>
+    </DocExample>
+
+    <DocExample Title="Toggle Formatting" Description="Use `Toggle` and `Pressed` for icon buttons that represent an on/off tool state." Code="@ToggleCode">
+        <W3ButtonGroup Label="Formatting" Border="true" Round="W3Round.Medium" Connected="false" Gap="4">
+            <W3IconButton Label="Bold" Toggle="true" Pressed="true" Border="true">B</W3IconButton>
+            <W3IconButton Label="Italic" Toggle="true" Border="true">I</W3IconButton>
+            <W3IconButton Label="Underline" Toggle="true" Border="true">U</W3IconButton>
+        </W3ButtonGroup>
+    </DocExample>
+
+    <DocExample Title="Table Row Actions" Description="Use `Circle` for compact icon-only commands inside dense table rows; labels still describe each action." Code="@RowCode">
+        <W3Table Bordered="true" Responsive="true">
+            <thead>
+                <tr><th>Asset</th><th>Status</th><th>Actions</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>hero-banner.jpg</td>
+                    <td><W3Tag Color="W3Color.PaleGreen" TextColor="W3Color.Black">Ready</W3Tag></td>
+                    <td>
+                        <W3IconButton Label="Preview hero banner" Title="Preview" IconClass="fa fa-eye" Circle="true" Border="true" Class="w3-margin-right" />
+                        <W3IconButton Label="Edit hero banner" Title="Edit" IconClass="fa fa-pencil" Circle="true" Border="true" Class="w3-margin-right" />
+                        <W3IconButton Label="Remove hero banner" Title="Remove" IconClass="fa fa-trash" Circle="true" TextColor="W3Color.Red" Border="true" />
+                    </td>
+                </tr>
+            </tbody>
+        </W3Table>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Label</td><td>string</td><td>Icon action</td><td>Required button `aria-label` fallback</td></tr>
+                <tr><td>Title</td><td>string?</td><td>null</td><td>Optional native title tooltip</td></tr>
+                <tr><td>IconClass</td><td>string?</td><td>null</td><td>Classes passed to the inner `W3Icon`</td></tr>
+                <tr><td>IconElementClass</td><td>string?</td><td>null</td><td>Additional class on the inner icon element</td></tr>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Icon text for icon fonts such as Material Icons, or custom icon content</td></tr>
+                <tr><td>Color / TextColor</td><td>W3Color</td><td>None / None</td><td>Button background and text color classes</td></tr>
+                <tr><td>Size</td><td>W3Size</td><td>Default</td><td>Button size class</td></tr>
+                <tr><td>Round</td><td>W3Round</td><td>Medium</td><td>Rounded button class</td></tr>
+                <tr><td>Border</td><td>bool</td><td>false</td><td>`w3-border`</td></tr>
+                <tr><td>Circle</td><td>bool</td><td>false</td><td>`w3-circle` plus stable square icon-button sizing</td></tr>
+                <tr><td>Toggle / Pressed</td><td>bool</td><td>false / false</td><td>`aria-pressed` and pressed visual state for toggle tools</td></tr>
+                <tr><td>Disabled</td><td>bool</td><td>false</td><td>`disabled` plus `w3-disabled`</td></tr>
+                <tr><td>Type</td><td>string</td><td>button</td><td>Button type attribute</td></tr>
+                <tr><td>OnClick</td><td>EventCallback&lt;MouseEventArgs&gt;</td><td>empty</td><td>Click callback</td></tr>
+                <tr><td>Class / Style</td><td>string?</td><td>null</td><td>Additional root classes and inline style</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Related</h2>
+        <p><NavLink href="components/button">Button</NavLink> covers text commands, and <NavLink href="components/toolbar">Toolbar</NavLink> groups icon buttons into action rows.</p>
+        <p><NavLink href="components/icons">Icons</NavLink> explains icon-library setup.</p>
+    </section>
+
+    <DocPager PreviousHref="components/button" PreviousText="Button" NextHref="components/toggle-icon-button" NextText="Toggle Icon Button" />
+</W3Container>
+
+@code {
+    private const string ToolbarCode = """
+<W3Toolbar Label="Document actions" Border="true" Round="W3Round.Medium" Gap="4">
+    <W3IconButton Label="Save" Title="Save" IconClass="fa fa-save" Color="W3Color.Teal" TextColor="W3Color.White" />
+    <W3IconButton Label="Undo" Title="Undo" IconClass="fa fa-undo" Border="true" />
+    <W3IconButton Label="Redo" Title="Redo" IconClass="fa fa-repeat" Border="true" />
+    <W3IconButton Label="Delete" Title="Delete" IconClass="fa fa-trash" TextColor="W3Color.Red" Border="true" />
+</W3Toolbar>
+""";
+
+    private const string ToggleCode = """
+<W3ButtonGroup Label="Formatting" Border="true" Round="W3Round.Medium" Connected="false" Gap="4">
+    <W3IconButton Label="Bold" Toggle="true" Pressed="true" Border="true">B</W3IconButton>
+    <W3IconButton Label="Italic" Toggle="true" Border="true">I</W3IconButton>
+    <W3IconButton Label="Underline" Toggle="true" Border="true">U</W3IconButton>
+</W3ButtonGroup>
+""";
+
+    private const string RowCode = """
+<W3IconButton Label="Preview hero banner" Title="Preview" IconClass="fa fa-eye" Circle="true" Border="true" />
+<W3IconButton Label="Edit hero banner" Title="Edit" IconClass="fa fa-pencil" Circle="true" Border="true" />
+<W3IconButton Label="Remove hero banner" Title="Remove" IconClass="fa fa-trash" Circle="true" TextColor="W3Color.Red" Border="true" />
+""";
+}

@@ -1,0 +1,124 @@
+@page "/components/chart"
+
+<PageTitle>W3Chart</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3Chart</h1>
+    <DocPager PreviousHref="components/timeline" PreviousText="Timeline" NextHref="components/chat" NextText="Chat" />
+
+    <p class="w3-large">`W3Chart` is a dependency-free, script-free SVG chart (`MudChart` parity) supporting bar, line, pie, and donut.</p>
+    <p>W3.CSS ships no charts, so this is a new component. It renders pure SVG from typed `W3ChartSeries` data — no JavaScript and no external charting library.</p>
+
+    <W3Row>
+        <W3Column Medium="6">
+            <DocExample Title="Bar" Code="@BarCode">
+                <W3Chart ChartType="W3ChartType.Bar"
+                         Series="revenueSeries"
+                         Labels="quarters"
+                         Title="Revenue by quarter" />
+            </DocExample>
+        </W3Column>
+        <W3Column Medium="6">
+            <DocExample Title="Line" Code="@LineCode">
+                <W3Chart ChartType="W3ChartType.Line"
+                         Series="revenueSeries"
+                         Labels="quarters"
+                         Title="Revenue trend" />
+            </DocExample>
+        </W3Column>
+    </W3Row>
+
+    <W3Row>
+        <W3Column Medium="6">
+            <DocExample Title="Pie" Code="@PieCode">
+                <W3Chart ChartType="W3ChartType.Pie"
+                         Series="trafficSeries"
+                         Labels="channels"
+                         Title="Traffic by channel" />
+            </DocExample>
+        </W3Column>
+        <W3Column Medium="6">
+            <DocExample Title="Donut" Code="@DonutCode">
+                <W3Chart ChartType="W3ChartType.Donut"
+                         Series="trafficSeries"
+                         Labels="channels"
+                         Title="Traffic by channel" />
+            </DocExample>
+        </W3Column>
+    </W3Row>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>ChartType</td><td>W3ChartType</td><td>Bar</td><td>Bar / Line / Pie / Donut</td></tr>
+                <tr><td>Series</td><td>IReadOnlyList&lt;W3ChartSeries&gt;</td><td>empty</td><td>Named data (first series = slices for Pie/Donut)</td></tr>
+                <tr><td>Labels</td><td>IReadOnlyList&lt;string&gt;</td><td>empty</td><td>Category / slice labels</td></tr>
+                <tr><td>Palette</td><td>IReadOnlyList&lt;string&gt;</td><td>built-in</td><td>Hex colors (overridden per series via W3ChartSeries.Color)</td></tr>
+                <tr><td>Width / Height</td><td>int</td><td>420 / 260</td><td>SVG viewBox size (renders responsively at 100% width)</td></tr>
+                <tr><td>ShowLegend</td><td>bool</td><td>true</td><td>Legend below the chart</td></tr>
+                <tr><td>ShowAxisLabels</td><td>bool</td><td>true</td><td>Axis/category labels (Bar/Line)</td></tr>
+                <tr><td>Title</td><td>string?</td><td>null</td><td>Chart heading</td></tr>
+                <tr><td>HoleColor</td><td>string</td><td>"#ffffff"</td><td>Donut hole fill (match the surface behind it)</td></tr>
+                <tr><td>AriaLabel</td><td>string</td><td>"Chart"</td><td><code>role="img"</code> label</td></tr>
+            </tbody>
+        </W3Table>
+        <p class="doc-muted">Each bar/slice includes an SVG <code>&lt;title&gt;</code> tooltip with its value. For Pie/Donut, pass the slice values as the first series and the slice names as <code>Labels</code>.</p>
+        <p class="doc-muted">Values are expected to be non-negative — the axis starts at zero, so negative data points are not plotted on a negative axis.</p>
+    </section>
+
+    <DocPager PreviousHref="components/timeline" PreviousText="Timeline" NextHref="components/chat" NextText="Chat" />
+</W3Container>
+
+@code {
+    private readonly IReadOnlyList<string> quarters = new[] { "Q1", "Q2", "Q3", "Q4" };
+
+    private readonly IReadOnlyList<W3ChartSeries> revenueSeries = new[]
+    {
+        new W3ChartSeries("2025", new double[] { 12, 19, 15, 24 }),
+        new W3ChartSeries("2026", new double[] { 16, 14, 22, 30 })
+    };
+
+    private readonly IReadOnlyList<string> channels = new[] { "Direct", "Search", "Social", "Referral" };
+
+    private readonly IReadOnlyList<W3ChartSeries> trafficSeries = new[]
+    {
+        new W3ChartSeries("Traffic", new double[] { 42, 30, 18, 10 })
+    };
+
+    private const string BarCode = """
+<W3Chart ChartType="W3ChartType.Bar" Series="revenueSeries" Labels="quarters" Title="Revenue by quarter" />
+
+@code {
+    private readonly IReadOnlyList<string> quarters = new[] { "Q1", "Q2", "Q3", "Q4" };
+    private readonly IReadOnlyList<W3ChartSeries> revenueSeries = new[]
+    {
+        new W3ChartSeries("2025", new double[] { 12, 19, 15, 24 }),
+        new W3ChartSeries("2026", new double[] { 16, 14, 22, 30 })
+    };
+}
+""";
+
+    private const string LineCode = """
+<W3Chart ChartType="W3ChartType.Line" Series="revenueSeries" Labels="quarters" Title="Revenue trend" />
+""";
+
+    private const string PieCode = """
+<W3Chart ChartType="W3ChartType.Pie" Series="trafficSeries" Labels="channels" Title="Traffic by channel" />
+
+@code {
+    private readonly IReadOnlyList<string> channels = new[] { "Direct", "Search", "Social", "Referral" };
+    private readonly IReadOnlyList<W3ChartSeries> trafficSeries = new[]
+    {
+        new W3ChartSeries("Traffic", new double[] { 42, 30, 18, 10 })
+    };
+}
+""";
+
+    private const string DonutCode = """
+<W3Chart ChartType="W3ChartType.Donut" Series="trafficSeries" Labels="channels" Title="Traffic by channel" />
+""";
+}

@@ -1,0 +1,693 @@
+# Progress Log
+
+Last updated: 2026-05-31
+
+## 2026-05-31
+
+- Re-synced memory folder with current source state after major component/parity/theming work already on `main`.
+- Verified again:
+  - `dotnet build W3Css.Blazor.slnx --configuration Release` (0 warnings, 0 errors).
+  - `dotnet test tests/W3Css.Blazor.Tests/W3Css.Blazor.Tests.csproj --configuration Release --no-build` (369 passing).
+- Confirmed repository inventory for memory consistency:
+- 124 `.razor` files in `src/W3Css.Blazor/Components`.
+  - 118 docs pages under `src/W3Css.Blazor.Docs/Pages/ComponentTopics`.
+  - `W3Theme` + `W3ThemeProvider` + bundled `w3-theme.css` still present and active.
+- Memory updates applied to:
+  - `memory/current-state.md`
+  - `memory/decisions.md`
+  - `memory/development-plan.md`
+  - `memory/findings.md`
+  - `memory/w3css-gap-scan.md`
+  - `memory/project-memory.md` (full rewrite in this pass)
+  - `memory/feature-list.md` timestamp refresh
+- Committed the memory sync as `5358512 docs: sync project memory`.
+- Started release-readiness and API consistency audit:
+  - corrected package repository metadata to the actual `origin` URL (`https://github.com/araxis/W3Css.Blazor`);
+  - removed the `W3Slideshow` child-content RenderTree probe that caused `BL0006` during pack/build paths;
+  - fixed `W3MessageBox` so inherited unmatched attributes flow to the underlying modal;
+  - added regression coverage for `W3MessageBox` additional attributes.
+- Mechanical API audit result: every rendering component inheriting `W3ComponentBase`/`W3FormComponentBase` now forwards unmatched attributes through the rendered root or control path.
+- Verification:
+  - `dotnet test tests/W3Css.Blazor.Tests/W3Css.Blazor.Tests.csproj --configuration Release` (370 passing).
+  - `dotnet pack src/W3Css.Blazor/W3Css.Blazor.csproj --configuration Release --no-build --output artifacts/packages-release-audit`.
+  - Packed `.nuspec` now reports `projectUrl` and repository URL as `https://github.com/araxis/W3Css.Blazor`.
+- Retargeted the local-only `v0.1.0` tag to the current release-ready `HEAD` after confirming `origin` does not currently have that tag. The tag remains unpushed so the release workflow is not triggered before the publish path is confirmed.
+- Dated `CHANGELOG.md` for `0.1.0` and refreshed `docs/release-notes/0.1.0.md` verification commands.
+- Prepared repository recreation handoff:
+  - removed public-surface local tooling references from tracked files;
+  - created a local full-history backup bundle at `D:\Projects\W3Css-repo-backups\W3Css-before-recreate-20260531.bundle`;
+  - created clean snapshot repository at `D:\Projects\W3Css-clean-public` with one neutral initial commit;
+  - verified the clean snapshot scan found no provider/tooling traces in tracked files or commit history;
+  - verified clean snapshot build/test/pack (`370` passing tests).
+- Remote delete/recreate is blocked until GitHub CLI is authorized with repository deletion scope. `gh repo delete araxis/W3Css.Blazor --yes` returned missing `delete_repo` scope; `gh auth refresh -h github.com -s delete_repo` needs interactive authorization.
+
+## 2026-05-29
+
+- Opened a dedicated **MudBlazor parity** track: identify every MudBlazor user-facing component not yet wrapped/aliased in the library and close the gaps W3.CSS-first.
+- Recorded the parity plan in the docs site itself: populated the previously empty `Product Readiness Backlog` (`ExpansionBacklog`) in `src/W3Css.Blazor.Docs/Pages/Components.razor` with the remaining MudBlazor candidates (`W3MessageBox`, `W3ToggleGroup`/`W3ToggleItem`, `W3ColorPicker`, `W3Mask`, `W3DynamicTabs`, `W3Hidden`, `W3ScrollToTop`, `W3PageContentNavigation`, `W3SwipeArea` [Later], `W3Chart` [Later]).
+- Implemented the first parity slice — layout/content primitives (all CSS-first, no JS):
+  - `W3Spacer` (MudSpacer) — flex filler; `src/W3Css.Blazor/Components/W3Spacer.razor` + `.razor.css`.
+  - `W3Footer` (MudFooter) — semantic `<footer>` with color/border/fixed (`w3-bottom`) options; `W3Footer.razor` + `.razor.css`.
+  - `W3AvatarGroup` (MudAvatarGroup) — overlapping `W3Avatar` row via scoped `::deep` overlap CSS; `W3AvatarGroup.razor` + `.razor.css`.
+- Added docs topics `/components/spacer`, `/components/footer`, `/components/avatar-group` with examples and parameter tables.
+- Spliced pager chains: Divider → **Spacer** → **Footer** → Container, and Avatar → **Avatar Group** → Icons.
+- Registered the three topics in `Components.razor` catalog (Layout And Surfaces; Actions, Content, And Media) and `NavMenu.razor` sidebar.
+- Added route + index-link coverage in `tests/W3Css.Blazor.Tests/W3DocsSmokeTests.cs` and dedicated rendering tests in `tests/W3Css.Blazor.Tests/W3MudParityLayoutTests.cs`.
+- Verification:
+  - `dotnet build W3Css.Blazor.slnx --configuration Release` ✅ (0 errors; pre-existing BL0006 warning only)
+  - `dotnet test tests/W3Css.Blazor.Tests/W3Css.Blazor.Tests.csproj --configuration Release --no-build` ✅ (**372 tests**)
+- Implemented the second parity slice — confirm prompt + segmented selection (CSS-first, no JS):
+  - `W3MessageBox` (MudMessageBox) — inline `@bind-Visible` confirm/alert over `W3Dialog`/`W3Modal`; `bool?` result (Yes=true, No=false, Cancel/dismiss=null) plus `OnYes`/`OnNo`/`OnCancel`. `src/W3Css.Blazor/Components/W3MessageBox.razor`.
+  - `W3ToggleGroup<TValue>` + `W3ToggleItem<TValue>` (MudToggleGroup/MudToggleItem) — single/multi segmented selector using the `W3ChipSet`/`W3Chip` cascading owner/item pattern over `w3-bar`/`w3-button`, items expose `aria-pressed`. `W3ToggleGroup.razor` + `W3ToggleItem.razor`.
+  - Docs topics `/components/message-box` (interactive Yes/No/Cancel demo) and `/components/toggle-group` (single + multi demos); pagers Dialog → **Message Box** → Tooltip and Switch → **Toggle Group** → Color Input.
+  - Registered in `Components.razor` catalog + `NavMenu.razor`; removed both from the docs `Product Readiness Backlog`.
+  - Tests: route + index-link coverage in `W3DocsSmokeTests.cs`; behavior tests in `tests/W3Css.Blazor.Tests/W3MudParityInteractiveTests.cs`.
+  - Verification: `dotnet build … -c Release` ✅ (0 errors); `dotnet test … --no-build` ✅ (**379 tests**).
+- Implemented the third parity slice — masked input, full color picker, dynamic tabs (CSS-first, no JS):
+  - `W3Mask` (MudMask) — `W3FormComponentBase<string?>` input that formats against a pattern (`0`=digit, `a`=letter, `*`=alphanumeric, others literal); bound value is masked text. `src/W3Css.Blazor/Components/W3Mask.razor`.
+  - `W3ColorPicker` (MudColorPicker) — preview swatch + native picker + hex field + preset palette over Blazor `Value`/`ValueChanged`; hex entry validated. `W3ColorPicker.razor` + `.razor.css`.
+  - `W3DynamicTabs` (MudDynamicTabs) + `W3DynamicTabItem` model — closeable/addable tab bar over `w3-bar`/`w3-button` with `OnAddTab`/`OnCloseTab` and `@bind-ActiveValue`. `W3DynamicTabs.razor` + `.razor.css`, model at `src/W3Css.Blazor/W3DynamicTabItem.cs`.
+  - Docs topics `/components/mask`, `/components/color-picker`, `/components/dynamic-tabs`; pagers Text Field → **Mask** → Numeric Field, Color Input → **Color Picker** → File Input, Tabs → **Dynamic Tabs** → Accordion. Registered in `Components.razor` + `NavMenu.razor`; removed all three from the docs backlog.
+  - Tests: routes/index-links in `W3DocsSmokeTests.cs`; behavior tests in `tests/W3Css.Blazor.Tests/W3MudParitySlice3Tests.cs`.
+  - Verification: `dotnet build … -c Release` ✅ (0 errors); `dotnet test … --no-build` ✅ (**387 tests**). Browser-verified on the running docs server (port 5015): color picker (22 swatches + hex), mask live-formats `1234567890`→`(123) 456-7890`, dynamic tabs add 2→3 and close 3→2 with no Blazor error UI.
+- **Pivoted strategy → W3.CSS-loyal consolidation (no MudBlazor alias shims).** Per the new design rule ([[decisions]]), removed the alias layer and folded unique features into canonical components:
+  - Folds: `W3SimpleTable`→`W3Table.Dense`; `W3DataGrid`→`W3DataTable` (already had selection); `W3ColorPicker`→`W3ColorInput.ShowPalette` (palette/preview/hex); `W3DynamicTabs`→`W3Tabs` (`ShowAddButton`/`OnAddTab`, `Closeable`/`ShowCloseButtons`/`OnCloseTab`, per-panel `W3TabPanel.Closeable`); `W3Dialog`→`W3Modal.Actions`, and `W3MessageBox` rebuilt on `W3Modal`.
+  - Deleted 15 alias components + the `W3SnackbarSeverity` enum, their 15 docs pages, sidebar/catalog entries, and re-linked all pager chains (Divider→Spacer→Footer→Container untouched; new joins e.g. Tabs→Accordion, Color Input→File Input, Toast→Modal→Overlay→Message Box→Tooltip, Table→Data Table→Tree View, Slideshow→Code).
+  - Deleted 10 alias test files; reworked `W3MudParitySlice3Tests` (Mask + `W3ColorInput.ShowPalette` + `W3Tabs` closeable/addable) and the dialog tests → one `W3Modal.Actions` test.
+  - Verification: `dotnet build W3Css.Blazor.slnx -c Release` ✅ (0 errors, 0 warnings); `dotnet test` ✅ (**346 tests**). Browser-verified on the docs server: Color Input renders (color-picker gone from nav), Message Box opens on `W3Modal`, deleted `/components/dialog` shows a graceful Not Found, sidebar down to 118 links.
+- Added `W3ScrollToTop` (genuinely-missing capability): back-to-top button that appears past a scroll threshold and smooth-scrolls up. `src/W3Css.Blazor/Components/W3ScrollToTop.razor` (+ `.razor.css`) with `wwwroot/w3ScrollToTop.js` (scroll listener + `scrollTo`, `DotNetObjectReference` callback, `IAsyncDisposable`, `JSDisconnectedException`-safe). Docs `/components/scroll-to-top` (pager Stepper → Scroll To Top → Spinner), nav/catalog wiring, smoke route + index link, and `W3ScrollToTopTests` (loose JS interop). Removed it from the docs backlog.
+- Doc cleanups: corrected the stale `W3Dialog` reference on the Message Box page to `W3Modal`; the Color Input page now documents the `ShowPalette` picker (example + `ShowPalette`/`Palette`/`Label` rows).
+- Verification: `dotnet build … -c Release` ✅ (0 errors); `dotnet test … --no-build` ✅ (**349 tests**). Browser-verified on a fresh docs server: button starts hidden, scrolling past the threshold makes it visible (JS→.NET `SetVisible`), and clicking smooth-scrolls toward the top — no Blazor error UI.
+- Added `W3PageContentNavigation` + `W3PageSection` (last non-deferred missing capability): in-page table-of-contents scrollspy. `src/W3Css.Blazor/Components/W3PageContentNavigation.razor` (+ `.razor.css`) with `wwwroot/w3PageContentNavigation.js` (`IntersectionObserver`, `DotNetObjectReference` `SetActive` callback, `IAsyncDisposable`, `JSDisconnectedException`-safe). Docs `/components/page-content-navigation` (pager Breadcrumb → Page Content Navigation → Link), nav/catalog wiring, smoke route + index link, and `W3PageContentNavigationTests`. Removed it from the docs backlog.
+- Verification: `dotnet build … -c Release` ✅ (0 errors); `dotnet test … --no-build` ✅ (**352 tests**). Page renders with the TOC links and the active-highlight path is unit-tested; the headless preview reports `window.innerHeight === 0` so the IntersectionObserver scrollspy couldn't be exercised there (no JS errors; works in a real browser).
+- Per the new commit policy, committed the session in focused commits on `test/docs-smoke`: W3.CSS-loyal consolidation, memory sync, and this component as separate commits.
+- Added `W3Chart` + `W3ChartSeries` (the last deferred parity item, accepted by the user): a dependency-free, script-free SVG chart (`MudChart` parity) supporting Bar, Line, Pie, and Donut with legend, axis labels, gridlines, per-series colors, and `<title>` tooltips. Geometry lives in `Internal/W3ChartGeometry.cs` (pure, unit-tested); the component renders the layout as SVG, emitting `<text>` via a `RenderFragment` builder because Razor reserves the `<text>` tag. Docs `/components/chart` (pager Timeline → Chart → Chat), nav/catalog wiring, smoke route + index link, and `W3ChartTests` (geometry + render). Removed from the docs backlog.
+- Verification: `dotnet build … -c Release` ✅ (0 errors, 0 warnings); `dotnet test … --no-build` ✅ (**360 tests**). Browser-verified on a fresh docs server: Bar (8 rects/2 series), Line (2 polylines), Pie (4 slices), Donut (4 slices + hole) all render with legends and axis labels, no Blazor error UI. Committed as its own focused commit.
+- Parity status: the MudBlazor parity backlog is effectively complete; only the niche `W3SwipeArea` (pointer/JS gesture) remains deferred.
+- New direction (user): make every component really easy to use and give the library **strong theming/customization** (the named weak spot, shared with MudBlazor). Shipped the MVP **theme token system**: `W3Theme` (record: primary/secondary/accent/surface/border/radius/font + optional dark) and `W3ThemeProvider` (emits CSS custom properties on `.w3-theme-root` + a `[data-w3-dark]` block + token utility classes like `.w3-primary`/`.w3-surface`; cascades the theme). Added `W3Color.Primary/Secondary/Accent/Surface` tokens wired through `W3ClassMaps`, so `Color="W3Color.Primary"` adopts the theme. Non-breaking/opt-in; W3.CSS-loyal (no `w3.css` edits, no deps, no JS). Docs `/components/theming` (pager Color Schemes → Theming → Trends) with a live theme editor; `W3ThemeTests`. `dotnet build` ✅ (0/0); `dotnet test` ✅ (**369 tests**). Browser-verified: editing the Primary color input updates `--w3-primary` and recolors the Primary button live (`#1976d2` → `#ff0000`), no errors. Recorded the architecture in `memory/decisions.md`. Then refined the architecture: moved the token utility classes + `:root` defaults into a bundled always-on `wwwroot/w3-theme.css` (linked next to `w3.css`), and slimmed `W3ThemeProvider` to emit only variable overrides. Tokens now render with sensible defaults app-wide (even without a provider) — the right foundation for "themed by default" and no duplication. Browser-verified: `w3-theme.css` loads, Primary token defaults to `#1976d2`, provider override recolors it live to `#00aa55`. `dotnet test` ✅ (369). Next: Phase 2 "themed by default" (flip selected component defaults to tokens) + ease-of-use pass.
+- Code review follow-up: made `W3ChartGeometry` and its records `internal` (they had leaked as `public`, inconsistent with the `internal` convention for `W3ClassBuilder`/`W3ClassMaps`) and added `<InternalsVisibleTo Include="W3Css.Blazor.Tests" />` so the geometry stays directly testable without expanding the public API. Null-guarded `W3ChartSeries.Data` against `NRE` (+ regression test). Documented that `W3ScrollToTop.VisibleHeight` is applied at initialization and that `W3Chart` expects non-negative values. `dotnet test` ✅ (**361 tests**).
+
+## 2026-05-28
+
+- Added `W3SimpleTable` MudBlazor compatibility wrapper and docs page:
+  - Implemented `src/W3Css.Blazor/Components/W3SimpleTable.razor` as a thin alias over `W3Table` with `Dense`/`Hover` support.
+  - Added docs page `src/W3Css.Blazor.Docs/Pages/ComponentTopics/SimpleTablePage.razor`.
+  - Added `W3SimpleTable` navigation/categorization entries in `Components.razor` and `NavMenu.razor`.
+  - Updated component doc pager chain to place `Simple Table` between `Table` and `Data Table`.
+  - Updated smoke tests for docs routes and index link coverage in `tests/W3Css.Blazor.Tests/W3DocsSmokeTests.cs`.
+  - Added `tests/W3Css.Blazor.Tests/W3SimpleTableTests.cs` for dense/hover and responsive rendering assertions.
+  - Verification pending: test count and doc route assertions after the current build/test pass.
+
+- Added `W3Link`:
+  - Implemented `src/W3Css.Blazor/Components/W3Link.razor` as a MudBlazor-style link primitive with anchor/button/command fallback and disabled span rendering.
+  - Added docs topic `/components/link` and threaded pager updates (`Breadcrumb` → `Link` → `Dropdown`).
+  - Updated `Components.razor` category catalog, `NavMenu.razor`, and neighboring docs (`BreadcrumbPage.razor`, `DropdownPage.razor`) to preserve a coherent navigation order.
+  - Added `tests/W3Css.Blazor.Tests/W3LinkTests.cs` for rendering, classes, click handling, and disabled behavior, and fixed namespace/assertion issues from initial draft.
+
+- Added `W3Form`:
+  - Implemented `src/W3Css.Blazor/Components/W3Form.razor` as an `EditForm`-style wrapper with support for `Model`, explicit `EditContext`, and pass-through `Class`/`Style`.
+  - Added docs topic `/components/form`, updated docs pager flow (`Numeric Field` → `Form` → `Number Input`), and included `W3Form` in inputs catalog and navigation entries.
+  - Added `tests/W3Css.Blazor.Tests/W3FormTests.cs` focused on class/style rendering and `OnSubmit` context forwarding through `EditContext`.
+- Verification:
+    - `dotnet build W3Css.Blazor.slnx -c Release` ✅
+    - `dotnet test tests/W3Css.Blazor.Tests/W3Css.Blazor.Tests.csproj -c Release --no-build` ✅ (346 tests)
+
+- Added MudBlazor-style `W3ProgressCircular` (circular progress component):
+  - Implemented isolated styling in `src/W3Css.Blazor/Components/W3ProgressCircular.razor.css` for determinate/indeterminate rendering, text-centered labels, and animation.
+  - Wired `W3ProgressCircular` markup classes to text color classes so SVG stroke styling follows component colors.
+  - Added component docs at `/components/progress-circular` with examples and parameter table.
+  - Updated pager chain: `/components/progress-linear` → `/components/progress-circular` → `/components/stepper`.
+  - Updated docs navigation/category metadata in `Components.razor` and `NavMenu.razor` usage consistency.
+  - Added focused tests in `tests/W3Css.Blazor.Tests/W3ProgressCircularTests.cs` and route coverage in `W3DocsSmokeTests`.
+  - Updated memory artifacts and re-verified test totals in `memory/current-state.md` and `memory/feature-list.md`.
+  - Verification:
+    - `dotnet test tests/W3Css.Blazor.Tests/W3Css.Blazor.Tests.csproj --no-restore --verbosity minimal` ✅ (336 tests)
+
+- Continued MudBlazor parity expansion with:
+  - Implemented `W3DataGrid<TItem>` in `src/W3Css.Blazor/Components/W3DataGrid.razor` as a compatibility wrapper over `W3DataTable<TItem>`.
+  - Added `W3ExpansionPanel` in `src/W3Css.Blazor/Components/W3ExpansionPanel.razor` with `Text`/`IsExpanded` alias behavior and two-way binding compatibility.
+  - Added docs topics:
+    - `/components/data-grid` with Mud-style paging/search/alias examples.
+    - `/components/expansion-panel` with Mud-style expansion-state alias examples.
+  - Wired new topics into docs navigation (`NavMenu.razor`) and component index category lists (`Components.razor`) with pager updates.
+  - Updated docs smoke coverage in `tests/W3Css.Blazor.Tests/W3DocsSmokeTests.cs` to include route and nav-link assertions for `data-grid`.
+  - Updated memory artifacts:
+    - `memory/current-state.md` (component lists and test count).
+    - `memory/feature-list.md` (new `W3DataGrid`/`W3ExpansionPanel` entries, 316 test count, updated date).
+    - `memory/progress-log.md`.
+- Verification:
+  - `dotnet build W3Css.Blazor.slnx -v:minimal` ✅
+  - `dotnet test tests/W3Css.Blazor.Tests/W3Css.Blazor.Tests.csproj --no-restore --verbosity minimal` ✅ (316 tests)
+
+## 2026-05-27
+
+- Added MudBlazor-style `W3Carousel` parity wrapper over `W3Slideshow`:
+  - Implemented `W3Carousel` in `src/W3Css.Blazor/Components/W3Carousel.razor` with aliases: `ShowArrows`, `ShowBullets`, `ShowDots`, `AutoCycle`, and `CycleInterval`.
+  - Added Mud-style examples and API table in new docs page: `/components/carousel`.
+  - Wired carousel into sidebar and component index category content (`Actions, content, and media`).
+  - Updated nearby docs pager chains so slideshow now flows into carousel.
+- Added component route coverage and content checks for carousel in docs smoke tests.
+- Added focused rendering/alias tests for `W3Carousel` in `tests/W3Css.Blazor.Tests/W3CarouselTests.cs`:
+  - Alias parameters map correctly.
+  - Alias precedence (`ShowDots` over `ShowIndicators`) is validated.
+  - Default behavior is preserved when aliases are unset.
+- Synced memory:
+  - `memory/current-state.md` (test count + component list + nav docs).
+  - `memory/feature-list.md` (new component row + updated test count).
+  - `memory/progress-log.md`.
+- Added MudBlazor-style text input compatibility (`W3TextField`) and docs smoke coverage:
+  - Implemented `W3TextField` as a MudBlazor-compatible wrapper over `W3Input` in `src/W3Css.Blazor/Components/W3TextField.razor`.
+  - Added docs topic `/components/text-field` to `src/W3Css.Blazor.Docs/Pages/ComponentTopics/TextFieldPage.razor`.
+  - Added tests in `tests/W3Css.Blazor.Tests/W3TextFieldTests.cs` and docs smoke checks in `tests/W3Css.Blazor.Tests/W3DocsSmokeTests.cs`.
+  - Synced memory updates for the new component and test count across memory files.
+- Re-ran verification:
+  - `dotnet build W3Css.Blazor.slnx -c Release` ✅
+  - `dotnet test tests\\W3Css.Blazor.Tests\\W3Css.Blazor.Tests.csproj -c Release` ✅ (310)
+
+## 2026-05-26
+
+- Added release automation pipeline:
+  - Created `.github/workflows/release.yml` for tag/manual release runs.
+  - Workflow validates build and test, creates release artifacts with configured version, creates a GitHub release from `docs/release-notes/<version>.md`, and publishes to NuGet when credentials are available.
+  - Added memory sync updates to document Phase 14 progress and next release-handoff step.
+- Added MudBlazor-parity `W3Dialog` component coverage and docs:
+  - Added `W3Dialog` component implementation (`src/W3Css.Blazor/Components/W3Dialog.razor`) with `Actions`-driven footer, close-button handling, backdrop/escape disabling, and `OnClose` callback.
+  - Added `/components/dialog` docs topic and inserted it into component index + overlay navigation.
+  - Updated docs smoke tests (`W3DocsSmokeTests`) to include dialog route/link/markup checks.
+  - Added overlay tests for `W3Dialog` open/close and backdrop/escape disable behavior.
+- Finalized release metadata and repository pointers:
+  - Replaced `https://github.com/OWNER/W3Css.Blazor` with `https://github.com/meisa/W3Css.Blazor` in `Directory.Build.props`.
+  - Added package metadata fields in `src/W3Css.Blazor/W3Css.Blazor.csproj`:
+    - `PackageProjectUrl`
+    - `RepositoryType`
+    - `RepositoryUrl`
+    - `PackageReleaseNotes`
+- Synced memory docs to reflect the Phase 14 status and package metadata readiness:
+  - `memory/development-plan.md`
+  - `memory/current-state.md`
+- Confirmed `dotnet build W3Css.Blazor.slnx --configuration Release --no-restore`, `dotnet test` and `dotnet pack` still pass with **290 tests**.
+- Re-ran release-gate verification to mirror `.github/workflows/release.yml`:
+  - `dotnet restore W3Css.Blazor.slnx`
+  - `dotnet build W3Css.Blazor.slnx --configuration Release --no-restore`
+  - `dotnet test tests\\W3Css.Blazor.Tests\\W3Css.Blazor.Tests.csproj --configuration Release --no-build --logger trx`
+  - `dotnet pack src\\W3Css.Blazor\\W3Css.Blazor.csproj --configuration Release --no-restore --output artifacts/packages --include-symbols --include-source -p:Version=0.1.0`
+
+- Package artifacts at `artifacts/packages/` were regenerated (`W3Css.Blazor.0.1.0.nupkg` and symbols package).
+
+---
+
+## 2026-05-23
+
+- Read local command instructions.
+- Selected project name `W3Css.Blazor`.
+- Confirmed W3.CSS 5.01 as the baseline.
+- Created project memory folder.
+- Scaffolded .NET 10 solution, Razor Class Library, Blazor WebAssembly documentation site, and xUnit/bUnit tests.
+- Added W3.CSS 5.01 as a static web asset.
+- Removed template Bootstrap and sample content from the documentation site.
+- Added first library components:
+  - `W3Button`
+  - `W3Alert`
+  - `W3Card`
+  - `W3Container`
+- Added focused component tests.
+- Added GitHub Actions CI workflow.
+- Added GitHub Pages workflow.
+- Added repository README, MIT license, and PR template.
+- Verified tests, full solution build, package creation, and documentation site in the browser.
+- Initialized git repository on `main`.
+- Split memory into dedicated files:
+  - `README.md`
+  - `feature-list.md`
+  - `development-plan.md`
+  - `decisions.md`
+  - `findings.md`
+  - `current-state.md`
+  - `progress-log.md`
+- Completed core content expansion:
+  - `W3Badge`
+  - `W3Tag`
+  - `W3Panel`
+  - `W3List`
+  - `W3Table`
+- Expanded docs examples for badges, tags, panels, lists, and tables.
+- Increased bUnit coverage from 6 tests to 12 tests.
+- Fixed alert title spacing in the rendered text stream.
+- Restarted docs server on `http://localhost:5015` with process id `44328`.
+- Verified build, tests, package creation, and docs browser checks for the core content slice.
+- Restructured docs to follow the W3.CSS topic format:
+  - Component index page.
+  - Separate component topic pages.
+  - Previous/next page navigation.
+  - Same-page examples, code, parameter tables, and related links.
+- Renamed the docs topic folder to avoid a Razor namespace collision while preserving public routes.
+- Restarted docs server on `http://localhost:5015` with process id `48080`.
+- Verified build, tests, package creation, and browser checks for all current component topic routes in the new docs structure.
+- Committed baseline on `main`:
+  - `dc03bf8 feat: establish W3Css.Blazor baseline`
+- Created branch `feature/layout-components`.
+- Completed layout expansion:
+  - `W3Row`
+  - `W3Column`
+  - `W3Grid`
+  - `W3Flex`
+  - `W3Bar`
+  - `W3BarItem`
+  - `W3Responsive`
+- Added six W3.CSS-style layout documentation pages.
+- Increased bUnit coverage from 12 tests to 19 tests.
+- Restarted docs server on `http://localhost:5015` with process id `43124`.
+- Verified build, tests, package creation, and browser checks for layout routes.
+- Created branch `feature/form-components`.
+- Completed forms expansion:
+  - `W3Input`
+  - `W3Select`
+  - `W3Checkbox`
+  - `W3Radio`
+  - `W3TextArea`
+  - `W3Field`
+- Added `W3FormComponentBase<TValue>` for Blazor validation-friendly form controls.
+- Switched the test project to the Razor SDK to support Razor test fixtures.
+- Added six W3.CSS-style form documentation pages.
+- Increased bUnit coverage from 19 tests to 25 tests.
+- Restarted docs server on `http://localhost:5015` with process id `40164`.
+- Verified build, tests, package creation, and browser checks for form routes.
+- Created branch `feature/navigation-components`.
+- Completed navigation and progress expansion:
+  - `W3Tabs`
+  - `W3TabPanel`
+  - `W3Accordion`
+  - `W3AccordionItem`
+  - `W3Dropdown`
+  - `W3Pagination`
+  - `W3Progress`
+- Added five W3.CSS-style navigation and progress documentation pages.
+- Increased bUnit coverage from 25 tests to 30 tests.
+- Restarted docs server on `http://localhost:5015` with process id `59260`.
+- Verified build, tests, package creation, and browser checks for navigation and progress routes.
+- Created branch `feature/overlay-components`.
+- Completed overlay and polish expansion:
+  - `W3Modal`
+  - `W3Tooltip`
+  - `W3Sidebar`
+- Added three W3.CSS-style overlay documentation pages.
+- Increased bUnit coverage from 30 tests to 35 tests.
+- Restarted docs server on `http://localhost:5015` with process id `61340`.
+- Verified build, tests, package creation, and browser checks for overlay routes.
+- Created branch `feature/content-extras`.
+- Completed content extras and release-readiness work:
+  - `W3Image`
+  - `W3Code`
+  - `W3Note`
+  - `W3Quote`
+- Added four W3.CSS-style content-extra documentation pages.
+- Added release notes and changelog.
+- Pinned package version to `0.1.0`.
+- Increased bUnit coverage from 35 tests to 39 tests.
+- Restarted docs server on `http://localhost:5015` with process id `59248`.
+- Verified build, tests, `W3Css.Blazor.0.1.0.nupkg` package creation, and browser checks for content-extra routes and pager chain.
+- Scanned the original W3.CSS topic list and recorded coverage gaps in `memory/w3css-gap-scan.md`.
+- Committed the W3.CSS gap scan on `feature/content-extras`:
+  - `47dce20 docs: record w3css gap scan`
+- Created branch `feature/display-utility-components`.
+- Completed display utility expansion:
+  - `W3DisplayContainer`
+  - `W3Display`
+  - `W3CellRow`
+  - `W3Cell`
+- Added typed enums for display position, visibility, and cell alignment.
+- Added W3.CSS-style Cells and Display documentation pages.
+- Increased bUnit coverage from 39 tests to 42 tests.
+- Restarted docs server on `http://localhost:5015` with process id `64752`.
+- Verified build, tests, `W3Css.Blazor.0.1.0.nupkg` package creation, docs index, display and cell docs routes, and the Flex-to-Bar pager chain through Cells and Display.
+- Created branch `feature/slideshow-component`.
+- Completed slideshow expansion:
+  - `W3Slideshow`
+  - `W3Slide`
+- Added `W3Animation` for W3.CSS animation classes used by slideshow and future components.
+- Added a W3.CSS-style Slideshow documentation page.
+- Linked Slideshow in the sidebar, component index, and Image-to-Code pager chain.
+- Increased bUnit coverage from 42 tests to 46 tests.
+- Restarted docs server on `http://localhost:5015` with process id `7812`.
+- Verified build, tests, `W3Css.Blazor.0.1.0.nupkg` package creation, slideshow docs route, component index, Image-to-Code pager chain through Slideshow, and slideshow control interaction in the browser.
+
+## 2026-05-24
+
+- Created branch `feature/border-utilities`.
+- Completed border utility expansion:
+  - `W3Border`
+  - `W3BorderSide`
+  - `W3BorderBar`
+- Added a W3.CSS-style Borders documentation page.
+- Linked Borders in the sidebar, component index, and Display-to-Bar pager chain.
+- Increased bUnit coverage from 46 tests to 50 tests.
+- Restarted docs server on `http://localhost:5015` with process id `66368`.
+- Verified build, tests, `W3Css.Blazor.0.1.0.nupkg` package creation, border docs route, component index, Display-to-Bar pager chain through Borders, and browser console state.
+- Created branch `feature/spacing-utilities`.
+- Completed spacing utility expansion:
+  - `W3Spacing`
+  - `W3Padding`
+  - `W3TopPadding`
+  - `W3Margin`
+- Added a W3.CSS-style Spacing documentation page.
+- Linked Spacing in the sidebar, component index, and Display-to-Bar pager chain.
+- Increased bUnit coverage from 50 tests to 54 tests.
+- Restarted docs server on `http://localhost:5015` with process id `68732`.
+- Verified build, tests, `W3Css.Blazor.0.1.0.nupkg` package creation, spacing docs route, component index, Display-to-Bar pager chain through Spacing, and browser console state.
+- Created branch `feature/text-font-utilities`.
+- Completed text and font utility expansion:
+  - `W3Text`
+  - `W3TextAlignment`
+  - `W3TextStyle`
+  - `W3FontFamily`
+- Added a W3.CSS-style Text Fonts documentation page.
+- Linked Text Fonts in the sidebar, component index, and Display-to-Bar pager chain.
+- Increased bUnit coverage from 54 tests to 58 tests.
+- Restarted docs server on `http://localhost:5015` with process id `62320`.
+- Verified build, tests, `W3Css.Blazor.0.1.0.nupkg` package creation, text fonts docs route, component index, Display-to-Bar pager chain through Text Fonts, and browser console state.
+- Created branch `feature/effect-hover-utilities`.
+- Completed effect and hover utility expansion:
+  - `W3Effect`
+  - `W3EffectStyle`
+  - `W3HoverEffect`
+- Added a W3.CSS-style Effects documentation page.
+- Linked Effects in the sidebar, component index, and Display-to-Bar pager chain.
+- Increased bUnit coverage from 58 tests to 63 tests.
+- Restarted docs server on `http://localhost:5015` with process id `50748`.
+- Verified build, tests, `W3Css.Blazor.0.1.0.nupkg` package creation, effects docs route, component index, Display-to-Bar pager chain through Effects, and browser console state.
+- Created branch `feature/animation-utilities`.
+- Completed animation utility expansion:
+  - `W3Animate`
+  - `W3Animation.Input`
+  - `W3Input` animation parameter
+- Added a W3.CSS-style Animations documentation page.
+- Linked Animations in the sidebar, component index, and Display-to-Bar pager chain.
+- Increased bUnit coverage from 63 tests to 74 tests.
+- Restarted docs server on `http://localhost:5015` with process id `18032`.
+- Verified build, tests, animations docs route, component index, Display-to-Bar pager chain through Animations, animated input, and browser console state.
+- Improved animation documentation examples with replay behavior, a more visible inline animation example, and focused input expansion.
+- Restarted docs server on `http://localhost:5015` with process id `64248`.
+- Verified build, tests, animation replay control, inline animation class, focused input expansion, and browser console state.
+- Moved animation replay controls into the specific directional, motion, and inline examples.
+- Restarted docs server on `http://localhost:5015` with process id `18048`.
+- Verified build, tests, section-local animation replay controls, and browser console state.
+- Updated the inline animation example to use `w3-show-inline-block` so zoom animation is visible on the inline span.
+- Restarted docs server on `http://localhost:5015` with process id `66112`.
+- Verified build, tests, inline zoom animation display, inline replay control, route response, and browser console state.
+- Created branch `feature/hover-color-utilities`.
+- Completed hover color utility expansion:
+  - `W3HoverColor`
+  - `W3Color` hover background, text, and border class maps
+- Added a W3.CSS-style Hover Colors documentation page.
+- Linked Hover Colors in the sidebar, component index, and Display-to-Bar pager chain.
+- Increased bUnit coverage from 74 tests to 76 tests.
+- Restarted docs server on `http://localhost:5015` with process id `70836`.
+- Verified build, tests, `W3Css.Blazor.0.1.0.nupkg` package creation, hover color docs route, component index, hover background/text/border examples with supported color classes, inline span rendering, pager navigation to Bar, and browser console state.
+- Created branch `feature/direction-utilities`.
+- Completed direction utility expansion:
+  - `W3Direction`
+  - `W3TextDirection`
+- Added a W3.CSS-style Direction documentation page.
+- Linked Direction in the sidebar, component index, and Hover Colors-to-Bar pager chain.
+- Increased bUnit coverage from 76 tests to 78 tests.
+- Restarted docs server on `http://localhost:5015` with process id `64168`.
+- Verified build, tests, `W3Css.Blazor.0.1.0.nupkg` package creation, direction docs route, component index, left-to-right and right-to-left examples, inline span rendering, pager navigation to Bar, and browser console state.
+- Improved the Direction documentation examples with Persian right-to-left sample text and `lang="fa"` pass-through.
+- Restarted docs server on `http://localhost:5015` with process id `69528`.
+- Verified build, direction docs route, Persian block and inline examples, code samples, computed right-to-left direction, and browser console state.
+- Replaced the Direction block sample with the selected Persian poetic line for a clearer right-to-left visual example.
+- Restarted docs server on `http://localhost:5015` with process id `74188`.
+- Verified the selected Persian poetic line in the live block example and code sample, with computed right-to-left direction and clean browser console state.
+- Created branch `feature/icon-guidance`.
+- Completed icon guidance expansion:
+  - `W3Icon`
+  - W3.CSS-style Icons documentation page
+- Linked Icons in the sidebar, component index, and Tag-to-Roadmap pager chain.
+- Added docs-only Font Awesome loading so icon examples render while the library package remains free of bundled icon fonts.
+- Increased bUnit coverage from 78 tests to 80 tests.
+- Restarted docs server on `http://localhost:5015` with process id `75580`.
+- Verified build, tests, `W3Css.Blazor.0.1.0.nupkg` package creation, icons docs route, icon library classes, accessible icon labels, Tag-to-Roadmap pager chain through Icons, and browser console state.
+- Synced the Icons documentation code blocks with the live Icon Buttons and Sized And Accessible Icons examples.
+- Restarted docs server on `http://localhost:5015` with process id `63564`.
+- Verified build, tests, icons docs route, refreshed code blocks, live refresh button, accessible Home/Search/Delete labels, and browser console state.
+- Audited component topic code samples for live-preview drift and synced clear omissions in Animations, Borders, Direction, Effects, Hover Colors, Responsive, and Text Fonts.
+- Restarted docs server on `http://localhost:5015` with process id `67532`.
+- Verified build, tests, refreshed audited docs routes, expected code tokens, and browser console state.
+- Created branch `feature/dark-mode-filter-guidance`.
+- Added a W3.CSS-style Dark Mode guidance page.
+- Added a W3.CSS-style Filters guidance page.
+- Added `W3Input.UpdateOnInput` for live filter updates without script.
+- Linked Dark Mode in the sidebar, component index, and Responsive-to-Input pager chain.
+- Linked Filters in the sidebar, component index, and Code-to-Note pager chain.
+- Increased bUnit coverage from 80 tests to 81 tests.
+- Restarted docs server on `http://localhost:5015` with process id `59412`.
+- Verified build, tests, `W3Css.Blazor.0.1.0.nupkg` package creation, dark mode docs route, dark surface toggle, filters docs route, live table filtering, and live list filtering.
+- Created branch `feature/validation-guidance`.
+- Added a W3.CSS-style Validation guidance page.
+- Linked Validation in the sidebar, component index, and Field-to-Tabs pager chain.
+- Restarted docs server on `http://localhost:5015` with process id `54728`.
+- Verified build, tests, `W3Css.Blazor.0.1.0.nupkg` package creation, validation docs route, invalid validation messages, valid submit feedback, synchronized `UpdateOnInput` code tokens, and browser console state.
+- Created branch `feature/mobile-guidance`.
+- Added a W3.CSS-style Mobile guidance page.
+- Linked Mobile in the sidebar, component index, and Dark Mode-to-Input pager chain.
+- Restarted docs server on `http://localhost:5015` with process id `63792`.
+- Verified build, tests, `W3Css.Blazor.0.1.0.nupkg` package creation, mobile docs route, mobile bar items, mobile cells, class pass-through examples, related W3.CSS links, dropdown interaction, synchronized code snippets, and browser console state.
+- Created branch `feature/visibility-guidance`.
+- Added a W3.CSS-style Visibility guidance page.
+- Linked Visibility in the sidebar, component index, and Display-to-Borders pager chain.
+- Restarted docs server on `http://localhost:5015` with process id `51548`.
+- Verified build, tests, `W3Css.Blazor.0.1.0.nupkg` package creation, visibility docs route, Blazor state show/hide behavior, responsive hide classes, contained fixed top/bottom examples, related W3.CSS links, adjacent pager routes, synchronized code snippets, and browser console state.
+- Created branch `feature/round-guidance`.
+- Added a W3.CSS-style Round guidance page.
+- Linked Round in the sidebar, component index, and Borders-to-Spacing pager chain.
+- Restarted docs server on `http://localhost:5015` with process id `70696`.
+- Verified build, tests, `W3Css.Blazor.0.1.0.nupkg` package creation, round docs route, rounded button variants, rounded surfaces, circle classes, class pass-through, related W3.CSS link, adjacent pager routes, synchronized code snippets, and browser console state.
+- Created branch `feature/color-guidance`.
+- Added a W3.CSS-style Colors guidance page.
+- Linked Colors in the sidebar, component index, and Components-to-Container pager chain.
+- Loaded docs-only W3.CSS highway color and indigo theme stylesheets so optional color examples render.
+- Restarted docs server on `http://localhost:5015` with process id `71496`.
+- Verified build, tests, `W3Css.Blazor.0.1.0.nupkg` package creation, colors docs route, typed background/text/border colors, semantic alerts, hover colors, optional color library classes, optional theme classes, related W3.CSS links, adjacent pager routes, synchronized code snippets, and browser console state.
+- Tightened color class mapping so unsupported bundled W3.CSS text, border, hover text, and hover border classes are not emitted for extended W3.CSS 5 colors.
+- Updated Colors, Animations, Effects, Text Fonts, and Quote documentation examples to use supported text and border color classes.
+- Increased bUnit coverage from 81 tests to 84 tests.
+- Restarted docs server on `http://localhost:5015` with process id `15496`.
+- Verified build, tests, colors docs route, supported hover text and hover border class rules, corrected code samples, and browser console state.
+- Created branch `feature/defaults-guidance`.
+- Added a W3.CSS-style Defaults guidance page.
+- Linked Defaults in the sidebar, component index, and Components-to-Colors pager chain.
+- Restarted docs server on `http://localhost:5015` with process id `64004`.
+- Verified build, tests, package creation, defaults docs route, default typography, heading scale, font-size class examples, source links, component index, adjacent pager routes, and browser console state.
+- Created branch `feature/font-guidance`.
+- Added a W3.CSS-style Fonts guidance page.
+- Linked Fonts in the sidebar, component index, Defaults-to-Colors pager chain, and Text Fonts related links.
+- Loaded docs-only Google Sofia so the font example renders while the library package remains free of bundled font files.
+- Restarted docs server on `http://localhost:5015` with process id `74736`.
+- Verified build, tests, `W3Css.Blazor.0.1.0.nupkg` package creation, fonts docs route, built-in font classes, docs-only Google font example, source links, component index, Defaults-to-Fonts-to-Colors pager chain, Text Fonts related link, and browser console state.
+- Created branch `feature/color-schemes-guidance`.
+- Added a W3.CSS-style Color Schemes guidance page.
+- Linked Color Schemes in the sidebar, component index, Colors-to-Container pager chain, and Colors related links.
+- Documented palette swatches, achromatic schemes, theme classes, and private generator CSS as consumer-owned styling.
+- Restarted docs server on `http://localhost:5015` with process id `77976`.
+- Verified build, tests, `W3Css.Blazor.0.1.0.nupkg` package creation, color schemes docs route, palette swatches, achromatic examples, theme class example, private generator CSS guidance, source links, component index, Colors-to-Color-Schemes-to-Container pager chain, and browser console state.
+- Created branch `feature/trends-guidance`.
+- Added a W3.CSS-style Trends guidance page.
+- Linked Trends in the sidebar, component index, Color Schemes-to-Container pager chain, and nearby Card and Effects related links.
+- Documented flat color blocks, almost-flat card surfaces, material-style surfaces, full-screen input modal composition, mobile-first hero flow, and single-page patterns as existing component composition.
+- Restarted docs server on `http://localhost:5015` with process id `77952`.
+- Verified build, tests, `W3Css.Blazor.0.1.0.nupkg` package creation, trends docs route, synchronized code snippets, modal open and close behavior, adjacent pager routes, source links, and browser console state.
+- Added `HeaderClass`, `BodyClass`, and `FooterClass` to `W3Card` so slot containers can receive W3.CSS utility spacing classes.
+- Updated Card and Trends docs examples to use footer padding and white card root surfaces where needed.
+- Restarted docs server on `http://localhost:5015` with process id `65656`.
+- Verified build, tests, `W3Css.Blazor.0.1.0.nupkg` package creation, Card footer spacing, Trends Almost Flat Cards footer spacing, stretched card bottom surface, synchronized code snippets, and browser console state.
+- Created branch `feature/case-examples-guidance`.
+- Added a W3.CSS-style Case Study guidance page.
+- Linked Case Study in the sidebar, component index, Trends-to-Container pager chain, and nearby Container, Row, Column, Bar, and Sidebar related links.
+- Documented site shells, color and size utilities, responsive content columns, top navigation with side navigation, and single-page flow as existing component composition.
+- Restarted docs server on `http://localhost:5015` with process id `55692`.
+- Verified build, tests, `W3Css.Blazor.0.1.0.nupkg` package creation, Case Study docs route, synchronized code snippets, sidebar menu open and overlay close behavior, adjacent pager routes, component index link, and browser console state.
+- Fixed Case Study fragment links so in-page navigation stays on `/components/case-study`.
+- Created branch `feature/material-design-guidance`.
+- Added a W3.CSS-style Material Design guidance page.
+- Linked Material Design in the sidebar, component index, Case Study-to-Container pager chain, and nearby Trends, Card, Effects, and Colors related links.
+- Documented surface stacks, download lists, theme app bars, colorful cards, and theme action areas as existing component composition.
+- Restarted docs server on `http://localhost:5015` with process id `11564`.
+- Verified build, Material Design docs route, synchronized code snippets, theme classes, routed action anchor, adjacent pager routes, component index link, and browser console state after the final restart.
+- Expanded Material Design docs to follow the original W3.CSS topic shape with basics, downloads panel, color-theme travel cards, separated navigation bars, and colorful image cards.
+- Restarted docs server on `http://localhost:5015` with process id `63272`.
+- Verified build, tests, package creation, Material Design docs route, synchronized code snippets, theme classes, routed navigation fragments, loaded external example images, hidden default error container state, and browser console state after the final restart.
+- Created branch `feature/versions-guidance`.
+- Added a W3.CSS-style Versions guidance page.
+- Linked Versions in the sidebar, component index, Material Design-to-Container pager chain, Installation page, and nearby Colors and Color Schemes pages.
+- Documented the W3.CSS version timeline, bundled W3.CSS 5.01 asset, W3.CSS 4 and Pro stylesheet options, consumer color files, stylesheet ordering, and upgrade checks.
+- Restarted docs server on `http://localhost:5015` with process id `74168`.
+- Verified build, tests, package creation, Versions docs route, synchronized code snippets, packaged stylesheet path, W3.CSS 5.01 header note, W3.CSS Pro guidance, source links, adjacent pager routes, component index link, Installation link, and browser console state.
+- Committed Versions guidance with `51a33a7 docs: add versions guidance`.
+- Created branch `feature/navbar-composition`.
+- Implemented `W3Navbar` and `W3NavbarItem`.
+- Added bUnit coverage for navbar active value, inherited mobile state, disabled item behavior, and dropdown composition.
+- Added a W3.CSS-style Navbar documentation page.
+- Linked Navbar in the sidebar, component index, Accordion-to-Dropdown pager chain, and nearby Bar and Dropdown pages.
+- Restarted docs server on `http://localhost:5015` with process id `63352`.
+- Verified build, tests, Navbar docs route, responsive item classes, active item rendering, dropdown open/close behavior, source links, adjacent pager routes, component index link, Bar related link, and browser console state.
+- Added general dropdown outside-click dismissal through a transparent Blazor close layer.
+- Added bUnit coverage for dropdown outside-click close behavior and documented the `CloseOnOutsideClick` parameter.
+- Restarted docs server on `http://localhost:5015` with process id `15172`.
+- Verified Navbar dropdown outside-click close, reopen behavior, 88 passing tests, and clean browser console state.
+- Corrected the dropdown close-layer CSS so navbar dropdown content keeps W3.CSS absolute positioning and no longer stretches the bar.
+- Restarted docs server on `http://localhost:5015` with process id `73216`.
+- Verified one-row Navbar dropdown layout, outside-click close behavior, reopen behavior, and clean browser console state.
+- Committed Navbar composition with `9809757 feat: add navbar composition`.
+- Created branch `test/docs-smoke`.
+- Added bUnit docs smoke coverage for route metadata, Components index links, Navbar dropdown close/reopen behavior, Dark Mode toggle behavior, and Filters table input behavior.
+- Increased test coverage from 88 tests to 97 tests.
+- Updated memory resume notes so a new session can continue from `Resume from memory`.
+
+## 2026-05-25
+
+- Resumed from memory on `test/docs-smoke` at `49ce1f4 test: add docs smoke coverage`.
+- Read the full `memory` folder handoff.
+- Corrected remaining release-facing W3.CSS wording from 5.0 to 5.01 in README, changelog, and release notes.
+- Added CI package artifact creation after Release build and tests.
+- Verified `dotnet build W3Css.Blazor.slnx --configuration Release` with 0 warnings and 0 errors.
+- Verified `dotnet test W3Css.Blazor.slnx --configuration Release --no-build --logger trx` with 97 passing tests.
+- Verified `dotnet pack src\W3Css.Blazor\W3Css.Blazor.csproj --configuration Release --no-build --output artifacts/packages`.
+- Spot checked the generated nupkg includes README, DLL, XML docs, static web asset props, and `staticwebassets/w3css/5/w3.css`.
+- Reworked the Components index into product categories inspired by mature Blazor component libraries while keeping W3.CSS as the implementation boundary.
+- Added a product-readiness backlog for app/site enrichment candidates such as `W3AppShell`, `W3DataTable`, richer inputs, `W3Toast`, `W3Spinner`, `W3Avatar`, `W3ChipSet`, and `W3Stepper`.
+- Updated the Roadmap with the category model and expansion phases.
+- Added docs smoke assertions for the category map and backlog.
+- Verified the rendered `/components` page through Chrome DevTools Protocol on `http://localhost:5016/components`: categories and backlog render, `W3AppShell` and `W3DataTable` are present, no visible Blazor error, and no horizontal overflow at 1440px width.
+- Started the product-readiness expansion with `W3AppShell`.
+- Implemented `W3AppShell` as a W3.CSS-first app/site frame with header, sidebar, main, footer, overlay dismissal, right/left sidebar placement, contained preview mode, slot class/style pass-through, and typed color parameters.
+- Added isolated shell layout CSS for min-height, header layering, main/footer behavior, and contained previews without modifying the vendored `w3.css`.
+- Added bUnit coverage for semantic shell regions, main offset styles, overlay close behavior, right sidebar placement, and contained preview positioning.
+- Added the W3.CSS-style App Shell docs page and linked it from the sidebar navigation, Components category catalog, Versions-to-Container pager chain, Roadmap, and docs smoke tests.
+- Increased test coverage from 97 tests to 102 tests.
+- Restarted docs server on `http://localhost:5016` with parent process id `44728` and listening process id `50996`.
+- Verified `dotnet build W3Css.Blazor.slnx --configuration Release` with 0 warnings and 0 errors.
+- Verified `dotnet test W3Css.Blazor.slnx --configuration Release --no-build --logger trx` with 102 passing tests.
+- Verified `dotnet pack src\W3Css.Blazor\W3Css.Blazor.csproj --configuration Release --no-build --output artifacts/packages`.
+- Verified `/components/app-shell` and `/components` through Chrome DevTools Protocol at 1440px and 390px widths: expected content and links render, the App Shell page includes `.w3-app-shell`, `.w3-sidebar`, and `main.w3-main`, no visible Blazor error appears, and there is no horizontal overflow.
+- Continued the product-readiness expansion with `W3DataTable`.
+- Implemented `W3DataTable<TItem>` and `W3DataColumn<TItem>` as a W3.CSS-first app data table over `W3Table` and `W3Pagination`.
+- Added built-in search, sortable column headers, paging, count text, loading state, empty state, optional row selection, row click callback, row actions template, templated cells, column alignment, and class/style pass-through.
+- Added isolated `W3DataTable` CSS for toolbar, sort button, and footer layout without modifying the vendored `w3.css`.
+- Added bUnit coverage for data table columns and paging, sort toggles and `aria-sort`, live search filtering, loading and empty states, row actions, and row selection.
+- Added the W3.CSS-style Data Table docs page and linked it from the sidebar navigation, Components category catalog, Table-to-List pager chain, Roadmap, and docs smoke tests.
+- Increased test coverage from 102 tests to 108 tests.
+- Restarted docs server on `http://localhost:5016` with parent process id `89124` and listening process id `85288`.
+- Verified `dotnet build W3Css.Blazor.slnx --configuration Release` with 0 warnings and 0 errors.
+- Verified `dotnet test W3Css.Blazor.slnx --configuration Release --no-build --logger trx` with 108 passing tests.
+- Verified `dotnet pack src\W3Css.Blazor\W3Css.Blazor.csproj --configuration Release --no-build --output artifacts/packages`.
+- Verified `/components/data-table` and `/components` through Chrome DevTools Protocol at 1440px and 390px widths: Data Table route renders expected examples and the Components index links it, no visible Blazor error appears, and there is no horizontal overflow.
+- Verified live `/components/data-table` interaction through Chrome DevTools Protocol: sorting from the Project header updates row order and searching for `linus` filters to the Cygnus/Linus row.
+- Continued the product-readiness expansion with `W3Spinner`.
+- Implemented `W3Spinner` as an accessible indeterminate loading indicator using the W3.CSS `w3-spin` animation class, typed size/text color parameters, optional visible label, inline mode, centered mode, and status semantics.
+- Added isolated spinner shape CSS without modifying the vendored `w3.css`.
+- Added bUnit coverage for status attributes, accessible label behavior, visible label behavior, inline mode, centered mode, size, and text color classes.
+- Added the W3.CSS-style Spinner docs page and linked it from the sidebar navigation, Components category catalog, Progress-to-Modal pager chain, Roadmap, and docs smoke tests.
+- Increased test coverage from 108 tests to 111 tests.
+- Restarted docs server on `http://localhost:5016` with parent process id `85436` and listening process id `16844`.
+- Verified `dotnet build W3Css.Blazor.slnx --configuration Release /nr:false` with 0 warnings and 0 errors after stopping a stale timed-out build process.
+- Verified `dotnet test W3Css.Blazor.slnx --configuration Release --no-build --logger trx` with 111 passing tests.
+- Verified `dotnet pack src\W3Css.Blazor\W3Css.Blazor.csproj --configuration Release --no-build --output artifacts/packages`.
+- Verified `/components/spinner` and `/components` through Chrome DevTools Protocol at 1440px and 390px widths: Spinner route renders expected status/spin markup and the Components index links it, no visible Blazor error appears, and there is no horizontal overflow.
+- Continued the product-readiness expansion with `W3Toast`.
+- Implemented `W3Toast`, `W3ToastProvider`, `W3ToastService`, `W3ToastOptions`, `W3ToastMessage`, `W3ToastPosition`, and DI helpers `AddW3CssBlazor`/`AddW3Toasts`.
+- Toasts use W3.CSS panel and semantic color classes, status/alert live-region defaults, action and dismiss callbacks, fixed provider placement, auto-dismiss timers, and component-scoped CSS without changing the vendored `w3.css`.
+- Added the W3.CSS-style Toast docs page and linked it from sidebar navigation, Components category catalog, Spinner-to-Modal pager chain, Roadmap, and docs smoke tests.
+- Increased test coverage from 111 tests to 115 tests.
+- Restarted docs server on `http://localhost:5016` with parent process id `82628` and listening process id `77268`.
+- Verified `dotnet build W3Css.Blazor.slnx --configuration Release /nr:false` with 0 warnings and 0 errors.
+- Verified `dotnet test W3Css.Blazor.slnx --configuration Release --no-build --logger trx` with 115 passing tests.
+- Verified `dotnet pack src\W3Css.Blazor\W3Css.Blazor.csproj --configuration Release --no-build --output artifacts/packages`.
+- Verified `/components/toast` and `/components` through Chrome DevTools Protocol at 1440px and 390px widths: Toast route renders expected toast/provider markup, clicking Success creates a service toast, Components index links Toast and no longer lists it in the backlog, no visible Blazor error appears, and there is no horizontal overflow.
+- Continued the product-readiness expansion with richer native form inputs.
+- Implemented `W3NumberInput<TValue>`, `W3DateInput`, and `W3TimeInput` as W3.CSS-first wrappers over native number, date, and time controls.
+- Added min/max/step support, validation-friendly parsing, `DateOnly?` and `TimeOnly?` binding, and optional `UpdateOnInput` behavior without changing the vendored `w3.css`.
+- Added Number Input, Date Input, and Time Input docs pages and linked them from sidebar navigation, Components category catalog, the Input-to-Select pager chain, Roadmap, and docs smoke tests.
+- Increased test coverage from 115 tests to 122 tests.
+- Restarted docs server on `http://localhost:5016` with parent process id `76596` and listening process id `69876`.
+- Verified `dotnet build W3Css.Blazor.slnx --configuration Release /nr:false` with 0 warnings and 0 errors.
+- Verified `dotnet test W3Css.Blazor.slnx --configuration Release --no-build --logger trx` with 122 passing tests.
+- Verified `dotnet pack src\W3Css.Blazor\W3Css.Blazor.csproj --configuration Release --no-build --output artifacts/packages`.
+- Verified `/components/number-input`, `/components/date-input`, `/components/time-input`, and `/components` through Chrome DevTools Protocol at 1440px and 390px widths: native input docs render expected control types and parameter tables, Components index links the new pages and no longer lists those inputs in the backlog, no visible Blazor error appears, and there is no horizontal overflow.
+- Continued the product-readiness expansion with slider and switch form controls.
+- Implemented `W3Slider<TValue>` as a native range input with W3.CSS styling, min/max/step attributes, invariant parsing, and live `oninput` updates by default.
+- Implemented `W3Switch` as an accessible switch-style checkbox with `role="switch"`, `aria-checked`, W3.CSS color classes, Blazor binding, and isolated toggle-shape CSS without changing the vendored `w3.css`.
+- Added Slider and Switch docs pages and linked them from sidebar navigation, Components category catalog, the Time Input-to-Select pager chain, Roadmap, and docs smoke tests.
+- Increased test coverage from 122 tests to 127 tests.
+- Restarted docs server on `http://localhost:5016` with parent process id `58320` and listening process id `59272`.
+- Verified `dotnet build W3Css.Blazor.slnx --configuration Release /nr:false` with 0 warnings and 0 errors.
+- Verified `dotnet test W3Css.Blazor.slnx --configuration Release --no-build --logger trx` with 127 passing tests.
+- Verified `dotnet pack src\W3Css.Blazor\W3Css.Blazor.csproj --configuration Release --no-build --output artifacts/packages`.
+- Verified `/components/slider`, `/components/switch`, and `/components` through Chrome DevTools Protocol at 1440px and 390px widths: Slider renders range inputs, Switch renders `role="switch"` controls, Components index links both and no longer lists them in the backlog, no visible Blazor error appears, and there is no horizontal overflow. Switch interaction also updates `aria-checked`.
+- Continued the product-readiness expansion with color and file input controls.
+- Implemented `W3ColorInput` as a validation-friendly native color picker for hex string values, compact/full-width modes, and live `oninput` updates by default.
+- Implemented `W3FileInput` as a Blazor `InputFile` wrapper with W3.CSS input styling, accept/multiple attributes, optional selected-file listing, and normal `InputFileChangeEventArgs` callbacks.
+- Added Color Input and File Input docs pages and linked them from sidebar navigation, Components category catalog, the Switch-to-Select pager chain, Roadmap, and docs smoke tests.
+- Increased test coverage from 127 tests to 131 tests.
+- Restarted docs server on `http://localhost:5016` with parent process id `85300` and listening process id `54244`.
+- Verified `dotnet build W3Css.Blazor.slnx --configuration Release /nr:false` with 0 warnings and 0 errors.
+- Verified `dotnet test W3Css.Blazor.slnx --configuration Release --no-build --logger trx` with 131 passing tests.
+- Verified `dotnet pack src\W3Css.Blazor\W3Css.Blazor.csproj --configuration Release --no-build --output artifacts/packages`.
+- Verified `/components/color-input`, `/components/file-input`, and `/components` through Chrome DevTools Protocol at 1440px and 390px widths: Color Input renders native color inputs and live binding, File Input renders native file inputs, Components index links both and no longer lists them in the backlog, no visible Blazor error appears, and there is no horizontal overflow.
+- Continued the product-readiness expansion with `W3Autocomplete`.
+- Implemented `W3Autocomplete` as a searchable combobox/listbox selection component with C# filtering state, templates, text selectors, keyboard selection, loading/no-results states, and an optional close layer.
+- Added Autocomplete docs and linked it from sidebar navigation, Components category catalog, the File Input-to-Select pager chain, Roadmap, and docs smoke tests.
+- Increased test coverage from 131 tests to 135 tests.
+- Restarted docs server on `http://localhost:5016` with parent process id `75076` and listening process id `93160`.
+- Verified `dotnet build W3Css.Blazor.slnx --configuration Release /nr:false` with 0 warnings and 0 errors.
+- Verified `dotnet test W3Css.Blazor.slnx --configuration Release --no-build --logger trx` with 135 passing tests.
+- Verified `dotnet pack src\W3Css.Blazor\W3Css.Blazor.csproj --configuration Release --no-build --output artifacts/packages`.
+- Verified `/components/autocomplete` and `/components` in the in-app browser: Autocomplete renders combobox/listbox semantics and parameter tables, typing `gra` filters to Grace Hopper and selection updates state, Components index links Autocomplete and no longer lists it in the backlog, no browser console error appears, and there is no horizontal overflow.
+- Continued the product-readiness expansion with `W3Breadcrumb`.
+- Implemented `W3Breadcrumb` and `W3BreadcrumbItem` as accessible ordered breadcrumb navigation with W3.CSS surface classes, custom separators, current-page semantics, disabled items, and optional button-style links.
+- Added Breadcrumb docs and linked it from sidebar navigation, Components category catalog, the Navbar-to-Dropdown pager chain, Roadmap, and docs smoke tests.
+- Increased test coverage from 135 tests to 138 tests.
+- Restarted docs server on `http://localhost:5016` with parent process id `44556` and listening process id `38756`.
+- Verified `dotnet build W3Css.Blazor.slnx --configuration Release /nr:false` with 0 warnings and 0 errors.
+- Verified `dotnet test W3Css.Blazor.slnx --configuration Release --no-build --logger trx` with 138 passing tests.
+- Verified `dotnet pack src\W3Css.Blazor\W3Css.Blazor.csproj --configuration Release --no-build --output artifacts/packages`.
+- Verified `/components/breadcrumb` and `/components` in the in-app browser: Breadcrumb renders ordered nav examples and parameter tables, Components index links Breadcrumb and no longer lists it in the backlog, no browser console error appears, and there is no horizontal overflow. The in-app browser was refreshed to `/components/breadcrumb` after the round.
+- Continued the product-readiness expansion with `W3TreeView`.
+- Implemented `W3TreeView<TItem>` as a generic hierarchical tree with bindable expanded values, bindable selected value, item templates, optional links, disabled nodes, default expansion, expand-on-label-click behavior, and tree/treeitem semantics.
+- Added isolated Tree View indentation, line, dense, selection, and empty-state CSS without modifying the vendored `w3.css`.
+- Added Tree View docs and linked it from sidebar navigation, Components category catalog, the Data Table-to-List pager chain, Roadmap, and docs smoke tests.
+- Increased test coverage from 138 tests to 142 tests.
+- Restarted docs server on `http://localhost:5016` with parent process id `63056` and listening process id `94552`.
+- Verified `dotnet build W3Css.Blazor.slnx --no-restore` with 0 warnings and 0 errors.
+- Verified `dotnet test tests\W3Css.Blazor.Tests\W3Css.Blazor.Tests.csproj --no-restore` with 142 passing tests.
+- Verified `dotnet pack src\W3Css.Blazor\W3Css.Blazor.csproj --no-restore --configuration Release`.
+- Verified `/components/tree-view` and `/components` in the in-app browser: Tree View renders two tree widgets, tree semantics, parameter tables, expansion and selection interaction, Components index links Tree View and no longer lists it in the backlog, no visible Blazor error appears, and there is no horizontal overflow. The in-app browser was refreshed to `/components/tree-view` after the round.
+- Continued the product-readiness expansion with `W3Stepper`.
+- Implemented `W3Stepper` and `W3Step` as a multi-step workflow component with active panels, completed/error/disabled states, optional linear activation, and optional `W3Progress` composition.
+- Added isolated Stepper horizontal and vertical layout CSS without modifying the vendored `w3.css`.
+- Added Stepper docs and linked it from sidebar navigation, Components category catalog, the Progress-to-Spinner pager chain, Roadmap, and docs smoke tests.
+- Increased test coverage from 142 tests to 146 tests.
+- Restarted docs server on `http://localhost:5016` with parent process id `35916` and listening process id `30964`.
+- Verified `dotnet build W3Css.Blazor.slnx --no-restore /nr:false` with 0 warnings and 0 errors.
+- Verified `dotnet test tests\W3Css.Blazor.Tests\W3Css.Blazor.Tests.csproj --no-restore /nr:false` with 146 passing tests.
+- Verified `dotnet pack src\W3Css.Blazor\W3Css.Blazor.csproj --no-restore --configuration Release`.
+- Verified `/components/stepper` and `/components` in the in-app browser: Stepper renders two workflow examples, a progressbar, parameter tables, checkout step advancement, Components index links Stepper and no longer lists it in the backlog, no visible Blazor error appears, and there is no horizontal overflow. The in-app browser was refreshed to `/components/stepper` after the round.
+- Committed Stepper/Panel/Progress spacing polish with `e741639 fix: polish stepper and panel spacing`.
+- Continued the product-readiness expansion with `W3NavMenu`.
+- Implemented `W3NavMenu`, `W3NavMenuGroup`, and `W3NavMenuItem` as grouped side navigation with route-aware `NavLink` items, collapsible groups, command-button items, badges, icons, header/footer slots, active styling, and component-scoped CSS without modifying the vendored `w3.css`.
+- Added Nav Menu docs and linked it from sidebar navigation, Components category catalog, the Navbar-to-Breadcrumb pager chain, Roadmap, and docs smoke tests.
+- Increased test coverage from 147 tests after spacing polish to 152 tests.
+- Restarted docs server on `http://localhost:5016` with listening process id `84044`.
+- Verified `dotnet build W3Css.Blazor.slnx --no-restore /nr:false` with 0 warnings and 0 errors.
+- Verified `dotnet test tests\W3Css.Blazor.Tests\W3Css.Blazor.Tests.csproj --no-restore /nr:false` with 152 passing tests.
+- Verified `dotnet pack src\W3Css.Blazor\W3Css.Blazor.csproj --no-restore --configuration Release`.
+- Verified `/components/nav-menu` in the in-app browser: Nav Menu renders grouped app navigation, active item styling, a visible badge, parameter tables, no visible Blazor error, and no horizontal overflow. Command menu interaction updates the footer to `Last action: Run check`, and the in-app browser was refreshed to `/components/nav-menu` after the round.
+- Committed the accepted Nav Menu item spacing fix with `f93c67c fix: apply nav menu item spacing`.
+- Continued the product-readiness expansion with `W3AppBar`.
+- Implemented `W3AppBar` as a semantic app header over W3.CSS `w3-bar` patterns with menu button state, title/subtitle slots, optional linked title, leading/navigation/action slots, sticky/top/bottom placement, dense/prominent/mobile modes, card/border/round/color composition, and component-scoped flex alignment without modifying the vendored `w3.css`.
+- Added App Bar docs and linked it from sidebar navigation, Components category catalog, the App Shell-to-Container pager chain, Roadmap, and docs smoke tests.
+- Increased test coverage from 152 tests to 156 tests.
+- Restarted docs server on `http://localhost:5016` with listening process id `40220`.
+- Verified `dotnet build W3Css.Blazor.slnx --no-restore /nr:false -v:minimal` with 0 warnings and 0 errors.
+- Verified `dotnet test tests\W3Css.Blazor.Tests\W3Css.Blazor.Tests.csproj --no-restore /nr:false` with 156 passing tests.
+- Verified `dotnet pack src\W3Css.Blazor\W3Css.Blazor.csproj --no-restore --configuration Release`.
+- Verified `/components/app-bar` in the in-app browser: App Bar renders three demos, menu icon/text spacing is visible, W3 bar items are flex-aligned with `float: none`, no slot overlap appears, and no horizontal overflow appears. The in-app browser was refreshed to `/components/app-bar` after the round.

@@ -1,0 +1,74 @@
+@page "/components/card"
+
+<PageTitle>W3Card</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3Card</h1>
+    <DocPager PreviousHref="components/panel" PreviousText="Panel" NextHref="components/paper" NextText="Paper" />
+
+    <p class="w3-large">`W3Card` renders W3.CSS card classes with optional header, body, and footer slots.</p>
+    <p>Use cards for content that benefits from clear visual grouping and optional shadow depth.</p>
+
+    <DocExample Title="Card With Header" Code="@HeaderCode">
+        <W3Card Depth="W3CardDepth.Two" Round="W3Round.Medium" HeaderColor="W3Color.Cobalt">
+            <Header><h2 class="w3-large">Card header</h2></Header>
+            <ChildContent><p>Cards compose W3.CSS containers and shadow classes.</p></ChildContent>
+        </W3Card>
+    </DocExample>
+
+    <DocExample Title="Card With Footer" Code="@FooterCode">
+        <W3Card Depth="W3CardDepth.Four" Round="W3Round.Medium" FooterColor="W3Color.LightGrey" FooterClass="w3-padding-16">
+            <ChildContent><p>Body content stays in a `w3-container` block.</p></ChildContent>
+            <Footer><small>Footer content</small></Footer>
+        </W3Card>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Purpose</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Depth</td><td>W3CardDepth</td><td>Default</td><td>Card shadow class</td></tr>
+                <tr><td>Round</td><td>W3Round</td><td>None</td><td>Rounded corner class</td></tr>
+                <tr><td>Header</td><td>RenderFragment</td><td>null</td><td>Optional header slot</td></tr>
+                <tr><td>Footer</td><td>RenderFragment</td><td>null</td><td>Optional footer slot</td></tr>
+                <tr><td>HeaderColor</td><td>W3Color</td><td>None</td><td>Header background color</td></tr>
+                <tr><td>BodyColor</td><td>W3Color</td><td>None</td><td>Body background color</td></tr>
+                <tr><td>FooterColor</td><td>W3Color</td><td>None</td><td>Footer background color</td></tr>
+                <tr><td>HeaderClass</td><td>string</td><td>null</td><td>Additional header container classes</td></tr>
+                <tr><td>BodyClass</td><td>string</td><td>null</td><td>Additional body container classes</td></tr>
+                <tr><td>FooterClass</td><td>string</td><td>null</td><td>Additional footer container classes</td></tr>
+                <tr><td>Class</td><td>string</td><td>null</td><td>Additional root card classes</td></tr>
+                <tr><td>Style</td><td>string</td><td>null</td><td>Root card inline style</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Related W3.CSS</h2>
+        <p><NavLink href="components/trends">Trends guidance</NavLink></p>
+        <p><NavLink href="components/material-design">Material Design guidance</NavLink></p>
+        <p><a href="https://www.w3schools.com/w3css/w3css_cards.asp" target="_blank" rel="noopener">W3.CSS Cards</a></p>
+        <p><a href="https://www.w3schools.com/w3css/w3css_trends.asp" target="_blank" rel="noopener">W3.CSS Trends</a></p>
+    </section>
+
+    <DocPager PreviousHref="components/panel" PreviousText="Panel" NextHref="components/paper" NextText="Paper" />
+</W3Container>
+
+@code {
+    private const string HeaderCode = """
+<W3Card Depth="W3CardDepth.Two" Round="W3Round.Medium" HeaderColor="W3Color.Cobalt">
+    <Header><h2 class="w3-large">Card header</h2></Header>
+    <ChildContent><p>Cards compose W3.CSS containers and shadow classes.</p></ChildContent>
+</W3Card>
+""";
+
+    private const string FooterCode = """
+<W3Card Depth="W3CardDepth.Four" Round="W3Round.Medium" FooterColor="W3Color.LightGrey" FooterClass="w3-padding-16">
+    <ChildContent><p>Body content stays in a `w3-container` block.</p></ChildContent>
+    <Footer><small>Footer content</small></Footer>
+</W3Card>
+""";
+}

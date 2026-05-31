@@ -1,0 +1,37 @@
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+<div @attributes="AdditionalAttributes"
+     class="@CssClass"
+     style="@Style">
+    @ChildContent
+</div>
+
+@code {
+    private string CssClass => BuildClass(
+        "w3-panel",
+        "w3-panel-surface",
+        Color.ToBackgroundClass(),
+        TextColor.ToTextClass(),
+        Round.ToClass(),
+        Border ? "w3-border" : null,
+        LeftBar ? "w3-leftbar" : null);
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public W3Color Color { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color TextColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Round Round { get; set; } = W3Round.None;
+
+    [Parameter]
+    public bool Border { get; set; }
+
+    [Parameter]
+    public bool LeftBar { get; set; }
+}

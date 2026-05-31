@@ -1,0 +1,134 @@
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+@if (!string.IsNullOrWhiteSpace(Href))
+{
+    <a @attributes="AdditionalAttributes"
+       href="@ResolvedHref"
+       target="@Target"
+       aria-current="@AriaCurrent"
+       aria-disabled="@AriaDisabled"
+       class="@CssClass"
+       style="@Style"
+       @onclick="HandleClickAsync">
+        @ChildContent
+    </a>
+}
+else
+{
+    <button @attributes="AdditionalAttributes"
+            type="@Type"
+            disabled="@Disabled"
+            aria-current="@AriaCurrent"
+            class="@CssClass"
+            style="@Style"
+            @onclick="HandleClickAsync">
+        @ChildContent
+    </button>
+}
+
+@code {
+    [CascadingParameter]
+    internal W3Navbar? Owner { get; set; }
+
+    private bool EffectiveMobile => Mobile || Owner?.Mobile == true;
+    private bool IsActive => Active || Owner?.IsActive(Value) == true;
+    private string? AriaCurrent => IsActive ? "page" : null;
+    private string? AriaDisabled => Disabled ? "true" : null;
+    private string? ResolvedHref => Disabled ? null : Href;
+
+    private string CssClass => BuildClass(
+        "w3-bar-item",
+        Button ? "w3-button" : null,
+        EffectiveMobile ? "w3-mobile" : null,
+        Disabled ? "w3-disabled" : null,
+        ResolveColor().ToBackgroundClass(),
+        ResolveTextColor().ToTextClass());
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public string? Value { get; set; }
+
+    [Parameter]
+    public string? Href { get; set; }
+
+    [Parameter]
+    public string? Target { get; set; }
+
+    [Parameter]
+    public bool Button { get; set; } = true;
+
+    [Parameter]
+    public bool Mobile { get; set; }
+
+    [Parameter]
+    public bool Active { get; set; }
+
+    [Parameter]
+    public bool Disabled { get; set; }
+
+    [Parameter]
+    public string Type { get; set; } = "button";
+
+    [Parameter]
+    public W3Color Color { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color TextColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color ActiveColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color ActiveTextColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnClick { get; set; }
+
+    private W3Color ResolveColor()
+    {
+        if (!IsActive)
+        {
+            return Color;
+        }
+
+        if (ActiveColor != W3Color.None)
+        {
+            return ActiveColor;
+        }
+
+        return Owner?.ActiveColor ?? W3Color.Green;
+    }
+
+    private W3Color ResolveTextColor()
+    {
+        if (!IsActive)
+        {
+            return TextColor;
+        }
+
+        if (ActiveTextColor != W3Color.None)
+        {
+            return ActiveTextColor;
+        }
+
+        return Owner?.ActiveTextColor ?? W3Color.White;
+    }
+
+    private async Task HandleClickAsync(MouseEventArgs args)
+    {
+        if (Disabled)
+        {
+            return;
+        }
+
+        if (!string.IsNullOrWhiteSpace(Value) && Owner is not null)
+        {
+            await Owner.ActivateAsync(Value);
+        }
+
+        await OnClick.InvokeAsync(args);
+    }
+}

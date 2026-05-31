@@ -1,0 +1,84 @@
+@using System.Globalization
+@inherits W3FormComponentBase<DateOnly?>
+
+<input @attributes="AdditionalAttributes"
+       id="@Id"
+       name="@NameAttributeValue"
+       type="date"
+       class="@DateCssClass"
+       style="@Style"
+       min="@FormatDate(Min)"
+       max="@FormatDate(Max)"
+       disabled="@Disabled"
+       readonly="@ReadOnly"
+       value="@CurrentValueAsString"
+       @oninput="HandleInput"
+       @onchange="HandleChange" />
+
+@code {
+    private const string DateFormat = "yyyy-MM-dd";
+    private string DateCssClass => BuildControlClass("w3-input");
+
+    [Parameter]
+    public string? Id { get; set; }
+
+    [Parameter]
+    public DateOnly? Min { get; set; }
+
+    [Parameter]
+    public DateOnly? Max { get; set; }
+
+    [Parameter]
+    public bool ReadOnly { get; set; }
+
+    [Parameter]
+    public bool UpdateOnInput { get; set; }
+
+    private void HandleInput(ChangeEventArgs args)
+    {
+        if (UpdateOnInput)
+        {
+            CurrentValueAsString = args.Value?.ToString();
+        }
+    }
+
+    private void HandleChange(ChangeEventArgs args)
+    {
+        if (!UpdateOnInput)
+        {
+            CurrentValueAsString = args.Value?.ToString();
+        }
+    }
+
+    protected override string? FormatValueAsString(DateOnly? value)
+    {
+        return FormatDate(value);
+    }
+
+    protected override bool TryParseValueFromString(string? value, out DateOnly? result, out string validationErrorMessage)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            result = null;
+            validationErrorMessage = string.Empty;
+            return true;
+        }
+
+        if (DateOnly.TryParseExact(value, DateFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out var parsedValue))
+        {
+            result = parsedValue;
+            validationErrorMessage = string.Empty;
+            return true;
+        }
+
+        result = null;
+        validationErrorMessage = $"The {FieldIdentifier.FieldName} field is not a valid date.";
+        return false;
+    }
+
+    private static string? FormatDate(DateOnly? value)
+    {
+        return value?.ToString(DateFormat, CultureInfo.InvariantCulture);
+    }
+}
+

@@ -1,0 +1,51 @@
+name: Pages
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Publish docs
+        run: dotnet publish src/W3Css.Blazor.Docs/W3Css.Blazor.Docs.csproj --configuration Release --output artifacts/site
+
+      - name: Configure Pages base path
+        shell: pwsh
+        run: |
+          $index = "artifacts/site/wwwroot/index.html"
+          $basePath = "/${{ github.event.repository.name }}/"
+          (Get-Content $index -Raw).Replace('<base href="/" />', "<base href=`"$basePath`" />") | Set-Content $index
+          New-Item -ItemType File -Path "artifacts/site/wwwroot/.nojekyll" -Force
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: artifacts/site/wwwroot
+
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v5

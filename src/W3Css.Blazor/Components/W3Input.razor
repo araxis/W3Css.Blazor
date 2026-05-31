@@ -1,0 +1,60 @@
+@using W3Css.Blazor.Internal
+@inherits W3FormComponentBase<string?>
+
+<input @attributes="AdditionalAttributes"
+       id="@Id"
+       name="@NameAttributeValue"
+       type="@Type"
+       class="@InputCssClass"
+       style="@Style"
+       placeholder="@Placeholder"
+       disabled="@Disabled"
+       readonly="@ReadOnly"
+       value="@CurrentValueAsString"
+       @oninput="HandleInput"
+       @onchange="HandleChange" />
+
+@code {
+    private string InputCssClass => BuildControlClass("w3-input", Animation.ToClass());
+
+    [Parameter]
+    public string? Id { get; set; }
+
+    [Parameter]
+    public string Type { get; set; } = "text";
+
+    [Parameter]
+    public string? Placeholder { get; set; }
+
+    [Parameter]
+    public bool ReadOnly { get; set; }
+
+    [Parameter]
+    public W3Animation Animation { get; set; } = W3Animation.None;
+
+    [Parameter]
+    public bool UpdateOnInput { get; set; }
+
+    private void HandleInput(ChangeEventArgs args)
+    {
+        if (UpdateOnInput)
+        {
+            CurrentValueAsString = args.Value?.ToString();
+        }
+    }
+
+    private void HandleChange(ChangeEventArgs args)
+    {
+        if (!UpdateOnInput)
+        {
+            CurrentValueAsString = args.Value?.ToString();
+        }
+    }
+
+    protected override bool TryParseValueFromString(string? value, out string? result, out string validationErrorMessage)
+    {
+        result = value;
+        validationErrorMessage = string.Empty;
+        return true;
+    }
+}

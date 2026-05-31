@@ -1,0 +1,156 @@
+@page "/components/visibility"
+
+<PageTitle>Visibility</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>Visibility</h1>
+    <DocPager PreviousHref="components/display" PreviousText="Display" NextHref="components/borders" NextText="Borders" />
+
+    <p class="w3-large">W3.CSS visibility utilities are small class switches for showing, hiding, and fixing content at the viewport edges.</p>
+    <p>Use `W3Visibility` on display helpers when a typed value is clearer, and use `Class` pass-through for fixed position utilities such as `w3-top` and `w3-bottom`.</p>
+
+    <DocExample Title="Blazor Show And Hide" Code="@ToggleCode">
+        <W3Button Color="W3Color.Teal" TextColor="W3Color.White" Round="W3Round.Medium" OnClick="ToggleNotice">
+            @(noticeVisible ? "Hide notice" : "Show notice")
+        </W3Button>
+
+        <W3DisplayContainer Visibility="@(noticeVisible ? W3Visibility.Show : W3Visibility.Hide)"
+                            Color="W3Color.PaleGreen"
+                            Class="w3-padding w3-margin-top w3-border">
+            This panel is shown or hidden by Blazor state while W3.CSS handles the display class.
+        </W3DisplayContainer>
+    </DocExample>
+
+    <DocExample Title="Responsive Hide Classes" Code="@ResponsiveCode">
+        <W3Grid Padding="true">
+            <W3Container Class="w3-padding w3-border w3-pale-blue w3-hide-small">
+                Hidden on small screens
+            </W3Container>
+            <W3Container Class="w3-padding w3-border w3-pale-yellow w3-hide-medium">
+                Hidden on medium screens
+            </W3Container>
+            <W3Container Class="w3-padding w3-border w3-pale-red w3-hide-large">
+                Hidden on large screens
+            </W3Container>
+        </W3Grid>
+    </DocExample>
+
+    <DocExample Title="Fixed Top And Bottom" Code="@FixedCode">
+        <div class="w3-border w3-white" style="position: relative; transform: translateZ(0); height: 12rem; overflow: auto;">
+            <div class="w3-top w3-teal w3-padding-small">
+                Fixed top bar
+            </div>
+            <div class="w3-padding" style="padding-top: 3rem; padding-bottom: 3rem;">
+                <p>Scrollable page content stays between fixed bars.</p>
+                <p>Use this pattern for app shells, persistent status bars, or fixed action rows.</p>
+                <p>The preview frame keeps the fixed bars inside this example.</p>
+            </div>
+            <div class="w3-bottom w3-black w3-padding-small">
+                Fixed bottom bar
+            </div>
+        </div>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Usage Reference</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Need</th><th>Use</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Toggle content from Blazor state</td><td>`Visibility` on `W3Display` or `W3DisplayContainer`</td><td>`w3-show`, `w3-hide`, `w3-show-block`, or `w3-show-inline-block`</td></tr>
+                <tr><td>Hide content by breakpoint</td><td>`W3Visibility.HideSmall`, `HideMedium`, or `HideLarge`</td><td>`w3-hide-small`, `w3-hide-medium`, or `w3-hide-large`</td></tr>
+                <tr><td>Use a visibility class on another component</td><td>`Class="w3-hide-small"` or another raw W3.CSS class</td><td>Shared `Class` pass-through</td></tr>
+                <tr><td>Pin content to the viewport edge</td><td>`Class="w3-top"` or `Class="w3-bottom"`</td><td>Fixed top or bottom positioning</td></tr>
+                <tr><td>Reveal content inside a display container on hover</td><td>`ShowOnHover="true"` on `W3Display`</td><td>`w3-display-hover`</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>W3Visibility Values</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Value</th><th>Maps to</th><th>Use when</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Default</td><td>No class</td><td>The component should follow normal display behavior</td></tr>
+                <tr><td>Hide</td><td>`w3-hide`</td><td>Content should be hidden until state changes</td></tr>
+                <tr><td>Show</td><td>`w3-show`</td><td>Content should be shown as a block-level element</td></tr>
+                <tr><td>ShowBlock</td><td>`w3-show-block`</td><td>Content should explicitly render as a block</td></tr>
+                <tr><td>ShowInlineBlock</td><td>`w3-show-inline-block`</td><td>Content should render inline while accepting box styling</td></tr>
+                <tr><td>HideSmall</td><td>`w3-hide-small`</td><td>Content should hide on small screens</td></tr>
+                <tr><td>HideMedium</td><td>`w3-hide-medium`</td><td>Content should hide on medium screens</td></tr>
+                <tr><td>HideLarge</td><td>`w3-hide-large`</td><td>Content should hide on large screens</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Related W3.CSS</h2>
+        <p><a href="https://www.w3schools.com/w3css/w3css_display.asp" target="_blank" rel="noopener">W3.CSS Display</a></p>
+        <p><a href="https://www.w3schools.com/w3css/w3css_responsive.asp" target="_blank" rel="noopener">W3.CSS Responsive Classes</a></p>
+    </section>
+
+    <DocPager PreviousHref="components/display" PreviousText="Display" NextHref="components/borders" NextText="Borders" />
+</W3Container>
+
+@code {
+    private bool noticeVisible = true;
+
+    private void ToggleNotice()
+    {
+        noticeVisible = !noticeVisible;
+    }
+
+    private const string ToggleCode = """
+<W3Button Color="W3Color.Teal" TextColor="W3Color.White" Round="W3Round.Medium" OnClick="ToggleNotice">
+    @(noticeVisible ? "Hide notice" : "Show notice")
+</W3Button>
+
+<W3DisplayContainer Visibility="@(noticeVisible ? W3Visibility.Show : W3Visibility.Hide)"
+                    Color="W3Color.PaleGreen"
+                    Class="w3-padding w3-margin-top w3-border">
+    This panel is shown or hidden by Blazor state while W3.CSS handles the display class.
+</W3DisplayContainer>
+
+@code {
+    private bool noticeVisible = true;
+
+    private void ToggleNotice()
+    {
+        noticeVisible = !noticeVisible;
+    }
+}
+""";
+
+    private const string ResponsiveCode = """
+<W3Grid Padding="true">
+    <W3Container Class="w3-padding w3-border w3-pale-blue w3-hide-small">
+        Hidden on small screens
+    </W3Container>
+    <W3Container Class="w3-padding w3-border w3-pale-yellow w3-hide-medium">
+        Hidden on medium screens
+    </W3Container>
+    <W3Container Class="w3-padding w3-border w3-pale-red w3-hide-large">
+        Hidden on large screens
+    </W3Container>
+</W3Grid>
+""";
+
+    private const string FixedCode = """
+<div class="w3-border w3-white" style="position: relative; transform: translateZ(0); height: 12rem; overflow: auto;">
+    <div class="w3-top w3-teal w3-padding-small">
+        Fixed top bar
+    </div>
+    <div class="w3-padding" style="padding-top: 3rem; padding-bottom: 3rem;">
+        <p>Scrollable page content stays between fixed bars.</p>
+        <p>Use this pattern for app shells, persistent status bars, or fixed action rows.</p>
+        <p>The preview frame keeps the fixed bars inside this example.</p>
+    </div>
+    <div class="w3-bottom w3-black w3-padding-small">
+        Fixed bottom bar
+    </div>
+</div>
+""";
+}

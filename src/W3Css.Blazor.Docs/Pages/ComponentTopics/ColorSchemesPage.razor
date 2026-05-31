@@ -1,0 +1,127 @@
+@page "/components/color-schemes"
+
+<PageTitle>Color Schemes</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>Color Schemes</h1>
+    <DocPager PreviousHref="components/colors" PreviousText="Colors" NextHref="components/theming" NextText="Theming" />
+
+    <p class="w3-large">Color schemes group related colors so a page has a consistent visual tone.</p>
+    <p>Use bundled `W3Color` values for ordinary W3.CSS colors, and use `Class`, `Style`, or app CSS for palette swatches, optional theme files, and private themes from the W3.CSS color generator.</p>
+
+    <DocExample Title="Palette Swatches" Code="@PaletteCode">
+        <W3Grid Padding="true" Style="grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));">
+            <W3Container Class="w3-padding" Style="background-color:#7e9a9a;color:#fff;">#7e9a9a</W3Container>
+            <W3Container Class="w3-padding" Style="background-color:#f6d8ac;color:#000;">#f6d8ac</W3Container>
+            <W3Container Class="w3-padding" Style="background-color:#db9833;color:#000;">#db9833</W3Container>
+            <W3Container Class="w3-padding" Style="background-color:#2a6592;color:#fff;">#2a6592</W3Container>
+            <W3Container Class="w3-padding" Style="background-color:#8ec3eb;color:#000;">#8ec3eb</W3Container>
+        </W3Grid>
+    </DocExample>
+
+    <DocExample Title="Achromatic Schemes" Code="@AchromaticCode">
+        <W3Grid Padding="true" Style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
+            <W3Container Color="W3Color.White" TextColor="W3Color.Black" Class="w3-border w3-padding">
+                White background with black text
+            </W3Container>
+            <W3Container Color="W3Color.Black" TextColor="W3Color.White" Class="w3-padding">
+                Black background with white text
+            </W3Container>
+        </W3Grid>
+    </DocExample>
+
+    <DocExample Title="Theme Classes" Code="@ThemeCode">
+        <W3Container Class="w3-theme-d4 w3-padding">
+            <h2 class="w3-large">Theme header</h2>
+        </W3Container>
+        <W3Container Class="w3-theme-l4 w3-padding">
+            <p>Theme classes come from a stylesheet loaded by the app.</p>
+            <W3Button Class="w3-theme-action" Round="W3Round.Medium">Theme action</W3Button>
+        </W3Container>
+    </DocExample>
+
+    <DocExample Title="Private Theme CSS" Code="@PrivateThemeCode">
+        <W3Panel Color="W3Color.PaleBlue" TextColor="W3Color.Black" LeftBar="true" Border="true" Round="W3Round.Medium">
+            Keep private palette CSS in the consuming app, then use the generated class names through `Class` pass-through.
+        </W3Panel>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Usage Reference</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Need</th><th>Use</th><th>Notes</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Bundled W3.CSS colors</td><td>`Color`, `TextColor`, `BorderColor`, and `W3HoverColor`</td><td>Typed API for classes present in the bundled stylesheet.</td></tr>
+                <tr><td>Custom palette swatch</td><td>`Style` or an application CSS class</td><td>Best for one-off hex values or project-owned palettes.</td></tr>
+                <tr><td>Optional W3.CSS theme file</td><td>Load the theme stylesheet and use `Class="w3-theme-l4"`</td><td>The docs site loads one theme so examples render.</td></tr>
+                <tr><td>Color generator output</td><td>Save the emitted CSS in the consuming app</td><td>Use generated `w3-theme-*` class names through `Class` pass-through.</td></tr>
+                <tr><td>Library package size</td><td>Do not bundle private palettes</td><td>Keeps W3Css.Blazor close to the lightweight W3.CSS model.</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Related W3.CSS</h2>
+        <p><NavLink href="components/colors">Colors guidance</NavLink></p>
+        <p><NavLink href="components/trends">Trends guidance</NavLink></p>
+        <p><NavLink href="components/versions">Versions guidance</NavLink></p>
+        <p><a href="https://www.w3schools.com/w3css/w3css_color_schemes.asp" target="_blank" rel="noopener">W3.CSS Color Schemes</a></p>
+        <p><a href="https://www.w3schools.com/w3css/w3css_color_generator.asp" target="_blank" rel="noopener">W3.CSS Color Generator</a></p>
+        <p><a href="https://www.w3schools.com/w3css/w3css_color_themes.asp" target="_blank" rel="noopener">W3.CSS Color Themes</a></p>
+        <p><a href="https://www.w3schools.com/w3css/w3css_color_classes.asp" target="_blank" rel="noopener">W3.CSS Color Classes</a></p>
+    </section>
+
+    <DocPager PreviousHref="components/colors" PreviousText="Colors" NextHref="components/theming" NextText="Theming" />
+</W3Container>
+
+@code {
+    private const string PaletteCode = """
+<W3Grid Padding="true" Style="grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));">
+    <W3Container Class="w3-padding" Style="background-color:#7e9a9a;color:#fff;">#7e9a9a</W3Container>
+    <W3Container Class="w3-padding" Style="background-color:#f6d8ac;color:#000;">#f6d8ac</W3Container>
+    <W3Container Class="w3-padding" Style="background-color:#db9833;color:#000;">#db9833</W3Container>
+    <W3Container Class="w3-padding" Style="background-color:#2a6592;color:#fff;">#2a6592</W3Container>
+    <W3Container Class="w3-padding" Style="background-color:#8ec3eb;color:#000;">#8ec3eb</W3Container>
+</W3Grid>
+""";
+
+    private const string AchromaticCode = """
+<W3Container Color="W3Color.White" TextColor="W3Color.Black" Class="w3-border w3-padding">
+    White background with black text
+</W3Container>
+
+<W3Container Color="W3Color.Black" TextColor="W3Color.White" Class="w3-padding">
+    Black background with white text
+</W3Container>
+""";
+
+    private const string ThemeCode = """
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-indigo.css" />
+
+<W3Container Class="w3-theme-d4 w3-padding">
+    <h2 class="w3-large">Theme header</h2>
+</W3Container>
+<W3Container Class="w3-theme-l4 w3-padding">
+    <p>Theme classes come from a stylesheet loaded by the app.</p>
+    <W3Button Class="w3-theme-action" Round="W3Round.Medium">Theme action</W3Button>
+</W3Container>
+""";
+
+    private const string PrivateThemeCode = """
+<link rel="stylesheet" href="_content/W3Css.Blazor/w3css/5/w3.css" />
+<link rel="stylesheet" href="css/my-w3-theme.css" />
+
+/* css/my-w3-theme.css */
+.w3-theme { color:#fff !important; background-color:#3f51b5 !important; }
+.w3-theme-light { color:#000 !important; background-color:#e8eaf6 !important; }
+.w3-theme-dark { color:#fff !important; background-color:#1a237e !important; }
+.w3-theme-action { color:#fff !important; background-color:#311b92 !important; }
+.w3-text-theme { color:#1a237e !important; }
+
+<W3Container Class="w3-theme w3-padding">
+    Private theme surface
+</W3Container>
+""";
+}

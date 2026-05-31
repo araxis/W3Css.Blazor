@@ -1,0 +1,85 @@
+@page "/components/page-content-navigation"
+
+<PageTitle>W3PageContentNavigation</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3PageContentNavigation</h1>
+    <DocPager PreviousHref="components/breadcrumb" PreviousText="Breadcrumb" NextHref="components/link" NextText="Link" />
+
+    <p class="w3-large">`W3PageContentNavigation` is an in-page table of contents that highlights the section currently in view.</p>
+    <p>W3.CSS has no equivalent, so this is a small new component. It uses an `IntersectionObserver` (tiny JS module) to track the visible section; rendering and the active state stay in Blazor.</p>
+
+    <W3Note Class="w3-pale-blue">
+        Scroll the demo content below — the matching entry in the &ldquo;On this page&rdquo; list highlights as each section scrolls into view. Active section: <strong>@(activeSection ?? "(none)")</strong>.
+    </W3Note>
+
+    <DocExample Title="Scrollspy Table Of Contents" Code="@BasicCode">
+        <W3Row>
+            <W3Column Medium="4">
+                <div style="position: sticky; top: 16px;">
+                    <W3PageContentNavigation Sections="sections"
+                                             Title="On this page"
+                                             ActiveSectionChanged="OnActiveChanged" />
+                </div>
+            </W3Column>
+            <W3Column Medium="8">
+                @foreach (var section in sections)
+                {
+                    <section id="@section.Id" class="w3-panel w3-border w3-round w3-padding" style="min-height: 240px;">
+                        <h3>@section.Title</h3>
+                        <p class="doc-muted">Demo content for the @section.Title section. Scroll to move between sections and watch the list update.</p>
+                    </section>
+                }
+            </W3Column>
+        </W3Row>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Sections</td><td>IReadOnlyList&lt;W3PageSection&gt;</td><td>empty</td><td>Section entries (Id, Title, Level)</td></tr>
+                <tr><td>Title</td><td>string?</td><td>null</td><td>Optional heading above the list</td></tr>
+                <tr><td>ActiveSectionChanged</td><td>EventCallback&lt;string?&gt;</td><td>—</td><td>Raised when the in-view section changes</td></tr>
+                <tr><td>Bordered</td><td>bool</td><td>true</td><td>Left border bar (<code>w3-leftbar</code>)</td></tr>
+                <tr><td>ActiveTextColor</td><td>W3Color</td><td>Teal</td><td>Active link text color</td></tr>
+                <tr><td>Color / TextColor</td><td>W3Color</td><td>None</td><td>Background / text color classes</td></tr>
+                <tr><td>AriaLabel</td><td>string</td><td>"On this page"</td><td>Navigation landmark label</td></tr>
+            </tbody>
+        </W3Table>
+        <p class="doc-muted">Each <code>W3PageSection.Id</code> must match a section element id on the page. <code>Level</code> controls indentation for nested entries.</p>
+    </section>
+
+    <DocPager PreviousHref="components/breadcrumb" PreviousText="Breadcrumb" NextHref="components/link" NextText="Link" />
+</W3Container>
+
+@code {
+    private string? activeSection;
+
+    private readonly IReadOnlyList<W3PageSection> sections = new[]
+    {
+        new W3PageSection("pcn-overview", "Overview"),
+        new W3PageSection("pcn-installation", "Installation"),
+        new W3PageSection("pcn-usage", "Usage"),
+        new W3PageSection("pcn-accessibility", "Accessibility")
+    };
+
+    private void OnActiveChanged(string? id) => activeSection = id;
+
+    private const string BasicCode = """
+<W3PageContentNavigation Sections="sections" Title="On this page" />
+
+@code {
+    private readonly IReadOnlyList<W3PageSection> sections = new[]
+    {
+        new W3PageSection("pcn-overview", "Overview"),
+        new W3PageSection("pcn-installation", "Installation"),
+        new W3PageSection("pcn-usage", "Usage"),
+        new W3PageSection("pcn-accessibility", "Accessibility")
+    };
+}
+""";
+}

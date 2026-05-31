@@ -1,0 +1,203 @@
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+<W3Modal Open="@Visible"
+         OpenChanged="HandleOpenChangedAsync"
+         Id="@Id"
+         Title="@Title"
+         ShowCloseButton="@ShowCloseButton"
+         CloseOnBackdrop="@(!DisableBackdropClick)"
+         CloseOnEscape="@(!DisableEscapeKeyDown)"
+         AdditionalAttributes="@AdditionalAttributes"
+         Class="@Class"
+         Style="@Style">
+    <ChildContent>
+        @if (MessageContent is not null)
+        {
+            @MessageContent
+        }
+        else if (!string.IsNullOrWhiteSpace(Message))
+        {
+            <p class="w3-large">@Message</p>
+        }
+        @ChildContent
+    </ChildContent>
+    <Actions>
+        @if (!string.IsNullOrWhiteSpace(CancelText))
+        {
+            <W3Button Class="w3-bar-item w3-margin-right" Border="true" OnClick="CancelAsync">@CancelText</W3Button>
+        }
+        @if (!string.IsNullOrWhiteSpace(NoText))
+        {
+            <W3Button Class="w3-bar-item w3-margin-right" Border="true" OnClick="NoAsync">@NoText</W3Button>
+        }
+        <W3Button Class="w3-bar-item" Color="@YesColor" TextColor="@YesTextColor" OnClick="YesAsync">@YesText</W3Button>
+    </Actions>
+</W3Modal>
+
+@code {
+    // MudBlazor compatibility: mirrors MudMessageBox. Inline component controlled
+    // through @bind-Visible. Yes => true, No => false, Cancel/dismiss => null,
+    // matching MudMessageBox's bool? result.
+
+    /// <summary>
+    /// Controls whether the message box is shown. Two-way bindable.
+    /// </summary>
+    [Parameter]
+    public bool Visible { get; set; }
+
+    /// <summary>
+    /// Raised when visibility changes (for <c>@bind-Visible</c>).
+    /// </summary>
+    [Parameter]
+    public EventCallback<bool> VisibleChanged { get; set; }
+
+    /// <summary>
+    /// Optional DOM id forwarded to the underlying dialog.
+    /// </summary>
+    [Parameter]
+    public string? Id { get; set; }
+
+    /// <summary>
+    /// Title shown in the dialog header.
+    /// </summary>
+    [Parameter]
+    public string? Title { get; set; }
+
+    /// <summary>
+    /// Plain-text message body. Ignored when <see cref="MessageContent"/> is set.
+    /// </summary>
+    [Parameter]
+    public string? Message { get; set; }
+
+    /// <summary>
+    /// Rich message body that overrides <see cref="Message"/>.
+    /// </summary>
+    [Parameter]
+    public RenderFragment? MessageContent { get; set; }
+
+    /// <summary>
+    /// Additional content appended below the message.
+    /// </summary>
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    /// <summary>
+    /// Text for the confirming (Yes) button.
+    /// </summary>
+    [Parameter]
+    public string YesText { get; set; } = "OK";
+
+    /// <summary>
+    /// Text for the declining (No) button. Hidden when null or empty.
+    /// </summary>
+    [Parameter]
+    public string? NoText { get; set; }
+
+    /// <summary>
+    /// Text for the Cancel button. Hidden when null or empty.
+    /// </summary>
+    [Parameter]
+    public string? CancelText { get; set; }
+
+    /// <summary>
+    /// Invoked when the Yes button is clicked.
+    /// </summary>
+    [Parameter]
+    public EventCallback OnYes { get; set; }
+
+    /// <summary>
+    /// Invoked when the No button is clicked.
+    /// </summary>
+    [Parameter]
+    public EventCallback OnNo { get; set; }
+
+    /// <summary>
+    /// Invoked when the Cancel button is clicked or the dialog is dismissed.
+    /// </summary>
+    [Parameter]
+    public EventCallback OnCancel { get; set; }
+
+    /// <summary>
+    /// Invoked with the result: <c>true</c> (Yes), <c>false</c> (No), or <c>null</c> (Cancel/dismiss).
+    /// </summary>
+    [Parameter]
+    public EventCallback<bool?> OnResult { get; set; }
+
+    /// <summary>
+    /// Shows the dialog close (×) button.
+    /// </summary>
+    [Parameter]
+    public bool ShowCloseButton { get; set; } = true;
+
+    /// <summary>
+    /// Disables backdrop-click dismissal.
+    /// </summary>
+    [Parameter]
+    public bool DisableBackdropClick { get; set; }
+
+    /// <summary>
+    /// Disables Escape-key dismissal.
+    /// </summary>
+    [Parameter]
+    public bool DisableEscapeKeyDown { get; set; }
+
+    /// <summary>
+    /// Background color of the confirming (Yes) button.
+    /// </summary>
+    [Parameter]
+    public W3Color YesColor { get; set; } = W3Color.Teal;
+
+    /// <summary>
+    /// Text color of the confirming (Yes) button.
+    /// </summary>
+    [Parameter]
+    public W3Color YesTextColor { get; set; } = W3Color.White;
+
+    private async Task YesAsync()
+    {
+        await CloseAsync();
+        await OnYes.InvokeAsync();
+        await OnResult.InvokeAsync(true);
+    }
+
+    private async Task NoAsync()
+    {
+        await CloseAsync();
+        await OnNo.InvokeAsync();
+        await OnResult.InvokeAsync(false);
+    }
+
+    private async Task CancelAsync()
+    {
+        await CloseAsync();
+        await OnCancel.InvokeAsync();
+        await OnResult.InvokeAsync(null);
+    }
+
+    private async Task CloseAsync()
+    {
+        if (!Visible)
+        {
+            return;
+        }
+
+        Visible = false;
+        await VisibleChanged.InvokeAsync(false);
+    }
+
+    // Fires only when the dialog dismisses itself (backdrop, Escape, close button).
+    // A button click closes via CloseAsync first, so Visible is already false here.
+    private async Task HandleOpenChangedAsync(bool value)
+    {
+        if (value || !Visible)
+        {
+            return;
+        }
+
+        Visible = false;
+        await VisibleChanged.InvokeAsync(false);
+        await OnCancel.InvokeAsync();
+        await OnResult.InvokeAsync(null);
+    }
+}

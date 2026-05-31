@@ -1,0 +1,122 @@
+@using Microsoft.AspNetCore.Components
+@using W3Css.Blazor.Internal
+@using System.Linq.Expressions;
+@typeparam TValue
+@inherits W3ComponentBase
+
+@if (HasLabel)
+{
+    <label class="@LabelCssClass">
+        @Control
+        <span>@LabelContent</span>
+    </label>
+}
+else
+{
+    @Control
+}
+
+@code {
+    private string RadioCssClass => BuildRadioClass();
+    private bool HasLabel => ChildContent is not null || !string.IsNullOrWhiteSpace(Label);
+    private bool IsChecked => Owner is not null
+        ? Owner.IsSelected(OptionValue)
+        : EqualityComparer<TValue>.Default.Equals(Value, OptionValue);
+    private string RadioName => Name ?? Owner?.GroupName ?? "Value";
+    private string LabelCssClass => new W3Css.Blazor.Internal.W3ClassBuilder().Add("w3-block").Add(LabelClass).ToString();
+    private RenderFragment LabelContent => ChildContent ?? (builder => builder.AddContent(0, Label));
+
+    private RenderFragment Control => builder =>
+    {
+        builder.OpenElement(0, "input");
+        builder.AddMultipleAttributes(1, AdditionalAttributes);
+        builder.AddAttribute(2, "id", Id);
+        builder.AddAttribute(3, "name", RadioName);
+        builder.AddAttribute(4, "type", "radio");
+        builder.AddAttribute(5, "class", RadioCssClass);
+        builder.AddAttribute(6, "style", Style);
+        builder.AddAttribute(7, "disabled", Disabled || Owner?.Disabled == true);
+        builder.AddAttribute(8, "value", OptionValue?.ToString());
+        builder.AddAttribute(9, "checked", IsChecked);
+        builder.AddAttribute(10, "onchange", EventCallback.Factory.Create<ChangeEventArgs>(this, SelectOption));
+        builder.CloseElement();
+    };
+
+    private string BuildRadioClass()
+    {
+        var builder = new W3Css.Blazor.Internal.W3ClassBuilder()
+            .Add("w3-radio")
+            .Add(Color.ToBackgroundClass())
+            .Add(TextColor.ToTextClass())
+            .Add(Round.ToClass())
+            .AddIf(Border, "w3-border")
+            .Add(Class);
+
+        return builder.ToString();
+    }
+
+    [Parameter]
+    public string? Id { get; set; }
+
+    [Parameter]
+    public string? Name { get; set; }
+
+    [Parameter]
+    public TValue? OptionValue { get; set; }
+
+    [Parameter]
+    public TValue? Value { get; set; }
+
+    [Parameter]
+    public EventCallback<TValue?> ValueChanged { get; set; }
+
+    [Parameter]
+    public Expression<Func<TValue>>? ValueExpression { get; set; }
+
+    [Parameter]
+    public bool Disabled { get; set; }
+
+    [Parameter]
+    public bool Border { get; set; }
+
+    [Parameter]
+    public W3Color Color { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color TextColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Round Round { get; set; } = W3Round.None;
+
+    [Parameter]
+    public string? Label { get; set; }
+
+    [CascadingParameter(Name = "W3RadioGroup")]
+    public W3RadioGroup<TValue>? Owner { get; set; }
+
+    [Parameter]
+    public string? LabelClass { get; set; }
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    private async Task SelectOption(ChangeEventArgs args)
+    {
+        if (Disabled || Owner?.Disabled == true)
+        {
+            return;
+        }
+
+        if (Owner is not null)
+        {
+            Owner.NotifySelection(OptionValue);
+            return;
+        }
+
+        if (!EqualityComparer<TValue>.Default.Equals(Value, OptionValue))
+        {
+            Value = OptionValue;
+            await ValueChanged.InvokeAsync(OptionValue);
+        }
+    }
+}

@@ -1,0 +1,183 @@
+@using W3Css.Blazor.Internal
+@inherits W3FormComponentBase<string?>
+
+@if (ShowPalette)
+{
+    <div @attributes="AdditionalAttributes"
+         class="@PickerCssClass"
+         style="@Style">
+        <div class="w3-color-input-top">
+            <span class="w3-color-input-preview" style="background:@PreviewColor" aria-hidden="true"></span>
+            <input type="color"
+                   id="@Id"
+                   name="@NameAttributeValue"
+                   class="w3-color-input-native"
+                   value="@PreviewColor"
+                   disabled="@Disabled"
+                   aria-label="@($"{Label} picker")"
+                   @oninput="HandleInput"
+                   @onchange="HandleChange" />
+            <input type="text"
+                   class="w3-input w3-color-input-hex"
+                   value="@CurrentValueAsString"
+                   disabled="@Disabled"
+                   aria-label="@($"{Label} hex value")"
+                   @onchange="HandleHexChange" />
+        </div>
+
+        @if (Palette.Count > 0)
+        {
+            <div class="w3-color-input-palette" role="group" aria-label="@($"{Label} presets")">
+                @foreach (var swatch in Palette)
+                {
+                    var selected = string.Equals(swatch, CurrentValueAsString, StringComparison.OrdinalIgnoreCase);
+                    <button type="button"
+                            class="@SwatchClass(selected)"
+                            style="background:@swatch"
+                            title="@swatch"
+                            aria-label="@swatch"
+                            aria-pressed="@(selected ? "true" : "false")"
+                            disabled="@Disabled"
+                            @onclick="() => SelectSwatchAsync(swatch)"></button>
+                }
+            </div>
+        }
+    </div>
+}
+else
+{
+    <input @attributes="AdditionalAttributes"
+           id="@Id"
+           name="@NameAttributeValue"
+           type="color"
+           class="@ColorCssClass"
+           style="@Style"
+           disabled="@Disabled"
+           value="@CurrentValueAsString"
+           @oninput="HandleInput"
+           @onchange="HandleChange" />
+}
+
+@code {
+    // The canonical W3.CSS color control: a native color input by default, with
+    // an opt-in palette/preview/hex picker (ShowPalette) that absorbs the
+    // capability MudBlazor exposes through MudColorPicker.
+    private string ColorCssClass => BuildControlClass("w3-input", "w3-color-input", FullWidth ? "w3-color-input-block" : null);
+
+    private string PickerCssClass => new W3ClassBuilder()
+        .Add("w3-color-input-picker")
+        .AddIf(Border, "w3-border")
+        .Add(Round.ToClass())
+        .AddIf(Disabled, "w3-disabled")
+        .Add(Class)
+        .ToString();
+
+    private string PreviewColor => string.IsNullOrWhiteSpace(CurrentValueAsString) ? "#ffffff" : CurrentValueAsString!;
+
+    private string SwatchClass(bool selected) => new W3ClassBuilder()
+        .Add("w3-color-input-swatch")
+        .AddIf(selected, "w3-color-input-swatch-selected")
+        .ToString();
+
+    [Parameter]
+    public string? Id { get; set; }
+
+    [Parameter]
+    public bool FullWidth { get; set; }
+
+    [Parameter]
+    public bool UpdateOnInput { get; set; } = true;
+
+    /// <summary>
+    /// Renders the richer picker (preview swatch, native input, hex field, and a preset palette)
+    /// instead of the bare native color input.
+    /// </summary>
+    [Parameter]
+    public bool ShowPalette { get; set; }
+
+    /// <summary>
+    /// Preset swatches shown when <see cref="ShowPalette"/> is enabled.
+    /// </summary>
+    [Parameter]
+    public IReadOnlyList<string> Palette { get; set; } = DefaultPalette;
+
+    /// <summary>
+    /// Accessible label prefix for the picker controls.
+    /// </summary>
+    [Parameter]
+    public string Label { get; set; } = "Color";
+
+    private static readonly IReadOnlyList<string> DefaultPalette =
+    [
+        "#f44336", "#e91e63", "#9c27b0", "#3f51b5",
+        "#2196f3", "#00bcd4", "#009688", "#4caf50",
+        "#cddc39", "#ffeb3b", "#ff9800", "#795548",
+        "#607d8b", "#000000", "#9e9e9e", "#ffffff"
+    ];
+
+    private void HandleInput(ChangeEventArgs args)
+    {
+        if (UpdateOnInput)
+        {
+            CurrentValueAsString = args.Value?.ToString();
+        }
+    }
+
+    private void HandleChange(ChangeEventArgs args)
+    {
+        if (!UpdateOnInput)
+        {
+            CurrentValueAsString = args.Value?.ToString();
+        }
+    }
+
+    private void HandleHexChange(ChangeEventArgs args)
+    {
+        var raw = args.Value?.ToString();
+        if (IsValidHex(raw))
+        {
+            CurrentValueAsString = raw;
+        }
+    }
+
+    private Task SelectSwatchAsync(string color)
+    {
+        if (!Disabled)
+        {
+            CurrentValueAsString = color;
+        }
+
+        return Task.CompletedTask;
+    }
+
+    private static bool IsValidHex(string? value)
+    {
+        if (string.IsNullOrWhiteSpace(value) || value[0] != '#')
+        {
+            return false;
+        }
+
+        var digits = value.AsSpan(1);
+        if (digits.Length is not (3 or 6))
+        {
+            return false;
+        }
+
+        foreach (var c in digits)
+        {
+            if (!Uri.IsHexDigit(c))
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    protected override bool TryParseValueFromString(string? value, out string? result, out string validationErrorMessage)
+    {
+        result = value;
+        validationErrorMessage = string.Empty;
+        return true;
+    }
+}

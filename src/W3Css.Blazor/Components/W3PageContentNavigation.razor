@@ -1,0 +1,184 @@
+@using Microsoft.JSInterop
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+@implements IAsyncDisposable
+@inject IJSRuntime JS
+
+<nav @attributes="AdditionalAttributes"
+     class="@CssClass"
+     style="@Style"
+     aria-label="@AriaLabel">
+    @if (!string.IsNullOrWhiteSpace(Title))
+    {
+        <div class="w3-page-content-nav-title">@Title</div>
+    }
+
+    <ul class="w3-ul w3-page-content-nav-list">
+        @foreach (var section in Sections)
+        {
+            <li @key="section.Id"
+                class="@ItemCssClass(section)"
+                style="@($"--w3-page-content-nav-indent:{Math.Max(0, section.Level - 1)};")">
+                <a href="@($"#{section.Id}")"
+                   class="@LinkCssClass(section)"
+                   aria-current="@(IsActive(section) ? "true" : "false")">
+                    @section.Title
+                </a>
+            </li>
+        }
+    </ul>
+</nav>
+
+@code {
+    // A genuinely-missing capability (no W3.CSS equivalent): an in-page
+    // table-of-contents that highlights the section currently in view, matching
+    // MudBlazor's MudPageContentNavigation. Uses a tiny IntersectionObserver JS
+    // module; the active state and rendering stay in Blazor.
+    private DotNetObjectReference<W3PageContentNavigation>? selfRef;
+    private IJSObjectReference? module;
+    private IJSObjectReference? handle;
+    private string? activeId;
+    private string? observedKey;
+
+    private string CssClass => BuildClass(
+        "w3-page-content-nav",
+        Bordered ? "w3-leftbar w3-border-grey" : null,
+        Color.ToBackgroundClass(),
+        TextColor.ToTextClass());
+
+    private bool IsActive(W3PageSection section) => string.Equals(activeId, section.Id, StringComparison.Ordinal);
+
+    private string ItemCssClass(W3PageSection section) => new W3ClassBuilder()
+        .Add("w3-page-content-nav-item")
+        .AddIf(IsActive(section), "w3-page-content-nav-active")
+        .ToString();
+
+    private string LinkCssClass(W3PageSection section) => new W3ClassBuilder()
+        .Add("w3-page-content-nav-link")
+        .AddIf(IsActive(section), ActiveTextColor.ToTextClass())
+        .ToString();
+
+    /// <summary>
+    /// The page sections to list. Each <see cref="W3PageSection.Id"/> must match a section element id on the page.
+    /// </summary>
+    [Parameter]
+    public IReadOnlyList<W3PageSection> Sections { get; set; } = [];
+
+    /// <summary>
+    /// Optional heading shown above the list.
+    /// </summary>
+    [Parameter]
+    public string? Title { get; set; }
+
+    /// <summary>
+    /// Accessible label for the navigation landmark.
+    /// </summary>
+    [Parameter]
+    public string AriaLabel { get; set; } = "On this page";
+
+    /// <summary>
+    /// Raised when the active section changes (scroll or click).
+    /// </summary>
+    [Parameter]
+    public EventCallback<string?> ActiveSectionChanged { get; set; }
+
+    /// <summary>
+    /// Adds a left border bar to the navigation.
+    /// </summary>
+    [Parameter]
+    public bool Bordered { get; set; } = true;
+
+    /// <summary>
+    /// Background color class.
+    /// </summary>
+    [Parameter]
+    public W3Color Color { get; set; } = W3Color.None;
+
+    /// <summary>
+    /// Text color class.
+    /// </summary>
+    [Parameter]
+    public W3Color TextColor { get; set; } = W3Color.None;
+
+    /// <summary>
+    /// Text color applied to the active section link.
+    /// </summary>
+    [Parameter]
+    public W3Color ActiveTextColor { get; set; } = W3Color.Teal;
+
+    private string SectionKey => string.Join('|', Sections.Select(s => s.Id));
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            selfRef = DotNetObjectReference.Create(this);
+            module = await JS.InvokeAsync<IJSObjectReference>("import", "./_content/W3Css.Blazor/w3PageContentNavigation.js");
+        }
+
+        if (module is null)
+        {
+            return;
+        }
+
+        var key = SectionKey;
+        if (key == observedKey)
+        {
+            return;
+        }
+
+        observedKey = key;
+        var ids = Sections.Select(s => s.Id).Where(id => !string.IsNullOrWhiteSpace(id)).ToArray();
+
+        if (handle is not null)
+        {
+            await handle.InvokeVoidAsync("dispose");
+            await handle.DisposeAsync();
+            handle = null;
+        }
+
+        if (ids.Length > 0)
+        {
+            handle = await module.InvokeAsync<IJSObjectReference>("observe", selfRef, ids);
+        }
+    }
+
+    /// <summary>
+    /// Invoked from JS when the section in view changes.
+    /// </summary>
+    [JSInvokable]
+    public async Task SetActive(string? id)
+    {
+        if (string.Equals(activeId, id, StringComparison.Ordinal))
+        {
+            return;
+        }
+
+        activeId = id;
+        await ActiveSectionChanged.InvokeAsync(id);
+        StateHasChanged();
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        try
+        {
+            if (handle is not null)
+            {
+                await handle.InvokeVoidAsync("dispose");
+                await handle.DisposeAsync();
+            }
+
+            if (module is not null)
+            {
+                await module.DisposeAsync();
+            }
+        }
+        catch (JSDisconnectedException)
+        {
+            // Runtime already gone; nothing to clean up.
+        }
+
+        selfRef?.Dispose();
+    }
+}

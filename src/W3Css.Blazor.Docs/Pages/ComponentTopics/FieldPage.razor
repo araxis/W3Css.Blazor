@@ -1,0 +1,62 @@
+@page "/components/field"
+
+<PageTitle>W3Field</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3Field</h1>
+    <DocPager PreviousHref="components/text-area" PreviousText="Text Area" NextHref="components/validation" NextText="Validation" />
+
+    <p class="w3-large">`W3Field` groups a label, control, help text, and Blazor validation message.</p>
+    <p>It does not own input state; place a form component inside it and pass the same expression to `For`.</p>
+
+    <DocExample Title="Field Wrapper" Code="@BasicCode">
+        <EditForm Model="@FieldModel">
+            <DataAnnotationsValidator />
+            <W3Field TValue="string" Label="Project name" ForId="project-name" For="@(() => FieldModel.ProjectName)" HelpText="This appears in headings and examples.">
+                <W3Input Id="project-name" @bind-Value="FieldModel.ProjectName" Border="true" />
+            </W3Field>
+        </EditForm>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>TValue</td><td>type</td><td>required</td><td>Validation expression type</td></tr>
+                <tr><td>Label</td><td>string?</td><td>null</td><td>Label text</td></tr>
+                <tr><td>ForId</td><td>string?</td><td>null</td><td>Label `for` attribute</td></tr>
+                <tr><td>For</td><td>Expression&lt;Func&lt;TValue&gt;&gt;?</td><td>null</td><td>Validation message expression</td></tr>
+                <tr><td>HelpText</td><td>string?</td><td>null</td><td>Small help text below the control</td></tr>
+                <tr><td>LabelClass</td><td>string?</td><td>null</td><td>Additional label classes</td></tr>
+                <tr><td>HelpClass</td><td>string?</td><td>null</td><td>Additional help text classes</td></tr>
+                <tr><td>Compact</td><td>bool</td><td>false</td><td>Compact spacing class</td></tr>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Field control content</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional root classes</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline style on the root wrapper</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <DocPager PreviousHref="components/text-area" PreviousText="Text Area" NextHref="components/validation" NextText="Validation" />
+</W3Container>
+
+@code {
+    private readonly FieldExampleModel FieldModel = new();
+
+    private const string BasicCode = """
+<EditForm Model="@model">
+    <DataAnnotationsValidator />
+    <W3Field TValue="string" Label="Project name" ForId="project-name" For="@(() => model.ProjectName)" HelpText="This appears in headings and examples.">
+        <W3Input Id="project-name" @bind-Value="model.ProjectName" Border="true" />
+    </W3Field>
+</EditForm>
+""";
+
+    private sealed class FieldExampleModel
+    {
+        public string ProjectName { get; set; } = "W3Css.Blazor";
+    }
+}

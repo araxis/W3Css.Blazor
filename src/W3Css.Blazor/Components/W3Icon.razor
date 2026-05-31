@@ -1,0 +1,42 @@
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+@if (HasLabel)
+{
+    <i @attributes="AdditionalAttributes"
+       class="@CssClass"
+       style="@Style"
+       role="img"
+       aria-label="@Label">@ChildContent</i>
+}
+else
+{
+    <i @attributes="AdditionalAttributes"
+       class="@CssClass"
+       style="@Style"
+       aria-hidden="true">@ChildContent</i>
+}
+
+@code {
+    private bool HasLabel => !string.IsNullOrWhiteSpace(Label);
+
+    private string CssClass => BuildClass(
+        IconClass,
+        Size.ToClass(),
+        TextColor.ToTextClass());
+
+    [Parameter]
+    public string? IconClass { get; set; }
+
+    [Parameter]
+    public string? Label { get; set; }
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public W3Size Size { get; set; } = W3Size.Default;
+
+    [Parameter]
+    public W3Color TextColor { get; set; } = W3Color.None;
+}

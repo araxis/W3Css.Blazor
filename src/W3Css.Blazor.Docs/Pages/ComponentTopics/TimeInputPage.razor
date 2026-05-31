@@ -1,0 +1,105 @@
+@page "/components/time-input"
+
+<PageTitle>W3TimeInput</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3TimeInput</h1>
+    <DocPager PreviousHref="components/date-input" PreviousText="Date Input" NextHref="components/slider" NextText="Slider" />
+
+    <p class="w3-large">`W3TimeInput` wraps the native browser time control for nullable `TimeOnly` values.</p>
+    <p>Use it with date inputs for schedule forms, booking tools, reminders, and time-of-day filters.</p>
+
+    <DocExample Title="Time Field" Description="Time values are formatted for native `input type=time` and parsed back into `TimeOnly?`." Code="@BasicCode">
+        <EditForm Model="@TimeModel">
+            <W3Field TValue="TimeOnly?" Label="Start time" ForId="time-start" For="@(() => TimeModel.StartTime)" HelpText="Use a 15 minute step.">
+                <W3TimeInput Id="time-start"
+                             @bind-Value="TimeModel.StartTime"
+                             Min="@MinimumTime"
+                             Max="@MaximumTime"
+                             Step="900"
+                             Border="true"
+                             Round="W3Round.Medium" />
+            </W3Field>
+        </EditForm>
+    </DocExample>
+
+    <DocExample Title="Date And Time Pair" Description="Pair native date and time controls for compact scheduling UI." Code="@PairCode">
+        <div class="w3-row-padding">
+            <div class="w3-half">
+                <W3DateInput @bind-Value="TimeModel.AppointmentDate" Border="true" />
+            </div>
+            <div class="w3-half">
+                <W3TimeInput @bind-Value="TimeModel.AppointmentTime" Border="true" />
+            </div>
+        </div>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Value</td><td>TimeOnly?</td><td>null</td><td>Blazor input value</td></tr>
+                <tr><td>Id</td><td>string?</td><td>null</td><td>`id` attribute</td></tr>
+                <tr><td>Min</td><td>TimeOnly?</td><td>null</td><td>`min` attribute</td></tr>
+                <tr><td>Max</td><td>TimeOnly?</td><td>null</td><td>`max` attribute</td></tr>
+                <tr><td>Step</td><td>string</td><td>null</td><td>`step` seconds such as 900 for 15 minutes</td></tr>
+                <tr><td>UpdateOnInput</td><td>bool</td><td>false</td><td>Updates on `input` instead of `change`</td></tr>
+                <tr><td>ReadOnly</td><td>bool</td><td>false</td><td>`readonly` attribute</td></tr>
+                <tr><td>Disabled</td><td>bool</td><td>false</td><td>`disabled` attribute</td></tr>
+                <tr><td>Border</td><td>bool</td><td>false</td><td>`w3-border`</td></tr>
+                <tr><td>Color</td><td>W3Color</td><td>None</td><td>Background color class</td></tr>
+                <tr><td>TextColor</td><td>W3Color</td><td>None</td><td>Text color class</td></tr>
+                <tr><td>Round</td><td>W3Round</td><td>None</td><td>Rounded corner class</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional CSS classes</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline style</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Related</h2>
+        <p><NavLink href="components/date-input">Date Input</NavLink> covers the date half of a schedule form.</p>
+        <p><NavLink href="components/select">Select</NavLink> works well for time zones or predefined durations.</p>
+    </section>
+
+    <DocPager PreviousHref="components/date-input" PreviousText="Date Input" NextHref="components/slider" NextText="Slider" />
+</W3Container>
+
+@code {
+    private readonly TimeInputExampleModel TimeModel = new();
+    private static readonly TimeOnly MinimumTime = new(8, 0);
+    private static readonly TimeOnly MaximumTime = new(18, 0);
+
+    private const string BasicCode = """
+<W3Field TValue="TimeOnly?" Label="Start time" ForId="time-start" For="@(() => model.StartTime)" HelpText="Use a 15 minute step.">
+    <W3TimeInput Id="time-start"
+                 @bind-Value="model.StartTime"
+                 Min="new TimeOnly(8, 0)"
+                 Max="new TimeOnly(18, 0)"
+                 Step="900"
+                 Border="true"
+                 Round="W3Round.Medium" />
+</W3Field>
+""";
+
+    private const string PairCode = """
+<div class="w3-row-padding">
+    <div class="w3-half">
+        <W3DateInput @bind-Value="model.AppointmentDate" Border="true" />
+    </div>
+    <div class="w3-half">
+        <W3TimeInput @bind-Value="model.AppointmentTime" Border="true" />
+    </div>
+</div>
+""";
+
+    private sealed class TimeInputExampleModel
+    {
+        public TimeOnly? StartTime { get; set; } = new TimeOnly(9, 30);
+        public DateOnly? AppointmentDate { get; set; } = new DateOnly(2026, 6, 15);
+        public TimeOnly? AppointmentTime { get; set; } = new TimeOnly(10, 0);
+    }
+}

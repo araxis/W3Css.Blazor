@@ -1,0 +1,28 @@
+.w3-spinner {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.w3-spinner-inline {
+    display: inline-flex;
+    vertical-align: middle;
+}
+
+.w3-spinner-centered {
+    justify-content: center;
+}
+
+.w3-spinner-visual {
+    width: 1em;
+    height: 1em;
+    display: inline-block;
+    flex: 0 0 auto;
+    border: 0.16em solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+}
+
+.w3-spinner-label {
+    line-height: 1.2;
+}

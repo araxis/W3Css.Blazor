@@ -1,0 +1,279 @@
+@page "/components/case-study"
+
+<PageTitle>Case Study</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>Case Study</h1>
+    <DocPager PreviousHref="components/trends" PreviousText="Trends" NextHref="components/material-design" NextText="Material Design" />
+
+    <p class="w3-large">The W3.CSS case study builds a responsive site from small page sections.</p>
+    <p>In Blazor, keep the same progression: containers for structure, W3.CSS utility classes for color and size, responsive rows for layout, and component-owned state for navigation.</p>
+
+    <DocExample Title="Site Shell" Description="Start with semantic sections and W3.CSS container spacing." Code="@ShellCode">
+        <div class="w3-border w3-white">
+            <header class="w3-container w3-light-grey w3-padding-24">
+                <h2 class="w3-xxlarge">My W3.CSS Site</h2>
+                <p class="w3-large">This page grows one section at a time.</p>
+            </header>
+
+            <main>
+                <W3Container Class="w3-padding-24">
+                    <p>Use a normal Blazor page for content and let W3.CSS classes carry the visual language.</p>
+                    <W3Button Color="W3Color.Teal" TextColor="W3Color.White" Round="W3Round.Medium">Read more</W3Button>
+                </W3Container>
+            </main>
+
+            <footer class="w3-container w3-light-grey w3-padding-16">
+                <small>Footer content stays simple and predictable.</small>
+            </footer>
+        </div>
+    </DocExample>
+
+    <DocExample Title="Color And Size Classes" Description="Combine typed component parameters with ordinary W3.CSS class pass-through." Code="@ColorSizeCode">
+        <W3Container Color="W3Color.PaleBlue" TextColor="W3Color.Black" Class="w3-padding-32 w3-center">
+            <W3Image Src="assets/w3css-blazor-mark.svg" Alt="W3Css.Blazor mark" Width="88" Height="88" />
+            <h2 class="w3-xxxlarge">Design in layers</h2>
+            <p class="w3-xlarge">Start plain, then add color, text scale, and spacing.</p>
+        </W3Container>
+    </DocExample>
+
+    <DocExample Title="Responsive Content Columns" Description="Use row padding and column spans when the static case-study columns become a Blazor layout." Code="@ColumnsCode">
+        <W3Row Padding="true" Class="w3-section">
+            <W3Column Small="12" Large="4">
+                <W3Card Depth="W3CardDepth.Two" Round="W3Round.Medium" BodyColor="W3Color.White" FooterClass="w3-padding-16" Class="w3-white">
+                    <ChildContent>
+                        <h2 class="w3-large">Plan</h2>
+                        <p>Outline the page sections and decide which content needs emphasis.</p>
+                    </ChildContent>
+                    <Footer>
+                        <span class="w3-tag w3-teal">Step 1</span>
+                    </Footer>
+                </W3Card>
+            </W3Column>
+            <W3Column Small="12" Large="4">
+                <W3Card Depth="W3CardDepth.Two" Round="W3Round.Medium" BodyColor="W3Color.White" FooterClass="w3-padding-16" Class="w3-white">
+                    <ChildContent>
+                        <h2 class="w3-large">Build</h2>
+                        <p>Compose containers, cards, images, buttons, and forms from the existing library pieces.</p>
+                    </ChildContent>
+                    <Footer>
+                        <span class="w3-tag w3-blue">Step 2</span>
+                    </Footer>
+                </W3Card>
+            </W3Column>
+            <W3Column Small="12" Large="4">
+                <W3Card Depth="W3CardDepth.Two" Round="W3Round.Medium" BodyColor="W3Color.White" FooterClass="w3-padding-16" Class="w3-white">
+                    <ChildContent>
+                        <h2 class="w3-large">Refine</h2>
+                        <p>Check narrow screens, spacing, text scale, links, and keyboard-friendly actions.</p>
+                    </ChildContent>
+                    <Footer>
+                        <span class="w3-tag w3-purple">Step 3</span>
+                    </Footer>
+                </W3Card>
+            </W3Column>
+        </W3Row>
+    </DocExample>
+
+    <DocExample Title="Top Navigation And Side Navigation" Description="Replace script-driven menu toggles with Blazor state." Code="@NavigationCode">
+        <W3Bar Color="W3Color.Black" TextColor="W3Color.White" Class="w3-large">
+            <W3BarItem Href="components/case-study#case-home" Mobile="true">Home</W3BarItem>
+            <W3BarItem Href="components/case-study#case-work" Mobile="true">Work</W3BarItem>
+            <W3BarItem Href="components/case-study#case-contact" Mobile="true">Contact</W3BarItem>
+            <W3BarItem Mobile="true" OnClick="@(() => CaseSidebarOpen = true)">Menu</W3BarItem>
+        </W3Bar>
+
+        <W3Container id="case-home" Color="W3Color.White" Class="w3-border w3-padding-24">
+            <h2 class="w3-large">Top navigation</h2>
+            <p>Bar items can be links or Blazor buttons, so mobile menus stay component-owned.</p>
+        </W3Container>
+
+        <W3Sidebar @bind-Open="CaseSidebarOpen" Width="260" Overlay="true" Color="W3Color.White">
+            <Header>
+                <W3Container Color="W3Color.Black" TextColor="W3Color.White">
+                    <h3 class="w3-large">Site menu</h3>
+                </W3Container>
+            </Header>
+            <ChildContent>
+                <W3Bar Block="true">
+                    <W3BarItem Href="components/case-study#case-home">Home</W3BarItem>
+                    <W3BarItem Href="components/case-study#case-work">Work</W3BarItem>
+                    <W3BarItem Href="components/case-study#case-contact">Contact</W3BarItem>
+                </W3Bar>
+            </ChildContent>
+        </W3Sidebar>
+    </DocExample>
+
+    <DocExample Title="Single Page Flow" Description="Anchor sections and responsive layout primitives are enough for many small sites." Code="@FlowCode">
+        <W3Container id="case-work" Color="W3Color.LightGrey" Class="w3-padding-24">
+            <h2 class="w3-large">Work</h2>
+            <p>Keep each section focused so the page remains easy to scan.</p>
+        </W3Container>
+
+        <W3Row Padding="true" Class="w3-section">
+            <W3Column Small="12" Medium="6">
+                <W3Container Color="W3Color.White" Class="w3-border w3-padding-24">
+                    <h3 class="w3-large">Feature</h3>
+                    <p>Use rows and columns only when the content naturally belongs side by side.</p>
+                </W3Container>
+            </W3Column>
+            <W3Column Small="12" Medium="6">
+                <W3Container id="case-contact" Color="W3Color.White" Class="w3-border w3-padding-24">
+                    <h3 class="w3-large">Contact</h3>
+                    <p>Finish with a reachable action or next step.</p>
+                </W3Container>
+            </W3Column>
+        </W3Row>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Usage Reference</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Case step</th><th>Use</th><th>Notes</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Page shell</td><td>`header`, `main`, `footer`, and `W3Container`</td><td>Semantic HTML works normally with W3.CSS classes.</td></tr>
+                <tr><td>Color and type</td><td>`W3Color`, `TextColor`, and size classes such as `w3-xlarge`</td><td>Typed parameters cover common colors; class pass-through covers one-off utilities.</td></tr>
+                <tr><td>Responsive columns</td><td>`W3Row`, `W3Column`, and `W3Card`</td><td>Use explicit small, medium, and large spans for predictable breakpoints.</td></tr>
+                <tr><td>Top navigation</td><td>`W3Bar` and `W3BarItem`</td><td>Bar items can render links or buttons.</td></tr>
+                <tr><td>Side navigation</td><td>`W3Sidebar` with `@@bind-Open`</td><td>Open and close state belongs in Blazor.</td></tr>
+                <tr><td>Single-page sections</td><td>Anchor IDs, containers, rows, and buttons</td><td>Keep the page lightweight and avoid adding a routing layer for simple scrolling pages.</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Related W3.CSS</h2>
+        <p><NavLink href="components/container">Container component</NavLink></p>
+        <p><NavLink href="components/row">Row component</NavLink></p>
+        <p><NavLink href="components/column">Column component</NavLink></p>
+        <p><NavLink href="components/bar">Bar component</NavLink></p>
+        <p><NavLink href="components/sidebar">Sidebar component</NavLink></p>
+        <p><NavLink href="components/material-design">Material Design guidance</NavLink></p>
+        <p><a href="https://www.w3schools.com/w3css/w3css_case.asp" target="_blank" rel="noopener">W3.CSS Case Study</a></p>
+    </section>
+
+    <DocPager PreviousHref="components/trends" PreviousText="Trends" NextHref="components/material-design" NextText="Material Design" />
+</W3Container>
+
+@code {
+    private bool CaseSidebarOpen { get; set; }
+
+    private const string ShellCode = """
+<div class="w3-border w3-white">
+    <header class="w3-container w3-light-grey w3-padding-24">
+        <h2 class="w3-xxlarge">My W3.CSS Site</h2>
+        <p class="w3-large">This page grows one section at a time.</p>
+    </header>
+
+    <main>
+        <W3Container Class="w3-padding-24">
+            <p>Use a normal Blazor page for content and let W3.CSS classes carry the visual language.</p>
+            <W3Button Color="W3Color.Teal" TextColor="W3Color.White" Round="W3Round.Medium">Read more</W3Button>
+        </W3Container>
+    </main>
+
+    <footer class="w3-container w3-light-grey w3-padding-16">
+        <small>Footer content stays simple and predictable.</small>
+    </footer>
+</div>
+""";
+
+    private const string ColorSizeCode = """
+<W3Container Color="W3Color.PaleBlue" TextColor="W3Color.Black" Class="w3-padding-32 w3-center">
+    <W3Image Src="assets/w3css-blazor-mark.svg" Alt="W3Css.Blazor mark" Width="88" Height="88" />
+    <h2 class="w3-xxxlarge">Design in layers</h2>
+    <p class="w3-xlarge">Start plain, then add color, text scale, and spacing.</p>
+</W3Container>
+""";
+
+    private const string ColumnsCode = """
+<W3Row Padding="true" Class="w3-section">
+    <W3Column Small="12" Large="4">
+        <W3Card Depth="W3CardDepth.Two" Round="W3Round.Medium" BodyColor="W3Color.White" FooterClass="w3-padding-16" Class="w3-white">
+            <ChildContent>
+                <h2 class="w3-large">Plan</h2>
+                <p>Outline the page sections and decide which content needs emphasis.</p>
+            </ChildContent>
+            <Footer>
+                <span class="w3-tag w3-teal">Step 1</span>
+            </Footer>
+        </W3Card>
+    </W3Column>
+    <W3Column Small="12" Large="4">
+        <W3Card Depth="W3CardDepth.Two" Round="W3Round.Medium" BodyColor="W3Color.White" FooterClass="w3-padding-16" Class="w3-white">
+            <ChildContent>
+                <h2 class="w3-large">Build</h2>
+                <p>Compose containers, cards, images, buttons, and forms from the existing library pieces.</p>
+            </ChildContent>
+            <Footer>
+                <span class="w3-tag w3-blue">Step 2</span>
+            </Footer>
+        </W3Card>
+    </W3Column>
+    <W3Column Small="12" Large="4">
+        <W3Card Depth="W3CardDepth.Two" Round="W3Round.Medium" BodyColor="W3Color.White" FooterClass="w3-padding-16" Class="w3-white">
+            <ChildContent>
+                <h2 class="w3-large">Refine</h2>
+                <p>Check narrow screens, spacing, text scale, links, and keyboard-friendly actions.</p>
+            </ChildContent>
+            <Footer>
+                <span class="w3-tag w3-purple">Step 3</span>
+            </Footer>
+        </W3Card>
+    </W3Column>
+</W3Row>
+""";
+
+    private const string NavigationCode = """
+<W3Bar Color="W3Color.Black" TextColor="W3Color.White" Class="w3-large">
+    <W3BarItem Href="components/case-study#case-home" Mobile="true">Home</W3BarItem>
+    <W3BarItem Href="components/case-study#case-work" Mobile="true">Work</W3BarItem>
+    <W3BarItem Href="components/case-study#case-contact" Mobile="true">Contact</W3BarItem>
+    <W3BarItem Mobile="true" OnClick="@(() => caseSidebarOpen = true)">Menu</W3BarItem>
+</W3Bar>
+
+<W3Container id="case-home" Color="W3Color.White" Class="w3-border w3-padding-24">
+    <h2 class="w3-large">Top navigation</h2>
+    <p>Bar items can be links or Blazor buttons, so mobile menus stay component-owned.</p>
+</W3Container>
+
+<W3Sidebar @bind-Open="caseSidebarOpen" Width="260" Overlay="true" Color="W3Color.White">
+    <Header>
+        <W3Container Color="W3Color.Black" TextColor="W3Color.White">
+            <h3 class="w3-large">Site menu</h3>
+        </W3Container>
+    </Header>
+    <ChildContent>
+        <W3Bar Block="true">
+            <W3BarItem Href="components/case-study#case-home">Home</W3BarItem>
+            <W3BarItem Href="components/case-study#case-work">Work</W3BarItem>
+            <W3BarItem Href="components/case-study#case-contact">Contact</W3BarItem>
+        </W3Bar>
+    </ChildContent>
+</W3Sidebar>
+""";
+
+    private const string FlowCode = """
+<W3Container id="case-work" Color="W3Color.LightGrey" Class="w3-padding-24">
+    <h2 class="w3-large">Work</h2>
+    <p>Keep each section focused so the page remains easy to scan.</p>
+</W3Container>
+
+<W3Row Padding="true" Class="w3-section">
+    <W3Column Small="12" Medium="6">
+        <W3Container Color="W3Color.White" Class="w3-border w3-padding-24">
+            <h3 class="w3-large">Feature</h3>
+            <p>Use rows and columns only when the content naturally belongs side by side.</p>
+        </W3Container>
+    </W3Column>
+    <W3Column Small="12" Medium="6">
+        <W3Container id="case-contact" Color="W3Color.White" Class="w3-border w3-padding-24">
+            <h3 class="w3-large">Contact</h3>
+            <p>Finish with a reachable action or next step.</p>
+        </W3Container>
+    </W3Column>
+</W3Row>
+""";
+}

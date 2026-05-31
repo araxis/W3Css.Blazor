@@ -1,0 +1,29 @@
+.w3-avatar {
+    align-items: center;
+    display: inline-flex;
+    font-weight: 600;
+    height: var(--w3-avatar-size, 40px);
+    justify-content: center;
+    line-height: 1;
+    min-width: var(--w3-avatar-size, 40px);
+    overflow: hidden;
+    text-align: center;
+    vertical-align: middle;
+    width: var(--w3-avatar-size, 40px);
+}
+
+.w3-avatar img {
+    display: block;
+    height: 100%;
+    object-fit: cover;
+    width: 100%;
+}
+
+.w3-avatar-initials {
+    display: inline-block;
+    max-width: 100%;
+    overflow: hidden;
+    padding: 0 4px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

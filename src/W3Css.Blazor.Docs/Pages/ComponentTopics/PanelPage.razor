@@ -1,0 +1,62 @@
+@page "/components/panel"
+
+<PageTitle>W3Panel</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3Panel</h1>
+    <DocPager PreviousHref="components/container" PreviousText="Container" NextHref="components/card" NextText="Card" />
+
+    <p class="w3-large">`W3Panel` renders W3.CSS panels for notes, callouts, and grouped content.</p>
+    <p>Panels are general-purpose content blocks. Use `W3Alert` when the panel has semantic status meaning.</p>
+
+    <DocExample Title="Panel With Left Bar" Code="@LeftBarCode">
+        <W3Panel Color="W3Color.PaleYellow" TextColor="W3Color.Black" Border="true" LeftBar="true" Round="W3Round.Medium">
+            <p>Panels can combine border, color, and left bar utilities.</p>
+        </W3Panel>
+    </DocExample>
+
+    <DocExample Title="Colored Panel" Code="@ColoredCode">
+        <W3Panel Color="W3Color.PaleGreen" TextColor="W3Color.Black" Round="W3Round.Medium">
+            <p>A panel can be a quiet content note without semantic alert behavior.</p>
+        </W3Panel>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Color</td><td>W3Color</td><td>None</td><td>Background color class</td></tr>
+                <tr><td>TextColor</td><td>W3Color</td><td>None</td><td>Text color class</td></tr>
+                <tr><td>Round</td><td>W3Round</td><td>None</td><td>Rounded corner class</td></tr>
+                <tr><td>Border</td><td>bool</td><td>false</td><td>`w3-border`</td></tr>
+                <tr><td>LeftBar</td><td>bool</td><td>false</td><td>`w3-leftbar`</td></tr>
+                <tr><td>Class</td><td>string</td><td>null</td><td>Additional classes</td></tr>
+                <tr><td>Style</td><td>string</td><td>null</td><td>Inline style</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Related</h2>
+        <p><NavLink href="components/alert">Alert</NavLink> adds semantic status styling. <NavLink href="components/card">Card</NavLink> adds shadow depth.</p>
+    </section>
+
+    <DocPager PreviousHref="components/container" PreviousText="Container" NextHref="components/card" NextText="Card" />
+</W3Container>
+
+@code {
+    private const string LeftBarCode = """
+<W3Panel Color="W3Color.PaleYellow" TextColor="W3Color.Black" Border="true" LeftBar="true" Round="W3Round.Medium">
+    <p>Panels can combine border, color, and left bar utilities.</p>
+</W3Panel>
+""";
+
+    private const string ColoredCode = """
+<W3Panel Color="W3Color.PaleGreen" TextColor="W3Color.Black" Round="W3Round.Medium">
+    <p>A panel can be a quiet content note without semantic alert behavior.</p>
+</W3Panel>
+""";
+}

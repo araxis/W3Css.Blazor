@@ -1,0 +1,59 @@
+@implements IDisposable
+
+@code {
+    [CascadingParameter]
+    internal W3Slideshow? Owner { get; set; }
+
+    [Parameter, EditorRequired]
+    public string Value { get; set; } = string.Empty;
+
+    [Parameter]
+    public string? Title { get; set; }
+
+    [Parameter]
+    public string? Caption { get; set; }
+
+    [Parameter]
+    public string? Src { get; set; }
+
+    [Parameter]
+    public string Alt { get; set; } = string.Empty;
+
+    [Parameter]
+    public int? Width { get; set; }
+
+    [Parameter]
+    public int? Height { get; set; }
+
+    [Parameter]
+    public string? Loading { get; set; } = "lazy";
+
+    [Parameter]
+    public bool Responsive { get; set; } = true;
+
+    [Parameter]
+    public bool Disabled { get; set; }
+
+    [Parameter]
+    public string? Class { get; set; }
+
+    [Parameter]
+    public string? Style { get; set; }
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    internal string SlideId => $"w3-slide-{Value}";
+    internal string IndicatorId => $"w3-slide-indicator-{Value}";
+    internal string IndicatorLabel => string.IsNullOrWhiteSpace(Title) ? $"Show slide {Value}" : $"Show {Title}";
+
+    protected override void OnInitialized()
+    {
+        Owner?.Register(this);
+    }
+
+    public void Dispose()
+    {
+        Owner?.Unregister(this);
+    }
+}

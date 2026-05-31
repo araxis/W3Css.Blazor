@@ -1,0 +1,32 @@
+.w3-bottom-navigation {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    min-height: 64px;
+    box-sizing: border-box;
+    overflow-x: auto;
+}
+
+.w3-bottom-navigation-fixed {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.w3-bottom-navigation-contained {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.w3-bottom-navigation-dense {
+    min-height: 52px;
+}
+
+.w3-bottom-navigation-equal ::deep .w3-bottom-navigation-item {
+    flex: 1 1 0;
+    min-width: 0;
+}

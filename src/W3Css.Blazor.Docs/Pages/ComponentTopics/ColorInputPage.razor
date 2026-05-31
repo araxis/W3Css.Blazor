@@ -1,0 +1,119 @@
+@page "/components/color-input"
+
+<PageTitle>W3ColorInput</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3ColorInput</h1>
+    <DocPager PreviousHref="components/toggle-group" PreviousText="Toggle Group" NextHref="components/file-input" NextText="File Input" />
+
+    <p class="w3-large">`W3ColorInput` renders a validation-friendly native color picker for hex color values.</p>
+    <p>Use it for theme tools, palette editors, design settings, and any workflow where a browser-native color picker is enough.</p>
+
+    <DocExample Title="Accent Color" Description="Bind to a hex string and reflect the selected color in nearby W3.CSS-styled preview content." Code="@AccentCode">
+        <EditForm Model="@ColorModel">
+            <W3Field TValue="string" Label="Accent color" ForId="color-accent" For="@(() => ColorModel.Accent)" HelpText="Choose a browser-native color value.">
+                <W3ColorInput Id="color-accent"
+                              @bind-Value="ColorModel.Accent"
+                              Border="true"
+                              Round="W3Round.Medium" />
+            </W3Field>
+        </EditForm>
+        <W3Panel Border="true" Round="W3Round.Medium" Class="w3-padding" Style="@($"border-left: 8px solid {ColorModel.Accent};")">
+            <strong>Accent:</strong> @ColorModel.Accent
+        </W3Panel>
+    </DocExample>
+
+    <DocExample Title="Full Width Picker" Description="Use FullWidth when the color picker should align with wider form controls." Code="@FullWidthCode">
+        <W3ColorInput @bind-Value="ColorModel.Surface"
+                      FullWidth="true"
+                      Border="true"
+                      Color="W3Color.White" />
+        <p class="w3-small">Surface color: <strong>@ColorModel.Surface</strong></p>
+    </DocExample>
+
+    <DocExample Title="Palette Picker" Description="Enable ShowPalette for the richer picker: a preview swatch, native input, hex field, and a preset palette. Provide a Label for accessible control names." Code="@PaletteCode">
+        <W3ColorInput @bind-Value="ColorModel.Theme"
+                      ShowPalette="true"
+                      Label="Theme color"
+                      Border="true"
+                      Round="W3Round.Medium" />
+        <W3Panel Border="true" Round="W3Round.Medium" Class="w3-padding" Style="@($"border-left: 8px solid {ColorModel.Theme};")">
+            <strong>Theme:</strong> @ColorModel.Theme
+        </W3Panel>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Value</td><td>string?</td><td>null</td><td>Hex color value</td></tr>
+                <tr><td>Id</td><td>string?</td><td>null</td><td>`id` attribute</td></tr>
+                <tr><td>ShowPalette</td><td>bool</td><td>false</td><td>Renders the preview/hex/palette picker instead of the bare native input</td></tr>
+                <tr><td>Palette</td><td>IReadOnlyList&lt;string&gt;</td><td>16 presets</td><td>Preset swatches shown when ShowPalette is enabled</td></tr>
+                <tr><td>Label</td><td>string</td><td>"Color"</td><td>Accessible label prefix for the picker controls</td></tr>
+                <tr><td>FullWidth</td><td>bool</td><td>false</td><td>Expands the picker width</td></tr>
+                <tr><td>UpdateOnInput</td><td>bool</td><td>true</td><td>Updates while choosing instead of waiting for `change`</td></tr>
+                <tr><td>Disabled</td><td>bool</td><td>false</td><td>`disabled` attribute</td></tr>
+                <tr><td>Border</td><td>bool</td><td>false</td><td>`w3-border`</td></tr>
+                <tr><td>Round</td><td>W3Round</td><td>None</td><td>Rounded corner class</td></tr>
+                <tr><td>Color</td><td>W3Color</td><td>None</td><td>Background color class</td></tr>
+                <tr><td>TextColor</td><td>W3Color</td><td>None</td><td>Text color class</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional CSS classes</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline style</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Related</h2>
+        <p><NavLink href="components/colors">Colors</NavLink> covers W3.CSS color classes.</p>
+        <p><NavLink href="components/color-schemes">Color Schemes</NavLink> covers palettes and theme generation.</p>
+        <p><NavLink href="components/file-input">File Input</NavLink> covers native file selection.</p>
+    </section>
+
+    <DocPager PreviousHref="components/toggle-group" PreviousText="Toggle Group" NextHref="components/file-input" NextText="File Input" />
+</W3Container>
+
+@code {
+    private readonly ColorInputExampleModel ColorModel = new();
+
+    private const string AccentCode = """
+<W3Field TValue="string" Label="Accent color" ForId="color-accent" For="@(() => model.Accent)" HelpText="Choose a browser-native color value.">
+    <W3ColorInput Id="color-accent"
+                  @bind-Value="model.Accent"
+                  Border="true"
+                  Round="W3Round.Medium" />
+</W3Field>
+<W3Panel Border="true" Round="W3Round.Medium" Class="w3-padding" Style="@($"border-left: 8px solid {model.Accent};")">
+    <strong>Accent:</strong> @model.Accent
+</W3Panel>
+""";
+
+    private const string FullWidthCode = """
+<W3ColorInput @bind-Value="model.Surface"
+              FullWidth="true"
+              Border="true"
+              Color="W3Color.White" />
+""";
+
+    private const string PaletteCode = """
+<W3ColorInput @bind-Value="model.Theme"
+              ShowPalette="true"
+              Label="Theme color"
+              Border="true"
+              Round="W3Round.Medium" />
+<W3Panel Border="true" Round="W3Round.Medium" Class="w3-padding" Style="@($"border-left: 8px solid {model.Theme};")">
+    <strong>Theme:</strong> @model.Theme
+</W3Panel>
+""";
+
+    private sealed class ColorInputExampleModel
+    {
+        public string Accent { get; set; } = "#008080";
+        public string Surface { get; set; } = "#ffffff";
+        public string Theme { get; set; } = "#2196f3";
+    }
+}

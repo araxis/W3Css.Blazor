@@ -1,0 +1,30 @@
+<section class="doc-example-section">
+    <h2>@Title</h2>
+    @if (!string.IsNullOrWhiteSpace(Description))
+    {
+        <p>@Description</p>
+    }
+
+    <div class="doc-example-preview">
+        @ChildContent
+    </div>
+
+    @if (!string.IsNullOrWhiteSpace(Code))
+    {
+        <pre class="doc-code"><code>@Code</code></pre>
+    }
+</section>
+
+@code {
+    [Parameter, EditorRequired]
+    public string Title { get; set; } = string.Empty;
+
+    [Parameter]
+    public string? Description { get; set; }
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public string? Code { get; set; }
+}

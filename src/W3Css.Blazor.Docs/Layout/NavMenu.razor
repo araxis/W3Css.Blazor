@@ -1,0 +1,47 @@
+<header class="mobile-top w3-teal">
+    <a class="brand" href="">
+        <img src="assets/w3css-blazor-mark.svg" class="doc-logo" alt="" />
+        <span>W3Css.Blazor</span>
+    </a>
+    <button type="button" class="w3-button w3-teal" aria-label="Toggle navigation" @onclick="ToggleNavMenu">Menu</button>
+</header>
+
+<aside class="@NavMenuCssClass">
+    <a class="brand desktop-brand" href="">
+        <img src="assets/w3css-blazor-mark.svg" class="doc-logo" alt="" />
+        <span>W3Css.Blazor</span>
+    </a>
+
+    <div class="nav-search-wrap">
+        <input type="search"
+               class="nav-search"
+               placeholder="Search docs…"
+               aria-label="Search components and pages"
+               value="@filter"
+               @ref="searchInput"
+               @oninput="OnFilterInput"
+               @onkeydown="OnFilterKeyDown" />
+        <kbd class="nav-search-key" aria-hidden="true">/</kbd>
+    </div>
+
+    <nav class="nav-links" aria-label="Main">
+        @{
+            var groups = FilteredGroups();
+        }
+        @foreach (var group in groups)
+        {
+            if (group.Title is not null)
+            {
+                <span class="nav-group-title">@group.Title</span>
+            }
+            @foreach (var item in group.Items)
+            {
+                <NavLink href="@item.Href" Match="item.Match">@item.Text</NavLink>
+            }
+        }
+        @if (groups.Count == 0)
+        {
+            <p class="nav-empty">No matches for &ldquo;@filter&rdquo;.</p>
+        }
+    </nav>
+</aside>

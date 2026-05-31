@@ -1,0 +1,26 @@
+.drawer-demo-frame {
+    position: relative;
+    min-height: 360px;
+    overflow: hidden;
+    background: #f7f9fb;
+}
+
+.drawer-demo-main {
+    min-height: 320px;
+    padding: 24px;
+    box-sizing: border-box;
+}
+
+.drawer-demo-main-with-inspector {
+    padding-right: 324px;
+}
+
+.drawer-demo-card {
+    min-height: 88px;
+}
+
+@media (max-width: 720px) {
+    .drawer-demo-main-with-inspector {
+        padding-right: 24px;
+    }
+}

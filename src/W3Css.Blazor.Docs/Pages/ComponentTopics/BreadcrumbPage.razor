@@ -1,0 +1,118 @@
+@page "/components/breadcrumb"
+
+<PageTitle>W3Breadcrumb</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3Breadcrumb</h1>
+    <DocPager PreviousHref="components/bottom-navigation" PreviousText="Bottom Navigation" NextHref="components/page-content-navigation" NextText="Page Content Navigation" />
+
+    <p class="w3-large"><code>W3Breadcrumb</code> renders accessible ordered page-path navigation with W3.CSS surfaces and Blazor-friendly item composition.</p>
+    <p>Use it for documentation pages, admin sections, nested settings, and dashboard drill-down paths.</p>
+
+    <DocExample Title="Documentation Path" Description="Use links for ancestors and mark the current page with aria-current." Code="@BasicCode">
+        <W3Breadcrumb Label="Documentation breadcrumb"
+                      Border="true"
+                      Round="W3Round.Medium"
+                      Color="W3Color.LightGrey">
+            <W3BreadcrumbItem Href="components">Components</W3BreadcrumbItem>
+            <W3BreadcrumbItem Href="components/navbar">Navigation</W3BreadcrumbItem>
+            <W3BreadcrumbItem Current="true">Breadcrumb</W3BreadcrumbItem>
+        </W3Breadcrumb>
+    </DocExample>
+
+    <DocExample Title="App Context" Description="Change the separator and color classes for dense app headers or settings surfaces." Code="@AppCode">
+        <W3Breadcrumb Label="Settings breadcrumb"
+                      Separator=">"
+                      Border="true"
+                      Card="true"
+                      Color="W3Color.White">
+            <W3BreadcrumbItem Href="components/app-shell">Workspace</W3BreadcrumbItem>
+            <W3BreadcrumbItem Href="components/data-table">Projects</W3BreadcrumbItem>
+            <W3BreadcrumbItem Current="true" TextColor="W3Color.Teal">Cygnus</W3BreadcrumbItem>
+        </W3Breadcrumb>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>W3Breadcrumb Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Label</td><td>string</td><td>Breadcrumb</td><td><code>aria-label</code> on the nav element</td></tr>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>`W3BreadcrumbItem` children</td></tr>
+                <tr><td>Separator</td><td>string</td><td>/</td><td>Separator text rendered between items</td></tr>
+                <tr><td>ListClass</td><td>string?</td><td>null</td><td>Additional ordered-list classes</td></tr>
+                <tr><td>Small</td><td>bool</td><td>true</td><td><code>w3-small</code> on the item list</td></tr>
+                <tr><td>Border</td><td>bool</td><td>false</td><td><code>w3-border</code></td></tr>
+                <tr><td>Card</td><td>bool</td><td>false</td><td>Uses <code>CardDepth</code> to add a W3.CSS card class</td></tr>
+                <tr><td>CardDepth</td><td>W3CardDepth</td><td>Two</td><td>Card depth class when Card is true</td></tr>
+                <tr><td>Round</td><td>W3Round</td><td>None</td><td>Rounded utility class</td></tr>
+                <tr><td>Color</td><td>W3Color</td><td>None</td><td>Breadcrumb background color</td></tr>
+                <tr><td>TextColor</td><td>W3Color</td><td>None</td><td>Breadcrumb text color</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional nav classes</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline style on the nav</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>W3BreadcrumbItem Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Custom crumb content</td></tr>
+                <tr><td>Text</td><td>string?</td><td>null</td><td>Plain text fallback when no child content is supplied</td></tr>
+                <tr><td>Href</td><td>string?</td><td>null</td><td>Anchor href when the item is a link</td></tr>
+                <tr><td>Target</td><td>string?</td><td>null</td><td>Anchor target attribute</td></tr>
+                <tr><td>Current</td><td>bool</td><td>false</td><td><code>aria-current="page"</code> on the current item text</td></tr>
+                <tr><td>Disabled</td><td>bool</td><td>false</td><td><code>w3-disabled</code> and text rendering instead of a link</td></tr>
+                <tr><td>Button</td><td>bool</td><td>false</td><td>Adds <code>w3-button</code> to linked crumbs</td></tr>
+                <tr><td>LinkClass</td><td>string?</td><td>null</td><td>Additional anchor classes</td></tr>
+                <tr><td>TextClass</td><td>string?</td><td>null</td><td>Additional current or disabled text classes</td></tr>
+                <tr><td>Color</td><td>W3Color</td><td>None</td><td>Item background color</td></tr>
+                <tr><td>TextColor</td><td>W3Color</td><td>None</td><td>Item text color</td></tr>
+                <tr><td>OnClick</td><td>EventCallback&lt;MouseEventArgs&gt;</td><td>none</td><td>Raised for linked crumbs</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional item classes</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline style on the item</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Related</h2>
+        <p><NavLink href="components/navbar">Navbar</NavLink> covers primary navigation bars.</p>
+        <p><NavLink href="components/bottom-navigation">Bottom Navigation</NavLink> covers mobile app destination switching.</p>
+        <p><NavLink href="components/sidebar">Sidebar</NavLink> covers side navigation surfaces.</p>
+        <p><NavLink href="components/bar">Bar</NavLink> covers lower-level W3.CSS bar composition.</p>
+    </section>
+
+    <DocPager PreviousHref="components/bottom-navigation" PreviousText="Bottom Navigation" NextHref="components/page-content-navigation" NextText="Page Content Navigation" />
+</W3Container>
+
+@code {
+    private const string BasicCode = """
+<W3Breadcrumb Label="Documentation breadcrumb"
+              Border="true"
+              Round="W3Round.Medium"
+              Color="W3Color.LightGrey">
+    <W3BreadcrumbItem Href="components">Components</W3BreadcrumbItem>
+    <W3BreadcrumbItem Href="components/navbar">Navigation</W3BreadcrumbItem>
+    <W3BreadcrumbItem Current="true">Breadcrumb</W3BreadcrumbItem>
+</W3Breadcrumb>
+""";
+
+    private const string AppCode = """
+<W3Breadcrumb Label="Settings breadcrumb"
+              Separator=">"
+              Border="true"
+              Card="true"
+              Color="W3Color.White">
+    <W3BreadcrumbItem Href="components/app-shell">Workspace</W3BreadcrumbItem>
+    <W3BreadcrumbItem Href="components/data-table">Projects</W3BreadcrumbItem>
+    <W3BreadcrumbItem Current="true" TextColor="W3Color.Teal">Cygnus</W3BreadcrumbItem>
+</W3Breadcrumb>
+""";
+}

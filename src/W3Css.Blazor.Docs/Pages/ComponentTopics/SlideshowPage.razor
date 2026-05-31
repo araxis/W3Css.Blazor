@@ -1,0 +1,132 @@
+@page "/components/slideshow"
+
+<PageTitle>W3Slideshow</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3Slideshow</h1>
+    <DocPager PreviousHref="components/image-list" PreviousText="Image List" NextHref="components/code" NextText="Code" />
+
+    <p class="w3-large">`W3Slideshow` renders W3.CSS slideshow patterns with Blazor-managed state.</p>
+    <p>Use `W3Slide` children for each slide. Controls, indicators, captions, keyboard navigation, and timed advance are component parameters.</p>
+
+    <DocExample Title="Manual Slideshow" Code="@ManualCode">
+        <W3Slideshow @bind-ActiveValue="ActiveSlide"
+                     Label="Product highlights"
+                     Animation="W3Animation.Opacity"
+                     Style="max-width: 560px;">
+            <W3Slide Value="one" Title="First" Caption="First slide">
+                <W3Container Color="W3Color.PaleBlue" TextColor="W3Color.Black" Class="w3-center w3-padding-64">
+                    <W3Image Src="assets/w3css-blazor-mark.svg" Alt="W3Css.Blazor mark" Width="96" Height="96" />
+                    <h3>Lightweight components</h3>
+                </W3Container>
+            </W3Slide>
+            <W3Slide Value="two" Title="Second" Caption="Second slide">
+                <W3Container Color="W3Color.PaleGreen" TextColor="W3Color.Black" Class="w3-center w3-padding-64">
+                    <W3Image Src="assets/w3css-blazor-mark.svg" Alt="W3Css.Blazor mark" Width="96" Height="96" />
+                    <h3>CSS-first styling</h3>
+                </W3Container>
+            </W3Slide>
+            <W3Slide Value="three" Title="Third" Caption="Third slide">
+                <W3Container Color="W3Color.PaleYellow" TextColor="W3Color.Black" Class="w3-center w3-padding-64">
+                    <W3Image Src="assets/w3css-blazor-mark.svg" Alt="W3Css.Blazor mark" Width="96" Height="96" />
+                    <h3>Blazor state</h3>
+                </W3Container>
+            </W3Slide>
+        </W3Slideshow>
+    </DocExample>
+
+    <DocExample Title="Image Slides" Code="@ImageCode">
+        <W3Slideshow ShowIndicators="false"
+                     Animation="W3Animation.Fading"
+                     Style="max-width: 420px;">
+            <W3Slide Value="mark" Src="assets/w3css-blazor-mark.svg" Alt="Project mark" Caption="Image slide" />
+            <W3Slide Value="mark-zoom" Src="assets/w3css-blazor-mark.svg" Alt="Project mark" Caption="Same asset, different state" />
+        </W3Slideshow>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>W3Slideshow Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>`W3Slide` children</td></tr>
+                <tr><td>Label</td><td>string</td><td>Slideshow</td><td>Carousel `aria-label`</td></tr>
+                <tr><td>ActiveValue</td><td>string?</td><td>null</td><td>Current slide value</td></tr>
+                <tr><td>ActiveValueChanged</td><td>EventCallback&lt;string&gt;</td><td>none</td><td>Raised when active slide changes</td></tr>
+                <tr><td>ShowControls</td><td>bool</td><td>true</td><td>Previous and next buttons</td></tr>
+                <tr><td>ShowIndicators</td><td>bool</td><td>true</td><td>Bottom slide buttons</td></tr>
+                <tr><td>ShowCaptions</td><td>bool</td><td>true</td><td>Caption overlay</td></tr>
+                <tr><td>Keyboard</td><td>bool</td><td>true</td><td>Arrow, Home, and End keys</td></tr>
+                <tr><td>Wrap</td><td>bool</td><td>true</td><td>Loop first and last slides</td></tr>
+                <tr><td>AutoAdvance</td><td>bool</td><td>false</td><td>Timed slide changes</td></tr>
+                <tr><td>Interval</td><td>int</td><td>5000</td><td>Timer interval in milliseconds</td></tr>
+                <tr><td>PreviousLabel and NextLabel</td><td>string</td><td>Previous/Next slide</td><td>Control button aria labels</td></tr>
+                <tr><td>Animation</td><td>W3Animation</td><td>None</td><td>Optional `w3-animate-*` class</td></tr>
+                <tr><td>Color and TextColor</td><td>W3Color</td><td>None</td><td>Carousel root color classes</td></tr>
+                <tr><td>ControlColor and ControlTextColor</td><td>W3Color</td><td>Black and White</td><td>Control button color classes</td></tr>
+                <tr><td>ControlClass</td><td>string?</td><td>null</td><td>Additional control button classes</td></tr>
+                <tr><td>CaptionColor and CaptionTextColor</td><td>W3Color</td><td>Black and White</td><td>Caption overlay color classes</td></tr>
+                <tr><td>CaptionClass</td><td>string?</td><td>null</td><td>Additional caption classes</td></tr>
+                <tr><td>ActiveIndicatorColor and IndicatorTextColor</td><td>W3Color</td><td>White</td><td>Indicator button color classes</td></tr>
+                <tr><td>IndicatorClass</td><td>string?</td><td>null</td><td>Additional indicator button classes</td></tr>
+                <tr><td>IndicatorContainerClass</td><td>string?</td><td>null</td><td>Additional indicator container classes</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional carousel root classes</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline style on the carousel root</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>W3Slide Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Value</td><td>string</td><td>required</td><td>Slide identity</td></tr>
+                <tr><td>Title</td><td>string?</td><td>null</td><td>Accessible slide label</td></tr>
+                <tr><td>Caption</td><td>string?</td><td>null</td><td>Caption overlay text</td></tr>
+                <tr><td>Src</td><td>string?</td><td>null</td><td>Image source when no child content is provided</td></tr>
+                <tr><td>Alt</td><td>string</td><td>empty</td><td>Image alternative text</td></tr>
+                <tr><td>Width</td><td>int?</td><td>null</td><td>Rendered image width</td></tr>
+                <tr><td>Height</td><td>int?</td><td>null</td><td>Rendered image height</td></tr>
+                <tr><td>Loading</td><td>string?</td><td>lazy</td><td>Rendered image loading attribute</td></tr>
+                <tr><td>Responsive</td><td>bool</td><td>true</td><td>Rendered image responsive class</td></tr>
+                <tr><td>Disabled</td><td>bool</td><td>false</td><td>Remove from slideshow navigation</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional active slide classes</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline style on the active slide</td></tr>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Custom slide content</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <DocPager PreviousHref="components/image-list" PreviousText="Image List" NextHref="components/code" NextText="Code" />
+</W3Container>
+
+@code {
+    private string ActiveSlide { get; set; } = "one";
+
+    private const string ManualCode = """
+<W3Slideshow @bind-ActiveValue="activeSlide" Animation="W3Animation.Opacity">
+    <W3Slide Value="one" Title="First" Caption="First slide">
+        <W3Container Color="W3Color.PaleBlue" Class="w3-center w3-padding-64">
+            <h3>Lightweight components</h3>
+        </W3Container>
+    </W3Slide>
+    <W3Slide Value="two" Title="Second" Caption="Second slide">
+        <W3Container Color="W3Color.PaleGreen" Class="w3-center w3-padding-64">
+            <h3>CSS-first styling</h3>
+        </W3Container>
+    </W3Slide>
+</W3Slideshow>
+""";
+
+    private const string ImageCode = """
+<W3Slideshow ShowIndicators="false" Animation="W3Animation.Fading">
+    <W3Slide Value="mark" Src="assets/w3css-blazor-mark.svg" Alt="Project mark" Caption="Image slide" />
+    <W3Slide Value="mark-zoom" Src="assets/w3css-blazor-mark.svg" Alt="Project mark" Caption="Same asset, different state" />
+</W3Slideshow>
+""";
+}

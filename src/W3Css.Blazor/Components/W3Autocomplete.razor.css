@@ -1,0 +1,38 @@
+.w3-autocomplete {
+    position: relative;
+}
+
+.w3-autocomplete-open {
+    z-index: 20;
+}
+
+.w3-autocomplete-menu {
+    left: 0;
+    max-height: 16rem;
+    min-width: 100%;
+    overflow-y: auto;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    z-index: 22;
+}
+
+.w3-autocomplete-option {
+    white-space: normal;
+}
+
+.w3-autocomplete-option-selected {
+    font-weight: 600;
+}
+
+.w3-autocomplete-empty {
+    padding: 0.75rem 1rem;
+}
+
+.w3-autocomplete-close-layer {
+    background: transparent;
+    cursor: default;
+    inset: 0;
+    position: fixed;
+    z-index: 19;
+}

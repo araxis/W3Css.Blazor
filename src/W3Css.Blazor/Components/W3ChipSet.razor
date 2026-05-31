@@ -1,0 +1,117 @@
+@typeparam TValue
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <div @attributes="AdditionalAttributes"
+         class="@CssClass"
+         style="@StyleValue"
+         role="listbox"
+         aria-label="@Label"
+         aria-multiselectable="@AriaMultiSelectable">
+        @ChildContent
+    </div>
+</CascadingValue>
+
+@code {
+    private string CssClass => BuildClass(
+        "w3-chip-set",
+        Wrap ? "w3-chip-set-wrap" : null,
+        Disabled ? "w3-disabled" : null,
+        Color.ToBackgroundClass(),
+        TextColor.ToTextClass());
+
+    private string? StyleValue => CombineStyle(Gap >= 0 ? $"--w3-chip-set-gap:{Gap}px" : null, Style);
+
+    private string AriaMultiSelectable => MultiSelect ? "true" : "false";
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public string Label { get; set; } = "Chip set";
+
+    [Parameter]
+    public bool MultiSelect { get; set; }
+
+    [Parameter]
+    public TValue? SelectedValue { get; set; }
+
+    [Parameter]
+    public EventCallback<TValue?> SelectedValueChanged { get; set; }
+
+    [Parameter]
+    public IReadOnlyCollection<TValue> SelectedValues { get; set; } = [];
+
+    [Parameter]
+    public EventCallback<IReadOnlyCollection<TValue>> SelectedValuesChanged { get; set; }
+
+    [Parameter]
+    public bool Wrap { get; set; } = true;
+
+    [Parameter]
+    public bool Disabled { get; set; }
+
+    [Parameter]
+    public int Gap { get; set; } = 8;
+
+    [Parameter]
+    public W3Color Color { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color TextColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color ActiveColor { get; set; } = W3Color.Primary;
+
+    [Parameter]
+    public W3Color ActiveTextColor { get; set; } = W3Color.White;
+
+    internal bool IsSelected(TValue value)
+    {
+        return MultiSelect
+            ? SelectedValues.Contains(value, EqualityComparer<TValue>.Default)
+            : EqualityComparer<TValue?>.Default.Equals(SelectedValue, value);
+    }
+
+    internal async Task ToggleAsync(TValue value)
+    {
+        if (Disabled)
+        {
+            return;
+        }
+
+        if (MultiSelect)
+        {
+            var next = SelectedValues.ToList();
+            var index = next.FindIndex(item => EqualityComparer<TValue>.Default.Equals(item, value));
+
+            if (index >= 0)
+            {
+                next.RemoveAt(index);
+            }
+            else
+            {
+                next.Add(value);
+            }
+
+            SelectedValues = next;
+            await SelectedValuesChanged.InvokeAsync(next);
+            await InvokeAsync(StateHasChanged);
+            return;
+        }
+
+        SelectedValue = value;
+        await SelectedValueChanged.InvokeAsync(value);
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private static string? CombineStyle(params string?[] styles)
+    {
+        var style = string.Join(';', styles
+            .Where(value => !string.IsNullOrWhiteSpace(value))
+            .Select(value => value!.Trim().TrimEnd(';')));
+
+        return string.IsNullOrWhiteSpace(style) ? null : style;
+    }
+}

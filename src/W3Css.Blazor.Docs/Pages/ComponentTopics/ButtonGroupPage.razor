@@ -1,0 +1,69 @@
+@page "/components/button-group"
+
+<PageTitle>W3ButtonGroup</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3ButtonGroup</h1>
+    <DocPager PreviousHref="components/fab" PreviousText="Floating Action Button" NextHref="components/alert" NextText="Alert" />
+
+    <p class="w3-large">`W3ButtonGroup` groups related actions with accessible group semantics.</p>
+    <p>Use it for segmented commands, formatting controls, compact filters, and grouped table actions.</p>
+
+    <DocExample Title="Segmented Actions" Code="@SegmentedCode">
+        <W3ButtonGroup Label="View mode" Border="true" Round="W3Round.Medium">
+            <W3Button Color="W3Color.Teal" TextColor="W3Color.White">List</W3Button>
+            <W3Button Border="true">Board</W3Button>
+            <W3Button Border="true">Calendar</W3Button>
+        </W3ButtonGroup>
+    </DocExample>
+
+    <DocExample Title="Vertical Group" Code="@VerticalCode">
+        <W3ButtonGroup Label="Formatting" Vertical="true" Connected="false" Gap="6">
+            <W3Button Border="true">Bold</W3Button>
+            <W3Button Border="true">Italic</W3Button>
+            <W3Button Border="true">Underline</W3Button>
+        </W3ButtonGroup>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Grouped buttons or links</td></tr>
+                <tr><td>Label</td><td>string</td><td>Button group</td><td>`aria-label` on the group</td></tr>
+                <tr><td>Vertical</td><td>bool</td><td>false</td><td>Vertical grouping direction</td></tr>
+                <tr><td>Connected</td><td>bool</td><td>true</td><td>Touches adjacent buttons</td></tr>
+                <tr><td>Border</td><td>bool</td><td>false</td><td>`w3-border` on the group</td></tr>
+                <tr><td>Round</td><td>W3Round</td><td>None</td><td>Rounded corner class on the group</td></tr>
+                <tr><td>Gap</td><td>int</td><td>8</td><td>Gap in pixels when `Connected` is false</td></tr>
+                <tr><td>Color</td><td>W3Color</td><td>None</td><td>Background color class</td></tr>
+                <tr><td>TextColor</td><td>W3Color</td><td>None</td><td>Text color class</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional group classes</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline styles on the group</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <DocPager PreviousHref="components/fab" PreviousText="Floating Action Button" NextHref="components/alert" NextText="Alert" />
+</W3Container>
+
+@code {
+    private const string SegmentedCode = """
+<W3ButtonGroup Label="View mode" Border="true" Round="W3Round.Medium">
+    <W3Button Color="W3Color.Teal" TextColor="W3Color.White">List</W3Button>
+    <W3Button Border="true">Board</W3Button>
+    <W3Button Border="true">Calendar</W3Button>
+</W3ButtonGroup>
+""";
+
+    private const string VerticalCode = """
+<W3ButtonGroup Label="Formatting" Vertical="true" Connected="false" Gap="6">
+    <W3Button Border="true">Bold</W3Button>
+    <W3Button Border="true">Italic</W3Button>
+    <W3Button Border="true">Underline</W3Button>
+</W3ButtonGroup>
+""";
+}

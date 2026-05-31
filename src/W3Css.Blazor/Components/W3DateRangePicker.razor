@@ -1,0 +1,185 @@
+@inherits W3ComponentBase
+
+<div class="@DateRangePickerCssClass"
+     style="@Style"
+     @attributes="AdditionalAttributes">
+    <div class="w3-col l6 m6 s12 w3-padding-small">
+        <label class="w3-small">@FromLabel</label>
+        <W3DateInput Value="@_start"
+                     ValueChanged="OnStartChanged"
+                     ValueExpression="() => _start"
+                     Min="@Min"
+                     Max="@Max"
+                     Disabled="@Disabled"
+                     ReadOnly="@ReadOnly"
+                     UpdateOnInput="@ResolvedUpdateOnInput"
+                     Color="@Color"
+                     TextColor="@TextColor"
+                     Round="@Round"
+                     Border="@Border" />
+    </div>
+    <div class="w3-col l6 m6 s12 w3-padding-small">
+        <label class="w3-small">@ToLabel</label>
+        <W3DateInput Value="@_end"
+                     ValueChanged="OnEndChanged"
+                     ValueExpression="() => _end"
+                     Min="@Min"
+                     Max="@Max"
+                     Disabled="@Disabled"
+                     ReadOnly="@ReadOnly"
+                     UpdateOnInput="@ResolvedUpdateOnInput"
+                     Color="@Color"
+                     TextColor="@TextColor"
+                     Round="@Round"
+                     Border="@Border" />
+    </div>
+</div>
+
+@code {
+    private DateOnly? _start;
+    private DateOnly? _end;
+    private bool _isInitialized;
+
+    private string DateRangePickerCssClass => BuildClass("w3-row");
+
+    private bool ResolvedUpdateOnInput => Immediate ?? UpdateOnInput;
+
+    /// <summary>
+    /// MudBlazor-compatible alias for immediate update mode.
+    /// </summary>
+    [Parameter]
+    public bool? Immediate { get; set; }
+
+    /// <summary>
+    /// Whether start/end values update on each input event.
+    /// </summary>
+    [Parameter]
+    public bool UpdateOnInput { get; set; }
+
+    /// <summary>
+    /// Range wrapper value.
+    /// </summary>
+    [Parameter]
+    public W3DateRange? Value { get; set; }
+
+    /// <summary>
+    /// Invoked when either date boundary updates.
+    /// </summary>
+    [Parameter]
+    public EventCallback<W3DateRange?> ValueChanged { get; set; }
+
+    /// <summary>
+    /// Optional expression for form/edit context integration.
+    /// </summary>
+    [Parameter]
+    public System.Linq.Expressions.Expression<Func<W3DateRange?>>? ValueExpression { get; set; }
+
+    /// <summary>
+    /// Optional label for the start input.
+    /// </summary>
+    [Parameter]
+    public string FromLabel { get; set; } = "From";
+
+    /// <summary>
+    /// Optional label for the end input.
+    /// </summary>
+    [Parameter]
+    public string ToLabel { get; set; } = "To";
+
+    /// <summary>
+    /// Optional shared minimum value for both date inputs.
+    /// </summary>
+    [Parameter]
+    public DateOnly? Min { get; set; }
+
+    /// <summary>
+    /// Optional shared maximum value for both date inputs.
+    /// </summary>
+    [Parameter]
+    public DateOnly? Max { get; set; }
+
+    /// <summary>
+    /// Whether both controls are read-only.
+    /// </summary>
+    [Parameter]
+    public bool ReadOnly { get; set; }
+
+    /// <summary>
+    /// Whether both controls are disabled.
+    /// </summary>
+    [Parameter]
+    public bool Disabled { get; set; }
+
+    /// <summary>
+    /// Shared border style applied to both date inputs.
+    /// </summary>
+    [Parameter]
+    public bool Border { get; set; }
+
+    /// <summary>
+    /// Shared color applied to both date inputs.
+    /// </summary>
+    [Parameter]
+    public W3Color Color { get; set; } = W3Color.None;
+
+    /// <summary>
+    /// Shared text color applied to both date inputs.
+    /// </summary>
+    [Parameter]
+    public W3Color TextColor { get; set; } = W3Color.None;
+
+    /// <summary>
+    /// Shared rounding applied to both date inputs.
+    /// </summary>
+    [Parameter]
+    public W3Round Round { get; set; } = W3Round.None;
+
+    /// <inheritdoc />
+    protected override void OnParametersSet()
+    {
+        if (!_isInitialized || !IsSameRange(Value, new W3DateRange(_start, _end)))
+        {
+            _start = Value?.Start;
+            _end = Value?.End;
+            _isInitialized = true;
+        }
+    }
+
+    private async Task OnStartChanged(DateOnly? value)
+    {
+        _start = value;
+        await NotifyValueChangedAsync();
+    }
+
+    private async Task OnEndChanged(DateOnly? value)
+    {
+        _end = value;
+        await NotifyValueChangedAsync();
+    }
+
+    private async Task NotifyValueChangedAsync()
+    {
+        var nextRange = new W3DateRange(_start, _end);
+        if (nextRange.Start is null && nextRange.End is null)
+        {
+            await ValueChanged.InvokeAsync(null);
+            return;
+        }
+
+        if (IsSameRange(nextRange, Value))
+        {
+            return;
+        }
+
+        await ValueChanged.InvokeAsync(nextRange);
+    }
+
+    private static bool IsSameRange(W3DateRange? left, W3DateRange? right)
+    {
+        return left is null && right is null
+            || (left is not null
+                && right is not null
+                && left.Start == right.Start
+                && left.End == right.End);
+    }
+}

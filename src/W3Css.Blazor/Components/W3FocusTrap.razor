@@ -1,0 +1,80 @@
+@using Microsoft.JSInterop
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+@implements IAsyncDisposable
+@inject IJSRuntime JS
+
+<div @attributes="AdditionalAttributes"
+     @ref="RootElement"
+     class="@CssClass"
+     style="@Style"
+     tabindex="@TabIndex"
+     aria-label="@AriaLabel">
+    @ChildContent
+</div>
+
+@code {
+    private ElementReference RootElement { get; set; }
+
+    private IJSObjectReference? Module { get; set; }
+
+    private IJSObjectReference? FocusTrapReference { get; set; }
+
+    private string CssClass => BuildClass("w3-focus-trap");
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public bool Active { get; set; } = true;
+
+    [Parameter]
+    public bool AutoFocus { get; set; } = true;
+
+    [Parameter]
+    public bool RestoreFocus { get; set; } = true;
+
+    [Parameter]
+    public string? InitialFocusSelector { get; set; }
+
+    [Parameter]
+    public string? AriaLabel { get; set; }
+
+    [Parameter]
+    public int? TabIndex { get; set; } = -1;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        Module ??= await JS.InvokeAsync<IJSObjectReference>("import", "./_content/W3Css.Blazor/w3FocusTrap.js");
+
+        var options = new
+        {
+            active = Active,
+            autoFocus = AutoFocus,
+            restoreFocus = RestoreFocus,
+            initialFocusSelector = InitialFocusSelector
+        };
+
+        if (FocusTrapReference is null)
+        {
+            FocusTrapReference = await Module.InvokeAsync<IJSObjectReference>("connect", RootElement, options);
+            return;
+        }
+
+        await FocusTrapReference.InvokeVoidAsync("update", options);
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (FocusTrapReference is not null)
+        {
+            await FocusTrapReference.InvokeVoidAsync("dispose");
+            await FocusTrapReference.DisposeAsync();
+        }
+
+        if (Module is not null)
+        {
+            await Module.DisposeAsync();
+        }
+    }
+}

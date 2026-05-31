@@ -1,0 +1,109 @@
+@page "/components/focus-trap"
+
+<PageTitle>W3FocusTrap</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3FocusTrap</h1>
+    <DocPager PreviousHref="components/popover" PreviousText="Popover" NextHref="components/drawer" NextText="Drawer" />
+
+    <p class="w3-large">`W3FocusTrap` keeps keyboard focus inside a region while it is active.</p>
+    <p>Use it inside modals, side drawers, command panels, and rich popovers when tabbing outside the open surface would be confusing.</p>
+
+    <DocExample Title="Focus-Locked Panel" Description="The trap is inactive until the demo starts, then Tab and Shift+Tab cycle through the controls inside the panel." Code="@PanelCode">
+        <W3Button Color="W3Color.Teal" TextColor="W3Color.White" Round="W3Round.Medium" OnClick="@(() => PanelTrapActive = true)">Start focus trap</W3Button>
+
+        <W3FocusTrap Active="PanelTrapActive"
+                     AutoFocus="true"
+                     RestoreFocus="true"
+                     InitialFocusSelector="#focus-trap-name"
+                     AriaLabel="Focus locked account panel"
+                     Class="w3-border w3-padding w3-margin-top w3-round">
+            <strong>Account panel</strong>
+            <p class="w3-small">Trap state: <strong>@(PanelTrapActive ? "Active" : "Inactive")</strong></p>
+            <label for="focus-trap-name">Display name</label>
+            <input id="focus-trap-name" class="w3-input w3-border w3-margin-bottom" value="Ada Lovelace" />
+            <div class="w3-bar">
+                <W3Button Color="W3Color.Teal" TextColor="W3Color.White">Save</W3Button>
+                <W3Button Border="true" OnClick="@(() => PanelTrapActive = false)">Release focus</W3Button>
+            </div>
+        </W3FocusTrap>
+
+        <W3Button Class="w3-margin-top" Border="true">Outside action</W3Button>
+    </DocExample>
+
+    <DocExample Title="Inside A Modal" Description="Keep the focus trap active only while the modal is open so normal page navigation returns after close." Code="@ModalCode">
+        <W3Button Color="W3Color.Teal" TextColor="W3Color.White" Round="W3Round.Medium" OnClick="@(() => ModalOpen = true)">Open trapped modal</W3Button>
+
+        <W3Modal Id="focus-trap-modal" Title="Keyboard dialog" @bind-Open="ModalOpen" Animate="true" ContentStyle="max-width: 34rem;">
+            <ChildContent>
+                <W3FocusTrap Active="ModalOpen"
+                             AutoFocus="true"
+                             RestoreFocus="true"
+                             InitialFocusSelector="#focus-trap-email">
+                    <p>Tab through the email field and actions; focus wraps before leaving the dialog.</p>
+                    <label for="focus-trap-email">Email</label>
+                    <input id="focus-trap-email" class="w3-input w3-border w3-margin-bottom" value="ada@example.com" />
+                    <W3Button Color="W3Color.Teal" TextColor="W3Color.White" OnClick="@(() => ModalOpen = false)">Done</W3Button>
+                    <W3Button Border="true" OnClick="@(() => ModalOpen = false)">Cancel</W3Button>
+                </W3FocusTrap>
+            </ChildContent>
+        </W3Modal>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Active</td><td>bool</td><td>true</td><td>Enables or disables keyboard focus containment</td></tr>
+                <tr><td>AutoFocus</td><td>bool</td><td>true</td><td>Moves focus into the first available target when the trap activates</td></tr>
+                <tr><td>RestoreFocus</td><td>bool</td><td>true</td><td>Returns focus to the previously focused element when the trap deactivates</td></tr>
+                <tr><td>InitialFocusSelector</td><td>string?</td><td>null</td><td>Optional selector scoped to the trap root for the first focus target</td></tr>
+                <tr><td>AriaLabel</td><td>string?</td><td>null</td><td>Accessible label on the trap root when a region label is useful</td></tr>
+                <tr><td>TabIndex</td><td>int?</td><td>-1</td><td>Fallback focus target on the trap root</td></tr>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Content whose keyboard focus should be contained</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional root classes</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline style on the root wrapper</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Related</h2>
+        <p><NavLink href="components/modal">Modal</NavLink>, <NavLink href="components/drawer">Drawer</NavLink>, and <NavLink href="components/sidebar">Sidebar</NavLink> are common places to enable a focus trap.</p>
+        <p><NavLink href="components/popover">Popover</NavLink> can use it when the popover contains forms or multiple actions.</p>
+    </section>
+
+    <DocPager PreviousHref="components/popover" PreviousText="Popover" NextHref="components/drawer" NextText="Drawer" />
+</W3Container>
+
+@code {
+    private bool PanelTrapActive { get; set; }
+    private bool ModalOpen { get; set; }
+
+    private const string PanelCode = """
+<W3Button OnClick="@(() => panelTrapActive = true)">Start focus trap</W3Button>
+
+<W3FocusTrap Active="panelTrapActive"
+             InitialFocusSelector="#focus-trap-name"
+             AriaLabel="Focus locked account panel">
+    <input id="focus-trap-name" class="w3-input w3-border" value="Ada Lovelace" />
+    <W3Button>Save</W3Button>
+    <W3Button OnClick="@(() => panelTrapActive = false)">Release focus</W3Button>
+</W3FocusTrap>
+""";
+
+    private const string ModalCode = """
+<W3Modal Title="Keyboard dialog" @bind-Open="modalOpen">
+    <ChildContent>
+        <W3FocusTrap Active="modalOpen" InitialFocusSelector="#focus-trap-email">
+            <input id="focus-trap-email" class="w3-input w3-border" value="ada@example.com" />
+            <W3Button OnClick="@(() => modalOpen = false)">Done</W3Button>
+            <W3Button OnClick="@(() => modalOpen = false)">Cancel</W3Button>
+        </W3FocusTrap>
+    </ChildContent>
+</W3Modal>
+""";
+}

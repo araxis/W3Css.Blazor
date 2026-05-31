@@ -1,0 +1,55 @@
+/*
+ * W3Css.Blazor theme token layer.
+ * W3.CSS itself has no CSS variables; this stylesheet defines the design tokens
+ * and the utility classes that resolve them. Link it once (next to w3.css):
+ *   <link rel="stylesheet" href="_content/W3Css.Blazor/w3-theme.css" />
+ * Tokens render with these defaults out of the box; a <W3ThemeProvider> overrides
+ * the variables within its subtree (and toggles the dark variant).
+ */
+
+:root {
+    --w3-primary: #1976d2;
+    --w3-on-primary: #ffffff;
+    --w3-secondary: #7b1fa2;
+    --w3-on-secondary: #ffffff;
+    --w3-accent: #ff9800;
+    --w3-on-accent: #000000;
+    --w3-surface: #ffffff;
+    --w3-on-surface: #1a1a1a;
+    --w3-background: #f6f7f9;
+    --w3-on-background: #1f2933;
+    --w3-border: #e0e0e0;
+    --w3-radius: 4px;
+}
+
+/* The provider wrapper is a themed page surface, so wrapping an app/region in
+   W3ThemeProvider themes its background and text with no extra CSS. */
+.w3-theme-root {
+    background-color: var(--w3-background);
+    color: var(--w3-on-background);
+}
+
+.w3-primary { background-color: var(--w3-primary) !important; color: var(--w3-on-primary) !important; }
+.w3-text-primary { color: var(--w3-primary) !important; }
+.w3-border-primary { border-color: var(--w3-primary) !important; }
+.w3-hover-primary:hover { background-color: var(--w3-primary) !important; color: var(--w3-on-primary) !important; }
+
+.w3-secondary { background-color: var(--w3-secondary) !important; color: var(--w3-on-secondary) !important; }
+.w3-text-secondary { color: var(--w3-secondary) !important; }
+.w3-border-secondary { border-color: var(--w3-secondary) !important; }
+.w3-hover-secondary:hover { background-color: var(--w3-secondary) !important; color: var(--w3-on-secondary) !important; }
+
+.w3-accent { background-color: var(--w3-accent) !important; color: var(--w3-on-accent) !important; }
+.w3-text-accent { color: var(--w3-accent) !important; }
+.w3-border-accent { border-color: var(--w3-accent) !important; }
+.w3-hover-accent:hover { background-color: var(--w3-accent) !important; color: var(--w3-on-accent) !important; }
+
+.w3-surface { background-color: var(--w3-surface) !important; color: var(--w3-on-surface) !important; }
+.w3-text-surface { color: var(--w3-on-surface) !important; }
+.w3-border-surface { border-color: var(--w3-border) !important; }
+
+.w3-theme-root [class*="w3-round"] { border-radius: var(--w3-radius) !important; }
+
+/* In a dark theme scope, neutral borders adopt the themed border so dark
+   surfaces don't show harsh light-grey edges. Light mode is untouched. */
+.w3-theme-root[data-w3-dark="true"] .w3-border { border-color: var(--w3-border) !important; }

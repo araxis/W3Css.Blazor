@@ -1,0 +1,222 @@
+@page "/components/validation"
+@using System.ComponentModel.DataAnnotations
+
+<PageTitle>Validation</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>Validation</h1>
+    <DocPager PreviousHref="components/field" PreviousText="Field" NextHref="components/tabs" NextText="Tabs" />
+
+    <p class="w3-large">Blazor owns form validation state; W3.CSS owns the visual treatment.</p>
+    <p>Use `EditForm`, a validator, `W3Field`, and validation-friendly form controls together for script-free validation.</p>
+
+    <DocExample Title="Validated Form" Code="@ValidatedFormCode">
+        <EditForm Model="@ValidationModel" OnValidSubmit="HandleValidSubmit" OnInvalidSubmit="HandleInvalidSubmit">
+            <DataAnnotationsValidator />
+            <ValidationSummary class="w3-panel w3-pale-red w3-leftbar w3-border-red" />
+
+            <W3Field TValue="string" Label="Project name" ForId="validation-project-name" For="@(() => ValidationModel.ProjectName)" HelpText="Required, up to 40 characters.">
+                <W3Input Id="validation-project-name"
+                         @bind-Value="ValidationModel.ProjectName"
+                         Placeholder="W3Css.Blazor"
+                         UpdateOnInput="true"
+                         Border="true"
+                         Round="W3Round.Medium" />
+            </W3Field>
+
+            <W3Field TValue="string" Label="Owner email" ForId="validation-owner-email" For="@(() => ValidationModel.OwnerEmail)" HelpText="Required email address.">
+                <W3Input Id="validation-owner-email"
+                         Type="email"
+                         @bind-Value="ValidationModel.OwnerEmail"
+                         Placeholder="owner@example.com"
+                         UpdateOnInput="true"
+                         Border="true"
+                         Round="W3Round.Medium" />
+            </W3Field>
+
+            <W3Field TValue="string" Label="Release stage" ForId="validation-stage" For="@(() => ValidationModel.Stage)" HelpText="Choose where this work is headed.">
+                <W3Select TValue="string"
+                          Id="validation-stage"
+                          @bind-Value="ValidationModel.Stage"
+                          Border="true"
+                          Round="W3Round.Medium">
+                    <option value="">Choose a stage</option>
+                    <option value="preview">Preview</option>
+                    <option value="stable">Stable</option>
+                    <option value="maintenance">Maintenance</option>
+                </W3Select>
+            </W3Field>
+
+            <W3Field TValue="string" Label="Notes" ForId="validation-notes" For="@(() => ValidationModel.Notes)" HelpText="Optional, up to 160 characters.">
+                <W3TextArea Id="validation-notes"
+                            @bind-Value="ValidationModel.Notes"
+                            Placeholder="Short release note"
+                            Rows="3"
+                            Border="true"
+                            Round="W3Round.Medium" />
+            </W3Field>
+
+            <W3Button Type="submit" Color="W3Color.Teal" TextColor="W3Color.White" Round="W3Round.Medium">Validate</W3Button>
+        </EditForm>
+
+        @if (!string.IsNullOrWhiteSpace(SubmitMessage))
+        {
+            <W3Panel Color="@SubmitPanelColor"
+                     TextColor="W3Color.Black"
+                     Border="true"
+                     LeftBar="true"
+                     Round="W3Round.Medium"
+                     Class="@SubmitPanelClass"
+                     role="status"
+                     aria-live="polite">
+                @SubmitMessage
+            </W3Panel>
+        }
+    </DocExample>
+
+    <DocExample Title="CSS Validation Notes" Code="@CssValidationCode">
+        <W3Panel Color="W3Color.PaleYellow" TextColor="W3Color.Black" Border="true" LeftBar="true" Round="W3Round.Medium">
+            <p>The original W3.CSS validation topic points to CSS validation tools and notes that vendor-prefixed CSS can create warnings.</p>
+            <p>W3Css.Blazor keeps validation markup standard: Blazor renders validation classes and messages, while W3.CSS utility classes handle the layout and colors.</p>
+        </W3Panel>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Guidance</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Part</th><th>Use</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>`EditForm`</td><td>Owns model binding, submit events, and validation flow</td><td>Blazor form state</td></tr>
+                <tr><td>`DataAnnotationsValidator`</td><td>Applies data annotation attributes on the model</td><td>Required, length, email, and custom validation attributes</td></tr>
+                <tr><td>`W3Field`</td><td>Groups label, help text, control, and field message</td><td>W3.CSS section spacing plus Blazor `ValidationMessage`</td></tr>
+                <tr><td>`W3Input`, `W3Select`, `W3TextArea`</td><td>Bind with `@@bind-Value` inside the form</td><td>W3.CSS input/select classes plus Blazor validation classes</td></tr>
+                <tr><td>`ValidationSummary`</td><td>Show form-level errors when useful</td><td>Standard Blazor summary styled with W3.CSS panel classes</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Related W3.CSS</h2>
+        <p><a href="https://www.w3schools.com/w3css/w3css_validation.asp" target="_blank" rel="noopener">W3.CSS Validation</a></p>
+    </section>
+
+    <DocPager PreviousHref="components/field" PreviousText="Field" NextHref="components/tabs" NextText="Tabs" />
+</W3Container>
+
+@code {
+    private readonly ValidationExampleModel ValidationModel = new();
+    private string? SubmitMessage;
+    private bool SubmitIsValid;
+
+    private W3Color SubmitPanelColor => SubmitIsValid ? W3Color.PaleGreen : W3Color.PaleRed;
+    private string SubmitPanelClass => SubmitIsValid ? "w3-border-green" : "w3-border-red";
+
+    private void HandleValidSubmit()
+    {
+        SubmitIsValid = true;
+        SubmitMessage = $"{ValidationModel.ProjectName} is ready for {ValidationModel.Stage}.";
+    }
+
+    private void HandleInvalidSubmit()
+    {
+        SubmitIsValid = false;
+        SubmitMessage = "Fix the highlighted fields and try again.";
+    }
+
+    private sealed class ValidationExampleModel
+    {
+        [Required(ErrorMessage = "Project name is required.")]
+        [StringLength(40, ErrorMessage = "Project name must be 40 characters or fewer.")]
+        public string ProjectName { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Owner email is required.")]
+        [EmailAddress(ErrorMessage = "Use a valid email address.")]
+        public string OwnerEmail { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Choose a release stage.")]
+        public string Stage { get; set; } = string.Empty;
+
+        [StringLength(160, ErrorMessage = "Notes must be 160 characters or fewer.")]
+        public string Notes { get; set; } = string.Empty;
+    }
+
+    private const string ValidatedFormCode = """
+@using System.ComponentModel.DataAnnotations
+
+<EditForm Model="@model" OnValidSubmit="HandleValidSubmit" OnInvalidSubmit="HandleInvalidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary class="w3-panel w3-pale-red w3-leftbar w3-border-red" />
+
+    <W3Field TValue="string" Label="Project name" ForId="project-name" For="@(() => model.ProjectName)" HelpText="Required, up to 40 characters.">
+        <W3Input Id="project-name"
+                 @bind-Value="model.ProjectName"
+                 Placeholder="W3Css.Blazor"
+                 UpdateOnInput="true"
+                 Border="true"
+                 Round="W3Round.Medium" />
+    </W3Field>
+
+    <W3Field TValue="string" Label="Owner email" ForId="owner-email" For="@(() => model.OwnerEmail)" HelpText="Required email address.">
+        <W3Input Id="owner-email"
+                 Type="email"
+                 @bind-Value="model.OwnerEmail"
+                 Placeholder="owner@example.com"
+                 UpdateOnInput="true"
+                 Border="true"
+                 Round="W3Round.Medium" />
+    </W3Field>
+
+    <W3Field TValue="string" Label="Release stage" ForId="release-stage" For="@(() => model.Stage)" HelpText="Choose where this work is headed.">
+        <W3Select TValue="string"
+                  Id="release-stage"
+                  @bind-Value="model.Stage"
+                  Border="true"
+                  Round="W3Round.Medium">
+            <option value="">Choose a stage</option>
+            <option value="preview">Preview</option>
+            <option value="stable">Stable</option>
+            <option value="maintenance">Maintenance</option>
+        </W3Select>
+    </W3Field>
+
+    <W3Button Type="submit" Color="W3Color.Teal" TextColor="W3Color.White" Round="W3Round.Medium">Validate</W3Button>
+</EditForm>
+
+@code {
+    private readonly ValidationExampleModel model = new();
+
+    private void HandleValidSubmit()
+    {
+        // Save or continue.
+    }
+
+    private void HandleInvalidSubmit()
+    {
+        // Keep the validation messages visible.
+    }
+
+    private sealed class ValidationExampleModel
+    {
+        [Required(ErrorMessage = "Project name is required.")]
+        [StringLength(40, ErrorMessage = "Project name must be 40 characters or fewer.")]
+        public string ProjectName { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Owner email is required.")]
+        [EmailAddress(ErrorMessage = "Use a valid email address.")]
+        public string OwnerEmail { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Choose a release stage.")]
+        public string Stage { get; set; } = string.Empty;
+    }
+}
+""";
+
+    private const string CssValidationCode = """
+<W3Panel Color="W3Color.PaleYellow" TextColor="W3Color.Black" Border="true" LeftBar="true" Round="W3Round.Medium">
+    <p>The original W3.CSS validation topic points to CSS validation tools and notes that vendor-prefixed CSS can create warnings.</p>
+    <p>W3Css.Blazor keeps validation markup standard: Blazor renders validation classes and messages, while W3.CSS utility classes handle the layout and colors.</p>
+</W3Panel>
+""";
+}

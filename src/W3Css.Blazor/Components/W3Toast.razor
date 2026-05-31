@@ -1,0 +1,107 @@
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+<div @attributes="AdditionalAttributes"
+     class="@CssClass"
+     style="@Style"
+     role="@RoleValue"
+     aria-live="@AriaLiveValue">
+    <div class="w3-toast-main">
+        @if (!string.IsNullOrWhiteSpace(Title))
+        {
+            <strong class="w3-toast-title">@Title</strong>
+        }
+        <div class="w3-toast-message">
+            @ChildContent
+        </div>
+    </div>
+
+    @if (HasAction || ShowCloseButton)
+    {
+        <div class="w3-toast-actions">
+            @if (HasAction)
+            {
+                <button type="button"
+                        class="w3-button w3-toast-action"
+                        @onclick="InvokeActionAsync">
+                    @ActionText
+                </button>
+            }
+
+            @if (ShowCloseButton)
+            {
+                <button type="button"
+                        class="w3-button w3-toast-close"
+                        aria-label="@CloseButtonLabel"
+                        @onclick="DismissAsync">
+                    &times;
+                </button>
+            }
+        </div>
+    }
+</div>
+
+@code {
+    private bool HasAction => !string.IsNullOrWhiteSpace(ActionText);
+
+    private string CssClass => BuildClass(
+        "w3-toast",
+        "w3-panel",
+        Kind.ToClass(),
+        Round.ToClass(),
+        Card ? "w3-card-4" : null,
+        Animate ? "w3-animate-right" : null);
+
+    private string RoleValue => Role ?? (Kind == W3AlertKind.Danger ? "alert" : "status");
+    private string AriaLiveValue => AriaLive ?? (Kind == W3AlertKind.Danger ? "assertive" : "polite");
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public string? Title { get; set; }
+
+    [Parameter]
+    public W3AlertKind Kind { get; set; } = W3AlertKind.Info;
+
+    [Parameter]
+    public W3Round Round { get; set; } = W3Round.Medium;
+
+    [Parameter]
+    public bool Card { get; set; } = true;
+
+    [Parameter]
+    public bool Animate { get; set; } = true;
+
+    [Parameter]
+    public bool ShowCloseButton { get; set; } = true;
+
+    [Parameter]
+    public string CloseButtonLabel { get; set; } = "Dismiss notification";
+
+    [Parameter]
+    public string? ActionText { get; set; }
+
+    [Parameter]
+    public EventCallback OnAction { get; set; }
+
+    [Parameter]
+    public EventCallback OnDismiss { get; set; }
+
+    [Parameter]
+    public string? Role { get; set; }
+
+    [Parameter]
+    public string? AriaLive { get; set; }
+
+    private Task InvokeActionAsync()
+    {
+        return OnAction.InvokeAsync();
+    }
+
+    private Task DismissAsync()
+    {
+        return OnDismiss.InvokeAsync();
+    }
+}
+

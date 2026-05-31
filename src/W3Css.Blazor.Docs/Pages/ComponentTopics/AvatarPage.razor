@@ -1,0 +1,75 @@
+@page "/components/avatar"
+
+<PageTitle>W3Avatar</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3Avatar</h1>
+    <DocPager PreviousHref="components/chip-set" PreviousText="Chip Set" NextHref="components/avatar-group" NextText="Avatar Group" />
+
+    <p class="w3-large">`W3Avatar` renders a compact identity mark for people, teams, products, and comments.</p>
+    <p>Use an image source when available, initials when not, or custom child content for icon-based fallbacks.</p>
+
+    <DocExample Title="Initial Avatars" Code="@InitialsCode">
+        <W3Stack Horizontal="true" Wrap="true" AlignCenter="true">
+            <W3Avatar Initials="AL" Label="Ada Lovelace" Color="W3Color.Teal" TextColor="W3Color.White" />
+            <W3Avatar Initials="GH" Label="Grace Hopper" Color="W3Color.Indigo" TextColor="W3Color.White" />
+            <W3Avatar Initials="KJ" Label="Katherine Johnson" Color="W3Color.Amber" TextColor="W3Color.Black" />
+        </W3Stack>
+    </DocExample>
+
+    <DocExample Title="Image And Custom Content" Code="@ImageCode">
+        <W3Stack Horizontal="true" Wrap="true" AlignCenter="true">
+            <W3Avatar Src="assets/w3css-blazor-mark.svg" Alt="W3Css.Blazor mark" Label="W3Css.Blazor" Size="56" Border="true" />
+            <W3Avatar Label="Settings" Size="56" Color="W3Color.LightGrey" TextColor="W3Color.Black">
+                <W3Icon IconClass="fa fa-cog" Label="Settings" />
+            </W3Avatar>
+        </W3Stack>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Custom fallback content</td></tr>
+                <tr><td>Src</td><td>string?</td><td>null</td><td>Image source</td></tr>
+                <tr><td>Alt</td><td>string</td><td>empty</td><td>Image alt text</td></tr>
+                <tr><td>Initials</td><td>string?</td><td>null</td><td>Fallback initials</td></tr>
+                <tr><td>Label</td><td>string?</td><td>null</td><td>`role="img"` and `aria-label` on the avatar</td></tr>
+                <tr><td>Loading</td><td>string</td><td>lazy</td><td>Image loading attribute</td></tr>
+                <tr><td>Size</td><td>int</td><td>40</td><td>Avatar size in pixels</td></tr>
+                <tr><td>Circle</td><td>bool</td><td>true</td><td>`w3-circle` shape</td></tr>
+                <tr><td>Border</td><td>bool</td><td>false</td><td>`w3-border`</td></tr>
+                <tr><td>Round</td><td>W3Round</td><td>Medium</td><td>Rounded class when `Circle` is false</td></tr>
+                <tr><td>Color</td><td>W3Color</td><td>LightGrey</td><td>Background color class</td></tr>
+                <tr><td>TextColor</td><td>W3Color</td><td>Black</td><td>Text color class</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional avatar classes</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline styles on the avatar</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <DocPager PreviousHref="components/chip-set" PreviousText="Chip Set" NextHref="components/avatar-group" NextText="Avatar Group" />
+</W3Container>
+
+@code {
+    private const string InitialsCode = """
+<W3Avatar Initials="AL" Label="Ada Lovelace" Color="W3Color.Teal" TextColor="W3Color.White" />
+<W3Avatar Initials="GH" Label="Grace Hopper" Color="W3Color.Indigo" TextColor="W3Color.White" />
+<W3Avatar Initials="KJ" Label="Katherine Johnson" Color="W3Color.Amber" TextColor="W3Color.Black" />
+""";
+
+    private const string ImageCode = """
+<W3Avatar Src="assets/w3css-blazor-mark.svg"
+          Alt="W3Css.Blazor mark"
+          Label="W3Css.Blazor"
+          Size="56"
+          Border="true" />
+
+<W3Avatar Label="Settings" Size="56" Color="W3Color.LightGrey" TextColor="W3Color.Black">
+    <W3Icon IconClass="fa fa-cog" Label="Settings" />
+</W3Avatar>
+""";
+}

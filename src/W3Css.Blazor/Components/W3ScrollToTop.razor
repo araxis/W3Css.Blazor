@@ -1,0 +1,172 @@
+@using Microsoft.JSInterop
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+@implements IAsyncDisposable
+@inject IJSRuntime JS
+
+<button @attributes="AdditionalAttributes"
+        type="button"
+        class="@CssClass"
+        style="@Style"
+        aria-label="@AriaLabel"
+        aria-hidden="@(visible ? "false" : "true")"
+        tabindex="@(visible ? 0 : -1)"
+        @onclick="ScrollToTopAsync">
+    @if (ChildContent is not null)
+    {
+        @ChildContent
+    }
+    else if (!string.IsNullOrWhiteSpace(IconClass))
+    {
+        <span class="@IconClass" aria-hidden="true"></span>
+    }
+    else
+    {
+        <span aria-hidden="true">&#8593;</span>
+    }
+</button>
+
+@code {
+    // A genuinely-missing capability (no W3.CSS equivalent): a back-to-top button
+    // that appears after the page scrolls past a threshold and smooth-scrolls up.
+    // Uses a small JS module for the scroll listener, matching the project's other
+    // interop components (w3FocusTrap.js, w3DropZone.js, w3Menu.js).
+    private DotNetObjectReference<W3ScrollToTop>? selfRef;
+    private IJSObjectReference? module;
+    private IJSObjectReference? handle;
+    private bool visible;
+
+    private string CssClass => BuildClass(
+        "w3-button",
+        "w3-scroll-to-top",
+        visible ? "w3-scroll-to-top-visible" : "w3-scroll-to-top-hidden",
+        Circle ? "w3-circle" : Round.ToClass(),
+        Border ? "w3-border" : null,
+        Color.ToBackgroundClass(),
+        TextColor.ToTextClass());
+
+    /// <summary>
+    /// Optional custom button content. Defaults to an up-arrow glyph.
+    /// </summary>
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    /// <summary>
+    /// Scroll distance in pixels before the button appears. Applied when the
+    /// component initializes; changing it after first render has no effect.
+    /// </summary>
+    [Parameter]
+    public int VisibleHeight { get; set; } = 300;
+
+    /// <summary>
+    /// Scroll target offset from the top in pixels.
+    /// </summary>
+    [Parameter]
+    public int TopOffset { get; set; }
+
+    /// <summary>
+    /// Uses smooth scrolling when returning to the top.
+    /// </summary>
+    [Parameter]
+    public bool Smooth { get; set; } = true;
+
+    /// <summary>
+    /// Optional leading icon class used when no child content is supplied.
+    /// </summary>
+    [Parameter]
+    public string? IconClass { get; set; }
+
+    /// <summary>
+    /// Accessible label.
+    /// </summary>
+    [Parameter]
+    public string AriaLabel { get; set; } = "Scroll to top";
+
+    /// <summary>
+    /// Adds the W3.CSS border class.
+    /// </summary>
+    [Parameter]
+    public bool Border { get; set; }
+
+    /// <summary>
+    /// Renders the button as a circle. When false, rounding via <see cref="Round"/> applies.
+    /// </summary>
+    [Parameter]
+    public bool Circle { get; set; } = true;
+
+    /// <summary>
+    /// Rounded corner style used when <see cref="Circle"/> is false.
+    /// </summary>
+    [Parameter]
+    public W3Round Round { get; set; } = W3Round.Large;
+
+    /// <summary>
+    /// Background color.
+    /// </summary>
+    [Parameter]
+    public W3Color Color { get; set; } = W3Color.Teal;
+
+    /// <summary>
+    /// Text color.
+    /// </summary>
+    [Parameter]
+    public W3Color TextColor { get; set; } = W3Color.White;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender)
+        {
+            return;
+        }
+
+        selfRef = DotNetObjectReference.Create(this);
+        module = await JS.InvokeAsync<IJSObjectReference>("import", "./_content/W3Css.Blazor/w3ScrollToTop.js");
+        handle = await module.InvokeAsync<IJSObjectReference>("connect", selfRef, new { visibleHeight = VisibleHeight });
+    }
+
+    /// <summary>
+    /// Invoked from JS when the scroll threshold is crossed.
+    /// </summary>
+    [JSInvokable]
+    public Task SetVisible(bool value)
+    {
+        if (visible != value)
+        {
+            visible = value;
+            StateHasChanged();
+        }
+
+        return Task.CompletedTask;
+    }
+
+    private async Task ScrollToTopAsync()
+    {
+        if (module is not null)
+        {
+            await module.InvokeVoidAsync("scrollToTop", TopOffset, Smooth);
+        }
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        try
+        {
+            if (handle is not null)
+            {
+                await handle.InvokeVoidAsync("dispose");
+                await handle.DisposeAsync();
+            }
+
+            if (module is not null)
+            {
+                await module.DisposeAsync();
+            }
+        }
+        catch (JSDisconnectedException)
+        {
+            // The circuit/runtime is already gone; nothing to clean up.
+        }
+
+        selfRef?.Dispose();
+    }
+}

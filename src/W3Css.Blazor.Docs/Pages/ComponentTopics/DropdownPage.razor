@@ -1,0 +1,81 @@
+@page "/components/dropdown"
+
+<PageTitle>W3Dropdown</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3Dropdown</h1>
+    <DocPager PreviousHref="components/link" PreviousText="Link" NextHref="components/menu" NextText="Menu" />
+
+    <p class="w3-large">`W3Dropdown` renders a Blazor-controlled W3.CSS click dropdown.</p>
+    <p>Use it for small menus where open state belongs in Blazor rather than script.</p>
+
+    <DocExample Title="Dropdown Menu" Code="@BasicCode">
+        <W3Dropdown Label="Components" ButtonColor="W3Color.Teal" ButtonTextColor="W3Color.White" @bind-Open="DropdownOpen">
+            <W3BarItem Href="components/button">Button</W3BarItem>
+            <W3BarItem Href="components/input">Input</W3BarItem>
+            <W3BarItem Href="components/tabs">Tabs</W3BarItem>
+        </W3Dropdown>
+    </DocExample>
+
+    <DocExample Title="Animated Dropdown" Code="@AnimatedCode">
+        <W3Dropdown Label="More" Animate="true">
+            <W3BarItem Href="roadmap">Roadmap</W3BarItem>
+            <W3BarItem Disabled="true">Disabled item</W3BarItem>
+        </W3Dropdown>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Label</td><td>string</td><td>Menu</td><td>Button text</td></tr>
+                <tr><td>ButtonContent</td><td>RenderFragment?</td><td>null</td><td>Custom button content</td></tr>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Dropdown content</td></tr>
+                <tr><td>Open</td><td>bool</td><td>false</td><td>`w3-show` on dropdown content</td></tr>
+                <tr><td>OpenChanged</td><td>EventCallback&lt;bool&gt;</td><td>none</td><td>Raised when open state changes</td></tr>
+                <tr><td>Disabled</td><td>bool</td><td>false</td><td>Disabled button state</td></tr>
+                <tr><td>Mobile</td><td>bool</td><td>false</td><td>`w3-mobile`</td></tr>
+                <tr><td>Card</td><td>bool</td><td>true</td><td>`w3-card-4` on content</td></tr>
+                <tr><td>Animate</td><td>bool</td><td>false</td><td>`w3-animate-opacity`</td></tr>
+                <tr><td>CloseOnOutsideClick</td><td>bool</td><td>true</td><td>Transparent Blazor close layer while open</td></tr>
+                <tr><td>ButtonColor</td><td>W3Color</td><td>None</td><td>Button background color</td></tr>
+                <tr><td>ButtonTextColor</td><td>W3Color</td><td>None</td><td>Button text color</td></tr>
+                <tr><td>ContentColor</td><td>W3Color</td><td>White</td><td>Content background color</td></tr>
+                <tr><td>ContentTextColor</td><td>W3Color</td><td>Black</td><td>Content text color</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional wrapper classes</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline style on the wrapper</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Related</h2>
+    <p><NavLink href="components/menu">Menu</NavLink> adds command-item semantics, icons, shortcuts, and close-on-select behavior.</p>
+    <p><NavLink href="components/navbar">Navbar</NavLink> composes dropdown menus inside navigation bars.</p>
+        <p><NavLink href="components/breadcrumb">Breadcrumb</NavLink> covers page hierarchy navigation.</p>
+    </section>
+
+    <DocPager PreviousHref="components/link" PreviousText="Link" NextHref="components/menu" NextText="Menu" />
+</W3Container>
+
+@code {
+    private bool DropdownOpen { get; set; } = true;
+
+    private const string BasicCode = """
+<W3Dropdown Label="Components" ButtonColor="W3Color.Teal" ButtonTextColor="W3Color.White" @bind-Open="dropdownOpen">
+    <W3BarItem Href="components/button">Button</W3BarItem>
+    <W3BarItem Href="components/input">Input</W3BarItem>
+    <W3BarItem Href="components/tabs">Tabs</W3BarItem>
+</W3Dropdown>
+""";
+
+    private const string AnimatedCode = """
+<W3Dropdown Label="More" Animate="true">
+    <W3BarItem Href="roadmap">Roadmap</W3BarItem>
+    <W3BarItem Disabled="true">Disabled item</W3BarItem>
+</W3Dropdown>
+""";
+}

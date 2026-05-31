@@ -1,0 +1,66 @@
+@page "/components/list"
+
+<PageTitle>W3List</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3List</h1>
+    <DocPager PreviousHref="components/tree-view" PreviousText="Tree View" NextHref="components/list-item" NextText="List Item" />
+
+    <p class="w3-large">`W3List` renders a standard unordered list with W3.CSS list classes.</p>
+    <p>Write normal `li` items inside the component, then choose border, hover, centered, and color options.</p>
+
+    <DocExample Title="Hoverable List" Code="@HoverableCode">
+        <W3List Border="true" Hoverable="true" Color="W3Color.White">
+            <li>Foundation components</li>
+            <li>Content components</li>
+            <li>Layout components</li>
+        </W3List>
+    </DocExample>
+
+    <DocExample Title="Centered List" Code="@CenteredCode">
+        <W3List Border="true" Centered="true" Color="W3Color.White">
+            <li>Small API</li>
+            <li>Static CSS asset</li>
+            <li>No runtime script dependency</li>
+        </W3List>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>List item markup</td></tr>
+                <tr><td>Border</td><td>bool</td><td>false</td><td>`w3-border`</td></tr>
+                <tr><td>Hoverable</td><td>bool</td><td>false</td><td>`w3-hoverable`</td></tr>
+                <tr><td>Centered</td><td>bool</td><td>false</td><td>`w3-center`</td></tr>
+                <tr><td>Color</td><td>W3Color</td><td>None</td><td>Background color class</td></tr>
+                <tr><td>TextColor</td><td>W3Color</td><td>None</td><td>Text color class</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional classes on the list</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline styles on the list</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <DocPager PreviousHref="components/tree-view" PreviousText="Tree View" NextHref="components/list-item" NextText="List Item" />
+</W3Container>
+
+@code {
+    private const string HoverableCode = """
+<W3List Border="true" Hoverable="true" Color="W3Color.White">
+    <li>Foundation components</li>
+    <li>Content components</li>
+    <li>Layout components</li>
+</W3List>
+""";
+
+    private const string CenteredCode = """
+<W3List Border="true" Centered="true" Color="W3Color.White">
+    <li>Small API</li>
+    <li>Static CSS asset</li>
+    <li>No runtime script dependency</li>
+</W3List>
+""";
+}

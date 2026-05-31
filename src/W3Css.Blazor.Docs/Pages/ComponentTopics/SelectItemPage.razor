@@ -1,0 +1,54 @@
+@page "/components/select-item"
+
+<PageTitle>W3SelectItem</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3SelectItem</h1>
+    <DocPager PreviousHref="components/select" PreviousText="W3Select" NextHref="components/checkbox" NextText="Checkbox" />
+
+    <p class="w3-large">`W3SelectItem` is a typed item helper for `W3Select` and similar MudBlazor-style select APIs.</p>
+        <p>Use the `Value` parameter for typed item values and optional `Disabled` for unavailable choices.</p>
+
+        <DocExample Title="Typed Select Items" Code="@SelectItemCode">
+            <W3Select TValue="int" @bind-Value="selectedValue" Class="w3-border">
+                <W3SelectItem TValue="int" Value="@(1)">One</W3SelectItem>
+                <W3SelectItem TValue="int" Value="@(2)">Two</W3SelectItem>
+                <W3SelectItem TValue="int" Value="@(3)" Disabled="true">Three (disabled)</W3SelectItem>
+            </W3Select>
+        </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Value</td><td>TValue</td><td>default</td><td>Rendered <code>&lt;option value="..."&gt;</code> value</td></tr>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Visible label inside the option</td></tr>
+                <tr><td>Disabled</td><td>bool</td><td>false</td><td>`disabled` option attribute</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional classes on <code>&lt;option&gt;</code></td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline style on <code>&lt;option&gt;</code></td></tr>
+                <tr><td>AdditionalAttributes</td><td>IDictionary&lt;string,object&gt;?</td><td>none</td><td>Any extra attributes for <code>&lt;option&gt;</code></td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <DocPager PreviousHref="components/select" PreviousText="W3Select" NextHref="components/checkbox" NextText="Checkbox" />
+</W3Container>
+
+@code {
+    private int selectedValue = 2;
+
+    private const string SelectItemCode = """
+<W3Select TValue="int" @bind-Value="selected">
+    <W3SelectItem TValue="int" Value="@(1)">One</W3SelectItem>
+    <W3SelectItem TValue="int" Value="@(2)">Two</W3SelectItem>
+    <W3SelectItem TValue="int" Value="@(3)" Disabled="true">Three (disabled)</W3SelectItem>
+</W3Select>
+
+@code {
+    private int selected = 2;
+}
+""";
+}

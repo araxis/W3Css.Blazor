@@ -1,0 +1,32 @@
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+<div @attributes="AdditionalAttributes"
+     class="@CssClass"
+     style="@Style"
+     role="@Role">
+    @if (!string.IsNullOrWhiteSpace(Title))
+    {
+        <strong class="w3-alert-title">@Title</strong>@(" ")
+    }
+    @ChildContent
+</div>
+
+@code {
+    private string CssClass => BuildClass("w3-panel", Kind.ToClass(), Round.ToClass());
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public string? Title { get; set; }
+
+    [Parameter]
+    public W3AlertKind Kind { get; set; } = W3AlertKind.Info;
+
+    [Parameter]
+    public W3Round Round { get; set; } = W3Round.None;
+
+    [Parameter]
+    public string Role { get; set; } = "status";
+}

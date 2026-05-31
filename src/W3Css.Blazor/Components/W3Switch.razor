@@ -1,0 +1,81 @@
+@using W3Css.Blazor.Internal
+@inherits W3FormComponentBase<bool>
+
+<label class="@RootCssClass" style="@Style">
+    <input @attributes="AdditionalAttributes"
+           id="@Id"
+           name="@NameAttributeValue"
+           type="checkbox"
+           class="@InputCssClass"
+           role="switch"
+           aria-checked="@AriaChecked"
+           disabled="@Disabled"
+           checked="@CurrentValue"
+           @onchange="EventCallback.Factory.CreateBinder<bool>(this, value => CurrentValue = value, CurrentValue)" />
+    <span class="@TrackCssClass" aria-hidden="true">
+        <span class="w3-switch-thumb"></span>
+    </span>
+    @if (HasLabel)
+    {
+        <span class="@LabelCssClass">@LabelContent</span>
+    }
+</label>
+
+@code {
+    private bool HasLabel => ChildContent is not null || !string.IsNullOrWhiteSpace(Label);
+    private string AriaChecked => CurrentValue ? "true" : "false";
+
+    private string RootCssClass => new W3ClassBuilder()
+        .Add("w3-switch")
+        .AddIf(CurrentValue, "w3-switch-on")
+        .AddIf(Disabled, "w3-disabled")
+        .Add(Class)
+        .ToString();
+
+    private string InputCssClass => new W3ClassBuilder()
+        .Add("w3-switch-input")
+        .Add(CssClass)
+        .ToString();
+
+    private string TrackCssClass => new W3ClassBuilder()
+        .Add("w3-switch-track")
+        .Add(CurrentValue ? OnColor.ToBackgroundClass() : OffColor.ToBackgroundClass())
+        .AddIf(Border, "w3-border")
+        .Add(Round.ToClass())
+        .Add(TrackClass)
+        .ToString();
+
+    private string LabelCssClass => new W3ClassBuilder()
+        .Add("w3-switch-label")
+        .Add(TextColor.ToTextClass())
+        .Add(LabelClass)
+        .ToString();
+
+    private RenderFragment LabelContent => ChildContent ?? (builder => builder.AddContent(0, Label));
+
+    [Parameter]
+    public string? Id { get; set; }
+
+    [Parameter]
+    public string? Label { get; set; }
+
+    [Parameter]
+    public string? LabelClass { get; set; }
+
+    [Parameter]
+    public string? TrackClass { get; set; }
+
+    [Parameter]
+    public W3Color OnColor { get; set; } = W3Color.Primary;
+
+    [Parameter]
+    public W3Color OffColor { get; set; } = W3Color.LightGrey;
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    protected override bool TryParseValueFromString(string? value, out bool result, out string validationErrorMessage)
+    {
+        throw new InvalidOperationException($"{GetType()} does not parse string values directly.");
+    }
+}

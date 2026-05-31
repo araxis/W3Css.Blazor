@@ -1,0 +1,88 @@
+@page "/components/chip"
+
+<PageTitle>W3Chip</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3Chip</h1>
+    <DocPager PreviousHref="components/tag" PreviousText="Tag" NextHref="components/chip-set" NextText="Chip Set" />
+
+    <p class="w3-large">`W3Chip` renders a selectable action chip used for compact choices, filters, and mode states.</p>
+    <p>Use chips standalone when you need individual toggles, or pair with `W3ChipSet` for grouped selection behavior.</p>
+
+    <DocExample Title="Standalone Chip Actions" Code="@BasicCode">
+        <W3Chip TValue="string" Value="@AllChipValue" Active="@IsAllChipSelected" OnSelected="HandleChipSelected">All</W3Chip>
+        <W3Chip TValue="string" Value="@ImportantChipValue" Class="w3-margin-left" Color="W3Color.Amber" OnSelected="HandleChipSelected">Important</W3Chip>
+        <W3Chip TValue="string" Value="@DisabledChipValue" Class="w3-margin-left" Disabled="true">Unavailable</W3Chip>
+        <p class="w3-small w3-margin-top">Selected chip: <strong>@selectedChip</strong></p>
+    </DocExample>
+
+    <DocExample Title="Chip With Icon" Code="@IconCode">
+        <W3Chip TValue="string"
+                Value="@DraftChipValue"
+                IconClass="fa fa-pencil"
+                Color="W3Color.LightBlue"
+                TextColor="W3Color.White"
+                OnSelected="HandleChipSelected">
+            Draft
+        </W3Chip>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>W3Chip Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Value</td><td>TValue</td><td>required</td><td>Chip selection value</td></tr>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Chip label content</td></tr>
+                <tr><td>IconClass</td><td>string?</td><td>null</td><td>Optional leading icon class</td></tr>
+                <tr><td>Active</td><td>bool</td><td>false</td><td>Standalone selected styling</td></tr>
+                <tr><td>Disabled</td><td>bool</td><td>false</td><td>Disables this chip</td></tr>
+                <tr><td>Border</td><td>bool</td><td>true</td><td>`w3-border`</td></tr>
+                <tr><td>Size</td><td>W3Size</td><td>Default</td><td>Size class</td></tr>
+                <tr><td>Round</td><td>W3Round</td><td>XXLarge</td><td>Rounded chip shape</td></tr>
+                <tr><td>Color, TextColor</td><td>W3Color</td><td>None</td><td>Default chip colors</td></tr>
+                <tr><td>ActiveColor, ActiveTextColor</td><td>W3Color</td><td>None</td><td>Per-chip active colors</td></tr>
+                <tr><td>OnSelected</td><td>EventCallback&lt;TValue&gt;</td><td>empty</td><td>Chip selected callback</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional chip classes</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline styles on the chip</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <DocPager PreviousHref="components/tag" PreviousText="Tag" NextHref="components/chip-set" NextText="Chip Set" />
+</W3Container>
+
+@code {
+    private string selectedChip = "none";
+
+    private void HandleChipSelected(string value)
+    {
+        selectedChip = value;
+    }
+
+    private bool IsAllChipSelected => selectedChip == AllChipValue;
+    private const string AllChipValue = "all";
+    private const string ImportantChipValue = "important";
+    private const string DisabledChipValue = "disabled";
+    private const string DraftChipValue = "draft";
+
+    private const string BasicCode = """
+<W3Chip TValue="string" Value="all" Active="true" OnSelected="HandleChipSelected">All</W3Chip>
+<W3Chip TValue="string" Value="important" Class="w3-margin-left" Color="W3Color.Amber" OnSelected="HandleChipSelected">Important</W3Chip>
+<W3Chip TValue="string" Value="disabled" Class="w3-margin-left" Disabled="true">Unavailable</W3Chip>
+<p class="w3-small w3-margin-top">Selected chip: <strong>@selectedChip</strong></p>
+""";
+
+    private const string IconCode = """
+<W3Chip TValue="string"
+        Value="draft"
+        IconClass="fa fa-pencil"
+        Color="W3Color.LightBlue"
+        TextColor="W3Color.White"
+        OnSelected="HandleChipSelected">
+    Draft
+</W3Chip>
+""";
+}

@@ -1,0 +1,66 @@
+@page "/components/avatar-group"
+
+<PageTitle>W3AvatarGroup</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3AvatarGroup</h1>
+    <DocPager PreviousHref="components/avatar" PreviousText="Avatar" NextHref="components/icons" NextText="Icons" />
+
+    <p class="w3-large">`W3AvatarGroup` overlaps a row of `W3Avatar` children, matching MudBlazor's `MudAvatarGroup`.</p>
+    <p>Use it to show participants, assignees, or collaborators in a compact, stacked row.</p>
+
+    <DocExample Title="Overlapping Avatars" Code="@BasicCode">
+        <W3AvatarGroup Label="Project members">
+            <W3Avatar Initials="AL" Color="W3Color.Teal" TextColor="W3Color.White" />
+            <W3Avatar Initials="GH" Color="W3Color.Indigo" TextColor="W3Color.White" />
+            <W3Avatar Initials="LT" Color="W3Color.DeepOrange" TextColor="W3Color.White" />
+            <W3Avatar Initials="+5" Color="W3Color.LightGrey" TextColor="W3Color.Black" />
+        </W3AvatarGroup>
+    </DocExample>
+
+    <DocExample Title="Tighter Overlap, No Outline" Code="@TightCode">
+        <W3AvatarGroup Spacing="20" Outlined="false">
+            <W3Avatar Initials="A" Color="W3Color.Blue" TextColor="W3Color.White" />
+            <W3Avatar Initials="B" Color="W3Color.Green" TextColor="W3Color.White" />
+            <W3Avatar Initials="C" Color="W3Color.Purple" TextColor="W3Color.White" />
+        </W3AvatarGroup>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>W3Avatar children</td></tr>
+                <tr><td>Spacing</td><td>int</td><td>12</td><td>Overlap distance in pixels</td></tr>
+                <tr><td>Outlined</td><td>bool</td><td>true</td><td>Adds a contrasting ring around each avatar</td></tr>
+                <tr><td>Label</td><td>string</td><td>"Avatar group"</td><td><code>aria-label</code> on the group</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional group classes</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline styles on the group</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <DocPager PreviousHref="components/avatar" PreviousText="Avatar" NextHref="components/icons" NextText="Icons" />
+</W3Container>
+
+@code {
+    private const string BasicCode = """
+<W3AvatarGroup Label="Project members">
+    <W3Avatar Initials="AL" Color="W3Color.Teal" TextColor="W3Color.White" />
+    <W3Avatar Initials="GH" Color="W3Color.Indigo" TextColor="W3Color.White" />
+    <W3Avatar Initials="LT" Color="W3Color.DeepOrange" TextColor="W3Color.White" />
+    <W3Avatar Initials="+5" Color="W3Color.LightGrey" TextColor="W3Color.Black" />
+</W3AvatarGroup>
+""";
+
+    private const string TightCode = """
+<W3AvatarGroup Spacing="20" Outlined="false">
+    <W3Avatar Initials="A" Color="W3Color.Blue" TextColor="W3Color.White" />
+    <W3Avatar Initials="B" Color="W3Color.Green" TextColor="W3Color.White" />
+    <W3Avatar Initials="C" Color="W3Color.Purple" TextColor="W3Color.White" />
+</W3AvatarGroup>
+""";
+}

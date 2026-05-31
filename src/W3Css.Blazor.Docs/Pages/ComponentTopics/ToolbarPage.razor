@@ -1,0 +1,84 @@
+@page "/components/toolbar"
+
+<PageTitle>W3Toolbar</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3Toolbar</h1>
+    <DocPager PreviousHref="components/app-bar" PreviousText="App Bar" NextHref="components/stack" NextText="Stack" />
+
+    <p class="w3-large">`W3Toolbar` renders an accessible action row for editors, dashboards, tables, and app headers.</p>
+    <p>Use the main slot for primary controls and the actions slot for trailing commands.</p>
+
+    <DocExample Title="Dashboard Toolbar" Code="@BasicCode">
+        <W3Toolbar Label="Dashboard actions" Color="W3Color.White" Border="true" Round="W3Round.Medium">
+            <ChildContent>
+                <W3Button Color="W3Color.Teal" TextColor="W3Color.White" Round="W3Round.Medium">New</W3Button>
+                <W3Button Border="true" Round="W3Round.Medium">Filter</W3Button>
+            </ChildContent>
+            <Actions>
+                <W3Button Border="true" Round="W3Round.Medium">Export</W3Button>
+            </Actions>
+        </W3Toolbar>
+    </DocExample>
+
+    <DocExample Title="Dense Wrapping Toolbar" Code="@DenseCode">
+        <W3Toolbar Label="Table tools" Dense="true" Wrap="true" Gap="6" Color="W3Color.LightGrey">
+            <ChildContent>
+                <W3Tag Color="W3Color.Teal" TextColor="W3Color.White" Round="W3Round.Medium">Active</W3Tag>
+                <W3Button Size="W3Size.Small" Border="true">Refresh</W3Button>
+                <W3Button Size="W3Size.Small" Border="true">Archive</W3Button>
+            </ChildContent>
+        </W3Toolbar>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Main toolbar controls</td></tr>
+                <tr><td>Actions</td><td>RenderFragment?</td><td>null</td><td>Trailing toolbar controls</td></tr>
+                <tr><td>Label</td><td>string</td><td>Toolbar</td><td>`aria-label` on the toolbar</td></tr>
+                <tr><td>Dense</td><td>bool</td><td>false</td><td>Compact toolbar padding</td></tr>
+                <tr><td>Wrap</td><td>bool</td><td>true</td><td>Allows controls to wrap</td></tr>
+                <tr><td>Border</td><td>bool</td><td>false</td><td>`w3-border`</td></tr>
+                <tr><td>Card</td><td>bool</td><td>false</td><td>W3.CSS card shadow classes</td></tr>
+                <tr><td>CardDepth</td><td>W3CardDepth</td><td>Two</td><td>Card depth when `Card` is true</td></tr>
+                <tr><td>Round</td><td>W3Round</td><td>None</td><td>Rounded corner class</td></tr>
+                <tr><td>Gap</td><td>int</td><td>8</td><td>Control gap in pixels</td></tr>
+                <tr><td>Color</td><td>W3Color</td><td>None</td><td>Background color class</td></tr>
+                <tr><td>TextColor</td><td>W3Color</td><td>None</td><td>Text color class</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional toolbar classes</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline styles on the toolbar</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <DocPager PreviousHref="components/app-bar" PreviousText="App Bar" NextHref="components/stack" NextText="Stack" />
+</W3Container>
+
+@code {
+    private const string BasicCode = """
+<W3Toolbar Label="Dashboard actions" Color="W3Color.White" Border="true" Round="W3Round.Medium">
+    <ChildContent>
+        <W3Button Color="W3Color.Teal" TextColor="W3Color.White" Round="W3Round.Medium">New</W3Button>
+        <W3Button Border="true" Round="W3Round.Medium">Filter</W3Button>
+    </ChildContent>
+    <Actions>
+        <W3Button Border="true" Round="W3Round.Medium">Export</W3Button>
+    </Actions>
+</W3Toolbar>
+""";
+
+    private const string DenseCode = """
+<W3Toolbar Label="Table tools" Dense="true" Wrap="true" Gap="6" Color="W3Color.LightGrey">
+    <ChildContent>
+        <W3Tag Color="W3Color.Teal" TextColor="W3Color.White" Round="W3Round.Medium">Active</W3Tag>
+        <W3Button Size="W3Size.Small" Border="true">Refresh</W3Button>
+        <W3Button Size="W3Size.Small" Border="true">Archive</W3Button>
+    </ChildContent>
+</W3Toolbar>
+""";
+}

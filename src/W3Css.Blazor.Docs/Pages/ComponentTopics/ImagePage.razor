@@ -1,0 +1,61 @@
+@page "/components/image"
+
+<PageTitle>W3Image</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3Image</h1>
+    <DocPager PreviousHref="components/icons" PreviousText="Icons" NextHref="components/image-list" NextText="Image List" />
+
+    <p class="w3-large">`W3Image` renders an image element with the W3.CSS `w3-image` responsive class by default.</p>
+    <p>Use typed parameters for common W3.CSS image effects and use `Class` for any remaining utilities.</p>
+
+    <DocExample Title="Responsive Image" Code="@ResponsiveCode">
+        <W3Image Src="assets/w3css-blazor-mark.svg" Alt="W3Css.Blazor mark" Width="160" Height="160" Round="W3Round.Large" Border="true" />
+    </DocExample>
+
+    <DocExample Title="Image Effects" Code="@EffectsCode">
+        <W3Flex Style="gap: 12px; align-items: center; flex-wrap: wrap;">
+            <W3Image Src="assets/w3css-blazor-mark.svg" Alt="Grayscale mark" Width="96" Height="96" Effect="W3ImageEffect.Grayscale" />
+            <W3Image Src="assets/w3css-blazor-mark.svg" Alt="Sepia mark" Width="96" Height="96" Effect="W3ImageEffect.Sepia" />
+            <W3Image Src="assets/w3css-blazor-mark.svg" Alt="Opacity mark" Width="96" Height="96" Effect="W3ImageEffect.OpacityMin" HoverOpacity="true" />
+        </W3Flex>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Src</td><td>string</td><td>required</td><td>Image source</td></tr>
+                <tr><td>Alt</td><td>string</td><td>empty</td><td>Alternative text</td></tr>
+                <tr><td>Width</td><td>int?</td><td>null</td><td>`width` attribute</td></tr>
+                <tr><td>Height</td><td>int?</td><td>null</td><td>`height` attribute</td></tr>
+                <tr><td>Loading</td><td>string?</td><td>lazy</td><td>`loading` attribute</td></tr>
+                <tr><td>Responsive</td><td>bool</td><td>true</td><td>`w3-image`</td></tr>
+                <tr><td>Effect</td><td>W3ImageEffect</td><td>None</td><td>Opacity, grayscale, or sepia class</td></tr>
+                <tr><td>HoverOpacity</td><td>bool</td><td>false</td><td>`w3-hover-opacity`</td></tr>
+                <tr><td>Round</td><td>W3Round</td><td>None</td><td>Rounded corner class</td></tr>
+                <tr><td>Circle</td><td>bool</td><td>false</td><td>`w3-circle`</td></tr>
+                <tr><td>Border</td><td>bool</td><td>false</td><td>`w3-border`</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional image classes</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline style</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <DocPager PreviousHref="components/icons" PreviousText="Icons" NextHref="components/image-list" NextText="Image List" />
+</W3Container>
+
+@code {
+    private const string ResponsiveCode = """
+<W3Image Src="assets/w3css-blazor-mark.svg" Alt="W3Css.Blazor mark" Width="160" Height="160" Round="W3Round.Large" Border="true" />
+""";
+
+    private const string EffectsCode = """
+<W3Image Src="assets/w3css-blazor-mark.svg" Alt="Grayscale mark" Effect="W3ImageEffect.Grayscale" />
+<W3Image Src="assets/w3css-blazor-mark.svg" Alt="Sepia mark" Effect="W3ImageEffect.Sepia" />
+<W3Image Src="assets/w3css-blazor-mark.svg" Alt="Opacity mark" Effect="W3ImageEffect.OpacityMin" HoverOpacity="true" />
+""";
+}

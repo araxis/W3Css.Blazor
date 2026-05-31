@@ -1,0 +1,158 @@
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+<li @attributes="AdditionalAttributes"
+    class="@CssClass"
+    style="@Style">
+    <div class="w3-timeline-rail" aria-hidden="true">
+        <span class="@MarkerCssClass">
+            @if (MarkerContent is not null)
+            {
+                @MarkerContent
+            }
+            else if (!string.IsNullOrWhiteSpace(IconClass))
+            {
+                <span class="@IconClass" aria-hidden="true"></span>
+            }
+            else if (!string.IsNullOrWhiteSpace(Marker))
+            {
+                @Marker
+            }
+        </span>
+        <span class="@LineCssClass"></span>
+    </div>
+
+    <article class="@ContentCssClass">
+        @if (!string.IsNullOrWhiteSpace(Time) || !string.IsNullOrWhiteSpace(Title))
+        {
+            <header class="w3-timeline-header">
+                @if (!string.IsNullOrWhiteSpace(Title))
+                {
+                    <h3 class="w3-timeline-title">@Title</h3>
+                }
+                @if (!string.IsNullOrWhiteSpace(Time))
+                {
+                    <time class="w3-timeline-time" datetime="@DateTime">@Time</time>
+                }
+            </header>
+        }
+        @if (!string.IsNullOrWhiteSpace(Subtitle))
+        {
+            <p class="w3-timeline-subtitle">@Subtitle</p>
+        }
+        @if (ChildContent is not null)
+        {
+            <div class="w3-timeline-body">
+                @ChildContent
+            </div>
+        }
+    </article>
+</li>
+
+@code {
+    [CascadingParameter]
+    internal W3Timeline? Owner { get; set; }
+
+    private string CssClass => BuildClass(
+        "w3-timeline-item",
+        Active ? "w3-timeline-item-active" : null,
+        Completed ? "w3-timeline-item-completed" : null);
+
+    private string MarkerCssClass => new W3ClassBuilder()
+        .Add("w3-timeline-marker")
+        .Add("w3-circle")
+        .Add(EffectiveMarkerColor.ToBackgroundClass())
+        .Add(EffectiveMarkerTextColor.ToTextClass())
+        .ToString();
+
+    private string LineCssClass => new W3ClassBuilder()
+        .Add("w3-timeline-line")
+        .Add(EffectiveLineColor.ToBorderClass())
+        .ToString();
+
+    private string ContentCssClass => new W3ClassBuilder()
+        .Add("w3-container")
+        .Add("w3-timeline-content")
+        .Add(EffectiveContentColor.ToBackgroundClass())
+        .Add(EffectiveContentTextColor.ToTextClass())
+        .Add(EffectiveRound.ToClass())
+        .AddIf(Border, "w3-border")
+        .AddIf(Active, "w3-leftbar")
+        .Add(Active ? EffectiveMarkerColor.ToBorderClass() : null)
+        .ToString();
+
+    private W3Color EffectiveLineColor => LineColor == W3Color.None
+        ? Owner?.EffectiveLineColor ?? W3Color.LightGrey
+        : LineColor;
+
+    private W3Color EffectiveMarkerColor => MarkerColor == W3Color.None
+        ? Owner?.EffectiveMarkerColor ?? W3Color.Teal
+        : MarkerColor;
+
+    private W3Color EffectiveMarkerTextColor => MarkerTextColor == W3Color.None
+        ? Owner?.EffectiveMarkerTextColor ?? W3Color.White
+        : MarkerTextColor;
+
+    private W3Color EffectiveContentColor => ContentColor == W3Color.None
+        ? Owner?.EffectiveContentColor ?? W3Color.White
+        : ContentColor;
+
+    private W3Color EffectiveContentTextColor => ContentTextColor == W3Color.None
+        ? Owner?.EffectiveContentTextColor ?? W3Color.None
+        : ContentTextColor;
+
+    private W3Round EffectiveRound => Round == W3Round.None
+        ? Owner?.EffectiveRound ?? W3Round.Medium
+        : Round;
+
+    [Parameter]
+    public string? Title { get; set; }
+
+    [Parameter]
+    public string? Subtitle { get; set; }
+
+    [Parameter]
+    public string? Time { get; set; }
+
+    [Parameter]
+    public string? DateTime { get; set; }
+
+    [Parameter]
+    public string? Marker { get; set; }
+
+    [Parameter]
+    public string? IconClass { get; set; }
+
+    [Parameter]
+    public RenderFragment? MarkerContent { get; set; }
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public bool Active { get; set; }
+
+    [Parameter]
+    public bool Completed { get; set; }
+
+    [Parameter]
+    public bool Border { get; set; } = true;
+
+    [Parameter]
+    public W3Color LineColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color MarkerColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color MarkerTextColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color ContentColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color ContentTextColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Round Round { get; set; } = W3Round.None;
+}

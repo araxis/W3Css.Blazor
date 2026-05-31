@@ -1,0 +1,107 @@
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+<li @attributes="AdditionalAttributes"
+    class="@ItemCssClass"
+    style="@Style"
+    data-separator="@SeparatorText"
+    aria-disabled="@AriaDisabled">
+    @if (ShouldRenderLink)
+    {
+        <a href="@Href"
+           target="@Target"
+           class="@LinkCssClass"
+           @onclick="HandleClickAsync">
+            @Content
+        </a>
+    }
+    else
+    {
+        <span class="@TextCssClass" aria-current="@AriaCurrent">
+            @Content
+        </span>
+    }
+</li>
+
+@code {
+    [CascadingParameter]
+    internal W3Breadcrumb? Owner { get; set; }
+
+    private bool ShouldRenderLink => !Current && !Disabled && !string.IsNullOrWhiteSpace(Href);
+    private string? AriaCurrent => Current ? "page" : null;
+    private string? AriaDisabled => Disabled ? "true" : null;
+    private string SeparatorText => Owner?.Separator ?? "/";
+
+    private RenderFragment Content => builder =>
+    {
+        if (ChildContent is not null)
+        {
+            builder.AddContent(0, ChildContent);
+            return;
+        }
+
+        builder.AddContent(1, Text);
+    };
+
+    private string ItemCssClass => BuildClass(
+        "w3-breadcrumb-item",
+        "w3-bar-item",
+        Disabled ? "w3-disabled" : null,
+        Color.ToBackgroundClass(),
+        TextColor.ToTextClass());
+
+    private string LinkCssClass => new W3ClassBuilder()
+        .Add("w3-breadcrumb-link")
+        .AddIf(Button, "w3-button")
+        .Add(LinkClass)
+        .ToString();
+
+    private string TextCssClass => new W3ClassBuilder()
+        .Add("w3-breadcrumb-current")
+        .Add(TextClass)
+        .ToString();
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public string? Text { get; set; }
+
+    [Parameter]
+    public string? Href { get; set; }
+
+    [Parameter]
+    public string? Target { get; set; }
+
+    [Parameter]
+    public bool Current { get; set; }
+
+    [Parameter]
+    public bool Disabled { get; set; }
+
+    [Parameter]
+    public bool Button { get; set; }
+
+    [Parameter]
+    public string? LinkClass { get; set; }
+
+    [Parameter]
+    public string? TextClass { get; set; }
+
+    [Parameter]
+    public W3Color Color { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color TextColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnClick { get; set; }
+
+    private async Task HandleClickAsync(MouseEventArgs args)
+    {
+        if (!Disabled)
+        {
+            await OnClick.InvokeAsync(args);
+        }
+    }
+}

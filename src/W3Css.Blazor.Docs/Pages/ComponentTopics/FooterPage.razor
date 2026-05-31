@@ -1,0 +1,71 @@
+@page "/components/footer"
+
+<PageTitle>W3Footer</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3Footer</h1>
+    <DocPager PreviousHref="components/spacer" PreviousText="Spacer" NextHref="components/container" NextText="Container" />
+
+    <p class="w3-large">`W3Footer` is the MudBlazor-compatible footer region (`MudFooter`).</p>
+    <p>It composes W3.CSS color, border, and fixed-position classes into a semantic <code>&lt;footer&gt;</code> for page and app shells.</p>
+
+    <DocExample Title="Page Footer" Code="@BasicCode">
+        <W3Footer Color="W3Color.DarkGrey" TextColor="W3Color.White" Border="true">
+            <span>© 2026 W3Css.Blazor</span>
+            <W3Spacer />
+            <a class="w3-text-white" href="components">Docs</a>
+            <a class="w3-text-white" href="components/versions">Versions</a>
+        </W3Footer>
+    </DocExample>
+
+    <DocExample Title="Light Footer With Wrapping Links" Code="@WrapCode">
+        <W3Footer Color="W3Color.LightGrey" Wrap="true" Gap="24">
+            <span>Status: operational</span>
+            <span>Support</span>
+            <span>Privacy</span>
+            <span>Terms</span>
+        </W3Footer>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Footer content</td></tr>
+                <tr><td>Fixed</td><td>bool</td><td>false</td><td>Pins to the bottom with <code>w3-bottom</code></td></tr>
+                <tr><td>Wrap</td><td>bool</td><td>true</td><td>Allows footer content to wrap</td></tr>
+                <tr><td>Border</td><td>bool</td><td>false</td><td>Adds a top border</td></tr>
+                <tr><td>Gap</td><td>int</td><td>16</td><td>Gap between items in pixels</td></tr>
+                <tr><td>Color</td><td>W3Color</td><td>None</td><td>Background color class</td></tr>
+                <tr><td>TextColor</td><td>W3Color</td><td>None</td><td>Text color class</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional footer classes</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline styles on the footer</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <DocPager PreviousHref="components/spacer" PreviousText="Spacer" NextHref="components/container" NextText="Container" />
+</W3Container>
+
+@code {
+    private const string BasicCode = """
+<W3Footer Color="W3Color.DarkGrey" TextColor="W3Color.White" Border="true">
+    <span>© 2026 W3Css.Blazor</span>
+    <W3Spacer />
+    <a class="w3-text-white" href="components">Docs</a>
+    <a class="w3-text-white" href="components/versions">Versions</a>
+</W3Footer>
+""";
+
+    private const string WrapCode = """
+<W3Footer Color="W3Color.LightGrey" Wrap="true" Gap="24">
+    <span>Status: operational</span>
+    <span>Support</span>
+    <span>Privacy</span>
+    <span>Terms</span>
+</W3Footer>
+""";
+}

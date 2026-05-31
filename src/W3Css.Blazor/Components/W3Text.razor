@@ -1,0 +1,51 @@
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+@if (Inline)
+{
+    <span @attributes="AdditionalAttributes"
+          class="@CssClass"
+          style="@Style">@ChildContent</span>
+}
+else
+{
+    <div @attributes="AdditionalAttributes"
+         class="@CssClass"
+         style="@Style">
+        @ChildContent
+    </div>
+}
+
+@code {
+    private string CssClass => BuildClass(
+        Alignment.ToClass(),
+        TextStyle.ToClass(),
+        Font.ToClass(),
+        Size.ToClass(),
+        Color.ToBackgroundClass(),
+        TextColor.ToTextClass());
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public bool Inline { get; set; }
+
+    [Parameter]
+    public W3TextAlignment Alignment { get; set; } = W3TextAlignment.None;
+
+    [Parameter]
+    public W3TextStyle TextStyle { get; set; } = W3TextStyle.None;
+
+    [Parameter]
+    public W3FontFamily Font { get; set; } = W3FontFamily.None;
+
+    [Parameter]
+    public W3Size Size { get; set; } = W3Size.Default;
+
+    [Parameter]
+    public W3Color Color { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color TextColor { get; set; } = W3Color.None;
+}

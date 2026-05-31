@@ -1,0 +1,176 @@
+@page "/components/colors"
+
+<PageTitle>Colors</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>Colors</h1>
+    <DocPager PreviousHref="components/fonts" PreviousText="Fonts" NextHref="components/color-schemes" NextText="Color Schemes" />
+
+    <p class="w3-large">W3.CSS color utilities set background, text, border, hover, semantic, library, and theme colors with small CSS classes.</p>
+    <p>Use typed `W3Color` parameters for colors bundled with W3.CSS, and use `Class` pass-through for optional color libraries or theme classes. Background colors include the widest set; text and border families follow the classes present in the bundled stylesheet.</p>
+
+    <DocExample Title="Typed Color Parameters" Code="@TypedCode">
+        <W3Grid Padding="true" Style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));">
+            <W3Container Color="W3Color.Teal" TextColor="W3Color.White" Class="w3-padding">
+                Background color
+            </W3Container>
+            <W3Button Color="W3Color.Cobalt" TextColor="W3Color.White" Round="W3Round.Medium">
+                Button color
+            </W3Button>
+            <W3Text TextColor="W3Color.Red" TextStyle="W3TextStyle.Bold" Class="w3-padding w3-white">
+                Text color
+            </W3Text>
+            <W3Border Border="W3BorderSide.All" BorderColor="W3Color.Green" Round="W3Round.Medium" Class="w3-padding w3-white">
+                Border color
+            </W3Border>
+        </W3Grid>
+    </DocExample>
+
+    <DocExample Title="Semantic Status Colors" Code="@SemanticCode">
+        <W3Grid Padding="true" Style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));">
+            <W3Alert Kind="W3AlertKind.Success" Round="W3Round.Medium">Success message</W3Alert>
+            <W3Alert Kind="W3AlertKind.Info" Round="W3Round.Medium">Information message</W3Alert>
+            <W3Alert Kind="W3AlertKind.Warning" Round="W3Round.Medium">Warning message</W3Alert>
+            <W3Alert Kind="W3AlertKind.Danger" Round="W3Round.Medium">Danger message</W3Alert>
+        </W3Grid>
+    </DocExample>
+
+    <DocExample Title="Hover Colors" Code="@HoverCode">
+        <W3Grid Padding="true" Style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));">
+            <W3HoverColor Color="W3Color.White" TextColor="W3Color.Black" HoverColor="W3Color.Teal" HoverTextColor="W3Color.White" Border="true" BorderColor="W3Color.LightGrey" Round="W3Round.Medium" Class="w3-padding">
+                Hover background
+            </W3HoverColor>
+            <W3HoverColor TextColor="W3Color.Black" HoverTextColor="W3Color.Red" Class="w3-padding">
+                Hover text color
+            </W3HoverColor>
+            <W3HoverColor Color="W3Color.White" Border="true" BorderColor="W3Color.LightGrey" HoverBorderColor="W3Color.Blue" Round="W3Round.Medium" Class="w3-padding">
+                Hover border color
+            </W3HoverColor>
+        </W3Grid>
+    </DocExample>
+
+    <DocExample Title="Library And Theme Classes" Code="@LibraryCode">
+        <W3Grid Padding="true" Style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));">
+            <W3Container Class="w3-padding w3-highway-red w3-margin-bottom">
+                Highway color library
+            </W3Container>
+            <W3Container Class="w3-padding w3-theme-l2 w3-margin-bottom">
+                Theme shade
+            </W3Container>
+            <W3Button Class="w3-theme-action" Round="W3Round.Medium">
+                Theme action
+            </W3Button>
+        </W3Grid>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Usage Reference</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Need</th><th>Use</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Background color</td><td>`Color="W3Color.Teal"`</td><td>`w3-teal`</td></tr>
+                <tr><td>Text color</td><td>`TextColor="W3Color.Red"`</td><td>`w3-text-red`</td></tr>
+                <tr><td>Border color</td><td>`BorderColor="W3Color.Green"`</td><td>`w3-border-green`</td></tr>
+                <tr><td>Hover background</td><td>`HoverColor="W3Color.Teal"` on `W3HoverColor`</td><td>`w3-hover-teal`</td></tr>
+                <tr><td>Hover text or border</td><td>`HoverTextColor` or `HoverBorderColor` on `W3HoverColor`</td><td>`w3-hover-text-*` or `w3-hover-border-*`</td></tr>
+                <tr><td>Semantic status color</td><td>`Kind="W3AlertKind.Success"`</td><td>`w3-success`, `w3-info`, `w3-warning`, `w3-danger`, or `w3-note`</td></tr>
+                <tr><td>Optional color libraries</td><td>Load the library stylesheet and use `Class="w3-highway-red"`</td><td>Consumer-provided CSS class</td></tr>
+                <tr><td>Optional themes</td><td>Load a theme stylesheet and use `Class="w3-theme-action"`</td><td>Consumer-provided theme class</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>W3Color Values</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Group</th><th>Values</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Core text and border families</td><td>White, Black, Red, Pink, Purple, DeepPurple, Indigo, Blue, LightBlue, Cyan, Aqua, Teal, Green, LightGreen, Lime, Sand, Khaki, Yellow, Amber, Orange, DeepOrange, BlueGrey, Brown, LightGrey, Grey, DarkGrey</td></tr>
+                <tr><td>Pale border family</td><td>PaleRed, PaleYellow, PaleGreen, PaleBlue</td></tr>
+                <tr><td>Background and hover background</td><td>Core colors, pale colors, Paper, Asphalt, Crimson, Cobalt, Emerald, Olive, Taupe, Sienna</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Related W3.CSS</h2>
+        <p><NavLink href="components/material-design">Material Design guidance</NavLink></p>
+        <p><NavLink href="components/versions">Versions guidance</NavLink></p>
+        <p><a href="https://www.w3schools.com/w3css/w3css_colors.asp" target="_blank" rel="noopener">W3.CSS Colors</a></p>
+        <p><a href="https://www.w3schools.com/w3css/w3css_color_classes.asp" target="_blank" rel="noopener">W3.CSS Color Classes</a></p>
+        <p><a href="https://www.w3schools.com/w3css/w3css_color_libraries.asp" target="_blank" rel="noopener">W3.CSS Color Libraries</a></p>
+        <p><a href="https://www.w3schools.com/w3css/w3css_color_themes.asp" target="_blank" rel="noopener">W3.CSS Color Themes</a></p>
+        <p><a href="https://www.w3schools.com/w3css/w3css_color_material.asp" target="_blank" rel="noopener">W3.CSS Material Colors</a></p>
+        <p><a href="https://www.w3schools.com/w3css/w3css_color_flat.asp" target="_blank" rel="noopener">W3.CSS Flat UI Colors</a></p>
+        <p><a href="https://www.w3schools.com/w3css/w3css_color_metro.asp" target="_blank" rel="noopener">W3.CSS Metro Colors</a></p>
+        <p><a href="https://www.w3schools.com/w3css/w3css_color_ios.asp" target="_blank" rel="noopener">W3.CSS iOS Colors</a></p>
+        <p><a href="https://www.w3schools.com/w3css/w3css_color_fashion.asp" target="_blank" rel="noopener">W3.CSS Fashion Colors</a></p>
+        <p><NavLink href="components/color-schemes">Color schemes guidance</NavLink></p>
+        <p><a href="https://www.w3schools.com/w3css/w3css_color_schemes.asp" target="_blank" rel="noopener">W3.CSS Color Schemes</a></p>
+    </section>
+
+    <DocPager PreviousHref="components/fonts" PreviousText="Fonts" NextHref="components/color-schemes" NextText="Color Schemes" />
+</W3Container>
+
+@code {
+    private const string TypedCode = """
+<W3Grid Padding="true" Style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));">
+    <W3Container Color="W3Color.Teal" TextColor="W3Color.White" Class="w3-padding">
+        Background color
+    </W3Container>
+    <W3Button Color="W3Color.Cobalt" TextColor="W3Color.White" Round="W3Round.Medium">
+        Button color
+    </W3Button>
+    <W3Text TextColor="W3Color.Red" TextStyle="W3TextStyle.Bold" Class="w3-padding w3-white">
+        Text color
+    </W3Text>
+    <W3Border Border="W3BorderSide.All" BorderColor="W3Color.Green" Round="W3Round.Medium" Class="w3-padding w3-white">
+        Border color
+    </W3Border>
+</W3Grid>
+""";
+
+    private const string SemanticCode = """
+<W3Grid Padding="true" Style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));">
+    <W3Alert Kind="W3AlertKind.Success" Round="W3Round.Medium">Success message</W3Alert>
+    <W3Alert Kind="W3AlertKind.Info" Round="W3Round.Medium">Information message</W3Alert>
+    <W3Alert Kind="W3AlertKind.Warning" Round="W3Round.Medium">Warning message</W3Alert>
+    <W3Alert Kind="W3AlertKind.Danger" Round="W3Round.Medium">Danger message</W3Alert>
+</W3Grid>
+""";
+
+    private const string HoverCode = """
+<W3Grid Padding="true" Style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));">
+    <W3HoverColor Color="W3Color.White" TextColor="W3Color.Black" HoverColor="W3Color.Teal" HoverTextColor="W3Color.White" Border="true" BorderColor="W3Color.LightGrey" Round="W3Round.Medium" Class="w3-padding">
+        Hover background
+    </W3HoverColor>
+    <W3HoverColor TextColor="W3Color.Black" HoverTextColor="W3Color.Red" Class="w3-padding">
+        Hover text color
+    </W3HoverColor>
+    <W3HoverColor Color="W3Color.White" Border="true" BorderColor="W3Color.LightGrey" HoverBorderColor="W3Color.Blue" Round="W3Round.Medium" Class="w3-padding">
+        Hover border color
+    </W3HoverColor>
+</W3Grid>
+""";
+
+    private const string LibraryCode = """
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-highway.css" />
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-indigo.css" />
+
+<W3Grid Padding="true" Style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));">
+    <W3Container Class="w3-padding w3-highway-red w3-margin-bottom">
+        Highway color library
+    </W3Container>
+    <W3Container Class="w3-padding w3-theme-l2 w3-margin-bottom">
+        Theme shade
+    </W3Container>
+    <W3Button Class="w3-theme-action" Round="W3Round.Medium">
+        Theme action
+    </W3Button>
+</W3Grid>
+""";
+}

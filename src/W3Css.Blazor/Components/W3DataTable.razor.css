@@ -1,0 +1,44 @@
+.w3-data-table-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: end;
+    padding: 0.75rem;
+}
+
+.w3-data-table-search {
+    flex: 1 1 16rem;
+    max-width: 28rem;
+}
+
+.w3-data-table-toolbar-content {
+    flex: 999 1 auto;
+}
+
+.w3-data-table-sort {
+    display: inline-flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 0;
+    text-align: inherit;
+}
+
+.w3-data-table-sort-state {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+}
+
+.w3-data-table-footer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 0;
+}
+
+.w3-data-table-count {
+    margin: 0;
+}

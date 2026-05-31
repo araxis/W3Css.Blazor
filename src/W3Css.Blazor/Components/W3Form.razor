@@ -1,0 +1,72 @@
+@using Microsoft.AspNetCore.Components.Forms
+@inherits W3ComponentBase
+
+<EditForm @attributes="AdditionalAttributes"
+          EditContext="@ResolvedEditContext"
+          OnSubmit="@OnSubmit"
+          OnValidSubmit="@OnValidSubmit"
+          OnInvalidSubmit="@OnInvalidSubmit"
+          class="@BuildClass(Class)"
+          style="@Style">
+    @ChildContent
+</EditForm>
+
+@code {
+    private static readonly object FallbackModel = new();
+    private EditContext? _resolvedEditContext;
+    private object? _resolvedModel;
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public object? Model { get; set; }
+
+    [Parameter]
+    public EditContext? EditContext { get; set; }
+
+    [Parameter]
+    public EventCallback<EditContext> OnSubmit { get; set; }
+
+    [Parameter]
+    public EventCallback<EditContext> OnValidSubmit { get; set; }
+
+    [Parameter]
+    public EventCallback<EditContext> OnInvalidSubmit { get; set; }
+
+    private EditContext ResolvedEditContext
+    {
+        get
+        {
+            if (EditContext is not null)
+            {
+                if (!ReferenceEquals(_resolvedEditContext, EditContext))
+                {
+                    _resolvedEditContext = EditContext;
+                    _resolvedModel = EditContext.Model;
+                }
+
+                return _resolvedEditContext;
+            }
+
+            if (Model is null)
+            {
+                if (_resolvedModel is not null && ReferenceEquals(_resolvedModel, FallbackModel))
+                {
+                    return _resolvedEditContext ??= new EditContext(FallbackModel);
+                }
+
+                _resolvedModel = FallbackModel;
+                return _resolvedEditContext = new EditContext(FallbackModel);
+            }
+
+            if (!ReferenceEquals(_resolvedModel, Model))
+            {
+                _resolvedModel = Model;
+                _resolvedEditContext = new EditContext(Model);
+            }
+
+            return _resolvedEditContext ??= new EditContext(FallbackModel);
+        }
+    }
+}

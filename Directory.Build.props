@@ -1,0 +1,9 @@
+<Project>
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+    <ContinuousIntegrationBuild Condition="'$(CI)' == 'true'">true</ContinuousIntegrationBuild>
+    <Deterministic>true</Deterministic>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/araxis/W3Css.Blazor</RepositoryUrl>
+  </PropertyGroup>
+</Project>

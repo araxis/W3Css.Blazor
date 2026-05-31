@@ -1,0 +1,52 @@
+@page "/components/scroll-to-top"
+
+<PageTitle>W3ScrollToTop</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3ScrollToTop</h1>
+    <DocPager PreviousHref="components/stepper" PreviousText="Stepper" NextHref="components/spinner" NextText="Spinner" />
+
+    <p class="w3-large">`W3ScrollToTop` is a back-to-top button that appears after the page scrolls past a threshold and smoothly returns to the top.</p>
+    <p>W3.CSS has no built-in equivalent, so this is a small new component. It uses a tiny JS module only for the scroll listener and `window.scrollTo` — the visibility state stays in Blazor.</p>
+
+    <W3Note Class="w3-pale-blue">
+        Scroll this page down to see the button appear in the bottom-right corner, then click it to return here.
+    </W3Note>
+
+    <DocExample Title="Default Back-To-Top" Code="@BasicCode">
+        <p class="doc-muted">Renders a fixed circular button after scrolling 300&nbsp;px. The live instance for this page is mounted below.</p>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>VisibleHeight</td><td>int</td><td>300</td><td>Scroll distance (px) before the button appears (applied at initialization)</td></tr>
+                <tr><td>TopOffset</td><td>int</td><td>0</td><td>Scroll target offset from the top</td></tr>
+                <tr><td>Smooth</td><td>bool</td><td>true</td><td>Smooth vs. instant scrolling</td></tr>
+                <tr><td>IconClass</td><td>string?</td><td>null</td><td>Icon class used when no child content is set</td></tr>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Custom button content (defaults to ↑)</td></tr>
+                <tr><td>Circle</td><td>bool</td><td>true</td><td>Circular button (else uses Round)</td></tr>
+                <tr><td>Round</td><td>W3Round</td><td>Large</td><td>Corner rounding when not circular</td></tr>
+                <tr><td>Color / TextColor</td><td>W3Color</td><td>Teal / White</td><td>Button colors</td></tr>
+                <tr><td>AriaLabel</td><td>string</td><td>"Scroll to top"</td><td>Accessible label</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <div style="height: 900px;" aria-hidden="true"></div>
+    <p class="doc-muted">End of demo scroll area.</p>
+
+    <DocPager PreviousHref="components/stepper" PreviousText="Stepper" NextHref="components/spinner" NextText="Spinner" />
+</W3Container>
+
+<W3ScrollToTop VisibleHeight="250" />
+
+@code {
+    private const string BasicCode = """
+<W3ScrollToTop VisibleHeight="250" />
+""";
+}

@@ -1,0 +1,262 @@
+@using Microsoft.AspNetCore.Components.Web
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+@if (Disabled)
+{
+    <span @attributes="AdditionalAttributes"
+          class="@CssClass"
+          style="@Style"
+          aria-label="@EffectiveAriaLabel"
+          aria-disabled="true"
+          aria-current="@AriaCurrent">
+        @if (!string.IsNullOrWhiteSpace(IconClass))
+        {
+            <span class="w3-bottom-navigation-item-icon-wrap">
+                <span class="@IconCssClass" aria-hidden="true"></span>
+                @if (!string.IsNullOrWhiteSpace(Badge))
+                {
+                    <span class="@BadgeCssClass">@Badge</span>
+                }
+            </span>
+        }
+        else if (!string.IsNullOrWhiteSpace(Badge))
+        {
+            <span class="@BadgeCssClass">@Badge</span>
+        }
+
+        <span class="@LabelCssClass">
+            @if (ChildContent is not null)
+            {
+                @ChildContent
+            }
+            else
+            {
+                @Text
+            }
+        </span>
+    </span>
+}
+else if (!string.IsNullOrWhiteSpace(Href))
+{
+    <a @attributes="AdditionalAttributes"
+       href="@Href"
+       target="@Target"
+       class="@CssClass"
+       style="@Style"
+       aria-label="@EffectiveAriaLabel"
+       aria-current="@AriaCurrent"
+       @onclick="HandleClickAsync">
+        @if (!string.IsNullOrWhiteSpace(IconClass))
+        {
+            <span class="w3-bottom-navigation-item-icon-wrap">
+                <span class="@IconCssClass" aria-hidden="true"></span>
+                @if (!string.IsNullOrWhiteSpace(Badge))
+                {
+                    <span class="@BadgeCssClass">@Badge</span>
+                }
+            </span>
+        }
+        else if (!string.IsNullOrWhiteSpace(Badge))
+        {
+            <span class="@BadgeCssClass">@Badge</span>
+        }
+
+        <span class="@LabelCssClass">
+            @if (ChildContent is not null)
+            {
+                @ChildContent
+            }
+            else
+            {
+                @Text
+            }
+        </span>
+    </a>
+}
+else
+{
+    <button @attributes="AdditionalAttributes"
+            type="@Type"
+            class="@CssClass"
+            style="@Style"
+            aria-label="@EffectiveAriaLabel"
+            aria-pressed="@AriaPressed"
+            @onclick="HandleClickAsync">
+        @if (!string.IsNullOrWhiteSpace(IconClass))
+        {
+            <span class="w3-bottom-navigation-item-icon-wrap">
+                <span class="@IconCssClass" aria-hidden="true"></span>
+                @if (!string.IsNullOrWhiteSpace(Badge))
+                {
+                    <span class="@BadgeCssClass">@Badge</span>
+                }
+            </span>
+        }
+        else if (!string.IsNullOrWhiteSpace(Badge))
+        {
+            <span class="@BadgeCssClass">@Badge</span>
+        }
+
+        <span class="@LabelCssClass">
+            @if (ChildContent is not null)
+            {
+                @ChildContent
+            }
+            else
+            {
+                @Text
+            }
+        </span>
+    </button>
+}
+
+@code {
+    [CascadingParameter]
+    internal W3BottomNavigation? Owner { get; set; }
+
+    private bool IsActive => Active || Owner?.IsActive(Value) == true;
+    private bool ShowLabel => Owner?.ShowLabels != false;
+    private string? AriaCurrent => IsActive ? "page" : null;
+    private string? AriaPressed => string.IsNullOrWhiteSpace(Href) ? IsActive.ToString().ToLowerInvariant() : null;
+    private string EffectiveAriaLabel => AriaLabel ?? Text ?? "Bottom navigation item";
+
+    private string CssClass => BuildClass(
+        "w3-bar-item",
+        "w3-button",
+        "w3-bottom-navigation-item",
+        Owner?.Dense == true ? "w3-bottom-navigation-item-dense" : null,
+        IsActive ? "w3-bottom-navigation-item-active" : null,
+        Disabled ? "w3-disabled w3-bottom-navigation-item-disabled" : null,
+        ResolveColor().ToBackgroundClass(),
+        ResolveTextColor().ToTextClass(),
+        ResolveHoverCssClass());
+
+    private string IconCssClass => new W3ClassBuilder()
+        .Add("w3-bottom-navigation-item-icon")
+        .Add(IconClass)
+        .ToString();
+
+    private string LabelCssClass => new W3ClassBuilder()
+        .Add("w3-bottom-navigation-item-label")
+        .Add(!ShowLabel ? "w3-bottom-navigation-item-label-hidden" : null)
+        .ToString();
+
+    private string BadgeCssClass => new W3ClassBuilder()
+        .Add("w3-badge")
+        .Add("w3-bottom-navigation-item-badge")
+        .Add(BadgeColor.ToBackgroundClass())
+        .Add(BadgeTextColor.ToTextClass())
+        .ToString();
+
+    [Parameter]
+    public string? Value { get; set; }
+
+    [Parameter]
+    public string? Text { get; set; }
+
+    [Parameter]
+    public string? AriaLabel { get; set; }
+
+    [Parameter]
+    public string? Href { get; set; }
+
+    [Parameter]
+    public string? Target { get; set; }
+
+    [Parameter]
+    public string? IconClass { get; set; }
+
+    [Parameter]
+    public string? Badge { get; set; }
+
+    [Parameter]
+    public W3Color BadgeColor { get; set; } = W3Color.Red;
+
+    [Parameter]
+    public W3Color BadgeTextColor { get; set; } = W3Color.White;
+
+    [Parameter]
+    public bool Active { get; set; }
+
+    [Parameter]
+    public bool Disabled { get; set; }
+
+    [Parameter]
+    public string Type { get; set; } = "button";
+
+    [Parameter]
+    public W3Color Color { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color TextColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color ActiveColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color ActiveTextColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color HoverColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color HoverTextColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnClick { get; set; }
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    private W3Color ResolveColor()
+    {
+        if (IsActive)
+        {
+            return ActiveColor != W3Color.None ? ActiveColor : Owner?.ActiveColor ?? W3Color.Teal;
+        }
+
+        return Color != W3Color.None ? Color : W3Color.None;
+    }
+
+    private W3Color ResolveTextColor()
+    {
+        if (IsActive)
+        {
+            return ActiveTextColor != W3Color.None ? ActiveTextColor : Owner?.ActiveTextColor ?? W3Color.White;
+        }
+
+        return TextColor != W3Color.None ? TextColor : W3Color.None;
+    }
+
+    private string ResolveHoverCssClass()
+    {
+        if (IsActive || Disabled)
+        {
+            return string.Empty;
+        }
+
+        var hoverColor = HoverColor != W3Color.None ? HoverColor : Owner?.HoverColor ?? W3Color.None;
+        var hoverTextColor = HoverTextColor != W3Color.None ? HoverTextColor : Owner?.HoverTextColor ?? W3Color.None;
+
+        return new W3ClassBuilder()
+            .Add(hoverColor.ToHoverBackgroundClass())
+            .Add(hoverTextColor.ToHoverTextClass())
+            .ToString();
+    }
+
+    private async Task HandleClickAsync(MouseEventArgs args)
+    {
+        if (Disabled)
+        {
+            return;
+        }
+
+        if (!string.IsNullOrWhiteSpace(Value) && Owner is not null)
+        {
+            await Owner.SelectAsync(Value);
+        }
+
+        await OnClick.InvokeAsync(args);
+    }
+}

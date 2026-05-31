@@ -1,0 +1,14 @@
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+<div @attributes="AdditionalAttributes"
+     class="@CssClass"
+     style="@Style"
+     aria-hidden="true">
+</div>
+
+@code {
+    // MudBlazor compatibility: mirrors MudSpacer, a flexible filler that pushes
+    // sibling content apart inside flex containers such as bars and toolbars.
+    private string CssClass => BuildClass("w3-spacer");
+}

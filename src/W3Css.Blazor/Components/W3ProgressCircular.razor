@@ -1,0 +1,155 @@
+@using System.Globalization
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+<div @attributes="AdditionalAttributes"
+     class="@ProgressCircularClass"
+     style="@RootStyle"
+     role="progressbar"
+     aria-label="@AriaLabel"
+     aria-valuemin="@SafeMin"
+     aria-valuemax="@SafeMax"
+     aria-valuenow="@SafeValue"
+     aria-valuetext="@AriaValueText">
+
+    <svg class="w3-progress-circular-svg" viewBox="@SvgViewBox" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle class="@TrackCircleClass"
+                cx="@Center"
+                cy="@Center"
+                r="@TrackRadius"
+                fill="none"
+                stroke-width="@Thickness"
+                pathLength="100" />
+
+        <circle class="@IndicatorCircleClass"
+                cx="@Center"
+                cy="@Center"
+                r="@TrackRadius"
+                fill="none"
+                stroke-width="@Thickness"
+                stroke-linecap="round"
+                pathLength="100"
+                style="@IndicatorCircleStyle" />
+    </svg>
+
+    @if (ShowLabel)
+    {
+        <span class="w3-progress-circular-label">
+            @ValueLabel
+        </span>
+    }
+</div>
+
+@code {
+    private const double DefaultSize = 48;
+    private const double DefaultThickness = 4;
+    private const double MinimumSize = 16;
+    private const double MaximumValue = 100;
+
+    private double SafeSize => Math.Max(Size, MinimumSize);
+    private double SafeThickness => Math.Clamp(Thickness, 1, Math.Max(SafeSize / 2.5d, 1));
+    private double SafeMin => Min;
+    private double SafeMax => Max > Min ? Max : Min + 0.0001;
+    private double SafeValue => Math.Clamp(Value, SafeMin, SafeMax);
+    private double Percent => (SafeMax - SafeMin) <= 0 ? 0 : (SafeValue - SafeMin) / (SafeMax - SafeMin) * MaximumValue;
+    private double Radius => Math.Max((SafeSize - SafeThickness) / 2d, 1);
+    private string AriaValueText => Indeterminate ? "indeterminate" : $"{Math.Clamp(Percent, 0, MaximumValue):0}%";
+    private string AriaLabel => string.IsNullOrWhiteSpace(AccessibilityLabel) ? "Progress" : AccessibilityLabel;
+    private string ValueLabel => string.IsNullOrWhiteSpace(Label) ? $"{Math.Clamp(Percent, 0, MaximumValue):0}%" : Label!;
+    private string ProgressCircularClass => BuildClass(
+        "w3-progress-circular",
+        Indeterminate ? "w3-progress-circular-indeterminate" : "w3-progress-circular-determinate",
+        TextColor.ToTextClass(),
+        Class);
+
+    private string RootStyle => BuildStyle();
+
+    private string SvgViewBox => $"0 0 {SafeSize.ToString(CultureInfo.InvariantCulture)} {SafeSize.ToString(CultureInfo.InvariantCulture)}";
+    private string Center => (SafeSize / 2d).ToString(CultureInfo.InvariantCulture);
+    private string TrackRadius => Radius.ToString(CultureInfo.InvariantCulture);
+    private string TrackCircleClass => BuildClass(
+        "w3-progress-circular-track",
+        TrackColor.ToTextClass());
+
+    private string IndicatorCircleClass => BuildClass(
+        "w3-progress-circular-indicator",
+        Color.ToTextClass());
+
+    private string IndicatorCircleStyle
+    {
+        get
+        {
+            if (Indeterminate)
+            {
+                return string.Empty;
+            }
+
+            var progress = Math.Clamp(Percent, 0, MaximumValue);
+            var dashOffset = MaximumValue - progress;
+            return $"stroke-dasharray:{MaximumValue.ToString(CultureInfo.InvariantCulture)};"
+                 + $" stroke-dashoffset:{dashOffset.ToString(CultureInfo.InvariantCulture)};";
+        }
+    }
+
+    /// <summary>Minimum value for progress calculations.</summary>
+    [Parameter]
+    public double Min { get; set; }
+
+    /// <summary>Maximum value for progress calculations.</summary>
+    [Parameter]
+    public double Max { get; set; } = MaximumValue;
+
+    /// <summary>Current value for determinate mode.</summary>
+    [Parameter]
+    public double Value { get; set; }
+
+    /// <summary>Indeterminate mode indicates a loading spinner style.</summary>
+    [Parameter]
+    public bool Indeterminate { get; set; }
+
+    /// <summary>Track color for the background ring.</summary>
+    [Parameter]
+    public W3Color TrackColor { get; set; } = W3Color.LightGrey;
+
+    /// <summary>Indicator color.</summary>
+    [Parameter]
+    public W3Color Color { get; set; } = W3Color.Teal;
+
+    /// <summary>Indicator text color (used for contrast against the ring).</summary>
+    [Parameter]
+    public W3Color TextColor { get; set; } = W3Color.Teal;
+
+    /// <summary>Text rendered inside the ring when <see cref="ShowLabel"/> is enabled.</summary>
+    [Parameter]
+    public string? Label { get; set; }
+
+    /// <summary>Accessible label when no custom <see cref="AccessibilityLabel"/> is provided.</summary>
+    [Parameter]
+    public string? AccessibilityLabel { get; set; } = "Progress";
+
+    /// <summary>Total outer size in CSS pixels.</summary>
+    [Parameter]
+    public double Size { get; set; } = DefaultSize;
+
+    /// <summary>Whether ring progress text should be rendered in the center.</summary>
+    [Parameter]
+    public bool ShowLabel { get; set; }
+
+    /// <summary>Stroke width in CSS pixels.</summary>
+    [Parameter]
+    public double Thickness { get; set; } = DefaultThickness;
+
+    private string BuildStyle()
+    {
+        var style = string.Join("; ", new[]
+        {
+            $"width: {SafeSize.ToString(CultureInfo.InvariantCulture)}px",
+            $"height: {SafeSize.ToString(CultureInfo.InvariantCulture)}px",
+            Style
+        }
+            .Where(value => !string.IsNullOrWhiteSpace(value))
+            .Select(value => value!.Trim().TrimEnd(';')));
+
+        return string.IsNullOrWhiteSpace(style) ? string.Empty : $"{style};";
+    }
+}

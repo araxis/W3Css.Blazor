@@ -1,0 +1,70 @@
+@page "/components/tooltip"
+
+<PageTitle>W3Tooltip</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3Tooltip</h1>
+    <DocPager PreviousHref="components/message-box" PreviousText="Message Box" NextHref="components/popover" NextText="Popover" />
+
+    <p class="w3-large">`W3Tooltip` renders the W3.CSS hover tooltip pattern.</p>
+    <p>Because it is CSS hover behavior, use it for short supplemental hints rather than required instructions.</p>
+
+    <DocExample Title="Basic Tooltip" Code="@BasicCode">
+        <W3Tooltip Text="Ships as static CSS plus Razor components">
+            <W3Button Border="true" Round="W3Round.Medium">Hover for details</W3Button>
+        </W3Tooltip>
+    </DocExample>
+
+    <DocExample Title="Custom Tooltip Content" Code="@CustomCode">
+        <W3Tooltip Color="W3Color.Cobalt" TextColor="W3Color.White" Round="W3Round.Large">
+            <ChildContent>
+                <span class="w3-tag w3-teal">Status</span>
+            </ChildContent>
+            <TooltipContent>
+                Stable API
+            </TooltipContent>
+        </W3Tooltip>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Trigger content</td></tr>
+                <tr><td>Text</td><td>string?</td><td>null</td><td>Tooltip text</td></tr>
+                <tr><td>TooltipContent</td><td>RenderFragment?</td><td>null</td><td>Custom tooltip content</td></tr>
+                <tr><td>TextClass</td><td>string?</td><td>null</td><td>Additional tooltip text classes</td></tr>
+                <tr><td>Color</td><td>W3Color</td><td>Black</td><td>Tooltip background</td></tr>
+                <tr><td>TextColor</td><td>W3Color</td><td>White</td><td>Tooltip text color</td></tr>
+                <tr><td>Round</td><td>W3Round</td><td>Medium</td><td>Rounded tooltip class</td></tr>
+                <tr><td>TooltipStyle</td><td>string?</td><td>null</td><td>Tooltip text inline style</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional root classes</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline style on the root wrapper</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <DocPager PreviousHref="components/message-box" PreviousText="Message Box" NextHref="components/popover" NextText="Popover" />
+</W3Container>
+
+@code {
+    private const string BasicCode = """
+<W3Tooltip Text="Ships as static CSS plus Razor components">
+    <W3Button Border="true">Hover for details</W3Button>
+</W3Tooltip>
+""";
+
+    private const string CustomCode = """
+<W3Tooltip Color="W3Color.Cobalt" TextColor="W3Color.White" Round="W3Round.Large">
+    <ChildContent>
+        <span class="w3-tag w3-teal">Status</span>
+    </ChildContent>
+    <TooltipContent>
+        Stable API
+    </TooltipContent>
+</W3Tooltip>
+""";
+}

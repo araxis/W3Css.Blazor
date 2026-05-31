@@ -1,0 +1,409 @@
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+@implements IDisposable
+
+<CascadingValue Value="this" IsFixed="true">
+    <section @attributes="AdditionalAttributes"
+             class="@CssClass"
+             style="@Style"
+             role="region"
+             aria-roledescription="carousel"
+             aria-label="@Label"
+             tabindex="@KeyboardTabIndex"
+             @onkeydown="HandleKeyDownAsync">
+        @if (ActiveSlide is not null)
+        {
+            <div class="@GetSlideCssClass(ActiveSlide)"
+                 style="@ActiveSlide.Style"
+                 id="@ActiveSlide.SlideId"
+                 role="group"
+                 aria-roledescription="slide"
+                 aria-label="@GetSlideLabel(ActiveSlide)">
+                @if (ActiveSlide.ChildContent is not null)
+                {
+                    @ActiveSlide.ChildContent
+                }
+                else if (!string.IsNullOrWhiteSpace(ActiveSlide.Src))
+                {
+                    <W3Image Src="@ActiveSlide.Src"
+                             Alt="@ActiveSlide.Alt"
+                             Width="@ActiveSlide.Width"
+                             Height="@ActiveSlide.Height"
+                             Loading="@ActiveSlide.Loading"
+                             Responsive="@ActiveSlide.Responsive" />
+                }
+
+                @if (ShowCaptions && !string.IsNullOrWhiteSpace(ActiveSlide.Caption))
+                {
+                    <div class="@CaptionCssClass">@ActiveSlide.Caption</div>
+                }
+            </div>
+        }
+
+        @if (ShowControls && EnabledSlides.Count > 1)
+        {
+            <button type="button"
+                    class="@PreviousButtonCssClass"
+                    aria-label="@PreviousLabel"
+                    @onclick="PreviousAsync">
+                &#10094;
+            </button>
+            <button type="button"
+                    class="@NextButtonCssClass"
+                    aria-label="@NextLabel"
+                    @onclick="NextAsync">
+                &#10095;
+            </button>
+        }
+
+        @if (ShowIndicators && EnabledSlides.Count > 1)
+        {
+            <div class="@IndicatorsCssClass">
+                @foreach (var slide in EnabledSlides)
+                {
+                    var active = IsActive(slide);
+                    <button type="button"
+                            class="@GetIndicatorCssClass(active)"
+                            id="@slide.IndicatorId"
+                            aria-label="@slide.IndicatorLabel"
+                            aria-controls="@slide.SlideId"
+                            aria-current="@(active ? "true" : null)"
+                            @onclick="() => ActivateAsync(slide)">
+                    </button>
+                }
+            </div>
+        }
+    </section>
+
+    @ChildContent
+</CascadingValue>
+
+@code {
+    private readonly List<W3Slide> slides = [];
+    private System.Threading.Timer? autoAdvanceTimer;
+    private bool disposed;
+
+    private IReadOnlyList<W3Slide> EnabledSlides => slides.Where(slide => !slide.Disabled).ToArray();
+    private W3Slide? ActiveSlide => EnabledSlides.FirstOrDefault(IsActive) ?? EnabledSlides.FirstOrDefault();
+    private int? KeyboardTabIndex => Keyboard ? 0 : null;
+
+    private string CssClass => BuildClass(
+        "w3-content",
+        "w3-display-container",
+        Color.ToBackgroundClass(),
+        TextColor.ToTextClass());
+
+    private string CaptionCssClass => new W3ClassBuilder()
+        .Add("w3-display-bottommiddle")
+        .Add("w3-container")
+        .Add(CaptionColor.ToBackgroundClass())
+        .Add(CaptionTextColor.ToTextClass())
+        .Add(CaptionClass)
+        .ToString();
+
+    private string PreviousButtonCssClass => new W3ClassBuilder()
+        .Add("w3-button")
+        .Add("w3-display-left")
+        .Add(ControlColor.ToBackgroundClass())
+        .Add(ControlTextColor.ToTextClass())
+        .Add(ControlClass)
+        .ToString();
+
+    private string NextButtonCssClass => new W3ClassBuilder()
+        .Add("w3-button")
+        .Add("w3-display-right")
+        .Add(ControlColor.ToBackgroundClass())
+        .Add(ControlTextColor.ToTextClass())
+        .Add(ControlClass)
+        .ToString();
+
+    private string IndicatorsCssClass => new W3ClassBuilder()
+        .Add("w3-center")
+        .Add("w3-display-bottommiddle")
+        .Add(IndicatorContainerClass)
+        .ToString();
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public string Label { get; set; } = "Slideshow";
+
+    [Parameter]
+    public string? ActiveValue { get; set; }
+
+    [Parameter]
+    public EventCallback<string> ActiveValueChanged { get; set; }
+
+    [Parameter]
+    public bool ShowControls { get; set; } = true;
+
+    [Parameter]
+    public bool ShowIndicators { get; set; } = true;
+
+    [Parameter]
+    public bool ShowCaptions { get; set; } = true;
+
+    [Parameter]
+    public bool Keyboard { get; set; } = true;
+
+    [Parameter]
+    public bool Wrap { get; set; } = true;
+
+    [Parameter]
+    public bool AutoAdvance { get; set; }
+
+    [Parameter]
+    public int Interval { get; set; } = 5000;
+
+    [Parameter]
+    public string PreviousLabel { get; set; } = "Previous slide";
+
+    [Parameter]
+    public string NextLabel { get; set; } = "Next slide";
+
+    [Parameter]
+    public W3Animation Animation { get; set; } = W3Animation.None;
+
+    [Parameter]
+    public W3Color Color { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color TextColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color ControlColor { get; set; } = W3Color.Black;
+
+    [Parameter]
+    public W3Color ControlTextColor { get; set; } = W3Color.White;
+
+    [Parameter]
+    public string? ControlClass { get; set; }
+
+    [Parameter]
+    public W3Color CaptionColor { get; set; } = W3Color.Black;
+
+    [Parameter]
+    public W3Color CaptionTextColor { get; set; } = W3Color.White;
+
+    [Parameter]
+    public string? CaptionClass { get; set; }
+
+    [Parameter]
+    public W3Color ActiveIndicatorColor { get; set; } = W3Color.White;
+
+    [Parameter]
+    public W3Color IndicatorTextColor { get; set; } = W3Color.White;
+
+    [Parameter]
+    public string? IndicatorClass { get; set; }
+
+    [Parameter]
+    public string? IndicatorContainerClass { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        UpdateTimer();
+    }
+
+    internal void Register(W3Slide slide)
+    {
+        if (slides.Contains(slide))
+        {
+            return;
+        }
+
+        slides.Add(slide);
+
+        if (string.IsNullOrWhiteSpace(ActiveValue) && !slide.Disabled)
+        {
+            ActiveValue = slide.Value;
+        }
+
+        UpdateTimer();
+        _ = InvokeAsync(StateHasChanged);
+    }
+
+    internal void Unregister(W3Slide slide)
+    {
+        if (!slides.Remove(slide))
+        {
+            return;
+        }
+
+        if (string.Equals(ActiveValue, slide.Value, StringComparison.Ordinal))
+        {
+            ActiveValue = EnabledSlides.FirstOrDefault()?.Value;
+        }
+
+        UpdateTimer();
+        _ = InvokeAsync(StateHasChanged);
+    }
+
+    private bool IsActive(W3Slide slide)
+    {
+        return string.Equals(ActiveValue, slide.Value, StringComparison.Ordinal);
+    }
+
+    private string GetSlideCssClass(W3Slide slide)
+    {
+        return new W3ClassBuilder()
+            .Add("w3-display-container")
+            .Add(Animation.ToClass())
+            .Add(slide.Class)
+            .ToString();
+    }
+
+    private string GetSlideLabel(W3Slide slide)
+    {
+        if (!string.IsNullOrWhiteSpace(slide.Title))
+        {
+            return slide.Title;
+        }
+
+        var enabledSlides = EnabledSlides;
+        var index = GetSlideIndex(enabledSlides, slide) + 1;
+        return $"Slide {index} of {enabledSlides.Count}";
+    }
+
+    private string GetIndicatorCssClass(bool active)
+    {
+        return new W3ClassBuilder()
+            .Add("w3-button")
+            .Add("w3-badge")
+            .Add("w3-border")
+            .Add("w3-transparent")
+            .Add("w3-hover-white")
+            .Add(IndicatorTextColor.ToTextClass())
+            .AddIf(active, ActiveIndicatorColor.ToBackgroundClass())
+            .Add(IndicatorClass)
+            .ToString();
+    }
+
+    private Task PreviousAsync()
+    {
+        return MoveAsync(-1);
+    }
+
+    private Task NextAsync()
+    {
+        return MoveAsync(1);
+    }
+
+    private async Task MoveAsync(int direction)
+    {
+        var enabledSlides = EnabledSlides;
+
+        if (enabledSlides.Count == 0)
+        {
+            return;
+        }
+
+        var active = ActiveSlide;
+        var currentIndex = active is null ? 0 : GetSlideIndex(enabledSlides, active);
+        var nextIndex = currentIndex + direction;
+
+        if (Wrap)
+        {
+            nextIndex = (nextIndex + enabledSlides.Count) % enabledSlides.Count;
+        }
+        else
+        {
+            nextIndex = Math.Clamp(nextIndex, 0, enabledSlides.Count - 1);
+        }
+
+        await ActivateAsync(enabledSlides[nextIndex]);
+    }
+
+    private static int GetSlideIndex(IReadOnlyList<W3Slide> enabledSlides, W3Slide slide)
+    {
+        for (var index = 0; index < enabledSlides.Count; index++)
+        {
+            if (ReferenceEquals(enabledSlides[index], slide))
+            {
+                return index;
+            }
+        }
+
+        return 0;
+    }
+
+    private async Task ActivateAsync(W3Slide slide)
+    {
+        if (slide.Disabled || IsActive(slide))
+        {
+            return;
+        }
+
+        ActiveValue = slide.Value;
+        await ActiveValueChanged.InvokeAsync(slide.Value);
+    }
+
+    private async Task HandleKeyDownAsync(KeyboardEventArgs args)
+    {
+        if (!Keyboard)
+        {
+            return;
+        }
+
+        if (args.Key == "ArrowLeft")
+        {
+            await PreviousAsync();
+        }
+        else if (args.Key == "ArrowRight")
+        {
+            await NextAsync();
+        }
+        else if (args.Key == "Home" && EnabledSlides.Count > 0)
+        {
+            await ActivateAsync(EnabledSlides[0]);
+        }
+        else if (args.Key == "End" && EnabledSlides.Count > 0)
+        {
+            await ActivateAsync(EnabledSlides[^1]);
+        }
+    }
+
+    private void UpdateTimer()
+    {
+        if (disposed || !AutoAdvance || EnabledSlides.Count < 2)
+        {
+            DisposeTimer();
+            return;
+        }
+
+        var interval = Math.Max(250, Interval);
+
+        if (autoAdvanceTimer is null)
+        {
+            autoAdvanceTimer = new System.Threading.Timer(_ => _ = InvokeAsync(AdvanceFromTimerAsync), null, interval, interval);
+        }
+        else
+        {
+            autoAdvanceTimer.Change(interval, interval);
+        }
+    }
+
+    private async Task AdvanceFromTimerAsync()
+    {
+        if (disposed || !AutoAdvance || EnabledSlides.Count < 2)
+        {
+            return;
+        }
+
+        await NextAsync();
+        StateHasChanged();
+    }
+
+    private void DisposeTimer()
+    {
+        autoAdvanceTimer?.Dispose();
+        autoAdvanceTimer = null;
+    }
+
+    public void Dispose()
+    {
+        disposed = true;
+        DisposeTimer();
+    }
+}

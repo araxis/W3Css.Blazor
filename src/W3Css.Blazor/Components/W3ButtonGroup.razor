@@ -1,0 +1,59 @@
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+<div @attributes="AdditionalAttributes"
+     class="@CssClass"
+     style="@StyleValue"
+     role="group"
+     aria-label="@Label">
+    @ChildContent
+</div>
+
+@code {
+    private string CssClass => BuildClass(
+        "w3-button-group",
+        Vertical ? "w3-button-group-vertical" : "w3-button-group-horizontal",
+        Connected ? "w3-button-group-connected" : null,
+        Border ? "w3-border" : null,
+        Round.ToClass(),
+        Color.ToBackgroundClass(),
+        TextColor.ToTextClass());
+
+    private string? StyleValue => CombineStyle(!Connected && Gap >= 0 ? $"--w3-button-group-gap:{Gap}px" : null, Style);
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public string Label { get; set; } = "Button group";
+
+    [Parameter]
+    public bool Vertical { get; set; }
+
+    [Parameter]
+    public bool Connected { get; set; } = true;
+
+    [Parameter]
+    public bool Border { get; set; }
+
+    [Parameter]
+    public W3Round Round { get; set; } = W3Round.None;
+
+    [Parameter]
+    public int Gap { get; set; } = 8;
+
+    [Parameter]
+    public W3Color Color { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color TextColor { get; set; } = W3Color.None;
+
+    private static string? CombineStyle(params string?[] styles)
+    {
+        var style = string.Join(';', styles
+            .Where(value => !string.IsNullOrWhiteSpace(value))
+            .Select(value => value!.Trim().TrimEnd(';')));
+
+        return string.IsNullOrWhiteSpace(style) ? null : style;
+    }
+}

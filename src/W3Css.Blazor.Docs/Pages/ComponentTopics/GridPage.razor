@@ -1,0 +1,61 @@
+@page "/components/grid"
+
+<PageTitle>W3Grid</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3Grid</h1>
+    <DocPager PreviousHref="components/column" PreviousText="Column" NextHref="components/flex" NextText="Flex" />
+
+    <p class="w3-large">`W3Grid` renders the W3.CSS grid display helper.</p>
+    <p>Use `Style` or utility classes to define track behavior while the component supplies the W3.CSS grid class.</p>
+
+    <DocExample Title="Responsive Grid" Code="@ResponsiveCode">
+        <W3Grid Padding="true" Style="grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));">
+            <W3Panel Color="W3Color.PaleBlue" TextColor="W3Color.Black" Border="true">Grid item</W3Panel>
+            <W3Panel Color="W3Color.PaleGreen" TextColor="W3Color.Black" Border="true">Grid item</W3Panel>
+            <W3Panel Color="W3Color.PaleYellow" TextColor="W3Color.Black" Border="true">Grid item</W3Panel>
+        </W3Grid>
+    </DocExample>
+
+    <DocExample Title="Plain Grid" Code="@PlainCode">
+        <W3Grid Style="grid-template-columns: 1fr 1fr; gap: 8px;">
+            <W3Container Color="W3Color.Teal" TextColor="W3Color.White">One</W3Container>
+            <W3Container Color="W3Color.Black" TextColor="W3Color.White">Two</W3Container>
+        </W3Grid>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Padding</td><td>bool</td><td>false</td><td>`w3-grid-padding` instead of `w3-grid`</td></tr>
+                <tr><td>Color</td><td>W3Color</td><td>None</td><td>Background color class</td></tr>
+                <tr><td>TextColor</td><td>W3Color</td><td>None</td><td>Text color class</td></tr>
+                <tr><td>Class</td><td>string</td><td>null</td><td>Additional root grid classes</td></tr>
+                <tr><td>Style</td><td>string</td><td>null</td><td>Inline grid tracks and gaps</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <DocPager PreviousHref="components/column" PreviousText="Column" NextHref="components/flex" NextText="Flex" />
+</W3Container>
+
+@code {
+    private const string ResponsiveCode = """
+<W3Grid Padding="true" Style="grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));">
+    <W3Panel>Grid item</W3Panel>
+    <W3Panel>Grid item</W3Panel>
+    <W3Panel>Grid item</W3Panel>
+</W3Grid>
+""";
+
+    private const string PlainCode = """
+<W3Grid Style="grid-template-columns: 1fr 1fr; gap: 8px;">
+    <W3Container>One</W3Container>
+    <W3Container>Two</W3Container>
+</W3Grid>
+""";
+}

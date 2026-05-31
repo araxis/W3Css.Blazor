@@ -1,0 +1,137 @@
+.w3-app-bar {
+    align-items: stretch;
+    display: flex;
+    min-height: 48px;
+    width: 100%;
+}
+
+.w3-app-bar.w3-top,
+.w3-app-bar.w3-bottom,
+.w3-app-bar-sticky {
+    z-index: 4;
+}
+
+.w3-app-bar-sticky {
+    position: sticky;
+    top: 0;
+}
+
+.w3-app-bar-dense {
+    min-height: 40px;
+}
+
+.w3-app-bar-prominent {
+    min-height: 72px;
+}
+
+.w3-app-bar-leading,
+.w3-app-bar-title,
+.w3-app-bar-nav,
+.w3-app-bar-actions {
+    align-items: center;
+    display: flex;
+    min-width: 0;
+}
+
+.w3-app-bar-leading,
+.w3-app-bar-actions {
+    flex: 0 0 auto;
+}
+
+.w3-app-bar-title {
+    align-items: flex-start;
+    flex: 0 1 auto;
+    flex-direction: column;
+    justify-content: center;
+    line-height: 1.25;
+    padding-bottom: 8px;
+    padding-top: 8px;
+}
+
+.w3-app-bar-title-single {
+    align-items: center;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.w3-app-bar-title-link,
+.w3-app-bar-title-text {
+    color: inherit;
+    display: block;
+    font-weight: 600;
+    max-width: 100%;
+    min-width: 0;
+    overflow: hidden;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+}
+
+.w3-app-bar-subtitle {
+    font-size: 0.82rem;
+    opacity: 0.78;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+}
+
+.w3-app-bar-nav {
+    flex: 0 1 auto;
+    overflow-x: auto;
+}
+
+.w3-app-bar-actions {
+    margin-left: auto;
+}
+
+.w3-app-bar-menu-button {
+    align-items: center;
+    display: inline-flex;
+    gap: 0.5rem;
+    height: 100%;
+    justify-content: center;
+    white-space: nowrap;
+}
+
+.w3-app-bar ::deep .w3-bar-item {
+    align-items: center;
+    display: inline-flex;
+    float: none;
+    min-height: 100%;
+    white-space: nowrap;
+}
+
+.w3-app-bar > .w3-app-bar-title:not(.w3-app-bar-title-single) {
+    align-items: flex-start;
+}
+
+.w3-app-bar > .w3-app-bar-title-single {
+    align-items: center;
+}
+
+.w3-app-bar-nav ::deep .w3-dropdown-click,
+.w3-app-bar-actions ::deep .w3-dropdown-click {
+    float: none;
+}
+
+@media (max-width: 600px) {
+    .w3-app-bar-mobile {
+        flex-wrap: wrap;
+    }
+
+    .w3-app-bar-mobile .w3-app-bar-title {
+        flex: 1 1 auto;
+    }
+
+    .w3-app-bar-mobile .w3-app-bar-nav {
+        flex: 1 0 100%;
+        order: 4;
+    }
+
+    .w3-app-bar-mobile .w3-app-bar-nav ::deep .w3-bar-item {
+        flex: 1 0 auto;
+        justify-content: center;
+    }
+}

@@ -1,0 +1,239 @@
+@page "/components/nav-menu"
+
+<PageTitle>W3NavMenu</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3NavMenu</h1>
+    <DocPager PreviousHref="components/navbar" PreviousText="Navbar" NextHref="components/bottom-navigation" NextText="Bottom Navigation" />
+
+    <p class="w3-large"><code>W3NavMenu</code> builds grouped side navigation with route-aware <code>NavLink</code> items, collapsible sections, badges, icons, and header or footer slots.</p>
+    <p>Use it inside sidebars, app shells, dashboards, settings pages, or documentation layouts when low-level bars and links need a reusable menu structure.</p>
+
+    <DocExample Title="Grouped App Navigation" Description="Use groups for product areas and active item classes for the current destination." Code="@BasicCode">
+        <W3NavMenu Label="Workspace navigation"
+                   Border="true"
+                   Round="W3Round.Medium"
+                   Color="W3Color.White"
+                   ActiveColor="W3Color.Teal"
+                   ActiveTextColor="W3Color.White">
+            <Header>
+                <strong>Studio</strong>
+                <div class="w3-small w3-text-grey">Project admin</div>
+            </Header>
+            <ChildContent>
+                <W3NavMenuGroup Title="Build" @bind-Expanded="BuildOpen">
+                    <W3NavMenuItem Href="components/app-shell" IconClass="fa fa-columns" Text="App Shell" />
+                    <W3NavMenuItem Href="components/data-table" IconClass="fa fa-table" Badge="3" BadgeColor="W3Color.Black" BadgeTextColor="W3Color.White" Active="true">Data Tools</W3NavMenuItem>
+                    <W3NavMenuItem Href="components/tree-view" IconClass="fa fa-sitemap" Text="Tree View" />
+                </W3NavMenuGroup>
+                <W3NavMenuGroup Title="Workflow" Expanded="true">
+                    <W3NavMenuItem Href="components/stepper" IconClass="fa fa-check-square-o" Text="Stepper" />
+                    <W3NavMenuItem Href="components/toast" IconClass="fa fa-bell-o" Text="Toast" />
+                </W3NavMenuGroup>
+            </ChildContent>
+            <Footer>
+                <span class="w3-small w3-text-grey">Updated for app and site navigation.</span>
+            </Footer>
+        </W3NavMenu>
+    </DocExample>
+
+    <DocExample Title="Inside W3Sidebar" Description="Keep side surface state in `W3Sidebar` and let the menu own grouped navigation content." Code="@SidebarCode">
+        <W3Button Color="W3Color.Teal" TextColor="W3Color.White" Round="W3Round.Medium" OnClick="@(() => SidebarOpen = true)">Open menu</W3Button>
+
+        <W3Sidebar @bind-Open="SidebarOpen" Width="280" Overlay="true" Color="W3Color.White">
+            <Header>
+                <W3Container Color="W3Color.Teal" TextColor="W3Color.White">
+                    <h3>Workspace</h3>
+                </W3Container>
+            </Header>
+            <ChildContent>
+                <W3NavMenu Label="Sidebar navigation" Compact="true" ActiveColor="W3Color.Indigo">
+                    <W3NavMenuGroup Title="Pages" Expanded="true">
+                        <W3NavMenuItem Href="components" IconClass="fa fa-th-large" Text="Components" />
+                        <W3NavMenuItem Href="components/sidebar" IconClass="fa fa-bars" Text="Sidebar" />
+                        <W3NavMenuItem Href="components/nav-menu" IconClass="fa fa-list" Text="Nav Menu" Active="true" />
+                    </W3NavMenuGroup>
+                    <W3NavMenuGroup Title="Support" Expanded="true">
+                        <W3NavMenuItem Href="roadmap" IconClass="fa fa-map-o" Text="Roadmap" />
+                    </W3NavMenuGroup>
+                </W3NavMenu>
+            </ChildContent>
+        </W3Sidebar>
+    </DocExample>
+
+    <DocExample Title="Compact Command Menu" Description="Menu items without `Href` render as buttons, so the same structure can drive app commands." Code="@CommandCode">
+        <W3NavMenu Label="Command menu"
+                   Compact="true"
+                   Border="true"
+                   Color="W3Color.LightGrey"
+                   ActiveColor="W3Color.Blue"
+                   ActiveTextColor="W3Color.White">
+            <ChildContent>
+                <W3NavMenuGroup Title="Commands" Collapsible="false">
+                    <W3NavMenuItem IconClass="fa fa-play" Text="Run check" OnClick="@(_ => RunCheck())" />
+                    <W3NavMenuItem IconClass="fa fa-cog" Text="Open settings" OnClick="@(_ => OpenSettings())" />
+                    <W3NavMenuItem IconClass="fa fa-lock" Text="Deploy locked" Disabled="true" />
+                </W3NavMenuGroup>
+            </ChildContent>
+            <Footer>
+                <span class="w3-small">Last action: @LastAction</span>
+            </Footer>
+        </W3NavMenu>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>W3NavMenu Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Label</td><td>string</td><td>Navigation menu</td><td>`aria-label` on the `nav` element</td></tr>
+                <tr><td>Header</td><td>RenderFragment?</td><td>null</td><td>Optional menu header slot</td></tr>
+                <tr><td>Footer</td><td>RenderFragment?</td><td>null</td><td>Optional menu footer slot</td></tr>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Menu groups and items</td></tr>
+                <tr><td>Compact</td><td>bool</td><td>false</td><td>Reduces local menu spacing</td></tr>
+                <tr><td>Border</td><td>bool</td><td>false</td><td>`w3-border`</td></tr>
+                <tr><td>Card</td><td>bool</td><td>false</td><td>Uses `CardDepth` to add a W3.CSS card class</td></tr>
+                <tr><td>CardDepth</td><td>W3CardDepth</td><td>Four</td><td>Card depth class when Card is true</td></tr>
+                <tr><td>Round</td><td>W3Round</td><td>None</td><td>Rounded utility class</td></tr>
+                <tr><td>Color</td><td>W3Color</td><td>None</td><td>Menu background color</td></tr>
+                <tr><td>TextColor</td><td>W3Color</td><td>None</td><td>Menu text color</td></tr>
+                <tr><td>ActiveColor</td><td>W3Color</td><td>Teal</td><td>Inherited active item background</td></tr>
+                <tr><td>ActiveTextColor</td><td>W3Color</td><td>White</td><td>Inherited active item text color</td></tr>
+                <tr><td>HoverColor</td><td>W3Color</td><td>LightGrey</td><td>Inherited item hover background</td></tr>
+                <tr><td>HoverTextColor</td><td>W3Color</td><td>None</td><td>Inherited item hover text color</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional nav classes</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline style on the nav</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Group And Item Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Component</th><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>W3NavMenuGroup</td><td>Title</td><td>string</td><td>Required</td><td>Group heading or toggle label</td></tr>
+                <tr><td>W3NavMenuGroup</td><td>Collapsible</td><td>bool</td><td>true</td><td>Button disclosure with `aria-expanded`</td></tr>
+                <tr><td>W3NavMenuGroup</td><td>Expanded</td><td>bool</td><td>true</td><td>Shows or hides group content</td></tr>
+                <tr><td>W3NavMenuGroup</td><td>ExpandedChanged</td><td>EventCallback&lt;bool&gt;</td><td>none</td><td>Raised when a collapsible group toggles</td></tr>
+                <tr><td>W3NavMenuGroup</td><td>Disabled</td><td>bool</td><td>false</td><td>Disables the group toggle</td></tr>
+                <tr><td>W3NavMenuGroup</td><td>Color and TextColor</td><td>W3Color</td><td>None</td><td>Group button or title colors</td></tr>
+                <tr><td>W3NavMenuGroup</td><td>HoverColor and HoverTextColor</td><td>W3Color</td><td>Owner values</td><td>Group button hover classes</td></tr>
+                <tr><td>W3NavMenuGroup</td><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Group items</td></tr>
+                <tr><td>W3NavMenuGroup</td><td>Class and Style</td><td>string?</td><td>null</td><td>Group wrapper classes and style</td></tr>
+                <tr><td>W3NavMenuItem</td><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Custom label content</td></tr>
+                <tr><td>W3NavMenuItem</td><td>Href</td><td>string?</td><td>null</td><td>Renders `NavLink` when set</td></tr>
+                <tr><td>W3NavMenuItem</td><td>Target</td><td>string?</td><td>null</td><td>Anchor target attribute</td></tr>
+                <tr><td>W3NavMenuItem</td><td>Match</td><td>NavLinkMatch</td><td>Prefix</td><td>Blazor active-route matching</td></tr>
+                <tr><td>W3NavMenuItem</td><td>Text</td><td>string?</td><td>null</td><td>Text fallback when no child content is supplied</td></tr>
+                <tr><td>W3NavMenuItem</td><td>IconClass</td><td>string?</td><td>null</td><td>Consumer icon class pass-through</td></tr>
+                <tr><td>W3NavMenuItem</td><td>Badge</td><td>string?</td><td>null</td><td>Optional W3.CSS badge text</td></tr>
+                <tr><td>W3NavMenuItem</td><td>BadgeColor and BadgeTextColor</td><td>W3Color</td><td>None</td><td>Badge color classes</td></tr>
+                <tr><td>W3NavMenuItem</td><td>Button</td><td>bool</td><td>true</td><td>`w3-button` on the item</td></tr>
+                <tr><td>W3NavMenuItem</td><td>Type</td><td>string</td><td>button</td><td>Button type when Href is not set</td></tr>
+                <tr><td>W3NavMenuItem</td><td>Active</td><td>bool</td><td>false</td><td>Manual active state with `aria-current="page"`</td></tr>
+                <tr><td>W3NavMenuItem</td><td>Disabled</td><td>bool</td><td>false</td><td>`w3-disabled` and non-interactive rendering</td></tr>
+                <tr><td>W3NavMenuItem</td><td>Color and TextColor</td><td>W3Color</td><td>None</td><td>Item color classes</td></tr>
+                <tr><td>W3NavMenuItem</td><td>ActiveColor and ActiveTextColor</td><td>W3Color</td><td>Owner values</td><td>Item active color overrides</td></tr>
+                <tr><td>W3NavMenuItem</td><td>HoverColor and HoverTextColor</td><td>W3Color</td><td>Owner values</td><td>Item hover classes</td></tr>
+                <tr><td>W3NavMenuItem</td><td>OnClick</td><td>EventCallback&lt;MouseEventArgs&gt;</td><td>none</td><td>Raised on item click</td></tr>
+                <tr><td>W3NavMenuItem</td><td>Class and Style</td><td>string?</td><td>null</td><td>Item classes and inline style</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Related</h2>
+        <p><NavLink href="components/sidebar">Sidebar</NavLink> supplies fixed side surfaces for app navigation.</p>
+        <p><NavLink href="components/navbar">Navbar</NavLink> covers horizontal primary navigation.</p>
+        <p><NavLink href="components/bottom-navigation">Bottom Navigation</NavLink> covers mobile-first app destinations.</p>
+        <p><NavLink href="components/accordion">Accordion</NavLink> covers lower-level disclosure state.</p>
+        <p><NavLink href="components/app-shell">App Shell</NavLink> shows full shell composition.</p>
+    </section>
+
+    <DocPager PreviousHref="components/navbar" PreviousText="Navbar" NextHref="components/bottom-navigation" NextText="Bottom Navigation" />
+</W3Container>
+
+@code {
+    private bool BuildOpen { get; set; } = true;
+    private bool SidebarOpen { get; set; }
+    private string LastAction { get; set; } = "None";
+
+    private void RunCheck()
+    {
+        LastAction = "Run check";
+    }
+
+    private void OpenSettings()
+    {
+        LastAction = "Open settings";
+    }
+
+    private const string BasicCode = """
+<W3NavMenu Label="Workspace navigation"
+           Border="true"
+           Round="W3Round.Medium"
+           Color="W3Color.White"
+           ActiveColor="W3Color.Teal"
+           ActiveTextColor="W3Color.White">
+    <Header>
+        <strong>Studio</strong>
+        <div class="w3-small w3-text-grey">Project admin</div>
+    </Header>
+    <ChildContent>
+        <W3NavMenuGroup Title="Build" @bind-Expanded="buildOpen">
+            <W3NavMenuItem Href="components/app-shell" IconClass="fa fa-columns" Text="App Shell" />
+            <W3NavMenuItem Href="components/data-table" IconClass="fa fa-table" Badge="3" BadgeColor="W3Color.Black" BadgeTextColor="W3Color.White" Active="true">Data Tools</W3NavMenuItem>
+            <W3NavMenuItem Href="components/tree-view" IconClass="fa fa-sitemap" Text="Tree View" />
+        </W3NavMenuGroup>
+        <W3NavMenuGroup Title="Workflow" Expanded="true">
+            <W3NavMenuItem Href="components/stepper" IconClass="fa fa-check-square-o" Text="Stepper" />
+            <W3NavMenuItem Href="components/toast" IconClass="fa fa-bell-o" Text="Toast" />
+        </W3NavMenuGroup>
+    </ChildContent>
+    <Footer>
+        <span class="w3-small w3-text-grey">Updated for app and site navigation.</span>
+    </Footer>
+</W3NavMenu>
+""";
+
+    private const string SidebarCode = """
+<W3Button OnClick="@(() => sidebarOpen = true)">Open menu</W3Button>
+
+<W3Sidebar @bind-Open="sidebarOpen" Width="280" Overlay="true" Color="W3Color.White">
+    <Header>
+        <W3Container Color="W3Color.Teal" TextColor="W3Color.White">
+            <h3>Workspace</h3>
+        </W3Container>
+    </Header>
+    <ChildContent>
+        <W3NavMenu Label="Sidebar navigation" Compact="true" ActiveColor="W3Color.Indigo">
+            <W3NavMenuGroup Title="Pages" Expanded="true">
+                <W3NavMenuItem Href="components" IconClass="fa fa-th-large" Text="Components" />
+                <W3NavMenuItem Href="components/sidebar" IconClass="fa fa-bars" Text="Sidebar" />
+                <W3NavMenuItem Href="components/nav-menu" IconClass="fa fa-list" Text="Nav Menu" Active="true" />
+            </W3NavMenuGroup>
+        </W3NavMenu>
+    </ChildContent>
+</W3Sidebar>
+""";
+
+    private const string CommandCode = """
+<W3NavMenu Label="Command menu" Compact="true" Border="true" Color="W3Color.LightGrey">
+    <ChildContent>
+        <W3NavMenuGroup Title="Commands" Collapsible="false">
+            <W3NavMenuItem IconClass="fa fa-play" Text="Run check" OnClick="@(_ => RunCheck())" />
+            <W3NavMenuItem IconClass="fa fa-cog" Text="Open settings" OnClick="@(_ => OpenSettings())" />
+            <W3NavMenuItem IconClass="fa fa-lock" Text="Deploy locked" Disabled="true" />
+        </W3NavMenuGroup>
+    </ChildContent>
+    <Footer>
+        <span class="w3-small">Last action: @lastAction</span>
+    </Footer>
+</W3NavMenu>
+""";
+}

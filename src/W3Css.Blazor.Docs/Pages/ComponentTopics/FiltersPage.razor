@@ -1,0 +1,218 @@
+@page "/components/filters"
+
+<PageTitle>Filters</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>Filters</h1>
+    <DocPager PreviousHref="components/highlighter" PreviousText="Highlighter" NextHref="components/note" NextText="Note" />
+
+    <p class="w3-large">W3.CSS filter examples combine styled inputs with tables, lists, or dropdown content.</p>
+    <p>In Blazor, keep the input and filtering state in C# and use W3.CSS classes for the visible controls.</p>
+
+    <DocExample Title="Filter Table" Code="@TableFilterCode">
+        <W3Input @bind-Value="TableFilter"
+                 UpdateOnInput="true"
+                 Placeholder="Search people"
+                 Border="true"
+                 Round="W3Round.Medium"
+                 Class="w3-margin-bottom"
+                 aria-label="Search people" />
+
+        <W3Table Striped="true" Bordered="true" Hoverable="true" Responsive="true" Class="w3-white" aria-label="Filtered people">
+            <thead>
+                <tr><th>Name</th><th>City</th><th>Role</th></tr>
+            </thead>
+            <tbody>
+                @foreach (var person in FilteredPeople)
+                {
+                    <tr @key="person.Name">
+                        <td>@person.Name</td>
+                        <td>@person.City</td>
+                        <td>@person.Role</td>
+                    </tr>
+                }
+                @if (FilteredPeople.Count == 0)
+                {
+                    <tr><td colspan="3">No matches</td></tr>
+                }
+            </tbody>
+        </W3Table>
+    </DocExample>
+
+    <DocExample Title="Filter List" Code="@ListFilterCode">
+        <W3Input @bind-Value="TopicFilter"
+                 UpdateOnInput="true"
+                 Placeholder="Search topics"
+                 Border="true"
+                 Round="W3Round.Medium"
+                 Class="w3-margin-bottom"
+                 aria-label="Search topics" />
+
+        <W3List Border="true" Hoverable="true" Color="W3Color.White">
+            @foreach (var topic in FilteredTopics)
+            {
+                <li @key="topic">@topic</li>
+            }
+            @if (FilteredTopics.Count == 0)
+            {
+                <li>No matches</li>
+            }
+        </W3List>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Guidance</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Part</th><th>Use</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>`W3Input`</td><td>Bind the search text and set `UpdateOnInput` for per-keystroke updates</td><td>`w3-input`, optional border, round, and color classes</td></tr>
+                <tr><td>Filtered data</td><td>Use computed C# collections from the bound search text</td><td>Blazor rendering and normal .NET filtering</td></tr>
+                <tr><td>Display component</td><td>Render the result with `W3Table`, `W3List`, or dropdown content</td><td>W3.CSS table, list, and menu classes</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Related W3.CSS</h2>
+        <p><a href="https://www.w3schools.com/w3css/w3css_filters.asp" target="_blank" rel="noopener">W3.CSS Filters</a></p>
+    </section>
+
+    <DocPager PreviousHref="components/highlighter" PreviousText="Highlighter" NextHref="components/note" NextText="Note" />
+</W3Container>
+
+@code {
+    private string? TableFilter;
+    private string? TopicFilter;
+
+    private static readonly PersonRecord[] People =
+    [
+        new("Ada Lovelace", "London", "Analyst"),
+        new("Grace Hopper", "Arlington", "Compiler pioneer"),
+        new("Katherine Johnson", "White Sulphur Springs", "Mathematician"),
+        new("Mary Jackson", "Hampton", "Engineer")
+    ];
+
+    private static readonly string[] Topics =
+    [
+        "Buttons",
+        "Cards",
+        "Dark Mode",
+        "Dropdowns",
+        "Filters",
+        "Tables"
+    ];
+
+    private IReadOnlyList<PersonRecord> FilteredPeople => People
+        .Where(person => Matches($"{person.Name} {person.City} {person.Role}", TableFilter))
+        .ToArray();
+
+    private IReadOnlyList<string> FilteredTopics => Topics
+        .Where(topic => Matches(topic, TopicFilter))
+        .ToArray();
+
+    private static bool Matches(string value, string? filter)
+    {
+        return string.IsNullOrWhiteSpace(filter) || value.Contains(filter, StringComparison.OrdinalIgnoreCase);
+    }
+
+    private sealed record PersonRecord(string Name, string City, string Role);
+
+    private const string TableFilterCode = """
+<W3Input @bind-Value="tableFilter"
+         UpdateOnInput="true"
+         Placeholder="Search people"
+         Border="true"
+         Round="W3Round.Medium"
+         Class="w3-margin-bottom"
+         aria-label="Search people" />
+
+<W3Table Striped="true" Bordered="true" Hoverable="true" Responsive="true" Class="w3-white" aria-label="Filtered people">
+    <thead>
+        <tr><th>Name</th><th>City</th><th>Role</th></tr>
+    </thead>
+    <tbody>
+        @foreach (var person in FilteredPeople)
+        {
+            <tr @key="person.Name">
+                <td>@person.Name</td>
+                <td>@person.City</td>
+                <td>@person.Role</td>
+            </tr>
+        }
+        @if (FilteredPeople.Count == 0)
+        {
+            <tr><td colspan="3">No matches</td></tr>
+        }
+    </tbody>
+</W3Table>
+
+@code {
+    private string? tableFilter;
+
+    private static readonly PersonRecord[] People =
+    [
+        new("Ada Lovelace", "London", "Analyst"),
+        new("Grace Hopper", "Arlington", "Compiler pioneer"),
+        new("Katherine Johnson", "White Sulphur Springs", "Mathematician"),
+        new("Mary Jackson", "Hampton", "Engineer")
+    ];
+
+    private IReadOnlyList<PersonRecord> FilteredPeople => People
+        .Where(person => Matches($"{person.Name} {person.City} {person.Role}", tableFilter))
+        .ToArray();
+
+    private static bool Matches(string value, string? filter)
+    {
+        return string.IsNullOrWhiteSpace(filter) || value.Contains(filter, StringComparison.OrdinalIgnoreCase);
+    }
+
+    private sealed record PersonRecord(string Name, string City, string Role);
+}
+""";
+
+    private const string ListFilterCode = """
+<W3Input @bind-Value="topicFilter"
+         UpdateOnInput="true"
+         Placeholder="Search topics"
+         Border="true"
+         Round="W3Round.Medium"
+         Class="w3-margin-bottom"
+         aria-label="Search topics" />
+
+<W3List Border="true" Hoverable="true" Color="W3Color.White">
+    @foreach (var topic in FilteredTopics)
+    {
+        <li @key="topic">@topic</li>
+    }
+    @if (FilteredTopics.Count == 0)
+    {
+        <li>No matches</li>
+    }
+</W3List>
+
+@code {
+    private string? topicFilter;
+
+    private static readonly string[] Topics =
+    [
+        "Buttons",
+        "Cards",
+        "Dark Mode",
+        "Dropdowns",
+        "Filters",
+        "Tables"
+    ];
+
+    private IReadOnlyList<string> FilteredTopics => Topics
+        .Where(topic => Matches(topic, topicFilter))
+        .ToArray();
+
+    private static bool Matches(string value, string? filter)
+    {
+        return string.IsNullOrWhiteSpace(filter) || value.Contains(filter, StringComparison.OrdinalIgnoreCase);
+    }
+}
+""";
+}

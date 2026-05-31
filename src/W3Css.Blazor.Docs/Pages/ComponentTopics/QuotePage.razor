@@ -1,0 +1,60 @@
+@page "/components/quote"
+
+<PageTitle>W3Quote</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3Quote</h1>
+    <DocPager PreviousHref="components/note" PreviousText="Note" NextHref="components/button" NextText="Button" />
+
+    <p class="w3-large">`W3Quote` renders a blockquote with W3.CSS panel and bar utility classes.</p>
+    <p>Use it for short quotes, testimonials, citations, and pull-out content.</p>
+
+    <DocExample Title="Basic Quote" Code="@BasicCode">
+        <W3Quote Cite="W3Css.Blazor" BorderColor="W3Color.Teal" Round="W3Round.Medium">
+            Simple components are easier to remember and easier to replace.
+        </W3Quote>
+    </DocExample>
+
+    <DocExample Title="Right Bar Quote" Code="@RightCode">
+        <W3Quote LeftBar="false" RightBar="true" Color="W3Color.PaleBlue" TextColor="W3Color.Black" BorderColor="W3Color.Blue">
+            Use the bar position that fits the surrounding layout.
+        </W3Quote>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Quote body</td></tr>
+                <tr><td>Cite</td><td>string?</td><td>null</td><td>Footer citation</td></tr>
+                <tr><td>LeftBar</td><td>bool</td><td>true</td><td>`w3-leftbar`</td></tr>
+                <tr><td>RightBar</td><td>bool</td><td>false</td><td>`w3-rightbar`</td></tr>
+                <tr><td>Color</td><td>W3Color</td><td>LightGrey</td><td>Background color class</td></tr>
+                <tr><td>TextColor</td><td>W3Color</td><td>Black</td><td>Text color class</td></tr>
+                <tr><td>BorderColor</td><td>W3Color</td><td>None</td><td>Border color class</td></tr>
+                <tr><td>Round</td><td>W3Round</td><td>None</td><td>Rounded corner class</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional classes on the blockquote</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline styles on the blockquote</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <DocPager PreviousHref="components/note" PreviousText="Note" NextHref="components/button" NextText="Button" />
+</W3Container>
+
+@code {
+    private const string BasicCode = """
+<W3Quote Cite="W3Css.Blazor" BorderColor="W3Color.Teal" Round="W3Round.Medium">
+    Simple components are easier to remember and easier to replace.
+</W3Quote>
+""";
+
+    private const string RightCode = """
+<W3Quote LeftBar="false" RightBar="true" Color="W3Color.PaleBlue" TextColor="W3Color.Black" BorderColor="W3Color.Blue">
+    Use the bar position that fits the surrounding layout.
+</W3Quote>
+""";
+}

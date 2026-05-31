@@ -1,0 +1,10 @@
+.w3-chip-set {
+    align-items: center;
+    display: flex;
+    gap: var(--w3-chip-set-gap, 8px);
+    min-width: 0;
+}
+
+.w3-chip-set-wrap {
+    flex-wrap: wrap;
+}

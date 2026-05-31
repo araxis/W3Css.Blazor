@@ -1,0 +1,85 @@
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+<CascadingValue Value="this" IsFixed="true">
+    <nav @attributes="AdditionalAttributes"
+         class="@CssClass"
+         style="@Style"
+         aria-label="@Label">
+        @if (Header is not null)
+        {
+            <div class="w3-nav-menu-header">
+                @Header
+            </div>
+        }
+
+        <div class="w3-nav-menu-items">
+            @ChildContent
+        </div>
+
+        @if (Footer is not null)
+        {
+            <div class="w3-nav-menu-footer">
+                @Footer
+            </div>
+        }
+    </nav>
+</CascadingValue>
+
+@code {
+    private string CssClass => BuildClass(
+        "w3-nav-menu",
+        "w3-bar-block",
+        Compact ? "w3-nav-menu-compact" : null,
+        Border ? "w3-border" : null,
+        Card ? CardDepth.ToClass() : null,
+        Round.ToClass(),
+        Color.ToBackgroundClass(),
+        TextColor.ToTextClass());
+
+    [Parameter]
+    public string Label { get; set; } = "Navigation menu";
+
+    [Parameter]
+    public RenderFragment? Header { get; set; }
+
+    [Parameter]
+    public RenderFragment? Footer { get; set; }
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public bool Compact { get; set; }
+
+    [Parameter]
+    public bool Border { get; set; }
+
+    [Parameter]
+    public bool Card { get; set; }
+
+    [Parameter]
+    public W3CardDepth CardDepth { get; set; } = W3CardDepth.Four;
+
+    [Parameter]
+    public W3Round Round { get; set; } = W3Round.None;
+
+    [Parameter]
+    public W3Color Color { get; set; } = W3Color.Surface;
+
+    [Parameter]
+    public W3Color TextColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color ActiveColor { get; set; } = W3Color.Primary;
+
+    [Parameter]
+    public W3Color ActiveTextColor { get; set; } = W3Color.White;
+
+    [Parameter]
+    public W3Color HoverColor { get; set; } = W3Color.LightGrey;
+
+    [Parameter]
+    public W3Color HoverTextColor { get; set; } = W3Color.None;
+
+}

@@ -1,0 +1,268 @@
+@page "/components"
+
+<PageTitle>Components</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3Css.Blazor Components</h1>
+    <DocPager PreviousHref="installation" PreviousText="Installation" NextHref="components/defaults" NextText="Defaults" />
+
+    <p class="w3-large">Each component topic follows the W3.CSS documentation pattern: short introduction, live examples, copyable code, parameter reference, and related links.</p>
+
+    <section class="doc-section">
+        <h2>Component Categories</h2>
+        <p>The catalog is grouped around how a team builds real pages: foundation, layout, content, data, forms, navigation, feedback, overlays, media, and utility styling. The categories borrow the mental model used by larger Blazor libraries while keeping each W3Css.Blazor component tied to W3.CSS classes, native HTML, or Blazor state.</p>
+
+        @foreach (var category in Categories)
+        {
+            <section class="doc-section">
+                <h3>@category.Name</h3>
+                <p class="doc-muted">@category.Description</p>
+                <W3Table Striped="true" Bordered="true" Hoverable="true" Responsive="true" aria-label="@($"{category.Name} component topics")">
+                    <thead>
+                        <tr>
+                            <th>Topic</th>
+                            <th>Use</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var topic in category.Topics)
+                        {
+                            <tr>
+                                <td><NavLink href="@topic.Href">@topic.Name</NavLink></td>
+                                <td>@topic.Use</td>
+                                <td>@topic.Status</td>
+                            </tr>
+                        }
+                    </tbody>
+                </W3Table>
+            </section>
+        }
+    </section>
+
+    <section class="doc-section">
+        <h2>Product Readiness Backlog</h2>
+        <W3Panel Color="W3Color.PaleYellow" TextColor="W3Color.Black" LeftBar="true" Border="true" Round="W3Round.Medium">
+            <p>These candidates enrich site and app building without changing the vendored W3.CSS file. Each should compose existing components, W3.CSS classes, native HTML inputs, or small Blazor-owned state before adding any isolated CSS.</p>
+        </W3Panel>
+
+        <W3Table Striped="true" Bordered="true" Hoverable="true" Responsive="true" aria-label="Product readiness backlog">
+            <thead>
+                <tr>
+                    <th>Candidate</th>
+                    <th>Category</th>
+                    <th>Why It Matters</th>
+                    <th>W3.CSS-First Approach</th>
+                    <th>Priority</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (ExpansionBacklog.Length == 0)
+                {
+                    <tr>
+                        <td colspan="5">No low-risk second-round component gaps are currently queued.</td>
+                    </tr>
+                }
+                else
+                {
+                    @foreach (var item in ExpansionBacklog)
+                    {
+                        <tr>
+                            <td><code>@item.Name</code></td>
+                            <td>@item.Category</td>
+                            <td>@item.Why</td>
+                            <td>@item.Approach</td>
+                            <td>@item.Priority</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Page Format</h2>
+        <W3Panel Color="W3Color.PaleBlue" TextColor="W3Color.Black" LeftBar="true" Border="true" Round="W3Round.Medium">
+            <p>Component pages keep the instruction and examples together so readers can learn the Blazor API without jumping between separate reference and example pages.</p>
+        </W3Panel>
+
+        <ul class="w3-ul w3-border w3-white">
+            <li><strong>Introduction</strong> explains when to use the component.</li>
+            <li><strong>Examples</strong> show the rendered component and the Razor markup beside it.</li>
+            <li><strong>Parameter Reference</strong> lists typed parameters, defaults, and generated W3.CSS behavior.</li>
+            <li><strong>Related W3.CSS</strong> links back to the original CSS topic where it helps.</li>
+        </ul>
+    </section>
+
+    <section class="doc-section">
+        <h2>Next Topics</h2>
+        <div class="w3-bar w3-border w3-white">
+            <NavLink class="w3-bar-item w3-button" href="components/defaults">Defaults</NavLink>
+            <NavLink class="w3-bar-item w3-button" href="components/fonts">Fonts</NavLink>
+            <NavLink class="w3-bar-item w3-button" href="components/colors">Colors</NavLink>
+            <NavLink class="w3-bar-item w3-button" href="components/color-schemes">Color Schemes</NavLink>
+            <NavLink class="w3-bar-item w3-button" href="components/trends">Trends</NavLink>
+            <NavLink class="w3-bar-item w3-button" href="components/case-study">Case Study</NavLink>
+            <NavLink class="w3-bar-item w3-button" href="components/material-design">Material Design</NavLink>
+            <NavLink class="w3-bar-item w3-button" href="components/versions">Versions</NavLink>
+            <NavLink class="w3-bar-item w3-button" href="components/app-shell">App Shell</NavLink>
+            <NavLink class="w3-bar-item w3-button" href="components/app-bar">App Bar</NavLink>
+        </div>
+    </section>
+
+    <DocPager PreviousHref="installation" PreviousText="Installation" NextHref="components/defaults" NextText="Defaults" />
+</W3Container>
+
+@code {
+    private static readonly ComponentCategory[] Categories =
+    [
+        new("Foundation And Theme Guidance", "Base styling, typography, colors, theme guidance, and version policy.", [
+            new("Defaults", "Base W3.CSS typography, heading, size, and override guidance.", "Documented", "components/defaults"),
+            new("Fonts", "W3.CSS default font, built-in font classes, and custom font loading guidance.", "Documented", "components/fonts"),
+            new("Colors", "W3.CSS background, text, border, hover, semantic, library, and theme color guidance.", "Documented", "components/colors"),
+            new("Color Schemes", "W3.CSS color scheme, theme class, and private generator guidance.", "Documented", "components/color-schemes"),
+            new("Theming", "W3ThemeProvider + W3Theme tokens: brand the whole app from one place with CSS variables and themed W3Color tokens.", "Documented", "components/theming"),
+            new("Dark Mode", "CSS-first dark surfaces using W3.CSS color classes and Blazor state.", "Documented", "components/dark-mode"),
+            new("Versions", "W3.CSS version, packaged asset, pro stylesheet, and upgrade guidance.", "Documented", "components/versions")
+        ]),
+        new("Site Composition", "Higher-level recipes for building complete pages, marketing sites, dashboards, and mobile-first layouts.", [
+            new("Trends", "W3.CSS trend composition guidance for flat, card, material-style, input, mobile-first, and single-page patterns.", "Documented", "components/trends"),
+            new("Case Study", "W3.CSS case study guidance for page shells, color and size utilities, responsive columns, and navigation composition.", "Documented", "components/case-study"),
+            new("Material Design", "W3.CSS material-style guidance for surfaces, shadows, hover response, app bars, theme classes, and colorful cards.", "Documented", "components/material-design"),
+            new("App Shell", "W3AppShell composes header, sidebar, main content, and footer regions for apps and sites.", "Documented", "components/app-shell"),
+            new("App Bar", "W3AppBar composes app headers with title, menu, navigation, actions, mobile, and fixed-position support.", "Documented", "components/app-bar"),
+            new("Toolbar", "W3Toolbar provides accessible action rows for dashboards, tables, and editors.", "Documented", "components/toolbar"),
+            new("Mobile", "W3.CSS mobile utility guidance for stacked navigation, cells, and class pass-through.", "Documented", "components/mobile")
+        ]),
+        new("Layout And Surfaces", "Responsive structure, page sections, panels, cards, bars, and positioned content.", [
+            new("Stack", "W3Stack provides vertical and horizontal spacing for app layout primitives.", "Documented", "components/stack"),
+            new("Divider", "W3Divider separates dense panels, forms, menus, and grouped content.", "Documented", "components/divider"),
+            new("Spacer", "W3Spacer is the MudBlazor-compatible flexible filler that pushes bar and toolbar content apart.", "Documented", "components/spacer"),
+            new("Footer", "W3Footer is the MudBlazor-compatible page/app footer region with color, border, and fixed-position options.", "Documented", "components/footer"),
+            new("Container", "Page sections, forms, and content blocks.", "Documented", "components/container"),
+            new("Panel", "Notes, callouts, and grouped content.", "Documented", "components/panel"),
+            new("Card", "Raised content blocks with optional header and footer slots.", "Documented", "components/card"),
+            new("Paper", "MudBlazor-like flat and elevated paper surfaces with outline and rounded options.", "Documented", "components/paper"),
+            new("Row", "Floated row layouts with optional column padding.", "Documented", "components/row"),
+            new("Column", "Responsive column spans for small, medium, and large breakpoints.", "Documented", "components/column"),
+            new("Grid", "W3.CSS grid display helper with optional padding gap.", "Documented", "components/grid"),
+            new("Flex", "W3.CSS flex display helper for compact alignment layouts.", "Documented", "components/flex"),
+            new("Cells", "W3.CSS cell rows and vertical alignment helpers.", "Documented", "components/cells"),
+            new("Display", "Positioned display helpers for captions, overlays, and controls.", "Documented", "components/display"),
+            new("Bar", "Horizontal or stacked bar navigation with bar items.", "Documented", "components/bar"),
+            new("Responsive", "Overflow wrapper for wide tables and fixed-width content.", "Documented", "components/responsive")
+        ]),
+        new("Actions, Content, And Media", "Buttons, labels, readable content primitives, icons, images, and slideshows.", [
+            new("Button", "Typed W3.CSS button classes, disabled state, and click callback.", "Documented", "components/button"),
+            new("Icon Button", "W3IconButton provides compact accessible icon-only commands for toolbars, app bars, and row actions.", "Documented", "components/icon-button"),
+            new("Toggle Icon Button", "W3ToggleIconButton adds built-in pressed state and `aria-pressed` for icon toggles.", "Documented", "components/toggle-icon-button"),
+            new("Floating Action Button", "W3Fab provides prominent floating action buttons for page, app, and design-tool primary commands.", "Documented", "components/fab"),
+            new("Button Group", "W3ButtonGroup groups related commands with accessible group semantics.", "Documented", "components/button-group"),
+            new("Badge", "Compact count and status markers.", "Documented", "components/badge"),
+            new("Tag", "Inline labels and small content markers.", "Documented", "components/tag"),
+            new("Chip", "Standalone selectable chips for compact actions and filter states.", "Documented", "components/chip"),
+            new("Chip Set", "W3ChipSet provides selectable chips for filters, categories, and preferences.", "Documented", "components/chip-set"),
+            new("Avatar", "W3Avatar renders compact identity marks from images, initials, or custom content.", "Documented", "components/avatar"),
+            new("Avatar Group", "W3AvatarGroup overlaps a row of avatars for participants, assignees, and collaborators.", "Documented", "components/avatar-group"),
+            new("Image", "Responsive images with W3.CSS image effects and utility classes.", "Documented", "components/image"),
+            new("Image List", "W3ImageList creates responsive image grids for galleries, product media, and app previews.", "Documented", "components/image-list"),
+            new("Slideshow", "Script-free slideshow with slides, captions, controls, and indicators.", "Documented", "components/slideshow"),
+            new("Code", "W3.CSS code blocks and inline code spans for documented snippets.", "Documented", "components/code"),
+            new("Highlighter", "W3Highlighter emphasizes matched text inside search results and filter previews.", "Documented", "components/highlighter"),
+            new("Note", "Semantic note panels for supporting guidance.", "Documented", "components/note"),
+            new("Quote", "Blockquotes with W3.CSS panel and border bar styling.", "Documented", "components/quote"),
+            new("Icons", "Inline icon wrapper for consumer-provided icon libraries.", "Documented", "components/icons")
+        ]),
+        new("Data Display", "Tables, lists, and script-free filtering patterns for app data.", [
+            new("Table", "Standard table markup with striped, bordered, hoverable, and responsive options.", "Documented", "components/table"),
+            new("Data Table", "W3DataTable adds sorting, search, paging, loading and empty states, selection, and row actions over W3Table.", "Documented", "components/data-table"),
+            new("Tree View", "W3TreeView renders hierarchical data, nested navigation, expanded state, selected values, and templated node labels.", "Documented", "components/tree-view"),
+            new("List", "Unordered lists with border, hover, and alignment options.", "Documented", "components/list"),
+            new("List Item", "Clickable list rows with icon/start content, end content, links, dense, active, disabled, and stateful styling.", "Documented", "components/list-item"),
+            new("Timeline", "W3Timeline renders activity feeds, audit trails, release history, and workflow events.", "Documented", "components/timeline"),
+            new("Chart", "W3Chart renders dependency-free, script-free SVG bar, line, pie, and donut charts.", "Documented", "components/chart"),
+            new("Chat", "W3Chat renders conversation-style message streams for support, comments, assistants, and activity discussions.", "Documented", "components/chat"),
+            new("Filters", "Script-free Blazor filtering examples for tables and lists styled with W3.CSS.", "Documented", "components/filters")
+        ]),
+        new("Inputs And Forms", "Validation-friendly form controls and form guidance.", [
+            new("Input", "Validation-friendly text input with W3.CSS input styling.", "Documented", "components/input"),
+            new("Mask", "W3Mask is the MudBlazor-compatible masked text input (digit/letter/alphanumeric tokens).", "Documented", "components/mask"),
+            new("Form", "MudBlazor-compatible form wrapper with submit callbacks and editable context.", "Documented", "components/form"),
+            new("Number Input", "Generic native number input with W3.CSS styling and Blazor validation.", "Documented", "components/number-input"),
+            new("W3DateRangePicker", "MudBlazor-style date range alias using two W3DateInput controls.", "Documented", "components/date-range-picker"),
+            new("Date Input", "Native DateOnly date input with W3.CSS styling and validation support.", "Documented", "components/date-input"),
+            new("Time Input", "Native TimeOnly time input for schedules and filters.", "Documented", "components/time-input"),
+            new("Slider", "Native range input for bounded numeric settings and filters.", "Documented", "components/slider"),
+            new("Rating", "W3Rating provides icon-based scoring for reviews, preference capture, and quick feedback.", "Documented", "components/rating"),
+            new("Switch", "Accessible switch-style checkbox for app settings.", "Documented", "components/switch"),
+            new("Toggle Group", "W3ToggleGroup is the MudBlazor-compatible segmented single/multi selector.", "Documented", "components/toggle-group"),
+            new("Color Input", "Native color picker for theme and design-tooling workflows.", "Documented", "components/color-input"),
+            new("File Input", "Blazor InputFile wrapper with W3.CSS input styling.", "Documented", "components/file-input"),
+            new("Drop Zone", "W3DropZone provides a large native file selection and drag-state surface for uploads and imports.", "Documented", "components/drop-zone"),
+            new("Autocomplete", "Searchable typed selection with W3.CSS listbox styling.", "Documented", "components/autocomplete"),
+            new("Select", "Generic select control with W3.CSS select styling.", "Documented", "components/select"),
+            new("Select Item", "Typed select-item helper for `W3Select` content and MudBlazor-style composition.", "Documented", "components/select-item"),
+            new("Checkbox", "Boolean input with W3.CSS checkbox styling.", "Documented", "components/checkbox"),
+            new("Radio", "Typed radio option with W3.CSS radio styling.", "Documented", "components/radio"),
+            new("Radio Group", "Typed radio group that coordinates `W3Radio` children via shared value.", "Documented", "components/radio-group"),
+            new("Text Area", "Multi-line text area with W3.CSS input styling.", "Documented", "components/text-area"),
+            new("Field", "Label, help text, control, and validation message wrapper.", "Documented", "components/field"),
+            new("Validation", "W3.CSS-styled Blazor validation guidance for forms and field messages.", "Documented", "components/validation")
+        ]),
+        new("Navigation And Disclosure", "Navigation bars, page navigation, menus, tabs, accordions, and disclosure state.", [
+            new("Tabs", "W3.CSS bar tabs with Blazor-controlled active panel state.", "Documented", "components/tabs"),
+            new("Accordion", "Disclosure stack using W3.CSS buttons and containers.", "Documented", "components/accordion"),
+            new("Collapse", "Reusable disclosure surface with compatible `Expanded` / `IsExpanded` states.", "Documented", "components/collapse"),
+            new("Navbar", "Navigation composition with active state, mobile items, and dropdown support.", "Documented", "components/navbar"),
+            new("Nav Menu", "Grouped side navigation with route-aware links, collapsible sections, badges, and command items.", "Documented", "components/nav-menu"),
+            new("Bottom Navigation", "W3BottomNavigation provides mobile-first bottom app destinations with icons, labels, badges, and active state.", "Documented", "components/bottom-navigation"),
+            new("Breadcrumb", "Accessible ordered page-path navigation for apps and documentation.", "Documented", "components/breadcrumb"),
+            new("Page Content Navigation", "W3PageContentNavigation is an in-page table of contents that scrollspy-highlights the section in view.", "Documented", "components/page-content-navigation"),
+            new("Link", "MudBlazor-like link primitive with button fallback and optional underline control.", "Documented", "components/link"),
+            new("Dropdown", "Blazor-controlled W3.CSS click dropdown menus.", "Documented", "components/dropdown"),
+            new("Menu", "W3Menu provides command menus with icons, descriptions, dividers, disabled items, and close-on-select behavior.", "Documented", "components/menu"),
+            new("Pagination", "Page navigation buttons using W3.CSS bar styles.", "Documented", "components/pagination"),
+            new("Stepper", "W3Stepper renders multi-step workflows with progress, active panels, completed/error/disabled states, and linear navigation.", "Documented", "components/stepper"),
+            new("Scroll To Top", "W3ScrollToTop shows a back-to-top button after scrolling past a threshold (small JS for the scroll listener).", "Documented", "components/scroll-to-top")
+        ]),
+        new("Feedback And Overlays", "Status, progress, modal surfaces, tooltips, and side surfaces.", [
+            new("Alert", "Semantic status messages using W3.CSS color classes.", "Documented", "components/alert"),
+            new("Progress", "Progressbar component with W3.CSS track and bar classes.", "Documented", "components/progress"),
+            new("Progress Circular", "MudBlazor-compatible circular progress with determinate and indeterminate states.", "Documented", "components/progress-circular"),
+            new("Spinner", "Accessible indeterminate loading indicator using W3.CSS spin animation.", "Documented", "components/spinner"),
+            new("Skeleton", "W3Skeleton renders accessible loading placeholders for cards, profile rows, and content lists.", "Documented", "components/skeleton"),
+            new("Toast", "Transient app notifications through a Blazor service/provider and W3.CSS panels.", "Documented", "components/toast"),
+            new("Modal", "Blazor-controlled W3.CSS modal overlay.", "Documented", "components/modal"),
+            new("Overlay", "Reusable W3.CSS backdrop layer for contained or page overlays.", "Documented", "components/overlay"),
+            new("Message Box", "W3MessageBox is the MudBlazor-compatible confirm/alert prompt with bool? result.", "Documented", "components/message-box"),
+            new("Tooltip", "CSS hover tooltip wrapper for short hints.", "Documented", "components/tooltip"),
+            new("Popover", "W3Popover renders click-controlled contextual content for filters, actions, and compact detail panels.", "Documented", "components/popover"),
+            new("Focus Trap", "W3FocusTrap keeps keyboard focus inside active modals, drawers, and rich popovers.", "Documented", "components/focus-trap"),
+            new("Drawer", "W3Drawer provides temporary and persistent app side surfaces over W3.CSS sidebar behavior.", "Documented", "components/drawer"),
+            new("Sidebar", "Fixed W3.CSS sidebar with optional overlay dismissal.", "Documented", "components/sidebar")
+        ]),
+        new("Utilities", "Thin utility wrappers over W3.CSS helper classes.", [
+            new("Visibility", "W3.CSS visibility and fixed-position utility guidance.", "Documented", "components/visibility"),
+            new("Borders", "Typed W3.CSS border sides, bars, colors, and roundness.", "Documented", "components/borders"),
+            new("Round", "W3.CSS rounded corner and circle utility guidance.", "Documented", "components/round"),
+            new("Spacing", "Typed W3.CSS padding, margin, and section utilities.", "Documented", "components/spacing"),
+            new("Text Fonts", "Typed W3.CSS alignment, text style, and font family utilities.", "Documented", "components/text-fonts"),
+            new("Effects", "Typed W3.CSS opacity, filter, and hover effect utilities.", "Documented", "components/effects"),
+            new("Animations", "Typed W3.CSS animation utility wrapper and input animation helper.", "Documented", "components/animations"),
+            new("Hover Colors", "Typed W3.CSS hover background, text, and border color utilities.", "Documented", "components/hover-colors"),
+            new("Direction", "Typed W3.CSS left-to-right and right-to-left direction utilities.", "Documented", "components/direction")
+        ])
+    ];
+
+    private static readonly ExpansionCandidate[] ExpansionBacklog =
+    [
+        new("W3Hidden", "Layout And Surfaces", "MudHidden breakpoint show/hide convenience.", "Thin alias over W3Display responsive visibility classes.", "Low"),
+        new("W3SwipeArea", "Utilities", "MudSwipeArea gesture surface.", "Requires pointer/JS interop; deferred while keeping CSS-first principle.", "Later"),
+    ];
+
+    private sealed record ComponentCategory(string Name, string Description, ComponentTopic[] Topics);
+
+    private sealed record ComponentTopic(string Name, string Use, string Status, string Href);
+
+    private sealed record ExpansionCandidate(string Name, string Category, string Why, string Approach, string Priority);
+}

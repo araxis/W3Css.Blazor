@@ -1,0 +1,155 @@
+@typeparam TValue
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <div @attributes="AdditionalAttributes"
+         class="@CssClass"
+         style="@Style"
+         role="group"
+         aria-label="@Label">
+        @ChildContent
+    </div>
+</CascadingValue>
+
+@code {
+    // MudBlazor compatibility: mirrors MudToggleGroup, a segmented single- or
+    // multi-select control. Built W3.CSS-first over w3-bar / w3-button classes
+    // with the same cascading owner/item pattern as W3ChipSet/W3Chip.
+    private string CssClass => BuildClass(
+        "w3-toggle-group",
+        "w3-bar",
+        Vertical ? "w3-bar-block" : null,
+        Border ? "w3-border" : null,
+        Round.ToClass(),
+        Disabled ? "w3-disabled" : null);
+
+    /// <summary>
+    /// The toggle items. Use <see cref="W3ToggleItem{TValue}"/> children.
+    /// </summary>
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    /// <summary>
+    /// Accessible label for the toggle group.
+    /// </summary>
+    [Parameter]
+    public string Label { get; set; } = "Toggle group";
+
+    /// <summary>
+    /// Allows multiple items to be selected at once.
+    /// </summary>
+    [Parameter]
+    public bool MultiSelect { get; set; }
+
+    /// <summary>
+    /// Selected value in single-select mode. Two-way bindable.
+    /// </summary>
+    [Parameter]
+    public TValue? SelectedValue { get; set; }
+
+    /// <summary>
+    /// Raised when the single-select value changes.
+    /// </summary>
+    [Parameter]
+    public EventCallback<TValue?> SelectedValueChanged { get; set; }
+
+    /// <summary>
+    /// Selected values in multi-select mode. Two-way bindable.
+    /// </summary>
+    [Parameter]
+    public IReadOnlyCollection<TValue> SelectedValues { get; set; } = [];
+
+    /// <summary>
+    /// Raised when the multi-select values change.
+    /// </summary>
+    [Parameter]
+    public EventCallback<IReadOnlyCollection<TValue>> SelectedValuesChanged { get; set; }
+
+    /// <summary>
+    /// Stacks items vertically using <c>w3-bar-block</c>.
+    /// </summary>
+    [Parameter]
+    public bool Vertical { get; set; }
+
+    /// <summary>
+    /// Adds a border around the group.
+    /// </summary>
+    [Parameter]
+    public bool Border { get; set; } = true;
+
+    /// <summary>
+    /// Disables the whole group.
+    /// </summary>
+    [Parameter]
+    public bool Disabled { get; set; }
+
+    /// <summary>
+    /// Rounded corner style for the group.
+    /// </summary>
+    [Parameter]
+    public W3Round Round { get; set; } = W3Round.None;
+
+    /// <summary>
+    /// Default background color for unselected items.
+    /// </summary>
+    [Parameter]
+    public W3Color Color { get; set; } = W3Color.None;
+
+    /// <summary>
+    /// Default text color for unselected items.
+    /// </summary>
+    [Parameter]
+    public W3Color TextColor { get; set; } = W3Color.None;
+
+    /// <summary>
+    /// Background color for the selected item(s).
+    /// </summary>
+    [Parameter]
+    public W3Color ActiveColor { get; set; } = W3Color.Primary;
+
+    /// <summary>
+    /// Text color for the selected item(s).
+    /// </summary>
+    [Parameter]
+    public W3Color ActiveTextColor { get; set; } = W3Color.White;
+
+    internal bool IsSelected(TValue value)
+    {
+        return MultiSelect
+            ? SelectedValues.Contains(value, EqualityComparer<TValue>.Default)
+            : EqualityComparer<TValue?>.Default.Equals(SelectedValue, value);
+    }
+
+    internal async Task ToggleAsync(TValue value)
+    {
+        if (Disabled)
+        {
+            return;
+        }
+
+        if (MultiSelect)
+        {
+            var next = SelectedValues.ToList();
+            var index = next.FindIndex(item => EqualityComparer<TValue>.Default.Equals(item, value));
+
+            if (index >= 0)
+            {
+                next.RemoveAt(index);
+            }
+            else
+            {
+                next.Add(value);
+            }
+
+            SelectedValues = next;
+            await SelectedValuesChanged.InvokeAsync(next);
+            await InvokeAsync(StateHasChanged);
+            return;
+        }
+
+        SelectedValue = value;
+        await SelectedValueChanged.InvokeAsync(value);
+        await InvokeAsync(StateHasChanged);
+    }
+}

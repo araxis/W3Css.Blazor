@@ -1,0 +1,120 @@
+@page "/components/spacing"
+
+<PageTitle>W3Spacing</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3Spacing</h1>
+    <DocPager PreviousHref="components/round" PreviousText="Round" NextHref="components/text-fonts" NextText="Text Fonts" />
+
+    <p class="w3-large">`W3Spacing` renders W3.CSS padding, margin, and section utility classes on a lightweight wrapper.</p>
+    <p>Use it when spacing choices should stay typed and readable in Razor markup.</p>
+
+    <DocExample Title="Padding" Code="@PaddingCode">
+        <W3Grid Padding="true" Style="grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));">
+            <W3Spacing Padding="W3Padding.Small" Color="W3Color.PaleBlue" Round="W3Round.Medium">
+                Small padding
+            </W3Spacing>
+            <W3Spacing Padding="W3Padding.Medium" Color="W3Color.PaleGreen" Round="W3Round.Medium">
+                Medium padding
+            </W3Spacing>
+            <W3Spacing Padding="W3Padding.Large" Color="W3Color.PaleYellow" Round="W3Round.Medium">
+                Large padding
+            </W3Spacing>
+        </W3Grid>
+    </DocExample>
+
+    <DocExample Title="Vertical And Top Padding" Code="@VerticalCode">
+        <W3Grid Padding="true" Style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));">
+            <W3Spacing Padding="W3Padding.Vertical32" Color="W3Color.LightGrey" Round="W3Round.Medium" Class="w3-center">
+                32 px vertical padding
+            </W3Spacing>
+            <W3Spacing TopPadding="W3TopPadding.Top48" Color="W3Color.PaleRed" Round="W3Round.Medium">
+                48 px top padding
+            </W3Spacing>
+        </W3Grid>
+    </DocExample>
+
+    <DocExample Title="Margin And Section" Code="@MarginCode">
+        <div class="w3-border w3-white">
+            <W3Spacing Section="true" Margin="W3Margin.Left | W3Margin.Right" Padding="W3Padding.Medium" Color="W3Color.PaleBlue">
+                Section spacing with left and right margins
+            </W3Spacing>
+            <W3Spacing Margin="W3Margin.Top | W3Margin.Bottom" Padding="W3Padding.Medium" Color="W3Color.PaleGreen">
+                Top and bottom margins
+            </W3Spacing>
+        </div>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Section</td><td>bool</td><td>false</td><td>`w3-section`</td></tr>
+                <tr><td>Margin</td><td>W3Margin</td><td>None</td><td>`w3-margin` and side margin classes</td></tr>
+                <tr><td>Padding</td><td>W3Padding</td><td>None</td><td>General and vertical padding classes</td></tr>
+                <tr><td>TopPadding</td><td>W3TopPadding</td><td>None</td><td>Top padding classes</td></tr>
+                <tr><td>Color</td><td>W3Color</td><td>None</td><td>Background color class</td></tr>
+                <tr><td>TextColor</td><td>W3Color</td><td>None</td><td>Text color class</td></tr>
+                <tr><td>Round</td><td>W3Round</td><td>None</td><td>Rounded corner class</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional CSS classes</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline style</td></tr>
+                <tr><td>ChildContent</td><td>RenderFragment</td><td>null</td><td>Content inside the spacing wrapper</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Utility Values</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Enum</th><th>Values</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>W3Padding</td><td>None, Small, Medium, Large, Vertical16, Vertical24, Vertical32, Vertical48, Vertical64</td></tr>
+                <tr><td>W3TopPadding</td><td>None, Top24, Top32, Top48, Top64</td></tr>
+                <tr><td>W3Margin</td><td>None, All, Top, Right, Bottom, Left</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <DocPager PreviousHref="components/round" PreviousText="Round" NextHref="components/text-fonts" NextText="Text Fonts" />
+</W3Container>
+
+@code {
+    private const string PaddingCode = """
+<W3Spacing Padding="W3Padding.Small">
+    Small padding
+</W3Spacing>
+
+<W3Spacing Padding="W3Padding.Medium">
+    Medium padding
+</W3Spacing>
+
+<W3Spacing Padding="W3Padding.Large">
+    Large padding
+</W3Spacing>
+""";
+
+    private const string VerticalCode = """
+<W3Spacing Padding="W3Padding.Vertical32">
+    32 px vertical padding
+</W3Spacing>
+
+<W3Spacing TopPadding="W3TopPadding.Top48">
+    48 px top padding
+</W3Spacing>
+""";
+
+    private const string MarginCode = """
+<W3Spacing Section="true" Margin="W3Margin.Left | W3Margin.Right" Padding="W3Padding.Medium">
+    Section spacing with left and right margins
+</W3Spacing>
+
+<W3Spacing Margin="W3Margin.Top | W3Margin.Bottom" Padding="W3Padding.Medium">
+    Top and bottom margins
+</W3Spacing>
+""";
+}

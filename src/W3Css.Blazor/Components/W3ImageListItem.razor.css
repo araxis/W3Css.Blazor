@@ -1,0 +1,24 @@
+.w3-image-list-item {
+    margin: 0;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.w3-image-list-image {
+    aspect-ratio: var(--w3-image-list-aspect, 4 / 3);
+    display: block;
+    height: auto;
+    object-fit: cover;
+    width: 100%;
+}
+
+.w3-image-list-caption {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    padding: 8px 10px;
+}
+
+.w3-image-list-caption span {
+    font-size: 0.92rem;
+}

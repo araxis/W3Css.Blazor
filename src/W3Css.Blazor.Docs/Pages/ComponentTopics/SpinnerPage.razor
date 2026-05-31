@@ -1,0 +1,73 @@
+@page "/components/spinner"
+
+<PageTitle>W3Spinner</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3Spinner</h1>
+    <DocPager PreviousHref="components/scroll-to-top" PreviousText="Scroll To Top" NextHref="components/skeleton" NextText="Skeleton" />
+
+    <p class="w3-large">`W3Spinner` renders a small accessible loading indicator using W3.CSS spin animation and component-scoped shape styling.</p>
+    <p>Use it for indeterminate work such as loading cards, saving forms, or refreshing app tables.</p>
+
+    <DocExample Title="Status Spinner" Description="The spinner exposes `role=status` and an accessible label while keeping the label visually hidden by default." Code="@StatusCode">
+        <W3Spinner Label="Loading project data" />
+    </DocExample>
+
+    <DocExample Title="Inline Label" Description="Set `ShowLabel` when the status text should be visible next to the indicator." Code="@InlineCode">
+        <p>
+            <W3Spinner Label="Saving changes" ShowLabel="true" Inline="true" TextColor="W3Color.Indigo" />
+        </p>
+    </DocExample>
+
+    <DocExample Title="Centered Loading State" Description="A centered spinner works well inside empty app panels and data surfaces." Code="@CenteredCode">
+        <W3Panel Color="W3Color.White" Border="true" Round="W3Round.Medium" Class="w3-padding-32">
+            <W3Spinner Label="Refreshing dashboard" ShowLabel="true" Centered="true" Size="W3Size.XXLarge" />
+        </W3Panel>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Label</td><td>string</td><td>Loading</td><td>Status text and accessible label</td></tr>
+                <tr><td>ShowLabel</td><td>bool</td><td>false</td><td>Renders visible status text</td></tr>
+                <tr><td>Inline</td><td>bool</td><td>false</td><td>Renders an inline `span` root</td></tr>
+                <tr><td>Centered</td><td>bool</td><td>false</td><td>Centers the spinner group in its container</td></tr>
+                <tr><td>Size</td><td>W3Size</td><td>Large</td><td>W3.CSS text size class</td></tr>
+                <tr><td>TextColor</td><td>W3Color</td><td>Teal</td><td>W3.CSS text color class</td></tr>
+                <tr><td>AriaLive</td><td>string</td><td>polite</td><td>`aria-live` value for status updates</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional root classes</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline style on the root</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Related</h2>
+        <p><NavLink href="components/progress">Progress</NavLink> covers determinate progress values.</p>
+        <p><NavLink href="components/stepper">Stepper</NavLink> covers multi-step workflow progress.</p>
+        <p><NavLink href="components/data-table">Data Table</NavLink> can use spinners around server-backed loading states.</p>
+        <p><NavLink href="components/animations">Animations</NavLink> documents the underlying W3.CSS spin class.</p>
+    </section>
+
+    <DocPager PreviousHref="components/scroll-to-top" PreviousText="Scroll To Top" NextHref="components/skeleton" NextText="Skeleton" />
+</W3Container>
+
+@code {
+    private const string StatusCode = """
+<W3Spinner Label="Loading project data" />
+""";
+
+    private const string InlineCode = """
+<W3Spinner Label="Saving changes" ShowLabel="true" Inline="true" TextColor="W3Color.Indigo" />
+""";
+
+    private const string CenteredCode = """
+<W3Panel Color="W3Color.White" Border="true" Round="W3Round.Medium" Class="w3-padding-32">
+    <W3Spinner Label="Refreshing dashboard" ShowLabel="true" Centered="true" Size="W3Size.XXLarge" />
+</W3Panel>
+""";
+}

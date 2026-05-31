@@ -1,0 +1,243 @@
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+@if (ShowOverlay)
+{
+    <div class="@OverlayCssClass"
+         aria-hidden="true"
+         @onclick="CloseFromOverlayAsync"></div>
+}
+
+<aside @attributes="AdditionalAttributes"
+       id="@Id"
+       class="@DrawerCssClass"
+       style="@DrawerStyle"
+       role="@Role"
+       aria-modal="@AriaModal"
+       aria-hidden="@AriaHidden"
+       aria-labelledby="@AriaLabelledBy"
+       aria-label="@AriaLabelValue"
+       tabindex="-1"
+       @onkeydown="HandleKeyDownAsync">
+    @if (ShowHeader)
+    {
+        <div class="@HeaderCssClass">
+            <div class="w3-drawer-header-content">
+                @if (Header is not null)
+                {
+                    @Header
+                }
+                else if (!string.IsNullOrWhiteSpace(Title))
+                {
+                    <h2 id="@TitleId" class="w3-drawer-title">@Title</h2>
+                }
+            </div>
+
+            @if (ShowCloseButton)
+            {
+                <button type="button"
+                        class="w3-button w3-drawer-close"
+                        aria-label="@CloseButtonLabel"
+                        @onclick="CloseAsync">
+                    &times;
+                </button>
+            }
+        </div>
+    }
+
+    <div class="@BodyCssClass">
+        @ChildContent
+    </div>
+
+    @if (Footer is not null)
+    {
+        <div class="@FooterCssClass">
+            @Footer
+        </div>
+    }
+</aside>
+
+@code {
+    private readonly string generatedTitleId = $"w3-drawer-title-{Guid.NewGuid():N}";
+
+    private bool IsTemporary => Variant == W3DrawerVariant.Temporary;
+
+    private bool ShowOverlay => Open && IsTemporary && Overlay;
+
+    private bool ShowHeader => Header is not null || !string.IsNullOrWhiteSpace(Title) || ShowCloseButton;
+
+    private string TitleId => string.IsNullOrWhiteSpace(Id) ? generatedTitleId : $"{Id}-title";
+
+    private string? AriaLabelledBy => !string.IsNullOrWhiteSpace(Title) ? TitleId : null;
+
+    private string? AriaLabelValue => string.IsNullOrWhiteSpace(Title) ? AriaLabel : null;
+
+    private string AriaHidden => Open ? "false" : "true";
+
+    private string? AriaModal => IsTemporary ? Open.ToString().ToLowerInvariant() : null;
+
+    private string Role => IsTemporary ? "dialog" : "complementary";
+
+    private string DrawerCssClass => BuildClass(
+        "w3-sidebar",
+        "w3-drawer",
+        Position == W3SidebarPosition.Right ? "w3-drawer-right" : "w3-drawer-left",
+        IsTemporary ? "w3-drawer-temporary" : "w3-drawer-persistent",
+        Contained ? "w3-drawer-contained" : null,
+        Open ? "w3-show" : "w3-hide",
+        Animate ? AnimationClass : null,
+        Card ? "w3-card-4" : null,
+        Border ? "w3-border" : null,
+        Color.ToBackgroundClass(),
+        TextColor.ToTextClass());
+
+    private string OverlayCssClass => new W3ClassBuilder()
+        .Add("w3-overlay")
+        .Add("w3-show")
+        .Add("w3-drawer-overlay")
+        .Add(Contained ? "w3-drawer-overlay-contained" : null)
+        .ToString();
+
+    private string HeaderCssClass => new W3ClassBuilder()
+        .Add("w3-container")
+        .Add("w3-drawer-header")
+        .Add(HeaderColor.ToBackgroundClass())
+        .Add(HeaderTextColor.ToTextClass())
+        .Add(HeaderClass)
+        .ToString();
+
+    private string BodyCssClass => new W3ClassBuilder()
+        .Add("w3-container")
+        .Add("w3-drawer-body")
+        .Add(BodyClass)
+        .ToString();
+
+    private string FooterCssClass => new W3ClassBuilder()
+        .Add("w3-container")
+        .Add("w3-drawer-footer")
+        .Add(FooterColor.ToBackgroundClass())
+        .Add(FooterTextColor.ToTextClass())
+        .Add(FooterClass)
+        .ToString();
+
+    private string DrawerStyle
+    {
+        get
+        {
+            var width = Width <= 0 ? 280 : Width;
+            var positionStyle = Position == W3SidebarPosition.Right ? "right:0" : "left:0";
+            var baseStyle = $"width:{width}px;max-width:100vw;top:0;bottom:0;{positionStyle}";
+            return string.IsNullOrWhiteSpace(Style) ? baseStyle : $"{baseStyle};{Style}";
+        }
+    }
+
+    private string AnimationClass => Position == W3SidebarPosition.Right ? "w3-animate-right" : "w3-animate-left";
+
+    [Parameter]
+    public string? Id { get; set; }
+
+    [Parameter]
+    public bool Open { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> OpenChanged { get; set; }
+
+    [Parameter]
+    public W3DrawerVariant Variant { get; set; } = W3DrawerVariant.Temporary;
+
+    [Parameter]
+    public bool Overlay { get; set; } = true;
+
+    [Parameter]
+    public bool CloseOnOverlay { get; set; } = true;
+
+    [Parameter]
+    public bool CloseOnEscape { get; set; } = true;
+
+    [Parameter]
+    public bool ShowCloseButton { get; set; } = true;
+
+    [Parameter]
+    public string CloseButtonLabel { get; set; } = "Close drawer";
+
+    [Parameter]
+    public bool Contained { get; set; }
+
+    [Parameter]
+    public bool Animate { get; set; } = true;
+
+    [Parameter]
+    public bool Card { get; set; } = true;
+
+    [Parameter]
+    public bool Border { get; set; }
+
+    [Parameter]
+    public int Width { get; set; } = 280;
+
+    [Parameter]
+    public W3SidebarPosition Position { get; set; } = W3SidebarPosition.Left;
+
+    [Parameter]
+    public string? Title { get; set; }
+
+    [Parameter]
+    public string? AriaLabel { get; set; }
+
+    [Parameter]
+    public W3Color Color { get; set; } = W3Color.Surface;
+
+    [Parameter]
+    public W3Color TextColor { get; set; } = W3Color.Black;
+
+    [Parameter]
+    public W3Color HeaderColor { get; set; } = W3Color.Teal;
+
+    [Parameter]
+    public W3Color HeaderTextColor { get; set; } = W3Color.White;
+
+    [Parameter]
+    public W3Color FooterColor { get; set; } = W3Color.LightGrey;
+
+    [Parameter]
+    public W3Color FooterTextColor { get; set; } = W3Color.Black;
+
+    [Parameter]
+    public string? HeaderClass { get; set; }
+
+    [Parameter]
+    public string? BodyClass { get; set; }
+
+    [Parameter]
+    public string? FooterClass { get; set; }
+
+    [Parameter]
+    public RenderFragment? Header { get; set; }
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public RenderFragment? Footer { get; set; }
+
+    private async Task CloseAsync()
+    {
+        if (!Open)
+        {
+            return;
+        }
+
+        Open = false;
+        await OpenChanged.InvokeAsync(false);
+    }
+
+    private Task CloseFromOverlayAsync()
+    {
+        return CloseOnOverlay ? CloseAsync() : Task.CompletedTask;
+    }
+
+    private Task HandleKeyDownAsync(KeyboardEventArgs args)
+    {
+        return CloseOnEscape && args.Key == "Escape" ? CloseAsync() : Task.CompletedTask;
+    }
+}

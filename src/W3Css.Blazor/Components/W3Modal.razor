@@ -1,0 +1,164 @@
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+<div @attributes="AdditionalAttributes"
+     class="@ModalCssClass"
+     style="@Style"
+     role="dialog"
+     aria-modal="@AriaOpen"
+     aria-labelledby="@TitleId"
+     tabindex="-1"
+     @onclick="CloseFromBackdropAsync"
+     @onkeydown="HandleKeyDownAsync">
+    <div class="@ContentCssClass"
+         style="@ContentStyle"
+         @onclick:stopPropagation="true">
+        @if (ShowCloseButton)
+        {
+            <button type="button"
+                    class="w3-button w3-display-topright"
+                    aria-label="@CloseButtonLabel"
+                    @onclick="CloseAsync">
+                &times;
+            </button>
+        }
+
+        @if (Header is not null)
+        {
+            @Header
+        }
+        else if (!string.IsNullOrWhiteSpace(Title))
+        {
+            <W3Container Color="HeaderColor" TextColor="HeaderTextColor">
+                <h2 id="@TitleId">@Title</h2>
+            </W3Container>
+        }
+
+        <W3Container>
+            @ChildContent
+        </W3Container>
+
+        @if (Footer is not null)
+        {
+            <W3Container Color="FooterColor" TextColor="FooterTextColor">
+                @Footer
+            </W3Container>
+        }
+        else if (Actions is not null)
+        {
+            <W3Container Color="FooterColor" TextColor="FooterTextColor">
+                <div class="w3-bar">
+                    @Actions
+                </div>
+            </W3Container>
+        }
+    </div>
+</div>
+
+@code {
+    private string TitleId => Id is null ? "w3-modal-title" : $"{Id}-title";
+    private string AriaOpen => Open ? "true" : "false";
+
+    private string ModalCssClass => BuildClass(
+        "w3-modal",
+        Open ? "w3-show" : null);
+
+    private string ContentCssClass => new W3ClassBuilder()
+        .Add("w3-modal-content")
+        .Add(Card ? "w3-card-4" : null)
+        .Add(Animate ? "w3-animate-zoom" : null)
+        .Add(ContentColor.ToBackgroundClass())
+        .Add(ContentTextColor.ToTextClass())
+        .Add(ContentClass)
+        .ToString();
+
+    [Parameter]
+    public string? Id { get; set; }
+
+    [Parameter]
+    public bool Open { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> OpenChanged { get; set; }
+
+    [Parameter]
+    public string? Title { get; set; }
+
+    [Parameter]
+    public RenderFragment? Header { get; set; }
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public RenderFragment? Footer { get; set; }
+
+    /// <summary>
+    /// Convenience footer actions rendered inside a <c>w3-bar</c> when <see cref="Footer"/> is not set.
+    /// </summary>
+    [Parameter]
+    public RenderFragment? Actions { get; set; }
+
+    [Parameter]
+    public bool ShowCloseButton { get; set; } = true;
+
+    [Parameter]
+    public string CloseButtonLabel { get; set; } = "Close";
+
+    [Parameter]
+    public bool CloseOnBackdrop { get; set; } = true;
+
+    [Parameter]
+    public bool CloseOnEscape { get; set; } = true;
+
+    [Parameter]
+    public bool Card { get; set; } = true;
+
+    [Parameter]
+    public bool Animate { get; set; }
+
+    [Parameter]
+    public string? ContentClass { get; set; }
+
+    [Parameter]
+    public string? ContentStyle { get; set; }
+
+    [Parameter]
+    public W3Color ContentColor { get; set; } = W3Color.Surface;
+
+    [Parameter]
+    public W3Color ContentTextColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color HeaderColor { get; set; } = W3Color.Teal;
+
+    [Parameter]
+    public W3Color HeaderTextColor { get; set; } = W3Color.White;
+
+    [Parameter]
+    public W3Color FooterColor { get; set; } = W3Color.LightGrey;
+
+    [Parameter]
+    public W3Color FooterTextColor { get; set; } = W3Color.Black;
+
+    private async Task CloseAsync()
+    {
+        if (!Open)
+        {
+            return;
+        }
+
+        Open = false;
+        await OpenChanged.InvokeAsync(false);
+    }
+
+    private Task CloseFromBackdropAsync()
+    {
+        return CloseOnBackdrop ? CloseAsync() : Task.CompletedTask;
+    }
+
+    private Task HandleKeyDownAsync(KeyboardEventArgs args)
+    {
+        return CloseOnEscape && args.Key == "Escape" ? CloseAsync() : Task.CompletedTask;
+    }
+}

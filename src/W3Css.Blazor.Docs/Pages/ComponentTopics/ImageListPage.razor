@@ -1,0 +1,105 @@
+@page "/components/image-list"
+
+<PageTitle>W3ImageList</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3ImageList</h1>
+    <DocPager PreviousHref="components/image" PreviousText="Image" NextHref="components/slideshow" NextText="Slideshow" />
+
+    <p class="w3-large">`W3ImageList` renders responsive image grids for galleries, product media, portfolios, and app content previews.</p>
+    <p>Use `W3ImageListItem` for image, caption, hover, border, and W3.CSS image effect options without editing the vendored stylesheet.</p>
+
+    <DocExample Title="Gallery Grid" Code="@GalleryCode">
+        <W3ImageList Label="Design gallery" Columns="3" MinItemWidth="10rem" CaptionColor="W3Color.PaleBlue">
+            <W3ImageListItem Src="assets/w3css-blazor-mark.svg" Alt="W3Css.Blazor mark" Title="Layout" Subtitle="Shell, grid, and app bars" HoverOpacity="true" />
+            <W3ImageListItem Src="assets/w3css-blazor-mark.svg" Alt="W3Css.Blazor mark" Title="Forms" Subtitle="Inputs and validation" Effect="W3ImageEffect.OpacityMin" />
+            <W3ImageListItem Src="assets/w3css-blazor-mark.svg" Alt="W3Css.Blazor mark" Title="Data" Subtitle="Tables, trees, and filters" Effect="W3ImageEffect.GrayscaleMin" />
+        </W3ImageList>
+    </DocExample>
+
+    <DocExample Title="Custom Captions" Code="@CustomCode">
+        <W3ImageList Label="Status media" Columns="2" MinItemWidth="12rem" Gap="16">
+            <W3ImageListItem Src="assets/w3css-blazor-mark.svg" Alt="W3Css.Blazor mark" CaptionColor="W3Color.Teal" CaptionTextColor="W3Color.White">
+                <CaptionContent>
+                    <strong>Ready</strong>
+                    <span class="w3-small">Components documented and tested.</span>
+                </CaptionContent>
+            </W3ImageListItem>
+            <W3ImageListItem Src="assets/w3css-blazor-mark.svg" Alt="W3Css.Blazor mark" CaptionColor="W3Color.Indigo" CaptionTextColor="W3Color.White">
+                <CaptionContent>
+                    <strong>Composable</strong>
+                    <span class="w3-small">W3.CSS classes stay visible.</span>
+                </CaptionContent>
+            </W3ImageListItem>
+        </W3ImageList>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>W3ImageList Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>`W3ImageListItem` children</td></tr>
+                <tr><td>Label</td><td>string</td><td>Image list</td><td>`aria-label` on the list</td></tr>
+                <tr><td>Columns</td><td>int</td><td>3</td><td>Grid column CSS variable</td></tr>
+                <tr><td>Gap</td><td>int</td><td>12</td><td>Grid gap in pixels</td></tr>
+                <tr><td>MinItemWidth</td><td>string?</td><td>12rem</td><td>Responsive minimum item width</td></tr>
+                <tr><td>Dense</td><td>bool</td><td>false</td><td>Compact grid spacing</td></tr>
+                <tr><td>Color, TextColor</td><td>W3Color</td><td>None</td><td>Root list colors</td></tr>
+                <tr><td>CaptionColor, CaptionTextColor</td><td>W3Color</td><td>White / Black</td><td>Default item caption colors</td></tr>
+                <tr><td>Round</td><td>W3Round</td><td>Medium</td><td>Default item roundness</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional classes on the grid</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline styles on the grid</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>W3ImageListItem Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Src</td><td>string</td><td>required</td><td>Image source</td></tr>
+                <tr><td>Alt</td><td>string</td><td>empty</td><td>Image alternative text</td></tr>
+                <tr><td>Title, Subtitle</td><td>string?</td><td>null</td><td>Default caption content</td></tr>
+                <tr><td>CaptionContent</td><td>RenderFragment?</td><td>null</td><td>Custom caption content</td></tr>
+                <tr><td>Loading</td><td>string?</td><td>lazy</td><td>`loading` attribute</td></tr>
+                <tr><td>AspectRatio</td><td>string</td><td>4 / 3</td><td>CSS aspect ratio value</td></tr>
+                <tr><td>Border</td><td>bool</td><td>true</td><td>`w3-border` on the figure</td></tr>
+                <tr><td>HoverOpacity</td><td>bool</td><td>false</td><td>`w3-hover-opacity` on the image</td></tr>
+                <tr><td>Effect</td><td>W3ImageEffect</td><td>None</td><td>W3.CSS image effect class</td></tr>
+                <tr><td>CaptionColor, CaptionTextColor</td><td>W3Color</td><td>None</td><td>Per-item caption colors</td></tr>
+                <tr><td>Round</td><td>W3Round</td><td>None</td><td>Per-item roundness override</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional classes on the figure</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline styles on the figure</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <DocPager PreviousHref="components/image" PreviousText="Image" NextHref="components/slideshow" NextText="Carousel" />
+</W3Container>
+
+@code {
+    private const string GalleryCode = """
+<W3ImageList Label="Design gallery" Columns="3" MinItemWidth="10rem" CaptionColor="W3Color.PaleBlue">
+    <W3ImageListItem Src="assets/w3css-blazor-mark.svg" Alt="W3Css.Blazor mark" Title="Layout" Subtitle="Shell, grid, and app bars" HoverOpacity="true" />
+    <W3ImageListItem Src="assets/w3css-blazor-mark.svg" Alt="W3Css.Blazor mark" Title="Forms" Subtitle="Inputs and validation" Effect="W3ImageEffect.OpacityMin" />
+    <W3ImageListItem Src="assets/w3css-blazor-mark.svg" Alt="W3Css.Blazor mark" Title="Data" Subtitle="Tables, trees, and filters" Effect="W3ImageEffect.GrayscaleMin" />
+</W3ImageList>
+""";
+
+    private const string CustomCode = """
+<W3ImageList Label="Status media" Columns="2" MinItemWidth="12rem" Gap="16">
+    <W3ImageListItem Src="assets/w3css-blazor-mark.svg" Alt="W3Css.Blazor mark" CaptionColor="W3Color.Teal" CaptionTextColor="W3Color.White">
+        <CaptionContent>
+            <strong>Ready</strong>
+            <span class="w3-small">Components documented and tested.</span>
+        </CaptionContent>
+    </W3ImageListItem>
+</W3ImageList>
+""";
+}

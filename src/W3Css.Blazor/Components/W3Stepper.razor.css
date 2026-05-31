@@ -1,0 +1,208 @@
+.w3-stepper {
+    --w3-stepper-gap: 1.5rem;
+    box-sizing: border-box;
+    container-type: inline-size;
+    display: block;
+    padding: 1rem;
+}
+
+.w3-stepper-nav {
+    overflow-x: auto;
+}
+
+.w3-stepper-nav-after-progress {
+    margin-top: 1.5rem;
+}
+
+.w3-stepper-list {
+    display: flex;
+    gap: var(--w3-stepper-gap);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.w3-stepper-item {
+    border-radius: 0.25rem;
+    flex: 1 1 0;
+    min-width: 10rem;
+    position: relative;
+}
+
+.w3-stepper-button {
+    align-items: center;
+    appearance: none;
+    background: transparent;
+    border: 0;
+    border-radius: 0.25rem;
+    color: inherit;
+    cursor: pointer;
+    display: flex;
+    font: inherit;
+    gap: 0.65rem;
+    min-height: 4rem;
+    padding: 0.75rem 1rem;
+    position: relative;
+    text-align: left;
+    white-space: normal;
+    width: 100%;
+    z-index: 1;
+}
+
+.w3-stepper-button:disabled {
+    cursor: default;
+}
+
+.w3-stepper-button:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+}
+
+.w3-stepper-active .w3-stepper-button:hover {
+    background: transparent;
+    color: inherit;
+}
+
+.w3-stepper-marker {
+    align-items: center;
+    display: inline-flex;
+    flex: 0 0 2rem;
+    height: 2rem;
+    justify-content: center;
+    line-height: 2rem;
+    width: 2rem;
+}
+
+.w3-stepper-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    min-width: 0;
+}
+
+.w3-stepper-title {
+    font-weight: 600;
+    overflow-wrap: anywhere;
+}
+
+.w3-stepper-description {
+    font-size: 0.875em;
+    opacity: 0.78;
+    overflow-wrap: anywhere;
+}
+
+.w3-stepper-panel {
+    margin-top: 0.75rem;
+    overflow-wrap: anywhere;
+    padding-bottom: 0.75rem;
+    padding-top: 0.75rem;
+}
+
+.w3-stepper-panel > * {
+    box-sizing: border-box;
+    max-width: 100%;
+}
+
+.w3-stepper-panel > :first-child {
+    margin-top: 0;
+}
+
+.w3-stepper-panel > :last-child {
+    margin-bottom: 0;
+}
+
+.w3-stepper-disabled {
+    opacity: 0.72;
+}
+
+.w3-stepper-vertical .w3-stepper-list {
+    flex-direction: column;
+}
+
+.w3-stepper-vertical {
+    --w3-stepper-gap: 0.35rem;
+}
+
+.w3-stepper-vertical .w3-stepper-item {
+    min-width: 0;
+}
+
+.w3-stepper-vertical .w3-stepper-button {
+    min-height: 3.5rem;
+}
+
+.w3-stepper-horizontal .w3-stepper-item + .w3-stepper-item::before {
+    border-top: 1px solid #ddd;
+    content: "";
+    left: calc(var(--w3-stepper-gap) * -1);
+    position: absolute;
+    right: auto;
+    top: 2rem;
+    width: var(--w3-stepper-gap);
+    z-index: 0;
+}
+
+.w3-stepper-vertical .w3-stepper-item + .w3-stepper-item::before {
+    border-left: 1px solid #ddd;
+    bottom: calc(100% - 1rem);
+    content: "";
+    left: 2rem;
+    position: absolute;
+    top: -1rem;
+}
+
+@container (max-width: 48rem) {
+    .w3-stepper-horizontal .w3-stepper-nav {
+        overflow-x: visible;
+    }
+
+    .w3-stepper-horizontal .w3-stepper-list {
+        --w3-stepper-gap: 0.35rem;
+        flex-direction: column;
+    }
+
+    .w3-stepper-horizontal .w3-stepper-item {
+        min-width: 0;
+    }
+
+    .w3-stepper-horizontal .w3-stepper-button {
+        min-height: 3.5rem;
+    }
+
+    .w3-stepper-horizontal .w3-stepper-item + .w3-stepper-item::before {
+        border-left: 1px solid #ddd;
+        border-top: 0;
+        bottom: calc(100% - 1rem);
+        left: 2rem;
+        right: auto;
+        top: -1rem;
+    }
+}
+
+@media (max-width: 900px) {
+    .w3-stepper-horizontal .w3-stepper-nav {
+        overflow-x: visible;
+    }
+
+    .w3-stepper-horizontal .w3-stepper-list {
+        --w3-stepper-gap: 0.35rem;
+        flex-direction: column;
+    }
+
+    .w3-stepper-horizontal .w3-stepper-item {
+        min-width: 0;
+    }
+
+    .w3-stepper-horizontal .w3-stepper-button {
+        min-height: 3.5rem;
+    }
+
+    .w3-stepper-horizontal .w3-stepper-item + .w3-stepper-item::before {
+        border-left: 1px solid #ddd;
+        border-top: 0;
+        bottom: calc(100% - 1rem);
+        left: 2rem;
+        right: auto;
+        top: -1rem;
+    }
+}

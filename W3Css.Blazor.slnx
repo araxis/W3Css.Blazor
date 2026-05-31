@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/W3Css.Blazor.Docs/W3Css.Blazor.Docs.csproj" />
+    <Project Path="src/W3Css.Blazor/W3Css.Blazor.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/W3Css.Blazor.Tests/W3Css.Blazor.Tests.csproj" />
+  </Folder>
+</Solution>

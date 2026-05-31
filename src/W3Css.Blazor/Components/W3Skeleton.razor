@@ -1,0 +1,70 @@
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+<div @attributes="AdditionalAttributes"
+     class="@CssClass"
+     style="@StyleValue"
+     role="status"
+     aria-label="@Label"
+     aria-busy="true">
+    @if (Circle)
+    {
+        <span class="w3-skeleton-shape" aria-hidden="true"></span>
+    }
+    else
+    {
+        @for (var index = 0; index < EffectiveLines; index++)
+        {
+            <span class="w3-skeleton-line" aria-hidden="true"></span>
+        }
+    }
+</div>
+
+@code {
+    private int EffectiveLines => Math.Max(1, Lines);
+
+    private string CssClass => BuildClass(
+        "w3-skeleton",
+        Circle ? "w3-skeleton-circle" : null,
+        Animate ? "w3-skeleton-animate" : null,
+        Round.ToClass(),
+        Color.ToBackgroundClass());
+
+    private string? StyleValue => CombineStyle(
+        !string.IsNullOrWhiteSpace(Width) ? $"--w3-skeleton-width:{Width}" : null,
+        !string.IsNullOrWhiteSpace(Height) ? $"--w3-skeleton-height:{Height}" : null,
+        Style);
+
+    [Parameter]
+    public int Lines { get; set; } = 1;
+
+    [Parameter]
+    public string? Width { get; set; }
+
+    [Parameter]
+    public string? Height { get; set; }
+
+    [Parameter]
+    public string Label { get; set; } = "Loading";
+
+    [Parameter]
+    public bool Circle { get; set; }
+
+    [Parameter]
+    public bool Animate { get; set; } = true;
+
+    [Parameter]
+    public W3Round Round { get; set; } = W3Round.Medium;
+
+    [Parameter]
+    public W3Color Color { get; set; } = W3Color.LightGrey;
+
+    private static string? CombineStyle(params string?[] styles)
+    {
+        var style = string.Join(';', styles
+            .Where(value => !string.IsNullOrWhiteSpace(value))
+            .Select(value => value!.Trim().TrimEnd(';')));
+
+        return string.IsNullOrWhiteSpace(style) ? null : style;
+    }
+}

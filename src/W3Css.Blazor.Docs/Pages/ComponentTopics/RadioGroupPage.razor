@@ -1,0 +1,69 @@
+@page "/components/radio-group"
+
+<PageTitle>W3RadioGroup</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3RadioGroup</h1>
+    <DocPager PreviousHref="components/radio" PreviousText="Radio" NextHref="components/text-area" NextText="Text Area" />
+
+    <p class="w3-large">`W3RadioGroup&lt;TValue&gt;` manages a set of `W3Radio` options so your model only stores one selected value.</p>
+    <p>Use &#64;bind-Value on the group and OptionValue on each W3Radio option.</p>
+
+    <DocExample Title="Contact Method" Description="Shared value updates when one radio option is selected." Code="@RadioGroupCode">
+        <EditForm Model="@RadioModel">
+            <W3RadioGroup TValue="string" Label="Contact method" @bind-Value="RadioModel.Contact" Name="contact">
+                <W3Radio TValue="string" OptionValue="@EmailOption">Email</W3Radio>
+                <W3Radio TValue="string" OptionValue="@SmsOption">SMS</W3Radio>
+                <W3Radio TValue="string" OptionValue="@ChatOption" Disabled="true">In-app chat</W3Radio>
+            </W3RadioGroup>
+            <p class="w3-small">Selected method: <strong>@RadioModel.Contact</strong></p>
+        </EditForm>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>TValue</td><td>type</td><td>required</td><td>Bound value type for the radio group.</td></tr>
+                <tr><td>Value</td><td>TValue</td><td>default</td><td>Current group value.</td></tr>
+                <tr><td>ValueChanged</td><td>EventCallback&lt;TValue&gt;</td><td>none</td><td>Raised when selected value changes.</td></tr>
+                <tr><td>Label</td><td>string</td><td>Radio Group</td><td>Accessibility label for the radio wrapper.</td></tr>
+                <tr><td>Name</td><td>string?</td><td>null</td><td>Shared radio `name` value when child radios omit `Name`.</td></tr>
+                <tr><td>Disabled</td><td>bool</td><td>false</td><td>Disables all child radios.</td></tr>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Collection of `W3Radio` children.</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional wrapper classes.</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline styles on the wrapper.</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Related</h2>
+        <p><NavLink href="components/radio">Radio</NavLink> shows individual radio option styling and label parameters.</p>
+    </section>
+
+    <DocPager PreviousHref="components/radio" PreviousText="Radio" NextHref="components/text-area" NextText="Text Area" />
+</W3Container>
+
+@code {
+    private const string EmailOption = "email";
+    private const string SmsOption = "sms";
+    private const string ChatOption = "chat";
+    private readonly RadioGroupExampleModel RadioModel = new();
+
+    private const string RadioGroupCode = """
+<W3RadioGroup TValue="string" Label="Contact method" @bind-Value="model.Contact" Name="contact">
+    <W3Radio TValue="string" OptionValue="email">Email</W3Radio>
+    <W3Radio TValue="string" OptionValue="sms">SMS</W3Radio>
+    <W3Radio TValue="string" OptionValue="chat" Disabled="true">In-app chat</W3Radio>
+</W3RadioGroup>
+""";
+
+    private sealed class RadioGroupExampleModel
+    {
+        public string Contact { get; set; } = EmailOption;
+    }
+}

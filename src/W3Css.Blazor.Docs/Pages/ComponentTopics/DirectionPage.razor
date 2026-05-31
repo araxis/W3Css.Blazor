@@ -1,0 +1,97 @@
+@page "/components/direction"
+
+<PageTitle>W3Direction</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3Direction</h1>
+    <DocPager PreviousHref="components/hover-colors" PreviousText="Hover Colors" NextHref="components/bar" NextText="Bar" />
+
+    <p class="w3-large">`W3Direction` renders W3.CSS left-to-right and right-to-left direction utility classes.</p>
+    <p>Use it for localized content blocks that need a CSS direction class, or set `Inline` when the wrapper should render a span.</p>
+
+    <DocExample Title="Block Direction" Code="@BlockCode">
+        <W3Grid Padding="true" Style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
+            <W3Direction Direction="W3TextDirection.LeftToRight" Color="W3Color.PaleBlue" Round="W3Round.Medium" Class="@SampleClass">
+                Direction: left-to-right. Account #123, draft (start).
+            </W3Direction>
+            <W3Direction Direction="W3TextDirection.RightToLeft" Color="W3Color.PaleYellow" Round="W3Round.Medium" Class="@SampleClass" lang="fa">
+                احساس سوختن به تماشا نمی‌شود. آتش بگیر تا بدانی چه می‌کشم.
+            </W3Direction>
+        </W3Grid>
+    </DocExample>
+
+    <DocExample Title="Inline Direction" Code="@InlineCode">
+        <p>
+            Inline wrappers can mark
+            <W3Direction Inline="true" Direction="W3TextDirection.RightToLeft" TextColor="W3Color.Red" Class="w3-padding-small" lang="fa">
+                متن کوتاه فارسی
+            </W3Direction>
+            without adding a block element.
+        </p>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Inline</td><td>bool</td><td>false</td><td>Renders `span` instead of `div`</td></tr>
+                <tr><td>Direction</td><td>W3TextDirection</td><td>None</td><td>`w3-ltr` or `w3-rtl`</td></tr>
+                <tr><td>Color</td><td>W3Color</td><td>None</td><td>Background color class</td></tr>
+                <tr><td>TextColor</td><td>W3Color</td><td>None</td><td>Text color class</td></tr>
+                <tr><td>Size</td><td>W3Size</td><td>Default</td><td>Text size class</td></tr>
+                <tr><td>Round</td><td>W3Round</td><td>None</td><td>Rounded corner class</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional CSS classes</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline style</td></tr>
+                <tr><td>ChildContent</td><td>RenderFragment</td><td>null</td><td>Content inside the direction wrapper</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Utility Values</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Value</th><th>Class</th><th>Use</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>None</td><td>none</td><td>No direction class</td></tr>
+                <tr><td>LeftToRight</td><td>`w3-ltr`</td><td>Left-to-right direction</td></tr>
+                <tr><td>RightToLeft</td><td>`w3-rtl`</td><td>Right-to-left direction</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Related W3.CSS</h2>
+        <p><a href="https://www.w3schools.com/w3css/w3css_references.asp" target="_blank" rel="noopener">W3.CSS References</a></p>
+    </section>
+
+    <DocPager PreviousHref="components/hover-colors" PreviousText="Hover Colors" NextHref="components/bar" NextText="Bar" />
+</W3Container>
+
+@code {
+    private const string SampleClass = "w3-padding w3-border";
+
+    private const string BlockCode = """
+<W3Direction Direction="W3TextDirection.LeftToRight">
+    Direction: left-to-right. Account #123, draft (start).
+</W3Direction>
+
+<W3Direction Direction="W3TextDirection.RightToLeft" lang="fa">
+    احساس سوختن به تماشا نمی‌شود. آتش بگیر تا بدانی چه می‌کشم.
+</W3Direction>
+""";
+
+    private const string InlineCode = """
+<p>
+    Inline wrappers can mark
+    <W3Direction Inline="true" Direction="W3TextDirection.RightToLeft" lang="fa">
+        متن کوتاه فارسی
+    </W3Direction>
+    without adding a block element.
+</p>
+""";
+}

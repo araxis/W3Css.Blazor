@@ -1,0 +1,113 @@
+@page "/components/popover"
+
+<PageTitle>W3Popover</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3Popover</h1>
+    <DocPager PreviousHref="components/tooltip" PreviousText="Tooltip" NextHref="components/focus-trap" NextText="Focus Trap" />
+
+    <p class="w3-large">`W3Popover` renders click-controlled contextual content for filters, quick actions, and compact detail panels.</p>
+    <p>Use it when the content is more interactive or structured than a tooltip but lighter than a modal.</p>
+
+    <DocExample Title="Filter Popover" Code="@FilterCode">
+        <W3Popover Label="Open filters"
+                   Open="@FilterOpen"
+                   OpenChanged="SetFilterOpen"
+                   TriggerColor="W3Color.Teal"
+                   TriggerTextColor="W3Color.White">
+            <TriggerContent>
+                <span class="fa fa-filter" aria-hidden="true"></span>
+                Filters
+            </TriggerContent>
+            <ChildContent>
+                <strong>Status</strong>
+                <W3Stack Gap="8" Class="w3-margin-top">
+                    <W3Tag Color="W3Color.PaleBlue" TextColor="W3Color.Black">Open</W3Tag>
+                    <W3Tag Color="W3Color.PaleGreen" TextColor="W3Color.Black">Ready</W3Tag>
+                </W3Stack>
+            </ChildContent>
+        </W3Popover>
+        <p class="w3-small">Popover state: <strong>@(FilterOpen ? "Open" : "Closed")</strong></p>
+    </DocExample>
+
+    <DocExample Title="Right Placement" Code="@PlacementCode">
+        <W3Popover Label="Show summary"
+                   Placement="W3PopoverPlacement.Right"
+                   Width="16rem"
+                   TriggerColor="W3Color.LightGrey"
+                   Round="W3Round.Large">
+            <TriggerContent>Summary</TriggerContent>
+            <ChildContent>
+                <p class="w3-margin-top-0">Use right placement for dense toolbar actions when horizontal space is available.</p>
+                <W3Button Color="W3Color.Teal" TextColor="W3Color.White" Round="W3Round.Medium">Apply</W3Button>
+            </ChildContent>
+        </W3Popover>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Label</td><td>string</td><td>Open popover</td><td>Trigger label fallback and popover `aria-label`</td></tr>
+                <tr><td>TriggerContent</td><td>RenderFragment?</td><td>null</td><td>Custom trigger content</td></tr>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Popover content</td></tr>
+                <tr><td>Open</td><td>bool</td><td>false</td><td>Controlled open state</td></tr>
+                <tr><td>OpenChanged</td><td>EventCallback&lt;bool&gt;</td><td>empty</td><td>`@@bind-Open` support</td></tr>
+                <tr><td>Disabled</td><td>bool</td><td>false</td><td>Disabled trigger state</td></tr>
+                <tr><td>Card</td><td>bool</td><td>true</td><td>`w3-card-4` on content</td></tr>
+                <tr><td>Animate</td><td>bool</td><td>false</td><td>`w3-animate-opacity` while open</td></tr>
+                <tr><td>CloseOnOutsideClick</td><td>bool</td><td>true</td><td>Fixed close layer behind content</td></tr>
+                <tr><td>Placement</td><td>W3PopoverPlacement</td><td>Bottom</td><td>Relative content placement class</td></tr>
+                <tr><td>Width</td><td>string?</td><td>18rem</td><td>Content width style</td></tr>
+                <tr><td>TriggerClass, ContentClass</td><td>string?</td><td>null</td><td>Additional trigger/content classes</td></tr>
+                <tr><td>ContentStyle</td><td>string?</td><td>null</td><td>Inline styles on content</td></tr>
+                <tr><td>TriggerColor, TriggerTextColor</td><td>W3Color</td><td>None</td><td>Trigger colors</td></tr>
+                <tr><td>ContentColor, ContentTextColor</td><td>W3Color</td><td>White / Black</td><td>Popover content colors</td></tr>
+                <tr><td>Round</td><td>W3Round</td><td>Medium</td><td>Rounded content class</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional root classes</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline styles on the root wrapper</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <DocPager PreviousHref="components/tooltip" PreviousText="Tooltip" NextHref="components/focus-trap" NextText="Focus Trap" />
+</W3Container>
+
+@code {
+    private bool FilterOpen { get; set; } = true;
+
+    private void SetFilterOpen(bool open)
+    {
+        FilterOpen = open;
+    }
+
+    private const string FilterCode = """
+<W3Popover Label="Open filters" @bind-Open="filterOpen" TriggerColor="W3Color.Teal" TriggerTextColor="W3Color.White">
+    <TriggerContent>
+        <span class="fa fa-filter" aria-hidden="true"></span>
+        Filters
+    </TriggerContent>
+    <ChildContent>
+        <strong>Status</strong>
+        <W3Tag Color="W3Color.PaleBlue" TextColor="W3Color.Black">Open</W3Tag>
+    </ChildContent>
+</W3Popover>
+""";
+
+    private const string PlacementCode = """
+<W3Popover Label="Show summary"
+           Placement="W3PopoverPlacement.Right"
+           Width="16rem"
+           TriggerColor="W3Color.LightGrey"
+           Round="W3Round.Large">
+    <TriggerContent>Summary</TriggerContent>
+    <ChildContent>
+        <p>Use right placement for dense toolbar actions.</p>
+        <W3Button Color="W3Color.Teal" TextColor="W3Color.White">Apply</W3Button>
+    </ChildContent>
+</W3Popover>
+""";
+}

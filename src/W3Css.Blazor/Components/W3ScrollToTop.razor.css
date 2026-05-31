@@ -1,0 +1,23 @@
+.w3-scroll-to-top {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    z-index: 5;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    font-size: 1.25rem;
+    line-height: 1;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.w3-scroll-to-top-hidden {
+    opacity: 0;
+    transform: translateY(8px);
+    pointer-events: none;
+}
+
+.w3-scroll-to-top-visible {
+    opacity: 1;
+    transform: none;
+}

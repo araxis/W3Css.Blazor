@@ -1,0 +1,70 @@
+@page "/components/progress-circular"
+
+<PageTitle>W3ProgressCircular</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3ProgressCircular</h1>
+    <DocPager PreviousHref="components/progress" PreviousText="Progress" NextHref="components/stepper" NextText="Stepper" />
+
+    <p class="w3-large">`W3ProgressCircular` renders a MudBlazor-style circular progress indicator in two modes: determinate and indeterminate.</p>
+    <p>Use it in upload progress, data sync, import states, background tasks, and anywhere a compact circular status marker fits better than a bar.</p>
+
+    <DocExample Title="Circular Indeterminate" Description="Use this style when the duration is unknown or work is ongoing." Code="@IndeterminateCode">
+        <W3ProgressCircular Indeterminate="true" Size="56" Thickness="6" Color="W3Color.Teal" />
+    </DocExample>
+
+    <DocExample Title="Circular Determinate" Description="Set value against a range and show the current percentage in the center." Code="@DeterminateCode">
+        <W3ProgressCircular Value="42" Max="100" ShowLabel="true" Size="64" Thickness="6" Color="W3Color.Teal" TrackColor="W3Color.LightGrey" />
+    </DocExample>
+
+    <DocExample Title="Small Status Ring" Description="A compact ring suitable for toolbar and list row state indicators." Code="@CompactCode">
+        <W3ProgressCircular Value="75" Max="100" Size="36" Thickness="4" ShowLabel="true" TextColor="W3Color.White" Color="W3Color.Indigo" Label="75%" />
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Value</td><td>double</td><td>0</td><td>Current progress value</td></tr>
+                <tr><td>Min</td><td>double</td><td>0</td><td>Lower bound for clamped progress</td></tr>
+                <tr><td>Max</td><td>double</td><td>100</td><td>Upper bound for clamped progress</td></tr>
+                <tr><td>Indeterminate</td><td>bool</td><td>false</td><td>Switches to spinning mode</td></tr>
+                <tr><td>TrackColor</td><td>W3Color</td><td>LightGrey</td><td>Ring track color</td></tr>
+                <tr><td>Color</td><td>W3Color</td><td>Teal</td><td>Active ring color</td></tr>
+                <tr><td>TextColor</td><td>W3Color</td><td>Teal</td><td>Root text and label color</td></tr>
+                <tr><td>Label</td><td>string?</td><td>null</td><td>Custom center label when `ShowLabel` is true</td></tr>
+                <tr><td>ShowLabel</td><td>bool</td><td>false</td><td>Renders label in center</td></tr>
+                <tr><td>Size</td><td>double</td><td>48</td><td>Outer diameter in CSS px</td></tr>
+                <tr><td>Thickness</td><td>double</td><td>4</td><td>Stroke width in CSS px</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional classes</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline root style</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Related</h2>
+        <p><NavLink href="components/progress">Progress</NavLink> covers the linear W3.CSS progress bar.</p>
+        <p><NavLink href="components/spinner">Spinner</NavLink> is an indeterminate status indicator without percentage semantics.</p>
+        <p><NavLink href="components/stepper">Stepper</NavLink> can compose progress data into multi-step workflows.</p>
+    </section>
+
+    <DocPager PreviousHref="components/progress" PreviousText="Progress" NextHref="components/stepper" NextText="Stepper" />
+</W3Container>
+
+@code {
+    private const string IndeterminateCode = """
+<W3ProgressCircular Indeterminate="true" Size="56" Thickness="6" Color="W3Color.Teal" />
+""";
+
+    private const string DeterminateCode = """
+<W3ProgressCircular Value="42" Max="100" ShowLabel="true" Size="64" Thickness="6" Color="W3Color.Teal" TrackColor="W3Color.LightGrey" />
+""";
+
+    private const string CompactCode = """
+<W3ProgressCircular Value="75" Max="100" Size="36" Thickness="4" ShowLabel="true" TextColor="W3Color.White" Color="W3Color.Indigo" Label="75%" />
+""";
+}

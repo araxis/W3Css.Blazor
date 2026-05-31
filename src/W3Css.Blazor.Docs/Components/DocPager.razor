@@ -1,0 +1,29 @@
+<nav class="doc-page-nav" aria-label="Component page navigation">
+    @if (!string.IsNullOrWhiteSpace(PreviousHref) && !string.IsNullOrWhiteSpace(PreviousText))
+    {
+        <NavLink class="w3-button w3-light-grey w3-border" href="@PreviousHref">Previous: @PreviousText</NavLink>
+    }
+    else
+    {
+        <span></span>
+    }
+
+    @if (!string.IsNullOrWhiteSpace(NextHref) && !string.IsNullOrWhiteSpace(NextText))
+    {
+        <NavLink class="w3-button w3-teal" href="@NextHref">Next: @NextText</NavLink>
+    }
+</nav>
+
+@code {
+    [Parameter]
+    public string? PreviousHref { get; set; }
+
+    [Parameter]
+    public string? PreviousText { get; set; }
+
+    [Parameter]
+    public string? NextHref { get; set; }
+
+    [Parameter]
+    public string? NextText { get; set; }
+}

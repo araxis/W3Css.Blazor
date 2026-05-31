@@ -1,0 +1,122 @@
+@page "/components/fonts"
+
+<PageTitle>Fonts</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>Fonts</h1>
+    <DocPager PreviousHref="components/defaults" PreviousText="Defaults" NextHref="components/colors" NextText="Colors" />
+
+    <p class="w3-large">W3.CSS starts with readable default fonts, then adds a small set of font-family utility classes for local changes.</p>
+    <p>Use `W3Text.Font` for the built-in W3.CSS font helpers. Load project fonts in your own stylesheet when you want Google Fonts, self-hosted fonts, or an app-wide font override.</p>
+
+    <DocExample Title="Built-In Font Classes" Code="@BuiltInFontCode">
+        <W3Grid Padding="true" Style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));">
+            <W3Text Font="W3FontFamily.Serif" Size="W3Size.Large" Class="@FontExampleClass">w3-serif</W3Text>
+            <W3Text Font="W3FontFamily.SansSerif" Size="W3Size.Large" Class="@FontExampleClass">w3-sans-serif</W3Text>
+            <W3Text Font="W3FontFamily.Monospace" Size="W3Size.Large" Class="@FontExampleClass">w3-monospace</W3Text>
+            <W3Text Font="W3FontFamily.Cursive" Size="W3Size.Large" Class="@FontExampleClass">w3-cursive</W3Text>
+        </W3Grid>
+    </DocExample>
+
+    <DocExample Title="Default Font Override" Code="@DefaultOverrideCode">
+        <W3Panel Color="W3Color.PaleYellow" TextColor="W3Color.Black" LeftBar="true" Border="true" Round="W3Round.Medium">
+            Load W3.CSS first, then load application CSS that sets `html`, `body`, and heading fonts when the whole app needs a different baseline.
+        </W3Panel>
+    </DocExample>
+
+    <DocExample Title="Google Font Class" Code="@GoogleFontCode">
+        <div class="w3-white w3-border w3-padding">
+            <p class="w3-sofia w3-xxlarge">Making the Web readable</p>
+            <p>The docs site loads Sofia only for this example. A consuming app should load its chosen font stylesheet itself.</p>
+        </div>
+    </DocExample>
+
+    <DocExample Title="Plain HTML Still Works" Code="@PlainHtmlCode">
+        <div class="w3-white w3-border w3-padding">
+            <p class="w3-serif">A plain paragraph can use the raw W3.CSS font class when no typed wrapper is needed.</p>
+            <p class="w3-monospace">Use plain classes for static documentation, samples, or one-off content.</p>
+        </div>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Usage Reference</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Need</th><th>Use</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Serif text</td><td>`Font="W3FontFamily.Serif"`</td><td>`w3-serif`</td></tr>
+                <tr><td>Sans serif text</td><td>`Font="W3FontFamily.SansSerif"`</td><td>`w3-sans-serif`</td></tr>
+                <tr><td>Monospace text</td><td>`Font="W3FontFamily.Monospace"`</td><td>`w3-monospace`</td></tr>
+                <tr><td>Cursive text</td><td>`Font="W3FontFamily.Cursive"`</td><td>`w3-cursive`</td></tr>
+                <tr><td>Google or custom font</td><td>Load a font stylesheet and use `Class` or `style`</td><td>Consumer-provided CSS</td></tr>
+                <tr><td>App-wide default</td><td>Application stylesheet loaded after W3.CSS</td><td>`font-family` override for `html`, `body`, and headings</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Default Font Values</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Target</th><th>W3.CSS default</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Body text</td><td>Verdana, 15px, 1.5 line height</td></tr>
+                <tr><td>Headings</td><td>Segoe UI, 400 font weight, W3.CSS heading sizes</td></tr>
+                <tr><td>Built-in font helpers</td><td>`w3-serif`, `w3-sans-serif`, `w3-monospace`, and `w3-cursive`</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Related W3.CSS</h2>
+        <p><a href="https://www.w3schools.com/w3css/w3css_fonts.asp" target="_blank" rel="noopener">W3.CSS Fonts</a></p>
+        <p><a href="https://www.w3schools.com/W3CSS/w3css_fonts_google.asp" target="_blank" rel="noopener">W3.CSS Google Fonts</a></p>
+        <p><NavLink href="components/text-fonts">W3Text utility documentation</NavLink></p>
+    </section>
+
+    <DocPager PreviousHref="components/defaults" PreviousText="Defaults" NextHref="components/colors" NextText="Colors" />
+</W3Container>
+
+@code {
+    private const string FontExampleClass = "w3-padding w3-border w3-white";
+
+    private const string BuiltInFontCode = """
+<W3Text Font="W3FontFamily.Serif">w3-serif</W3Text>
+<W3Text Font="W3FontFamily.SansSerif">w3-sans-serif</W3Text>
+<W3Text Font="W3FontFamily.Monospace">w3-monospace</W3Text>
+<W3Text Font="W3FontFamily.Cursive">w3-cursive</W3Text>
+""";
+
+    private const string DefaultOverrideCode = """
+<link rel="stylesheet" href="_content/W3Css.Blazor/w3css/5/w3.css" />
+<link rel="stylesheet" href="css/app.css" />
+
+html,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: Arial, Helvetica, sans-serif;
+}
+""";
+
+    private const string GoogleFontCode = """
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia" />
+
+.w3-sofia {
+    font-family: Sofia, cursive;
+}
+
+<p class="w3-sofia w3-xxlarge">Making the Web readable</p>
+""";
+
+    private const string PlainHtmlCode = """
+<p class="w3-serif">A plain paragraph can use the raw W3.CSS font class.</p>
+<p class="w3-monospace">Use plain classes for static documentation or one-off content.</p>
+""";
+}

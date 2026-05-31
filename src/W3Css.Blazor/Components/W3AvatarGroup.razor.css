@@ -1,0 +1,12 @@
+.w3-avatar-group {
+    display: inline-flex;
+    align-items: center;
+}
+
+.w3-avatar-group ::deep .w3-avatar:not(:first-child) {
+    margin-left: var(--w3-avatar-group-overlap, -12px);
+}
+
+.w3-avatar-group-outlined ::deep .w3-avatar {
+    box-shadow: 0 0 0 2px #fff;
+}

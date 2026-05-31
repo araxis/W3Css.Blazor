@@ -1,0 +1,176 @@
+@page "/components/menu"
+
+<PageTitle>W3Menu</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3Menu</h1>
+    <DocPager PreviousHref="components/dropdown" PreviousText="Dropdown" NextHref="components/pagination" NextText="Pagination" />
+
+    <p class="w3-large">`W3Menu` renders a Blazor-controlled command menu with W3.CSS dropdown styling and menu semantics.</p>
+    <p>Use it for app-bar overflow actions, row action menus, editor commands, and contextual operations that need icons, descriptions, shortcuts, disabled items, or destructive commands.</p>
+
+    <DocExample Title="Command Menu" Description="Menu items close the menu after selection by default, while disabled items remain non-interactive." Code="@CommandCode">
+        <W3Menu Label="Actions"
+                IconClass="fa fa-ellipsis-v"
+                TriggerColor="W3Color.Teal"
+                TriggerTextColor="W3Color.White"
+                Placement="W3MenuPlacement.BottomEnd"
+                @bind-Open="CommandMenuOpen">
+            <W3MenuItem IconClass="fa fa-pencil" Text="Rename" Description="Change the visible page name" Shortcut="R" OnClick="@(_ => Rename())" />
+            <W3MenuItem IconClass="fa fa-copy" Text="Duplicate" Description="Create a copy in the same workspace" Shortcut="D" OnClick="@(_ => Duplicate())" />
+            <W3MenuDivider />
+            <W3MenuItem IconClass="fa fa-trash" Text="Delete" Destructive="true" Shortcut="Del" OnClick="@(_ => Delete())" />
+            <W3MenuItem IconClass="fa fa-lock" Text="Publish locked" Disabled="true" />
+        </W3Menu>
+        <p class="w3-small w3-margin-top">Last action: @LastAction</p>
+    </DocExample>
+
+    <DocExample Title="Toolbar Overflow" Description="Use `TriggerContent` when the menu trigger needs to look like an icon button or app-bar command." Code="@ToolbarCode">
+        <W3Toolbar Label="Document toolbar" Border="true" Round="W3Round.Medium" Gap="4">
+            <W3Button Color="W3Color.Teal" TextColor="W3Color.White" Round="W3Round.Medium">Save</W3Button>
+            <W3Button Border="true" Round="W3Round.Medium">Preview</W3Button>
+            <W3Menu Label="More document actions" Placement="W3MenuPlacement.BottomEnd" TriggerClass="w3-border">
+                <TriggerContent>
+                    <span class="fa fa-ellipsis-h" aria-hidden="true"></span>
+                    <span class="w3-hide-small">More</span>
+                </TriggerContent>
+                <ChildContent>
+                    <W3MenuItem IconClass="fa fa-history" Text="Version history" Href="components/versions" />
+                    <W3MenuItem IconClass="fa fa-download" Text="Export" Description="Download a static package" />
+                    <W3MenuItem IconClass="fa fa-cog" Text="Settings" CloseOnClick="false" />
+                </ChildContent>
+            </W3Menu>
+        </W3Toolbar>
+    </DocExample>
+
+    <DocExample Title="Compact Row Menu" Description="Dense menu items keep table rows and cards scannable while preserving command labels." Code="@RowCode">
+        <W3Table Bordered="true" Responsive="true">
+            <thead>
+                <tr><th>Asset</th><th>Status</th><th class="w3-right-align">Actions</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>landing-page.html</td>
+                    <td><W3Tag Color="W3Color.PaleGreen" TextColor="W3Color.Black">Ready</W3Tag></td>
+                    <td class="w3-right-align">
+                        <W3Menu Label="Landing page actions" IconClass="fa fa-ellipsis-v" IconOnly="true" FixedPosition="true" ShowCaret="false" TriggerBorder="true" Placement="W3MenuPlacement.BottomEnd" MinWidth="160">
+                            <W3MenuItem Dense="true" IconClass="fa fa-eye" Text="Open" />
+                            <W3MenuItem Dense="true" IconClass="fa fa-pencil" Text="Edit" />
+                            <W3MenuDivider />
+                            <W3MenuItem Dense="true" IconClass="fa fa-trash" Text="Remove" Destructive="true" />
+                        </W3Menu>
+                    </td>
+                </tr>
+            </tbody>
+        </W3Table>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>W3Menu Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Id</td><td>string?</td><td>generated</td><td>Menu panel id for `aria-controls`</td></tr>
+                <tr><td>Label</td><td>string</td><td>Menu</td><td>Trigger text and fallback menu label</td></tr>
+                <tr><td>MenuLabel</td><td>string?</td><td>null</td><td>Optional `aria-label` on the menu panel</td></tr>
+                <tr><td>IconClass</td><td>string?</td><td>null</td><td>Optional trigger icon class</td></tr>
+                <tr><td>TriggerContent</td><td>RenderFragment?</td><td>null</td><td>Custom trigger button content</td></tr>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Menu items and dividers</td></tr>
+                <tr><td>Open / OpenChanged</td><td>bool / EventCallback&lt;bool&gt;</td><td>false / empty</td><td>`w3-show` and controlled open state</td></tr>
+                <tr><td>Disabled</td><td>bool</td><td>false</td><td>Disabled trigger state</td></tr>
+                <tr><td>CloseOnOutsideClick</td><td>bool</td><td>true</td><td>Transparent Blazor close layer while open</td></tr>
+                <tr><td>CloseOnSelect</td><td>bool</td><td>true</td><td>Allows menu items to close the owner after click</td></tr>
+                <tr><td>ShowCaret</td><td>bool</td><td>true</td><td>Small trigger caret when using default trigger content</td></tr>
+                <tr><td>IconOnly</td><td>bool</td><td>false</td><td>Hides the default label visually while keeping `Label` as the trigger `aria-label`</td></tr>
+                <tr><td>FixedPosition</td><td>bool</td><td>false</td><td>Positions the panel against the viewport so row menus can escape table or overflow wrappers</td></tr>
+                <tr><td>TriggerBorder / TriggerRound</td><td>bool / W3Round</td><td>false / Medium</td><td>Trigger border and round classes</td></tr>
+                <tr><td>TriggerColor / TriggerTextColor</td><td>W3Color</td><td>None / None</td><td>Trigger color classes</td></tr>
+                <tr><td>Placement</td><td>W3MenuPlacement</td><td>BottomStart</td><td>Panel placement class</td></tr>
+                <tr><td>Card / CardDepth / Round</td><td>bool / W3CardDepth / W3Round</td><td>true / Four / Medium</td><td>Panel card and round classes</td></tr>
+                <tr><td>Animate</td><td>bool</td><td>false</td><td>`w3-animate-opacity` on the panel</td></tr>
+                <tr><td>PanelColor / PanelTextColor</td><td>W3Color</td><td>White / Black</td><td>Panel color classes</td></tr>
+                <tr><td>MinWidth</td><td>int</td><td>192</td><td>Panel min width in pixels</td></tr>
+                <tr><td>Class / Style</td><td>string?</td><td>null</td><td>Wrapper class and style</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Item Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Component</th><th>Name</th><th>Type</th><th>Purpose</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>W3MenuItem</td><td>Text / ChildContent</td><td>string? / RenderFragment?</td><td>Primary item label</td></tr>
+                <tr><td>W3MenuItem</td><td>Description</td><td>string?</td><td>Secondary helper text under the label</td></tr>
+                <tr><td>W3MenuItem</td><td>Shortcut / EndContent</td><td>string? / RenderFragment?</td><td>Right-aligned shortcut or custom suffix</td></tr>
+                <tr><td>W3MenuItem</td><td>Href / Target</td><td>string?</td><td>Renders an anchor item when `Href` is set</td></tr>
+                <tr><td>W3MenuItem</td><td>IconClass</td><td>string?</td><td>Left icon class</td></tr>
+                <tr><td>W3MenuItem</td><td>Dense</td><td>bool</td><td>Compact row sizing</td></tr>
+                <tr><td>W3MenuItem</td><td>Destructive</td><td>bool</td><td>Danger styling for destructive commands</td></tr>
+                <tr><td>W3MenuItem</td><td>Disabled</td><td>bool</td><td>Non-interactive item with `aria-disabled`</td></tr>
+                <tr><td>W3MenuItem</td><td>CloseOnClick</td><td>bool</td><td>Opt out of owner close-on-select behavior</td></tr>
+                <tr><td>W3MenuDivider</td><td>Class / Style</td><td>string?</td><td>Separator customization</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Related</h2>
+        <p><NavLink href="components/dropdown">Dropdown</NavLink> covers generic custom dropdown content, while <NavLink href="components/icon-button">Icon Button</NavLink> covers inline icon-only commands.</p>
+    </section>
+
+    <DocPager PreviousHref="components/dropdown" PreviousText="Dropdown" NextHref="components/pagination" NextText="Pagination" />
+</W3Container>
+
+@code {
+    private bool CommandMenuOpen { get; set; }
+    private string LastAction { get; set; } = "None";
+
+    private void SetLastAction(string action)
+    {
+        LastAction = action;
+    }
+
+    private void Rename() => SetLastAction("Rename");
+
+    private void Duplicate() => SetLastAction("Duplicate");
+
+    private void Delete() => SetLastAction("Delete");
+
+    private const string CommandCode = """
+<W3Menu Label="Actions" IconClass="fa fa-ellipsis-v" Placement="W3MenuPlacement.BottomEnd" @bind-Open="menuOpen">
+    <W3MenuItem IconClass="fa fa-pencil" Text="Rename" Description="Change the visible page name" Shortcut="R" />
+    <W3MenuItem IconClass="fa fa-copy" Text="Duplicate" Description="Create a copy in the same workspace" Shortcut="D" />
+    <W3MenuDivider />
+    <W3MenuItem IconClass="fa fa-trash" Text="Delete" Destructive="true" Shortcut="Del" />
+    <W3MenuItem IconClass="fa fa-lock" Text="Publish locked" Disabled="true" />
+</W3Menu>
+""";
+
+    private const string ToolbarCode = """
+<W3Menu Label="More document actions" Placement="W3MenuPlacement.BottomEnd" TriggerClass="w3-border">
+    <TriggerContent>
+        <span class="fa fa-ellipsis-h" aria-hidden="true"></span>
+        <span class="w3-hide-small">More</span>
+    </TriggerContent>
+    <ChildContent>
+        <W3MenuItem IconClass="fa fa-history" Text="Version history" Href="components/versions" />
+        <W3MenuItem IconClass="fa fa-download" Text="Export" Description="Download a static package" />
+        <W3MenuItem IconClass="fa fa-cog" Text="Settings" CloseOnClick="false" />
+    </ChildContent>
+</W3Menu>
+""";
+
+    private const string RowCode = """
+<W3Menu Label="Landing page actions" IconClass="fa fa-ellipsis-v" IconOnly="true" FixedPosition="true" ShowCaret="false" TriggerBorder="true" Placement="W3MenuPlacement.BottomEnd" MinWidth="160">
+    <W3MenuItem Dense="true" IconClass="fa fa-eye" Text="Open" />
+    <W3MenuItem Dense="true" IconClass="fa fa-pencil" Text="Edit" />
+    <W3MenuDivider />
+    <W3MenuItem Dense="true" IconClass="fa fa-trash" Text="Remove" Destructive="true" />
+</W3Menu>
+""";
+}

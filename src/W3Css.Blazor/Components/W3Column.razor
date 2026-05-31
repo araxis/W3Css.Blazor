@@ -1,0 +1,44 @@
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+<div @attributes="AdditionalAttributes"
+     class="@CssClass"
+     style="@Style">
+    @ChildContent
+</div>
+
+@code {
+    private string CssClass => BuildClass(
+        Rest ? "w3-rest" : "w3-col",
+        Rest ? null : ToColumnClass("s", Small),
+        Rest ? null : ToColumnClass("m", Medium),
+        Rest ? null : ToColumnClass("l", Large),
+        Color.ToBackgroundClass(),
+        TextColor.ToTextClass());
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public int Small { get; set; }
+
+    [Parameter]
+    public int Medium { get; set; }
+
+    [Parameter]
+    public int Large { get; set; }
+
+    [Parameter]
+    public bool Rest { get; set; }
+
+    [Parameter]
+    public W3Color Color { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color TextColor { get; set; } = W3Color.None;
+
+    private static string? ToColumnClass(string prefix, int span)
+    {
+        return span is >= 1 and <= 12 ? $"{prefix}{span}" : null;
+    }
+}

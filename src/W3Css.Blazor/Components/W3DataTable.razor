@@ -1,0 +1,644 @@
+@typeparam TItem
+@using System.Globalization
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+<CascadingValue Value="this" IsFixed="true">
+    @ChildContent
+</CascadingValue>
+
+@{
+    var visibleColumns = VisibleColumns;
+    var viewItems = BuildViewItems(visibleColumns);
+    var pageCount = GetPageCount(viewItems.Count);
+    var currentPage = GetEffectiveCurrentPage(pageCount);
+    var pageItems = GetPageItems(viewItems, currentPage).ToList();
+    var columnSpan = visibleColumns.Count + (RowActions is null ? 0 : 1);
+}
+
+<section @attributes="AdditionalAttributes"
+         class="@RootCssClass"
+         style="@Style">
+    @if (ShowToolbar)
+    {
+        <div class="@ToolbarCssClass">
+            @if (Searchable)
+            {
+                <div class="w3-data-table-search">
+                    <label class="w3-small" for="@SearchInputId">@SearchLabel</label>
+                    <input id="@SearchInputId"
+                           type="search"
+                           class="@SearchInputCssClass"
+                           placeholder="@SearchPlaceholder"
+                           value="@SearchText"
+                           @oninput="OnSearchInputAsync" />
+                </div>
+            }
+
+            @if (Toolbar is not null)
+            {
+                <div class="w3-data-table-toolbar-content">
+                    @Toolbar
+                </div>
+            }
+        </div>
+    }
+
+    @if (Loading)
+    {
+        <div class="@LoadingCssClass" role="status">
+            @if (LoadingContent is not null)
+            {
+                @LoadingContent
+            }
+            else
+            {
+                @LoadingText
+            }
+        </div>
+    }
+    else
+    {
+        <W3Table Color="@Color"
+                 TextColor="@TextColor"
+                 Striped="@Striped"
+                 Bordered="@Bordered"
+                 Border="@Border"
+                 Hoverable="@Hoverable"
+                 Centered="@Centered"
+                 Responsive="@Responsive"
+                 aria-label="@AriaLabel">
+            <thead class="@HeaderCssClass">
+                <tr>
+                    @foreach (var column in visibleColumns)
+                    {
+                        <th scope="col"
+                            class="@column.HeaderCssClass"
+                            style="@column.HeaderStyle"
+                            aria-sort="@GetAriaSort(column)">
+                            @if (column.CanSort)
+                            {
+                                <button type="button"
+                                        class="@GetSortButtonClass(column)"
+                                        @onclick="() => SortByAsync(column)">
+                                    <span>
+                                        @if (column.HeaderContent is not null)
+                                        {
+                                            @column.HeaderContent
+                                        }
+                                        else
+                                        {
+                                            @column.Title
+                                        }
+                                    </span>
+                                    @if (IsSorted(column))
+                                    {
+                                        <span class="w3-data-table-sort-state" aria-hidden="true">@GetSortIndicator()</span>
+                                    }
+                                </button>
+                            }
+                            else if (column.HeaderContent is not null)
+                            {
+                                @column.HeaderContent
+                            }
+                            else
+                            {
+                                @column.Title
+                            }
+                        </th>
+                    }
+
+                    @if (RowActions is not null)
+                    {
+                        <th scope="col">@RowActionsHeader</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @if (pageItems.Count == 0)
+                {
+                    <tr>
+                        <td colspan="@Math.Max(columnSpan, 1)" class="w3-center w3-padding-24">
+                            @if (EmptyContent is not null)
+                            {
+                                @EmptyContent
+                            }
+                            else
+                            {
+                                @EmptyText
+                            }
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    @foreach (var item in pageItems)
+                    {
+                        <tr @key="item"
+                            class="@GetRowCssClass(item)"
+                            aria-selected="@GetAriaSelected(item)"
+                            @onclick="() => OnRowClickAsync(item)">
+                            @foreach (var column in visibleColumns)
+                            {
+                                <td class="@column.CellCssClass" style="@column.CellStyle">
+                                    @if (column.CellTemplate is not null)
+                                    {
+                                        @column.CellTemplate(item)
+                                    }
+                                    else
+                                    {
+                                        @column.GetCellText(item)
+                                    }
+                                </td>
+                            }
+
+                            @if (RowActions is not null)
+                            {
+                                <td>
+                                    @RowActions(item)
+                                </td>
+                            }
+                        </tr>
+                    }
+                }
+            </tbody>
+        </W3Table>
+
+        @if (ShowFooter(viewItems.Count, pageCount))
+        {
+            <div class="w3-data-table-footer">
+                @if (ShowCount)
+                {
+                    <p class="w3-small w3-data-table-count">@GetCountText(viewItems.Count, currentPage)</p>
+                }
+
+                @if (Pageable && pageCount > 1)
+                {
+                    <W3Pagination PageCount="@pageCount"
+                                  CurrentPage="@currentPage"
+                                  CurrentPageChanged="SetCurrentPageAsync"
+                                  ActiveColor="@ActivePageColor"
+                                  ActiveTextColor="@ActivePageTextColor"
+                                  AriaLabel="@PaginationAriaLabel"
+                                  PreviousText="@PreviousText"
+                                  NextText="@NextText" />
+                }
+            </div>
+        }
+    }
+</section>
+
+@code {
+    private readonly List<W3DataColumn<TItem>> columns = [];
+
+    private string SearchInputId => $"{IdPrefix}-search";
+
+    private string IdPrefix => string.IsNullOrWhiteSpace(Id)
+        ? $"w3-data-table-{GetHashCode():x}"
+        : Id;
+
+    private IReadOnlyList<W3DataColumn<TItem>> VisibleColumns => columns
+        .Where(column => column.Visible)
+        .ToList();
+
+    private bool ShowToolbar => Searchable || Toolbar is not null;
+
+    private string RootCssClass => BuildClass("w3-data-table");
+
+    private string ToolbarCssClass => new W3ClassBuilder()
+        .Add("w3-data-table-toolbar")
+        .Add(ToolbarColor.ToBackgroundClass())
+        .Add(ToolbarTextColor.ToTextClass())
+        .ToString();
+
+    private string SearchInputCssClass => new W3ClassBuilder()
+        .Add("w3-input")
+        .Add("w3-border")
+        .Add(SearchInputClass)
+        .ToString();
+
+    private string HeaderCssClass => new W3ClassBuilder()
+        .Add(HeaderColor.ToBackgroundClass())
+        .Add(HeaderTextColor.ToTextClass())
+        .ToString();
+
+    private string LoadingCssClass => new W3ClassBuilder()
+        .Add("w3-panel")
+        .Add("w3-padding")
+        .Add(LoadingColor.ToBackgroundClass())
+        .Add(LoadingTextColor.ToTextClass())
+        .ToString();
+
+    [Parameter]
+    public IEnumerable<TItem>? Items { get; set; }
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public RenderFragment? Toolbar { get; set; }
+
+    [Parameter]
+    public RenderFragment<TItem>? RowActions { get; set; }
+
+    [Parameter]
+    public RenderFragment? EmptyContent { get; set; }
+
+    [Parameter]
+    public RenderFragment? LoadingContent { get; set; }
+
+    [Parameter]
+    public string? Id { get; set; }
+
+    [Parameter]
+    public string AriaLabel { get; set; } = "Data table";
+
+    [Parameter]
+    public bool Loading { get; set; }
+
+    [Parameter]
+    public string LoadingText { get; set; } = "Loading data...";
+
+    [Parameter]
+    public string EmptyText { get; set; } = "No records found.";
+
+    [Parameter]
+    public bool Searchable { get; set; } = true;
+
+    [Parameter]
+    public string? SearchText { get; set; }
+
+    [Parameter]
+    public EventCallback<string?> SearchTextChanged { get; set; }
+
+    [Parameter]
+    public string SearchLabel { get; set; } = "Search";
+
+    [Parameter]
+    public string SearchPlaceholder { get; set; } = "Search table";
+
+    [Parameter]
+    public string? SearchInputClass { get; set; }
+
+    [Parameter]
+    public Func<TItem, string?, bool>? Filter { get; set; }
+
+    [Parameter]
+    public bool Pageable { get; set; } = true;
+
+    [Parameter]
+    public int PageSize { get; set; } = 10;
+
+    [Parameter]
+    public int CurrentPage { get; set; } = 1;
+
+    [Parameter]
+    public EventCallback<int> CurrentPageChanged { get; set; }
+
+    [Parameter]
+    public bool ShowCount { get; set; } = true;
+
+    [Parameter]
+    public string RowActionsHeader { get; set; } = "Actions";
+
+    [Parameter]
+    public bool Selectable { get; set; }
+
+    [Parameter]
+    public TItem? SelectedItem { get; set; }
+
+    [Parameter]
+    public EventCallback<TItem?> SelectedItemChanged { get; set; }
+
+    /// <summary>
+    /// Optional selected item set for compatibility wrappers that implement multi-row selection.
+    /// </summary>
+    [Parameter]
+    public IEnumerable<TItem>? SelectedItems { get; set; }
+
+    [Parameter]
+    public EventCallback<TItem> RowClicked { get; set; }
+
+    [Parameter]
+    public W3Color SelectedColor { get; set; } = W3Color.PaleBlue;
+
+    [Parameter]
+    public W3Color Color { get; set; } = W3Color.Surface;
+
+    [Parameter]
+    public W3Color TextColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color HeaderColor { get; set; } = W3Color.LightGrey;
+
+    [Parameter]
+    public W3Color HeaderTextColor { get; set; } = W3Color.Black;
+
+    [Parameter]
+    public W3Color ToolbarColor { get; set; } = W3Color.LightGrey;
+
+    [Parameter]
+    public W3Color ToolbarTextColor { get; set; } = W3Color.Black;
+
+    [Parameter]
+    public W3Color LoadingColor { get; set; } = W3Color.PaleBlue;
+
+    [Parameter]
+    public W3Color LoadingTextColor { get; set; } = W3Color.Black;
+
+    [Parameter]
+    public W3Color ActivePageColor { get; set; } = W3Color.Primary;
+
+    [Parameter]
+    public W3Color ActivePageTextColor { get; set; } = W3Color.White;
+
+    [Parameter]
+    public bool Striped { get; set; } = true;
+
+    [Parameter]
+    public bool Bordered { get; set; } = true;
+
+    [Parameter]
+    public bool Border { get; set; }
+
+    [Parameter]
+    public bool Hoverable { get; set; } = true;
+
+    [Parameter]
+    public bool Centered { get; set; }
+
+    [Parameter]
+    public bool Responsive { get; set; } = true;
+
+    [Parameter]
+    public string PaginationAriaLabel { get; set; } = "Data table pagination";
+
+    [Parameter]
+    public string PreviousText { get; set; } = "Previous";
+
+    [Parameter]
+    public string NextText { get; set; } = "Next";
+
+    internal void Register(W3DataColumn<TItem> column)
+    {
+        if (columns.Contains(column))
+        {
+            return;
+        }
+
+        columns.Add(column);
+        _ = InvokeAsync(StateHasChanged);
+    }
+
+    internal void Unregister(W3DataColumn<TItem> column)
+    {
+        if (ReferenceEquals(SortColumn, column))
+        {
+            SortColumn = null;
+            SortDescending = false;
+        }
+
+        if (columns.Remove(column))
+        {
+            _ = InvokeAsync(StateHasChanged);
+        }
+    }
+
+    private async Task OnSearchInputAsync(ChangeEventArgs args)
+    {
+        SearchText = Convert.ToString(args.Value, CultureInfo.CurrentCulture);
+        CurrentPage = 1;
+        await SearchTextChanged.InvokeAsync(SearchText);
+        await CurrentPageChanged.InvokeAsync(CurrentPage);
+    }
+
+    private async Task SortByAsync(W3DataColumn<TItem> column)
+    {
+        if (!column.CanSort)
+        {
+            return;
+        }
+
+        if (ReferenceEquals(SortColumn, column))
+        {
+            SortDescending = !SortDescending;
+        }
+        else
+        {
+            SortColumn = column;
+            SortDescending = false;
+        }
+
+        CurrentPage = 1;
+        await CurrentPageChanged.InvokeAsync(CurrentPage);
+    }
+
+    private async Task SetCurrentPageAsync(int page)
+    {
+        CurrentPage = page;
+        await CurrentPageChanged.InvokeAsync(page);
+    }
+
+    private async Task OnRowClickAsync(TItem item)
+    {
+        if (Selectable)
+        {
+            SelectedItem = item;
+            await SelectedItemChanged.InvokeAsync(item);
+        }
+
+        if (RowClicked.HasDelegate)
+        {
+            await RowClicked.InvokeAsync(item);
+        }
+    }
+
+    private W3DataColumn<TItem>? SortColumn { get; set; }
+
+    private bool SortDescending { get; set; }
+
+    private List<TItem> BuildViewItems(IReadOnlyList<W3DataColumn<TItem>> visibleColumns)
+    {
+        var viewItems = (Items ?? []).Where(item => MatchesFilter(item, visibleColumns));
+
+        if (SortColumn is not null && SortColumn.CanSort)
+        {
+            viewItems = SortDescending
+                ? viewItems.OrderByDescending(SortColumn.GetSortValue, SortValueComparer.Instance)
+                : viewItems.OrderBy(SortColumn.GetSortValue, SortValueComparer.Instance);
+        }
+
+        return viewItems.ToList();
+    }
+
+    private bool MatchesFilter(TItem item, IReadOnlyList<W3DataColumn<TItem>> visibleColumns)
+    {
+        if (Filter is not null)
+        {
+            return Filter.Invoke(item, SearchText);
+        }
+
+        if (string.IsNullOrWhiteSpace(SearchText))
+        {
+            return true;
+        }
+
+        var searchText = SearchText.Trim();
+        return visibleColumns.Any(column => column
+            .GetSearchText(item)
+            .Contains(searchText, StringComparison.CurrentCultureIgnoreCase));
+    }
+
+    private int GetPageCount(int itemCount)
+    {
+        if (!Pageable || PageSize <= 0)
+        {
+            return itemCount > 0 ? 1 : 0;
+        }
+
+        return itemCount == 0 ? 0 : (int)Math.Ceiling(itemCount / (double)PageSize);
+    }
+
+    private int GetEffectiveCurrentPage(int pageCount)
+    {
+        if (pageCount <= 0)
+        {
+            return 1;
+        }
+
+        return Math.Clamp(CurrentPage, 1, pageCount);
+    }
+
+    private IEnumerable<TItem> GetPageItems(IReadOnlyList<TItem> viewItems, int currentPage)
+    {
+        if (!Pageable || PageSize <= 0)
+        {
+            return viewItems;
+        }
+
+        return viewItems
+            .Skip((currentPage - 1) * PageSize)
+            .Take(PageSize);
+    }
+
+    private bool ShowFooter(int itemCount, int pageCount)
+    {
+        return ShowCount || (Pageable && itemCount > 0 && pageCount > 1);
+    }
+
+    private string GetCountText(int itemCount, int currentPage)
+    {
+        if (itemCount == 0)
+        {
+            return "0 of 0";
+        }
+
+        if (!Pageable || PageSize <= 0)
+        {
+            return $"1-{itemCount} of {itemCount}";
+        }
+
+        var start = ((currentPage - 1) * PageSize) + 1;
+        var end = Math.Min(start + PageSize - 1, itemCount);
+        return $"{start}-{end} of {itemCount}";
+    }
+
+    private string? GetRowCssClass(TItem item)
+    {
+        if (!Selectable || !IsSelected(item))
+        {
+            return null;
+        }
+
+        return SelectedColor.ToBackgroundClass();
+    }
+
+    private string? GetAriaSelected(TItem item)
+    {
+        if (!Selectable)
+        {
+            return null;
+        }
+
+        return IsSelected(item) ? "true" : "false";
+    }
+
+    private bool IsSelected(TItem item)
+    {
+        if (SelectedItems is not null)
+        {
+            var comparer = EqualityComparer<TItem>.Default;
+            return SelectedItems.Any(selected => comparer.Equals(selected, item));
+        }
+
+        return EqualityComparer<TItem>.Default.Equals(SelectedItem, item);
+    }
+
+    private string GetSortButtonClass(W3DataColumn<TItem> column)
+    {
+        return new W3ClassBuilder()
+            .Add("w3-button")
+            .Add("w3-data-table-sort")
+            .AddIf(IsSorted(column), "w3-bold")
+            .ToString();
+    }
+
+    private bool IsSorted(W3DataColumn<TItem> column)
+    {
+        return ReferenceEquals(SortColumn, column);
+    }
+
+    private string? GetAriaSort(W3DataColumn<TItem> column)
+    {
+        if (!IsSorted(column))
+        {
+            return null;
+        }
+
+        return SortDescending ? "descending" : "ascending";
+    }
+
+    private string GetSortIndicator()
+    {
+        return SortDescending ? "desc" : "asc";
+    }
+
+    private sealed class SortValueComparer : IComparer<object?>
+    {
+        public static SortValueComparer Instance { get; } = new();
+
+        public int Compare(object? x, object? y)
+        {
+            if (ReferenceEquals(x, y))
+            {
+                return 0;
+            }
+
+            if (x is null)
+            {
+                return -1;
+            }
+
+            if (y is null)
+            {
+                return 1;
+            }
+
+            if (x is IComparable comparable)
+            {
+                try
+                {
+                    return comparable.CompareTo(y);
+                }
+                catch (ArgumentException)
+                {
+                    // Fall back to text comparison for mixed comparable types.
+                }
+            }
+
+            var xText = Convert.ToString(x, CultureInfo.CurrentCulture);
+            var yText = Convert.ToString(y, CultureInfo.CurrentCulture);
+            return StringComparer.CurrentCultureIgnoreCase.Compare(xText, yText);
+        }
+    }
+}

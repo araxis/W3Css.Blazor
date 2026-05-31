@@ -1,0 +1,95 @@
+@using System.Globalization
+@inherits W3FormComponentBase<TimeOnly?>
+
+<input @attributes="AdditionalAttributes"
+       id="@Id"
+       name="@NameAttributeValue"
+       type="time"
+       class="@TimeCssClass"
+       style="@Style"
+       min="@FormatTime(Min)"
+       max="@FormatTime(Max)"
+       step="@Step"
+       disabled="@Disabled"
+       readonly="@ReadOnly"
+       value="@CurrentValueAsString"
+       @oninput="HandleInput"
+       @onchange="HandleChange" />
+
+@code {
+    private static readonly string[] TimeFormats = ["HH:mm", "HH:mm:ss", "HH:mm:ss.fff"];
+    private string TimeCssClass => BuildControlClass("w3-input");
+
+    [Parameter]
+    public string? Id { get; set; }
+
+    [Parameter]
+    public TimeOnly? Min { get; set; }
+
+    [Parameter]
+    public TimeOnly? Max { get; set; }
+
+    [Parameter]
+    public string? Step { get; set; }
+
+    [Parameter]
+    public bool ReadOnly { get; set; }
+
+    [Parameter]
+    public bool UpdateOnInput { get; set; }
+
+    private void HandleInput(ChangeEventArgs args)
+    {
+        if (UpdateOnInput)
+        {
+            CurrentValueAsString = args.Value?.ToString();
+        }
+    }
+
+    private void HandleChange(ChangeEventArgs args)
+    {
+        if (!UpdateOnInput)
+        {
+            CurrentValueAsString = args.Value?.ToString();
+        }
+    }
+
+    protected override string? FormatValueAsString(TimeOnly? value)
+    {
+        return FormatTime(value);
+    }
+
+    protected override bool TryParseValueFromString(string? value, out TimeOnly? result, out string validationErrorMessage)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            result = null;
+            validationErrorMessage = string.Empty;
+            return true;
+        }
+
+        if (TimeOnly.TryParseExact(value, TimeFormats, CultureInfo.InvariantCulture, DateTimeStyles.None, out var parsedValue))
+        {
+            result = parsedValue;
+            validationErrorMessage = string.Empty;
+            return true;
+        }
+
+        result = null;
+        validationErrorMessage = $"The {FieldIdentifier.FieldName} field is not a valid time.";
+        return false;
+    }
+
+    private static string? FormatTime(TimeOnly? value)
+    {
+        if (value is null)
+        {
+            return null;
+        }
+
+        return value.Value.Second == 0 && value.Value.Millisecond == 0
+            ? value.Value.ToString("HH:mm", CultureInfo.InvariantCulture)
+            : value.Value.ToString("HH:mm:ss", CultureInfo.InvariantCulture);
+    }
+}
+

@@ -1,0 +1,20 @@
+.w3-app-shell {
+    min-height: 100vh;
+}
+
+.w3-app-shell-body {
+    min-height: inherit;
+}
+
+.w3-app-shell-header {
+    position: relative;
+    z-index: 4;
+}
+
+.w3-app-shell-main {
+    min-height: inherit;
+}
+
+.w3-app-shell-footer {
+    clear: both;
+}

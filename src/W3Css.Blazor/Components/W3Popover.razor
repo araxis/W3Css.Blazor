@@ -1,0 +1,162 @@
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+<div @attributes="AdditionalAttributes"
+     class="@CssClass"
+     style="@StyleValue">
+    <button type="button"
+            class="@TriggerCssClass"
+            aria-haspopup="dialog"
+            aria-expanded="@AriaExpanded"
+            disabled="@Disabled"
+            @onclick="ToggleAsync">
+        @if (TriggerContent is not null)
+        {
+            @TriggerContent
+        }
+        else
+        {
+            @Label
+        }
+    </button>
+
+    @if (CloseOnOutsideClick && Open)
+    {
+        <div class="w3-popover-close-layer"
+             aria-hidden="true"
+             @onclick="CloseAsync"></div>
+    }
+
+    <div class="@ContentCssClass"
+         style="@ContentStyleValue"
+         role="dialog"
+         aria-label="@Label"
+         aria-hidden="@AriaHidden"
+         @onclick:stopPropagation="true">
+        @ChildContent
+    </div>
+</div>
+
+@code {
+    private string CssClass => BuildClass(
+        "w3-popover",
+        $"w3-popover-{Placement.ToString().ToLowerInvariant()}",
+        Open ? "w3-popover-open" : null);
+
+    private string TriggerCssClass => new W3ClassBuilder()
+        .Add("w3-button")
+        .Add(TriggerColor.ToBackgroundClass())
+        .Add(TriggerTextColor.ToTextClass())
+        .Add(TriggerClass)
+        .AddIf(Disabled, "w3-disabled")
+        .ToString();
+
+    private string ContentCssClass => new W3ClassBuilder()
+        .Add("w3-popover-content")
+        .Add(Open ? "w3-show" : null)
+        .Add(Card ? "w3-card-4" : null)
+        .Add(Animate && Open ? "w3-animate-opacity" : null)
+        .Add(ContentColor.ToBackgroundClass())
+        .Add(ContentTextColor.ToTextClass())
+        .Add(Round.ToClass())
+        .Add(ContentClass)
+        .ToString();
+
+    private string? StyleValue => CombineStyle(Style);
+
+    private string? ContentStyleValue => CombineStyle(
+        Width is null ? null : $"width:{Width}",
+        ContentStyle);
+
+    private string AriaExpanded => Open ? "true" : "false";
+
+    private string AriaHidden => Open ? "false" : "true";
+
+    [Parameter]
+    public string Label { get; set; } = "Open popover";
+
+    [Parameter]
+    public RenderFragment? TriggerContent { get; set; }
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public bool Open { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> OpenChanged { get; set; }
+
+    [Parameter]
+    public bool Disabled { get; set; }
+
+    [Parameter]
+    public bool Card { get; set; } = true;
+
+    [Parameter]
+    public bool Animate { get; set; }
+
+    [Parameter]
+    public bool CloseOnOutsideClick { get; set; } = true;
+
+    [Parameter]
+    public W3PopoverPlacement Placement { get; set; } = W3PopoverPlacement.Bottom;
+
+    [Parameter]
+    public string? Width { get; set; } = "18rem";
+
+    [Parameter]
+    public string? TriggerClass { get; set; }
+
+    [Parameter]
+    public string? ContentClass { get; set; }
+
+    [Parameter]
+    public string? ContentStyle { get; set; }
+
+    [Parameter]
+    public W3Color TriggerColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color TriggerTextColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color ContentColor { get; set; } = W3Color.Surface;
+
+    [Parameter]
+    public W3Color ContentTextColor { get; set; } = W3Color.Black;
+
+    [Parameter]
+    public W3Round Round { get; set; } = W3Round.Medium;
+
+    private async Task ToggleAsync()
+    {
+        if (Disabled)
+        {
+            return;
+        }
+
+        Open = !Open;
+        await OpenChanged.InvokeAsync(Open);
+    }
+
+    private async Task CloseAsync()
+    {
+        if (!Open)
+        {
+            return;
+        }
+
+        Open = false;
+        await OpenChanged.InvokeAsync(false);
+    }
+
+    private static string? CombineStyle(params string?[] styles)
+    {
+        var style = string.Join(';', styles
+            .Where(value => !string.IsNullOrWhiteSpace(value))
+            .Select(value => value!.Trim().TrimEnd(';')));
+
+        return string.IsNullOrWhiteSpace(style) ? null : style;
+    }
+}

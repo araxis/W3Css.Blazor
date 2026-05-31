@@ -1,0 +1,136 @@
+@using System.Text
+@using W3Css.Blazor.Internal
+@inherits W3FormComponentBase<string?>
+
+<input @attributes="AdditionalAttributes"
+       id="@Id"
+       name="@NameAttributeValue"
+       type="text"
+       inputmode="@InputMode"
+       class="@InputCssClass"
+       style="@Style"
+       placeholder="@Placeholder"
+       disabled="@Disabled"
+       readonly="@ReadOnly"
+       value="@CurrentValueAsString"
+       @oninput="HandleInput"
+       @onchange="HandleChange" />
+
+@code {
+    // MudBlazor compatibility: mirrors MudMask. Formats input against a mask
+    // pattern where '0' = digit, 'a' = letter, '*' = alphanumeric, and any other
+    // character is a literal delimiter. The bound value is the masked text.
+    private string InputCssClass => BuildControlClass("w3-input", "w3-mask");
+
+    /// <summary>
+    /// Optional DOM id.
+    /// </summary>
+    [Parameter]
+    public string? Id { get; set; }
+
+    /// <summary>
+    /// Mask pattern. <c>0</c> digit, <c>a</c> letter, <c>*</c> alphanumeric; other characters are literals.
+    /// </summary>
+    [Parameter, EditorRequired]
+    public string Mask { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Placeholder text shown when empty.
+    /// </summary>
+    [Parameter]
+    public string? Placeholder { get; set; }
+
+    /// <summary>
+    /// Renders the control read-only.
+    /// </summary>
+    [Parameter]
+    public bool ReadOnly { get; set; }
+
+    /// <summary>
+    /// <c>inputmode</c> hint for on-screen keyboards (e.g. "numeric", "tel").
+    /// </summary>
+    [Parameter]
+    public string? InputMode { get; set; }
+
+    private void HandleInput(ChangeEventArgs args)
+    {
+        CurrentValueAsString = ApplyMask(args.Value?.ToString());
+    }
+
+    private void HandleChange(ChangeEventArgs args)
+    {
+        CurrentValueAsString = ApplyMask(args.Value?.ToString());
+    }
+
+    protected override bool TryParseValueFromString(string? value, out string? result, out string validationErrorMessage)
+    {
+        result = value;
+        validationErrorMessage = string.Empty;
+        return true;
+    }
+
+    /// <summary>
+    /// Formats raw input against <see cref="Mask"/>.
+    /// </summary>
+    internal string ApplyMask(string? raw)
+    {
+        if (string.IsNullOrEmpty(Mask))
+        {
+            return raw ?? string.Empty;
+        }
+
+        if (string.IsNullOrEmpty(raw))
+        {
+            return string.Empty;
+        }
+
+        var data = new Queue<char>(raw.Where(char.IsLetterOrDigit));
+        var builder = new StringBuilder();
+
+        foreach (var slot in Mask)
+        {
+            if (IsPlaceholder(slot))
+            {
+                char? matched = null;
+
+                while (data.Count > 0)
+                {
+                    var candidate = data.Dequeue();
+                    if (Matches(slot, candidate))
+                    {
+                        matched = candidate;
+                        break;
+                    }
+                }
+
+                if (matched is null)
+                {
+                    break;
+                }
+
+                builder.Append(matched.Value);
+            }
+            else
+            {
+                if (data.Count == 0)
+                {
+                    break;
+                }
+
+                builder.Append(slot);
+            }
+        }
+
+        return builder.ToString();
+    }
+
+    private static bool IsPlaceholder(char slot) => slot is '0' or 'a' or '*';
+
+    private static bool Matches(char slot, char value) => slot switch
+    {
+        '0' => char.IsDigit(value),
+        'a' => char.IsLetter(value),
+        '*' => char.IsLetterOrDigit(value),
+        _ => false
+    };
+}

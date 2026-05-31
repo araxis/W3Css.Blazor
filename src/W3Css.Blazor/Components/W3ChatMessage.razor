@@ -1,0 +1,168 @@
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+<article @attributes="AdditionalAttributes"
+         class="@CssClass"
+         style="@Style"
+         role="listitem">
+    @if (RenderLeadingAvatar)
+    {
+        <W3Avatar Src="@AvatarSrc"
+                  Alt="@AvatarAlt"
+                  Initials="@Initials"
+                  Label="@AvatarLabel"
+                  Size="@EffectiveAvatarSize"
+                  Color="@AvatarColor"
+                  TextColor="@AvatarTextColor" />
+    }
+
+    <div class="@BubbleCssClass">
+        @if (HasHeader)
+        {
+            <header class="w3-chat-message-header">
+                @if (!string.IsNullOrWhiteSpace(Author))
+                {
+                    <strong>@Author</strong>
+                }
+                @if (!string.IsNullOrWhiteSpace(Time))
+                {
+                    <time datetime="@DateTime">@Time</time>
+                }
+            </header>
+        }
+
+        <div class="w3-chat-message-body">
+            @if (ChildContent is not null)
+            {
+                @ChildContent
+            }
+            else
+            {
+                @Text
+            }
+        </div>
+
+        @if (!string.IsNullOrWhiteSpace(Status))
+        {
+            <footer class="w3-chat-message-status">@Status</footer>
+        }
+    </div>
+
+    @if (RenderTrailingAvatar)
+    {
+        <W3Avatar Src="@AvatarSrc"
+                  Alt="@AvatarAlt"
+                  Initials="@Initials"
+                  Label="@AvatarLabel"
+                  Size="@EffectiveAvatarSize"
+                  Color="@AvatarColor"
+                  TextColor="@AvatarTextColor" />
+    }
+</article>
+
+@code {
+    [CascadingParameter]
+    internal W3Chat? Owner { get; set; }
+
+    private bool HasHeader => !string.IsNullOrWhiteSpace(Author) || !string.IsNullOrWhiteSpace(Time);
+
+    private bool EffectiveShowAvatar => ShowAvatar ?? Owner?.EffectiveShowAvatars ?? true;
+
+    private bool RenderLeadingAvatar => EffectiveShowAvatar && !Own;
+
+    private bool RenderTrailingAvatar => EffectiveShowAvatar && Own;
+
+    private int EffectiveAvatarSize => AvatarSize > 0
+        ? AvatarSize
+        : Owner?.EffectiveAvatarSize ?? 36;
+
+    private string? AvatarLabel => string.IsNullOrWhiteSpace(Author) ? null : Author;
+
+    private string CssClass => BuildClass(
+        "w3-chat-message",
+        Own ? "w3-chat-message-own" : null,
+        Compact ? "w3-chat-message-compact" : null);
+
+    private string BubbleCssClass => new W3ClassBuilder()
+        .Add("w3-chat-message-bubble")
+        .Add(EffectiveMessageColor.ToBackgroundClass())
+        .Add(EffectiveMessageTextColor.ToTextClass())
+        .Add(EffectiveRound.ToClass())
+        .AddIf(Border, "w3-border")
+        .ToString();
+
+    private W3Color EffectiveMessageColor => Own
+        ? OwnColor == W3Color.None ? Owner?.EffectiveOwnMessageColor ?? W3Color.Teal : OwnColor
+        : Color == W3Color.None ? Owner?.EffectiveMessageColor ?? W3Color.LightGrey : Color;
+
+    private W3Color EffectiveMessageTextColor => Own
+        ? OwnTextColor == W3Color.None ? Owner?.EffectiveOwnMessageTextColor ?? W3Color.White : OwnTextColor
+        : TextColor == W3Color.None ? Owner?.EffectiveMessageTextColor ?? W3Color.Black : TextColor;
+
+    private W3Round EffectiveRound => Round == W3Round.None
+        ? Owner?.EffectiveRound ?? W3Round.Large
+        : Round;
+
+    [Parameter]
+    public string? Author { get; set; }
+
+    [Parameter]
+    public string? Time { get; set; }
+
+    [Parameter]
+    public string? DateTime { get; set; }
+
+    [Parameter]
+    public string? Text { get; set; }
+
+    [Parameter]
+    public string? Status { get; set; }
+
+    [Parameter]
+    public string? AvatarSrc { get; set; }
+
+    [Parameter]
+    public string AvatarAlt { get; set; } = string.Empty;
+
+    [Parameter]
+    public string? Initials { get; set; }
+
+    [Parameter]
+    public int AvatarSize { get; set; }
+
+    [Parameter]
+    public bool? ShowAvatar { get; set; }
+
+    [Parameter]
+    public bool Own { get; set; }
+
+    [Parameter]
+    public bool Compact { get; set; }
+
+    [Parameter]
+    public bool Border { get; set; }
+
+    [Parameter]
+    public W3Color AvatarColor { get; set; } = W3Color.LightGrey;
+
+    [Parameter]
+    public W3Color AvatarTextColor { get; set; } = W3Color.Black;
+
+    [Parameter]
+    public W3Color Color { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color TextColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color OwnColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color OwnTextColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Round Round { get; set; } = W3Round.None;
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+}

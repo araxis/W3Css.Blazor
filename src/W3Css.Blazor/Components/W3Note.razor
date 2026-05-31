@@ -1,0 +1,36 @@
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+<div @attributes="AdditionalAttributes"
+     class="@CssClass"
+     style="@Style"
+     role="@Role">
+    @if (!string.IsNullOrWhiteSpace(Title))
+    {
+        <strong>@Title</strong>@(" ")
+    }
+    @ChildContent
+</div>
+
+@code {
+    private string CssClass => BuildClass(
+        "w3-panel",
+        "w3-note",
+        Round.ToClass(),
+        Border ? "w3-border" : null);
+
+    [Parameter]
+    public string? Title { get; set; }
+
+    [Parameter]
+    public string Role { get; set; } = "note";
+
+    [Parameter]
+    public bool Border { get; set; }
+
+    [Parameter]
+    public W3Round Round { get; set; } = W3Round.None;
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+}

@@ -1,0 +1,95 @@
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+<nav @attributes="AdditionalAttributes"
+     class="@CssClass"
+     style="@Style"
+     aria-label="@AriaLabel">
+    @if (ShowPreviousNext)
+    {
+        <button type="button"
+                class="@GetPageClass(false, CurrentPage <= 1)"
+                disabled="@(CurrentPage <= 1)"
+                @onclick="() => SelectPageAsync(CurrentPage - 1)">
+            @PreviousText
+        </button>
+    }
+
+    @for (var page = 1; page <= PageCount; page++)
+    {
+        var current = page;
+        var active = current == CurrentPage;
+        <button type="button"
+                class="@GetPageClass(active, false)"
+                aria-current="@(active ? "page" : null)"
+                @onclick="() => SelectPageAsync(current)">
+            @current
+        </button>
+    }
+
+    @if (ShowPreviousNext)
+    {
+        <button type="button"
+                class="@GetPageClass(false, CurrentPage >= PageCount)"
+                disabled="@(CurrentPage >= PageCount)"
+                @onclick="() => SelectPageAsync(CurrentPage + 1)">
+            @NextText
+        </button>
+    }
+</nav>
+
+@code {
+    private string CssClass => BuildClass("w3-bar", Center ? "w3-center" : null);
+
+    [Parameter]
+    public int PageCount { get; set; }
+
+    [Parameter]
+    public int CurrentPage { get; set; } = 1;
+
+    [Parameter]
+    public EventCallback<int> CurrentPageChanged { get; set; }
+
+    [Parameter]
+    public bool ShowPreviousNext { get; set; } = true;
+
+    [Parameter]
+    public bool Center { get; set; }
+
+    [Parameter]
+    public string PreviousText { get; set; } = "Previous";
+
+    [Parameter]
+    public string NextText { get; set; } = "Next";
+
+    [Parameter]
+    public string AriaLabel { get; set; } = "Pagination";
+
+    [Parameter]
+    public W3Color ActiveColor { get; set; } = W3Color.Primary;
+
+    [Parameter]
+    public W3Color ActiveTextColor { get; set; } = W3Color.White;
+
+    private string GetPageClass(bool active, bool disabled)
+    {
+        return new W3ClassBuilder()
+            .Add("w3-button")
+            .Add("w3-bar-item")
+            .AddIf(active, ActiveColor.ToBackgroundClass())
+            .AddIf(active, ActiveTextColor.ToTextClass())
+            .AddIf(disabled, "w3-disabled")
+            .ToString();
+    }
+
+    private async Task SelectPageAsync(int page)
+    {
+        if (page < 1 || page > PageCount || page == CurrentPage)
+        {
+            return;
+        }
+
+        CurrentPage = page;
+        await CurrentPageChanged.InvokeAsync(page);
+    }
+}

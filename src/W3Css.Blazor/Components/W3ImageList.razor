@@ -1,0 +1,78 @@
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+<CascadingValue Value="this" IsFixed="true">
+    <div @attributes="AdditionalAttributes"
+         class="@CssClass"
+         style="@StyleValue"
+         role="list"
+         aria-label="@Label">
+        @ChildContent
+    </div>
+</CascadingValue>
+
+@code {
+    private int SafeColumns => Columns < 1 ? 1 : Columns;
+
+    private int SafeGap => Gap < 0 ? 0 : Gap;
+
+    private string CssClass => BuildClass(
+        "w3-image-list",
+        Dense ? "w3-image-list-dense" : null,
+        Color.ToBackgroundClass(),
+        TextColor.ToTextClass());
+
+    private string? StyleValue => CombineStyle(
+        $"--w3-image-list-columns:{SafeColumns}",
+        $"--w3-image-list-gap:{SafeGap}px",
+        string.IsNullOrWhiteSpace(MinItemWidth) ? null : $"--w3-image-list-min:{MinItemWidth}",
+        Style);
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public string Label { get; set; } = "Image list";
+
+    [Parameter]
+    public int Columns { get; set; } = 3;
+
+    [Parameter]
+    public int Gap { get; set; } = 12;
+
+    [Parameter]
+    public string? MinItemWidth { get; set; } = "12rem";
+
+    [Parameter]
+    public bool Dense { get; set; }
+
+    [Parameter]
+    public W3Color Color { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color TextColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color CaptionColor { get; set; } = W3Color.White;
+
+    [Parameter]
+    public W3Color CaptionTextColor { get; set; } = W3Color.Black;
+
+    [Parameter]
+    public W3Round Round { get; set; } = W3Round.Medium;
+
+    internal W3Color EffectiveCaptionColor => CaptionColor;
+
+    internal W3Color EffectiveCaptionTextColor => CaptionTextColor;
+
+    internal W3Round EffectiveRound => Round;
+
+    private static string? CombineStyle(params string?[] styles)
+    {
+        var style = string.Join(';', styles
+            .Where(value => !string.IsNullOrWhiteSpace(value))
+            .Select(value => value!.Trim().TrimEnd(';')));
+
+        return string.IsNullOrWhiteSpace(style) ? null : style;
+    }
+}

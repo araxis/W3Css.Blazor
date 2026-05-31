@@ -1,0 +1,84 @@
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+<CascadingValue Value="this" IsFixed="true">
+    <ol @attributes="AdditionalAttributes"
+        class="@CssClass"
+        style="@StyleValue"
+        role="list"
+        aria-label="@Label">
+        @ChildContent
+    </ol>
+</CascadingValue>
+
+@code {
+    private int EffectiveGap => Gap < 0 ? 0 : Gap;
+
+    private string CssClass => BuildClass(
+        "w3-timeline",
+        Dense ? "w3-timeline-dense" : null,
+        Reverse ? "w3-timeline-reverse" : null,
+        TextColor.ToTextClass());
+
+    private string? StyleValue => CombineStyle(
+        $"--w3-timeline-gap:{EffectiveGap}px",
+        Dense ? "--w3-timeline-content-padding:8px 10px" : null,
+        Style);
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public string Label { get; set; } = "Timeline";
+
+    [Parameter]
+    public bool Dense { get; set; }
+
+    [Parameter]
+    public bool Reverse { get; set; }
+
+    [Parameter]
+    public int Gap { get; set; } = 18;
+
+    [Parameter]
+    public W3Color LineColor { get; set; } = W3Color.LightGrey;
+
+    [Parameter]
+    public W3Color MarkerColor { get; set; } = W3Color.Teal;
+
+    [Parameter]
+    public W3Color MarkerTextColor { get; set; } = W3Color.White;
+
+    [Parameter]
+    public W3Color ContentColor { get; set; } = W3Color.Surface;
+
+    [Parameter]
+    public W3Color ContentTextColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color TextColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Round Round { get; set; } = W3Round.Medium;
+
+    internal W3Color EffectiveLineColor => LineColor;
+
+    internal W3Color EffectiveMarkerColor => MarkerColor;
+
+    internal W3Color EffectiveMarkerTextColor => MarkerTextColor;
+
+    internal W3Color EffectiveContentColor => ContentColor;
+
+    internal W3Color EffectiveContentTextColor => ContentTextColor;
+
+    internal W3Round EffectiveRound => Round;
+
+    private static string? CombineStyle(params string?[] styles)
+    {
+        var style = string.Join(';', styles
+            .Where(value => !string.IsNullOrWhiteSpace(value))
+            .Select(value => value!.Trim().TrimEnd(';')));
+
+        return string.IsNullOrWhiteSpace(style) ? null : style;
+    }
+}

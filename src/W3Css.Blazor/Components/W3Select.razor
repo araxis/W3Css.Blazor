@@ -1,0 +1,38 @@
+@typeparam TValue
+@using System.Globalization
+@inherits W3FormComponentBase<TValue>
+
+<select @attributes="AdditionalAttributes"
+        id="@Id"
+        name="@NameAttributeValue"
+        class="@SelectCssClass"
+        style="@Style"
+        disabled="@Disabled"
+        value="@CurrentValueAsString"
+        @onchange="EventCallback.Factory.CreateBinder<string?>(this, value => CurrentValueAsString = value, CurrentValueAsString)">
+    @ChildContent
+</select>
+
+@code {
+    private string SelectCssClass => BuildControlClass("w3-select");
+
+    [Parameter]
+    public string? Id { get; set; }
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    protected override bool TryParseValueFromString(string? value, out TValue result, out string validationErrorMessage)
+    {
+        if (BindConverter.TryConvertTo<TValue>(value, CultureInfo.CurrentCulture, out var parsedValue))
+        {
+            result = parsedValue;
+            validationErrorMessage = string.Empty;
+            return true;
+        }
+
+        result = default!;
+        validationErrorMessage = $"The {FieldIdentifier.FieldName} field is not valid.";
+        return false;
+    }
+}

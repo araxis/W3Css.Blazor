@@ -1,0 +1,136 @@
+@typeparam TValue
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+<button @attributes="AdditionalAttributes"
+        type="button"
+        class="@CssClass"
+        style="@Style"
+        aria-pressed="@AriaPressed"
+        disabled="@IsDisabled"
+        @onclick="SelectAsync">
+    @if (!string.IsNullOrWhiteSpace(IconClass))
+    {
+        <span class="@IconClass" aria-hidden="true"></span>
+    }
+    @ChildContent
+</button>
+
+@code {
+    // MudBlazor compatibility: mirrors MudToggleItem. Renders a w3-bar-item button
+    // with aria-pressed reflecting selection within the owning W3ToggleGroup.
+    [CascadingParameter]
+    internal W3ToggleGroup<TValue>? Owner { get; set; }
+
+    private bool IsSelected => Owner?.IsSelected(Value) == true || Active;
+
+    private bool IsDisabled => Disabled || Owner?.Disabled == true;
+
+    private string AriaPressed => IsSelected ? "true" : "false";
+
+    private string CssClass => BuildClass(
+        "w3-toggle-item",
+        "w3-button",
+        "w3-bar-item",
+        IsSelected ? "w3-toggle-item-selected" : null,
+        IsDisabled ? "w3-disabled" : null,
+        EffectiveColor.ToBackgroundClass(),
+        EffectiveTextColor.ToTextClass(),
+        Size.ToClass(),
+        Border ? "w3-border" : null);
+
+    private W3Color EffectiveColor => IsSelected
+        ? ActiveColor == W3Color.None ? Owner?.ActiveColor ?? W3Color.Teal : ActiveColor
+        : Color == W3Color.None ? Owner?.Color ?? W3Color.None : Color;
+
+    private W3Color EffectiveTextColor => IsSelected
+        ? ActiveTextColor == W3Color.None ? Owner?.ActiveTextColor ?? W3Color.White : ActiveTextColor
+        : TextColor == W3Color.None ? Owner?.TextColor ?? W3Color.None : TextColor;
+
+    /// <summary>
+    /// The value represented by this item.
+    /// </summary>
+    [Parameter, EditorRequired]
+    public TValue Value { get; set; } = default!;
+
+    /// <summary>
+    /// Item label content.
+    /// </summary>
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    /// <summary>
+    /// Optional leading icon class.
+    /// </summary>
+    [Parameter]
+    public string? IconClass { get; set; }
+
+    /// <summary>
+    /// Forces the selected style independent of the owner state.
+    /// </summary>
+    [Parameter]
+    public bool Active { get; set; }
+
+    /// <summary>
+    /// Disables this item.
+    /// </summary>
+    [Parameter]
+    public bool Disabled { get; set; }
+
+    /// <summary>
+    /// Adds a border to this item.
+    /// </summary>
+    [Parameter]
+    public bool Border { get; set; }
+
+    /// <summary>
+    /// Item size.
+    /// </summary>
+    [Parameter]
+    public W3Size Size { get; set; } = W3Size.Default;
+
+    /// <summary>
+    /// Background color override for the unselected state.
+    /// </summary>
+    [Parameter]
+    public W3Color Color { get; set; } = W3Color.None;
+
+    /// <summary>
+    /// Text color override for the unselected state.
+    /// </summary>
+    [Parameter]
+    public W3Color TextColor { get; set; } = W3Color.None;
+
+    /// <summary>
+    /// Background color override for the selected state.
+    /// </summary>
+    [Parameter]
+    public W3Color ActiveColor { get; set; } = W3Color.None;
+
+    /// <summary>
+    /// Text color override for the selected state.
+    /// </summary>
+    [Parameter]
+    public W3Color ActiveTextColor { get; set; } = W3Color.None;
+
+    /// <summary>
+    /// Invoked when this item is toggled.
+    /// </summary>
+    [Parameter]
+    public EventCallback<TValue> OnSelected { get; set; }
+
+    private async Task SelectAsync()
+    {
+        if (IsDisabled)
+        {
+            return;
+        }
+
+        if (Owner is not null)
+        {
+            await Owner.ToggleAsync(Value);
+        }
+
+        await OnSelected.InvokeAsync(Value);
+    }
+}

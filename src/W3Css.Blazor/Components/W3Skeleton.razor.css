@@ -1,0 +1,50 @@
+.w3-skeleton {
+    display: block;
+    max-width: 100%;
+    min-width: 0;
+    overflow: hidden;
+    width: var(--w3-skeleton-width, 100%);
+}
+
+.w3-skeleton-line,
+.w3-skeleton-shape {
+    background-color: inherit;
+    display: block;
+    opacity: 0.72;
+}
+
+.w3-skeleton-line {
+    height: var(--w3-skeleton-height, 1rem);
+    margin-bottom: 8px;
+    width: 100%;
+}
+
+.w3-skeleton-line:last-child {
+    margin-bottom: 0;
+    width: 72%;
+}
+
+.w3-skeleton-shape {
+    height: var(--w3-skeleton-height, 40px);
+    width: var(--w3-skeleton-width, 40px);
+}
+
+.w3-skeleton-circle .w3-skeleton-shape {
+    border-radius: 50%;
+}
+
+.w3-skeleton-animate .w3-skeleton-line,
+.w3-skeleton-animate .w3-skeleton-shape {
+    animation: w3-skeleton-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes w3-skeleton-pulse {
+    0%,
+    100% {
+        opacity: 0.48;
+    }
+
+    50% {
+        opacity: 0.88;
+    }
+}

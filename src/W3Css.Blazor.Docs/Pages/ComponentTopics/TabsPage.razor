@@ -1,0 +1,80 @@
+@page "/components/tabs"
+
+<PageTitle>W3Tabs</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3Tabs</h1>
+    <DocPager PreviousHref="components/validation" PreviousText="Validation" NextHref="components/accordion" NextText="Accordion" />
+
+    <p class="w3-large">`W3Tabs` renders W3.CSS bar buttons and a Blazor-controlled active panel.</p>
+    <p>Use `W3TabPanel` children for each tab. Bind `ActiveValue` when the parent needs to control the selected tab.</p>
+
+    <DocExample Title="Basic Tabs" Code="@BasicCode">
+        <W3Tabs @bind-ActiveValue="ActiveTab" ActiveColor="W3Color.Teal" ActiveTextColor="W3Color.White">
+            <W3TabPanel Value="overview" Title="Overview">
+                <p>Lightweight components over W3.CSS classes.</p>
+            </W3TabPanel>
+            <W3TabPanel Value="install" Title="Install">
+                <p>Reference the package and add the stylesheet.</p>
+            </W3TabPanel>
+            <W3TabPanel Value="disabled" Title="Disabled" Disabled="true">
+                <p>This panel cannot be selected.</p>
+            </W3TabPanel>
+        </W3Tabs>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>W3Tabs Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>`W3TabPanel` children</td></tr>
+                <tr><td>ActiveValue</td><td>string?</td><td>null</td><td>Selected panel value</td></tr>
+                <tr><td>Border</td><td>bool</td><td>true</td><td>`w3-border` on the tab bar</td></tr>
+                <tr><td>PanelBorder</td><td>bool</td><td>true</td><td>`w3-border` on the panel</td></tr>
+                <tr><td>Color</td><td>W3Color</td><td>None</td><td>Tab bar background</td></tr>
+                <tr><td>TextColor</td><td>W3Color</td><td>None</td><td>Tab bar text color</td></tr>
+                <tr><td>ActiveColor</td><td>W3Color</td><td>LightGrey</td><td>Active tab background</td></tr>
+                <tr><td>ActiveTextColor</td><td>W3Color</td><td>Black</td><td>Active tab text color</td></tr>
+                <tr><td>PanelColor</td><td>W3Color</td><td>White</td><td>Panel background</td></tr>
+                <tr><td>PanelTextColor</td><td>W3Color</td><td>None</td><td>Panel text color</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional root classes</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline style on the root wrapper</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>W3TabPanel Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Value</td><td>string</td><td>required</td><td>Tab identity</td></tr>
+                <tr><td>Title</td><td>string</td><td>required</td><td>Tab button text</td></tr>
+                <tr><td>Disabled</td><td>bool</td><td>false</td><td>Disabled tab button</td></tr>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Active panel content</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <DocPager PreviousHref="components/validation" PreviousText="Validation" NextHref="components/accordion" NextText="Accordion" />
+</W3Container>
+
+@code {
+    private string ActiveTab { get; set; } = "overview";
+
+    private const string BasicCode = """
+<W3Tabs @bind-ActiveValue="activeTab" ActiveColor="W3Color.Teal" ActiveTextColor="W3Color.White">
+    <W3TabPanel Value="overview" Title="Overview">
+        <p>Lightweight components over W3.CSS classes.</p>
+    </W3TabPanel>
+    <W3TabPanel Value="install" Title="Install">
+        <p>Reference the package and add the stylesheet.</p>
+    </W3TabPanel>
+</W3Tabs>
+""";
+}

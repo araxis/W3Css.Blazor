@@ -1,0 +1,240 @@
+@using Microsoft.AspNetCore.Components.Routing
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+@implements IDisposable
+@inject NavigationManager Navigation
+
+@if (Disabled)
+{
+    <span @attributes="AdditionalAttributes"
+          class="@CssClass"
+          style="@Style"
+          aria-disabled="true">
+        @ItemContent
+    </span>
+}
+else if (!string.IsNullOrWhiteSpace(Href))
+{
+    <a @attributes="AdditionalAttributes"
+       href="@Href"
+       target="@Target"
+       class="@CssClass"
+       style="@Style"
+       aria-current="@AriaCurrent"
+       @onclick="HandleClickAsync">
+        @ItemContent
+    </a>
+}
+else
+{
+    <button @attributes="AdditionalAttributes"
+            type="@Type"
+            class="@CssClass"
+            style="@Style"
+            aria-current="@AriaCurrent"
+            @onclick="HandleClickAsync">
+        @ItemContent
+    </button>
+}
+
+@code {
+    [CascadingParameter]
+    internal W3NavMenu? Owner { get; set; }
+
+    private bool IsActive => Active || IsRouteActive;
+    private string? AriaCurrent => IsActive ? "page" : null;
+    private bool IsRouteActive => !string.IsNullOrWhiteSpace(Href) && IsActiveHref();
+
+    private string CssClass => BuildClass(
+        "w3-bar-item",
+        Button ? "w3-button" : null,
+        "w3-nav-menu-item",
+        Owner?.Compact == true ? "w3-nav-menu-item-compact" : null,
+        Disabled ? "w3-disabled" : null,
+        IsActive ? ResolvedActiveCssClass : null,
+        ResolveColor().ToBackgroundClass(),
+        ResolveTextColor().ToTextClass(),
+        ResolveHoverCssClass());
+
+    private string ResolvedActiveCssClass => new W3ClassBuilder()
+        .Add(ResolveActiveColor().ToBackgroundClass())
+        .Add(ResolveActiveTextColor().ToTextClass())
+        .Add("w3-nav-menu-item-active")
+        .ToString();
+
+    private string BadgeCssClass => new W3ClassBuilder()
+        .Add("w3-badge")
+        .Add("w3-nav-menu-item-badge")
+        .Add(BadgeColor.ToBackgroundClass())
+        .Add(BadgeTextColor.ToTextClass())
+        .ToString();
+
+    private string IconCssClass => new W3ClassBuilder()
+        .Add("w3-nav-menu-item-icon")
+        .Add(IconClass)
+        .ToString();
+
+    private RenderFragment ItemContent => builder =>
+    {
+        var sequence = 0;
+
+        if (!string.IsNullOrWhiteSpace(IconClass))
+        {
+            builder.OpenElement(sequence++, "span");
+            builder.AddAttribute(sequence++, "class", IconCssClass);
+            builder.AddAttribute(sequence++, "aria-hidden", "true");
+            builder.CloseElement();
+        }
+
+        builder.OpenElement(sequence++, "span");
+        builder.AddAttribute(sequence++, "class", "w3-nav-menu-item-label");
+        if (ChildContent is not null)
+        {
+            builder.AddContent(sequence++, ChildContent);
+        }
+        else
+        {
+            builder.AddContent(sequence++, Text);
+        }
+        builder.CloseElement();
+
+        if (!string.IsNullOrWhiteSpace(Badge))
+        {
+            builder.OpenElement(sequence++, "span");
+            builder.AddAttribute(sequence++, "class", BadgeCssClass);
+            builder.AddContent(sequence++, Badge);
+            builder.CloseElement();
+        }
+    };
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public string? Text { get; set; }
+
+    [Parameter]
+    public string? Href { get; set; }
+
+    [Parameter]
+    public string? Target { get; set; }
+
+    [Parameter]
+    public NavLinkMatch Match { get; set; } = NavLinkMatch.Prefix;
+
+    [Parameter]
+    public string? IconClass { get; set; }
+
+    [Parameter]
+    public string? Badge { get; set; }
+
+    [Parameter]
+    public W3Color BadgeColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color BadgeTextColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public bool Button { get; set; } = true;
+
+    [Parameter]
+    public bool Active { get; set; }
+
+    [Parameter]
+    public bool Disabled { get; set; }
+
+    [Parameter]
+    public string Type { get; set; } = "button";
+
+    [Parameter]
+    public W3Color Color { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color TextColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color ActiveColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color ActiveTextColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color HoverColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color HoverTextColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnClick { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Navigation.LocationChanged += HandleLocationChanged;
+    }
+
+    private W3Color ResolveColor()
+    {
+        return Color;
+    }
+
+    private W3Color ResolveTextColor()
+    {
+        return TextColor;
+    }
+
+    private W3Color ResolveActiveColor()
+    {
+        return ActiveColor != W3Color.None ? ActiveColor : Owner?.ActiveColor ?? W3Color.Teal;
+    }
+
+    private W3Color ResolveActiveTextColor()
+    {
+        return ActiveTextColor != W3Color.None ? ActiveTextColor : Owner?.ActiveTextColor ?? W3Color.White;
+    }
+
+    private string ResolveHoverCssClass()
+    {
+        var hoverColor = HoverColor != W3Color.None ? HoverColor : Owner?.HoverColor ?? W3Color.None;
+        var hoverTextColor = HoverTextColor != W3Color.None ? HoverTextColor : Owner?.HoverTextColor ?? W3Color.None;
+
+        return new W3ClassBuilder()
+            .Add(hoverColor.ToHoverBackgroundClass())
+            .Add(hoverTextColor.ToHoverTextClass())
+            .ToString();
+    }
+
+    private Task HandleClickAsync(MouseEventArgs args)
+    {
+        return OnClick.InvokeAsync(args);
+    }
+
+    private void HandleLocationChanged(object? sender, LocationChangedEventArgs args)
+    {
+        _ = InvokeAsync(StateHasChanged);
+    }
+
+    private bool IsActiveHref()
+    {
+        var currentUri = NormalizeUri(Navigation.Uri);
+        var targetUri = NormalizeUri(Navigation.ToAbsoluteUri(Href!).ToString());
+
+        if (Match == NavLinkMatch.All)
+        {
+            return string.Equals(currentUri, targetUri, StringComparison.OrdinalIgnoreCase);
+        }
+
+        return currentUri.StartsWith(targetUri, StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static string NormalizeUri(string uri)
+    {
+        var queryIndex = uri.IndexOfAny(['?', '#']);
+        var value = queryIndex >= 0 ? uri[..queryIndex] : uri;
+        return value.TrimEnd('/');
+    }
+
+    public void Dispose()
+    {
+        Navigation.LocationChanged -= HandleLocationChanged;
+    }
+}

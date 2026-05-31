@@ -1,0 +1,236 @@
+@page "/components/trends"
+
+<PageTitle>Trends</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>Trends</h1>
+    <DocPager PreviousHref="components/theming" PreviousText="Theming" NextHref="components/case-study" NextText="Case Study" />
+
+    <p class="w3-large">W3.CSS trend examples are composition patterns built from ordinary W3.CSS classes.</p>
+    <p>Use existing components for flat colors, almost-flat shadows, material-style surfaces, cards, readable typography, full-screen inputs, mobile-first sections, hero content, and single-page flows.</p>
+
+    <DocExample Title="Flat Color Blocks" Description="Flat blocks need clear affordance when they are clickable." Code="@FlatCode">
+        <W3Grid Padding="true" Style="grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));">
+            <W3Button Color="W3Color.Red" TextColor="W3Color.White" Block="true" Round="W3Round.Medium" Class="w3-padding-16">
+                Start
+            </W3Button>
+            <W3Button Color="W3Color.Green" TextColor="W3Color.White" Block="true" Round="W3Round.Medium" Class="w3-padding-16">
+                Review
+            </W3Button>
+            <W3Button Color="W3Color.Blue" TextColor="W3Color.White" Block="true" Round="W3Round.Medium" Class="w3-padding-16">
+                Publish
+            </W3Button>
+            <W3Button Color="W3Color.Yellow" TextColor="W3Color.Black" Block="true" Round="W3Round.Medium" Class="w3-padding-16">
+                Archive
+            </W3Button>
+        </W3Grid>
+    </DocExample>
+
+    <DocExample Title="Almost Flat Cards" Description="Add restrained depth and hover shadow when flat blocks need stronger grouping." Code="@CardCode">
+        <W3Grid Padding="true" Style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
+            <W3Card Depth="W3CardDepth.Two" Round="W3Round.Medium" BodyColor="W3Color.White" FooterClass="w3-padding-16" Class="w3-hover-shadow w3-white">
+                <ChildContent>
+                    <h2 class="w3-large">Project brief</h2>
+                    <p>Shadows create a layer without adding heavy decoration.</p>
+                </ChildContent>
+                <Footer>
+                    <W3Button Color="W3Color.Teal" TextColor="W3Color.White" Round="W3Round.Medium">Open</W3Button>
+                </Footer>
+            </W3Card>
+            <W3Card Depth="W3CardDepth.Four" Round="W3Round.Medium" HeaderColor="W3Color.Black" BodyColor="W3Color.White" Class="w3-white">
+                <Header><h2 class="w3-large">Material surface</h2></Header>
+                <ChildContent>
+                    <p>Use depth, color, and simple spacing to suggest paper-like structure.</p>
+                </ChildContent>
+            </W3Card>
+        </W3Grid>
+    </DocExample>
+
+    <DocExample Title="Full Screen Input" Description="Use a Blazor-controlled modal for large input moments instead of script-driven overlays." Code="@FullScreenInputCode">
+        <W3Button Color="W3Color.Teal" TextColor="W3Color.White" Round="W3Round.Medium" OnClick="@(() => RegistrationOpen = true)">
+            Open full-screen input
+        </W3Button>
+
+        <W3Modal @bind-Open="RegistrationOpen" Animate="true" ContentStyle="width: 96vw; max-width: 920px; min-height: 70vh;">
+            <Header>
+                <W3Container Color="W3Color.Black" TextColor="W3Color.White">
+                    <h2 class="w3-large">Class Registration</h2>
+                </W3Container>
+            </Header>
+            <ChildContent>
+                <W3Field TValue="string" Label="Name" ForId="trend-name">
+                    <W3Input Id="trend-name" @bind-Value="RegistrationName" Border="true" Round="W3Round.Medium" Placeholder="Your name" />
+                </W3Field>
+                <W3Field TValue="string" Label="Email" ForId="trend-email">
+                    <W3Input Id="trend-email" Type="email" @bind-Value="RegistrationEmail" Border="true" Round="W3Round.Medium" Placeholder="name@example.com" />
+                </W3Field>
+            </ChildContent>
+            <Footer>
+                <W3Button Color="W3Color.Teal" TextColor="W3Color.White" Round="W3Round.Medium" OnClick="@(() => RegistrationOpen = false)">
+                    Done
+                </W3Button>
+            </Footer>
+        </W3Modal>
+    </DocExample>
+
+    <DocExample Title="Mobile First Hero Flow" Description="Start with stacked sections, then add responsive columns for larger screens." Code="@MobileFirstCode">
+        <W3Bar Color="W3Color.Black" TextColor="W3Color.White">
+            <W3BarItem Href="#trend-hero" Mobile="true">Hero</W3BarItem>
+            <W3BarItem Href="#trend-work" Mobile="true">Work</W3BarItem>
+            <W3BarItem Href="#trend-contact" Mobile="true">Contact</W3BarItem>
+        </W3Bar>
+
+        <W3Row Padding="true" Class="w3-section">
+            <W3Column Small="12" Large="6">
+                <W3Container id="trend-hero" Color="W3Color.PaleBlue" TextColor="W3Color.Black" Class="w3-padding-32 w3-center">
+                    <W3Image Src="assets/w3css-blazor-mark.svg" Alt="W3Css.Blazor mark" Width="96" Height="96" />
+                    <h2 class="w3-xxlarge">Simple page</h2>
+                    <p>Hero content stays readable on phones and spacious on desktops.</p>
+                </W3Container>
+            </W3Column>
+            <W3Column Small="12" Large="6">
+                <W3Container id="trend-work" Color="W3Color.White" Class="w3-padding-32 w3-border">
+                    <h2 class="w3-large">My Work</h2>
+                    <p>Cards, rows, and columns can build a single-page flow without extra runtime code.</p>
+                    <W3Button Color="W3Color.Black" TextColor="W3Color.White" Round="W3Round.Medium">View work</W3Button>
+                </W3Container>
+            </W3Column>
+        </W3Row>
+
+        <W3Container id="trend-contact" Color="W3Color.LightGrey" Class="w3-padding">
+            <strong>Contact</strong>
+            <p>Keep the last section reachable by scrolling or anchor links.</p>
+        </W3Container>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Usage Reference</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Trend</th><th>Use</th><th>Notes</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Flat design</td><td>`W3Button`, `W3Container`, `W3Grid`, and typed colors</td><td>Use buttons for actions so clickable blocks are obvious.</td></tr>
+                <tr><td>Almost flat and material-style surfaces</td><td>`W3Card.Depth`, `W3Round`, `W3Effect`, and `w3-hover-shadow`</td><td>Add depth only where grouping or affordance improves.</td></tr>
+                <tr><td>Cards</td><td>`W3Card` with header, body, and footer slots</td><td>Good for equal-plane content, summaries, and actions.</td></tr>
+                <tr><td>Readable typography</td><td>`W3Text`, W3.CSS size classes, and the Fonts page</td><td>Keep text sizing deliberate and load custom fonts in the app.</td></tr>
+                <tr><td>Full-screen input</td><td>`W3Modal`, `W3Field`, `W3Input`, and Blazor state</td><td>Large input flows stay script-free and component-owned.</td></tr>
+                <tr><td>Mobile first and single page</td><td>`W3BarItem Mobile`, `W3Row`, `W3Column`, anchors, and stacked sections</td><td>Design for narrow screens first, then add desktop columns.</td></tr>
+                <tr><td>Hero content</td><td>`W3Image`, `W3Container`, `W3Display`, and utility classes</td><td>Use real page content and keep the next section visible when possible.</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Related W3.CSS</h2>
+        <p><NavLink href="components/card">Card component</NavLink></p>
+        <p><NavLink href="components/case-study">Case Study guidance</NavLink></p>
+        <p><NavLink href="components/material-design">Material Design guidance</NavLink></p>
+        <p><NavLink href="components/effects">Effects utility</NavLink></p>
+        <p><NavLink href="components/color-schemes">Color Schemes guidance</NavLink></p>
+        <p><NavLink href="components/mobile">Mobile guidance</NavLink></p>
+        <p><a href="https://www.w3schools.com/w3css/w3css_trends.asp" target="_blank" rel="noopener">W3.CSS Trends</a></p>
+    </section>
+
+    <DocPager PreviousHref="components/theming" PreviousText="Theming" NextHref="components/case-study" NextText="Case Study" />
+</W3Container>
+
+@code {
+    private bool RegistrationOpen { get; set; }
+    private string? RegistrationName { get; set; }
+    private string? RegistrationEmail { get; set; }
+
+    private const string FlatCode = """
+<W3Grid Padding="true" Style="grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));">
+    <W3Button Color="W3Color.Red" TextColor="W3Color.White" Block="true" Round="W3Round.Medium" Class="w3-padding-16">
+        Start
+    </W3Button>
+    <W3Button Color="W3Color.Green" TextColor="W3Color.White" Block="true" Round="W3Round.Medium" Class="w3-padding-16">
+        Review
+    </W3Button>
+    <W3Button Color="W3Color.Blue" TextColor="W3Color.White" Block="true" Round="W3Round.Medium" Class="w3-padding-16">
+        Publish
+    </W3Button>
+    <W3Button Color="W3Color.Yellow" TextColor="W3Color.Black" Block="true" Round="W3Round.Medium" Class="w3-padding-16">
+        Archive
+    </W3Button>
+</W3Grid>
+""";
+
+    private const string CardCode = """
+<W3Grid Padding="true" Style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
+    <W3Card Depth="W3CardDepth.Two" Round="W3Round.Medium" BodyColor="W3Color.White" FooterClass="w3-padding-16" Class="w3-hover-shadow w3-white">
+        <ChildContent>
+            <h2 class="w3-large">Project brief</h2>
+            <p>Shadows create a layer without adding heavy decoration.</p>
+        </ChildContent>
+        <Footer>
+            <W3Button Color="W3Color.Teal" TextColor="W3Color.White" Round="W3Round.Medium">Open</W3Button>
+        </Footer>
+    </W3Card>
+    <W3Card Depth="W3CardDepth.Four" Round="W3Round.Medium" HeaderColor="W3Color.Black" BodyColor="W3Color.White" Class="w3-white">
+        <Header><h2 class="w3-large">Material surface</h2></Header>
+        <ChildContent>
+            <p>Use depth, color, and simple spacing to suggest paper-like structure.</p>
+        </ChildContent>
+    </W3Card>
+</W3Grid>
+""";
+
+    private const string FullScreenInputCode = """
+<W3Button Color="W3Color.Teal" TextColor="W3Color.White" Round="W3Round.Medium" OnClick="@(() => registrationOpen = true)">
+    Open full-screen input
+</W3Button>
+
+<W3Modal @bind-Open="registrationOpen" Animate="true" ContentStyle="width: 96vw; max-width: 920px; min-height: 70vh;">
+    <Header>
+        <W3Container Color="W3Color.Black" TextColor="W3Color.White">
+            <h2 class="w3-large">Class Registration</h2>
+        </W3Container>
+    </Header>
+    <ChildContent>
+        <W3Field TValue="string" Label="Name" ForId="trend-name">
+            <W3Input Id="trend-name" @bind-Value="registrationName" Border="true" Round="W3Round.Medium" Placeholder="Your name" />
+        </W3Field>
+        <W3Field TValue="string" Label="Email" ForId="trend-email">
+            <W3Input Id="trend-email" Type="email" @bind-Value="registrationEmail" Border="true" Round="W3Round.Medium" Placeholder="name@example.com" />
+        </W3Field>
+    </ChildContent>
+    <Footer>
+        <W3Button Color="W3Color.Teal" TextColor="W3Color.White" Round="W3Round.Medium" OnClick="@(() => registrationOpen = false)">
+            Done
+        </W3Button>
+    </Footer>
+</W3Modal>
+""";
+
+    private const string MobileFirstCode = """
+<W3Bar Color="W3Color.Black" TextColor="W3Color.White">
+    <W3BarItem Href="#trend-hero" Mobile="true">Hero</W3BarItem>
+    <W3BarItem Href="#trend-work" Mobile="true">Work</W3BarItem>
+    <W3BarItem Href="#trend-contact" Mobile="true">Contact</W3BarItem>
+</W3Bar>
+
+<W3Row Padding="true" Class="w3-section">
+    <W3Column Small="12" Large="6">
+        <W3Container id="trend-hero" Color="W3Color.PaleBlue" TextColor="W3Color.Black" Class="w3-padding-32 w3-center">
+            <W3Image Src="assets/w3css-blazor-mark.svg" Alt="W3Css.Blazor mark" Width="96" Height="96" />
+            <h2 class="w3-xxlarge">Simple page</h2>
+            <p>Hero content stays readable on phones and spacious on desktops.</p>
+        </W3Container>
+    </W3Column>
+    <W3Column Small="12" Large="6">
+        <W3Container id="trend-work" Color="W3Color.White" Class="w3-padding-32 w3-border">
+            <h2 class="w3-large">My Work</h2>
+            <p>Cards, rows, and columns can build a single-page flow without extra runtime code.</p>
+            <W3Button Color="W3Color.Black" TextColor="W3Color.White" Round="W3Round.Medium">View work</W3Button>
+        </W3Container>
+    </W3Column>
+</W3Row>
+
+<W3Container id="trend-contact" Color="W3Color.LightGrey" Class="w3-padding">
+    <strong>Contact</strong>
+    <p>Keep the last section reachable by scrolling or anchor links.</p>
+</W3Container>
+""";
+}

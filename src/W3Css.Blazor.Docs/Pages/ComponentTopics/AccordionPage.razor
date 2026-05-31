@@ -1,0 +1,78 @@
+@page "/components/accordion"
+
+<PageTitle>W3Accordion</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3Accordion</h1>
+    <DocPager PreviousHref="components/tabs" PreviousText="Tabs" NextHref="components/collapse" NextText="Collapse" />
+
+    <p class="w3-large">`W3Accordion` groups `W3AccordionItem` components into a simple disclosure stack.</p>
+    <p>Each item owns a Blazor `Expanded` state and renders W3.CSS buttons and containers.</p>
+
+    <DocExample Title="Accordion Items" Code="@BasicCode">
+        <W3Accordion>
+            <W3AccordionItem Title="Install" @bind-Expanded="InstallExpanded">
+                <p>Add the package reference and stylesheet link.</p>
+            </W3AccordionItem>
+            <W3AccordionItem Title="Use Components" ButtonColor="W3Color.Teal" ButtonTextColor="W3Color.White">
+                <p>Import the namespace and use the Razor components.</p>
+            </W3AccordionItem>
+        </W3Accordion>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>W3Accordion Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>`W3AccordionItem` children</td></tr>
+                <tr><td>Color</td><td>W3Color</td><td>None</td><td>Wrapper background color class</td></tr>
+                <tr><td>TextColor</td><td>W3Color</td><td>None</td><td>Wrapper text color class</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional wrapper classes</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline style on the wrapper</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>W3AccordionItem Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Title</td><td>string</td><td>required</td><td>Button content</td></tr>
+                <tr><td>Expanded</td><td>bool</td><td>false</td><td>Visible content state</td></tr>
+                <tr><td>ExpandedChanged</td><td>EventCallback&lt;bool&gt;</td><td>none</td><td>Raised when the item toggles</td></tr>
+                <tr><td>Disabled</td><td>bool</td><td>false</td><td>Disabled button state</td></tr>
+                <tr><td>Border</td><td>bool</td><td>true</td><td>`w3-border` on content</td></tr>
+                <tr><td>ButtonColor</td><td>W3Color</td><td>LightGrey</td><td>Button background</td></tr>
+                <tr><td>ButtonTextColor</td><td>W3Color</td><td>Black</td><td>Button text color</td></tr>
+                <tr><td>ContentColor</td><td>W3Color</td><td>White</td><td>Content background</td></tr>
+                <tr><td>ContentTextColor</td><td>W3Color</td><td>None</td><td>Content text color</td></tr>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Expanded content</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional item wrapper classes</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline style on the item wrapper</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <DocPager PreviousHref="components/tabs" PreviousText="Tabs" NextHref="components/collapse" NextText="Collapse" />
+</W3Container>
+
+@code {
+    private bool InstallExpanded { get; set; } = true;
+
+    private const string BasicCode = """
+<W3Accordion>
+    <W3AccordionItem Title="Install" @bind-Expanded="installExpanded">
+        <p>Add the package reference and stylesheet link.</p>
+    </W3AccordionItem>
+    <W3AccordionItem Title="Use Components">
+        <p>Import the namespace and use the Razor components.</p>
+    </W3AccordionItem>
+</W3Accordion>
+""";
+}

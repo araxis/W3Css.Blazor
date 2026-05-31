@@ -1,0 +1,81 @@
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+<span @attributes="AdditionalAttributes"
+      class="@CssClass"
+      style="@StyleValue"
+      role="@RoleValue"
+      aria-label="@Label">
+    @if (!string.IsNullOrWhiteSpace(Src))
+    {
+        <img src="@Src"
+             alt="@Alt"
+             loading="@Loading" />
+    }
+    else if (ChildContent is not null)
+    {
+        @ChildContent
+    }
+    else
+    {
+        <span class="w3-avatar-initials">@Initials</span>
+    }
+</span>
+
+@code {
+    private string CssClass => BuildClass(
+        "w3-avatar",
+        Circle ? "w3-circle" : Round.ToClass(),
+        Border ? "w3-border" : null,
+        Color.ToBackgroundClass(),
+        TextColor.ToTextClass());
+
+    private string? StyleValue => CombineStyle(Size > 0 ? $"--w3-avatar-size:{Size}px" : null, Style);
+
+    private string? RoleValue => string.IsNullOrWhiteSpace(Label) ? null : "img";
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public string? Src { get; set; }
+
+    [Parameter]
+    public string Alt { get; set; } = string.Empty;
+
+    [Parameter]
+    public string? Initials { get; set; }
+
+    [Parameter]
+    public string? Label { get; set; }
+
+    [Parameter]
+    public string Loading { get; set; } = "lazy";
+
+    [Parameter]
+    public int Size { get; set; } = 40;
+
+    [Parameter]
+    public bool Circle { get; set; } = true;
+
+    [Parameter]
+    public bool Border { get; set; }
+
+    [Parameter]
+    public W3Round Round { get; set; } = W3Round.Medium;
+
+    [Parameter]
+    public W3Color Color { get; set; } = W3Color.LightGrey;
+
+    [Parameter]
+    public W3Color TextColor { get; set; } = W3Color.Black;
+
+    private static string? CombineStyle(params string?[] styles)
+    {
+        var style = string.Join(';', styles
+            .Where(value => !string.IsNullOrWhiteSpace(value))
+            .Select(value => value!.Trim().TrimEnd(';')));
+
+        return string.IsNullOrWhiteSpace(style) ? null : style;
+    }
+}

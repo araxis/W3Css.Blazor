@@ -1,0 +1,170 @@
+@page "/components/versions"
+
+<PageTitle>Versions</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>Versions</h1>
+    <DocPager PreviousHref="components/material-design" PreviousText="Material Design" NextHref="components/app-shell" NextText="App Shell" />
+
+    <p class="w3-large">W3.CSS versions matter because this library ships W3.CSS as a static web asset.</p>
+    <p>Pin the package, load the bundled stylesheet path, and keep optional pro, theme, and color-library files in the consuming app.</p>
+
+    <DocExample Title="Version Timeline" Description="The W3.CSS source page lists the public version line; the packaged file header identifies the exact vendored build." Code="@TimelineCode">
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Version</th><th>Release note</th><th>Use in this package</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>3.01</td><td>Released December 2017.</td><td>Historical W3.CSS version.</td></tr>
+                <tr><td>4.01</td><td>Released November 2018.</td><td>Older W3.CSS 4 line.</td></tr>
+                <tr><td>4.15</td><td>Released December 2020.</td><td>Older W3.CSS 4 line.</td></tr>
+                <tr><td>5.01</td><td>Current W3.CSS 5 asset family.</td><td>Bundled at `_content/W3Css.Blazor/w3css/5/w3.css`.</td></tr>
+            </tbody>
+        </W3Table>
+    </DocExample>
+
+    <DocExample Title="Packaged Stylesheet" Description="Consumers should reference the package static web asset instead of a floating CDN URL." Code="@PackagedStylesheetCode">
+        <W3Panel Color="W3Color.PaleBlue" TextColor="W3Color.Black" LeftBar="true" Border="true" Round="W3Round.Medium">
+            <p>The NuGet package version is `0.1.0` and the bundled W3.CSS file is served from the package static asset path.</p>
+            <p>The current vendored stylesheet header identifies W3.CSS 5.01 dated March 11 2026.</p>
+        </W3Panel>
+    </DocExample>
+
+    <DocExample Title="W3.CSS Pro" Description="The W3.CSS pro file removes color classes so applications can own colors, themes, and color libraries." Code="@ProCode">
+        <W3Grid Padding="true" Style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));">
+            <W3Panel Color="W3Color.White" TextColor="W3Color.Black" Border="true" Round="W3Round.Medium" Class="w3-padding">
+                <h2 class="w3-large">Standard bundle</h2>
+                <p>Use the packaged stylesheet when you want the W3.CSS color classes included.</p>
+                <span class="w3-tag w3-teal w3-round">w3-teal</span>
+                <span class="w3-tag w3-pale-blue w3-round">w3-pale-blue</span>
+            </W3Panel>
+
+            <W3Panel Color="W3Color.White" TextColor="W3Color.Black" Border="true" Round="W3Round.Medium" Class="w3-padding">
+                <h2 class="w3-large">Pro-style app ownership</h2>
+                <p>Use pro CSS only when the application supplies every needed color or theme class.</p>
+                <span class="w3-tag w3-theme w3-round">theme</span>
+                <span class="w3-tag w3-theme-action w3-round">action</span>
+            </W3Panel>
+        </W3Grid>
+    </DocExample>
+
+    <DocExample Title="Consumer Color Files" Description="When using pro or extra color systems, load those files in the app and use their class names through `Class`." Code="@ConsumerColorsCode">
+        <W3Grid Padding="true" Style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));">
+            <W3Container Class="w3-padding w3-theme-d4">
+                Theme file
+            </W3Container>
+            <W3Container Class="w3-padding w3-highway-red">
+                Color library
+            </W3Container>
+            <W3Container Class="w3-padding" Style="background-color:#ffc107;color:#000;">
+                App color
+            </W3Container>
+        </W3Grid>
+    </DocExample>
+
+    <DocExample Title="Upgrade Checklist" Description="Treat W3.CSS updates as package work: verify the stylesheet, docs, and generated package together." Code="@UpgradeCode">
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Step</th><th>Check</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Download</td><td>Get the target W3.CSS file from the official downloads page.</td></tr>
+                <tr><td>Vendor</td><td>Place it under the versioned static asset folder.</td></tr>
+                <tr><td>Compare</td><td>Scan for class additions, removals, and changed color families.</td></tr>
+                <tr><td>Verify</td><td>Run build, tests, package creation, and browser checks for affected docs pages.</td></tr>
+                <tr><td>Release</td><td>Update release notes and package version when the stylesheet changes.</td></tr>
+            </tbody>
+        </W3Table>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Usage Reference</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Need</th><th>Use</th><th>Notes</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Stable package asset</td><td>`_content/W3Css.Blazor/w3css/5/w3.css`</td><td>Use this path after installing the package.</td></tr>
+                <tr><td>Exact vendored build</td><td>Check the header in `src/W3Css.Blazor/wwwroot/w3css/5/w3.css`</td><td>The file header records the W3.CSS build date.</td></tr>
+                <tr><td>W3.CSS pro</td><td>`https://www.w3schools.com/w3css/4/w3pro.css`</td><td>Use only when the app supplies its own colors.</td></tr>
+                <tr><td>Theme classes</td><td>Load a `w3-theme-*` file in the app</td><td>Use generated classes through `Class` pass-through.</td></tr>
+                <tr><td>Color libraries</td><td>Load the optional color library in the app</td><td>Do not add optional palettes to the base package.</td></tr>
+                <tr><td>Upgrades</td><td>Update package docs, tests, and release notes together</td><td>A stylesheet upgrade can change the typed color surface.</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Related W3.CSS</h2>
+        <p><NavLink href="installation">Installation</NavLink></p>
+        <p><NavLink href="components/colors">Colors guidance</NavLink></p>
+        <p><NavLink href="components/color-schemes">Color Schemes guidance</NavLink></p>
+        <p><NavLink href="components/material-design">Material Design guidance</NavLink></p>
+        <p><a href="https://www.w3schools.com/w3css/w3css_versions.asp" target="_blank" rel="noopener">W3.CSS Versions</a></p>
+        <p><a href="https://www.w3schools.com/w3css/w3css_downloads.asp" target="_blank" rel="noopener">W3.CSS Downloads</a></p>
+        <p><a href="https://www.w3schools.com/w3css/4/w3pro.css" target="_blank" rel="noopener">w3pro.css</a></p>
+    </section>
+
+    <DocPager PreviousHref="components/material-design" PreviousText="Material Design" NextHref="components/app-shell" NextText="App Shell" />
+</W3Container>
+
+@code {
+    private const string TimelineCode = """
+<W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+    <thead>
+        <tr><th>Version</th><th>Release note</th><th>Use in this package</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>3.01</td><td>Released December 2017.</td><td>Historical W3.CSS version.</td></tr>
+        <tr><td>4.01</td><td>Released November 2018.</td><td>Older W3.CSS 4 line.</td></tr>
+        <tr><td>4.15</td><td>Released December 2020.</td><td>Older W3.CSS 4 line.</td></tr>
+        <tr><td>5.01</td><td>Current W3.CSS 5 asset family.</td><td>Bundled at `_content/W3Css.Blazor/w3css/5/w3.css`.</td></tr>
+    </tbody>
+</W3Table>
+""";
+
+    private const string PackagedStylesheetCode = """
+<link rel="stylesheet" href="_content/W3Css.Blazor/w3css/5/w3.css" />
+
+<!-- Package: W3Css.Blazor 0.1.0 -->
+<!-- Bundled stylesheet: W3.CSS 5.01 March 11 2026 -->
+""";
+
+    private const string ProCode = """
+<!-- Standard package asset with W3.CSS colors included -->
+<link rel="stylesheet" href="_content/W3Css.Blazor/w3css/5/w3.css" />
+
+<!-- Pro stylesheet for apps that supply their own colors -->
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3pro.css" />
+<link rel="stylesheet" href="css/my-theme.css" />
+
+<W3Panel Class="w3-theme w3-padding">
+    Pro-style app-owned theme surface
+</W3Panel>
+""";
+
+    private const string ConsumerColorsCode = """
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-indigo.css" />
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-highway.css" />
+
+<W3Grid Padding="true" Style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));">
+    <W3Container Class="w3-padding w3-theme-d4">
+        Theme file
+    </W3Container>
+    <W3Container Class="w3-padding w3-highway-red">
+        Color library
+    </W3Container>
+    <W3Container Class="w3-padding" Style="background-color:#ffc107;color:#000;">
+        App color
+    </W3Container>
+</W3Grid>
+""";
+
+    private const string UpgradeCode = """
+1. Download the target W3.CSS file from the official downloads page.
+2. Place it under the versioned package static asset folder.
+3. Compare class additions, removals, and changed color families.
+4. Run build, tests, package creation, and browser checks.
+5. Update release notes and package version when the stylesheet changes.
+""";
+}

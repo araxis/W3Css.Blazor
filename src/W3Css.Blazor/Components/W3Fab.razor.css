@@ -1,0 +1,58 @@
+.w3-fab {
+    align-items: center;
+    display: inline-flex !important;
+    gap: 0.5rem;
+    justify-content: center;
+    line-height: 1;
+    min-height: 3.5rem;
+    min-width: 3.5rem;
+    padding: 0 1rem !important;
+    vertical-align: middle;
+    white-space: nowrap;
+    z-index: 10;
+}
+
+.w3-fab:not(.w3-fab-extended) {
+    aspect-ratio: 1 / 1;
+    padding: 0 !important;
+}
+
+.w3-fab-mini {
+    min-height: 2.75rem;
+    min-width: 2.75rem;
+}
+
+.w3-fab-fixed {
+    position: fixed !important;
+    z-index: 1000;
+}
+
+.w3-fab-absolute {
+    position: absolute !important;
+}
+
+.w3-fab-top-left {
+    left: var(--w3-fab-offset, 24px);
+    top: var(--w3-fab-offset, 24px);
+}
+
+.w3-fab-top-right {
+    right: var(--w3-fab-offset, 24px);
+    top: var(--w3-fab-offset, 24px);
+}
+
+.w3-fab-bottom-left {
+    bottom: var(--w3-fab-offset, 24px);
+    left: var(--w3-fab-offset, 24px);
+}
+
+.w3-fab-bottom-right {
+    bottom: var(--w3-fab-offset, 24px);
+    right: var(--w3-fab-offset, 24px);
+}
+
+.w3-fab-icon,
+.w3-fab-label {
+    line-height: 1;
+    pointer-events: none;
+}

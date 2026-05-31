@@ -1,0 +1,101 @@
+@page "/components/toggle-group"
+
+<PageTitle>W3ToggleGroup</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3ToggleGroup</h1>
+    <DocPager PreviousHref="components/switch" PreviousText="Switch" NextHref="components/color-input" NextText="Color Input" />
+
+    <p class="w3-large">`W3ToggleGroup` and `W3ToggleItem` are the MudBlazor-compatible segmented selector (`MudToggleGroup` / `MudToggleItem`).</p>
+    <p>Use it for a small set of mutually exclusive options (single-select) or a set of independent flags (multi-select). Selection state stays in Blazor — no script.</p>
+
+    <DocExample Title="Single Select (View Mode)" Code="@SingleCode">
+        <W3ToggleGroup TValue="string" @bind-SelectedValue="view" Label="View mode" Round="W3Round.Medium">
+            <W3ToggleItem TValue="string" Value="@("list")">List</W3ToggleItem>
+            <W3ToggleItem TValue="string" Value="@("board")">Board</W3ToggleItem>
+            <W3ToggleItem TValue="string" Value="@("calendar")">Calendar</W3ToggleItem>
+        </W3ToggleGroup>
+        <p class="doc-muted">Selected: @view</p>
+    </DocExample>
+
+    <DocExample Title="Multi Select (Filters)" Code="@MultiCode">
+        <W3ToggleGroup TValue="string"
+                       MultiSelect="true"
+                       @bind-SelectedValues="tags"
+                       ActiveColor="W3Color.Indigo"
+                       Label="Active filters"
+                       Round="W3Round.Medium">
+            <W3ToggleItem TValue="string" Value="@("open")">Open</W3ToggleItem>
+            <W3ToggleItem TValue="string" Value="@("mine")">Mine</W3ToggleItem>
+            <W3ToggleItem TValue="string" Value="@("urgent")">Urgent</W3ToggleItem>
+        </W3ToggleGroup>
+        <p class="doc-muted">Active: @(tags.Count == 0 ? "none" : string.Join(", ", tags))</p>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>W3ToggleGroup Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>SelectedValue</td><td>TValue?</td><td>default</td><td>Single-select value (<code>@@bind-SelectedValue</code>)</td></tr>
+                <tr><td>SelectedValues</td><td>IReadOnlyCollection&lt;TValue&gt;</td><td>empty</td><td>Multi-select values (<code>@@bind-SelectedValues</code>)</td></tr>
+                <tr><td>MultiSelect</td><td>bool</td><td>false</td><td>Enables multi-select</td></tr>
+                <tr><td>Vertical</td><td>bool</td><td>false</td><td>Stacks items with <code>w3-bar-block</code></td></tr>
+                <tr><td>Border</td><td>bool</td><td>true</td><td>Group border</td></tr>
+                <tr><td>Round</td><td>W3Round</td><td>None</td><td>Group corner rounding</td></tr>
+                <tr><td>ActiveColor / ActiveTextColor</td><td>W3Color</td><td>Teal / White</td><td>Selected item colors</td></tr>
+                <tr><td>Color / TextColor</td><td>W3Color</td><td>None</td><td>Unselected item colors</td></tr>
+                <tr><td>Disabled</td><td>bool</td><td>false</td><td>Disables the whole group</td></tr>
+            </tbody>
+        </W3Table>
+
+        <h2>W3ToggleItem Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Value</td><td>TValue</td><td>required</td><td>Item value</td></tr>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Item label</td></tr>
+                <tr><td>IconClass</td><td>string?</td><td>null</td><td>Leading icon class</td></tr>
+                <tr><td>Disabled</td><td>bool</td><td>false</td><td>Disables this item</td></tr>
+                <tr><td>OnSelected</td><td>EventCallback&lt;TValue&gt;</td><td>—</td><td>Per-item toggle callback</td></tr>
+            </tbody>
+        </W3Table>
+        <p class="doc-muted">Items render as <code>w3-bar-item w3-button</code> with <code>aria-pressed</code> reflecting selection.</p>
+    </section>
+
+    <DocPager PreviousHref="components/switch" PreviousText="Switch" NextHref="components/color-input" NextText="Color Input" />
+</W3Container>
+
+@code {
+    private string view = "list";
+    private IReadOnlyCollection<string> tags = new List<string> { "open" };
+
+    private const string SingleCode = """
+<W3ToggleGroup TValue="string" @bind-SelectedValue="view" Label="View mode" Round="W3Round.Medium">
+    <W3ToggleItem TValue="string" Value="@("list")">List</W3ToggleItem>
+    <W3ToggleItem TValue="string" Value="@("board")">Board</W3ToggleItem>
+    <W3ToggleItem TValue="string" Value="@("calendar")">Calendar</W3ToggleItem>
+</W3ToggleGroup>
+
+@code {
+    private string view = "list";
+}
+""";
+
+    private const string MultiCode = """
+<W3ToggleGroup TValue="string" MultiSelect="true" @bind-SelectedValues="tags"
+               ActiveColor="W3Color.Indigo" Label="Active filters" Round="W3Round.Medium">
+    <W3ToggleItem TValue="string" Value="@("open")">Open</W3ToggleItem>
+    <W3ToggleItem TValue="string" Value="@("mine")">Mine</W3ToggleItem>
+    <W3ToggleItem TValue="string" Value="@("urgent")">Urgent</W3ToggleItem>
+</W3ToggleGroup>
+
+@code {
+    private IReadOnlyCollection<string> tags = new List<string> { "open" };
+}
+""";
+}

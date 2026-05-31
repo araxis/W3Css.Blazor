@@ -1,0 +1,14 @@
+@inherits W3ComponentBase
+
+<div @attributes="AdditionalAttributes"
+     class="@CssClass"
+     style="@Style">
+    @ChildContent
+</div>
+
+@code {
+    private string CssClass => BuildClass("w3-responsive");
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+}

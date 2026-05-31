@@ -1,0 +1,39 @@
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+<div @attributes="AdditionalAttributes"
+     class="@CssClass"
+     style="@Style">
+    @ChildContent
+</div>
+
+@code {
+    private string CssClass => BuildClass(
+        Border.ToClass(),
+        Bar.ToClass(),
+        BorderColor.ToBorderClass(),
+        Color.ToBackgroundClass(),
+        TextColor.ToTextClass(),
+        Round.ToClass());
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public W3BorderSide Border { get; set; } = W3BorderSide.All;
+
+    [Parameter]
+    public W3BorderBar Bar { get; set; } = W3BorderBar.None;
+
+    [Parameter]
+    public W3Color BorderColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color Color { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color TextColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Round Round { get; set; } = W3Round.None;
+}

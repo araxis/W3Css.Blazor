@@ -1,0 +1,95 @@
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+@if (Overlay && Open)
+{
+    <div class="@OverlayCssClass"
+         aria-hidden="true"
+         @onclick="CloseAsync"></div>
+}
+
+<aside @attributes="AdditionalAttributes"
+       class="@SidebarCssClass"
+       style="@SidebarStyle"
+       aria-hidden="@AriaHidden">
+    @if (Header is not null)
+    {
+        @Header
+    }
+
+    @ChildContent
+</aside>
+
+@code {
+    private string AriaHidden => Open ? "false" : "true";
+
+    private string SidebarCssClass => BuildClass(
+        "w3-sidebar",
+        Open ? "w3-show" : "w3-hide",
+        Collapse ? "w3-collapse" : null,
+        Animate ? AnimationClass : null,
+        Color.ToBackgroundClass(),
+        TextColor.ToTextClass());
+
+    private string OverlayCssClass => new W3ClassBuilder()
+        .Add("w3-overlay")
+        .Add("w3-show")
+        .ToString();
+
+    private string SidebarStyle
+    {
+        get
+        {
+            var width = Width <= 0 ? 200 : Width;
+            var positionStyle = Position == W3SidebarPosition.Right ? "right:0" : "left:0";
+            var baseStyle = $"width:{width}px;{positionStyle}";
+            return string.IsNullOrWhiteSpace(Style) ? baseStyle : $"{baseStyle};{Style}";
+        }
+    }
+
+    private string AnimationClass => Position == W3SidebarPosition.Right ? "w3-animate-right" : "w3-animate-left";
+
+    [Parameter]
+    public bool Open { get; set; } = true;
+
+    [Parameter]
+    public EventCallback<bool> OpenChanged { get; set; }
+
+    [Parameter]
+    public bool Overlay { get; set; } = true;
+
+    [Parameter]
+    public bool Collapse { get; set; }
+
+    [Parameter]
+    public bool Animate { get; set; } = true;
+
+    [Parameter]
+    public int Width { get; set; } = 200;
+
+    [Parameter]
+    public W3SidebarPosition Position { get; set; } = W3SidebarPosition.Left;
+
+    [Parameter]
+    public W3Color Color { get; set; } = W3Color.Surface;
+
+    [Parameter]
+    public W3Color TextColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public RenderFragment? Header { get; set; }
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    private async Task CloseAsync()
+    {
+        if (!Open)
+        {
+            return;
+        }
+
+        Open = false;
+        await OpenChanged.InvokeAsync(false);
+    }
+}

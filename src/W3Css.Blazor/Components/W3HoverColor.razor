@@ -1,0 +1,63 @@
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+@if (Inline)
+{
+    <span @attributes="AdditionalAttributes"
+          class="@CssClass"
+          style="@Style">@ChildContent</span>
+}
+else
+{
+    <div @attributes="AdditionalAttributes"
+         class="@CssClass"
+         style="@Style">
+        @ChildContent
+    </div>
+}
+
+@code {
+    private string CssClass => BuildClass(
+        Color.ToBackgroundClass(),
+        TextColor.ToTextClass(),
+        Border ? "w3-border" : null,
+        BorderColor.ToBorderClass(),
+        HoverColor.ToHoverBackgroundClass(),
+        HoverTextColor.ToHoverTextClass(),
+        HoverBorderColor.ToHoverBorderClass(),
+        Size.ToClass(),
+        Round.ToClass());
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public bool Inline { get; set; }
+
+    [Parameter]
+    public W3Color Color { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color TextColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color BorderColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color HoverColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color HoverTextColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color HoverBorderColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Size Size { get; set; } = W3Size.Default;
+
+    [Parameter]
+    public W3Round Round { get; set; } = W3Round.None;
+
+    [Parameter]
+    public bool Border { get; set; }
+}

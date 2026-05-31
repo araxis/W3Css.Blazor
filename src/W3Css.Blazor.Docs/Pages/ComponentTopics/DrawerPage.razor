@@ -1,0 +1,191 @@
+@page "/components/drawer"
+
+<PageTitle>W3Drawer</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3Drawer</h1>
+    <DocPager PreviousHref="components/focus-trap" PreviousText="Focus Trap" NextHref="components/sidebar" NextText="Sidebar" />
+
+    <p class="w3-large">`W3Drawer` composes W3.CSS sidebar behavior into an app drawer with temporary and persistent variants.</p>
+    <p>Use it when a site or app needs a side navigation, inspector, or settings surface with Blazor-controlled open state.</p>
+
+    <DocExample Title="Temporary Navigation Drawer" Description="Contained mode keeps the drawer inside demos, app previews, and embedded shells while preserving W3.CSS sidebar behavior." Code="@TemporaryCode">
+        <div class="drawer-demo-frame w3-border w3-white">
+            <div class="w3-bar w3-teal">
+                <W3Button Class="w3-bar-item" Color="W3Color.Teal" TextColor="W3Color.White" OnClick="@(() => TemporaryDrawerOpen = true)">Open app drawer</W3Button>
+                <span class="w3-bar-item">Design workspace</span>
+                <span class="w3-bar-item w3-right">Draft</span>
+            </div>
+
+            <W3Drawer Id="workspace-drawer"
+                      Title="Workspace"
+                      @bind-Open="TemporaryDrawerOpen"
+                      Contained="true"
+                      Width="300"
+                      HeaderColor="W3Color.Teal"
+                      HeaderTextColor="W3Color.White"
+                      FooterColor="W3Color.LightGrey">
+                <ChildContent>
+                    <W3Bar Block="true">
+                        <W3BarItem Href="components">Components</W3BarItem>
+                        <W3BarItem Href="components/app-shell">App Shell</W3BarItem>
+                        <W3BarItem Href="components/data-table">Data Table</W3BarItem>
+                        <W3BarItem Href="components/stepper">Workflow</W3BarItem>
+                    </W3Bar>
+                </ChildContent>
+                <Footer>
+                    <p class="w3-small">Menu state: <strong>@(TemporaryDrawerOpen ? "Open" : "Closed")</strong></p>
+                </Footer>
+            </W3Drawer>
+
+            <main class="drawer-demo-main">
+                <h3>Board</h3>
+                <p>Open the drawer to switch app areas without leaving the current workspace.</p>
+                <div class="w3-row-padding">
+                    <div class="w3-half">
+                        <W3Card BodyColor="W3Color.White" Class="drawer-demo-card">
+                            <strong>12</strong>
+                            <p>Open tasks</p>
+                        </W3Card>
+                    </div>
+                    <div class="w3-half">
+                        <W3Card BodyColor="W3Color.White" Class="drawer-demo-card">
+                            <strong>4</strong>
+                            <p>Reviews</p>
+                        </W3Card>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </DocExample>
+
+    <DocExample Title="Persistent Inspector Drawer" Description="Persistent drawers sit beside app content and usually skip the overlay so users can compare controls with the main surface." Code="@PersistentCode">
+        <div class="drawer-demo-frame w3-border w3-white">
+            <div class="w3-bar w3-light-grey">
+                <W3Button Class="w3-bar-item" Border="true" OnClick="@(() => InspectorOpen = !InspectorOpen)">Toggle inspector</W3Button>
+                <span class="w3-bar-item">Layout editor</span>
+            </div>
+
+            <main class="@InspectorMainClass">
+                <h3>Canvas</h3>
+                <p>Persistent drawers are useful for filters, properties, and side-by-side editing.</p>
+                <div class="w3-panel w3-pale-blue w3-leftbar w3-border-blue">
+                    <p>Selected: Pricing card</p>
+                </div>
+            </main>
+
+            <W3Drawer Title="Inspector"
+                      @bind-Open="InspectorOpen"
+                      Variant="W3DrawerVariant.Persistent"
+                      Position="W3SidebarPosition.Right"
+                      Contained="true"
+                      Overlay="false"
+                      Width="300"
+                      HeaderColor="W3Color.BlueGrey"
+                      HeaderTextColor="W3Color.White"
+                      FooterColor="W3Color.LightGrey">
+                <ChildContent>
+                    <label for="drawer-width">Width</label>
+                    <input id="drawer-width" class="w3-input w3-border w3-margin-bottom" value="320px" />
+                    <label for="drawer-color">Accent</label>
+                    <select id="drawer-color" class="w3-select w3-border">
+                        <option>Teal</option>
+                        <option>Blue grey</option>
+                        <option>Green</option>
+                    </select>
+                </ChildContent>
+                <Footer>
+                    <W3Button Color="W3Color.Teal" TextColor="W3Color.White" OnClick="@(() => InspectorOpen = false)">Apply</W3Button>
+                </Footer>
+            </W3Drawer>
+        </div>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Id</td><td>string?</td><td>null</td><td>Drawer id and default title id prefix</td></tr>
+                <tr><td>Open</td><td>bool</td><td>false</td><td>`w3-show` or `w3-hide`</td></tr>
+                <tr><td>OpenChanged</td><td>EventCallback&lt;bool&gt;</td><td>none</td><td>Raised when drawer close actions run</td></tr>
+                <tr><td>Variant</td><td>W3DrawerVariant</td><td>Temporary</td><td>Temporary dialog or persistent complementary surface</td></tr>
+                <tr><td>Overlay</td><td>bool</td><td>true</td><td>`w3-overlay` for temporary drawers</td></tr>
+                <tr><td>CloseOnOverlay</td><td>bool</td><td>true</td><td>Overlay click closes the drawer</td></tr>
+                <tr><td>CloseOnEscape</td><td>bool</td><td>true</td><td>Escape key close handler</td></tr>
+                <tr><td>ShowCloseButton</td><td>bool</td><td>true</td><td>Header close command</td></tr>
+                <tr><td>Contained</td><td>bool</td><td>false</td><td>Positions drawer and overlay inside a relative parent</td></tr>
+                <tr><td>Animate</td><td>bool</td><td>true</td><td>`w3-animate-left` or `w3-animate-right`</td></tr>
+                <tr><td>Card</td><td>bool</td><td>true</td><td>`w3-card-4` shadow</td></tr>
+                <tr><td>Border</td><td>bool</td><td>false</td><td>`w3-border`</td></tr>
+                <tr><td>Width</td><td>int</td><td>280</td><td>Width in pixels</td></tr>
+                <tr><td>Position</td><td>W3SidebarPosition</td><td>Left</td><td>`left:0` or `right:0`</td></tr>
+                <tr><td>Title</td><td>string?</td><td>null</td><td>Default header title and accessible label</td></tr>
+                <tr><td>AriaLabel</td><td>string?</td><td>null</td><td>Accessible label when no title is rendered</td></tr>
+                <tr><td>Header</td><td>RenderFragment?</td><td>null</td><td>Custom header slot</td></tr>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Drawer body content</td></tr>
+                <tr><td>Footer</td><td>RenderFragment?</td><td>null</td><td>Footer slot</td></tr>
+                <tr><td>Color and TextColor</td><td>W3Color</td><td>White and Black</td><td>Drawer surface color classes</td></tr>
+                <tr><td>HeaderColor and HeaderTextColor</td><td>W3Color</td><td>Teal and White</td><td>Header color classes</td></tr>
+                <tr><td>FooterColor and FooterTextColor</td><td>W3Color</td><td>LightGrey and Black</td><td>Footer color classes</td></tr>
+                <tr><td>HeaderClass, BodyClass, FooterClass</td><td>string?</td><td>null</td><td>Additional slot classes</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional drawer classes</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline style appended after width and position</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Related</h2>
+        <p><NavLink href="components/sidebar">Sidebar</NavLink> is the lower-level W3.CSS wrapper. <NavLink href="components/app-shell">App Shell</NavLink> handles full-page frames.</p>
+        <p><NavLink href="components/focus-trap">Focus Trap</NavLink> can be placed inside drawers that contain longer keyboard workflows.</p>
+    </section>
+
+    <DocPager PreviousHref="components/focus-trap" PreviousText="Focus Trap" NextHref="components/sidebar" NextText="Sidebar" />
+</W3Container>
+
+@code {
+    private bool TemporaryDrawerOpen { get; set; }
+    private bool InspectorOpen { get; set; } = true;
+
+    private string InspectorMainClass => InspectorOpen ? "drawer-demo-main drawer-demo-main-with-inspector" : "drawer-demo-main";
+
+    private const string TemporaryCode = """
+<W3Button OnClick="@(() => drawerOpen = true)">Open app drawer</W3Button>
+
+<W3Drawer Id="workspace-drawer"
+          Title="Workspace"
+          @bind-Open="drawerOpen"
+          Contained="true"
+          Width="300">
+    <ChildContent>
+        <W3Bar Block="true">
+            <W3BarItem Href="components">Components</W3BarItem>
+            <W3BarItem Href="components/app-shell">App Shell</W3BarItem>
+        </W3Bar>
+    </ChildContent>
+    <Footer>
+        <p>Menu state: @(drawerOpen ? "Open" : "Closed")</p>
+    </Footer>
+</W3Drawer>
+""";
+
+    private const string PersistentCode = """
+<W3Drawer Title="Inspector"
+          @bind-Open="inspectorOpen"
+          Variant="W3DrawerVariant.Persistent"
+          Position="W3SidebarPosition.Right"
+          Contained="true"
+          Overlay="false"
+          Width="300">
+    <ChildContent>
+        <input class="w3-input w3-border" value="320px" />
+    </ChildContent>
+    <Footer>
+        <W3Button OnClick="@(() => inspectorOpen = false)">Apply</W3Button>
+    </Footer>
+</W3Drawer>
+""";
+}

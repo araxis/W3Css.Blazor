@@ -1,0 +1,213 @@
+@page "/components/stepper"
+
+<PageTitle>W3Stepper</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3Stepper</h1>
+    <DocPager PreviousHref="components/progress-circular" PreviousText="Progress Circular" NextHref="components/scroll-to-top" NextText="Scroll To Top" />
+
+    <p class="w3-large">`W3Stepper` renders multi-step workflows with progress, completed states, error states, disabled steps, and active panel content.</p>
+    <p>Use it for checkout flows, onboarding, setup wizards, approvals, and app screens where people need to understand what is done and what comes next.</p>
+
+    <DocExample Title="Linear Checkout Flow" Description="The linear mode allows the current step and the first incomplete step while completed values drive the progress bar." Code="@CheckoutCode">
+        <W3Stepper Label="Checkout progress"
+                   Linear="true"
+                   ShowProgress="true"
+                   ShowProgressLabel="true"
+                   Border="true"
+                   Round="W3Round.Medium"
+                   CompletedValues="CheckoutCompletedValues"
+                   @bind-ActiveValue="CheckoutStep">
+            <W3Step Value="cart" Title="Cart" Description="Review items">
+                <W3Panel Color="W3Color.PaleBlue" TextColor="W3Color.Black" LeftBar="true" Border="true" Round="W3Round.Medium">
+                    <p>Review the order and confirm that the cart is ready.</p>
+                    <W3Button Color="W3Color.Teal" TextColor="W3Color.White" Round="W3Round.Medium" OnClick="CompleteCart">Continue to shipping</W3Button>
+                </W3Panel>
+            </W3Step>
+            <W3Step Value="shipping" Title="Shipping" Description="Address and delivery">
+                <W3Panel Color="W3Color.White" Border="true" Round="W3Round.Medium">
+                    <p>Add the delivery address and choose the shipping method.</p>
+                    <W3Button Color="W3Color.Teal" TextColor="W3Color.White" Round="W3Round.Medium" OnClick="CompleteShipping">Continue to review</W3Button>
+                </W3Panel>
+            </W3Step>
+            <W3Step Value="review" Title="Review" Description="Confirm and submit">
+                <W3Panel Color="W3Color.PaleGreen" TextColor="W3Color.Black" LeftBar="true" Border="true" Round="W3Round.Medium">
+                    <p>Confirm the checkout details before the order is submitted.</p>
+                    <W3Button Class="w3-margin-right" Color="W3Color.Teal" TextColor="W3Color.White" Round="W3Round.Medium" OnClick="CompleteReview">Mark complete</W3Button>
+                    <W3Button Border="true" Round="W3Round.Medium" OnClick="ResetCheckout">Reset</W3Button>
+                </W3Panel>
+            </W3Step>
+        </W3Stepper>
+    </DocExample>
+
+    <DocExample Title="Vertical Status Stepper" Description="Vertical steppers are useful for setup or approval states where error and disabled items should stay visible." Code="@StatusCode">
+        <W3Stepper Label="Deployment checklist"
+                   ActiveValue="build"
+                   CompletedValues="StatusCompletedValues"
+                   Vertical="true"
+                   Border="true"
+                   PanelBorder="false"
+                   Round="W3Round.Medium"
+                   ShowProgress="false">
+            <W3Step Value="plan" Title="Plan" Description="Requirements locked" Completed="true">
+                <p>The release scope is approved and ready for build.</p>
+            </W3Step>
+            <W3Step Value="build" Title="Build" Description="In progress">
+                <p>The app package is being assembled and validated.</p>
+            </W3Step>
+            <W3Step Value="qa" Title="QA" Description="Blocked" Error="true">
+                <p>QA is waiting on one failed acceptance check.</p>
+            </W3Step>
+            <W3Step Value="release" Title="Release" Description="Waiting" Disabled="true">
+                <p>The release step unlocks after QA is complete.</p>
+            </W3Step>
+        </W3Stepper>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>W3Stepper Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>`W3Step` children</td></tr>
+                <tr><td>Label</td><td>string</td><td>Stepper</td><td>`aria-label` on the step navigation</td></tr>
+                <tr><td>ActiveValue</td><td>string?</td><td>first enabled step</td><td>Current step value and active panel</td></tr>
+                <tr><td>ActiveValueChanged</td><td>EventCallback&lt;string&gt;</td><td>empty</td><td>Two-way active step binding</td></tr>
+                <tr><td>StepActivated</td><td>EventCallback&lt;string&gt;</td><td>empty</td><td>Raised after a step button is activated</td></tr>
+                <tr><td>CompletedValues</td><td>IReadOnlyCollection&lt;string&gt;</td><td>[]</td><td>Completed markers and progress calculation</td></tr>
+                <tr><td>Linear</td><td>bool</td><td>false</td><td>Disables future incomplete steps</td></tr>
+                <tr><td>Vertical and Compact</td><td>bool</td><td>false</td><td>Component-scoped step layout classes</td></tr>
+                <tr><td>ShowNumbers and ShowDescriptions</td><td>bool</td><td>true</td><td>Marker and supporting text visibility</td></tr>
+                <tr><td>ShowPanels</td><td>bool</td><td>true</td><td>Renders the active step content region</td></tr>
+                <tr><td>ShowProgress and ShowProgressLabel</td><td>bool</td><td>false</td><td>Composes `W3Progress` above the steps</td></tr>
+                <tr><td>ProgressLabelText</td><td>string?</td><td>percentage</td><td>Custom progress label text</td></tr>
+                <tr><td>Border and PanelBorder</td><td>bool</td><td>false/true</td><td>Root and panel border classes</td></tr>
+                <tr><td>Card and CardDepth</td><td>W3 options</td><td>false/Two</td><td>Root W3.CSS card class</td></tr>
+                <tr><td>Round, Color, TextColor</td><td>W3 options</td><td>None</td><td>Root W3.CSS surface classes</td></tr>
+                <tr><td>ActiveColor, CompletedColor, ErrorColor</td><td>W3Color</td><td>Teal, Green, Red</td><td>Step marker and active button classes</td></tr>
+                <tr><td>ActiveTextColor, CompletedTextColor, ErrorTextColor</td><td>W3Color</td><td>White</td><td>Step marker text classes</td></tr>
+                <tr><td>MarkerColor and MarkerTextColor</td><td>W3Color</td><td>LightGrey and Black</td><td>Inactive marker classes</td></tr>
+                <tr><td>PanelColor and PanelTextColor</td><td>W3Color</td><td>White and None</td><td>Active panel classes</td></tr>
+                <tr><td>ProgressColor, ProgressTextColor, ProgressTrackColor</td><td>W3Color</td><td>Teal, White, LightGrey</td><td>Composed progress bar classes</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional root classes</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline style on the root wrapper</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>W3Step Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Value</td><td>string</td><td>required</td><td>Stable step key for active and completed state</td></tr>
+                <tr><td>Title</td><td>string</td><td>required</td><td>Button label text</td></tr>
+                <tr><td>Description</td><td>string</td><td>null</td><td>Optional supporting text under the title</td></tr>
+                <tr><td>Completed</td><td>bool</td><td>false</td><td>Marks this step complete without using `CompletedValues`</td></tr>
+                <tr><td>Error</td><td>bool</td><td>false</td><td>Uses error marker color and state class</td></tr>
+                <tr><td>Disabled</td><td>bool</td><td>false</td><td>Disables activation and sets `aria-disabled`</td></tr>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Active panel content for this step</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Related</h2>
+        <p><NavLink href="components/progress-circular">Progress Circular</NavLink> provides circular progress state and can pair with <code>W3Stepper</code> for workflow overlays.</p>
+        <p><NavLink href="components/progress">Progress</NavLink> is used internally when a stepper needs determinate completion feedback.</p>
+        <p><NavLink href="components/tabs">Tabs</NavLink> uses the same child registration model for panels.</p>
+        <p><NavLink href="components/badge">Badge</NavLink> and <NavLink href="components/button">Button</NavLink> provide the marker and activation primitives.</p>
+    </section>
+
+    <DocPager PreviousHref="components/progress-circular" PreviousText="Progress Circular" NextHref="components/scroll-to-top" NextText="Scroll To Top" />
+</W3Container>
+
+@code {
+    private string CheckoutStep { get; set; } = "cart";
+
+    private IReadOnlyCollection<string> CheckoutCompletedValues { get; set; } = [];
+
+    private static readonly IReadOnlyCollection<string> StatusCompletedValues = ["plan"];
+
+    private void CompleteCart()
+    {
+        CheckoutCompletedValues = ["cart"];
+        CheckoutStep = "shipping";
+    }
+
+    private void CompleteShipping()
+    {
+        CheckoutCompletedValues = ["cart", "shipping"];
+        CheckoutStep = "review";
+    }
+
+    private void CompleteReview()
+    {
+        CheckoutCompletedValues = ["cart", "shipping", "review"];
+        CheckoutStep = "review";
+    }
+
+    private void ResetCheckout()
+    {
+        CheckoutCompletedValues = [];
+        CheckoutStep = "cart";
+    }
+
+    private const string CheckoutCode = """
+<W3Stepper Label="Checkout progress"
+           Linear="true"
+           ShowProgress="true"
+           ShowProgressLabel="true"
+           Border="true"
+           Round="W3Round.Medium"
+           CompletedValues="checkoutCompletedValues"
+           @bind-ActiveValue="checkoutStep">
+    <W3Step Value="cart" Title="Cart" Description="Review items">
+        <W3Panel Color="W3Color.PaleBlue" TextColor="W3Color.Black" LeftBar="true" Border="true" Round="W3Round.Medium">
+            <p>Review the order and confirm that the cart is ready.</p>
+            <W3Button Color="W3Color.Teal" TextColor="W3Color.White" Round="W3Round.Medium" OnClick="CompleteCart">Continue to shipping</W3Button>
+        </W3Panel>
+    </W3Step>
+    <W3Step Value="shipping" Title="Shipping" Description="Address and delivery">
+        <W3Panel Color="W3Color.White" Border="true" Round="W3Round.Medium">
+            <p>Add the delivery address and choose the shipping method.</p>
+            <W3Button Color="W3Color.Teal" TextColor="W3Color.White" Round="W3Round.Medium" OnClick="CompleteShipping">Continue to review</W3Button>
+        </W3Panel>
+    </W3Step>
+    <W3Step Value="review" Title="Review" Description="Confirm and submit">
+        <W3Panel Color="W3Color.PaleGreen" TextColor="W3Color.Black" LeftBar="true" Border="true" Round="W3Round.Medium">
+            <p>Confirm the checkout details before the order is submitted.</p>
+            <W3Button Color="W3Color.Teal" TextColor="W3Color.White" Round="W3Round.Medium" OnClick="CompleteReview">Mark complete</W3Button>
+        </W3Panel>
+    </W3Step>
+</W3Stepper>
+""";
+
+    private const string StatusCode = """
+<W3Stepper Label="Deployment checklist"
+           ActiveValue="build"
+           CompletedValues='new[] { "plan" }'
+           Vertical="true"
+           Border="true"
+           PanelBorder="false"
+           Round="W3Round.Medium"
+           ShowProgress="false">
+    <W3Step Value="plan" Title="Plan" Description="Requirements locked" Completed="true">
+        <p>The release scope is approved and ready for build.</p>
+    </W3Step>
+    <W3Step Value="build" Title="Build" Description="In progress">
+        <p>The app package is being assembled and validated.</p>
+    </W3Step>
+    <W3Step Value="qa" Title="QA" Description="Blocked" Error="true">
+        <p>QA is waiting on one failed acceptance check.</p>
+    </W3Step>
+    <W3Step Value="release" Title="Release" Description="Waiting" Disabled="true">
+        <p>The release step unlocks after QA is complete.</p>
+    </W3Step>
+</W3Stepper>
+""";
+}

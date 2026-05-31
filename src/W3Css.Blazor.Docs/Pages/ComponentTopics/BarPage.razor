@@ -1,0 +1,93 @@
+@page "/components/bar"
+
+<PageTitle>W3Bar</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3Bar</h1>
+    <DocPager PreviousHref="components/direction" PreviousText="Direction" NextHref="components/responsive" NextText="Responsive" />
+
+    <p class="w3-large">`W3Bar` renders W3.CSS bar containers, and `W3BarItem` renders links or buttons inside them.</p>
+    <p>Use horizontal bars for simple navigation and block bars for stacked menus.</p>
+
+    <DocExample Title="Horizontal Bar" Code="@HorizontalCode">
+        <W3Bar Color="W3Color.Teal" TextColor="W3Color.White">
+            <W3BarItem Href="" Mobile="true">Home</W3BarItem>
+            <W3BarItem Href="components" Mobile="true">Components</W3BarItem>
+            <W3BarItem Href="roadmap" Mobile="true">Roadmap</W3BarItem>
+        </W3Bar>
+    </DocExample>
+
+    <DocExample Title="Block Bar" Code="@BlockCode">
+        <W3Bar Block="true" Color="W3Color.LightGrey">
+            <W3BarItem Button="false">Layout</W3BarItem>
+            <W3BarItem Href="components/row">Row</W3BarItem>
+            <W3BarItem Href="components/grid">Grid</W3BarItem>
+        </W3Bar>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>W3Bar Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Block</td><td>bool</td><td>false</td><td>`w3-bar-block` instead of `w3-bar`</td></tr>
+                <tr><td>Color</td><td>W3Color</td><td>None</td><td>Background color class</td></tr>
+                <tr><td>TextColor</td><td>W3Color</td><td>None</td><td>Text color class</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional CSS classes</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline style</td></tr>
+                <tr><td>ChildContent</td><td>RenderFragment</td><td>null</td><td>Bar item content</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>W3BarItem Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Href</td><td>string</td><td>null</td><td>Renders an anchor when set</td></tr>
+                <tr><td>Target</td><td>string</td><td>null</td><td>Anchor target attribute</td></tr>
+                <tr><td>Button</td><td>bool</td><td>true</td><td>`w3-button`</td></tr>
+                <tr><td>Mobile</td><td>bool</td><td>false</td><td>`w3-mobile`</td></tr>
+                <tr><td>Disabled</td><td>bool</td><td>false</td><td>`w3-disabled`, disabled button, or disabled anchor state</td></tr>
+                <tr><td>Type</td><td>string</td><td>button</td><td>Button type when no `Href` is set</td></tr>
+                <tr><td>Color</td><td>W3Color</td><td>None</td><td>Background color class</td></tr>
+                <tr><td>TextColor</td><td>W3Color</td><td>None</td><td>Text color class</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional CSS classes</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline style</td></tr>
+                <tr><td>OnClick</td><td>EventCallback&lt;MouseEventArgs&gt;</td><td>empty</td><td>Click callback</td></tr>
+                <tr><td>ChildContent</td><td>RenderFragment</td><td>null</td><td>Item label or markup</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Related</h2>
+        <p><NavLink href="components/navbar">Navbar</NavLink> adds active state and inherited mobile behavior over bar primitives.</p>
+        <p><NavLink href="components/case-study">Case Study</NavLink> combines top bars with sidebar navigation.</p>
+    </section>
+
+    <DocPager PreviousHref="components/direction" PreviousText="Direction" NextHref="components/responsive" NextText="Responsive" />
+</W3Container>
+
+@code {
+    private const string HorizontalCode = """
+<W3Bar Color="W3Color.Teal" TextColor="W3Color.White">
+    <W3BarItem Href="" Mobile="true">Home</W3BarItem>
+    <W3BarItem Href="components" Mobile="true">Components</W3BarItem>
+    <W3BarItem Href="roadmap" Mobile="true">Roadmap</W3BarItem>
+</W3Bar>
+""";
+
+    private const string BlockCode = """
+<W3Bar Block="true" Color="W3Color.LightGrey">
+    <W3BarItem Button="false">Layout</W3BarItem>
+    <W3BarItem Href="components/row">Row</W3BarItem>
+    <W3BarItem Href="components/grid">Grid</W3BarItem>
+</W3Bar>
+""";
+}

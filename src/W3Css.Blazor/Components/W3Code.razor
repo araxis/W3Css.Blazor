@@ -1,0 +1,30 @@
+@inherits W3ComponentBase
+
+@if (Inline)
+{
+    <code @attributes="AdditionalAttributes"
+          class="@InlineCssClass"
+          style="@Style">@Content@ChildContent</code>
+}
+else
+{
+    <pre @attributes="AdditionalAttributes"
+         class="@BlockCssClass"
+         style="@Style"><code>@Content@ChildContent</code></pre>
+}
+
+@code {
+    private string InlineCssClass => BuildClass("w3-codespan");
+    private string BlockCssClass => BuildClass("w3-code");
+
+    private string? Content => Code;
+
+    [Parameter]
+    public string? Code { get; set; }
+
+    [Parameter]
+    public bool Inline { get; set; }
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+}

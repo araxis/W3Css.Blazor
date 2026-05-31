@@ -1,0 +1,32 @@
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+<div @attributes="AdditionalAttributes"
+     class="@CssClass"
+     style="@Style">
+    @ChildContent
+</div>
+
+@code {
+    private string CssClass => BuildClass(
+        "w3-cell",
+        Alignment.ToClass(),
+        Mobile ? "w3-mobile" : null,
+        Color.ToBackgroundClass(),
+        TextColor.ToTextClass());
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public W3CellAlignment Alignment { get; set; } = W3CellAlignment.Default;
+
+    [Parameter]
+    public bool Mobile { get; set; }
+
+    [Parameter]
+    public W3Color Color { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color TextColor { get; set; } = W3Color.None;
+}

@@ -1,0 +1,11 @@
+@inherits W3ComponentBase
+
+<div @attributes="AdditionalAttributes"
+     class="@CssClass"
+     style="@Style"
+     role="separator"
+     aria-orientation="horizontal"></div>
+
+@code {
+    private string CssClass => BuildClass("w3-menu-divider", "w3-border-top");
+}

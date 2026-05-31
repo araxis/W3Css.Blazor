@@ -1,0 +1,103 @@
+@page "/components/switch"
+
+<PageTitle>W3Switch</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3Switch</h1>
+    <DocPager PreviousHref="components/rating" PreviousText="Rating" NextHref="components/toggle-group" NextText="Toggle Group" />
+
+    <p class="w3-large">`W3Switch` renders an accessible switch-style checkbox for app settings and feature toggles.</p>
+    <p>The component keeps a real checkbox input under the hood, adds `role="switch"`, and uses isolated CSS for the toggle shape without touching the vendored W3.CSS file.</p>
+
+    <DocExample Title="Setting Toggle" Description="Use a switch when the setting turns something on or off immediately." Code="@BasicCode">
+        <EditForm Model="@SwitchModel">
+            <W3Switch Id="switch-notifications"
+                      @bind-Value="SwitchModel.Notifications"
+                      Label="Enable notifications"
+                      OnColor="W3Color.Green" />
+        </EditForm>
+        <p class="w3-small">Notifications are <strong>@(SwitchModel.Notifications ? "on" : "off")</strong>.</p>
+    </DocExample>
+
+    <DocExample Title="Settings Panel" Description="Switches pair well with cards and panels for compact app preferences." Code="@PanelCode">
+        <W3Panel Color="W3Color.White" Border="true" Round="W3Round.Medium" Class="w3-padding">
+            <div class="w3-section">
+                <W3Switch @bind-Value="SwitchModel.CompactMode" OnColor="W3Color.Teal">
+                    Compact mode
+                </W3Switch>
+            </div>
+            <div class="w3-section">
+                <W3Switch @bind-Value="SwitchModel.PublicProfile" OnColor="W3Color.Indigo" OffColor="W3Color.LightGrey">
+                    Public profile
+                </W3Switch>
+            </div>
+        </W3Panel>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Value</td><td>bool</td><td>false</td><td>Checked state and `aria-checked`</td></tr>
+                <tr><td>Id</td><td>string?</td><td>null</td><td>`id` attribute on the checkbox input</td></tr>
+                <tr><td>Label</td><td>string?</td><td>null</td><td>Visible label text</td></tr>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Custom label content</td></tr>
+                <tr><td>OnColor</td><td>W3Color</td><td>Teal</td><td>Track background while checked</td></tr>
+                <tr><td>OffColor</td><td>W3Color</td><td>LightGrey</td><td>Track background while unchecked</td></tr>
+                <tr><td>TrackClass</td><td>string?</td><td>null</td><td>Extra track classes</td></tr>
+                <tr><td>LabelClass</td><td>string?</td><td>null</td><td>Extra label classes</td></tr>
+                <tr><td>Disabled</td><td>bool</td><td>false</td><td>`disabled` attribute and disabled styling</td></tr>
+                <tr><td>Border</td><td>bool</td><td>false</td><td>`w3-border` on the track</td></tr>
+                <tr><td>Round</td><td>W3Round</td><td>None</td><td>Rounded track class</td></tr>
+                <tr><td>TextColor</td><td>W3Color</td><td>None</td><td>Label text color class</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional root label classes</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline style on the root label</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Related</h2>
+        <p><NavLink href="components/checkbox">Checkbox</NavLink> covers normal boolean form inputs.</p>
+        <p><NavLink href="components/field">Field</NavLink> wraps labels, help text, and validation messages.</p>
+        <p><NavLink href="components/slider">Slider</NavLink> covers bounded numeric settings.</p>
+    </section>
+
+    <DocPager PreviousHref="components/rating" PreviousText="Rating" NextHref="components/toggle-group" NextText="Toggle Group" />
+</W3Container>
+
+@code {
+    private readonly SwitchExampleModel SwitchModel = new();
+
+    private const string BasicCode = """
+<W3Switch Id="switch-notifications"
+          @bind-Value="model.Notifications"
+          Label="Enable notifications"
+          OnColor="W3Color.Green" />
+""";
+
+    private const string PanelCode = """
+<W3Panel Color="W3Color.White" Border="true" Round="W3Round.Medium" Class="w3-padding">
+    <div class="w3-section">
+        <W3Switch @bind-Value="model.CompactMode" OnColor="W3Color.Teal">
+            Compact mode
+        </W3Switch>
+    </div>
+    <div class="w3-section">
+        <W3Switch @bind-Value="model.PublicProfile" OnColor="W3Color.Indigo" OffColor="W3Color.LightGrey">
+            Public profile
+        </W3Switch>
+    </div>
+</W3Panel>
+""";
+
+    private sealed class SwitchExampleModel
+    {
+        public bool Notifications { get; set; } = true;
+        public bool CompactMode { get; set; } = true;
+        public bool PublicProfile { get; set; }
+    }
+}

@@ -1,0 +1,51 @@
+.w3-toast {
+    margin: 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
+    width: 100%;
+}
+
+.w3-toast-main {
+    min-width: 0;
+}
+
+.w3-toast-title {
+    display: block;
+    margin-bottom: 0.15rem;
+}
+
+.w3-toast-message {
+    overflow-wrap: anywhere;
+}
+
+.w3-toast-actions {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.25rem;
+    flex: 0 0 auto;
+}
+
+.w3-toast-action {
+    padding: 2px 8px;
+    font-weight: 600;
+}
+
+.w3-toast-close {
+    padding: 0 8px;
+    line-height: 1.6;
+    font-size: 1.25rem;
+}
+
+@media (max-width: 480px) {
+    .w3-toast {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .w3-toast-actions {
+        justify-content: flex-end;
+    }
+}
+

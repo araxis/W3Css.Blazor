@@ -1,0 +1,70 @@
+@page "/components/skeleton"
+
+<PageTitle>W3Skeleton</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3Skeleton</h1>
+    <DocPager PreviousHref="components/spinner" PreviousText="Spinner" NextHref="components/toast" NextText="Toast" />
+
+    <p class="w3-large">`W3Skeleton` renders accessible loading placeholders for cards, lists, tables, and profile rows.</p>
+    <p>Use skeletons when the layout is known but content is still loading.</p>
+
+    <DocExample Title="Card Skeleton" Code="@CardCode">
+        <W3Card Class="w3-white w3-border" BodyClass="w3-padding">
+            <W3Skeleton Width="60%" Height="18px" />
+            <W3Skeleton Lines="3" Height="12px" Color="W3Color.LightGrey" />
+        </W3Card>
+    </DocExample>
+
+    <DocExample Title="Avatar Row Skeleton" Code="@AvatarCode">
+        <W3Stack Horizontal="true" AlignCenter="true" Gap="12">
+            <W3Skeleton Circle="true" Width="48px" Height="48px" Label="Loading avatar" />
+            <W3Stack Gap="8" Style="flex: 1;">
+                <W3Skeleton Width="40%" Height="14px" />
+                <W3Skeleton Width="70%" Height="12px" />
+            </W3Stack>
+        </W3Stack>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Lines</td><td>int</td><td>1</td><td>Number of text placeholder lines</td></tr>
+                <tr><td>Width</td><td>string?</td><td>null</td><td>CSS width value</td></tr>
+                <tr><td>Height</td><td>string?</td><td>null</td><td>CSS height value</td></tr>
+                <tr><td>Label</td><td>string</td><td>Loading</td><td>`aria-label` on the status region</td></tr>
+                <tr><td>Circle</td><td>bool</td><td>false</td><td>Renders a circular shape placeholder</td></tr>
+                <tr><td>Animate</td><td>bool</td><td>true</td><td>Component-scoped pulse animation</td></tr>
+                <tr><td>Round</td><td>W3Round</td><td>Medium</td><td>Rounded corner class</td></tr>
+                <tr><td>Color</td><td>W3Color</td><td>LightGrey</td><td>Placeholder color class</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional skeleton classes</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline styles on the skeleton root</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <DocPager PreviousHref="components/spinner" PreviousText="Spinner" NextHref="components/toast" NextText="Toast" />
+</W3Container>
+
+@code {
+    private const string CardCode = """
+<W3Card Class="w3-white w3-border" BodyClass="w3-padding">
+    <W3Skeleton Width="60%" Height="18px" />
+    <W3Skeleton Lines="3" Height="12px" />
+</W3Card>
+""";
+
+    private const string AvatarCode = """
+<W3Stack Horizontal="true" AlignCenter="true" Gap="12">
+    <W3Skeleton Circle="true" Width="48px" Height="48px" Label="Loading avatar" />
+    <W3Stack Gap="8" Style="flex: 1;">
+        <W3Skeleton Width="40%" Height="14px" />
+        <W3Skeleton Width="70%" Height="12px" />
+    </W3Stack>
+</W3Stack>
+""";
+}

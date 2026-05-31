@@ -1,0 +1,112 @@
+@page "/components/dark-mode"
+
+<PageTitle>Dark Mode</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>Dark Mode</h1>
+    <DocPager PreviousHref="components/responsive" PreviousText="Responsive" NextHref="components/mobile" NextText="Mobile" />
+
+    <p class="w3-large">W3.CSS dark mode is class composition around dark background and light text utilities.</p>
+    <p>Use Blazor state to choose the W3.CSS classes or typed color parameters. This keeps theme switching script-free and easy to test.</p>
+
+    <DocExample Title="Blazor Toggle" Code="@ToggleCode">
+        <W3Button Color="W3Color.Teal" TextColor="W3Color.White" Round="W3Round.Medium" OnClick="ToggleDarkMode">
+            @(DarkMode ? "Use light surface" : "Use dark surface")
+        </W3Button>
+
+        <W3Container Color="@(DarkMode ? W3Color.Black : W3Color.White)"
+                     TextColor="@(DarkMode ? W3Color.White : W3Color.Black)"
+                     Class="w3-padding w3-margin-top w3-border">
+            <h3>Preview surface</h3>
+            <p>The same content can switch between light and dark W3.CSS utility classes from normal Blazor state.</p>
+            <p>Current mode: <strong>@(DarkMode ? "Dark" : "Light")</strong></p>
+        </W3Container>
+    </DocExample>
+
+    <DocExample Title="Dark Surfaces" Code="@SurfacesCode">
+        <div class="w3-row-padding">
+            <div class="w3-half">
+                <W3Panel Color="W3Color.Black" TextColor="W3Color.White" Border="true" Round="W3Round.Medium">
+                    <h3>Black panel</h3>
+                    <p>Use `W3Color.Black` and `W3Color.White` for the classic W3.CSS dark surface.</p>
+                </W3Panel>
+            </div>
+            <div class="w3-half">
+                <W3Panel Color="W3Color.DarkGrey" TextColor="W3Color.White" Border="true" Round="W3Round.Medium">
+                    <h3>Dark grey panel</h3>
+                    <p>Use `Class` for extra W3.CSS utilities when a typed parameter is not needed.</p>
+                </W3Panel>
+            </div>
+        </div>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Guidance</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Approach</th><th>Use</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Typed colors</td><td>`Color` and `TextColor` on W3Css.Blazor components</td><td>`w3-black`, `w3-white`, `w3-dark-grey`, and related classes</td></tr>
+                <tr><td>Class pass-through</td><td>`Class` for utilities that do not need a dedicated parameter</td><td>Raw W3.CSS classes such as `w3-border`, `w3-round`, and spacing utilities</td></tr>
+                <tr><td>Blazor state</td><td>Boolean, enum, or cascading app state to select classes</td><td>No JavaScript class toggling required</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Related W3.CSS</h2>
+        <p><a href="https://www.w3schools.com/w3css/w3css_darkmode.asp" target="_blank" rel="noopener">W3.CSS Dark Mode</a></p>
+    </section>
+
+    <DocPager PreviousHref="components/responsive" PreviousText="Responsive" NextHref="components/mobile" NextText="Mobile" />
+</W3Container>
+
+@code {
+    private bool DarkMode;
+
+    private void ToggleDarkMode()
+    {
+        DarkMode = !DarkMode;
+    }
+
+    private const string ToggleCode = """
+<W3Button Color="W3Color.Teal" TextColor="W3Color.White" Round="W3Round.Medium" OnClick="ToggleDarkMode">
+    @(darkMode ? "Use light surface" : "Use dark surface")
+</W3Button>
+
+<W3Container Color="@(darkMode ? W3Color.Black : W3Color.White)"
+             TextColor="@(darkMode ? W3Color.White : W3Color.Black)"
+             Class="w3-padding w3-margin-top w3-border">
+    <h3>Preview surface</h3>
+    <p>The same content can switch between light and dark W3.CSS utility classes from normal Blazor state.</p>
+    <p>Current mode: <strong>@(darkMode ? "Dark" : "Light")</strong></p>
+</W3Container>
+
+@code {
+    private bool darkMode;
+
+    private void ToggleDarkMode()
+    {
+        darkMode = !darkMode;
+    }
+}
+""";
+
+    private const string SurfacesCode = """
+<div class="w3-row-padding">
+    <div class="w3-half">
+        <W3Panel Color="W3Color.Black" TextColor="W3Color.White" Border="true" Round="W3Round.Medium">
+            <h3>Black panel</h3>
+            <p>Use `W3Color.Black` and `W3Color.White` for the classic W3.CSS dark surface.</p>
+        </W3Panel>
+    </div>
+    <div class="w3-half">
+        <W3Panel Color="W3Color.DarkGrey" TextColor="W3Color.White" Border="true" Round="W3Round.Medium">
+            <h3>Dark grey panel</h3>
+            <p>Use `Class` for extra W3.CSS utilities when a typed parameter is not needed.</p>
+        </W3Panel>
+    </div>
+</div>
+""";
+}

@@ -1,0 +1,242 @@
+@page "/components/tree-view"
+
+<PageTitle>W3TreeView</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3TreeView</h1>
+    <DocPager PreviousHref="components/data-table" PreviousText="Data Table" NextHref="components/list" NextText="List" />
+
+    <p class="w3-large"><code>W3TreeView&lt;TItem&gt;</code> renders hierarchical data and nested navigation with Blazor-owned expanded and selected state.</p>
+    <p>Use it for file explorers, settings groups, category pickers, documentation menus, and app navigation that needs more structure than a flat list.</p>
+
+    <DocExample Title="Navigation Tree" Description="Bind expanded and selected values while keeping navigation items as normal links." Code="@NavigationCode">
+        <W3TreeView TItem="TreeNode"
+                    Items="NavigationTree"
+                    Label="Documentation navigation"
+                    Border="true"
+                    Round="W3Round.Medium"
+                    Card="true"
+                    Color="W3Color.White"
+                    TextSelector="@(node => node.Name)"
+                    ValueSelector="@(node => node.Id)"
+                    ChildrenSelector="@(node => node.Children)"
+                    HrefSelector="@(node => node.Href)"
+                    DisabledSelector="@(node => node.Disabled)"
+                    @bind-ExpandedValues="ExpandedNavigationValues"
+                    @bind-SelectedValue="SelectedNavigationValue" />
+
+        <p class="w3-small">Selected node: <strong>@(SelectedNavigationValue ?? "None")</strong></p>
+    </DocExample>
+
+    <DocExample Title="Templated File Tree" Description="Templates can add badges, metadata, or icon-library classes without changing the tree state model." Code="@TemplateCode">
+        <W3TreeView TItem="TreeNode"
+                    Items="FileTree"
+                    Label="Project files"
+                    Border="true"
+                    ShowLines="true"
+                    DefaultExpanded="true"
+                    SelectedColor="W3Color.PaleGreen"
+                    TextSelector="@(node => node.Name)"
+                    ValueSelector="@(node => node.Id)"
+                    ChildrenSelector="@(node => node.Children)"
+                    ExpandOnItemClick="true"
+                    @bind-SelectedValue="SelectedFileValue">
+            <ItemTemplate Context="node">
+                <span class="w3-tree-view-doc-template">
+                    <span class="@($"w3-tag w3-small {GetKindClass(node.Kind)}")">@node.Kind</span>
+                    <span>@node.Name</span>
+                </span>
+            </ItemTemplate>
+        </W3TreeView>
+
+        <p class="w3-small">Selected file value: <strong>@(SelectedFileValue ?? "None")</strong></p>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Items</td><td>IEnumerable&lt;TItem&gt;?</td><td>null</td><td>Root tree items</td></tr>
+                <tr><td>ChildrenSelector</td><td>Func&lt;TItem, IEnumerable&lt;TItem&gt;?&gt;?</td><td>null</td><td>Nested child items</td></tr>
+                <tr><td>TextSelector</td><td>Func&lt;TItem, string&gt;?</td><td>ToString()</td><td>Visible label and fallback value</td></tr>
+                <tr><td>ValueSelector</td><td>Func&lt;TItem, string?&gt;?</td><td>null</td><td>Stable selected and expanded values</td></tr>
+                <tr><td>HrefSelector</td><td>Func&lt;TItem, string?&gt;?</td><td>null</td><td>Optional link URL for nodes</td></tr>
+                <tr><td>TargetSelector</td><td>Func&lt;TItem, string?&gt;?</td><td>null</td><td>Optional link target for nodes</td></tr>
+                <tr><td>DisabledSelector</td><td>Func&lt;TItem, bool&gt;?</td><td>null</td><td>Marks nodes disabled and prevents state changes</td></tr>
+                <tr><td>ItemTemplate</td><td>RenderFragment&lt;TItem&gt;?</td><td>null</td><td>Custom node label content</td></tr>
+                <tr><td>ExpandedValues</td><td>IReadOnlyCollection&lt;string&gt;</td><td>[]</td><td>Bindable expanded parent values</td></tr>
+                <tr><td>ExpandedValuesChanged</td><td>EventCallback&lt;IReadOnlyCollection&lt;string&gt;&gt;</td><td>empty</td><td>Expanded-values binding callback</td></tr>
+                <tr><td>SelectedValue</td><td>string?</td><td>null</td><td>Bindable selected node value</td></tr>
+                <tr><td>SelectedValueChanged</td><td>EventCallback&lt;string?&gt;</td><td>empty</td><td>Selected-value binding callback</td></tr>
+                <tr><td>ItemSelected</td><td>EventCallback&lt;TItem&gt;</td><td>empty</td><td>Selected item callback</td></tr>
+                <tr><td>Label</td><td>string</td><td>Tree view</td><td>`aria-label` on the tree</td></tr>
+                <tr><td>EmptyText</td><td>string</td><td>No items</td><td>Empty-state text</td></tr>
+                <tr><td>Selectable</td><td>bool</td><td>true</td><td>Enables selection semantics and state</td></tr>
+                <tr><td>ExpandOnItemClick</td><td>bool</td><td>false</td><td>Clicking a parent label toggles expansion</td></tr>
+                <tr><td>DefaultExpanded</td><td>bool</td><td>false</td><td>Expands all parents during initial render</td></tr>
+                <tr><td>Dense</td><td>bool</td><td>true</td><td>Compact tree spacing class</td></tr>
+                <tr><td>ShowLines</td><td>bool</td><td>true</td><td>Connector-line styling</td></tr>
+                <tr><td>Border</td><td>bool</td><td>false</td><td>`w3-border` on the tree root</td></tr>
+                <tr><td>Card</td><td>bool</td><td>false</td><td>Adds W3.CSS card shadow classes</td></tr>
+                <tr><td>CardDepth</td><td>W3CardDepth</td><td>Two</td><td>Card shadow depth when `Card` is true</td></tr>
+                <tr><td>Round</td><td>W3Round</td><td>None</td><td>Rounded corner class</td></tr>
+                <tr><td>Color</td><td>W3Color</td><td>None</td><td>Root background color class</td></tr>
+                <tr><td>TextColor</td><td>W3Color</td><td>None</td><td>Root text color class</td></tr>
+                <tr><td>SelectedColor</td><td>W3Color</td><td>PaleBlue</td><td>Selected row background class</td></tr>
+                <tr><td>ToggleColor</td><td>W3Color</td><td>None</td><td>Toggle button background color</td></tr>
+                <tr><td>ItemClass</td><td>string?</td><td>null</td><td>Additional classes on each tree item</td></tr>
+                <tr><td>LabelClass</td><td>string?</td><td>null</td><td>Additional classes on each label control</td></tr>
+                <tr><td>ToggleClass</td><td>string?</td><td>null</td><td>Additional classes on expand buttons</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional classes on the root tree</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline styles on the root tree</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Related</h2>
+        <p><NavLink href="components/data-table">Data Table</NavLink> covers searchable and sortable row data.</p>
+        <p><NavLink href="components/list">List</NavLink> is the flat W3.CSS list wrapper.</p>
+        <p><NavLink href="components/sidebar">Sidebar</NavLink> and <NavLink href="components/navbar">Navbar</NavLink> cover shell navigation composition.</p>
+    </section>
+
+    <DocPager PreviousHref="components/data-table" PreviousText="Data Table" NextHref="components/list" NextText="List" />
+</W3Container>
+
+@code {
+    private IReadOnlyCollection<string> ExpandedNavigationValues { get; set; } = ["docs", "components"];
+
+    private string? SelectedNavigationValue { get; set; } = "components";
+
+    private string? SelectedFileValue { get; set; } = "src";
+
+    private static readonly TreeNode[] NavigationTree =
+    [
+        new()
+        {
+            Id = "docs",
+            Name = "Documentation",
+            Kind = "Area",
+            Children =
+            [
+                new() { Id = "overview", Name = "Overview", Kind = "Page", Href = "" },
+                new() { Id = "components", Name = "Components", Kind = "Page", Href = "components" },
+                new() { Id = "roadmap", Name = "Roadmap", Kind = "Page", Href = "roadmap" }
+            ]
+        },
+        new()
+        {
+            Id = "data",
+            Name = "Data Display",
+            Kind = "Area",
+            Children =
+            [
+                new() { Id = "data-table", Name = "Data Table", Kind = "Page", Href = "components/data-table" },
+                new() { Id = "tree-view", Name = "Tree View", Kind = "Page", Href = "components/tree-view" },
+                new() { Id = "list", Name = "List", Kind = "Page", Href = "components/list" }
+            ]
+        },
+        new()
+        {
+            Id = "archive",
+            Name = "Archived Pattern",
+            Kind = "Area",
+            Disabled = true
+        }
+    ];
+
+    private static readonly TreeNode[] FileTree =
+    [
+        new()
+        {
+            Id = "src",
+            Name = "src",
+            Kind = "Folder",
+            Children =
+            [
+                new()
+                {
+                    Id = "components-folder",
+                    Name = "Components",
+                    Kind = "Folder",
+                    Children =
+                    [
+                        new() { Id = "tree-view-component", Name = "W3TreeView.razor", Kind = "File" },
+                        new() { Id = "tree-view-css", Name = "W3TreeView.razor.css", Kind = "File" }
+                    ]
+                },
+                new() { Id = "docs-folder", Name = "Docs", Kind = "Folder" }
+            ]
+        },
+        new() { Id = "tests", Name = "tests", Kind = "Folder" }
+    ];
+
+    private static string GetKindClass(string kind)
+    {
+        return kind switch
+        {
+            "Area" => "w3-teal",
+            "Folder" => "w3-green",
+            "File" => "w3-blue",
+            "Page" => "w3-indigo",
+            _ => "w3-grey"
+        };
+    }
+
+    private sealed class TreeNode
+    {
+        public required string Id { get; init; }
+
+        public required string Name { get; init; }
+
+        public required string Kind { get; init; }
+
+        public string? Href { get; init; }
+
+        public bool Disabled { get; init; }
+
+        public IReadOnlyList<TreeNode> Children { get; init; } = [];
+    }
+
+    private const string NavigationCode = """
+<W3TreeView TItem="TreeNode"
+            Items="NavigationTree"
+            Label="Documentation navigation"
+            Border="true"
+            Round="W3Round.Medium"
+            Card="true"
+            Color="W3Color.White"
+            TextSelector="@(node => node.Name)"
+            ValueSelector="@(node => node.Id)"
+            ChildrenSelector="@(node => node.Children)"
+            HrefSelector="@(node => node.Href)"
+            DisabledSelector="@(node => node.Disabled)"
+            @bind-ExpandedValues="expandedNavigationValues"
+            @bind-SelectedValue="selectedNavigationValue" />
+""";
+
+    private const string TemplateCode = """
+<W3TreeView TItem="TreeNode"
+            Items="FileTree"
+            Label="Project files"
+            Border="true"
+            ShowLines="true"
+            DefaultExpanded="true"
+            SelectedColor="W3Color.PaleGreen"
+            TextSelector="@(node => node.Name)"
+            ValueSelector="@(node => node.Id)"
+            ChildrenSelector="@(node => node.Children)"
+            ExpandOnItemClick="true"
+            @bind-SelectedValue="selectedFileValue">
+    <ItemTemplate Context="node">
+        <span>
+            <span class="@($"w3-tag w3-small {GetKindClass(node.Kind)}")">@node.Kind</span>
+            <span>@node.Name</span>
+        </span>
+    </ItemTemplate>
+</W3TreeView>
+""";
+}

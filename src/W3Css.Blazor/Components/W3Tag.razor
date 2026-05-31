@@ -1,0 +1,32 @@
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+<span @attributes="AdditionalAttributes"
+      class="@CssClass"
+      style="@Style">
+    @ChildContent
+</span>
+
+@code {
+    private string CssClass => BuildClass(
+        "w3-tag",
+        Color.ToBackgroundClass(),
+        TextColor.ToTextClass(),
+        Size.ToClass(),
+        Round.ToClass());
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public W3Color Color { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color TextColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Size Size { get; set; } = W3Size.Default;
+
+    [Parameter]
+    public W3Round Round { get; set; } = W3Round.None;
+}

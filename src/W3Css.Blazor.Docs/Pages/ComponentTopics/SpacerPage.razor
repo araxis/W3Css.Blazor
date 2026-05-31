@@ -1,0 +1,65 @@
+@page "/components/spacer"
+
+<PageTitle>W3Spacer</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3Spacer</h1>
+    <DocPager PreviousHref="components/divider" PreviousText="Divider" NextHref="components/footer" NextText="Footer" />
+
+    <p class="w3-large">`W3Spacer` is the MudBlazor-compatible flexible filler (`MudSpacer`).</p>
+    <p>Drop it between items inside a flex container such as a bar, app bar, or toolbar to push the following content to the opposite edge without writing one-off CSS.</p>
+
+    <DocExample Title="Push Actions To The Right" Code="@BarCode">
+        <div class="w3-bar w3-light-grey w3-round" style="display:flex; align-items:center; padding:8px;">
+            <strong class="w3-padding-small">Project Atlas</strong>
+            <W3Spacer />
+            <W3Button Size="W3Size.Small" Color="W3Color.Teal" TextColor="W3Color.White">Save</W3Button>
+        </div>
+    </DocExample>
+
+    <DocExample Title="Split A Toolbar Into Three Zones" Code="@SplitCode">
+        <W3Toolbar Border="true" Round="W3Round.Medium" Color="W3Color.White">
+            <span>Left</span>
+            <W3Spacer />
+            <span>Center</span>
+            <W3Spacer />
+            <span>Right</span>
+        </W3Toolbar>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional spacer classes</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline styles on the spacer</td></tr>
+            </tbody>
+        </W3Table>
+        <p class="doc-muted">Renders a single <code>div.w3-spacer</code> with <code>flex: 1 1 auto</code>, the same behavior as MudBlazor's <code>MudSpacer</code>.</p>
+    </section>
+
+    <DocPager PreviousHref="components/divider" PreviousText="Divider" NextHref="components/footer" NextText="Footer" />
+</W3Container>
+
+@code {
+    private const string BarCode = """
+<div class="w3-bar w3-light-grey w3-round" style="display:flex; align-items:center; padding:8px;">
+    <strong class="w3-padding-small">Project Atlas</strong>
+    <W3Spacer />
+    <W3Button Size="W3Size.Small" Color="W3Color.Teal" TextColor="W3Color.White">Save</W3Button>
+</div>
+""";
+
+    private const string SplitCode = """
+<W3Toolbar Border="true" Round="W3Round.Medium" Color="W3Color.White">
+    <span>Left</span>
+    <W3Spacer />
+    <span>Center</span>
+    <W3Spacer />
+    <span>Right</span>
+</W3Toolbar>
+""";
+}

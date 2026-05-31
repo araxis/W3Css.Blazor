@@ -1,0 +1,29 @@
+.w3-button-group {
+    display: inline-flex;
+    min-width: 0;
+    vertical-align: middle;
+}
+
+.w3-button-group-horizontal {
+    flex-direction: row;
+}
+
+.w3-button-group-vertical {
+    flex-direction: column;
+}
+
+.w3-button-group:not(.w3-button-group-connected) {
+    gap: var(--w3-button-group-gap, 8px);
+}
+
+.w3-button-group-connected ::deep(.w3-button) {
+    border-radius: 0;
+}
+
+.w3-button-group-horizontal.w3-button-group-connected ::deep(.w3-button + .w3-button) {
+    margin-left: -1px;
+}
+
+.w3-button-group-vertical.w3-button-group-connected ::deep(.w3-button + .w3-button) {
+    margin-top: -1px;
+}

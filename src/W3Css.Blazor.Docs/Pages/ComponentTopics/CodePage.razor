@@ -1,0 +1,51 @@
+@page "/components/code"
+
+<PageTitle>W3Code</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3Code</h1>
+    <DocPager PreviousHref="components/slideshow" PreviousText="Slideshow" NextHref="components/highlighter" NextText="Highlighter" />
+
+    <p class="w3-large">`W3Code` renders W3.CSS code blocks and inline code spans.</p>
+    <p>Use `Code` for plain text snippets that should be encoded and displayed as code.</p>
+
+    <DocExample Title="Code Block" Code="@BlockExampleCode">
+        <W3Code Code="@BlockSnippet" />
+    </DocExample>
+
+    <DocExample Title="Inline Code" Code="@InlineExampleCode">
+        <p>Use <W3Code Inline="true" Code="w3-code" /> for block snippets.</p>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Code</td><td>string?</td><td>null</td><td>Encoded code text</td></tr>
+                <tr><td>Inline</td><td>bool</td><td>false</td><td>`w3-codespan` instead of `w3-code`</td></tr>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Optional content</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional classes</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline style</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <DocPager PreviousHref="components/slideshow" PreviousText="Slideshow" NextHref="components/highlighter" NextText="Highlighter" />
+</W3Container>
+
+@code {
+    private const string BlockSnippet = """
+<W3Button Color="W3Color.Teal">Save</W3Button>
+""";
+
+    private const string BlockExampleCode = """
+<W3Code Code="@snippet" />
+""";
+
+    private const string InlineExampleCode = """
+<p>Use <W3Code Inline="true" Code="w3-code" /> for block snippets.</p>
+""";
+}

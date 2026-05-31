@@ -1,0 +1,166 @@
+@page "/components/autocomplete"
+
+<PageTitle>W3Autocomplete</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3Autocomplete</h1>
+    <DocPager PreviousHref="components/drop-zone" PreviousText="Drop Zone" NextHref="components/select" NextText="Select" />
+
+    <p class="w3-large"><code>W3Autocomplete&lt;TValue&gt;</code> renders a searchable input and W3.CSS-styled listbox for selecting an item from a typed collection.</p>
+    <p>Use it when a select list would be too long, but a full data grid or dialog would be too much.</p>
+
+    <DocExample Title="Searchable People" Description="Bind to the selected value and let the component filter by display text while the user types." Code="@PeopleCode">
+        <EditForm Model="@AutocompleteModel">
+            <W3Field TValue="string" Label="Owner" ForId="autocomplete-owner" For="@(() => AutocompleteModel.Owner)" HelpText="Type a name and choose a result.">
+                <W3Autocomplete TValue="string"
+                                Id="autocomplete-owner"
+                                @bind-Value="AutocompleteModel.Owner"
+                                Items="People"
+                                Placeholder="Search people"
+                                Border="true"
+                                Round="W3Round.Medium" />
+            </W3Field>
+        </EditForm>
+        <p class="w3-small">Selected owner: <strong>@(AutocompleteModel.Owner ?? "None")</strong></p>
+    </DocExample>
+
+    <DocExample Title="Templated Options" Description="Use TextSelector for filtering and ItemTemplate when the menu needs more context than a plain label." Code="@TemplateCode">
+        <W3Autocomplete TValue="WorkspaceOption"
+                        @bind-Value="AutocompleteModel.Workspace"
+                        Items="Workspaces"
+                        TextSelector="@(workspace => workspace.Name)"
+                        Placeholder="Search workspaces"
+                        ActiveColor="W3Color.PaleBlue"
+                        Border="true">
+            <ItemTemplate Context="workspace">
+                <div>
+                    <strong>@workspace.Name</strong>
+                    <div class="w3-small w3-text-grey">@workspace.Team</div>
+                </div>
+            </ItemTemplate>
+        </W3Autocomplete>
+        <p class="w3-small">Selected workspace: <strong>@(AutocompleteModel.Workspace?.Name ?? "None")</strong></p>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>TValue</td><td>type</td><td>required</td><td>Selected item type</td></tr>
+                <tr><td>Value</td><td>TValue?</td><td>default</td><td>Selected item</td></tr>
+                <tr><td>Id</td><td>string?</td><td>null</td><td>`id` attribute and generated listbox id prefix</td></tr>
+                <tr><td>Placeholder</td><td>string?</td><td>null</td><td>`placeholder` attribute</td></tr>
+                <tr><td>Items</td><td>IEnumerable&lt;TValue&gt;</td><td>empty</td><td>Searchable source items</td></tr>
+                <tr><td>TextSelector</td><td>Func&lt;TValue, string&gt;?</td><td>ToString()</td><td>Display and default filtering text</td></tr>
+                <tr><td>Filter</td><td>Func&lt;TValue, string, bool&gt;?</td><td>contains text</td><td>Custom filter predicate</td></tr>
+                <tr><td>ItemTemplate</td><td>RenderFragment&lt;TValue&gt;?</td><td>null</td><td>Custom option markup</td></tr>
+                <tr><td>ItemSelected</td><td>EventCallback&lt;TValue&gt;</td><td>none</td><td>Raised after an option is selected</td></tr>
+                <tr><td>MaxItems</td><td>int</td><td>8</td><td>Maximum rendered results</td></tr>
+                <tr><td>MinSearchLength</td><td>int</td><td>0</td><td>Minimum typed characters before results</td></tr>
+                <tr><td>NoResultsText</td><td>string</td><td>No results</td><td>Empty results message</td></tr>
+                <tr><td>Loading</td><td>bool</td><td>false</td><td>Shows LoadingText instead of results</td></tr>
+                <tr><td>LoadingText</td><td>string</td><td>Loading...</td><td>Text displayed while Loading is true</td></tr>
+                <tr><td>ReadOnly</td><td>bool</td><td>false</td><td>`readonly` attribute and prevents opening</td></tr>
+                <tr><td>Disabled</td><td>bool</td><td>false</td><td>`disabled` attribute</td></tr>
+                <tr><td>OpenOnFocus</td><td>bool</td><td>true</td><td>Opens the list when the input receives focus</td></tr>
+                <tr><td>CloseOnOutsideClick</td><td>bool</td><td>true</td><td>Renders the close layer while open</td></tr>
+                <tr><td>Card</td><td>bool</td><td>true</td><td>`w3-card-4` on the menu</td></tr>
+                <tr><td>ActiveColor</td><td>W3Color</td><td>LightGrey</td><td>Active option background class</td></tr>
+                <tr><td>MenuColor</td><td>W3Color</td><td>White</td><td>Menu background class</td></tr>
+                <tr><td>MenuTextColor</td><td>W3Color</td><td>Black</td><td>Menu text color class</td></tr>
+                <tr><td>Border</td><td>bool</td><td>false</td><td>`w3-border` on the input</td></tr>
+                <tr><td>Color</td><td>W3Color</td><td>None</td><td>Input background color class</td></tr>
+                <tr><td>TextColor</td><td>W3Color</td><td>None</td><td>Input text color class</td></tr>
+                <tr><td>Round</td><td>W3Round</td><td>None</td><td>Rounded input corners</td></tr>
+                <tr><td>InputClass</td><td>string?</td><td>null</td><td>Additional input classes</td></tr>
+                <tr><td>InputStyle</td><td>string?</td><td>null</td><td>Inline style on the input</td></tr>
+                <tr><td>MenuClass</td><td>string?</td><td>null</td><td>Additional menu classes</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional root classes</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline style on the root wrapper</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Keyboard</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true">
+            <thead>
+                <tr><th>Key</th><th>Behavior</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Arrow Down / Arrow Up</td><td>Moves the active option.</td></tr>
+                <tr><td>Enter</td><td>Selects the active option.</td></tr>
+                <tr><td>Escape</td><td>Closes the list.</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Related</h2>
+        <p><NavLink href="components/input">Input</NavLink> covers plain text entry.</p>
+        <p><NavLink href="components/dropdown">Dropdown</NavLink> covers lower-level disclosure menus.</p>
+        <p><NavLink href="components/select">Select</NavLink> covers smaller option lists.</p>
+    </section>
+
+    <DocPager PreviousHref="components/drop-zone" PreviousText="Drop Zone" NextHref="components/select" NextText="Select" />
+</W3Container>
+
+@code {
+    private readonly AutocompleteExampleModel AutocompleteModel = new();
+
+    private static readonly string[] People =
+    [
+        "Ada Lovelace",
+        "Grace Hopper",
+        "Katherine Johnson",
+        "Linus Torvalds",
+        "Margaret Hamilton"
+    ];
+
+    private static readonly WorkspaceOption[] Workspaces =
+    [
+        new("atlas", "Atlas", "Design system"),
+        new("cygnus", "Cygnus", "Engineering"),
+        new("luna", "Luna", "Operations")
+    ];
+
+    private const string PeopleCode = """
+<W3Field TValue="string" Label="Owner" ForId="autocomplete-owner" For="@(() => model.Owner)" HelpText="Type a name and choose a result.">
+    <W3Autocomplete TValue="string"
+                    Id="autocomplete-owner"
+                    @bind-Value="model.Owner"
+                    Items="people"
+                    Placeholder="Search people"
+                    Border="true"
+                    Round="W3Round.Medium" />
+</W3Field>
+""";
+
+    private const string TemplateCode = """
+<W3Autocomplete TValue="WorkspaceOption"
+                @bind-Value="model.Workspace"
+                Items="workspaces"
+                TextSelector="@(workspace => workspace.Name)"
+                Placeholder="Search workspaces"
+                ActiveColor="W3Color.PaleBlue"
+                Border="true">
+    <ItemTemplate Context="workspace">
+        <div>
+            <strong>@workspace.Name</strong>
+            <div class="w3-small w3-text-grey">@workspace.Team</div>
+        </div>
+    </ItemTemplate>
+</W3Autocomplete>
+""";
+
+    private sealed class AutocompleteExampleModel
+    {
+        public string? Owner { get; set; }
+        public WorkspaceOption? Workspace { get; set; }
+    }
+
+    private sealed record WorkspaceOption(string Id, string Name, string Team);
+}

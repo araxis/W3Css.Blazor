@@ -1,0 +1,81 @@
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+<CascadingValue Value="this" IsFixed="true">
+    <nav @attributes="AdditionalAttributes"
+         class="@CssClass"
+         style="@Style"
+         aria-label="@Label">
+        @ChildContent
+    </nav>
+</CascadingValue>
+
+@code {
+    private string CssClass => BuildClass(
+        Block ? "w3-bar-block" : "w3-bar",
+        Border ? "w3-border" : null,
+        Card ? CardDepth.ToClass() : null,
+        Round.ToClass(),
+        Color.ToBackgroundClass(),
+        TextColor.ToTextClass());
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public string Label { get; set; } = "Navigation";
+
+    [Parameter]
+    public string? ActiveValue { get; set; }
+
+    [Parameter]
+    public EventCallback<string> ActiveValueChanged { get; set; }
+
+    [Parameter]
+    public bool Block { get; set; }
+
+    [Parameter]
+    public bool Mobile { get; set; }
+
+    [Parameter]
+    public bool Border { get; set; }
+
+    [Parameter]
+    public bool Card { get; set; }
+
+    [Parameter]
+    public W3CardDepth CardDepth { get; set; } = W3CardDepth.Four;
+
+    [Parameter]
+    public W3Round Round { get; set; } = W3Round.None;
+
+    [Parameter]
+    public W3Color Color { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color TextColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color ActiveColor { get; set; } = W3Color.Primary;
+
+    [Parameter]
+    public W3Color ActiveTextColor { get; set; } = W3Color.White;
+
+    internal bool IsActive(string? value)
+    {
+        return !string.IsNullOrWhiteSpace(value)
+            && string.Equals(ActiveValue, value, StringComparison.Ordinal);
+    }
+
+    internal async Task ActivateAsync(string value)
+    {
+        if (string.Equals(ActiveValue, value, StringComparison.Ordinal))
+        {
+            return;
+        }
+
+        ActiveValue = value;
+        await ActiveValueChanged.InvokeAsync(value);
+        await InvokeAsync(StateHasChanged);
+    }
+}

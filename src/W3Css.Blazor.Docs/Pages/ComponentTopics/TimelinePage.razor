@@ -1,0 +1,123 @@
+@page "/components/timeline"
+
+<PageTitle>W3Timeline</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3Timeline</h1>
+    <DocPager PreviousHref="components/list-item" PreviousText="List Item" NextHref="components/chart" NextText="Chart" />
+
+    <p class="w3-large">`W3Timeline` renders chronological lists for activity feeds, audits, releases, and workflow history.</p>
+    <p>Timeline items use semantic list markup with W3.CSS colors, borders, and compact isolated layout rules for the marker rail.</p>
+
+    <DocExample Title="Release History" Code="@ReleaseCode">
+        <W3Timeline Label="Release history" MarkerColor="W3Color.Teal">
+            <W3TimelineItem Marker="1" Time="09:00" Title="Scope locked" Subtitle="Design system">
+                Component backlog was grouped into layout, content, data, forms, navigation, and feedback slices.
+            </W3TimelineItem>
+            <W3TimelineItem Marker="2" Time="11:30" Title="Component shipped" Subtitle="Documentation">
+                New examples, parameter tables, and smoke tests were added before publishing the docs page.
+            </W3TimelineItem>
+            <W3TimelineItem Marker="3" Time="14:00" Title="Browser verified" Subtitle="Quality">
+                The local docs app was refreshed and checked in the in-app browser.
+            </W3TimelineItem>
+        </W3Timeline>
+    </DocExample>
+
+    <DocExample Title="Dense Audit Trail" Code="@AuditCode">
+        <W3Timeline Dense="true" Label="Audit trail" LineColor="W3Color.PaleBlue" MarkerColor="W3Color.Indigo">
+            <W3TimelineItem IconClass="fa fa-check" Title="Imported" Time="08:42" Completed="true">
+                128 records accepted.
+            </W3TimelineItem>
+            <W3TimelineItem IconClass="fa fa-user" Title="Reviewed" Time="09:15" Active="true">
+                Manual review assigned to design operations.
+            </W3TimelineItem>
+            <W3TimelineItem IconClass="fa fa-clock-o" Title="Waiting" Time="09:40" MarkerColor="W3Color.Grey">
+                Export is queued.
+            </W3TimelineItem>
+        </W3Timeline>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>W3Timeline Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>`W3TimelineItem` children</td></tr>
+                <tr><td>Label</td><td>string</td><td>Timeline</td><td>`aria-label` on the list</td></tr>
+                <tr><td>Dense</td><td>bool</td><td>false</td><td>Compact spacing and item padding</td></tr>
+                <tr><td>Reverse</td><td>bool</td><td>false</td><td>Column reverse order for newest-first views</td></tr>
+                <tr><td>Gap</td><td>int</td><td>18</td><td>Vertical gap in pixels</td></tr>
+                <tr><td>LineColor</td><td>W3Color</td><td>LightGrey</td><td>Default marker rail border color</td></tr>
+                <tr><td>MarkerColor</td><td>W3Color</td><td>Teal</td><td>Default marker background color</td></tr>
+                <tr><td>MarkerTextColor</td><td>W3Color</td><td>White</td><td>Default marker text color</td></tr>
+                <tr><td>ContentColor</td><td>W3Color</td><td>White</td><td>Default item surface color</td></tr>
+                <tr><td>ContentTextColor</td><td>W3Color</td><td>None</td><td>Default item text color</td></tr>
+                <tr><td>TextColor</td><td>W3Color</td><td>None</td><td>Text color on the root list</td></tr>
+                <tr><td>Round</td><td>W3Round</td><td>Medium</td><td>Default item roundness</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional classes on the list</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline styles on the list</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>W3TimelineItem Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Title</td><td>string?</td><td>null</td><td>Item heading</td></tr>
+                <tr><td>Subtitle</td><td>string?</td><td>null</td><td>Muted supporting text under the heading</td></tr>
+                <tr><td>Time</td><td>string?</td><td>null</td><td>Visible `time` text</td></tr>
+                <tr><td>DateTime</td><td>string?</td><td>null</td><td>`datetime` attribute on the `time` element</td></tr>
+                <tr><td>Marker</td><td>string?</td><td>null</td><td>Short marker text</td></tr>
+                <tr><td>IconClass</td><td>string?</td><td>null</td><td>Optional marker icon class</td></tr>
+                <tr><td>MarkerContent</td><td>RenderFragment?</td><td>null</td><td>Custom marker content</td></tr>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Item body</td></tr>
+                <tr><td>Active, Completed</td><td>bool</td><td>false</td><td>State classes for current and completed events</td></tr>
+                <tr><td>Border</td><td>bool</td><td>true</td><td>`w3-border` on the content surface</td></tr>
+                <tr><td>LineColor</td><td>W3Color</td><td>None</td><td>Per-item line color override</td></tr>
+                <tr><td>MarkerColor, MarkerTextColor</td><td>W3Color</td><td>None</td><td>Per-item marker color override</td></tr>
+                <tr><td>ContentColor, ContentTextColor</td><td>W3Color</td><td>None</td><td>Per-item content color override</td></tr>
+                <tr><td>Round</td><td>W3Round</td><td>None</td><td>Per-item roundness override</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional classes on the list item</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline styles on the list item</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <DocPager PreviousHref="components/list-item" PreviousText="List Item" NextHref="components/chart" NextText="Chart" />
+</W3Container>
+
+@code {
+    private const string ReleaseCode = """
+<W3Timeline Label="Release history" MarkerColor="W3Color.Teal">
+    <W3TimelineItem Marker="1" Time="09:00" Title="Scope locked" Subtitle="Design system">
+        Component backlog was grouped into focused slices.
+    </W3TimelineItem>
+    <W3TimelineItem Marker="2" Time="11:30" Title="Component shipped" Subtitle="Documentation">
+        Examples, parameter tables, and smoke tests were added.
+    </W3TimelineItem>
+    <W3TimelineItem Marker="3" Time="14:00" Title="Browser verified" Subtitle="Quality">
+        The local docs app was refreshed and checked.
+    </W3TimelineItem>
+</W3Timeline>
+""";
+
+    private const string AuditCode = """
+<W3Timeline Dense="true" Label="Audit trail" LineColor="W3Color.PaleBlue" MarkerColor="W3Color.Indigo">
+    <W3TimelineItem IconClass="fa fa-check" Title="Imported" Time="08:42" Completed="true">
+        128 records accepted.
+    </W3TimelineItem>
+    <W3TimelineItem IconClass="fa fa-user" Title="Reviewed" Time="09:15" Active="true">
+        Manual review assigned to design operations.
+    </W3TimelineItem>
+    <W3TimelineItem IconClass="fa fa-clock-o" Title="Waiting" Time="09:40" MarkerColor="W3Color.Grey">
+        Export is queued.
+    </W3TimelineItem>
+</W3Timeline>
+""";
+}

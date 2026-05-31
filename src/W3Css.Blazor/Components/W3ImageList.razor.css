@@ -1,0 +1,15 @@
+.w3-image-list {
+    display: grid;
+    gap: var(--w3-image-list-gap, 12px);
+    grid-template-columns: repeat(var(--w3-image-list-columns, 3), minmax(0, 1fr));
+}
+
+@supports (width: min(1px, 2px)) {
+    .w3-image-list {
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--w3-image-list-min, 12rem)), 1fr));
+    }
+}
+
+.w3-image-list-dense {
+    --w3-image-list-gap: 6px;
+}

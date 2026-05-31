@@ -1,0 +1,107 @@
+@page "/components/number-input"
+
+<PageTitle>W3NumberInput</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3NumberInput</h1>
+    <DocPager PreviousHref="components/form" PreviousText="Form" NextHref="components/date-range-picker" NextText="Date Range Picker" />
+
+    <p class="w3-large"><code>W3NumberInput&lt;TValue&gt;</code> renders a validation-friendly native number input with W3.CSS input styling.</p>
+    <p>Use it for quantities, settings, numeric filters, and compact app forms without bringing in a picker dependency.</p>
+
+    <DocExample Title="Integer Number" Description="Bind `TValue` to the numeric type your model uses and keep normal Blazor validation behavior." Code="@IntegerCode">
+        <EditForm Model="@NumberModel">
+            <W3Field TValue="int" Label="Seats" ForId="number-seats" For="@(() => NumberModel.Seats)" HelpText="Choose between 1 and 12 seats.">
+                <W3NumberInput TValue="int"
+                               Id="number-seats"
+                               @bind-Value="NumberModel.Seats"
+                               Min="1"
+                               Max="12"
+                               Step="1"
+                               Border="true"
+                               Round="W3Round.Medium" />
+            </W3Field>
+        </EditForm>
+    </DocExample>
+
+    <DocExample Title="Decimal Number" Description="Use decimal or double values for prices, measurements, and design controls." Code="@DecimalCode">
+        <W3NumberInput TValue="decimal"
+                       @bind-Value="NumberModel.Price"
+                       Min="0"
+                       Max="999"
+                       Step="0.01"
+                       Placeholder="0.00"
+                       Border="true"
+                       Color="W3Color.White" />
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>TValue</td><td>numeric type</td><td>required</td><td>Bound number type</td></tr>
+                <tr><td>Value</td><td>TValue</td><td>default</td><td>Blazor input value</td></tr>
+                <tr><td>Id</td><td>string?</td><td>null</td><td>`id` attribute</td></tr>
+                <tr><td>Min</td><td>TValue</td><td>default</td><td>`min` attribute</td></tr>
+                <tr><td>Max</td><td>TValue</td><td>default</td><td>`max` attribute</td></tr>
+                <tr><td>Step</td><td>string</td><td>null</td><td>`step` attribute, including decimal steps or `any`</td></tr>
+                <tr><td>Placeholder</td><td>string</td><td>null</td><td>`placeholder` attribute</td></tr>
+                <tr><td>UpdateOnInput</td><td>bool</td><td>false</td><td>Updates on `input` instead of `change`</td></tr>
+                <tr><td>ReadOnly</td><td>bool</td><td>false</td><td>`readonly` attribute</td></tr>
+                <tr><td>Disabled</td><td>bool</td><td>false</td><td>`disabled` attribute</td></tr>
+                <tr><td>Border</td><td>bool</td><td>false</td><td>`w3-border`</td></tr>
+                <tr><td>Color</td><td>W3Color</td><td>None</td><td>Background color class</td></tr>
+                <tr><td>TextColor</td><td>W3Color</td><td>None</td><td>Text color class</td></tr>
+                <tr><td>Round</td><td>W3Round</td><td>None</td><td>Rounded corner class</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional CSS classes</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline style</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Related</h2>
+        <p><NavLink href="components/input">Input</NavLink> covers free text values.</p>
+        <p><NavLink href="components/field">Field</NavLink> wraps labels, help text, and validation messages.</p>
+        <p><NavLink href="components/validation">Validation</NavLink> shows complete form validation flow.</p>
+    </section>
+
+    <DocPager PreviousHref="components/form" PreviousText="Form" NextHref="components/date-range-picker" NextText="Date Range Picker" />
+</W3Container>
+
+@code {
+    private readonly NumberInputExampleModel NumberModel = new();
+
+    private const string IntegerCode = """
+<W3Field TValue="int" Label="Seats" ForId="number-seats" For="@(() => model.Seats)" HelpText="Choose between 1 and 12 seats.">
+    <W3NumberInput TValue="int"
+                   Id="number-seats"
+                   @bind-Value="model.Seats"
+                   Min="1"
+                   Max="12"
+                   Step="1"
+                   Border="true"
+                   Round="W3Round.Medium" />
+</W3Field>
+""";
+
+    private const string DecimalCode = """
+<W3NumberInput TValue="decimal"
+               @bind-Value="model.Price"
+               Min="0"
+               Max="999"
+               Step="0.01"
+               Placeholder="0.00"
+               Border="true"
+               Color="W3Color.White" />
+""";
+
+    private sealed class NumberInputExampleModel
+    {
+        public int Seats { get; set; } = 4;
+        public decimal Price { get; set; } = 29.95m;
+    }
+}

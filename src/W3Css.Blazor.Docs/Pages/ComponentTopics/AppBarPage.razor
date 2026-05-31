@@ -1,0 +1,248 @@
+@page "/components/app-bar"
+
+<PageTitle>W3AppBar</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3AppBar</h1>
+    <DocPager PreviousHref="components/app-shell" PreviousText="App Shell" NextHref="components/toolbar" NextText="Toolbar" />
+
+    <p class="w3-large"><code>W3AppBar</code> wraps W3.CSS bar patterns into a ready app header with menu, title, navigation, action, mobile, and fixed-position support.</p>
+    <p>Use it at the top of dashboards, admin apps, documentation sites, or landing pages when a plain <code>W3Bar</code> needs app-level structure.</p>
+
+    <DocExample Title="Application Header" Description="The menu button is optional and exposes normal Blazor click state for opening a sidebar or drawer." Code="@BasicCode">
+        <W3AppBar Title="Studio"
+                  Subtitle="Design workspace"
+                  ShowMenuButton="true"
+                  MenuExpanded="@MenuOpen"
+                  MenuControls="app-menu-demo"
+                  Color="W3Color.Teal"
+                  TextColor="W3Color.White"
+                  Card="true"
+                  OnMenuClick="@(_ => ToggleMenu())">
+            <ChildContent>
+                <W3BarItem Href="components/app-bar">Overview</W3BarItem>
+                <W3BarItem Href="components/data-table">Data</W3BarItem>
+                <W3BarItem Href="components/stepper">Workflow</W3BarItem>
+            </ChildContent>
+            <Actions>
+                <W3BarItem>Search</W3BarItem>
+                <W3BarItem>Profile</W3BarItem>
+            </Actions>
+        </W3AppBar>
+        <W3Panel Id="app-menu-demo" Color="W3Color.PaleBlue" TextColor="W3Color.Black" LeftBar="true" Border="true" Class="w3-margin-top">
+            Menu state: @(MenuOpen ? "Open" : "Closed")
+        </W3Panel>
+    </DocExample>
+
+    <DocExample Title="Inside W3AppShell" Description="Use the app bar in the shell header and let the shell own the sidebar and main region state." Code="@ShellCode">
+        <W3AppShell Contained="true"
+                    Style="min-height:360px"
+                    Class="w3-border w3-white"
+                    SidebarWidth="230"
+                    SidebarColor="W3Color.White"
+                    SidebarOpen="@ShellOpen"
+                    SidebarOpenChanged="SetShellOpen">
+            <Header>
+                <W3AppBar Title="Operations"
+                          Subtitle="Today"
+                          ShowMenuButton="true"
+                          MenuExpanded="@ShellOpen"
+                          Color="W3Color.Black"
+                          TextColor="W3Color.White"
+                          OnMenuClick="@(_ => ToggleShell())">
+                    <Actions>
+                        <W3BarItem>Alerts</W3BarItem>
+                        <W3BarItem>Export</W3BarItem>
+                    </Actions>
+                </W3AppBar>
+            </Header>
+            <Sidebar>
+                <W3NavMenu Label="App shell navigation" Compact="true" ActiveColor="W3Color.Teal">
+                    <W3NavMenuGroup Title="Workspace" Expanded="true">
+                        <W3NavMenuItem Href="components/app-shell" Text="App Shell" IconClass="fa fa-columns" />
+                        <W3NavMenuItem Href="components/app-bar" Text="App Bar" IconClass="fa fa-window-maximize" Active="true" />
+                        <W3NavMenuItem Href="components/nav-menu" Text="Nav Menu" IconClass="fa fa-list" />
+                    </W3NavMenuGroup>
+                </W3NavMenu>
+            </Sidebar>
+            <ChildContent>
+                <section class="w3-padding-24">
+                    <h2 class="w3-large">Main app content</h2>
+                    <p class="doc-muted">The header, sidebar, and routed body stay separate and composable.</p>
+                </section>
+            </ChildContent>
+        </W3AppShell>
+    </DocExample>
+
+    <DocExample Title="Sticky Mobile Bar" Description="Use <code>Position=Sticky</code> for an app bar that sticks inside the nearest scroll container and set <code>Mobile</code> to wrap navigation under the title on small screens." Code="@MobileCode">
+        <div class="w3-border w3-light-grey" style="max-height:220px;overflow:auto;">
+            <W3AppBar Title="Field App"
+                      Subtitle="Inspection queue"
+                      Position="W3AppBarPosition.Sticky"
+                      Mobile="true"
+                      Dense="true"
+                      Border="true"
+                      Color="W3Color.White">
+                <ChildContent>
+                    <W3BarItem Href="components/app-bar">Jobs</W3BarItem>
+                    <W3BarItem Href="components/table">Reports</W3BarItem>
+                    <W3BarItem Href="components/input">Forms</W3BarItem>
+                </ChildContent>
+                <Actions>
+                    <W3BarItem>Sync</W3BarItem>
+                </Actions>
+            </W3AppBar>
+            <W3Container Class="w3-padding-24">
+                <p>Scrollable preview content.</p>
+                <p>Sticky placement uses component-scoped CSS while top and bottom fixed placement map to W3.CSS classes.</p>
+                <p>Keep page content padded when using fixed top or bottom placement.</p>
+            </W3Container>
+        </div>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Leading</td><td>RenderFragment?</td><td>null</td><td>Content before the title</td></tr>
+                <tr><td>TitleContent</td><td>RenderFragment?</td><td>null</td><td>Custom title content</td></tr>
+                <tr><td>SubtitleContent</td><td>RenderFragment?</td><td>null</td><td>Custom subtitle content</td></tr>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Navigation slot, usually <code>W3BarItem</code> children</td></tr>
+                <tr><td>Actions</td><td>RenderFragment?</td><td>null</td><td>Trailing action slot</td></tr>
+                <tr><td>MenuButtonContent</td><td>RenderFragment?</td><td>null</td><td>Custom content inside the menu button</td></tr>
+                <tr><td>Title</td><td>string?</td><td>null</td><td>Title text inside the app bar</td></tr>
+                <tr><td>Subtitle</td><td>string?</td><td>null</td><td>Secondary title line</td></tr>
+                <tr><td>TitleHref</td><td>string?</td><td>null</td><td>Optional linked title URL</td></tr>
+                <tr><td>TitleTarget</td><td>string?</td><td>null</td><td>Optional linked title target</td></tr>
+                <tr><td>NavigationLabel</td><td>string</td><td>App bar navigation</td><td>`aria-label` on the nav slot</td></tr>
+                <tr><td>ShowMenuButton</td><td>bool</td><td>false</td><td>Renders a W3.CSS button for menu toggles</td></tr>
+                <tr><td>MenuButtonAriaLabel</td><td>string</td><td>Toggle navigation</td><td>Menu button accessible label</td></tr>
+                <tr><td>MenuText</td><td>string</td><td>Menu</td><td>Menu button text when no custom content is provided</td></tr>
+                <tr><td>MenuIconClass</td><td>string?</td><td>fa fa-bars</td><td>Optional icon class inside the menu button</td></tr>
+                <tr><td>MenuIconOnly</td><td>bool</td><td>false</td><td>Hides menu text while keeping the aria label</td></tr>
+                <tr><td>MenuExpanded</td><td>bool?</td><td>null</td><td><code>aria-expanded</code> on the menu button</td></tr>
+                <tr><td>MenuControls</td><td>string?</td><td>null</td><td><code>aria-controls</code> on the menu button</td></tr>
+                <tr><td>OnMenuClick</td><td>EventCallback&lt;MouseEventArgs&gt;</td><td>empty</td><td>Menu button command</td></tr>
+                <tr><td>Position</td><td>W3AppBarPosition</td><td>Static</td><td><code>w3-top</code>, <code>w3-bottom</code>, or sticky scoped CSS</td></tr>
+                <tr><td>Mobile</td><td>bool</td><td>false</td><td>Mobile wrapping class with scoped layout rules</td></tr>
+                <tr><td>Dense</td><td>bool</td><td>false</td><td>Compact app bar height</td></tr>
+                <tr><td>Prominent</td><td>bool</td><td>false</td><td>Taller app bar height</td></tr>
+                <tr><td>Border</td><td>bool</td><td>false</td><td>`w3-border`</td></tr>
+                <tr><td>Card</td><td>bool</td><td>false</td><td>Adds W3.CSS card shadow classes</td></tr>
+                <tr><td>CardDepth</td><td>W3CardDepth</td><td>Four</td><td>Card shadow depth when `Card` is true</td></tr>
+                <tr><td>Round</td><td>W3Round</td><td>None</td><td>Rounded corner class</td></tr>
+                <tr><td>Color</td><td>W3Color</td><td>None</td><td>Background color class</td></tr>
+                <tr><td>TextColor</td><td>W3Color</td><td>None</td><td>Text color class</td></tr>
+                <tr><td>LeadingClass, TitleClass, NavClass, ActionsClass, MenuButtonClass</td><td>string?</td><td>null</td><td>Slot-level class pass-through</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional classes on the app bar</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline styles on the app bar</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Related</h2>
+        <p><NavLink href="components/app-shell">App Shell</NavLink> supplies the full page frame around an app bar.</p>
+        <p><NavLink href="components/nav-menu">Nav Menu</NavLink> supplies grouped side navigation.</p>
+        <p><NavLink href="components/bar">Bar</NavLink> remains the lower-level W3.CSS bar wrapper.</p>
+        <p><NavLink href="components/navbar">Navbar</NavLink> covers route-like horizontal navigation with active state.</p>
+        <p><a href="https://www.w3schools.com/w3css/w3css_bars.asp" target="_blank" rel="noopener">W3.CSS Bars</a></p>
+        <p><a href="https://www.w3schools.com/w3css/w3css_navigation.asp" target="_blank" rel="noopener">W3.CSS Navigation Bars</a></p>
+    </section>
+
+    <DocPager PreviousHref="components/app-shell" PreviousText="App Shell" NextHref="components/toolbar" NextText="Toolbar" />
+</W3Container>
+
+@code {
+    private bool MenuOpen { get; set; }
+    private bool ShellOpen { get; set; } = true;
+
+    private void ToggleMenu()
+    {
+        MenuOpen = !MenuOpen;
+    }
+
+    private void ToggleShell()
+    {
+        ShellOpen = !ShellOpen;
+    }
+
+    private void SetShellOpen(bool open)
+    {
+        ShellOpen = open;
+    }
+
+    private const string BasicCode = """
+<W3AppBar Title="Studio"
+          Subtitle="Design workspace"
+          ShowMenuButton="true"
+          MenuExpanded="@menuOpen"
+          MenuControls="app-menu"
+          Color="W3Color.Teal"
+          TextColor="W3Color.White"
+          Card="true"
+          OnMenuClick="@(_ => menuOpen = !menuOpen)">
+    <ChildContent>
+        <W3BarItem Href="components/app-bar">Overview</W3BarItem>
+        <W3BarItem Href="components/data-table">Data</W3BarItem>
+        <W3BarItem Href="components/stepper">Workflow</W3BarItem>
+    </ChildContent>
+    <Actions>
+        <W3BarItem>Search</W3BarItem>
+        <W3BarItem>Profile</W3BarItem>
+    </Actions>
+</W3AppBar>
+""";
+
+    private const string ShellCode = """
+<W3AppShell @bind-SidebarOpen="shellOpen" SidebarWidth="230">
+    <Header>
+        <W3AppBar Title="Operations"
+                  Subtitle="Today"
+                  ShowMenuButton="true"
+                  MenuExpanded="@shellOpen"
+                  Color="W3Color.Black"
+                  TextColor="W3Color.White"
+                  OnMenuClick="@(_ => shellOpen = !shellOpen)">
+            <Actions>
+                <W3BarItem>Alerts</W3BarItem>
+                <W3BarItem>Export</W3BarItem>
+            </Actions>
+        </W3AppBar>
+    </Header>
+    <Sidebar>
+        <W3NavMenu Label="App shell navigation" Compact="true">
+            <W3NavMenuGroup Title="Workspace" Expanded="true">
+                <W3NavMenuItem Href="components/app-shell" Text="App Shell" />
+                <W3NavMenuItem Href="components/app-bar" Text="App Bar" Active="true" />
+            </W3NavMenuGroup>
+        </W3NavMenu>
+    </Sidebar>
+    <ChildContent>
+        @Body
+    </ChildContent>
+</W3AppShell>
+""";
+
+    private const string MobileCode = """
+<W3AppBar Title="Field App"
+          Subtitle="Inspection queue"
+          Position="W3AppBarPosition.Sticky"
+          Mobile="true"
+          Dense="true"
+          Border="true"
+          Color="W3Color.White">
+    <ChildContent>
+        <W3BarItem Href="components/app-bar">Jobs</W3BarItem>
+        <W3BarItem Href="components/table">Reports</W3BarItem>
+        <W3BarItem Href="components/input">Forms</W3BarItem>
+    </ChildContent>
+    <Actions>
+        <W3BarItem>Sync</W3BarItem>
+    </Actions>
+</W3AppBar>
+""";
+}

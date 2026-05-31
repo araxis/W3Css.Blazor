@@ -1,0 +1,81 @@
+@page "/components/toggle-icon-button"
+
+<PageTitle>W3ToggleIconButton</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3ToggleIconButton</h1>
+    <DocPager PreviousHref="components/icon-button" PreviousText="Icon Button" NextHref="components/fab" NextText="Floating Action Button" />
+
+    <p class="w3-large">`W3ToggleIconButton` is the icon-button equivalent of a binary toggle control with `aria-pressed` state.</p>
+    <p>Use it when each icon represents an on/off state, such as toolbar formatting tools.</p>
+
+    <DocExample Title="Formatting Toggle" Description="Each button keeps its own pressed state when no binding is supplied." Code="@FormattingCode">
+        <W3Toolbar Label="Formatting" Border="true" Round="W3Round.Medium" Gap="4">
+            <W3ToggleIconButton Label="Bold" Border="true" IconClass="fa fa-bold" />
+            <W3ToggleIconButton Label="Italic" Border="true" IconClass="fa fa-italic" />
+            <W3ToggleIconButton Label="Underline" Border="true" IconClass="fa fa-underline" />
+        </W3Toolbar>
+    </DocExample>
+
+    <DocExample Title="Controlled Formatting" Description="Use &#64;bind-Pressed for controlled state." Code="@ControlledCode">
+        <W3Toolbar Label="Article options" Border="true" Round="W3Round.Medium" Gap="4">
+            <W3ToggleIconButton Label="Spell-check" Border="true" @bind-Pressed="SpellCheck" />
+            <W3ToggleIconButton Label="Track changes" Border="true" @bind-Pressed="TrackChanges" />
+        </W3Toolbar>
+        <p class="w3-small">Spell-check: <strong>@(SpellCheck ? "On" : "Off")</strong>, Track changes: <strong>@(TrackChanges ? "On" : "Off")</strong></p>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Label</td><td>string</td><td>Icon action</td><td>Required accessibility label.</td></tr>
+                <tr><td>Title</td><td>string?</td><td>null</td><td>Optional tooltip title.</td></tr>
+                <tr><td>IconClass</td><td>string?</td><td>null</td><td>CSS class for icon content.</td></tr>
+                <tr><td>IconElementClass</td><td>string?</td><td>null</td><td>Additional icon class.</td></tr>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Icon text if not using `IconClass`.</td></tr>
+                <tr><td>Pressed</td><td>bool</td><td>false</td><td>Current pressed state.</td></tr>
+                <tr><td>PressedChanged</td><td>EventCallback&lt;bool&gt;</td><td>none</td><td>Raised when pressed state changes.</td></tr>
+                <tr><td>OnClick</td><td>EventCallback&lt;MouseEventArgs&gt;</td><td>none</td><td>Invoked after press state updates.</td></tr>
+                <tr><td>Color / TextColor</td><td>W3Color</td><td>None / None</td><td>Background/text classes.</td></tr>
+                <tr><td>Size</td><td>W3Size</td><td>Default</td><td>Button size class.</td></tr>
+                <tr><td>Round</td><td>W3Round</td><td>Medium</td><td>Rounded corners.</td></tr>
+                <tr><td>Border</td><td>bool</td><td>false</td><td>`w3-border`.</td></tr>
+                <tr><td>Circle</td><td>bool</td><td>false</td><td>`w3-circle` + compact icon size.</td></tr>
+                <tr><td>Disabled</td><td>bool</td><td>false</td><td>Disabled state.</td></tr>
+                <tr><td>Type</td><td>string</td><td>button</td><td>Button type.</td></tr>
+                <tr><td>Class / Style</td><td>string?</td><td>null</td><td>Additional classes/style.</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Related</h2>
+        <p><NavLink href="components/icon-button">Icon Button</NavLink> is ideal for stateless icon commands; use toggle only when state matters.</p>
+    </section>
+
+    <DocPager PreviousHref="components/icon-button" PreviousText="Icon Button" NextHref="components/fab" NextText="Floating Action Button" />
+</W3Container>
+
+@code {
+    private bool SpellCheck { get; set; }
+    private bool TrackChanges { get; set; } = true;
+
+    private const string FormattingCode = """
+<W3Toolbar Label="Formatting" Border="true" Round="W3Round.Medium" Gap="4">
+    <W3ToggleIconButton Label="Bold" Border="true" IconClass="fa fa-bold" />
+    <W3ToggleIconButton Label="Italic" Border="true" IconClass="fa fa-italic" />
+    <W3ToggleIconButton Label="Underline" Border="true" IconClass="fa fa-underline" />
+</W3Toolbar>
+""";
+
+    private const string ControlledCode = """
+<W3Toolbar Label="Article options" Border="true" Round="W3Round.Medium" Gap="4">
+    <W3ToggleIconButton Label="Spell-check" Border="true" @bind-Pressed="spellCheck" />
+    <W3ToggleIconButton Label="Track changes" Border="true" @bind-Pressed="trackChanges" />
+</W3Toolbar>
+""";
+}

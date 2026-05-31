@@ -1,0 +1,260 @@
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+<header @attributes="AdditionalAttributes"
+        class="@CssClass"
+        style="@Style">
+    @if (ShowMenuButton || Leading is not null)
+    {
+        <div class="@LeadingCssClass">
+            @if (ShowMenuButton)
+            {
+                <button type="button"
+                        class="@MenuButtonCssClass"
+                        aria-label="@MenuButtonAriaLabel"
+                        aria-expanded="@MenuExpandedValue"
+                        aria-controls="@MenuControls"
+                        @onclick="OnMenuClick">
+                    @if (!string.IsNullOrWhiteSpace(MenuIconClass))
+                    {
+                        <span class="@MenuIconClass" aria-hidden="true"></span>
+                    }
+
+                    @if (MenuButtonContent is not null)
+                    {
+                        @MenuButtonContent
+                    }
+                    else if (!MenuIconOnly && !string.IsNullOrWhiteSpace(MenuText))
+                    {
+                        <span>@MenuText</span>
+                    }
+                </button>
+            }
+
+            @Leading
+        </div>
+    }
+
+    @if (HasTitle)
+    {
+        <div class="@TitleCssClass">
+            @if (!string.IsNullOrWhiteSpace(TitleHref))
+            {
+                <a href="@TitleHref"
+                   target="@TitleTarget"
+                   class="w3-app-bar-title-link">
+                    @TitleBody
+                </a>
+            }
+            else
+            {
+                <div class="w3-app-bar-title-text">
+                    @TitleBody
+                </div>
+            }
+
+            @if (SubtitleContent is not null || !string.IsNullOrWhiteSpace(Subtitle))
+            {
+                <div class="w3-app-bar-subtitle">
+                    @if (SubtitleContent is not null)
+                    {
+                        @SubtitleContent
+                    }
+                    else
+                    {
+                        @Subtitle
+                    }
+                </div>
+            }
+        </div>
+    }
+
+    @if (ChildContent is not null)
+    {
+        <nav class="@NavCssClass" aria-label="@NavigationLabel">
+            @ChildContent
+        </nav>
+    }
+
+    @if (Actions is not null)
+    {
+        <div class="@ActionsCssClass">
+            @Actions
+        </div>
+    }
+</header>
+
+@code {
+    private bool HasTitle =>
+        TitleContent is not null ||
+        !string.IsNullOrWhiteSpace(Title) ||
+        SubtitleContent is not null ||
+        !string.IsNullOrWhiteSpace(Subtitle);
+
+    private RenderFragment TitleBody => builder =>
+    {
+        if (TitleContent is not null)
+        {
+            builder.AddContent(0, TitleContent);
+        }
+        else
+        {
+            builder.AddContent(1, Title);
+        }
+    };
+
+    private string CssClass => BuildClass(
+        "w3-bar",
+        "w3-app-bar",
+        Dense ? "w3-app-bar-dense" : null,
+        Prominent ? "w3-app-bar-prominent" : null,
+        Mobile ? "w3-app-bar-mobile" : null,
+        Border ? "w3-border" : null,
+        Card ? CardDepth.ToClass() : null,
+        Round.ToClass(),
+        PositionCssClass,
+        Color.ToBackgroundClass(),
+        TextColor.ToTextClass());
+
+    private string LeadingCssClass => BuildSlotClass("w3-app-bar-leading", LeadingClass);
+
+    private string TitleCssClass => BuildSlotClass(
+        "w3-bar-item",
+        "w3-app-bar-title",
+        SubtitleContent is null && string.IsNullOrWhiteSpace(Subtitle) ? "w3-app-bar-title-single" : null,
+        TitleClass);
+
+    private string NavCssClass => BuildSlotClass("w3-app-bar-nav", NavClass);
+
+    private string ActionsCssClass => BuildSlotClass("w3-app-bar-actions", ActionsClass);
+
+    private string MenuButtonCssClass => BuildSlotClass(
+        "w3-button",
+        "w3-bar-item",
+        "w3-app-bar-menu-button",
+        MenuButtonClass);
+
+    private string? PositionCssClass => Position switch
+    {
+        W3AppBarPosition.Top => "w3-top",
+        W3AppBarPosition.Bottom => "w3-bottom",
+        W3AppBarPosition.Sticky => "w3-app-bar-sticky",
+        _ => null
+    };
+
+    private string? MenuExpandedValue => MenuExpanded?.ToString().ToLowerInvariant();
+
+    [Parameter]
+    public RenderFragment? Leading { get; set; }
+
+    [Parameter]
+    public RenderFragment? TitleContent { get; set; }
+
+    [Parameter]
+    public RenderFragment? SubtitleContent { get; set; }
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public RenderFragment? Actions { get; set; }
+
+    [Parameter]
+    public RenderFragment? MenuButtonContent { get; set; }
+
+    [Parameter]
+    public string? Title { get; set; }
+
+    [Parameter]
+    public string? Subtitle { get; set; }
+
+    [Parameter]
+    public string? TitleHref { get; set; }
+
+    [Parameter]
+    public string? TitleTarget { get; set; }
+
+    [Parameter]
+    public string NavigationLabel { get; set; } = "App bar navigation";
+
+    [Parameter]
+    public bool ShowMenuButton { get; set; }
+
+    [Parameter]
+    public string MenuButtonAriaLabel { get; set; } = "Toggle navigation";
+
+    [Parameter]
+    public string MenuText { get; set; } = "Menu";
+
+    [Parameter]
+    public string? MenuIconClass { get; set; } = "fa fa-bars";
+
+    [Parameter]
+    public bool MenuIconOnly { get; set; }
+
+    [Parameter]
+    public bool? MenuExpanded { get; set; }
+
+    [Parameter]
+    public string? MenuControls { get; set; }
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnMenuClick { get; set; }
+
+    [Parameter]
+    public bool Mobile { get; set; }
+
+    [Parameter]
+    public bool Dense { get; set; }
+
+    [Parameter]
+    public bool Prominent { get; set; }
+
+    [Parameter]
+    public bool Border { get; set; }
+
+    [Parameter]
+    public bool Card { get; set; }
+
+    [Parameter]
+    public W3CardDepth CardDepth { get; set; } = W3CardDepth.Four;
+
+    [Parameter]
+    public W3Round Round { get; set; } = W3Round.None;
+
+    [Parameter]
+    public W3AppBarPosition Position { get; set; } = W3AppBarPosition.Static;
+
+    [Parameter]
+    public W3Color Color { get; set; } = W3Color.Surface;
+
+    [Parameter]
+    public W3Color TextColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public string? LeadingClass { get; set; }
+
+    [Parameter]
+    public string? TitleClass { get; set; }
+
+    [Parameter]
+    public string? NavClass { get; set; }
+
+    [Parameter]
+    public string? ActionsClass { get; set; }
+
+    [Parameter]
+    public string? MenuButtonClass { get; set; }
+
+    private static string BuildSlotClass(params string?[] classes)
+    {
+        var builder = new W3ClassBuilder();
+
+        foreach (var cssClass in classes)
+        {
+            builder.Add(cssClass);
+        }
+
+        return builder.ToString();
+    }
+}

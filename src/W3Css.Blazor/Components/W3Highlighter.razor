@@ -1,0 +1,99 @@
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+<span @attributes="AdditionalAttributes"
+      class="@CssClass"
+      style="@Style">
+    @foreach (var segment in Segments)
+    {
+        if (segment.Highlight)
+        {
+            <mark class="@HighlightCssClass">@segment.Text</mark>
+        }
+        else
+        {
+            @segment.Text
+        }
+    }
+</span>
+
+@code {
+    private string CssClass => BuildClass("w3-highlighter");
+
+    private string HighlightCssClass => new W3ClassBuilder()
+        .Add("w3-highlighter-mark")
+        .Add(Color.ToBackgroundClass())
+        .Add(TextColor.ToTextClass())
+        .Add(Round.ToClass())
+        .ToString();
+
+    private IReadOnlyList<TextSegment> Segments => BuildSegments();
+
+    [Parameter]
+    public string? Text { get; set; }
+
+    [Parameter]
+    public string? Search { get; set; }
+
+    [Parameter]
+    public bool CaseSensitive { get; set; }
+
+    [Parameter]
+    public int? MaxMatches { get; set; }
+
+    [Parameter]
+    public W3Color Color { get; set; } = W3Color.Yellow;
+
+    [Parameter]
+    public W3Color TextColor { get; set; } = W3Color.Black;
+
+    [Parameter]
+    public W3Round Round { get; set; } = W3Round.Small;
+
+    private IReadOnlyList<TextSegment> BuildSegments()
+    {
+        if (string.IsNullOrEmpty(Text) || string.IsNullOrEmpty(Search))
+        {
+            return [new(Text ?? string.Empty, false)];
+        }
+
+        var segments = new List<TextSegment>();
+        var comparison = CaseSensitive ? StringComparison.Ordinal : StringComparison.OrdinalIgnoreCase;
+        var start = 0;
+        var matches = 0;
+
+        while (start < Text.Length)
+        {
+            if (MaxMatches is not null && matches >= MaxMatches.Value)
+            {
+                segments.Add(new(Text[start..], false));
+                break;
+            }
+
+            var index = Text.IndexOf(Search, start, comparison);
+            if (index < 0)
+            {
+                segments.Add(new(Text[start..], false));
+                break;
+            }
+
+            if (index > start)
+            {
+                segments.Add(new(Text[start..index], false));
+            }
+
+            segments.Add(new(Text.Substring(index, Search.Length), true));
+            matches++;
+            start = index + Search.Length;
+        }
+
+        if (segments.Count == 0)
+        {
+            segments.Add(new(Text, false));
+        }
+
+        return segments;
+    }
+
+    private sealed record TextSegment(string Text, bool Highlight);
+}

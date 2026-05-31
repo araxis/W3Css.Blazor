@@ -1,0 +1,59 @@
+@page "/components/alert"
+
+<PageTitle>W3Alert</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3Alert</h1>
+    <DocPager PreviousHref="components/button-group" PreviousText="Button Group" NextHref="components/table" NextText="Table" />
+
+    <p class="w3-large">`W3Alert` renders semantic status panels using W3.CSS alert color classes.</p>
+    <p>Use alerts for user-visible status, success, warning, danger, and note messages.</p>
+
+    <DocExample Title="Alert Kinds" Code="@KindsCode">
+        <W3Alert Kind="W3AlertKind.Info" Title="Info" Round="W3Round.Medium">Useful neutral information.</W3Alert>
+        <W3Alert Kind="W3AlertKind.Success" Title="Success" Round="W3Round.Medium">The action completed.</W3Alert>
+        <W3Alert Kind="W3AlertKind.Warning" Title="Warning" Round="W3Round.Medium">Check the next step.</W3Alert>
+        <W3Alert Kind="W3AlertKind.Danger" Title="Danger" Round="W3Round.Medium">The action needs attention.</W3Alert>
+    </DocExample>
+
+    <DocExample Title="Custom Role" Description="The default role is `status`. Use `alert` for urgent messages." Code="@RoleCode">
+        <W3Alert Kind="W3AlertKind.Danger" Title="Error" Role="alert" Round="W3Round.Medium">
+            The save operation failed.
+        </W3Alert>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Purpose</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Alert body</td></tr>
+                <tr><td>Kind</td><td>W3AlertKind</td><td>Info</td><td>Semantic alert color</td></tr>
+                <tr><td>Title</td><td>string?</td><td>null</td><td>Optional strong title</td></tr>
+                <tr><td>Round</td><td>W3Round</td><td>None</td><td>Rounded corner class</td></tr>
+                <tr><td>Role</td><td>string</td><td>status</td><td>ARIA role</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional classes on the alert panel</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline styles on the alert panel</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <DocPager PreviousHref="components/button-group" PreviousText="Button Group" NextHref="components/table" NextText="Table" />
+</W3Container>
+
+@code {
+    private const string KindsCode = """
+<W3Alert Kind="W3AlertKind.Info" Title="Info">Useful neutral information.</W3Alert>
+<W3Alert Kind="W3AlertKind.Success" Title="Success">The action completed.</W3Alert>
+<W3Alert Kind="W3AlertKind.Warning" Title="Warning">Check the next step.</W3Alert>
+<W3Alert Kind="W3AlertKind.Danger" Title="Danger">The action needs attention.</W3Alert>
+""";
+
+    private const string RoleCode = """
+<W3Alert Kind="W3AlertKind.Danger" Title="Error" Role="alert">
+    The save operation failed.
+</W3Alert>
+""";
+}

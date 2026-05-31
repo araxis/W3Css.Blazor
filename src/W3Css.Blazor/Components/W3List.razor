@@ -1,0 +1,36 @@
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+<ul @attributes="AdditionalAttributes"
+    class="@CssClass"
+    style="@Style">
+    @ChildContent
+</ul>
+
+@code {
+    private string CssClass => BuildClass(
+        "w3-ul",
+        Color.ToBackgroundClass(),
+        TextColor.ToTextClass(),
+        Border ? "w3-border" : null,
+        Hoverable ? "w3-hoverable" : null,
+        Centered ? "w3-center" : null);
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public W3Color Color { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color TextColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public bool Border { get; set; }
+
+    [Parameter]
+    public bool Hoverable { get; set; }
+
+    [Parameter]
+    public bool Centered { get; set; }
+}

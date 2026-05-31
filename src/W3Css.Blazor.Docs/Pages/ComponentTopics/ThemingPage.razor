@@ -1,0 +1,125 @@
+@page "/components/theming"
+
+<PageTitle>Theming &amp; Customization</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>Theming &amp; Customization</h1>
+    <DocPager PreviousHref="components/color-schemes" PreviousText="Color Schemes" NextHref="components/trends" NextText="Trends" />
+
+    <p class="w3-large">Brand the whole app from one place. `W3ThemeProvider` turns a `W3Theme` into CSS variables, and components opt in with the themed `W3Color` tokens — `Primary`, `Secondary`, `Accent`, `Surface`.</p>
+    <p>W3.CSS has no variable layer, so the library provides this token system. It is non-breaking: existing fixed palette colors (`W3Color.Teal`, …) keep working; you adopt theming where you want it.</p>
+
+    <DocExample Title="Two-Line Setup" Code="@SetupCode">
+        <p class="doc-muted">Wrap your app (or any region) once, then use the tokens anywhere inside.</p>
+    </DocExample>
+
+    <DocExample Title="Live Theme — Change Once, Reskin Everything" Code="@LiveCode">
+        <W3Row>
+            <W3Column Medium="4">
+                <W3Field TValue="string" Label="Primary">
+                    <W3ColorInput @bind-Value="PrimaryHex" Border="true" Round="W3Round.Medium" />
+                </W3Field>
+                <W3Field TValue="string" Label="Secondary">
+                    <W3ColorInput @bind-Value="SecondaryHex" Border="true" Round="W3Round.Medium" />
+                </W3Field>
+                <W3Field TValue="string" Label="Accent">
+                    <W3ColorInput @bind-Value="AccentHex" Border="true" Round="W3Round.Medium" />
+                </W3Field>
+                <p><W3Switch @bind-Value="dark" Label="Dark mode" /></p>
+            </W3Column>
+            <W3Column Medium="8">
+                <W3ThemeProvider Theme="theme" Dark="dark">
+                    <div class="w3-surface w3-padding w3-round-large">
+                        <h3>Themed surface</h3>
+                        <p>This panel uses <code>w3-surface</code>; buttons and chips below use theme tokens — all driven by the controls.</p>
+                        <p>
+                            <W3Button Color="W3Color.Primary">Primary</W3Button>
+                            <W3Button Color="W3Color.Secondary">Secondary</W3Button>
+                            <W3Button Color="W3Color.Accent">Accent</W3Button>
+                        </p>
+                        <p>
+                            <W3Tag Color="W3Color.Primary">Primary tag</W3Tag>
+                            <W3Tag Color="W3Color.Accent">Accent tag</W3Tag>
+                            <span class="w3-text-secondary w3-large">Secondary text</span>
+                        </p>
+                    </div>
+                </W3ThemeProvider>
+            </W3Column>
+        </W3Row>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>W3Theme Tokens</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Token</th><th>CSS variable</th><th>Default</th><th>Used by</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Primary / OnPrimary</td><td><code>--w3-primary</code> / <code>--w3-on-primary</code></td><td>#1976d2 / #fff</td><td><code>W3Color.Primary</code> → <code>w3-primary</code>, <code>w3-text-primary</code></td></tr>
+                <tr><td>Secondary / OnSecondary</td><td><code>--w3-secondary</code></td><td>#7b1fa2 / #fff</td><td><code>W3Color.Secondary</code></td></tr>
+                <tr><td>Accent / OnAccent</td><td><code>--w3-accent</code></td><td>#ff9800 / #000</td><td><code>W3Color.Accent</code></td></tr>
+                <tr><td>Surface / OnSurface</td><td><code>--w3-surface</code> / <code>--w3-on-surface</code></td><td>#fff / #1a1a1a</td><td><code>W3Color.Surface</code> → <code>w3-surface</code></td></tr>
+                <tr><td>Background / OnBackground</td><td><code>--w3-background</code> / <code>--w3-on-background</code></td><td>#f6f7f9 / #1f2933</td><td>page surface — the <code>.w3-theme-root</code> wrapper</td></tr>
+                <tr><td>Border</td><td><code>--w3-border</code></td><td>#e0e0e0</td><td><code>w3-border-surface</code></td></tr>
+                <tr><td>Radius</td><td><code>--w3-radius</code></td><td>4px</td><td>rounded elements inside the provider</td></tr>
+                <tr><td>FontFamily</td><td>(font-family)</td><td>inherit</td><td>theme scope</td></tr>
+                <tr><td>Dark</td><td>—</td><td>DefaultDark</td><td>dark variant when <code>Dark="true"</code></td></tr>
+            </tbody>
+        </W3Table>
+        <p class="doc-muted">Link <code>_content/W3Css.Blazor/w3css-blazor.css</code> once (it bundles the framework + this token layer). Tokens then render with sensible defaults everywhere; a <code>W3ThemeProvider</code> only overrides the variables within its subtree (and toggles dark mode).</p>
+        <p class="doc-muted">The provider's <code>.w3-theme-root</code> wrapper is itself a themed page surface (it paints <code>Background</code> / <code>OnBackground</code>), so wrapping an app or region themes the whole page — including dark mode — with <strong>no per-mode app CSS</strong>. Custom (non-component) elements should consume the variables (<code>var(--w3-surface)</code>, <code>var(--w3-on-background)</code>, …) rather than carry their own dark-mode rules.</p>
+    </section>
+
+    <DocPager PreviousHref="components/color-schemes" PreviousText="Color Schemes" NextHref="components/trends" NextText="Trends" />
+</W3Container>
+
+@code {
+    private W3Theme theme = W3Theme.Default;
+    private bool dark;
+
+    private string PrimaryHex
+    {
+        get => theme.Primary;
+        set => theme = theme with { Primary = value };
+    }
+
+    private string SecondaryHex
+    {
+        get => theme.Secondary;
+        set => theme = theme with { Secondary = value };
+    }
+
+    private string AccentHex
+    {
+        get => theme.Accent;
+        set => theme = theme with { Accent = value };
+    }
+
+    private const string SetupCode = """
+<!-- index.html / App.razor, once. The bundle includes the token layer. -->
+<link rel="stylesheet" href="_content/W3Css.Blazor/w3css-blazor.css" />
+
+<!-- anywhere you want to override the defaults: -->
+<W3ThemeProvider Theme="@(new W3Theme { Primary = "#6750A4", Secondary = "#625B71" })">
+    <App />
+</W3ThemeProvider>
+
+<W3Button Color="W3Color.Primary">Save</W3Button>
+""";
+
+    private const string LiveCode = """
+<W3ThemeProvider Theme="theme" Dark="dark">
+    <div class="w3-surface w3-padding w3-round-large">
+        <W3Button Color="W3Color.Primary">Primary</W3Button>
+        <W3Button Color="W3Color.Secondary">Secondary</W3Button>
+        <W3Button Color="W3Color.Accent">Accent</W3Button>
+    </div>
+</W3ThemeProvider>
+
+@code {
+    private W3Theme theme = W3Theme.Default;
+    private bool dark;
+    // bind W3ColorInput to: theme = theme with { Primary = value };
+}
+""";
+}

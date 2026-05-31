@@ -1,0 +1,15 @@
+.w3-timeline {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.w3-timeline-reverse {
+    flex-direction: column-reverse;
+}
+
+.w3-timeline-dense {
+    font-size: 0.95rem;
+}

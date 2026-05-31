@@ -1,0 +1,55 @@
+@page "/components/progress"
+
+<PageTitle>W3Progress</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3Progress</h1>
+    <DocPager PreviousHref="components/pagination" PreviousText="Pagination" NextHref="components/progress-circular" NextText="Progress Circular" />
+
+    <p class="w3-large">`W3Progress` renders a W3.CSS progress bar with semantic progressbar attributes.</p>
+    <p>The visual width is clamped between zero and the configured maximum.</p>
+
+    <DocExample Title="Progress Bar" Code="@BasicCode">
+        <W3Progress Value="ProgressValue" ShowLabel="true" Round="W3Round.Medium" />
+    </DocExample>
+
+    <DocExample Title="Custom Label" Code="@CustomCode">
+        <W3Progress Value="42" Max="100" Label="Building" ShowLabel="true" Color="W3Color.Cobalt" Round="W3Round.Medium" />
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Value</td><td>double</td><td>0</td><td>Current value</td></tr>
+                <tr><td>Max</td><td>double</td><td>100</td><td>Maximum value</td></tr>
+                <tr><td>ShowLabel</td><td>bool</td><td>false</td><td>Text inside bar</td></tr>
+                <tr><td>Label</td><td>string?</td><td>null</td><td>Custom label text</td></tr>
+                <tr><td>Color</td><td>W3Color</td><td>Teal</td><td>Bar background</td></tr>
+                <tr><td>TextColor</td><td>W3Color</td><td>White</td><td>Bar text color</td></tr>
+                <tr><td>TrackColor</td><td>W3Color</td><td>LightGrey</td><td>Track background</td></tr>
+                <tr><td>Round</td><td>W3Round</td><td>None</td><td>Rounded bar and track</td></tr>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Custom bar content</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional track classes</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline style on the track</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <DocPager PreviousHref="components/pagination" PreviousText="Pagination" NextHref="components/progress-circular" NextText="Progress Circular" />
+</W3Container>
+
+@code {
+    private const double ProgressValue = 68;
+
+    private const string BasicCode = """
+<W3Progress Value="68" ShowLabel="true" Round="W3Round.Medium" />
+""";
+
+    private const string CustomCode = """
+<W3Progress Value="42" Max="100" Label="Building" ShowLabel="true" Color="W3Color.Cobalt" Round="W3Round.Medium" />
+""";
+}

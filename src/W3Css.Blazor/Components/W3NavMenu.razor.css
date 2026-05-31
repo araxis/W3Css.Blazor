@@ -1,0 +1,30 @@
+.w3-nav-menu {
+    box-sizing: border-box;
+    width: 100%;
+    overflow: hidden;
+}
+
+.w3-nav-menu-header,
+.w3-nav-menu-footer {
+    box-sizing: border-box;
+    padding: 1rem;
+}
+
+.w3-nav-menu-header > :first-child,
+.w3-nav-menu-footer > :first-child {
+    margin-top: 0;
+}
+
+.w3-nav-menu-header > :last-child,
+.w3-nav-menu-footer > :last-child {
+    margin-bottom: 0;
+}
+
+.w3-nav-menu-items {
+    display: block;
+}
+
+.w3-nav-menu-compact .w3-nav-menu-header,
+.w3-nav-menu-compact .w3-nav-menu-footer {
+    padding: .5rem .75rem;
+}

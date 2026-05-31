@@ -1,0 +1,12 @@
+.w3-footer {
+    display: flex;
+    align-items: center;
+    gap: var(--w3-footer-gap, 16px);
+    width: 100%;
+    padding: 16px;
+    box-sizing: border-box;
+}
+
+.w3-footer-wrap {
+    flex-wrap: wrap;
+}

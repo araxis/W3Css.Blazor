@@ -1,0 +1,147 @@
+@page "/components/defaults"
+
+<PageTitle>Defaults</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>Defaults</h1>
+    <DocPager PreviousHref="components" PreviousText="Components" NextHref="components/fonts" NextText="Fonts" />
+
+    <p class="w3-large">W3.CSS gives plain HTML readable defaults before any component wrapper is added.</p>
+    <p>The bundled stylesheet sets the base page font to 15px Verdana with 1.5 line height, then gives headings their own size scale and Segoe UI family.</p>
+
+    <DocExample Title="Plain HTML Defaults" Code="@PlainHtmlCode">
+        <div class="w3-white w3-border w3-padding">
+            <p>Paragraph text uses the W3.CSS base font size and line height.</p>
+            <p>Simple lists, links, emphasis, and inline code can stay as regular HTML when no component state or typed class mapping is needed.</p>
+            <ul>
+                <li>Readable body text</li>
+                <li>Comfortable line spacing</li>
+                <li><a href="https://www.w3schools.com/w3css/w3css_defaults.asp" target="_blank" rel="noopener">Related W3.CSS source</a></li>
+            </ul>
+        </div>
+    </DocExample>
+
+    <DocExample Title="HTML Headings" Code="@HeadingsCode">
+        <div class="w3-white w3-border w3-padding">
+            <h1>Heading 1</h1>
+            <h2>Heading 2</h2>
+            <h3>Heading 3</h3>
+            <h4>Heading 4</h4>
+            <h5>Heading 5</h5>
+            <h6>Heading 6</h6>
+        </div>
+    </DocExample>
+
+    <DocExample Title="Font Size Classes" Code="@SizeCode">
+        <div class="w3-white w3-border w3-padding">
+            <p class="w3-tiny">w3-tiny</p>
+            <p class="w3-small">w3-small</p>
+            <p class="w3-medium">w3-medium</p>
+            <p class="w3-large">w3-large</p>
+            <p class="w3-xlarge">w3-xlarge</p>
+            <p class="w3-xxlarge">w3-xxlarge</p>
+            <p class="w3-xxxlarge">w3-xxxlarge</p>
+            <p class="w3-jumbo">w3-jumbo</p>
+        </div>
+    </DocExample>
+
+    <DocExample Title="Override Defaults" Code="@OverrideCode">
+        <W3Panel Color="W3Color.PaleYellow" TextColor="W3Color.Black" LeftBar="true" Border="true" Round="W3Round.Medium">
+            Load W3.CSS first, then load your application stylesheet when headings, body font, or spacing need a project-specific baseline.
+        </W3Panel>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Usage Reference</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Need</th><th>Use</th><th>Why</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Body copy</td><td>Plain `p`, `ul`, `ol`, and links</td><td>The stylesheet already sets readable font size and line height.</td></tr>
+                <tr><td>Document hierarchy</td><td>Plain `h1` through `h6`</td><td>Headings already have W3.CSS sizes and margins.</td></tr>
+                <tr><td>One-off utility class</td><td>Plain HTML with `class="w3-large"`</td><td>Best for simple static content.</td></tr>
+                <tr><td>Repeated typed styling</td><td>`W3Text`, `W3Container`, `W3Panel`, or another component</td><td>Best when parameters make the markup clearer or state is involved.</td></tr>
+                <tr><td>Project baseline override</td><td>Application CSS loaded after W3.CSS</td><td>Keeps package CSS unchanged while allowing local design choices.</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Default Values</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Element or class</th><th>Default</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>`html`, `body`</td><td>Verdana, 15px, 1.5 line height</td></tr>
+                <tr><td>`h1`</td><td>36px</td></tr>
+                <tr><td>`h2`</td><td>30px</td></tr>
+                <tr><td>`h3`</td><td>24px</td></tr>
+                <tr><td>`h4`</td><td>20px</td></tr>
+                <tr><td>`h5`</td><td>18px</td></tr>
+                <tr><td>`h6`</td><td>16px</td></tr>
+                <tr><td>`w3-tiny` to `w3-jumbo`</td><td>10px, 12px, 15px, 18px, 24px, 36px, 48px, 64px</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Related W3.CSS</h2>
+        <p><a href="https://www.w3schools.com/w3css/w3css_defaults.asp" target="_blank" rel="noopener">W3.CSS Defaults</a></p>
+        <p><a href="https://www.w3schools.com/w3css/w3css_fonts.asp" target="_blank" rel="noopener">W3.CSS Fonts</a></p>
+        <p><a href="https://www.w3schools.com/w3css/w3css_text.asp" target="_blank" rel="noopener">W3.CSS Text</a></p>
+    </section>
+
+    <DocPager PreviousHref="components" PreviousText="Components" NextHref="components/fonts" NextText="Fonts" />
+</W3Container>
+
+@code {
+    private const string PlainHtmlCode = """
+<div class="w3-white w3-border w3-padding">
+    <p>Paragraph text uses the W3.CSS base font size and line height.</p>
+    <p>Simple lists, links, emphasis, and inline code can stay as regular HTML.</p>
+    <ul>
+        <li>Readable body text</li>
+        <li>Comfortable line spacing</li>
+        <li><a href="https://www.w3schools.com/w3css/w3css_defaults.asp">Related W3.CSS source</a></li>
+    </ul>
+</div>
+""";
+
+    private const string HeadingsCode = """
+<h1>Heading 1</h1>
+<h2>Heading 2</h2>
+<h3>Heading 3</h3>
+<h4>Heading 4</h4>
+<h5>Heading 5</h5>
+<h6>Heading 6</h6>
+""";
+
+    private const string SizeCode = """
+<p class="w3-tiny">w3-tiny</p>
+<p class="w3-small">w3-small</p>
+<p class="w3-medium">w3-medium</p>
+<p class="w3-large">w3-large</p>
+<p class="w3-xlarge">w3-xlarge</p>
+<p class="w3-xxlarge">w3-xxlarge</p>
+<p class="w3-xxxlarge">w3-xxxlarge</p>
+<p class="w3-jumbo">w3-jumbo</p>
+""";
+
+    private const string OverrideCode = """
+<link rel="stylesheet" href="_content/W3Css.Blazor/w3css/5/w3.css" />
+<link rel="stylesheet" href="css/app.css" />
+
+html,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: system-ui, sans-serif;
+}
+""";
+}

@@ -1,0 +1,70 @@
+.w3-drop-zone {
+    display: block;
+    min-height: 9rem;
+    outline: 2px dashed currentColor;
+    outline-offset: -10px;
+    position: relative;
+    text-align: center;
+    transition: background-color 160ms ease, box-shadow 160ms ease, outline-offset 160ms ease;
+}
+
+.w3-drop-zone:hover,
+.w3-drop-zone:focus-within,
+.w3-drop-zone-dragging {
+    box-shadow: 0 2px 12px rgb(0 0 0 / 12%);
+    outline-offset: -6px;
+}
+
+.w3-drop-zone-disabled {
+    cursor: not-allowed;
+}
+
+.w3-drop-zone ::deep .w3-drop-zone-input {
+    height: 1px;
+    left: -10000px;
+    opacity: 0;
+    position: absolute;
+    top: auto;
+    width: 1px;
+}
+
+.w3-drop-zone ::deep .w3-drop-zone-input:disabled {
+    cursor: not-allowed;
+}
+
+.w3-drop-zone-content {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    justify-content: center;
+    min-height: inherit;
+}
+
+.w3-drop-zone-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+}
+
+.w3-drop-zone-description,
+.w3-drop-zone-hint,
+.w3-drop-zone-file-size {
+    opacity: 0.72;
+}
+
+.w3-drop-zone-browse {
+    margin-top: 0.5rem;
+}
+
+.w3-drop-zone-compact {
+    min-height: 5.5rem;
+}
+
+.w3-drop-zone-compact .w3-drop-zone-title {
+    font-size: 1rem;
+}
+
+.w3-drop-zone-file-size {
+    float: right;
+    margin-left: 1rem;
+}

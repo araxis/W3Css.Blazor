@@ -1,0 +1,81 @@
+.w3-tree-view {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.w3-tree-view,
+.w3-tree-view-group {
+    list-style: none;
+}
+
+.w3-tree-view-group {
+    border-left: 1px solid #ddd;
+    margin: 0 0 0 1.1rem;
+    padding: 0 0 0 0.65rem;
+}
+
+.w3-tree-view-lines-disabled .w3-tree-view-group {
+    border-left: 0;
+    margin-left: 1.75rem;
+    padding-left: 0;
+}
+
+.w3-tree-view-node {
+    margin: 0;
+}
+
+.w3-tree-view-row {
+    align-items: stretch;
+    display: flex;
+    min-height: 2.25rem;
+    width: 100%;
+}
+
+.w3-tree-view-toggle,
+.w3-tree-view-spacer {
+    flex: 0 0 2.25rem;
+    min-height: 2.25rem;
+    padding-left: 0;
+    padding-right: 0;
+    text-align: center;
+    width: 2.25rem;
+}
+
+.w3-tree-view-label {
+    align-items: center;
+    background: transparent;
+    border: 0;
+    color: inherit;
+    display: flex;
+    flex: 1 1 auto;
+    font: inherit;
+    min-width: 0;
+    text-decoration: none;
+    white-space: normal;
+    width: 100%;
+}
+
+.w3-tree-view-label-text {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.w3-tree-view-dense .w3-tree-view-row {
+    min-height: 2rem;
+}
+
+.w3-tree-view-dense .w3-tree-view-toggle,
+.w3-tree-view-dense .w3-tree-view-spacer {
+    flex-basis: 2rem;
+    min-height: 2rem;
+    width: 2rem;
+}
+
+.w3-tree-view-disabled {
+    opacity: 0.68;
+}
+
+.w3-tree-view-empty {
+    padding: 0.75rem 1rem;
+}

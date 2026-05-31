@@ -1,0 +1,96 @@
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+<CascadingValue Value="this" IsFixed="true">
+    <div @attributes="AdditionalAttributes"
+         class="@CssClass"
+         style="@StyleValue"
+         role="list"
+         aria-label="@Label">
+        @ChildContent
+    </div>
+</CascadingValue>
+
+@code {
+    private int SafeGap => Gap < 0 ? 0 : Gap;
+
+    private string CssClass => BuildClass(
+        "w3-chat",
+        Dense ? "w3-chat-dense" : null,
+        Reverse ? "w3-chat-reverse" : null,
+        Color.ToBackgroundClass(),
+        TextColor.ToTextClass());
+
+    private string? StyleValue => CombineStyle(
+        $"--w3-chat-gap:{SafeGap}px",
+        MaxHeight is null ? null : $"--w3-chat-max-height:{MaxHeight}",
+        Style);
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public string Label { get; set; } = "Chat";
+
+    [Parameter]
+    public bool Dense { get; set; }
+
+    [Parameter]
+    public bool Reverse { get; set; }
+
+    [Parameter]
+    public int Gap { get; set; } = 12;
+
+    [Parameter]
+    public string? MaxHeight { get; set; }
+
+    [Parameter]
+    public bool ShowAvatars { get; set; } = true;
+
+    [Parameter]
+    public int AvatarSize { get; set; } = 36;
+
+    [Parameter]
+    public W3Color Color { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color TextColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color MessageColor { get; set; } = W3Color.LightGrey;
+
+    [Parameter]
+    public W3Color MessageTextColor { get; set; } = W3Color.Black;
+
+    [Parameter]
+    public W3Color OwnMessageColor { get; set; } = W3Color.Teal;
+
+    [Parameter]
+    public W3Color OwnMessageTextColor { get; set; } = W3Color.White;
+
+    [Parameter]
+    public W3Round Round { get; set; } = W3Round.Large;
+
+    internal bool EffectiveShowAvatars => ShowAvatars;
+
+    internal int EffectiveAvatarSize => AvatarSize;
+
+    internal W3Color EffectiveMessageColor => MessageColor;
+
+    internal W3Color EffectiveMessageTextColor => MessageTextColor;
+
+    internal W3Color EffectiveOwnMessageColor => OwnMessageColor;
+
+    internal W3Color EffectiveOwnMessageTextColor => OwnMessageTextColor;
+
+    internal W3Round EffectiveRound => Round;
+
+    private static string? CombineStyle(params string?[] styles)
+    {
+        var style = string.Join(';', styles
+            .Where(value => !string.IsNullOrWhiteSpace(value))
+            .Select(value => value!.Trim().TrimEnd(';')));
+
+        return string.IsNullOrWhiteSpace(style) ? null : style;
+    }
+}

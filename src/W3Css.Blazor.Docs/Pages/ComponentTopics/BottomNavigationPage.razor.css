@@ -1,0 +1,26 @@
+.bottom-nav-phone,
+.bottom-nav-toolbar-preview {
+    position: relative;
+    overflow: hidden;
+    background: #f7f9fb;
+}
+
+.bottom-nav-phone {
+    min-height: 440px;
+}
+
+.bottom-nav-phone-main {
+    min-height: 360px;
+    padding: 24px 24px 96px;
+    box-sizing: border-box;
+}
+
+.bottom-nav-toolbar-preview {
+    min-height: 280px;
+}
+
+.bottom-nav-toolbar-content {
+    min-height: 220px;
+    padding: 24px 24px 84px;
+    box-sizing: border-box;
+}

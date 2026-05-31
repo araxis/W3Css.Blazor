@@ -1,0 +1,16 @@
+.w3-progress {
+    min-height: 1.5rem;
+    overflow: hidden;
+}
+
+.w3-progress-bar {
+    box-sizing: border-box;
+    min-height: 1.5rem;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.w3-progress-bar-empty {
+    padding-left: 0;
+    padding-right: 0;
+}

@@ -1,0 +1,105 @@
+@page "/components/sidebar"
+
+<PageTitle>W3Sidebar</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3Sidebar</h1>
+    <DocPager PreviousHref="components/drawer" PreviousText="Drawer" NextHref="components/image" NextText="Image" />
+
+    <p class="w3-large">`W3Sidebar` renders a W3.CSS fixed sidebar with optional overlay dismissal.</p>
+    <p>Use `Open` or `@@bind-Open` to control visibility from Blazor.</p>
+
+    <DocExample Title="Sidebar With Overlay" Code="@BasicCode">
+        <W3Button Color="W3Color.Teal" TextColor="W3Color.White" Round="W3Round.Medium" OnClick="@(() => SidebarOpen = true)">Open sidebar</W3Button>
+
+        <W3Sidebar @bind-Open="SidebarOpen" Width="260" Overlay="true">
+            <Header>
+                <W3Container Color="W3Color.Teal" TextColor="W3Color.White">
+                    <h3>Menu</h3>
+                </W3Container>
+            </Header>
+            <ChildContent>
+                <W3Bar Block="true">
+                    <W3BarItem Href="components">Components</W3BarItem>
+                    <W3BarItem Href="components/modal">Modal</W3BarItem>
+                    <W3BarItem Href="roadmap">Roadmap</W3BarItem>
+                </W3Bar>
+            </ChildContent>
+        </W3Sidebar>
+    </DocExample>
+
+    <DocExample Title="Right Sidebar" Code="@RightCode">
+        <W3Button Border="true" Round="W3Round.Medium" OnClick="@(() => RightSidebarOpen = true)">Open right sidebar</W3Button>
+
+        <W3Sidebar @bind-Open="RightSidebarOpen" Position="W3SidebarPosition.Right" Width="240" Color="W3Color.LightGrey">
+            <W3Container>
+                <h3>Right side</h3>
+                <p>Use the position parameter for right-side panels.</p>
+            </W3Container>
+        </W3Sidebar>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Open</td><td>bool</td><td>true</td><td>`w3-show` or `w3-hide`</td></tr>
+                <tr><td>OpenChanged</td><td>EventCallback&lt;bool&gt;</td><td>none</td><td>Raised when the overlay closes the sidebar</td></tr>
+                <tr><td>Overlay</td><td>bool</td><td>true</td><td>`w3-overlay` dismissal layer</td></tr>
+                <tr><td>Collapse</td><td>bool</td><td>false</td><td>`w3-collapse`</td></tr>
+                <tr><td>Animate</td><td>bool</td><td>true</td><td>`w3-animate-left` or `w3-animate-right`</td></tr>
+                <tr><td>Width</td><td>int</td><td>200</td><td>Width in pixels</td></tr>
+                <tr><td>Position</td><td>W3SidebarPosition</td><td>Left</td><td>`left:0` or `right:0`</td></tr>
+                <tr><td>Color</td><td>W3Color</td><td>White</td><td>Sidebar background color</td></tr>
+                <tr><td>TextColor</td><td>W3Color</td><td>None</td><td>Sidebar text color</td></tr>
+                <tr><td>Header</td><td>RenderFragment?</td><td>null</td><td>Optional header slot</td></tr>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Sidebar body content</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional sidebar classes</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline style appended after width and position</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Related</h2>
+        <p><NavLink href="components/drawer">Drawer</NavLink> adds app-oriented header, body, footer, overlay, and persistent variants on top of sidebar behavior.</p>
+        <p><NavLink href="components/case-study">Case Study</NavLink> shows side navigation inside a page composition.</p>
+    </section>
+
+    <DocPager PreviousHref="components/drawer" PreviousText="Drawer" NextHref="components/image" NextText="Image" />
+</W3Container>
+
+@code {
+    private bool SidebarOpen { get; set; }
+    private bool RightSidebarOpen { get; set; }
+
+    private const string BasicCode = """
+<W3Button OnClick="@(() => sidebarOpen = true)">Open sidebar</W3Button>
+
+<W3Sidebar @bind-Open="sidebarOpen" Width="260" Overlay="true">
+    <Header>
+        <W3Container Color="W3Color.Teal" TextColor="W3Color.White">
+            <h3>Menu</h3>
+        </W3Container>
+    </Header>
+    <ChildContent>
+        <W3Bar Block="true">
+            <W3BarItem Href="components">Components</W3BarItem>
+            <W3BarItem Href="components/modal">Modal</W3BarItem>
+        </W3Bar>
+    </ChildContent>
+</W3Sidebar>
+""";
+
+    private const string RightCode = """
+<W3Sidebar @bind-Open="rightSidebarOpen" Position="W3SidebarPosition.Right" Width="240" Color="W3Color.LightGrey">
+    <W3Container>
+        <h3>Right side</h3>
+        <p>Use the position parameter for right-side panels.</p>
+    </W3Container>
+</W3Sidebar>
+""";
+}

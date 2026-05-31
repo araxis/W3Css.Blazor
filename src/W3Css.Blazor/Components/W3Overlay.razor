@@ -1,0 +1,66 @@
+@inherits W3ComponentBase
+
+@if (Visible)
+{
+    <div @attributes="AdditionalAttributes"
+         class="@OverlayCssClass"
+         style="@CombinedStyle"
+         aria-hidden="true"
+         role="presentation"
+         @onclick="CloseFromOverlayAsync"></div>
+}
+
+@code {
+    private string OverlayCssClass => BuildClass(
+        "w3-overlay",
+        "w3-show",
+        Contained ? "w3-overlay-contained" : null);
+
+    private string? CombinedStyle
+    {
+        get
+        {
+            var styles = new List<string?>();
+
+            if (Contained)
+            {
+                styles.Add("position:absolute!important");
+            }
+
+            if (!string.IsNullOrWhiteSpace(Style))
+            {
+                styles.Add(Style);
+            }
+
+            return string.IsNullOrWhiteSpace(string.Join(";", styles)) ? null : string.Join(";", styles);
+        }
+    }
+
+    [Parameter]
+    public bool Visible { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> VisibleChanged { get; set; }
+
+    [Parameter]
+    public bool AutoClose { get; set; } = true;
+
+    [Parameter]
+    public bool Contained { get; set; }
+
+    [Parameter]
+    public EventCallback OnClick { get; set; }
+
+    private async Task CloseFromOverlayAsync()
+    {
+        await OnClick.InvokeAsync();
+
+        if (!AutoClose || !Visible)
+        {
+            return;
+        }
+
+        Visible = false;
+        await VisibleChanged.InvokeAsync(false);
+    }
+}

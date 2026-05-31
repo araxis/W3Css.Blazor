@@ -1,0 +1,202 @@
+@page "/components/animations"
+
+<PageTitle>W3Animate</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3Animate</h1>
+    <DocPager PreviousHref="components/effects" PreviousText="Effects" NextHref="components/hover-colors" NextText="Hover Colors" />
+
+    <p class="w3-large">`W3Animate` renders W3.CSS animation utility classes from the typed `W3Animation` enum.</p>
+    <p>Use it for entrance and attention animations on a content wrapper, or set `Inline` when the wrapper should render a span.</p>
+
+    <DocExample Title="Directional Animations" Code="@DirectionalCode">
+        <div class="w3-margin-bottom">
+            <W3Button Color="W3Color.Teal" TextColor="W3Color.White" Size="W3Size.Small" Round="W3Round.Medium" OnClick="ReplayDirectionalAnimations">
+                Replay directional
+            </W3Button>
+        </div>
+
+        <div @key="DirectionalAnimationKey">
+            <W3Grid Padding="true" Style="grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));">
+                <W3Animate Animation="W3Animation.Top" Color="W3Color.Teal" TextColor="W3Color.White" Round="W3Round.Medium" Class="@SampleClass">
+                    Top
+                </W3Animate>
+                <W3Animate Animation="W3Animation.Left" Color="W3Color.PaleBlue" Round="W3Round.Medium" Class="@SampleClass">
+                    Left
+                </W3Animate>
+                <W3Animate Animation="W3Animation.Right" Color="W3Color.PaleGreen" Round="W3Round.Medium" Class="@SampleClass">
+                    Right
+                </W3Animate>
+                <W3Animate Animation="W3Animation.Bottom" Color="W3Color.PaleYellow" Round="W3Round.Medium" Class="@SampleClass">
+                    Bottom
+                </W3Animate>
+            </W3Grid>
+        </div>
+    </DocExample>
+
+    <DocExample Title="Fading, Opacity, Zoom, And Spin" Code="@MotionCode">
+        <div class="w3-margin-bottom">
+            <W3Button Color="W3Color.Teal" TextColor="W3Color.White" Size="W3Size.Small" Round="W3Round.Medium" OnClick="ReplayMotionAnimations">
+                Replay motion
+            </W3Button>
+        </div>
+
+        <div @key="MotionAnimationKey">
+            <W3Grid Padding="true" Style="grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));">
+                <W3Animate Animation="W3Animation.Opacity" Color="W3Color.LightGrey" Round="W3Round.Medium" Class="@SampleClass">
+                    Opacity
+                </W3Animate>
+                <W3Animate Animation="W3Animation.Zoom" Color="W3Color.PaleRed" Round="W3Round.Medium" Class="@SampleClass">
+                    Zoom
+                </W3Animate>
+                <W3Animate Animation="W3Animation.Fading" Color="W3Color.Black" TextColor="W3Color.White" Round="W3Round.Medium" Class="@SampleClass">
+                    Fading
+                </W3Animate>
+                <W3Animate Animation="W3Animation.Spin" Color="W3Color.White" Round="W3Round.Medium" Class="@SampleClass">
+                    Spin
+                </W3Animate>
+            </W3Grid>
+        </div>
+    </DocExample>
+
+    <DocExample Title="Inline Animation" Code="@InlineCode">
+        <div class="w3-margin-bottom">
+            <W3Button Color="W3Color.Teal" TextColor="W3Color.White" Size="W3Size.Small" Round="W3Round.Medium" OnClick="ReplayInlineAnimation">
+                Replay inline
+            </W3Button>
+        </div>
+
+        <p>
+            Inline wrappers can animate
+            <W3Animate @key="InlineAnimationKey" Inline="true" Animation="W3Animation.Zoom" Color="W3Color.PaleYellow" TextColor="W3Color.Red" Round="W3Round.Medium" Class="w3-padding-small w3-show-inline-block">
+                small text fragments
+            </W3Animate>
+            without adding a block element.
+        </p>
+    </DocExample>
+
+    <DocExample Title="Animated Input" Code="@InputCode">
+        <W3Input Animation="W3Animation.Input"
+                 @bind-Value="AnimatedInputValue"
+                 Placeholder="Focus to expand"
+                 Border="true"
+                 Style="@AnimatedInputStyle" />
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Inline</td><td>bool</td><td>false</td><td>Renders `span` instead of `div`</td></tr>
+                <tr><td>Animation</td><td>W3Animation</td><td>None</td><td>Animation class</td></tr>
+                <tr><td>Color</td><td>W3Color</td><td>None</td><td>Background color class</td></tr>
+                <tr><td>TextColor</td><td>W3Color</td><td>None</td><td>Text color class</td></tr>
+                <tr><td>Round</td><td>W3Round</td><td>None</td><td>Rounded corner class</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional CSS classes</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline style</td></tr>
+                <tr><td>ChildContent</td><td>RenderFragment</td><td>null</td><td>Content inside the animation wrapper</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Utility Values</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Value</th><th>Class</th><th>Use</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>None</td><td>none</td><td>No animation class</td></tr>
+                <tr><td>Top</td><td>`w3-animate-top`</td><td>Enter from above</td></tr>
+                <tr><td>Bottom</td><td>`w3-animate-bottom`</td><td>Enter from below</td></tr>
+                <tr><td>Left</td><td>`w3-animate-left`</td><td>Enter from the left</td></tr>
+                <tr><td>Right</td><td>`w3-animate-right`</td><td>Enter from the right</td></tr>
+                <tr><td>Opacity</td><td>`w3-animate-opacity`</td><td>Fade in once</td></tr>
+                <tr><td>Zoom</td><td>`w3-animate-zoom`</td><td>Scale in once</td></tr>
+                <tr><td>Fading</td><td>`w3-animate-fading`</td><td>Fade in and out continuously</td></tr>
+                <tr><td>Spin</td><td>`w3-spin`</td><td>Rotate continuously</td></tr>
+                <tr><td>Input</td><td>`w3-animate-input`</td><td>Expand a focused input</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Related W3.CSS</h2>
+        <p><a href="https://www.w3schools.com/w3css/w3css_animate.asp" target="_blank" rel="noopener">W3.CSS Animations</a></p>
+    </section>
+
+    <DocPager PreviousHref="components/effects" PreviousText="Effects" NextHref="components/hover-colors" NextText="Hover Colors" />
+</W3Container>
+
+@code {
+    private const string SampleClass = "w3-padding w3-border";
+    private const string AnimatedInputStyle = "width: 12rem; max-width: 100%;";
+    private int directionalAnimationVersion;
+    private int motionAnimationVersion;
+    private int inlineAnimationVersion;
+    private string AnimatedInputValue { get; set; } = string.Empty;
+    private string DirectionalAnimationKey => $"directional-{directionalAnimationVersion}";
+    private string MotionAnimationKey => $"motion-{motionAnimationVersion}";
+    private string InlineAnimationKey => $"inline-{inlineAnimationVersion}";
+
+    private void ReplayDirectionalAnimations()
+    {
+        directionalAnimationVersion++;
+    }
+
+    private void ReplayMotionAnimations()
+    {
+        motionAnimationVersion++;
+    }
+
+    private void ReplayInlineAnimation()
+    {
+        inlineAnimationVersion++;
+    }
+
+    private const string DirectionalCode = """
+<W3Animate Animation="W3Animation.Top">
+    Top
+</W3Animate>
+
+<W3Animate Animation="W3Animation.Left">
+    Left
+</W3Animate>
+
+<W3Animate Animation="W3Animation.Right">
+    Right
+</W3Animate>
+
+<W3Animate Animation="W3Animation.Bottom">
+    Bottom
+</W3Animate>
+""";
+
+    private const string MotionCode = """
+<W3Animate Animation="W3Animation.Opacity">Opacity</W3Animate>
+<W3Animate Animation="W3Animation.Zoom">Zoom</W3Animate>
+<W3Animate Animation="W3Animation.Fading">Fading</W3Animate>
+<W3Animate Animation="W3Animation.Spin">Spin</W3Animate>
+""";
+
+    private const string InlineCode = """
+<p>
+    Inline wrappers can animate
+    <W3Animate Inline="true" Animation="W3Animation.Zoom" Color="W3Color.PaleYellow" TextColor="W3Color.Red" Class="w3-padding-small w3-show-inline-block">
+        small text fragments
+    </W3Animate>
+    without adding a block element.
+</p>
+""";
+
+    private const string InputCode = """
+<W3Input Animation="W3Animation.Input"
+         @bind-Value="inputValue"
+         Placeholder="Focus to expand"
+         Border="true"
+         Style="width: 12rem; max-width: 100%;" />
+""";
+}

@@ -1,0 +1,196 @@
+@page "/components/app-shell"
+
+<PageTitle>W3AppShell</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3AppShell</h1>
+    <DocPager PreviousHref="components/versions" PreviousText="Versions" NextHref="components/app-bar" NextText="App Bar" />
+
+    <p class="w3-large">`W3AppShell` composes a complete site or app frame from W3.CSS sidebar, main, header, and footer patterns.</p>
+    <p>Use it when an application needs a stable shell around routed content, dashboards, documentation, or a mobile-first site layout. Enable `SidebarOverlay` only for temporary sidebars that should dim the page while open.</p>
+
+    <DocExample Title="Contained App Preview" Description="The contained mode is useful for previews, embedded demos, and documentation examples. Full-page apps can omit `Contained` so the W3.CSS sidebar follows its normal fixed-position behavior." Code="@ContainedCode">
+        <W3AppShell Contained="true"
+                    Style="min-height:430px"
+                    Class="w3-border w3-white"
+                    HeaderColor="W3Color.Teal"
+                    HeaderTextColor="W3Color.White"
+                    SidebarColor="W3Color.LightGrey"
+                    SidebarWidth="220"
+                    SidebarOpen="@ShellOpen"
+                    SidebarOpenChanged="SetShellOpen">
+            <Header>
+                <W3Bar Color="W3Color.Teal" TextColor="W3Color.White">
+                    <W3BarItem OnClick="ToggleShell">@(ShellOpen ? "Close" : "Menu")</W3BarItem>
+                    <W3BarItem Button="false">Studio</W3BarItem>
+                    <W3BarItem Href="components/app-shell" Class="w3-right">Docs</W3BarItem>
+                </W3Bar>
+            </Header>
+            <Sidebar>
+                <W3Container Class="w3-padding-16">
+                    <strong>Workspace</strong>
+                </W3Container>
+                <W3Bar Block="true">
+                    <W3BarItem Href="components">Components</W3BarItem>
+                    <W3BarItem Href="components/input">Forms</W3BarItem>
+                    <W3BarItem Href="roadmap">Roadmap</W3BarItem>
+                </W3Bar>
+            </Sidebar>
+            <ChildContent>
+                <section class="w3-padding-24">
+                    <h2 class="w3-large">Dashboard content</h2>
+                    <W3Grid Padding="true" Style="grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));">
+                        <W3Card BodyClass="w3-padding" Class="w3-border w3-white">
+                            <strong>12</strong>
+                            <p class="doc-muted">Open tasks</p>
+                        </W3Card>
+                        <W3Card BodyClass="w3-padding" Class="w3-border w3-white">
+                            <strong>4</strong>
+                            <p class="doc-muted">Reviews</p>
+                        </W3Card>
+                    </W3Grid>
+                </section>
+            </ChildContent>
+            <Footer>
+                <W3Container Class="w3-padding w3-border-top">
+                    Shell footer
+                </W3Container>
+            </Footer>
+        </W3AppShell>
+    </DocExample>
+
+    <DocExample Title="Full Page Shell" Description="For real application layouts, use the component around routed body content and keep navigation in the sidebar slot." Code="@FullPageCode">
+        <W3Panel Color="W3Color.PaleBlue" TextColor="W3Color.Black" LeftBar="true" Border="true" Round="W3Round.Medium">
+            <p>The shell renders semantic `header`, `aside`, `main`, and `footer` regions and offsets the main region when the sidebar is open.</p>
+            <p>Set `SidebarOverlay="true"` for a modal-style mobile sidebar that closes when the overlay is clicked.</p>
+            <p>W3.CSS media rules reset the `w3-main` margin on smaller screens when `SidebarCollapse` is enabled.</p>
+        </W3Panel>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Header</td><td>RenderFragment?</td><td>null</td><td>Optional `header` region</td></tr>
+                <tr><td>Sidebar</td><td>RenderFragment?</td><td>null</td><td>Optional `aside.w3-sidebar` region</td></tr>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>`main.w3-main` region</td></tr>
+                <tr><td>Footer</td><td>RenderFragment?</td><td>null</td><td>Optional `footer` region</td></tr>
+                <tr><td>SidebarOpen</td><td>bool</td><td>true</td><td>`w3-show` or `w3-hide` on the sidebar</td></tr>
+                <tr><td>SidebarOpenChanged</td><td>EventCallback&lt;bool&gt;</td><td>empty</td><td>Two-way sidebar open state</td></tr>
+                <tr><td>SidebarOverlay</td><td>bool</td><td>false</td><td>Renders a clickable `w3-overlay` while open</td></tr>
+                <tr><td>SidebarCollapse</td><td>bool</td><td>true</td><td>Adds `w3-collapse` for responsive sidebar behavior</td></tr>
+                <tr><td>SidebarAnimate</td><td>bool</td><td>true</td><td>Adds left or right W3.CSS animation classes</td></tr>
+                <tr><td>SidebarWidth</td><td>int</td><td>260</td><td>Sidebar width and main offset in pixels</td></tr>
+                <tr><td>SidebarPosition</td><td>W3SidebarPosition</td><td>Left</td><td>Left or right sidebar placement</td></tr>
+                <tr><td>SidebarLabel</td><td>string</td><td>Sidebar</td><td>`aria-label` on the sidebar region</td></tr>
+                <tr><td>MainId</td><td>string</td><td>main</td><td>`id` on the main region</td></tr>
+                <tr><td>Contained</td><td>bool</td><td>false</td><td>Uses contained positioning for previews</td></tr>
+                <tr><td>MainPadded</td><td>bool</td><td>true</td><td>Adds `w3-container` to the main region</td></tr>
+                <tr><td>Color</td><td>W3Color</td><td>None</td><td>Root background color class</td></tr>
+                <tr><td>TextColor</td><td>W3Color</td><td>None</td><td>Root text color class</td></tr>
+                <tr><td>HeaderColor</td><td>W3Color</td><td>None</td><td>Header background color class</td></tr>
+                <tr><td>HeaderTextColor</td><td>W3Color</td><td>None</td><td>Header text color class</td></tr>
+                <tr><td>SidebarColor</td><td>W3Color</td><td>White</td><td>Sidebar background color class</td></tr>
+                <tr><td>SidebarTextColor</td><td>W3Color</td><td>None</td><td>Sidebar text color class</td></tr>
+                <tr><td>FooterColor</td><td>W3Color</td><td>None</td><td>Footer background color class</td></tr>
+                <tr><td>FooterTextColor</td><td>W3Color</td><td>None</td><td>Footer text color class</td></tr>
+                <tr><td>HeaderClass, BodyClass, SidebarClass, OverlayClass, MainClass, FooterClass</td><td>string?</td><td>null</td><td>Slot-level class pass-through</td></tr>
+                <tr><td>HeaderStyle, BodyStyle, SidebarStyle, OverlayStyle, MainStyle, FooterStyle</td><td>string?</td><td>null</td><td>Slot-level inline styles</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional classes on the root shell</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline styles on the root shell</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Related</h2>
+        <p><NavLink href="components/app-bar">App Bar</NavLink> provides a ready app header inside the shell header slot.</p>
+        <p><NavLink href="components/navbar">Navbar</NavLink> provides active top navigation inside the header slot.</p>
+        <p><NavLink href="components/sidebar">Sidebar</NavLink> remains available as the lower-level side surface component.</p>
+        <p><NavLink href="components/bar">Bar</NavLink> and <NavLink href="components/card">Card</NavLink> compose naturally inside the shell.</p>
+        <p><a href="https://www.w3schools.com/w3css/w3css_sidebar.asp" target="_blank" rel="noopener">W3.CSS Sidebar</a></p>
+        <p><a href="https://www.w3schools.com/w3css/w3css_mobile.asp" target="_blank" rel="noopener">W3.CSS Mobile</a></p>
+    </section>
+
+    <DocPager PreviousHref="components/versions" PreviousText="Versions" NextHref="components/app-bar" NextText="App Bar" />
+</W3Container>
+
+@code {
+    private bool ShellOpen { get; set; } = true;
+
+    private void ToggleShell()
+    {
+        ShellOpen = !ShellOpen;
+    }
+
+    private void SetShellOpen(bool open)
+    {
+        ShellOpen = open;
+    }
+
+    private const string ContainedCode = """
+<W3AppShell Contained="true"
+            Style="min-height:430px"
+            Class="w3-border w3-white"
+            HeaderColor="W3Color.Teal"
+            HeaderTextColor="W3Color.White"
+            SidebarColor="W3Color.LightGrey"
+            SidebarWidth="220"
+            @bind-SidebarOpen="shellOpen">
+    <Header>
+        <W3Bar Color="W3Color.Teal" TextColor="W3Color.White">
+            <W3BarItem OnClick="ToggleShell">@(shellOpen ? "Close" : "Menu")</W3BarItem>
+            <W3BarItem Button="false">Studio</W3BarItem>
+            <W3BarItem Href="components/app-shell" Class="w3-right">Docs</W3BarItem>
+        </W3Bar>
+    </Header>
+    <Sidebar>
+        <W3Container Class="w3-padding-16">
+            <strong>Workspace</strong>
+        </W3Container>
+        <W3Bar Block="true">
+            <W3BarItem Href="components">Components</W3BarItem>
+            <W3BarItem Href="components/input">Forms</W3BarItem>
+            <W3BarItem Href="roadmap">Roadmap</W3BarItem>
+        </W3Bar>
+    </Sidebar>
+    <ChildContent>
+        <section class="w3-padding-24">
+            <h2 class="w3-large">Dashboard content</h2>
+        </section>
+    </ChildContent>
+    <Footer>
+        <W3Container Class="w3-padding w3-border-top">
+            Shell footer
+        </W3Container>
+    </Footer>
+</W3AppShell>
+""";
+
+    private const string FullPageCode = """
+<W3AppShell HeaderColor="W3Color.Teal"
+            HeaderTextColor="W3Color.White"
+            SidebarColor="W3Color.White"
+            SidebarWidth="260"
+            @bind-SidebarOpen="sidebarOpen">
+    <Header>
+        <W3Navbar Color="W3Color.Teal" TextColor="W3Color.White" ActiveValue="@activeSection">
+            <W3NavbarItem Value="home" Href="">Home</W3NavbarItem>
+            <W3NavbarItem Value="docs" Href="components">Components</W3NavbarItem>
+        </W3Navbar>
+    </Header>
+    <Sidebar>
+        <W3Bar Block="true">
+            <W3BarItem Href="components/app-shell">App Shell</W3BarItem>
+            <W3BarItem Href="components/data-table">Data Table</W3BarItem>
+        </W3Bar>
+    </Sidebar>
+    <ChildContent>
+        @Body
+    </ChildContent>
+</W3AppShell>
+""";
+}

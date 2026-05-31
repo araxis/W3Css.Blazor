@@ -1,0 +1,20 @@
+.w3-dropdown-open {
+    z-index: 20;
+}
+
+.w3-dropdown-open > .w3-button {
+    position: relative;
+    z-index: 2;
+}
+
+.w3-dropdown-open > .w3-dropdown-content {
+    z-index: 3;
+}
+
+.w3-dropdown-close-layer {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    background: transparent;
+    cursor: default;
+}

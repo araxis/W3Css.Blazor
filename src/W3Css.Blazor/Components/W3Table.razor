@@ -1,0 +1,67 @@
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+@if (Responsive)
+{
+    <div class="w3-responsive">
+        <table @attributes="AdditionalAttributes"
+               class="@CssClass"
+               style="@Style">
+            @ChildContent
+        </table>
+    </div>
+}
+else
+{
+    <table @attributes="AdditionalAttributes"
+           class="@CssClass"
+           style="@Style">
+        @ChildContent
+    </table>
+}
+
+@code {
+    private string CssClass => BuildClass(
+        "w3-table",
+        Color.ToBackgroundClass(),
+        TextColor.ToTextClass(),
+        Striped ? "w3-striped" : null,
+        Bordered ? "w3-bordered" : null,
+        Border ? "w3-border" : null,
+        Hoverable ? "w3-hoverable" : null,
+        Centered ? "w3-centered" : null,
+        Dense ? "w3-small" : null);
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public W3Color Color { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color TextColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public bool Striped { get; set; }
+
+    [Parameter]
+    public bool Bordered { get; set; }
+
+    [Parameter]
+    public bool Border { get; set; }
+
+    [Parameter]
+    public bool Hoverable { get; set; }
+
+    [Parameter]
+    public bool Centered { get; set; }
+
+    [Parameter]
+    public bool Responsive { get; set; }
+
+    /// <summary>
+    /// Compact row density using the W3.CSS <c>w3-small</c> text class.
+    /// </summary>
+    [Parameter]
+    public bool Dense { get; set; }
+}

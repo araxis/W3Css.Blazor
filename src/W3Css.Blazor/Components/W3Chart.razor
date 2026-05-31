@@ -1,0 +1,186 @@
+@using System.Globalization
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+<div @attributes="AdditionalAttributes" class="@CssClass" style="@Style">
+    @if (!string.IsNullOrWhiteSpace(Title))
+    {
+        <div class="w3-chart-title">@Title</div>
+    }
+
+    <svg class="w3-chart-svg"
+         viewBox="@($"0 0 {Width} {Height}")"
+         preserveAspectRatio="xMidYMid meet"
+         role="img"
+         aria-label="@AriaLabel">
+        @foreach (var line in layout.Grid)
+        {
+            <line x1="@F(line.X1)" y1="@F(line.Y1)" x2="@F(line.X2)" y2="@F(line.Y2)" class="w3-chart-grid" />
+        }
+        @if (layout.AxisX is { } axisX)
+        {
+            <line x1="@F(axisX.X1)" y1="@F(axisX.Y1)" x2="@F(axisX.X2)" y2="@F(axisX.Y2)" class="w3-chart-axis" />
+        }
+        @if (layout.AxisY is { } axisY)
+        {
+            <line x1="@F(axisY.X1)" y1="@F(axisY.Y1)" x2="@F(axisY.X2)" y2="@F(axisY.Y2)" class="w3-chart-axis" />
+        }
+
+        @foreach (var bar in layout.Bars)
+        {
+            <rect x="@F(bar.X)" y="@F(bar.Y)" width="@F(bar.Width)" height="@F(bar.Height)" rx="1" fill="@bar.Color">
+                <title>@bar.Label: @bar.Value.ToString(CultureInfo.InvariantCulture)</title>
+            </rect>
+        }
+
+        @foreach (var series in layout.Lines)
+        {
+            <polyline points="@series.Points" fill="none" stroke="@series.Color" stroke-width="2" class="w3-chart-line" />
+        }
+
+        @foreach (var slice in layout.Slices)
+        {
+            @if (slice.FullCircle)
+            {
+                <circle cx="@F(slice.Cx)" cy="@F(slice.Cy)" r="@F(slice.R)" fill="@slice.Color">
+                    <title>@slice.Label: 100%</title>
+                </circle>
+            }
+            else
+            {
+                <path d="@slice.Path" fill="@slice.Color">
+                    <title>@slice.Label: @slice.Percent.ToString(CultureInfo.InvariantCulture)%</title>
+                </path>
+            }
+        }
+        @if (layout.Hole is { } hole)
+        {
+            <circle cx="@F(hole.Cx)" cy="@F(hole.Cy)" r="@F(hole.R)" fill="@hole.Color" />
+        }
+
+        @foreach (var text in layout.Labels)
+        {
+            @RenderLabel(text)
+        }
+    </svg>
+
+    @if (ShowLegend && layout.Legend.Count > 0)
+    {
+        <ul class="w3-chart-legend">
+            @foreach (var item in layout.Legend)
+            {
+                <li class="w3-chart-legend-item">
+                    <span class="w3-chart-legend-swatch" style="@($"background:{item.Color}")" aria-hidden="true"></span>
+                    <span>@item.Name</span>
+                </li>
+            }
+        </ul>
+    }
+</div>
+
+@code {
+    // A genuinely-missing capability (W3.CSS ships no charts): a dependency-free,
+    // script-free SVG chart supporting Bar, Line, Pie, and Donut. Geometry lives
+    // in W3ChartGeometry so it stays simple and testable.
+    private W3ChartLayout layout = new();
+
+    private string CssClass => BuildClass("w3-chart", Color.ToBackgroundClass(), TextColor.ToTextClass());
+
+    /// <summary>
+    /// Chart variant.
+    /// </summary>
+    [Parameter]
+    public W3ChartType ChartType { get; set; } = W3ChartType.Bar;
+
+    /// <summary>
+    /// Data series. For Pie/Donut the first series' values become the slices.
+    /// </summary>
+    [Parameter]
+    public IReadOnlyList<W3ChartSeries> Series { get; set; } = [];
+
+    /// <summary>
+    /// Category labels (x-axis for Bar/Line, slice labels for Pie/Donut).
+    /// </summary>
+    [Parameter]
+    public IReadOnlyList<string> Labels { get; set; } = [];
+
+    /// <summary>
+    /// Color palette (hex). Falls back to a built-in palette when empty.
+    /// </summary>
+    [Parameter]
+    public IReadOnlyList<string> Palette { get; set; } = [];
+
+    /// <summary>
+    /// SVG viewBox width.
+    /// </summary>
+    [Parameter]
+    public int Width { get; set; } = 420;
+
+    /// <summary>
+    /// SVG viewBox height.
+    /// </summary>
+    [Parameter]
+    public int Height { get; set; } = 260;
+
+    /// <summary>
+    /// Shows the legend below the chart.
+    /// </summary>
+    [Parameter]
+    public bool ShowLegend { get; set; } = true;
+
+    /// <summary>
+    /// Shows axis/category labels (Bar/Line).
+    /// </summary>
+    [Parameter]
+    public bool ShowAxisLabels { get; set; } = true;
+
+    /// <summary>
+    /// Optional chart heading.
+    /// </summary>
+    [Parameter]
+    public string? Title { get; set; }
+
+    /// <summary>
+    /// Accessible label for the chart image.
+    /// </summary>
+    [Parameter]
+    public string AriaLabel { get; set; } = "Chart";
+
+    /// <summary>
+    /// Fill color of the donut hole (should match the surface behind the chart).
+    /// </summary>
+    [Parameter]
+    public string HoleColor { get; set; } = "#ffffff";
+
+    /// <summary>
+    /// Background color class.
+    /// </summary>
+    [Parameter]
+    public W3Color Color { get; set; } = W3Color.None;
+
+    /// <summary>
+    /// Text color class.
+    /// </summary>
+    [Parameter]
+    public W3Color TextColor { get; set; } = W3Color.None;
+
+    protected override void OnParametersSet()
+    {
+        layout = W3ChartGeometry.Build(ChartType, Series, Labels, Palette, Width, Height, ShowAxisLabels, HoleColor);
+    }
+
+    private static string F(double value) => value.ToString(CultureInfo.InvariantCulture);
+
+    // SVG <text> elements are emitted via the builder because Razor reserves the
+    // <text> tag as a control-flow directive that cannot carry attributes.
+    private RenderFragment RenderLabel(W3ChartAxisLabel label) => builder =>
+    {
+        builder.OpenElement(0, "text");
+        builder.AddAttribute(1, "x", F(label.X));
+        builder.AddAttribute(2, "y", F(label.Y));
+        builder.AddAttribute(3, "text-anchor", label.Anchor);
+        builder.AddAttribute(4, "class", "w3-chart-label");
+        builder.AddContent(5, label.Text);
+        builder.CloseElement();
+    };
+}

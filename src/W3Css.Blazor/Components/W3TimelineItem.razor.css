@@ -1,0 +1,98 @@
+.w3-timeline-item {
+    display: grid;
+    grid-template-columns: 2.5rem minmax(0, 1fr);
+    gap: 0.75rem;
+    margin: 0;
+    padding: 0 0 var(--w3-timeline-gap, 18px);
+}
+
+.w3-timeline-rail {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100%;
+}
+
+.w3-timeline-marker {
+    width: 2rem;
+    height: 2rem;
+    min-width: 2rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    line-height: 1;
+    overflow: hidden;
+}
+
+.w3-timeline-line {
+    flex: 1;
+    min-height: var(--w3-timeline-gap, 18px);
+    margin-top: 4px;
+    border-left-width: 3px;
+    border-left-style: solid;
+}
+
+.w3-timeline-item:last-child {
+    padding-bottom: 0;
+}
+
+.w3-timeline-item:last-child .w3-timeline-line {
+    display: none;
+}
+
+.w3-timeline-content {
+    min-width: 0;
+    margin: 0;
+    padding: var(--w3-timeline-content-padding, 12px 16px);
+}
+
+.w3-timeline-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.75rem;
+}
+
+.w3-timeline-title {
+    margin: 0;
+    font-size: 1.05rem;
+    line-height: 1.35;
+    font-weight: 700;
+}
+
+.w3-timeline-time {
+    color: #6b7280;
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+.w3-timeline-subtitle {
+    margin: 0.25rem 0 0;
+    color: #4b5563;
+}
+
+.w3-timeline-body {
+    margin-top: 0.5rem;
+}
+
+.w3-timeline-body:first-child {
+    margin-top: 0;
+}
+
+.w3-timeline-item-completed .w3-timeline-marker {
+    opacity: 0.92;
+}
+
+@media (max-width: 600px) {
+    .w3-timeline-item {
+        grid-template-columns: 2.25rem minmax(0, 1fr);
+        gap: 0.55rem;
+    }
+
+    .w3-timeline-header {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 0.2rem;
+    }
+}

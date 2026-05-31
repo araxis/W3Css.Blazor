@@ -1,0 +1,12 @@
+.w3-breadcrumb {
+    overflow-x: auto;
+}
+
+.w3-breadcrumb-list {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}

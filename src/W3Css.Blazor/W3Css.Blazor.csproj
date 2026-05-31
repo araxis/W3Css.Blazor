@@ -1,0 +1,84 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <PackageId>W3Css.Blazor</PackageId>
+    <Version>0.1.0</Version>
+    <Title>W3Css.Blazor</Title>
+    <Description>Lightweight Blazor components built on W3.CSS.</Description>
+    <Authors>W3Css.Blazor contributors</Authors>
+    <PackageTags>blazor;w3css;components;css;webassembly</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageProjectUrl>$(RepositoryUrl)</PackageProjectUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>$(RepositoryUrl)</RepositoryUrl>
+    <PackageReleaseNotes>See docs/release-notes/0.1.0.md</PackageReleaseNotes>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <IsPackable>true</IsPackable>
+  </PropertyGroup>
+
+
+  <ItemGroup>
+    <SupportedPlatform Include="browser" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Internal geometry helpers are testable directly without leaking into the public API. -->
+    <InternalsVisibleTo Include="W3Css.Blazor.Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="10.0.8" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+  <!--
+    Single-file convenience bundle: the vendored W3.CSS framework + the theme token
+    layer, concatenated into one stylesheet so consumers can link a single file
+    (_content/W3Css.Blazor/w3css-blazor.css). The two source files stay separate
+    (w3.css is kept pristine, never edited) and remain individually linkable for
+    consumers who want finer control. The bundle is committed so it is always present
+    as a static web asset at checkout time; this target regenerates it on every build
+    (WriteOnlyWhenDifferent) so it can never drift from its two sources.
+  -->
+  <UsingTask TaskName="ConcatCssFiles"
+             TaskFactory="RoslynCodeTaskFactory"
+             AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
+    <ParameterGroup>
+      <Output ParameterType="System.String" Required="true" />
+      <Header ParameterType="System.String" Required="true" />
+      <Inputs ParameterType="System.String[]" Required="true" />
+    </ParameterGroup>
+    <Task>
+      <Code Type="Fragment" Language="cs"><![CDATA[
+        var sb = new System.Text.StringBuilder();
+        sb.Append(Header).Append('\n');
+        foreach (var path in Inputs)
+        {
+            sb.Append(System.IO.File.ReadAllText(path)).Append('\n');
+        }
+        var content = sb.ToString();
+        if (!System.IO.File.Exists(Output) || System.IO.File.ReadAllText(Output) != content)
+        {
+            System.IO.File.WriteAllText(Output, content);
+        }
+      ]]></Code>
+    </Task>
+  </UsingTask>
+
+  <Target Name="BundleW3CssTheme"
+          BeforeTargets="ResolveStaticWebAssetsInputs;BeforeBuild;BeforeCompile"
+          Inputs="$(MSBuildProjectDirectory)\wwwroot\w3css\5\w3.css;$(MSBuildProjectDirectory)\wwwroot\w3-theme.css"
+          Outputs="$(MSBuildProjectDirectory)\wwwroot\w3css-blazor.css">
+    <ConcatCssFiles Header="/* W3Css.Blazor — generated bundle (w3css/5/w3.css + w3-theme.css). Do not edit. */"
+                    Inputs="$(MSBuildProjectDirectory)\wwwroot\w3css\5\w3.css;$(MSBuildProjectDirectory)\wwwroot\w3-theme.css"
+                    Output="$(MSBuildProjectDirectory)\wwwroot\w3css-blazor.css" />
+  </Target>
+
+</Project>

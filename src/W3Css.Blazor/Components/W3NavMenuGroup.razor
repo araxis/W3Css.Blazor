@@ -1,0 +1,121 @@
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+<div @attributes="AdditionalAttributes"
+     class="@CssClass"
+     style="@Style">
+    @if (Collapsible)
+    {
+        <button type="button"
+                class="@ButtonCssClass"
+                aria-expanded="@AriaExpanded"
+                disabled="@Disabled"
+                @onclick="ToggleAsync">
+            <span>@Title</span>
+            <span class="w3-nav-menu-group-indicator" aria-hidden="true">@(Expanded ? "-" : "+")</span>
+        </button>
+
+        @if (Expanded)
+        {
+            <div class="w3-nav-menu-group-content">
+                @ChildContent
+            </div>
+        }
+    }
+    else
+    {
+        <div class="@TitleCssClass">@Title</div>
+        <div class="w3-nav-menu-group-content">
+            @ChildContent
+        </div>
+    }
+</div>
+
+@code {
+    [CascadingParameter]
+    internal W3NavMenu? Owner { get; set; }
+
+    private string CssClass => BuildClass("w3-nav-menu-group");
+
+    private string ButtonCssClass => new W3ClassBuilder()
+        .Add("w3-button")
+        .Add("w3-block")
+        .Add("w3-left-align")
+        .Add("w3-nav-menu-group-button")
+        .AddIf(Owner?.Compact == true, "w3-nav-menu-group-button-compact")
+        .AddIf(Disabled, "w3-disabled")
+        .Add(ResolveColor().ToBackgroundClass())
+        .Add(ResolveTextColor().ToTextClass())
+        .Add(ResolveHoverColor().ToHoverBackgroundClass())
+        .Add(ResolveHoverTextColor().ToHoverTextClass())
+        .ToString();
+
+    private string TitleCssClass => new W3ClassBuilder()
+        .Add("w3-nav-menu-group-title")
+        .AddIf(Owner?.Compact == true, "w3-nav-menu-group-title-compact")
+        .Add(ResolveTextColor().ToTextClass())
+        .ToString();
+
+    private string AriaExpanded => Expanded ? "true" : "false";
+
+    [Parameter, EditorRequired]
+    public string Title { get; set; } = string.Empty;
+
+    [Parameter]
+    public bool Collapsible { get; set; } = true;
+
+    [Parameter]
+    public bool Expanded { get; set; } = true;
+
+    [Parameter]
+    public EventCallback<bool> ExpandedChanged { get; set; }
+
+    [Parameter]
+    public bool Disabled { get; set; }
+
+    [Parameter]
+    public W3Color Color { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color TextColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color HoverColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color HoverTextColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    private W3Color ResolveColor()
+    {
+        return Color;
+    }
+
+    private W3Color ResolveTextColor()
+    {
+        return TextColor;
+    }
+
+    private W3Color ResolveHoverColor()
+    {
+        return HoverColor != W3Color.None ? HoverColor : Owner?.HoverColor ?? W3Color.None;
+    }
+
+    private W3Color ResolveHoverTextColor()
+    {
+        return HoverTextColor != W3Color.None ? HoverTextColor : Owner?.HoverTextColor ?? W3Color.None;
+    }
+
+    private async Task ToggleAsync()
+    {
+        if (Disabled)
+        {
+            return;
+        }
+
+        Expanded = !Expanded;
+        await ExpandedChanged.InvokeAsync(Expanded);
+    }
+}

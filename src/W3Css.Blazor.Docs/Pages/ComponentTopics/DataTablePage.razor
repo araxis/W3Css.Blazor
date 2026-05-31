@@ -1,0 +1,291 @@
+@page "/components/data-table"
+
+<PageTitle>W3DataTable</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3DataTable</h1>
+    <DocPager PreviousHref="components/table" PreviousText="Table" NextHref="components/tree-view" NextText="Tree View" />
+
+    <p class="w3-large">`W3DataTable` layers app behavior over `W3Table`: searchable rows, sortable columns, paging, loading and empty states, row actions, and optional selection.</p>
+    <p>Use it when a screen needs data behavior but still wants W3.CSS table markup and Blazor-owned state instead of a JavaScript grid.</p>
+
+    <DocExample Title="Search, Sort, And Page" Description="Columns register inside the table. The table uses column text for search and sort keys for sortable headers." Code="@BasicCode">
+        <W3DataTable TItem="ProjectRow"
+                     Items="Projects"
+                     PageSize="3"
+                     SearchPlaceholder="Search projects"
+                     @bind-SearchText="ProjectSearch">
+            <ChildContent>
+                <W3DataColumn TItem="ProjectRow"
+                              Title="Project"
+                              CellText="@((ProjectRow project) => project.Name)"
+                              SortKey="@((ProjectRow project) => project.Name)" />
+                <W3DataColumn TItem="ProjectRow"
+                              Title="Owner"
+                              CellText="@((ProjectRow project) => project.Owner)"
+                              SearchValue="@((ProjectRow project) => project.Owner)" />
+                <W3DataColumn TItem="ProjectRow"
+                              Title="Tasks"
+                              Align="W3TextAlignment.Right"
+                              CellText="@((ProjectRow project) => project.Tasks)"
+                              SortKey="@((ProjectRow project) => project.Tasks)" />
+            </ChildContent>
+        </W3DataTable>
+    </DocExample>
+
+    <DocExample Title="Template Cells And Row Actions" Description="Use templated cells for tags, dates, links, buttons, or any app-specific markup." Code="@TemplateCode">
+        <W3DataTable TItem="ProjectRow"
+                     Items="Projects"
+                     PageSize="4"
+                     Searchable="false"
+                     Selectable="true"
+                     @bind-SelectedItem="SelectedProject">
+            <ChildContent>
+                <W3DataColumn TItem="ProjectRow"
+                              Title="Project"
+                              CellText="@((ProjectRow project) => project.Name)"
+                              SortKey="@((ProjectRow project) => project.Name)" />
+                <W3DataColumn TItem="ProjectRow"
+                              Title="Status"
+                              CellText="@((ProjectRow project) => project.Status)"
+                              SortKey="@((ProjectRow project) => project.Status)">
+                    <CellTemplate Context="project">
+                        <W3Tag Color="@GetStatusColor(project.Status)" TextColor="W3Color.White" Round="W3Round.Medium">@project.Status</W3Tag>
+                    </CellTemplate>
+                </W3DataColumn>
+                <W3DataColumn TItem="ProjectRow"
+                              Title="Updated"
+                              CellText='@((ProjectRow project) => project.Updated.ToString("MMM d"))'
+                              SortKey="@((ProjectRow project) => project.Updated)" />
+            </ChildContent>
+            <RowActions Context="project">
+                <W3Button Size="W3Size.Small" Border="true" Round="W3Round.Medium">Open @project.Name</W3Button>
+            </RowActions>
+        </W3DataTable>
+
+        @if (SelectedProject is not null)
+        {
+            <p class="w3-small">Selected: @SelectedProject.Name</p>
+        }
+    </DocExample>
+
+    <DocExample Title="Loading And Empty States" Description="Use the built-in states while data is loading or when filters return no rows." Code="@StatesCode">
+        <W3Grid Padding="true" Style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));">
+            <W3DataTable TItem="ProjectRow"
+                         Loading="true"
+                         LoadingText="Loading project rows">
+                <ChildContent>
+                    <W3DataColumn TItem="ProjectRow" Title="Project" CellText="@((ProjectRow project) => project.Name)" />
+                </ChildContent>
+            </W3DataTable>
+
+            <W3DataTable TItem="ProjectRow"
+                         Items="EmptyProjects"
+                         EmptyText="No projects match this view"
+                         Searchable="false">
+                <ChildContent>
+                    <W3DataColumn TItem="ProjectRow" Title="Project" CellText="@((ProjectRow project) => project.Name)" />
+                </ChildContent>
+            </W3DataTable>
+        </W3Grid>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>W3DataTable Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Items</td><td>IEnumerable&lt;TItem&gt;?</td><td>null</td><td>Rows rendered in the table</td></tr>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>`W3DataColumn` definitions</td></tr>
+                <tr><td>Toolbar</td><td>RenderFragment?</td><td>null</td><td>Custom toolbar content beside search</td></tr>
+                <tr><td>RowActions</td><td>RenderFragment&lt;TItem&gt;?</td><td>null</td><td>Optional actions column</td></tr>
+                <tr><td>EmptyContent</td><td>RenderFragment?</td><td>null</td><td>Custom empty row content</td></tr>
+                <tr><td>LoadingContent</td><td>RenderFragment?</td><td>null</td><td>Custom loading content</td></tr>
+                <tr><td>Id</td><td>string?</td><td>null</td><td>Stable prefix for generated control ids</td></tr>
+                <tr><td>AriaLabel</td><td>string</td><td>Data table</td><td>Accessible table label</td></tr>
+                <tr><td>Loading</td><td>bool</td><td>false</td><td>Renders a status panel instead of table rows</td></tr>
+                <tr><td>LoadingText</td><td>string</td><td>Loading data...</td><td>Default loading text</td></tr>
+                <tr><td>EmptyText</td><td>string</td><td>No records found.</td><td>Default empty-state text</td></tr>
+                <tr><td>Searchable</td><td>bool</td><td>true</td><td>Renders a W3.CSS-styled search input</td></tr>
+                <tr><td>SearchText</td><td>string?</td><td>null</td><td>Bindable search text</td></tr>
+                <tr><td>SearchTextChanged</td><td>EventCallback&lt;string?&gt;</td><td>empty</td><td>Search binding callback</td></tr>
+                <tr><td>SearchLabel</td><td>string</td><td>Search</td><td>Search input label</td></tr>
+                <tr><td>SearchPlaceholder</td><td>string</td><td>Search table</td><td>Search input placeholder</td></tr>
+                <tr><td>SearchInputClass</td><td>string?</td><td>null</td><td>Additional search input classes</td></tr>
+                <tr><td>Filter</td><td>Func&lt;TItem, string?, bool&gt;?</td><td>null</td><td>Optional custom filtering</td></tr>
+                <tr><td>Pageable</td><td>bool</td><td>true</td><td>Enables row paging</td></tr>
+                <tr><td>PageSize</td><td>int</td><td>10</td><td>Rows per page, or all rows when zero or less</td></tr>
+                <tr><td>CurrentPage</td><td>int</td><td>1</td><td>Bindable current page</td></tr>
+                <tr><td>CurrentPageChanged</td><td>EventCallback&lt;int&gt;</td><td>empty</td><td>Page binding callback</td></tr>
+                <tr><td>ShowCount</td><td>bool</td><td>true</td><td>Shows the row count summary</td></tr>
+                <tr><td>RowActionsHeader</td><td>string</td><td>Actions</td><td>Actions column header</td></tr>
+                <tr><td>Selectable</td><td>bool</td><td>false</td><td>Enables `aria-selected` and selected row color</td></tr>
+                <tr><td>SelectedItem</td><td>TItem?</td><td>null</td><td>Bindable selected row</td></tr>
+                <tr><td>SelectedItemChanged</td><td>EventCallback&lt;TItem?&gt;</td><td>empty</td><td>Selection binding callback</td></tr>
+                <tr><td>RowClicked</td><td>EventCallback&lt;TItem&gt;</td><td>empty</td><td>Row click callback</td></tr>
+                <tr><td>SelectedColor</td><td>W3Color</td><td>PaleBlue</td><td>Selected row background class</td></tr>
+                <tr><td>Color</td><td>W3Color</td><td>White</td><td>`W3Table` background color</td></tr>
+                <tr><td>TextColor</td><td>W3Color</td><td>None</td><td>`W3Table` text color</td></tr>
+                <tr><td>HeaderColor</td><td>W3Color</td><td>LightGrey</td><td>Header background color</td></tr>
+                <tr><td>HeaderTextColor</td><td>W3Color</td><td>Black</td><td>Header text color</td></tr>
+                <tr><td>ToolbarColor</td><td>W3Color</td><td>LightGrey</td><td>Toolbar background color</td></tr>
+                <tr><td>ToolbarTextColor</td><td>W3Color</td><td>Black</td><td>Toolbar text color</td></tr>
+                <tr><td>LoadingColor</td><td>W3Color</td><td>PaleBlue</td><td>Loading panel background color</td></tr>
+                <tr><td>LoadingTextColor</td><td>W3Color</td><td>Black</td><td>Loading panel text color</td></tr>
+                <tr><td>ActivePageColor</td><td>W3Color</td><td>Teal</td><td>Active pagination background color</td></tr>
+                <tr><td>ActivePageTextColor</td><td>W3Color</td><td>White</td><td>Active pagination text color</td></tr>
+                <tr><td>Striped</td><td>bool</td><td>true</td><td>`W3Table` striped rows</td></tr>
+                <tr><td>Bordered</td><td>bool</td><td>true</td><td>`W3Table` bordered rows</td></tr>
+                <tr><td>Border</td><td>bool</td><td>false</td><td>`W3Table` outer border</td></tr>
+                <tr><td>Hoverable</td><td>bool</td><td>true</td><td>`W3Table` hover rows</td></tr>
+                <tr><td>Centered</td><td>bool</td><td>false</td><td>`W3Table` centered cells</td></tr>
+                <tr><td>Responsive</td><td>bool</td><td>true</td><td>`W3Table` responsive wrapper</td></tr>
+                <tr><td>PaginationAriaLabel</td><td>string</td><td>Data table pagination</td><td>Pagination nav label</td></tr>
+                <tr><td>PreviousText</td><td>string</td><td>Previous</td><td>Previous page text</td></tr>
+                <tr><td>NextText</td><td>string</td><td>Next</td><td>Next page text</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional classes on the root section</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline styles on the root section</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>W3DataColumn Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Title</td><td>string</td><td>empty</td><td>Header text</td></tr>
+                <tr><td>HeaderContent</td><td>RenderFragment?</td><td>null</td><td>Custom header content</td></tr>
+                <tr><td>CellText</td><td>Func&lt;TItem, object?&gt;?</td><td>null</td><td>Cell text and default search text</td></tr>
+                <tr><td>CellTemplate</td><td>RenderFragment&lt;TItem&gt;?</td><td>null</td><td>Custom cell markup</td></tr>
+                <tr><td>SortKey</td><td>Func&lt;TItem, object?&gt;?</td><td>null</td><td>Sortable header value</td></tr>
+                <tr><td>SearchValue</td><td>Func&lt;TItem, string?&gt;?</td><td>null</td><td>Column-specific search value</td></tr>
+                <tr><td>Sortable</td><td>bool</td><td>true</td><td>Allows sorting when a sort key or cell text exists</td></tr>
+                <tr><td>Visible</td><td>bool</td><td>true</td><td>Includes or hides the column</td></tr>
+                <tr><td>Align</td><td>W3TextAlignment</td><td>None</td><td>Header and cell alignment class</td></tr>
+                <tr><td>HeaderClass</td><td>string?</td><td>null</td><td>Header cell class pass-through</td></tr>
+                <tr><td>CellClass</td><td>string?</td><td>null</td><td>Body cell class pass-through</td></tr>
+                <tr><td>HeaderStyle</td><td>string?</td><td>null</td><td>Header cell inline style</td></tr>
+                <tr><td>CellStyle</td><td>string?</td><td>null</td><td>Body cell inline style</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Related</h2>
+        <p><NavLink href="components/table">Table</NavLink> remains the low-level W3.CSS table wrapper.</p>
+        <p><NavLink href="components/tree-view">Tree View</NavLink> covers hierarchical data and nested navigation.</p>
+        <p><NavLink href="components/filters">Filters</NavLink> shows manual Blazor filtering over tables and lists.</p>
+        <p><NavLink href="components/pagination">Pagination</NavLink> is reused for the table footer controls.</p>
+    </section>
+
+    <DocPager PreviousHref="components/table" PreviousText="Table" NextHref="components/tree-view" NextText="Tree View" />
+</W3Container>
+
+@code {
+    private string? ProjectSearch { get; set; }
+
+    private ProjectRow? SelectedProject { get; set; }
+
+    private static readonly ProjectRow[] Projects =
+    [
+        new("Atlas", "Ada", "Active", 14, new DateOnly(2026, 5, 20)),
+        new("Borealis", "Grace", "Review", 7, new DateOnly(2026, 5, 18)),
+        new("Cygnus", "Linus", "Blocked", 3, new DateOnly(2026, 5, 12)),
+        new("Delta", "Katherine", "Active", 22, new DateOnly(2026, 5, 24)),
+        new("Equinox", "Barbara", "Review", 5, new DateOnly(2026, 5, 9))
+    ];
+
+    private static readonly ProjectRow[] EmptyProjects = [];
+
+    private static W3Color GetStatusColor(string status)
+    {
+        return status switch
+        {
+            "Active" => W3Color.Teal,
+            "Review" => W3Color.Indigo,
+            "Blocked" => W3Color.Red,
+            _ => W3Color.Grey
+        };
+    }
+
+    private sealed record ProjectRow(string Name, string Owner, string Status, int Tasks, DateOnly Updated);
+
+    private const string BasicCode = """
+<W3DataTable TItem="ProjectRow"
+             Items="Projects"
+             PageSize="3"
+             SearchPlaceholder="Search projects"
+             @bind-SearchText="projectSearch">
+    <ChildContent>
+        <W3DataColumn TItem="ProjectRow"
+                      Title="Project"
+                      CellText="@((ProjectRow project) => project.Name)"
+                      SortKey="@((ProjectRow project) => project.Name)" />
+        <W3DataColumn TItem="ProjectRow"
+                      Title="Owner"
+                      CellText="@((ProjectRow project) => project.Owner)"
+                      SearchValue="@((ProjectRow project) => project.Owner)" />
+        <W3DataColumn TItem="ProjectRow"
+                      Title="Tasks"
+                      Align="W3TextAlignment.Right"
+                      CellText="@((ProjectRow project) => project.Tasks)"
+                      SortKey="@((ProjectRow project) => project.Tasks)" />
+    </ChildContent>
+</W3DataTable>
+""";
+
+    private const string TemplateCode = """
+<W3DataTable TItem="ProjectRow"
+             Items="Projects"
+             PageSize="4"
+             Searchable="false"
+             Selectable="true"
+             @bind-SelectedItem="selectedProject">
+    <ChildContent>
+        <W3DataColumn TItem="ProjectRow"
+                      Title="Project"
+                      CellText="@((ProjectRow project) => project.Name)"
+                      SortKey="@((ProjectRow project) => project.Name)" />
+        <W3DataColumn TItem="ProjectRow"
+                      Title="Status"
+                      CellText="@((ProjectRow project) => project.Status)"
+                      SortKey="@((ProjectRow project) => project.Status)">
+            <CellTemplate Context="project">
+                <W3Tag Color="@GetStatusColor(project.Status)" TextColor="W3Color.White" Round="W3Round.Medium">@project.Status</W3Tag>
+            </CellTemplate>
+        </W3DataColumn>
+        <W3DataColumn TItem="ProjectRow"
+                      Title="Updated"
+                      CellText="@((ProjectRow project) => project.Updated.ToString("MMM d"))"
+                      SortKey="@((ProjectRow project) => project.Updated)" />
+    </ChildContent>
+    <RowActions Context="project">
+        <W3Button Size="W3Size.Small" Border="true" Round="W3Round.Medium">Open @project.Name</W3Button>
+    </RowActions>
+</W3DataTable>
+""";
+
+    private const string StatesCode = """
+<W3DataTable TItem="ProjectRow"
+             Loading="true"
+             LoadingText="Loading project rows">
+    <ChildContent>
+        <W3DataColumn TItem="ProjectRow" Title="Project" CellText="@((ProjectRow project) => project.Name)" />
+    </ChildContent>
+</W3DataTable>
+
+<W3DataTable TItem="ProjectRow"
+             Items="Array.Empty<ProjectRow>()"
+             EmptyText="No projects match this view"
+             Searchable="false">
+    <ChildContent>
+        <W3DataColumn TItem="ProjectRow" Title="Project" CellText="@((ProjectRow project) => project.Name)" />
+    </ChildContent>
+</W3DataTable>
+""";
+}

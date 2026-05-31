@@ -1,0 +1,126 @@
+@page "/components/chip-set"
+
+<PageTitle>W3ChipSet</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3ChipSet</h1>
+    <DocPager PreviousHref="components/chip" PreviousText="Chip" NextHref="components/avatar" NextText="Avatar" />
+
+    <p class="w3-large">`W3ChipSet` groups selectable `W3Chip` controls for filters, categories, and compact preference pickers.</p>
+    <p>Use single-select chips for mode switches and multi-select chips for filters that can combine several values.</p>
+
+    <DocExample Title="Single Select Chips" Code="@SingleCode">
+        <W3ChipSet TValue="string"
+                   Label="Project view"
+                   SelectedValue="@SelectedView"
+                   SelectedValueChanged="SetSelectedView">
+            <W3Chip TValue="string" Value="@("list")">List</W3Chip>
+            <W3Chip TValue="string" Value="@("board")">Board</W3Chip>
+            <W3Chip TValue="string" Value="@("calendar")">Calendar</W3Chip>
+        </W3ChipSet>
+        <p class="w3-small">Selected view: <strong>@SelectedView</strong></p>
+    </DocExample>
+
+    <DocExample Title="Multi Select Filters" Code="@MultiCode">
+        <W3ChipSet TValue="string"
+                   Label="Status filters"
+                   MultiSelect="true"
+                   SelectedValues="@SelectedStatuses"
+                   SelectedValuesChanged="SetSelectedStatuses"
+                   ActiveColor="W3Color.Indigo">
+            <W3Chip TValue="string" Value="@("active")" IconClass="fa fa-check">Active</W3Chip>
+            <W3Chip TValue="string" Value="@("review")" IconClass="fa fa-clock-o">Review</W3Chip>
+            <W3Chip TValue="string" Value="@("blocked")" IconClass="fa fa-exclamation">Blocked</W3Chip>
+        </W3ChipSet>
+        <p class="w3-small">Selected filters: <strong>@string.Join(", ", SelectedStatuses)</strong></p>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>W3ChipSet Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>`W3Chip` children</td></tr>
+                <tr><td>Label</td><td>string</td><td>Chip set</td><td>`aria-label` on the listbox</td></tr>
+                <tr><td>MultiSelect</td><td>bool</td><td>false</td><td>`aria-multiselectable` and multi-value behavior</td></tr>
+                <tr><td>SelectedValue</td><td>TValue?</td><td>null</td><td>Single selected value</td></tr>
+                <tr><td>SelectedValueChanged</td><td>EventCallback&lt;TValue?&gt;</td><td>empty</td><td>Single selection callback</td></tr>
+                <tr><td>SelectedValues</td><td>IReadOnlyCollection&lt;TValue&gt;</td><td>[]</td><td>Multi-selected values</td></tr>
+                <tr><td>SelectedValuesChanged</td><td>EventCallback&lt;IReadOnlyCollection&lt;TValue&gt;&gt;</td><td>empty</td><td>Multi-selection callback</td></tr>
+                <tr><td>Wrap</td><td>bool</td><td>true</td><td>Allows chips to wrap</td></tr>
+                <tr><td>Disabled</td><td>bool</td><td>false</td><td>Disables all chips</td></tr>
+                <tr><td>Gap</td><td>int</td><td>8</td><td>Gap in pixels</td></tr>
+                <tr><td>Color</td><td>W3Color</td><td>None</td><td>Default chip background color</td></tr>
+                <tr><td>TextColor</td><td>W3Color</td><td>None</td><td>Default chip text color</td></tr>
+                <tr><td>ActiveColor</td><td>W3Color</td><td>Teal</td><td>Selected chip background color</td></tr>
+                <tr><td>ActiveTextColor</td><td>W3Color</td><td>White</td><td>Selected chip text color</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional classes on the chip set</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline styles on the chip set</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>W3Chip Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Value</td><td>TValue</td><td>required</td><td>Chip selection value</td></tr>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Chip label content</td></tr>
+                <tr><td>IconClass</td><td>string?</td><td>null</td><td>Optional leading icon class</td></tr>
+                <tr><td>Active</td><td>bool</td><td>false</td><td>Standalone selected styling</td></tr>
+                <tr><td>Disabled</td><td>bool</td><td>false</td><td>Disables this chip</td></tr>
+                <tr><td>Border</td><td>bool</td><td>true</td><td>`w3-border`</td></tr>
+                <tr><td>Size</td><td>W3Size</td><td>Default</td><td>Size class</td></tr>
+                <tr><td>Round</td><td>W3Round</td><td>XXLarge</td><td>Rounded chip shape</td></tr>
+                <tr><td>Color, TextColor</td><td>W3Color</td><td>None</td><td>Default chip colors</td></tr>
+                <tr><td>ActiveColor, ActiveTextColor</td><td>W3Color</td><td>None</td><td>Per-chip active colors</td></tr>
+                <tr><td>OnSelected</td><td>EventCallback&lt;TValue&gt;</td><td>empty</td><td>Chip selected callback</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional chip classes</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline styles on the chip</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <DocPager PreviousHref="components/chip" PreviousText="Chip" NextHref="components/avatar" NextText="Avatar" />
+</W3Container>
+
+@code {
+    private string? SelectedView { get; set; } = "list";
+
+    private IReadOnlyCollection<string> SelectedStatuses { get; set; } = ["active"];
+
+    private void SetSelectedView(string? value)
+    {
+        SelectedView = value;
+    }
+
+    private void SetSelectedStatuses(IReadOnlyCollection<string> values)
+    {
+        SelectedStatuses = values;
+    }
+
+    private const string SingleCode = """
+<W3ChipSet TValue="string" Label="Project view" @bind-SelectedValue="selectedView">
+    <W3Chip TValue="string" Value="list">List</W3Chip>
+    <W3Chip TValue="string" Value="board">Board</W3Chip>
+    <W3Chip TValue="string" Value="calendar">Calendar</W3Chip>
+</W3ChipSet>
+""";
+
+    private const string MultiCode = """
+<W3ChipSet TValue="string"
+           Label="Status filters"
+           MultiSelect="true"
+           @bind-SelectedValues="selectedStatuses"
+           ActiveColor="W3Color.Indigo">
+    <W3Chip TValue="string" Value="active" IconClass="fa fa-check">Active</W3Chip>
+    <W3Chip TValue="string" Value="review" IconClass="fa fa-clock-o">Review</W3Chip>
+    <W3Chip TValue="string" Value="blocked" IconClass="fa fa-exclamation">Blocked</W3Chip>
+</W3ChipSet>
+""";
+}

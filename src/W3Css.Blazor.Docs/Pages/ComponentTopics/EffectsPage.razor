@@ -1,0 +1,169 @@
+@page "/components/effects"
+
+<PageTitle>W3Effect</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3Effect</h1>
+    <DocPager PreviousHref="components/text-fonts" PreviousText="Text Fonts" NextHref="components/animations" NextText="Animations" />
+
+    <p class="w3-large">`W3Effect` renders W3.CSS opacity, grayscale, sepia, shadow, and hover effect utility classes.</p>
+    <p>Use it when an effect should apply to a content wrapper, or set `Inline` when the wrapper should render a span.</p>
+
+    <DocExample Title="Opacity" Code="@OpacityCode">
+        <W3Grid Padding="true" Style="grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));">
+            <W3Effect Effect="W3EffectStyle.Opacity" Color="W3Color.Teal" TextColor="W3Color.White" Round="W3Round.Medium" Class="@SampleClass">
+                Opacity
+            </W3Effect>
+            <W3Effect Effect="W3EffectStyle.OpacityMin" Color="W3Color.Teal" TextColor="W3Color.White" Round="W3Round.Medium" Class="@SampleClass">
+                Opacity min
+            </W3Effect>
+            <W3Effect Effect="W3EffectStyle.OpacityMax" Color="W3Color.Teal" TextColor="W3Color.White" Round="W3Round.Medium" Class="@SampleClass">
+                Opacity max
+            </W3Effect>
+        </W3Grid>
+    </DocExample>
+
+    <DocExample Title="Filters" Code="@FilterCode">
+        <W3Grid Padding="true" Style="grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));">
+            <W3Effect Effect="W3EffectStyle.Grayscale" Color="W3Color.PaleBlue" Round="W3Round.Medium" Class="@SampleClass">
+                Grayscale
+            </W3Effect>
+            <W3Effect Effect="W3EffectStyle.GrayscaleMin" Color="W3Color.PaleGreen" Round="W3Round.Medium" Class="@SampleClass">
+                Grayscale min
+            </W3Effect>
+            <W3Effect Effect="W3EffectStyle.Sepia" Color="W3Color.PaleYellow" Round="W3Round.Medium" Class="@SampleClass">
+                Sepia
+            </W3Effect>
+        </W3Grid>
+    </DocExample>
+
+    <DocExample Title="Hover Effects" Code="@HoverCode">
+        <W3Grid Padding="true" Style="grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));">
+            <W3Effect HoverEffect="W3HoverEffect.Opacity" Color="W3Color.LightGrey" Round="W3Round.Medium" Class="@SampleClass">
+                Hover opacity
+            </W3Effect>
+            <W3Effect HoverEffect="W3HoverEffect.Grayscale" Color="W3Color.PaleRed" Round="W3Round.Medium" Class="@SampleClass">
+                Hover grayscale
+            </W3Effect>
+            <W3Effect HoverEffect="W3HoverEffect.Shadow" Color="W3Color.White" Round="W3Round.Medium" Class="@SampleClass">
+                Hover shadow
+            </W3Effect>
+            <W3Effect HoverEffect="W3HoverEffect.NoEffect" Color="W3Color.LightGrey" Round="W3Round.Medium" Class="@SampleClass">
+                Hover none
+            </W3Effect>
+        </W3Grid>
+    </DocExample>
+
+    <DocExample Title="Inline Effect" Code="@InlineCode">
+        <p>
+            Inline wrappers can mark
+            <W3Effect Inline="true" Effect="W3EffectStyle.OpacityOff" HoverEffect="W3HoverEffect.Opacity" TextColor="W3Color.Red">
+                small text fragments
+            </W3Effect>
+            without adding a block element.
+        </p>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Inline</td><td>bool</td><td>false</td><td>Renders `span` instead of `div`</td></tr>
+                <tr><td>Effect</td><td>W3EffectStyle</td><td>None</td><td>Opacity, grayscale, and sepia classes</td></tr>
+                <tr><td>HoverEffect</td><td>W3HoverEffect</td><td>None</td><td>Hover opacity, filter, shadow, and none classes</td></tr>
+                <tr><td>Color</td><td>W3Color</td><td>None</td><td>Background color class</td></tr>
+                <tr><td>TextColor</td><td>W3Color</td><td>None</td><td>Text color class</td></tr>
+                <tr><td>Round</td><td>W3Round</td><td>None</td><td>Rounded corner class</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional CSS classes</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline style</td></tr>
+                <tr><td>ChildContent</td><td>RenderFragment</td><td>null</td><td>Content inside the effect wrapper</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Utility Values</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Enum</th><th>Values</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>W3EffectStyle</td><td>None, Opacity, OpacityMin, OpacityMax, OpacityOff, Grayscale, GrayscaleMin, GrayscaleMax, Sepia, SepiaMin, SepiaMax</td></tr>
+                <tr><td>W3HoverEffect</td><td>None, Opacity, OpacityOff, Grayscale, Sepia, Shadow, NoEffect</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Related W3.CSS</h2>
+        <p><NavLink href="components/trends">Trends guidance</NavLink></p>
+        <p><NavLink href="components/material-design">Material Design guidance</NavLink></p>
+        <p><a href="https://www.w3schools.com/w3css/w3css_effects.asp" target="_blank" rel="noopener">W3.CSS Effects</a></p>
+        <p><a href="https://www.w3schools.com/w3css/w3css_trends.asp" target="_blank" rel="noopener">W3.CSS Trends</a></p>
+    </section>
+
+    <DocPager PreviousHref="components/text-fonts" PreviousText="Text Fonts" NextHref="components/animations" NextText="Animations" />
+</W3Container>
+
+@code {
+    private const string SampleClass = "w3-padding w3-border";
+
+    private const string OpacityCode = """
+<W3Effect Effect="W3EffectStyle.Opacity">
+    Opacity
+</W3Effect>
+
+<W3Effect Effect="W3EffectStyle.OpacityMin">
+    Opacity min
+</W3Effect>
+
+<W3Effect Effect="W3EffectStyle.OpacityMax">
+    Opacity max
+</W3Effect>
+""";
+
+    private const string FilterCode = """
+<W3Effect Effect="W3EffectStyle.Grayscale">
+    Grayscale
+</W3Effect>
+
+<W3Effect Effect="W3EffectStyle.GrayscaleMin">
+    Grayscale min
+</W3Effect>
+
+<W3Effect Effect="W3EffectStyle.Sepia">
+    Sepia
+</W3Effect>
+""";
+
+    private const string HoverCode = """
+<W3Effect HoverEffect="W3HoverEffect.Opacity">
+    Hover opacity
+</W3Effect>
+
+<W3Effect HoverEffect="W3HoverEffect.Grayscale">
+    Hover grayscale
+</W3Effect>
+
+<W3Effect HoverEffect="W3HoverEffect.Shadow">
+    Hover shadow
+</W3Effect>
+
+<W3Effect HoverEffect="W3HoverEffect.NoEffect">
+    Hover none
+</W3Effect>
+""";
+
+    private const string InlineCode = """
+<p>
+    Inline wrappers can mark
+    <W3Effect Inline="true" Effect="W3EffectStyle.OpacityOff" HoverEffect="W3HoverEffect.Opacity" TextColor="W3Color.Red">
+        small text fragments
+    </W3Effect>
+    without adding a block element.
+</p>
+""";
+}

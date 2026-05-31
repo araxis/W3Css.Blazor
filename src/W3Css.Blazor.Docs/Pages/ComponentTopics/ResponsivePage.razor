@@ -1,0 +1,79 @@
+@page "/components/responsive"
+
+<PageTitle>W3Responsive</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3Responsive</h1>
+    <DocPager PreviousHref="components/bar" PreviousText="Bar" NextHref="components/dark-mode" NextText="Dark Mode" />
+
+    <p class="w3-large">`W3Responsive` renders the W3.CSS overflow wrapper for wide content.</p>
+    <p>Use it around tables, charts, or fixed-width content that should scroll horizontally on small screens.</p>
+
+    <DocExample Title="Responsive Table Wrapper" Code="@TableCode">
+        <W3Responsive>
+            <W3Table Striped="true" Bordered="true" Class="w3-white" Style="min-width: 720px;" aria-label="Wide example table">
+                <thead>
+                    <tr>
+                        <th>Component</th>
+                        <th>Small</th>
+                        <th>Medium</th>
+                        <th>Large</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>W3Column</td><td>s12</td><td>m6</td><td>l4</td><td>Responsive spans</td></tr>
+                    <tr><td>W3Grid</td><td>auto</td><td>auto</td><td>auto</td><td>CSS grid tracks</td></tr>
+                </tbody>
+            </W3Table>
+        </W3Responsive>
+    </DocExample>
+
+    <DocExample Title="Generic Wide Content" Code="@GenericCode">
+        <W3Responsive>
+            <div class="w3-panel w3-pale-yellow w3-border" style="min-width: 680px;">
+                This content keeps its useful width and scrolls when the viewport is narrow.
+            </div>
+        </W3Responsive>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>ChildContent</td><td>RenderFragment</td><td>null</td><td>Content inside `w3-responsive`</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional CSS classes</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline wrapper style</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <DocPager PreviousHref="components/bar" PreviousText="Bar" NextHref="components/dark-mode" NextText="Dark Mode" />
+</W3Container>
+
+@code {
+    private const string TableCode = """
+<W3Responsive>
+    <W3Table Striped="true" Bordered="true" Class="w3-white" Style="min-width: 720px;" aria-label="Wide example table">
+        <thead>
+            <tr><th>Component</th><th>Small</th><th>Medium</th><th>Large</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>W3Column</td><td>s12</td><td>m6</td><td>l4</td><td>Responsive spans</td></tr>
+            <tr><td>W3Grid</td><td>auto</td><td>auto</td><td>auto</td><td>CSS grid tracks</td></tr>
+        </tbody>
+    </W3Table>
+</W3Responsive>
+""";
+
+    private const string GenericCode = """
+<W3Responsive>
+    <div class="w3-panel w3-pale-yellow w3-border" style="min-width: 680px;">
+        This content keeps its useful width and scrolls when the viewport is narrow.
+    </div>
+</W3Responsive>
+""";
+}

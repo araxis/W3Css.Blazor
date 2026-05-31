@@ -1,0 +1,392 @@
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.AspNetCore.Components.Web
+@using Microsoft.JSInterop
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+@implements IAsyncDisposable
+@inject IJSRuntime JS
+
+<div @attributes="AdditionalAttributes"
+     @ref="RootElement"
+     class="@RootCssClass"
+     style="@Style"
+     aria-disabled="@AriaDisabled"
+     @ondragenter="HandleDragEnterAsync"
+     @ondragover="HandleDragOverAsync"
+     @ondragleave="HandleDragLeaveAsync"
+     @ondrop="HandleDropAsync"
+     @ondragenter:preventDefault="true"
+     @ondragover:preventDefault="true"
+     @ondrop:preventDefault="true">
+    <InputFile @ref="FileInput"
+               id="@InputId"
+               name="@Name"
+               class="w3-drop-zone-input"
+               accept="@Accept"
+               multiple="@Multiple"
+               disabled="@Disabled"
+               aria-label="@InputLabel"
+               OnChange="@HandleChangeAsync" />
+
+    <div class="@ContentCssClass">
+        @if (ChildContent is not null)
+        {
+            @ChildContent
+        }
+        else
+        {
+            <span class="w3-drop-zone-title">@Label</span>
+            @if (!string.IsNullOrWhiteSpace(Description))
+            {
+                <span class="w3-drop-zone-description">@Description</span>
+            }
+            @if (!string.IsNullOrWhiteSpace(AcceptHint))
+            {
+                <span class="w3-drop-zone-hint">@AcceptHint</span>
+            }
+        }
+
+        @if (ShowBrowseButton)
+        {
+            <label for="@InputId" class="@BrowseButtonCssClass">@BrowseLabel</label>
+        }
+    </div>
+</div>
+
+@if (ShowSelectedFiles && SelectedFiles.Count > 0)
+{
+    <ul class="@SelectedListCssClass" aria-live="polite">
+        @foreach (var file in SelectedFiles)
+        {
+            <li>
+                <span>@file.Name</span>
+                @if (ShowFileSize)
+                {
+                    <span class="w3-drop-zone-file-size">@FormatFileSize(file.Size)</span>
+                }
+            </li>
+        }
+    </ul>
+}
+
+@code {
+    private readonly string generatedId = $"w3-drop-zone-{Guid.NewGuid():N}";
+
+    private IReadOnlyList<IBrowserFile> SelectedFiles { get; set; } = [];
+
+    private bool IsDragging { get; set; }
+
+    private ElementReference RootElement { get; set; }
+
+    private InputFile? FileInput { get; set; }
+
+    private IJSObjectReference? Module { get; set; }
+
+    private IJSObjectReference? DropZoneReference { get; set; }
+
+    private string InputId => Id ?? generatedId;
+
+    private string InputLabel => string.IsNullOrWhiteSpace(AriaLabel) ? Label : AriaLabel;
+
+    private int EffectiveMaximumFileCount => Math.Max(1, MaximumFileCount);
+
+    private string AriaDisabled => Disabled ? "true" : "false";
+
+    private string RootCssClass => BuildClass(
+        "w3-drop-zone",
+        "w3-padding-large",
+        Color.ToBackgroundClass(),
+        TextColor.ToTextClass(),
+        Border ? "w3-border" : null,
+        BorderColor.ToBorderClass(),
+        Round.ToClass(),
+        Compact ? "w3-drop-zone-compact" : null,
+        Disabled ? "w3-disabled w3-drop-zone-disabled" : null,
+        IsDragging ? "w3-drop-zone-dragging" : null,
+        IsDragging ? DragColor.ToBackgroundClass() : null,
+        IsDragging ? DragTextColor.ToTextClass() : null);
+
+    private string ContentCssClass => new W3ClassBuilder()
+        .Add("w3-drop-zone-content")
+        .Add(ContentClass)
+        .ToString();
+
+    private string BrowseButtonCssClass => new W3ClassBuilder()
+        .Add("w3-button")
+        .Add("w3-drop-zone-browse")
+        .Add(BrowseButtonColor.ToBackgroundClass())
+        .Add(BrowseButtonTextColor.ToTextClass())
+        .Add(BrowseButtonClass)
+        .AddIf(Disabled, "w3-disabled")
+        .ToString();
+
+    private string SelectedListCssClass => new W3ClassBuilder()
+        .Add("w3-ul")
+        .Add("w3-border")
+        .Add("w3-small")
+        .Add("w3-margin-top")
+        .Add(SelectedFilesClass)
+        .ToString();
+
+    [Parameter]
+    public string? Id { get; set; }
+
+    [Parameter]
+    public string? Name { get; set; }
+
+    [Parameter]
+    public string? Accept { get; set; }
+
+    [Parameter]
+    public bool Multiple { get; set; }
+
+    [Parameter]
+    public bool Disabled { get; set; }
+
+    [Parameter]
+    public bool Border { get; set; } = true;
+
+    [Parameter]
+    public bool Compact { get; set; }
+
+    [Parameter]
+    public W3Round Round { get; set; } = W3Round.Medium;
+
+    [Parameter]
+    public W3Color Color { get; set; } = W3Color.Surface;
+
+    [Parameter]
+    public W3Color TextColor { get; set; } = W3Color.Black;
+
+    [Parameter]
+    public W3Color BorderColor { get; set; } = W3Color.Teal;
+
+    [Parameter]
+    public W3Color DragColor { get; set; } = W3Color.PaleBlue;
+
+    [Parameter]
+    public W3Color DragTextColor { get; set; } = W3Color.Black;
+
+    [Parameter]
+    public string Label { get; set; } = "Drop files here";
+
+    [Parameter]
+    public string? Description { get; set; } = "or click to browse";
+
+    [Parameter]
+    public string? AcceptHint { get; set; }
+
+    [Parameter]
+    public string? AriaLabel { get; set; }
+
+    [Parameter]
+    public bool ShowSelectedFiles { get; set; } = true;
+
+    [Parameter]
+    public bool ShowFileSize { get; set; } = true;
+
+    [Parameter]
+    public bool ShowBrowseButton { get; set; } = true;
+
+    [Parameter]
+    public string BrowseLabel { get; set; } = "Choose files";
+
+    [Parameter]
+    public bool AccumulateFiles { get; set; } = true;
+
+    [Parameter]
+    public W3Color BrowseButtonColor { get; set; } = W3Color.Teal;
+
+    [Parameter]
+    public W3Color BrowseButtonTextColor { get; set; } = W3Color.White;
+
+    [Parameter]
+    public int MaximumFileCount { get; set; } = 10;
+
+    [Parameter]
+    public string? ContentClass { get; set; }
+
+    [Parameter]
+    public string? BrowseButtonClass { get; set; }
+
+    [Parameter]
+    public string? SelectedFilesClass { get; set; }
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public EventCallback<InputFileChangeEventArgs> OnChange { get; set; }
+
+    [Parameter]
+    public EventCallback<IReadOnlyList<IBrowserFile>> SelectedFilesChanged { get; set; }
+
+    [Parameter]
+    public EventCallback<DragEventArgs> OnDragEnter { get; set; }
+
+    [Parameter]
+    public EventCallback<DragEventArgs> OnDragOver { get; set; }
+
+    [Parameter]
+    public EventCallback<DragEventArgs> OnDragLeave { get; set; }
+
+    [Parameter]
+    public EventCallback<DragEventArgs> OnDrop { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender || FileInput is null)
+        {
+            return;
+        }
+
+        Module = await JS.InvokeAsync<IJSObjectReference>("import", "./_content/W3Css.Blazor/w3DropZone.js");
+        DropZoneReference = await Module.InvokeAsync<IJSObjectReference>(
+            "connect",
+            RootElement,
+            FileInput.Element,
+            new
+            {
+                accumulateFiles = AccumulateFiles,
+                maximumFileCount = EffectiveMaximumFileCount
+            });
+    }
+
+    private async Task HandleChangeAsync(InputFileChangeEventArgs args)
+    {
+        var incomingFiles = Multiple ? args.GetMultipleFiles(EffectiveMaximumFileCount) : [args.File];
+
+        SelectedFiles = MergeSelectedFiles(incomingFiles);
+        IsDragging = false;
+
+        if (SelectedFilesChanged.HasDelegate)
+        {
+            await SelectedFilesChanged.InvokeAsync(SelectedFiles);
+        }
+
+        if (OnChange.HasDelegate)
+        {
+            await OnChange.InvokeAsync(args);
+        }
+    }
+
+    private IReadOnlyList<IBrowserFile> MergeSelectedFiles(IReadOnlyList<IBrowserFile> incomingFiles)
+    {
+        if (!Multiple || !AccumulateFiles || SelectedFiles.Count == 0)
+        {
+            return incomingFiles;
+        }
+
+        var filesByKey = new Dictionary<(string Name, long Size, DateTimeOffset LastModified, string ContentType), IBrowserFile>();
+        var orderedKeys = new List<(string Name, long Size, DateTimeOffset LastModified, string ContentType)>();
+
+        AddFiles(SelectedFiles);
+        AddFiles(incomingFiles);
+
+        return orderedKeys
+            .Take(EffectiveMaximumFileCount)
+            .Select(key => filesByKey[key])
+            .ToArray();
+
+        void AddFiles(IEnumerable<IBrowserFile> files)
+        {
+            foreach (var file in files)
+            {
+                var key = GetFileKey(file);
+
+                if (!filesByKey.ContainsKey(key))
+                {
+                    if (orderedKeys.Count >= EffectiveMaximumFileCount)
+                    {
+                        continue;
+                    }
+
+                    orderedKeys.Add(key);
+                }
+
+                filesByKey[key] = file;
+            }
+        }
+    }
+
+    private static (string Name, long Size, DateTimeOffset LastModified, string ContentType) GetFileKey(IBrowserFile file) =>
+        (file.Name, file.Size, file.LastModified, file.ContentType);
+
+    private async Task HandleDragEnterAsync(DragEventArgs args)
+    {
+        if (!Disabled)
+        {
+            IsDragging = true;
+        }
+
+        if (OnDragEnter.HasDelegate)
+        {
+            await OnDragEnter.InvokeAsync(args);
+        }
+    }
+
+    private async Task HandleDragOverAsync(DragEventArgs args)
+    {
+        if (!Disabled)
+        {
+            IsDragging = true;
+        }
+
+        if (OnDragOver.HasDelegate)
+        {
+            await OnDragOver.InvokeAsync(args);
+        }
+    }
+
+    private async Task HandleDragLeaveAsync(DragEventArgs args)
+    {
+        IsDragging = false;
+
+        if (OnDragLeave.HasDelegate)
+        {
+            await OnDragLeave.InvokeAsync(args);
+        }
+    }
+
+    private async Task HandleDropAsync(DragEventArgs args)
+    {
+        IsDragging = false;
+
+        if (OnDrop.HasDelegate)
+        {
+            await OnDrop.InvokeAsync(args);
+        }
+    }
+
+    private static string FormatFileSize(long bytes)
+    {
+        if (bytes < 1024)
+        {
+            return $"{bytes} B";
+        }
+
+        var kilobytes = bytes / 1024d;
+
+        if (kilobytes < 1024)
+        {
+            return $"{kilobytes:0.#} KB";
+        }
+
+        var megabytes = kilobytes / 1024d;
+        return $"{megabytes:0.#} MB";
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (DropZoneReference is not null)
+        {
+            await DropZoneReference.InvokeVoidAsync("dispose");
+            await DropZoneReference.DisposeAsync();
+        }
+
+        if (Module is not null)
+        {
+            await Module.DisposeAsync();
+        }
+    }
+}

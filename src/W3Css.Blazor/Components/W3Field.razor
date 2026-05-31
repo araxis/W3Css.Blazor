@@ -1,0 +1,53 @@
+@typeparam TValue
+@inherits W3ComponentBase
+
+<div @attributes="AdditionalAttributes"
+     class="@CssClass"
+     style="@Style">
+    @if (!string.IsNullOrWhiteSpace(Label))
+    {
+        <label class="@LabelCssClass" for="@ForId">@Label</label>
+    }
+
+    @ChildContent
+
+    @if (!string.IsNullOrWhiteSpace(HelpText))
+    {
+        <div class="@HelpCssClass">@HelpText</div>
+    }
+
+    @if (For is not null)
+    {
+        <ValidationMessage For="@For" class="w3-text-red w3-small" />
+    }
+</div>
+
+@code {
+    private string CssClass => BuildClass("w3-section", Compact ? "w3-margin-bottom" : null);
+    private string LabelCssClass => new W3Css.Blazor.Internal.W3ClassBuilder().Add("w3-text-black").Add(LabelClass).ToString();
+    private string HelpCssClass => new W3Css.Blazor.Internal.W3ClassBuilder().Add("w3-small").Add("w3-text-grey").Add(HelpClass).ToString();
+
+    [Parameter]
+    public string? Label { get; set; }
+
+    [Parameter]
+    public string? ForId { get; set; }
+
+    [Parameter]
+    public Expression<Func<TValue>>? For { get; set; }
+
+    [Parameter]
+    public string? HelpText { get; set; }
+
+    [Parameter]
+    public string? LabelClass { get; set; }
+
+    [Parameter]
+    public string? HelpClass { get; set; }
+
+    [Parameter]
+    public bool Compact { get; set; }
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+}

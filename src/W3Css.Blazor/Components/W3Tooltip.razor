@@ -1,0 +1,55 @@
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+<span @attributes="AdditionalAttributes"
+      class="@TooltipCssClass"
+      style="@Style">
+    @ChildContent
+    <span class="@TextCssClass" style="@TooltipStyle">
+        @if (TooltipContent is not null)
+        {
+            @TooltipContent
+        }
+        else
+        {
+            @Text
+        }
+    </span>
+</span>
+
+@code {
+    private string TooltipCssClass => BuildClass("w3-tooltip");
+
+    private string TextCssClass => new W3ClassBuilder()
+        .Add("w3-text")
+        .Add("w3-tag")
+        .Add(Color.ToBackgroundClass())
+        .Add(TextColor.ToTextClass())
+        .Add(Round.ToClass())
+        .Add(TextClass)
+        .ToString();
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public string? Text { get; set; }
+
+    [Parameter]
+    public RenderFragment? TooltipContent { get; set; }
+
+    [Parameter]
+    public string? TextClass { get; set; }
+
+    [Parameter]
+    public string? TooltipStyle { get; set; }
+
+    [Parameter]
+    public W3Color Color { get; set; } = W3Color.Black;
+
+    [Parameter]
+    public W3Color TextColor { get; set; } = W3Color.White;
+
+    [Parameter]
+    public W3Round Round { get; set; } = W3Round.Medium;
+}

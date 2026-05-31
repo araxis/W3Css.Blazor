@@ -1,0 +1,49 @@
+.w3-divider {
+    border: 0;
+    border-top: 1px solid currentColor;
+    color: #ccc;
+    min-width: 0;
+}
+
+.w3-divider-strong {
+    border-top-width: 2px;
+}
+
+div.w3-divider {
+    align-items: center;
+    border: 0;
+    color: inherit;
+    display: flex;
+    gap: 12px;
+    width: 100%;
+}
+
+div.w3-divider::before,
+div.w3-divider::after {
+    border-top: 1px solid currentColor;
+    content: "";
+    flex: 1 1 auto;
+    min-width: 24px;
+}
+
+div.w3-divider-strong::before,
+div.w3-divider-strong::after {
+    border-top-width: 2px;
+}
+
+.w3-divider-content {
+    flex: 0 0 auto;
+}
+
+.w3-divider-vertical {
+    align-self: stretch;
+    border-left: 1px solid currentColor;
+    border-top: 0;
+    display: inline-block;
+    min-height: 1.5rem;
+    width: 0;
+}
+
+.w3-divider-vertical.w3-divider-strong {
+    border-left-width: 2px;
+}

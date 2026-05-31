@@ -1,0 +1,190 @@
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+@if (Disabled)
+{
+    <span @attributes="AdditionalAttributes"
+          class="@CssClass"
+          style="@ResolvedStyle"
+          aria-disabled="true">
+        @LinkContent
+    </span>
+}
+else if (!string.IsNullOrWhiteSpace(Href))
+{
+    <a @attributes="AdditionalAttributes"
+       href="@Href"
+       target="@Target"
+       rel="@Rel"
+       class="@CssClass"
+       style="@ResolvedStyle"
+       @onclick="HandleClickAsync">
+        @LinkContent
+    </a>
+}
+else if (Button)
+{
+    <button @attributes="AdditionalAttributes"
+            type="@Type"
+            class="@CssClass"
+            style="@ResolvedStyle"
+            @onclick="HandleClickAsync">
+        @LinkContent
+    </button>
+}
+else
+{
+    <span @attributes="AdditionalAttributes"
+          class="@CssClass"
+          style="@ResolvedStyle">
+        @LinkContent
+    </span>
+}
+
+@code {
+    private RenderFragment LinkContent => builder =>
+    {
+        if (ChildContent is not null)
+        {
+            builder.AddContent(0, ChildContent);
+            return;
+        }
+
+        builder.AddContent(1, Text);
+    };
+
+    private string CssClass => BuildClass(
+        "w3-link",
+        Button ? "w3-button" : null,
+        Button ? Color.ToBackgroundClass() : null,
+        TextColor.ToTextClass(),
+        Button ? Size.ToClass() : null,
+        Button ? Round.ToClass() : null,
+        Border ? "w3-border" : null,
+        Block ? "w3-block" : null);
+
+    private string? ResolvedStyle
+    {
+        get
+        {
+            if (Underline)
+            {
+                return Style;
+            }
+
+            if (string.IsNullOrWhiteSpace(Style))
+            {
+                return "text-decoration: none;";
+            }
+
+            if (Style.Contains("text-decoration", StringComparison.OrdinalIgnoreCase))
+            {
+                return Style;
+            }
+
+            return $"{Style.Trim().TrimEnd(';')}; text-decoration: none;";
+        }
+    }
+
+    /// <summary>
+    /// Label text when <see cref="ChildContent"/> is not set.
+    /// </summary>
+    [Parameter]
+    public string? Text { get; set; }
+
+    /// <summary>
+    /// Main link or button content.
+    /// </summary>
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    /// <summary>
+    /// Link target URL.
+    /// </summary>
+    [Parameter]
+    public string? Href { get; set; }
+
+    /// <summary>
+    /// Anchor target (for example, <c>_blank</c>).
+    /// </summary>
+    [Parameter]
+    public string? Target { get; set; }
+
+    /// <summary>
+    /// Optional rel attribute used for external anchors.
+    /// </summary>
+    [Parameter]
+    public string? Rel { get; set; }
+
+    /// <summary>
+    /// Whether the component should use button style and element behavior.
+    /// </summary>
+    [Parameter]
+    public bool Button { get; set; }
+
+    /// <summary>
+    /// Hide underlines for styled links (or use this to keep a button-like command look).
+    /// </summary>
+    [Parameter]
+    public bool Underline { get; set; } = true;
+
+    /// <summary>
+    /// Disabled behavior renders non-interactive text.
+    /// </summary>
+    [Parameter]
+    public bool Disabled { get; set; }
+
+    /// <summary>
+    /// Button mode only: HTML button type.
+    /// </summary>
+    [Parameter]
+    public string Type { get; set; } = "button";
+
+    /// <summary>
+    /// Button mode only: background color class.
+    /// </summary>
+    [Parameter]
+    public W3Color Color { get; set; } = W3Color.None;
+
+    /// <summary>
+    /// Link/button text color class.
+    /// </summary>
+    [Parameter]
+    public W3Color TextColor { get; set; } = W3Color.Primary;
+
+    /// <summary>
+    /// Optional button-size styling.
+    /// </summary>
+    [Parameter]
+    public W3Size Size { get; set; } = W3Size.Default;
+
+    /// <summary>
+    /// Optional button radius styling.
+    /// </summary>
+    [Parameter]
+    public W3Round Round { get; set; } = W3Round.None;
+
+    /// <summary>
+    /// Optional border styling.
+    /// </summary>
+    [Parameter]
+    public bool Border { get; set; }
+
+    /// <summary>
+    /// Optional block display.
+    /// </summary>
+    [Parameter]
+    public bool Block { get; set; }
+
+    /// <summary>
+    /// Click callback for anchor or button mode.
+    /// </summary>
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnClick { get; set; }
+
+    private Task HandleClickAsync(MouseEventArgs args)
+    {
+        return OnClick.InvokeAsync(args);
+    }
+
+}

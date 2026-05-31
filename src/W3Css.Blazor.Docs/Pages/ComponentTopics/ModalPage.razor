@@ -1,0 +1,104 @@
+@page "/components/modal"
+
+<PageTitle>W3Modal</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3Modal</h1>
+    <DocPager PreviousHref="components/toast" PreviousText="Toast" NextHref="components/overlay" NextText="Overlay" />
+
+    <p class="w3-large">`W3Modal` renders a W3.CSS modal with Blazor-controlled open state.</p>
+    <p>Use `Open` or `@@bind-Open` to show and hide the modal without script.</p>
+
+    <DocExample Title="Basic Modal" Code="@BasicCode">
+        <W3Button Color="W3Color.Teal" TextColor="W3Color.White" Round="W3Round.Medium" OnClick="@(() => ModalOpen = true)">Open modal</W3Button>
+
+        <W3Modal Id="sample-modal" Title="Modal title" @bind-Open="ModalOpen" Animate="true">
+            <ChildContent>
+                <p>This modal uses W3.CSS modal classes and Blazor state.</p>
+            </ChildContent>
+            <Footer>
+                <W3Button Color="W3Color.Teal" TextColor="W3Color.White" OnClick="@(() => ModalOpen = false)">Close</W3Button>
+            </Footer>
+        </W3Modal>
+    </DocExample>
+
+    <DocExample Title="Custom Header" Code="@HeaderCode">
+        <W3Button Border="true" Round="W3Round.Medium" OnClick="@(() => CustomModalOpen = true)">Open custom modal</W3Button>
+
+        <W3Modal @bind-Open="CustomModalOpen" ContentStyle="max-width: 520px;">
+            <Header>
+                <W3Container Color="W3Color.Cobalt" TextColor="W3Color.White">
+                    <h2>Custom header</h2>
+                </W3Container>
+            </Header>
+            <ChildContent>
+                <p>Header and footer slots allow regular W3.CSS composition.</p>
+            </ChildContent>
+        </W3Modal>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Id</td><td>string?</td><td>null</td><td>Dialog title id prefix</td></tr>
+                <tr><td>Open</td><td>bool</td><td>false</td><td>`w3-show` on modal</td></tr>
+                <tr><td>OpenChanged</td><td>EventCallback&lt;bool&gt;</td><td>none</td><td>Raised when the modal closes</td></tr>
+                <tr><td>Title</td><td>string?</td><td>null</td><td>Default header title</td></tr>
+                <tr><td>Header</td><td>RenderFragment?</td><td>null</td><td>Custom header slot</td></tr>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Modal body content</td></tr>
+                <tr><td>Footer</td><td>RenderFragment?</td><td>null</td><td>Footer slot</td></tr>
+                <tr><td>ShowCloseButton</td><td>bool</td><td>true</td><td>Renders top-right close button</td></tr>
+                <tr><td>CloseButtonLabel</td><td>string</td><td>Close</td><td>Close button aria-label</td></tr>
+                <tr><td>CloseOnBackdrop</td><td>bool</td><td>true</td><td>Backdrop click closes modal</td></tr>
+                <tr><td>CloseOnEscape</td><td>bool</td><td>true</td><td>Escape key close handler</td></tr>
+                <tr><td>Card</td><td>bool</td><td>true</td><td>`w3-card-4` on modal content</td></tr>
+                <tr><td>Animate</td><td>bool</td><td>false</td><td>`w3-animate-zoom`</td></tr>
+                <tr><td>ContentClass</td><td>string?</td><td>null</td><td>Additional modal content classes</td></tr>
+                <tr><td>ContentStyle</td><td>string?</td><td>null</td><td>Modal content inline style</td></tr>
+                <tr><td>ContentColor and ContentTextColor</td><td>W3Color</td><td>White and None</td><td>Modal content color classes</td></tr>
+                <tr><td>HeaderColor and HeaderTextColor</td><td>W3Color</td><td>Teal and White</td><td>Default header color classes</td></tr>
+                <tr><td>FooterColor and FooterTextColor</td><td>W3Color</td><td>LightGrey and Black</td><td>Default footer color classes</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional modal root classes</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline style on the modal root</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <DocPager PreviousHref="components/toast" PreviousText="Toast" NextHref="components/overlay" NextText="Overlay" />
+</W3Container>
+
+@code {
+    private bool ModalOpen { get; set; }
+    private bool CustomModalOpen { get; set; }
+
+    private const string BasicCode = """
+<W3Button OnClick="@(() => modalOpen = true)">Open modal</W3Button>
+
+<W3Modal Id="sample-modal" Title="Modal title" @bind-Open="modalOpen" Animate="true">
+    <ChildContent>
+        <p>This modal uses W3.CSS modal classes and Blazor state.</p>
+    </ChildContent>
+    <Footer>
+        <W3Button OnClick="@(() => modalOpen = false)">Close</W3Button>
+    </Footer>
+</W3Modal>
+""";
+
+    private const string HeaderCode = """
+<W3Modal @bind-Open="customModalOpen" ContentStyle="max-width: 520px;">
+    <Header>
+        <W3Container Color="W3Color.Cobalt" TextColor="W3Color.White">
+            <h2>Custom header</h2>
+        </W3Container>
+    </Header>
+    <ChildContent>
+        <p>Header and footer slots allow regular W3.CSS composition.</p>
+    </ChildContent>
+</W3Modal>
+""";
+}
+

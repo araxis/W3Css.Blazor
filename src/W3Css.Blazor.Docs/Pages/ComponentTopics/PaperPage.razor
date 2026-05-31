@@ -1,0 +1,68 @@
+@page "/components/paper"
+
+<PageTitle>W3Paper</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3Paper</h1>
+    <DocPager PreviousHref="components/card" PreviousText="Card" NextHref="components/row" NextText="Row" />
+
+    <p class="w3-large">
+        `W3Paper` provides MudBlazor-style paper surfaces with optional elevation, square mode, and outlined mode while staying true to W3.CSS classes.
+    </p>
+    <p>Use `W3Paper` when you want predictable surface surfaces without introducing a new styling system.</p>
+
+    <DocExample Title="Elevated Paper Surface" Code="@ElevatedPaperCode">
+        <W3Paper Elevation="2" Color="W3Color.White" TextColor="W3Color.Black">
+            <p>Medium surface with default rounded corners and card depth.</p>
+            <p>Keep content in a single surface for predictable spacing and contrast.</p>
+        </W3Paper>
+    </DocExample>
+
+    <DocExample Title="Outlined Square Paper" Code="@OutlinedSquarePaperCode">
+        <W3Paper Elevation="1" Square="true" Outlined="true" Style="max-width: 34rem;" Class="w3-padding-16">
+            <p><strong>Square + outlined</strong> is useful for compact command and content containers.</p>
+        </W3Paper>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Elevation</td><td>int</td><td>1</td><td>Depth class: 0=flat, 1=`w3-card`, 2=`w3-card-2`, 3+ = `w3-card-4`</td></tr>
+                <tr><td>Square</td><td>bool</td><td>false</td><td>Removes `w3-round` when true</td></tr>
+                <tr><td>Outlined</td><td>bool</td><td>false</td><td>Adds `w3-border`</td></tr>
+                <tr><td>Color</td><td>W3Color</td><td>None</td><td>Background color class</td></tr>
+                <tr><td>TextColor</td><td>W3Color</td><td>None</td><td>Text color class</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional classes</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline style</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Related</h2>
+        <p><NavLink href="components/card">Card</NavLink> provides slots for header and footer. Use paper when flat surface control is the primary goal.</p>
+        <p><NavLink href="components/panel">Panel</NavLink> provides semantic utility classes with less depth control.</p>
+        <p><NavLink href="components/material-design">Material Design</NavLink> includes paper-like surfaces and shadow guidance.</p>
+    </section>
+
+    <DocPager PreviousHref="components/card" PreviousText="Card" NextHref="components/row" NextText="Row" />
+</W3Container>
+
+@code {
+    private const string ElevatedPaperCode = """
+<W3Paper Elevation="2" Color="W3Color.White" TextColor="W3Color.Black">
+    <p>Medium surface with default rounded corners and card depth.</p>
+    <p>Keep content in a single surface for predictable spacing and contrast.</p>
+</W3Paper>
+""";
+
+    private const string OutlinedSquarePaperCode = """
+<W3Paper Elevation="1" Square="true" Outlined="true" Style="max-width: 34rem;" Class="w3-padding-16">
+    <p><strong>Square + outlined</strong> is useful for compact command and content containers.</p>
+</W3Paper>
+""";
+}

@@ -13,7 +13,8 @@
              @onkeydown="HandleKeyDownAsync">
         @if (ActiveSlide is not null)
         {
-            <div class="@GetSlideCssClass(ActiveSlide)"
+            <div @attributes="ActiveSlide.AdditionalAttributes"
+                 class="@GetSlideCssClass(ActiveSlide)"
                  style="@ActiveSlide.Style"
                  id="@ActiveSlide.SlideId"
                  role="group"

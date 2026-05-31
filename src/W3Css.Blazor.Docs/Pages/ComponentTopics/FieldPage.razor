@@ -1,4 +1,5 @@
 @page "/components/field"
+@using System.ComponentModel.DataAnnotations
 
 <PageTitle>W3Field</PageTitle>
 
@@ -18,6 +19,21 @@
         </EditForm>
     </DocExample>
 
+    <DocExample Title="Validation Feedback" Description="Field spacing keeps labels, help text, and validation messages readable even in dense forms." Code="@ValidationCode">
+        <EditForm Model="@FieldValidationModel">
+            <DataAnnotationsValidator />
+            <W3Field TValue="string"
+                     Label="Project code"
+                     ForId="field-project-code"
+                     For="@(() => FieldValidationModel.ProjectCode)"
+                     HelpText="Required before saving."
+                     ValidationClass="w3-pale-red w3-padding-small">
+                <W3Input Id="field-project-code" @bind-Value="FieldValidationModel.ProjectCode" Border="true" />
+            </W3Field>
+            <W3Button Type="submit" Color="W3Color.Teal" TextColor="W3Color.White" Round="W3Round.Medium">Validate</W3Button>
+        </EditForm>
+    </DocExample>
+
     <section class="doc-section">
         <h2>Parameters</h2>
         <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
@@ -32,6 +48,7 @@
                 <tr><td>HelpText</td><td>string?</td><td>null</td><td>Small help text below the control</td></tr>
                 <tr><td>LabelClass</td><td>string?</td><td>null</td><td>Additional label classes</td></tr>
                 <tr><td>HelpClass</td><td>string?</td><td>null</td><td>Additional help text classes</td></tr>
+                <tr><td>ValidationClass</td><td>string?</td><td>null</td><td>Additional validation message classes</td></tr>
                 <tr><td>Compact</td><td>bool</td><td>false</td><td>Compact spacing class</td></tr>
                 <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Field control content</td></tr>
                 <tr><td>Class</td><td>string?</td><td>null</td><td>Additional root classes</td></tr>
@@ -46,6 +63,7 @@
 
 @code {
     private readonly FieldExampleModel FieldModel = new();
+    private readonly FieldValidationExampleModel FieldValidationModel = new();
 
     private const string BasicCode = """
 <EditForm Model="@model">
@@ -56,8 +74,29 @@
 </EditForm>
 """;
 
+    private const string ValidationCode = """
+<EditForm Model="@model">
+    <DataAnnotationsValidator />
+    <W3Field TValue="string"
+             Label="Project code"
+             ForId="field-project-code"
+             For="@(() => model.ProjectCode)"
+             HelpText="Required before saving."
+             ValidationClass="w3-pale-red w3-padding-small">
+        <W3Input Id="field-project-code" @bind-Value="model.ProjectCode" Border="true" />
+    </W3Field>
+    <W3Button Type="submit" Color="W3Color.Teal" TextColor="W3Color.White" Round="W3Round.Medium">Validate</W3Button>
+</EditForm>
+""";
+
     private sealed class FieldExampleModel
     {
         public string ProjectName { get; set; } = "W3Css.Blazor";
+    }
+
+    private sealed class FieldValidationExampleModel
+    {
+        [Required(ErrorMessage = "Project code is required.")]
+        public string ProjectCode { get; set; } = string.Empty;
     }
 }

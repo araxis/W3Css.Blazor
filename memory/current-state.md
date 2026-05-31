@@ -17,7 +17,7 @@ Last updated: 2026-05-31
 - Current docs routes in `src/W3Css.Blazor.Docs/Pages/ComponentTopics`: 118 pages.
 - Tests in project source: 65 `.cs` test files.
 - Test suite status:
-  - `dotnet test tests/W3Css.Blazor.Tests/W3Css.Blazor.Tests.csproj --configuration Release` -> **418 passing tests**.
+  - `dotnet test tests/W3Css.Blazor.Tests/W3Css.Blazor.Tests.csproj --configuration Release` -> **420 passing tests**.
 - Build status:
   - `dotnet build W3Css.Blazor.slnx --configuration Release` → **0 warnings, 0 errors**.
 
@@ -63,5 +63,6 @@ Last updated: 2026-05-31
 - The tenth docs/API gap pass now covers `W3Bar`, `W3BarItem`, `W3Card`, `W3CellRow`, `W3Cell`, `W3DisplayContainer`, `W3Display`, `W3Responsive`, `W3Spacing`, `W3Text`, `W3Effect`, `W3Animate`, `W3HoverColor`, `W3Direction`, and `W3Border` parameter tables with focused docs smoke coverage.
 - The eleventh docs/API gap pass now covers the remaining breadcrumb, list, progress, rating, stepper, timeline, toggle group, and tree view parameter tables with focused docs smoke coverage.
 - The form-control UX audit added input-time updates to `W3TextArea`, refreshed its docs example/API table, and verified the rendered docs page.
+- The field UX audit added stable spacing hooks and customizable validation message classes to `W3Field`, refreshed the docs example/API table, and verified the rendered field page.
 - Neutral terminology cleanup is complete; source, docs, tests, and memory no longer use external comparison-library names for the compatibility work.
 - Remaining planned work is optional: extra theme tokens, focus-ring/theming polish, and `W3SwipeArea`-style pointer gesture support.

@@ -1,0 +1,30 @@
+.w3-field-label {
+    display: block;
+    font-weight: 600;
+    line-height: 1.35;
+    margin-bottom: 6px;
+}
+
+.w3-field-help {
+    line-height: 1.4;
+    margin-top: 6px;
+}
+
+.w3-field ::deep .w3-field-validation {
+    line-height: 1.4;
+    margin-top: 6px;
+}
+
+.w3-field.w3-field-compact {
+    margin-bottom: 8px;
+    margin-top: 8px;
+}
+
+.w3-field.w3-field-compact .w3-field-label {
+    margin-bottom: 4px;
+}
+
+.w3-field.w3-field-compact .w3-field-help,
+.w3-field.w3-field-compact ::deep .w3-field-validation {
+    margin-top: 4px;
+}

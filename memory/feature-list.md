@@ -43,7 +43,7 @@ This model is intentionally similar to mature Blazor libraries, while keeping im
 | `W3Container` | Implemented | Core wrapper with background/text/roundness/color options. |
 | `W3Panel` | Implemented | General panel with content and style variants. |
 | `W3Card` | Implemented | Cards with header/body/footer slot classes and rich color/rounding options. |
-| `W3Paper` | Implemented | MudBlazor-compatible paper surface wrapper with elevation, square, and outlined modes. |
+| `W3Paper` | Implemented | W3.CSS-first paper surface wrapper with elevation, square, and outlined modes. |
 | `W3Row` | Implemented | W3.CSS row layout wrapper. |
 | `W3Column` | Implemented | Responsive small/medium/large column spans. |
 | `W3Grid` | Implemented | W3.CSS grid utility wrapper. |
@@ -67,8 +67,8 @@ This model is intentionally similar to mature Blazor libraries, while keeping im
 | `W3Toolbar` | Implemented | Dense action rows for editors, tables, and dashboards. |
 | `W3Divider` | Implemented | Divider utility and section breaks. |
 | `W3Stack` | Implemented | Simple vertical/horizontal spacing container. |
-| `W3Spacer` | Implemented | MudBlazor-compatible flex filler (`MudSpacer`) for bars/toolbars. |
-| `W3Footer` | Implemented | MudBlazor-compatible footer region (`MudFooter`) with color/border/fixed options. |
+| `W3Spacer` | Implemented | W3.CSS-first flex filler for bars/toolbars. |
+| `W3Footer` | Implemented | W3.CSS-first footer region with color/border/fixed options. |
 
 ## Content Components
 
@@ -94,7 +94,7 @@ This model is intentionally similar to mature Blazor libraries, while keeping im
 | `W3Note` | Implemented | Semantic note panel component. |
 | `W3Quote` | Implemented | Citation-style quote component. |
 | `W3Avatar` | Implemented | Avatar with initials/image/fallback behavior. |
-| `W3AvatarGroup` | Implemented | MudBlazor-compatible overlapping avatar row (`MudAvatarGroup`). |
+| `W3AvatarGroup` | Implemented | Overlapping avatar row for compact participant displays. |
 | `W3Icon` | Implemented | Lightweight wrapper for icon classes. |
 
 ## Inputs And Forms
@@ -102,26 +102,26 @@ This model is intentionally similar to mature Blazor libraries, while keeping im
 | Component | Status | Notes |
 | --- | --- | --- |
 | `W3Input` | Implemented | Validation-friendly text input with `w3-input`. |
-| `W3Mask` | Implemented | MudBlazor-compatible masked input (`MudMask`); `0`/`a`/`*` tokens + literal delimiters. |
+| `W3Mask` | Implemented | Masked input with digit, letter, alphanumeric tokens, and literal delimiters. |
 | `W3NumberInput<TValue>` | Implemented | Native numeric input with W3.CSS styling and parsing helpers. |
 | `W3DateInput` | Implemented | Date picker input with range/date binding helpers. |
 | `W3TimeInput` | Implemented | Native time input with range and formatting support. |
 | `W3Slider<TValue>` | Implemented | Native range input wrapper with step/min/max. |
 | `W3Switch` | Implemented | Accessible toggle-style checkbox. |
-| `W3ToggleGroup<TValue>` / `W3ToggleItem<TValue>` | Implemented | MudBlazor-compatible segmented single/multi selector (`MudToggleGroup`) with `aria-pressed` items. |
+| `W3ToggleGroup<TValue>` / `W3ToggleItem<TValue>` | Implemented | Segmented single/multi selector with `aria-pressed` items. |
 | `W3ColorInput` | Implemented | Native color input with compact/full-width modes, plus an opt-in `ShowPalette` picker (preview + native + hex field + preset palette) that absorbed the former W3ColorPicker. |
 | `W3FileInput` | Implemented | `InputFile` wrapper with accept/multiple/listing. |
 | `W3RadioGroup` | Implemented | Binds grouped `W3Radio` options through shared value and selection events. |
 | `W3DropZone` | Implemented | Large-file input and drag/drop surface component. |
 | `W3Autocomplete` | Implemented | Searchable listbox/combo with templates and keyboard interaction. |
 | `W3Select` | Implemented | Generic select wrapper with validation patterns. |
-| `W3SelectItem` | Implemented | Typed option helper used inside `W3Select` and MudBlazor-style composition. |
+| `W3SelectItem` | Implemented | Typed option helper used inside `W3Select` and W3.CSS-first composition. |
 | `W3Checkbox` | Implemented | Checkbox with validation and label support. |
 | `W3Radio` | Implemented | Typed radio button wrapper. |
 | `W3RadioGroup` | Implemented | Coordinates grouped `W3Radio` selection through shared value binding. |
 | `W3TextArea` | Implemented | Text area wrapper with validation support. |
 | `W3Field` | Implemented | Label/help/validation wrapper for form fields. |
-| `W3Form` | Implemented | MudBlazor-compatible form wrapper using EditForm-style callbacks and class/style passthrough. |
+| `W3Form` | Implemented | W3.CSS-first form wrapper using EditForm-style callbacks and class/style passthrough. |
 | `W3Rating` | Implemented | Icon-first rating input component. |
 | `W3DateRangePicker` | Implemented | Date range selector composed from two `W3DateInput` controls (range capability a single date input lacks). |
 
@@ -144,7 +144,7 @@ This model is intentionally similar to mature Blazor libraries, while keeping im
 | `W3ScrollToTop` | Implemented | Back-to-top button that appears past a scroll threshold and smooth-scrolls up (small `w3ScrollToTop.js` for the scroll listener). |
 | `W3Menu` / `W3MenuItem` / `W3MenuDivider` | Implemented | Command menus with disabled items, descriptions, and close-on-select. |
 | `W3BottomNavigation` | Implemented | Mobile bottom navigation with icon/label/badge support. |
-| `W3Link` | Implemented | MudBlazor-like link/button primitive with optional underline control and disabled non-interactive fallback. |
+| `W3Link` | Implemented | W3.CSS-first link/button primitive with optional underline control and disabled non-interactive fallback. |
 
 ## Data Display
 
@@ -155,14 +155,14 @@ This model is intentionally similar to mature Blazor libraries, while keeping im
 | `W3TreeView<TItem>` | Implemented | Hierarchical tree with expansion/selection state and templated nodes. |
 | `W3List` / `W3ListItem` | Implemented | Lists and clickable list rows. |
 | `W3Timeline` / `W3TimelineItem` | Implemented | Activity/audit/release timelines. |
-| `W3Chart` / `W3ChartSeries` | Implemented | Dependency-free, script-free SVG charts (`MudChart` parity): Bar, Line, Pie, Donut, with legend, axis labels, and per-series colors. |
+| `W3Chart` / `W3ChartSeries` | Implemented | Dependency-free, script-free SVG charts: Bar, Line, Pie, Donut, with legend, axis labels, and per-series colors. |
 
 ## Feedback And Overlays
 
 | Component | Status | Notes |
 | --- | --- | --- |
 | `W3Modal` | Implemented | Blazor-controlled modal with backdrop, close handling, and an `Actions` footer convenience (the former W3Dialog folded in). |
-| `W3MessageBox` | Implemented | MudBlazor-compatible confirm/alert prompt (`MudMessageBox`) with `@bind-Visible` and `bool?` Yes/No/Cancel result. |
+| `W3MessageBox` | Implemented | Confirm/alert prompt with `@bind-Visible` and `bool?` Yes/No/Cancel result. |
 | `W3Tooltip` | Implemented | CSS-first tooltip wrapper. |
 | `W3Popover` | Implemented | Action/detail overlays with anchored popover behavior. |
 | `W3Drawer` | Implemented | Side drawer for temporary/persistent overlays. |
@@ -225,17 +225,17 @@ This model is intentionally similar to mature Blazor libraries, while keeping im
 | Content display and timeline | Implemented | Tree, chat, timeline, data table, rating, drop zone, and gallery coverage. |
 | Feedback and loading | Implemented | Spinner, skeleton, toast, file, autocomplete, and alert coverage. |
 | Package validation | Implemented | `dotnet pack` generates `W3Css.Blazor.0.1.0.nupkg`; CI uploads package artifact. |
-| Test count | Implemented | `dotnet test` reports 370 passing tests. |
+| Test count | Implemented | `dotnet test` reports 383 passing tests. |
 
-## MudBlazor Parity Backlog
+## Component Compatibility Backlog
 
-**Design rule (2026-05-29):** the library is **W3.CSS-loyal with one canonical component per concept**. Do NOT add MudBlazor-name alias shims (`W3TextField`, `W3NumericField`, `W3DataGrid`, etc.). Instead, fold any missing MudBlazor *feature* into the existing W3.CSS component, and add a brand-new component ONLY when the capability is entirely absent from the W3.CSS set. See [[decisions]] consolidation entry.
+**Design rule (2026-05-29):** the library is **W3.CSS-loyal with one canonical component per concept**. Do NOT add alias shims named after a reference library (`W3TextField`, `W3NumericField`, `W3DataGrid`, etc.). Instead, fold any missing reference-library *feature* into the existing W3.CSS component, and add a brand-new component ONLY when the capability is entirely absent from the W3.CSS set. See [[decisions]] consolidation entry.
 
 Consolidation (2026-05-29) removed 15 alias shims and folded their unique features into canonicals: `W3SimpleTable`→`W3Table.Dense`; `W3DataGrid`→`W3DataTable` (already had selection); `W3ColorPicker`→`W3ColorInput.ShowPalette`; `W3DynamicTabs`→`W3Tabs` closeable/addable; `W3Dialog`→`W3Modal.Actions` (W3MessageBox rebuilt on W3Modal); pure aliases removed outright (`W3TextField`, `W3NumericField`, `W3DatePicker`, `W3TimePicker`, `W3ProgressLinear`, `W3Snackbar`, `W3Carousel`, `W3CarouselItem`, `W3ExpansionPanels`, `W3ExpansionPanel`).
 
 New-capability components kept (not duplicates): `W3Spacer`, `W3Footer`, `W3AvatarGroup`, `W3MessageBox`, `W3ToggleGroup`/`W3ToggleItem`, `W3Mask`, `W3DateRangePicker`, `W3Paper`.
 
-The MudBlazor parity backlog is effectively complete. One niche candidate remains:
+The component compatibility backlog is effectively complete. One niche candidate remains:
 
 | Candidate | Category | Priority | W3.CSS-first approach |
 | --- | --- | --- | --- |
@@ -243,6 +243,6 @@ The MudBlazor parity backlog is effectively complete. One niche candidate remain
 
 Notes:
 
-- `MudHidden` is NOT added — responsive show/hide is already `W3Display`/`W3Responsive`'s job (would be a duplicate).
-- MudBlazor theming infra (`MudThemeProvider`, palettes) stays **guidance-first**, consistent with the project's dark-mode/color decisions; not planned as a component.
-- MudBlazor `MudCard*` sub-components are already covered by `W3Card` header/body/footer slots — no separate components.
+- A duplicate hidden component is NOT added — responsive show/hide is already `W3Display`/`W3Responsive`'s job.
+- Reference-library theming infrastructure stays **guidance-first**, consistent with the project's dark-mode/color decisions; not planned as a component.
+- Reference card sub-components are already covered by `W3Card` header/body/footer slots — no separate components.

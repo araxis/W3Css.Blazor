@@ -10,9 +10,8 @@
 </div>
 
 @code {
-    // MudBlazor compatibility: mirrors MudAvatarGroup, overlapping a row of
-    // W3Avatar children. The overlap is applied through scoped CSS so the
-    // vendored w3.css file stays untouched.
+    // Overlaps a row of W3Avatar children. The overlap is applied through scoped
+    // CSS so the vendored w3.css file stays untouched.
     private string CssClass => BuildClass(
         "w3-avatar-group",
         Outlined ? "w3-avatar-group-outlined" : null);

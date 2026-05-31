@@ -23,11 +23,11 @@ Last updated: 2026-05-31
 ## W3.CSS–Loyal Strategy
 
 - The project is W3.CSS-first and avoids changing vendored `w3.css`.
-- Do **not** ship MudBlazor-name aliases by default. If MudBlazor exposes a feature not in W3.CSS coverage, either:
+- Do **not** ship aliases named after a reference library by default. If a reference library exposes a feature not in W3.CSS coverage, either:
   1) fold that feature into an existing canonical component, or
   2) add a new component only when the capability is genuinely missing.
 - Removed/removed-by-design aliases include: `W3TextField`, `W3NumericField`, `W3DatePicker`, `W3TimePicker`, `W3ProgressLinear`, `W3Snackbar`, `W3Carousel`, `W3CarouselItem`, `W3ExpansionPanel`, `W3ExpansionPanels`, `W3SimpleTable`, `W3DataGrid`, `W3ColorPicker`, `W3DynamicTabs`, and `W3Dialog` wrappers.
-- `MudHidden` is intentionally not added; responsive show/hide is covered by `W3Display`/`W3Responsive`.
+- A duplicate hidden component is intentionally not added; responsive show/hide is covered by `W3Display`/`W3Responsive`.
 - `W3SwipeArea` is deferred (`Later`) as the only niche parity candidate not implemented yet (pointer/JS gesture focused).
 
 ## Theming And Customization

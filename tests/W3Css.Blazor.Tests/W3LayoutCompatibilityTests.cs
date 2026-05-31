@@ -4,7 +4,7 @@ using W3Css.Blazor.Components;
 
 namespace W3Css.Blazor.Tests;
 
-public sealed class W3MudParityLayoutTests
+public sealed class W3LayoutCompatibilityTests
 {
     [Fact]
     public void SpacerRendersFlexFillerElement()

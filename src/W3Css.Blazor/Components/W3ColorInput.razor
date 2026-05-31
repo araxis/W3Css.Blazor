@@ -60,8 +60,7 @@ else
 
 @code {
     // The canonical W3.CSS color control: a native color input by default, with
-    // an opt-in palette/preview/hex picker (ShowPalette) that absorbs the
-    // capability MudBlazor exposes through MudColorPicker.
+    // an opt-in palette/preview/hex picker for design-tooling workflows.
     private string ColorCssClass => BuildControlClass("w3-input", "w3-color-input", FullWidth ? "w3-color-input-block" : null);
 
     private string PickerCssClass => new W3ClassBuilder()

@@ -17,8 +17,7 @@
 </button>
 
 @code {
-    // MudBlazor compatibility: mirrors MudToggleItem. Renders a w3-bar-item button
-    // with aria-pressed reflecting selection within the owning W3ToggleGroup.
+    // Renders a w3-bar-item button with aria-pressed reflecting selection within the owning W3ToggleGroup.
     [CascadingParameter]
     internal W3ToggleGroup<TValue>? Owner { get; set; }
 

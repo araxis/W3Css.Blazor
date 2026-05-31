@@ -120,6 +120,8 @@ public sealed class W3SlideshowTests
                 builder.AddAttribute(9, nameof(W3Slide.Responsive), false);
                 builder.AddAttribute(10, nameof(W3Slide.Class), "slide-extra");
                 builder.AddAttribute(11, nameof(W3Slide.Style), "min-height: 10rem;");
+                builder.AddAttribute(12, "data-slide-id", "image-slide");
+                builder.AddAttribute(13, "aria-describedby", "image-caption");
                 builder.CloseComponent();
             }));
 
@@ -131,6 +133,8 @@ public sealed class W3SlideshowTests
         Assert.Contains("w3-animate-fading", slide.GetAttribute("class"));
         Assert.Contains("slide-extra", slide.GetAttribute("class"));
         Assert.Equal("min-height: 10rem;", slide.GetAttribute("style"));
+        Assert.Equal("image-slide", slide.GetAttribute("data-slide-id"));
+        Assert.Equal("image-caption", slide.GetAttribute("aria-describedby"));
         Assert.DoesNotContain("w3-image", image.GetAttribute("class"));
         Assert.Equal("Project mark", image.GetAttribute("alt"));
         Assert.Equal("96", image.GetAttribute("width"));

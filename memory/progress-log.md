@@ -701,3 +701,6 @@ Last updated: 2026-05-31
 - Started release-hardening phase with package consumer smoke tooling.
 - Added `tools/package-consumer-smoke.ps1` to create a disposable Blazor WebAssembly app, install a published package version from the public feed, compile real W3 components, publish the app, and verify the bundled static asset is present.
 - Verified `./tools/package-consumer-smoke.ps1 -PackageVersion 0.1.0` and default `./tools/package-consumer-smoke.ps1`: clean consumer app created, `W3Css.Blazor` 0.1.0 installed from the public feed, W3 components compiled, app published, and bundled stylesheet content was found.
+- Started public API consistency review.
+- Found `W3Slide` was the only rendered component-like public surface with hand-rolled `Class`/`Style` and no unmatched attribute capture. `W3DataColumn`, `W3Step`, and `W3TabPanel` are logical child descriptors and intentionally do not own standalone DOM roots.
+- Updated `W3Slide` to inherit the shared component base and updated `W3Slideshow` to forward slide-level unmatched attributes to the rendered active slide root, preserving `Class` and `Style` compatibility.

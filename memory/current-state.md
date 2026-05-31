@@ -49,4 +49,5 @@ Last updated: 2026-05-31
 
 - MudBlazor parity strategy is W3.CSS loyal: missing concepts are added as new reusable components where needed and duplicate alias components are intentionally avoided.
 - The "themed by default" pass is complete for surface and primary intent defaults in most components.
+- Public API hardening is in progress; `W3Slide` now uses the shared component base and forwards unmatched attributes to the rendered active slide.
 - Remaining planned work is optional: extra theme tokens, focus-ring/theming polish, and `W3SwipeArea`-style pointer gesture support.

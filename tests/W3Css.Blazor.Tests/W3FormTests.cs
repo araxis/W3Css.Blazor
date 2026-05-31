@@ -19,9 +19,13 @@ public sealed class W3FormTests
             .AddChildContent("<button type=\"submit\">Submit</button>"));
 
         var form = cut.Find("form");
+        var fieldset = cut.Find("fieldset");
 
+        Assert.Contains("w3-form", form.GetAttribute("class"));
         Assert.Contains("w3-card", form.GetAttribute("class"));
         Assert.Equal("max-width: 12rem;", form.GetAttribute("style"));
+        Assert.Contains("w3-form-fieldset", fieldset.GetAttribute("class"));
+        Assert.False(fieldset.HasAttribute("disabled"));
         Assert.Contains("Submit", form.TextContent);
     }
 
@@ -42,6 +46,46 @@ public sealed class W3FormTests
 
         Assert.NotNull(callbackContext);
         Assert.Same(model, callbackContext!.Model);
+    }
+
+    [Fact]
+    public void W3FormBusyDisablesChildControlsAndMarksFormBusy()
+    {
+        using var context = new BunitContext();
+
+        var cut = context.Render<W3Form>(parameters => parameters
+            .Add(p => p.Model, new FormModel())
+            .Add(p => p.Busy, true)
+            .AddChildContent("""
+                <input id="name" />
+                <button type="submit">Save</button>
+                """));
+
+        var form = cut.Find("form");
+        var fieldset = cut.Find("fieldset");
+
+        Assert.Contains("w3-form-busy", form.GetAttribute("class"));
+        Assert.Equal("true", form.GetAttribute("aria-busy"));
+        Assert.True(fieldset.HasAttribute("disabled"));
+        Assert.Contains("w3-form-fieldset", fieldset.GetAttribute("class"));
+    }
+
+    [Fact]
+    public void W3FormDisabledDisablesChildControlsWithoutBusyState()
+    {
+        using var context = new BunitContext();
+
+        var cut = context.Render<W3Form>(parameters => parameters
+            .Add(p => p.Model, new FormModel())
+            .Add(p => p.Disabled, true)
+            .AddChildContent("<input id=\"name\" />"));
+
+        var form = cut.Find("form");
+        var fieldset = cut.Find("fieldset");
+
+        Assert.Contains("w3-form-disabled", form.GetAttribute("class"));
+        Assert.Null(form.GetAttribute("aria-busy"));
+        Assert.True(fieldset.HasAttribute("disabled"));
     }
 
     private sealed class FormModel

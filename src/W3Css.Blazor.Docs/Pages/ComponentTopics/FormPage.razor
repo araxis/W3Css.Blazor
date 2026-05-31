@@ -21,6 +21,20 @@
         <p class="w3-small w3-text-gray">Submit count: @_submitCount</p>
     </DocExample>
 
+    <DocExample Title="Busy Submit State" Description="Bind Busy while saving to disable the form fieldset and expose aria-busy." Code="@BusyFormCode">
+        <W3Form Model="@_busyFormModel" OnValidSubmit="HandleBusySubmit" Busy="@_isSaving">
+            <W3Field TValue="string" Label="Team name" For="@(() => _busyFormModel.TeamName)" ForId="busy-team-name" HelpText="Submit is disabled while the save callback is running.">
+                <W3Input @bind-Value="_busyFormModel.TeamName" Id="busy-team-name" Placeholder="Design team" Border="true" />
+            </W3Field>
+            <div class="w3-margin-top">
+                <W3Button Type="submit" Color="W3Color.Teal" TextColor="W3Color.White">
+                    @(_isSaving ? "Saving..." : "Save")
+                </W3Button>
+            </div>
+        </W3Form>
+        <p class="w3-small w3-text-gray">@(_isSaving ? "Saving changes" : $"Saved {_saveCount} time(s)")</p>
+    </DocExample>
+
     <section class="doc-section">
         <h2>Parameters</h2>
         <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
@@ -33,6 +47,8 @@
                 <tr><td>OnSubmit</td><td>EventCallback&lt;EditContext&gt;</td><td>none</td><td>Maps to <code>EditForm.OnSubmit</code>.</td></tr>
                 <tr><td>OnValidSubmit</td><td>EventCallback&lt;EditContext&gt;</td><td>none</td><td>Maps to <code>EditForm.OnValidSubmit</code>.</td></tr>
                 <tr><td>OnInvalidSubmit</td><td>EventCallback&lt;EditContext&gt;</td><td>none</td><td>Maps to <code>EditForm.OnInvalidSubmit</code>.</td></tr>
+                <tr><td>Busy</td><td>bool</td><td>false</td><td>Sets <code>aria-busy</code> and disables child controls.</td></tr>
+                <tr><td>Disabled</td><td>bool</td><td>false</td><td>Disables child controls through the form fieldset.</td></tr>
                 <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Form content and fields.</td></tr>
                 <tr><td>Class</td><td>string?</td><td>null</td><td>Additional CSS classes.</td></tr>
                 <tr><td>Style</td><td>string?</td><td>null</td><td>Inline style.</td></tr>
@@ -53,14 +69,28 @@
 
 @code {
     private readonly FormModel _formModel = new();
+    private readonly BusyFormModel _busyFormModel = new();
     private int _submitCount;
+    private int _saveCount;
+    private bool _isSaving;
 
     private string BasicFormCode => """
 <W3Form Model="@_formModel" OnValidSubmit="HandleSubmit">
-    <W3Field TValue="string" Label="Full Name" ForId="form-name">
+    <W3Field TValue="string" Label="Full Name" For="@(() => _formModel.Name)" ForId="form-name">
         <W3Input @bind-Value="_formModel.Name" Id="form-name" Placeholder="Jane Example" Border="true" />
     </W3Field>
     <W3Button Type="submit" Color="W3Color.Teal" TextColor="W3Color.White">Submit</W3Button>
+</W3Form>
+""";
+
+    private string BusyFormCode => """
+<W3Form Model="@model" OnValidSubmit="HandleSubmit" Busy="@isSaving">
+    <W3Field TValue="string" Label="Team name" For="@(() => model.TeamName)" ForId="busy-team-name" HelpText="Submit is disabled while the save callback is running.">
+        <W3Input @bind-Value="model.TeamName" Id="busy-team-name" Placeholder="Design team" Border="true" />
+    </W3Field>
+    <W3Button Type="submit" Color="W3Color.Teal" TextColor="W3Color.White">
+        @(isSaving ? "Saving..." : "Save")
+    </W3Button>
 </W3Form>
 """;
 
@@ -69,8 +99,21 @@
         _submitCount++;
     }
 
+    private async Task HandleBusySubmit(Microsoft.AspNetCore.Components.Forms.EditContext _)
+    {
+        _isSaving = true;
+        await Task.Delay(700);
+        _saveCount++;
+        _isSaving = false;
+    }
+
     private sealed class FormModel
     {
         public string Name { get; set; } = "Jane";
+    }
+
+    private sealed class BusyFormModel
+    {
+        public string TeamName { get; set; } = "Design team";
     }
 }

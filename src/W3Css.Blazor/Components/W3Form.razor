@@ -6,15 +6,22 @@
           OnSubmit="@OnSubmit"
           OnValidSubmit="@OnValidSubmit"
           OnInvalidSubmit="@OnInvalidSubmit"
-          class="@BuildClass(Class)"
+          class="@FormCssClass"
+          aria-busy="@AriaBusy"
           style="@Style">
-    @ChildContent
+    <fieldset class="@FieldsetCssClass" disabled="@IsInteractionDisabled">
+        @ChildContent
+    </fieldset>
 </EditForm>
 
 @code {
     private static readonly object FallbackModel = new();
     private EditContext? _resolvedEditContext;
     private object? _resolvedModel;
+    private bool IsInteractionDisabled => Disabled || Busy;
+    private string? AriaBusy => Busy ? "true" : null;
+    private string FormCssClass => BuildClass("w3-form", Busy ? "w3-form-busy" : null, Disabled ? "w3-form-disabled" : null);
+    private string FieldsetCssClass => BuildClass("w3-form-fieldset");
 
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
@@ -33,6 +40,12 @@
 
     [Parameter]
     public EventCallback<EditContext> OnInvalidSubmit { get; set; }
+
+    [Parameter]
+    public bool Busy { get; set; }
+
+    [Parameter]
+    public bool Disabled { get; set; }
 
     private EditContext ResolvedEditContext
     {

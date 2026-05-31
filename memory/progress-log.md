@@ -29,6 +29,18 @@ Last updated: 2026-05-31
   - `dotnet pack src/W3Css.Blazor/W3Css.Blazor.csproj --configuration Release --no-build --output artifacts/packages /nr:false`;
   - hygiene scans found no blocked naming additions, no comparison naming matches, no tool/provider traces in project-visible paths, and no exact package key matches;
   - browser-verified `/components/field` after restarting the docs server on port 5016: validation feedback renders after submit, label/control/help spacing is readable, no visible error, no horizontal overflow, and no recent browser errors from the page load.
+- Continued the form-control UX audit on `W3Form`:
+  - added `Busy` and `Disabled` parameters that disable child controls through a zero-chrome form fieldset;
+  - `Busy` now emits `aria-busy="true"` and a stable `w3-form-busy` class while preserving normal submit callbacks;
+  - added a busy submit docs example and documented the new API rows;
+  - added focused form rendering and submit-state coverage plus docs smoke coverage.
+- Verification:
+  - focused form/docs tests: 122 passing;
+  - `dotnet build W3Css.Blazor.slnx --configuration Release /nr:false` (0 warnings, 0 errors);
+  - `dotnet test tests/W3Css.Blazor.Tests/W3Css.Blazor.Tests.csproj --configuration Release --no-build /nr:false` (422 passing);
+  - `dotnet pack src/W3Css.Blazor/W3Css.Blazor.csproj --configuration Release --no-build --output artifacts/packages /nr:false`;
+  - hygiene scans found no blocked naming additions, no comparison naming matches, no tool/provider traces in project-visible paths, and no exact package key matches;
+  - browser-verified `/components/form` after restarting the docs server on port 5016: busy submit emits `aria-busy`, disables the child fieldset while saving, returns to normal after save, has no visible error, no horizontal overflow, and no recent browser errors from the page load.
 - Re-synced memory folder with current source state after major component/parity/theming work already on `main`.
 - Verified again:
   - `dotnet build W3Css.Blazor.slnx --configuration Release` (0 warnings, 0 errors).

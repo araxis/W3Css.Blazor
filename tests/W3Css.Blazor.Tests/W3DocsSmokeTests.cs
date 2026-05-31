@@ -2,6 +2,7 @@ using Bunit;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using AccordionPage = W3Css.Blazor.Docs.Pages.ComponentTopics.AccordionPage;
 using AppBarPage = W3Css.Blazor.Docs.Pages.ComponentTopics.AppBarPage;
 using AppShellPage = W3Css.Blazor.Docs.Pages.ComponentTopics.AppShellPage;
 using AutocompletePage = W3Css.Blazor.Docs.Pages.ComponentTopics.AutocompletePage;
@@ -31,6 +32,7 @@ using DarkModePage = W3Css.Blazor.Docs.Pages.ComponentTopics.DarkModePage;
 using DividerPage = W3Css.Blazor.Docs.Pages.ComponentTopics.DividerPage;
 using DrawerPage = W3Css.Blazor.Docs.Pages.ComponentTopics.DrawerPage;
 using DropZonePage = W3Css.Blazor.Docs.Pages.ComponentTopics.DropZonePage;
+using DropdownPage = W3Css.Blazor.Docs.Pages.ComponentTopics.DropdownPage;
 using FabPage = W3Css.Blazor.Docs.Pages.ComponentTopics.FabPage;
 using ProgressCircularPage = W3Css.Blazor.Docs.Pages.ComponentTopics.ProgressCircularPage;
 using FileInputPage = W3Css.Blazor.Docs.Pages.ComponentTopics.FileInputPage;
@@ -53,6 +55,7 @@ using RadioGroupPage = W3Css.Blazor.Docs.Pages.ComponentTopics.RadioGroupPage;
 using RadioPage = W3Css.Blazor.Docs.Pages.ComponentTopics.RadioPage;
 using NumberInputPage = W3Css.Blazor.Docs.Pages.ComponentTopics.NumberInputPage;
 using DateRangePickerPage = W3Css.Blazor.Docs.Pages.ComponentTopics.DateRangePickerPage;
+using PaginationPage = W3Css.Blazor.Docs.Pages.ComponentTopics.PaginationPage;
 using PaperPage = W3Css.Blazor.Docs.Pages.ComponentTopics.PaperPage;
 using PanelPage = W3Css.Blazor.Docs.Pages.ComponentTopics.PanelPage;
 using ToggleIconButtonPage = W3Css.Blazor.Docs.Pages.ComponentTopics.ToggleIconButtonPage;
@@ -61,6 +64,7 @@ using RatingPage = W3Css.Blazor.Docs.Pages.ComponentTopics.RatingPage;
 using RowPage = W3Css.Blazor.Docs.Pages.ComponentTopics.RowPage;
 using SliderPage = W3Css.Blazor.Docs.Pages.ComponentTopics.SliderPage;
 using SlideshowPage = W3Css.Blazor.Docs.Pages.ComponentTopics.SlideshowPage;
+using SidebarPage = W3Css.Blazor.Docs.Pages.ComponentTopics.SidebarPage;
 using SkeletonPage = W3Css.Blazor.Docs.Pages.ComponentTopics.SkeletonPage;
 using SpinnerPage = W3Css.Blazor.Docs.Pages.ComponentTopics.SpinnerPage;
 using StackPage = W3Css.Blazor.Docs.Pages.ComponentTopics.StackPage;
@@ -88,6 +92,7 @@ using TextAreaPage = W3Css.Blazor.Docs.Pages.ComponentTopics.TextAreaPage;
 using TimelinePage = W3Css.Blazor.Docs.Pages.ComponentTopics.TimelinePage;
 using ToastPage = W3Css.Blazor.Docs.Pages.ComponentTopics.ToastPage;
 using ToolbarPage = W3Css.Blazor.Docs.Pages.ComponentTopics.ToolbarPage;
+using TooltipPage = W3Css.Blazor.Docs.Pages.ComponentTopics.TooltipPage;
 using TreeViewPage = W3Css.Blazor.Docs.Pages.ComponentTopics.TreeViewPage;
 using VersionsPage = W3Css.Blazor.Docs.Pages.ComponentTopics.VersionsPage;
 
@@ -158,11 +163,14 @@ public sealed class W3DocsSmokeTests
     [InlineData(typeof(NavMenuPage), "/components/nav-menu")]
     [InlineData(typeof(BottomNavigationPage), "/components/bottom-navigation")]
     [InlineData(typeof(BreadcrumbPage), "/components/breadcrumb")]
+    [InlineData(typeof(DropdownPage), "/components/dropdown")]
     [InlineData(typeof(MenuPage), "/components/menu")]
+    [InlineData(typeof(PaginationPage), "/components/pagination")]
     [InlineData(typeof(TreeViewPage), "/components/tree-view")]
     [InlineData(typeof(TimelinePage), "/components/timeline")]
     [InlineData(typeof(ChatPage), "/components/chat")]
     [InlineData(typeof(StepperPage), "/components/stepper")]
+    [InlineData(typeof(AccordionPage), "/components/accordion")]
     [InlineData(typeof(TabsPage), "/components/tabs")]
     [InlineData(typeof(TablePage), "/components/table")]
     [InlineData(typeof(MessageBoxPage), "/components/message-box")]
@@ -171,10 +179,12 @@ public sealed class W3DocsSmokeTests
     [InlineData(typeof(SpinnerPage), "/components/spinner")]
     [InlineData(typeof(ToastPage), "/components/toast")]
     [InlineData(typeof(ModalPage), "/components/modal")]
+    [InlineData(typeof(TooltipPage), "/components/tooltip")]
     [InlineData(typeof(PopoverPage), "/components/popover")]
     [InlineData(typeof(FocusTrapPage), "/components/focus-trap")]
     [InlineData(typeof(OverlayPage), "/components/overlay")]
     [InlineData(typeof(DrawerPage), "/components/drawer")]
+    [InlineData(typeof(SidebarPage), "/components/sidebar")]
     public void ImportantDocsPagesExposeExpectedRoutes(Type pageType, string expectedRoute)
     {
         var routes = pageType
@@ -513,6 +523,46 @@ public sealed class W3DocsSmokeTests
         Assert.Contains("Surface and Black", bottomNavigationPage.Markup);
         Assert.Contains("Primary and White", bottomNavigationPage.Markup);
         Assert.Contains("Extra attributes on the nav root", bottomNavigationPage.Markup);
+    }
+
+    [Fact]
+    public void DisclosureNavigationApiPagesDocumentCurrentParameterRows()
+    {
+        using var context = new BunitContext();
+        context.JSInterop.Mode = JSRuntimeMode.Loose;
+
+        var accordionPage = context.Render<AccordionPage>();
+        Assert.Contains("Surface", accordionPage.Markup);
+        Assert.Contains("Extra attributes on the accordion wrapper", accordionPage.Markup);
+        Assert.Contains("Extra attributes on the accordion item wrapper", accordionPage.Markup);
+
+        var dropdownPage = context.Render<DropdownPage>();
+        Assert.Contains("Surface", dropdownPage.Markup);
+        Assert.Contains("Extra attributes on the dropdown wrapper", dropdownPage.Markup);
+
+        var paginationPage = context.Render<PaginationPage>();
+        Assert.Contains("Primary", paginationPage.Markup);
+        Assert.Contains("Extra attributes on the pagination nav", paginationPage.Markup);
+
+        var sidebarPage = context.Render<SidebarPage>();
+        Assert.Contains("Surface", sidebarPage.Markup);
+        Assert.Contains("Extra attributes on the sidebar element", sidebarPage.Markup);
+
+        var tooltipPage = context.Render<TooltipPage>();
+        Assert.Contains("Extra attributes on the tooltip root", tooltipPage.Markup);
+
+        var scrollToTopPage = context.Render<ScrollToTopPage>();
+        Assert.Contains("Button border class", scrollToTopPage.Markup);
+        Assert.Contains("Extra attributes on the scroll button", scrollToTopPage.Markup);
+
+        var linkPage = context.Render<LinkPage>();
+        Assert.Contains("Extra attributes on the rendered link, button, or span", linkPage.Markup);
+        Assert.Contains("Primary", linkPage.Markup);
+
+        var pageContentNavigationPage = context.Render<PageContentNavigationPage>();
+        Assert.Contains("W3PageSection Properties", pageContentNavigationPage.Markup);
+        Assert.Contains("Extra attributes on the content navigation nav", pageContentNavigationPage.Markup);
+        Assert.Contains("Indent level for nested entries", pageContentNavigationPage.Markup);
     }
 
     [Fact]

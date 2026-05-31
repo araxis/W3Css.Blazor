@@ -695,3 +695,6 @@ Last updated: 2026-05-31
 - Added README package version and MIT license badges.
 - Updated the release workflow so version-tag releases restore, build, test, pack with the resolved package version, create release artifacts, validate publishing configuration, and publish packages automatically.
 - Configured the remote package publishing secret name `NUGET_API_KEY`; the secret value must not be committed or logged, and should be rotated after the first successful package release because the initial value was shared in chat.
+- Merged package automation into `main`, retagged the unpushed local `v0.1.0` tag onto the merged commit, and pushed the tag.
+- Verified the release workflow passed for `v0.1.0`: restore, build, 370 tests, pack, GitHub release creation, publish configuration validation, and package publishing all succeeded.
+- Verified the public package feed lists `W3Css.Blazor` version `0.1.0` after indexing completed.

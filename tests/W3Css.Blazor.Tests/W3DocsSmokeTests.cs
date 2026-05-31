@@ -15,6 +15,7 @@ using ChatPage = W3Css.Blazor.Docs.Pages.ComponentTopics.ChatPage;
 using CollapsePage = W3Css.Blazor.Docs.Pages.ComponentTopics.CollapsePage;
 using ChipPage = W3Css.Blazor.Docs.Pages.ComponentTopics.ChipPage;
 using ChipSetPage = W3Css.Blazor.Docs.Pages.ComponentTopics.ChipSetPage;
+using CodePage = W3Css.Blazor.Docs.Pages.ComponentTopics.CodePage;
 using ColumnPage = W3Css.Blazor.Docs.Pages.ComponentTopics.ColumnPage;
 using ContainerPage = W3Css.Blazor.Docs.Pages.ComponentTopics.ContainerPage;
 using SelectItemPage = W3Css.Blazor.Docs.Pages.ComponentTopics.SelectItemPage;
@@ -35,6 +36,8 @@ using FocusTrapPage = W3Css.Blazor.Docs.Pages.ComponentTopics.FocusTrapPage;
 using GridPage = W3Css.Blazor.Docs.Pages.ComponentTopics.GridPage;
 using HighlighterPage = W3Css.Blazor.Docs.Pages.ComponentTopics.HighlighterPage;
 using IconButtonPage = W3Css.Blazor.Docs.Pages.ComponentTopics.IconButtonPage;
+using IconsPage = W3Css.Blazor.Docs.Pages.ComponentTopics.IconsPage;
+using ImagePage = W3Css.Blazor.Docs.Pages.ComponentTopics.ImagePage;
 using ImageListPage = W3Css.Blazor.Docs.Pages.ComponentTopics.ImageListPage;
 using ListItemPage = W3Css.Blazor.Docs.Pages.ComponentTopics.ListItemPage;
 using MenuPage = W3Css.Blazor.Docs.Pages.ComponentTopics.MenuPage;
@@ -51,6 +54,7 @@ using PopoverPage = W3Css.Blazor.Docs.Pages.ComponentTopics.PopoverPage;
 using RatingPage = W3Css.Blazor.Docs.Pages.ComponentTopics.RatingPage;
 using RowPage = W3Css.Blazor.Docs.Pages.ComponentTopics.RowPage;
 using SliderPage = W3Css.Blazor.Docs.Pages.ComponentTopics.SliderPage;
+using SlideshowPage = W3Css.Blazor.Docs.Pages.ComponentTopics.SlideshowPage;
 using SkeletonPage = W3Css.Blazor.Docs.Pages.ComponentTopics.SkeletonPage;
 using SpinnerPage = W3Css.Blazor.Docs.Pages.ComponentTopics.SpinnerPage;
 using StackPage = W3Css.Blazor.Docs.Pages.ComponentTopics.StackPage;
@@ -64,6 +68,8 @@ using AvatarGroupPage = W3Css.Blazor.Docs.Pages.ComponentTopics.AvatarGroupPage;
 using MessageBoxPage = W3Css.Blazor.Docs.Pages.ComponentTopics.MessageBoxPage;
 using ToggleGroupPage = W3Css.Blazor.Docs.Pages.ComponentTopics.ToggleGroupPage;
 using MaskPage = W3Css.Blazor.Docs.Pages.ComponentTopics.MaskPage;
+using NotePage = W3Css.Blazor.Docs.Pages.ComponentTopics.NotePage;
+using QuotePage = W3Css.Blazor.Docs.Pages.ComponentTopics.QuotePage;
 using StepperPage = W3Css.Blazor.Docs.Pages.ComponentTopics.StepperPage;
 using SwitchPage = W3Css.Blazor.Docs.Pages.ComponentTopics.SwitchPage;
 using TabsPage = W3Css.Blazor.Docs.Pages.ComponentTopics.TabsPage;
@@ -528,6 +534,42 @@ public sealed class W3DocsSmokeTests
         var skeletonPage = context.Render<SkeletonPage>();
         Assert.Contains("Extra attributes on the skeleton root", skeletonPage.Markup);
         Assert.Contains("Component-scoped pulse animation", skeletonPage.Markup);
+    }
+
+    [Fact]
+    public void ContentAndMediaApiPagesDocumentCurrentParameterRows()
+    {
+        using var context = new BunitContext();
+
+        var imagePage = context.Render<ImagePage>();
+        Assert.Contains("Extra attributes on the image element", imagePage.Markup);
+
+        var imageListPage = context.Render<ImageListPage>();
+        Assert.Contains("Default item caption background color", imageListPage.Markup);
+        Assert.Contains("Extra attributes on the image list item figure", imageListPage.Markup);
+
+        var slideshowPage = context.Render<SlideshowPage>();
+        Assert.Contains("Previous button aria label", slideshowPage.Markup);
+        Assert.Contains("Extra attributes on the carousel root", slideshowPage.Markup);
+
+        var chatPage = context.Render<ChatPage>();
+        Assert.Contains("Avatar image alt text", chatPage.Markup);
+        Assert.Contains("Extra attributes on the message article", chatPage.Markup);
+
+        var codePage = context.Render<CodePage>();
+        Assert.Contains("Extra attributes on the rendered code element", codePage.Markup);
+
+        var notePage = context.Render<NotePage>();
+        Assert.Contains("Extra attributes on the note panel", notePage.Markup);
+
+        var quotePage = context.Render<QuotePage>();
+        Assert.Contains("Extra attributes on the blockquote", quotePage.Markup);
+
+        var iconsPage = context.Render<IconsPage>();
+        Assert.Contains("Extra attributes on the icon element", iconsPage.Markup);
+
+        var highlighterPage = context.Render<HighlighterPage>();
+        Assert.Contains("Extra attributes on the root span", highlighterPage.Markup);
     }
 
     [Fact]

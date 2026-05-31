@@ -751,3 +751,11 @@ Last updated: 2026-05-31
 - Split grouped drop-zone callback/color/class rows and corrected current defaults for switch, autocomplete, and drop-zone surface colors.
 - Added focused docs smoke coverage for the updated forms/input parameter rows.
 - Verified focused docs smoke tests, Release build, 394-test Release suite, package creation, hygiene scans, and `/components/autocomplete` in the in-app browser with no console errors or horizontal overflow.
+
+## 2026-05-31 - Disclosure Navigation API Docs Pass
+
+- Continued the docs/API gap pass for disclosure and navigation pages: `W3Accordion`, `W3AccordionItem`, `W3Dropdown`, `W3Pagination`, `W3Sidebar`, `W3Tooltip`, `W3ScrollToTop`, `W3Link`, `W3PageContentNavigation`, and `W3PageSection`.
+- Added missing inherited `AdditionalAttributes` rows and split grouped color/class rows so each public parameter is documented directly.
+- Corrected current defaults for accordion item content, dropdown content, pagination active color, sidebar surface color, and link text color.
+- Added focused docs smoke coverage and missing route coverage for the updated disclosure/navigation pages.
+- Verified focused docs smoke tests, Release build, 400-test Release suite, package creation, hygiene scans, and `/components/page-content-navigation` in the in-app browser with no console errors or horizontal overflow.

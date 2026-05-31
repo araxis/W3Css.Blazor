@@ -4,6 +4,18 @@ Last updated: 2026-05-31
 
 ## 2026-05-31
 
+- Continued the form-control UX audit on `W3TextArea`:
+  - added `UpdateOnInput` so text areas can update bound values during typing;
+  - added a live draft docs example and documented the new API row;
+  - added native input coverage for text area attributes, change updates, and input-time updates;
+  - added docs smoke coverage for the new docs section.
+- Verification:
+  - focused native input/docs tests: 129 passing;
+  - `dotnet build W3Css.Blazor.slnx --configuration Release /nr:false` (0 warnings, 0 errors);
+  - `dotnet test tests/W3Css.Blazor.Tests/W3Css.Blazor.Tests.csproj --configuration Release --no-build /nr:false` (418 passing);
+  - `dotnet pack src/W3Css.Blazor/W3Css.Blazor.csproj --configuration Release --no-build --output artifacts/packages /nr:false`;
+  - hygiene scans found no blocked naming additions, no comparison naming matches, no tool/provider traces in project-visible paths, and no exact package key matches;
+  - browser-verified `/components/text-area` after restarting the docs server on port 5016: two text areas render, live draft updates while typing, no visible error, and no horizontal overflow.
 - Re-synced memory folder with current source state after major component/parity/theming work already on `main`.
 - Verified again:
   - `dotnet build W3Css.Blazor.slnx --configuration Release` (0 warnings, 0 errors).

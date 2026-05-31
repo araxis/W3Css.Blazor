@@ -822,6 +822,8 @@ public sealed class W3DocsSmokeTests
         Assert.Contains("Extra attributes on the input element", inputPage.Markup);
 
         var textAreaPage = context.Render<TextAreaPage>();
+        Assert.Contains("UpdateOnInput", textAreaPage.Markup);
+        Assert.Contains("Live Draft", textAreaPage.Markup);
         Assert.Contains("Extra attributes on the textarea element", textAreaPage.Markup);
 
         var formPage = context.Render<FormPage>();

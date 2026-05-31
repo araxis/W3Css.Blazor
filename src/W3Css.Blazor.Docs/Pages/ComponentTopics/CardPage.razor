@@ -30,18 +30,20 @@
                 <tr><th>Name</th><th>Type</th><th>Default</th><th>Purpose</th></tr>
             </thead>
             <tbody>
+                <tr><td>ChildContent</td><td>RenderFragment</td><td>null</td><td>Body content slot</td></tr>
                 <tr><td>Depth</td><td>W3CardDepth</td><td>Default</td><td>Card shadow class</td></tr>
                 <tr><td>Round</td><td>W3Round</td><td>None</td><td>Rounded corner class</td></tr>
                 <tr><td>Header</td><td>RenderFragment</td><td>null</td><td>Optional header slot</td></tr>
                 <tr><td>Footer</td><td>RenderFragment</td><td>null</td><td>Optional footer slot</td></tr>
                 <tr><td>HeaderColor</td><td>W3Color</td><td>None</td><td>Header background color</td></tr>
-                <tr><td>BodyColor</td><td>W3Color</td><td>None</td><td>Body background color</td></tr>
+                <tr><td>BodyColor</td><td>W3Color</td><td>Surface</td><td>Body background color</td></tr>
                 <tr><td>FooterColor</td><td>W3Color</td><td>None</td><td>Footer background color</td></tr>
-                <tr><td>HeaderClass</td><td>string</td><td>null</td><td>Additional header container classes</td></tr>
-                <tr><td>BodyClass</td><td>string</td><td>null</td><td>Additional body container classes</td></tr>
-                <tr><td>FooterClass</td><td>string</td><td>null</td><td>Additional footer container classes</td></tr>
-                <tr><td>Class</td><td>string</td><td>null</td><td>Additional root card classes</td></tr>
-                <tr><td>Style</td><td>string</td><td>null</td><td>Root card inline style</td></tr>
+                <tr><td>HeaderClass</td><td>string?</td><td>null</td><td>Additional header container classes</td></tr>
+                <tr><td>BodyClass</td><td>string?</td><td>null</td><td>Additional body container classes</td></tr>
+                <tr><td>FooterClass</td><td>string?</td><td>null</td><td>Additional footer container classes</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional root card classes</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Root card inline style</td></tr>
+                <tr><td>AdditionalAttributes</td><td>IReadOnlyDictionary&lt;string, object&gt;?</td><td>null</td><td>Extra attributes on the card root</td></tr>
             </tbody>
         </W3Table>
     </section>

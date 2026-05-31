@@ -3,11 +3,16 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using AccordionPage = W3Css.Blazor.Docs.Pages.ComponentTopics.AccordionPage;
+using AnimationsPage = W3Css.Blazor.Docs.Pages.ComponentTopics.AnimationsPage;
 using AppBarPage = W3Css.Blazor.Docs.Pages.ComponentTopics.AppBarPage;
 using AppShellPage = W3Css.Blazor.Docs.Pages.ComponentTopics.AppShellPage;
 using AutocompletePage = W3Css.Blazor.Docs.Pages.ComponentTopics.AutocompletePage;
 using AvatarPage = W3Css.Blazor.Docs.Pages.ComponentTopics.AvatarPage;
 using BadgePage = W3Css.Blazor.Docs.Pages.ComponentTopics.BadgePage;
+using BarPage = W3Css.Blazor.Docs.Pages.ComponentTopics.BarPage;
+using BordersPage = W3Css.Blazor.Docs.Pages.ComponentTopics.BordersPage;
+using CardPage = W3Css.Blazor.Docs.Pages.ComponentTopics.CardPage;
+using CellsPage = W3Css.Blazor.Docs.Pages.ComponentTopics.CellsPage;
 using CheckboxPage = W3Css.Blazor.Docs.Pages.ComponentTopics.CheckboxPage;
 using LinkPage = W3Css.Blazor.Docs.Pages.ComponentTopics.LinkPage;
 using FieldPage = W3Css.Blazor.Docs.Pages.ComponentTopics.FieldPage;
@@ -29,10 +34,13 @@ using ComponentsIndexPage = W3Css.Blazor.Docs.Pages.Components;
 using DataTablePage = W3Css.Blazor.Docs.Pages.ComponentTopics.DataTablePage;
 using DateInputPage = W3Css.Blazor.Docs.Pages.ComponentTopics.DateInputPage;
 using DarkModePage = W3Css.Blazor.Docs.Pages.ComponentTopics.DarkModePage;
+using DirectionPage = W3Css.Blazor.Docs.Pages.ComponentTopics.DirectionPage;
 using DividerPage = W3Css.Blazor.Docs.Pages.ComponentTopics.DividerPage;
+using DisplayPage = W3Css.Blazor.Docs.Pages.ComponentTopics.DisplayPage;
 using DrawerPage = W3Css.Blazor.Docs.Pages.ComponentTopics.DrawerPage;
 using DropZonePage = W3Css.Blazor.Docs.Pages.ComponentTopics.DropZonePage;
 using DropdownPage = W3Css.Blazor.Docs.Pages.ComponentTopics.DropdownPage;
+using EffectsPage = W3Css.Blazor.Docs.Pages.ComponentTopics.EffectsPage;
 using FabPage = W3Css.Blazor.Docs.Pages.ComponentTopics.FabPage;
 using ProgressCircularPage = W3Css.Blazor.Docs.Pages.ComponentTopics.ProgressCircularPage;
 using FileInputPage = W3Css.Blazor.Docs.Pages.ComponentTopics.FileInputPage;
@@ -41,6 +49,7 @@ using FlexPage = W3Css.Blazor.Docs.Pages.ComponentTopics.FlexPage;
 using FocusTrapPage = W3Css.Blazor.Docs.Pages.ComponentTopics.FocusTrapPage;
 using GridPage = W3Css.Blazor.Docs.Pages.ComponentTopics.GridPage;
 using HighlighterPage = W3Css.Blazor.Docs.Pages.ComponentTopics.HighlighterPage;
+using HoverColorsPage = W3Css.Blazor.Docs.Pages.ComponentTopics.HoverColorsPage;
 using IconButtonPage = W3Css.Blazor.Docs.Pages.ComponentTopics.IconButtonPage;
 using IconsPage = W3Css.Blazor.Docs.Pages.ComponentTopics.IconsPage;
 using ImagePage = W3Css.Blazor.Docs.Pages.ComponentTopics.ImagePage;
@@ -58,6 +67,7 @@ using DateRangePickerPage = W3Css.Blazor.Docs.Pages.ComponentTopics.DateRangePic
 using PaginationPage = W3Css.Blazor.Docs.Pages.ComponentTopics.PaginationPage;
 using PaperPage = W3Css.Blazor.Docs.Pages.ComponentTopics.PaperPage;
 using PanelPage = W3Css.Blazor.Docs.Pages.ComponentTopics.PanelPage;
+using ResponsivePage = W3Css.Blazor.Docs.Pages.ComponentTopics.ResponsivePage;
 using ToggleIconButtonPage = W3Css.Blazor.Docs.Pages.ComponentTopics.ToggleIconButtonPage;
 using PopoverPage = W3Css.Blazor.Docs.Pages.ComponentTopics.PopoverPage;
 using RatingPage = W3Css.Blazor.Docs.Pages.ComponentTopics.RatingPage;
@@ -68,6 +78,7 @@ using SidebarPage = W3Css.Blazor.Docs.Pages.ComponentTopics.SidebarPage;
 using SkeletonPage = W3Css.Blazor.Docs.Pages.ComponentTopics.SkeletonPage;
 using SpinnerPage = W3Css.Blazor.Docs.Pages.ComponentTopics.SpinnerPage;
 using StackPage = W3Css.Blazor.Docs.Pages.ComponentTopics.StackPage;
+using SpacingPage = W3Css.Blazor.Docs.Pages.ComponentTopics.SpacingPage;
 using ScrollToTopPage = W3Css.Blazor.Docs.Pages.ComponentTopics.ScrollToTopPage;
 using PageContentNavigationPage = W3Css.Blazor.Docs.Pages.ComponentTopics.PageContentNavigationPage;
 using ChartPage = W3Css.Blazor.Docs.Pages.ComponentTopics.ChartPage;
@@ -89,6 +100,7 @@ using OverlayPage = W3Css.Blazor.Docs.Pages.ComponentTopics.OverlayPage;
 using TimeInputPage = W3Css.Blazor.Docs.Pages.ComponentTopics.TimeInputPage;
 using SelectPage = W3Css.Blazor.Docs.Pages.ComponentTopics.SelectPage;
 using TextAreaPage = W3Css.Blazor.Docs.Pages.ComponentTopics.TextAreaPage;
+using TextFontsPage = W3Css.Blazor.Docs.Pages.ComponentTopics.TextFontsPage;
 using TimelinePage = W3Css.Blazor.Docs.Pages.ComponentTopics.TimelinePage;
 using ToastPage = W3Css.Blazor.Docs.Pages.ComponentTopics.ToastPage;
 using ToolbarPage = W3Css.Blazor.Docs.Pages.ComponentTopics.ToolbarPage;
@@ -122,6 +134,18 @@ public sealed class W3DocsSmokeTests
     [InlineData(typeof(ColumnPage), "/components/column")]
     [InlineData(typeof(GridPage), "/components/grid")]
     [InlineData(typeof(FlexPage), "/components/flex")]
+    [InlineData(typeof(CellsPage), "/components/cells")]
+    [InlineData(typeof(DisplayPage), "/components/display")]
+    [InlineData(typeof(ResponsivePage), "/components/responsive")]
+    [InlineData(typeof(SpacingPage), "/components/spacing")]
+    [InlineData(typeof(TextFontsPage), "/components/text-fonts")]
+    [InlineData(typeof(EffectsPage), "/components/effects")]
+    [InlineData(typeof(AnimationsPage), "/components/animations")]
+    [InlineData(typeof(HoverColorsPage), "/components/hover-colors")]
+    [InlineData(typeof(DirectionPage), "/components/direction")]
+    [InlineData(typeof(BarPage), "/components/bar")]
+    [InlineData(typeof(BordersPage), "/components/borders")]
+    [InlineData(typeof(CardPage), "/components/card")]
     [InlineData(typeof(AvatarGroupPage), "/components/avatar-group")]
     [InlineData(typeof(DividerPage), "/components/divider")]
     [InlineData(typeof(IconButtonPage), "/components/icon-button")]
@@ -495,6 +519,55 @@ public sealed class W3DocsSmokeTests
         var flexPage = context.Render<FlexPage>();
         Assert.Contains("Flex item content", flexPage.Markup);
         Assert.Contains("Extra attributes on the flex root", flexPage.Markup);
+    }
+
+    [Fact]
+    public void FoundationAndUtilityApiPagesDocumentCurrentParameterRows()
+    {
+        using var context = new BunitContext();
+
+        var barPage = context.Render<BarPage>();
+        Assert.Contains("Extra attributes on the bar root", barPage.Markup);
+        Assert.Contains("Extra attributes on the rendered item", barPage.Markup);
+
+        var cardPage = context.Render<CardPage>();
+        Assert.Contains("BodyColor", cardPage.Markup);
+        Assert.Contains("Surface", cardPage.Markup);
+        Assert.Contains("Body content slot", cardPage.Markup);
+        Assert.Contains("Extra attributes on the card root", cardPage.Markup);
+
+        var cellsPage = context.Render<CellsPage>();
+        Assert.Contains("Extra attributes on the cell row root", cellsPage.Markup);
+        Assert.Contains("Extra attributes on the cell root", cellsPage.Markup);
+
+        var displayPage = context.Render<DisplayPage>();
+        Assert.Contains("Root display inline style", displayPage.Markup);
+        Assert.Contains("Extra attributes on the display container", displayPage.Markup);
+        Assert.Contains("Extra attributes on the positioned display element", displayPage.Markup);
+
+        var responsivePage = context.Render<ResponsivePage>();
+        Assert.Contains("Extra attributes on the responsive wrapper", responsivePage.Markup);
+
+        var spacingPage = context.Render<SpacingPage>();
+        Assert.Contains("Extra attributes on the spacing wrapper", spacingPage.Markup);
+
+        var textFontsPage = context.Render<TextFontsPage>();
+        Assert.Contains("Extra attributes on the text wrapper", textFontsPage.Markup);
+
+        var effectsPage = context.Render<EffectsPage>();
+        Assert.Contains("Extra attributes on the effect wrapper", effectsPage.Markup);
+
+        var animationsPage = context.Render<AnimationsPage>();
+        Assert.Contains("Extra attributes on the animation wrapper", animationsPage.Markup);
+
+        var hoverColorsPage = context.Render<HoverColorsPage>();
+        Assert.Contains("Extra attributes on the hover color wrapper", hoverColorsPage.Markup);
+
+        var directionPage = context.Render<DirectionPage>();
+        Assert.Contains("Extra attributes on the direction wrapper", directionPage.Markup);
+
+        var bordersPage = context.Render<BordersPage>();
+        Assert.Contains("Extra attributes on the border wrapper", bordersPage.Markup);
     }
 
     [Fact]

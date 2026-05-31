@@ -759,3 +759,11 @@ Last updated: 2026-05-31
 - Corrected current defaults for accordion item content, dropdown content, pagination active color, sidebar surface color, and link text color.
 - Added focused docs smoke coverage and missing route coverage for the updated disclosure/navigation pages.
 - Verified focused docs smoke tests, Release build, 400-test Release suite, package creation, hygiene scans, and `/components/page-content-navigation` in the in-app browser with no console errors or horizontal overflow.
+
+## 2026-05-31 - Foundation And Utility API Docs Pass
+
+- Continued the docs/API gap pass for foundational layout and utility pages: `W3Bar`, `W3BarItem`, `W3Card`, `W3CellRow`, `W3Cell`, `W3DisplayContainer`, `W3Display`, `W3Responsive`, `W3Spacing`, `W3Text`, `W3Effect`, `W3Animate`, `W3HoverColor`, `W3Direction`, and `W3Border`.
+- Added missing inherited `AdditionalAttributes` rows, added missing route coverage, and split stale grouped rows so each public parameter is documented directly.
+- Corrected current defaults and descriptions where docs had drifted from component source.
+- Added focused docs smoke coverage for the updated foundation and utility parameter rows.
+- Verified focused docs smoke tests, Release build, 413-test Release suite, package creation, hygiene scans, and `/components/card` in the in-app browser with no console errors or horizontal overflow.

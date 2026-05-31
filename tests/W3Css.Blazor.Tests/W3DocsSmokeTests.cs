@@ -59,6 +59,7 @@ using MaskPage = W3Css.Blazor.Docs.Pages.ComponentTopics.MaskPage;
 using StepperPage = W3Css.Blazor.Docs.Pages.ComponentTopics.StepperPage;
 using SwitchPage = W3Css.Blazor.Docs.Pages.ComponentTopics.SwitchPage;
 using TabsPage = W3Css.Blazor.Docs.Pages.ComponentTopics.TabsPage;
+using TablePage = W3Css.Blazor.Docs.Pages.ComponentTopics.TablePage;
 using OverlayPage = W3Css.Blazor.Docs.Pages.ComponentTopics.OverlayPage;
 using TimeInputPage = W3Css.Blazor.Docs.Pages.ComponentTopics.TimeInputPage;
 using TimelinePage = W3Css.Blazor.Docs.Pages.ComponentTopics.TimelinePage;
@@ -128,6 +129,7 @@ public sealed class W3DocsSmokeTests
     [InlineData(typeof(ChatPage), "/components/chat")]
     [InlineData(typeof(StepperPage), "/components/stepper")]
     [InlineData(typeof(TabsPage), "/components/tabs")]
+    [InlineData(typeof(TablePage), "/components/table")]
     [InlineData(typeof(MessageBoxPage), "/components/message-box")]
     [InlineData(typeof(ToggleGroupPage), "/components/toggle-group")]
     [InlineData(typeof(MaskPage), "/components/mask")]
@@ -342,6 +344,33 @@ public sealed class W3DocsSmokeTests
             .Click();
 
         Assert.Contains("Last closed: workspace-1", cut.Markup);
+    }
+
+    [Fact]
+    public void SmallApiGapPagesDocumentCurrentParameterRows()
+    {
+        using var context = new BunitContext();
+        context.JSInterop.Mode = JSRuntimeMode.Loose;
+
+        var tablePage = context.Render<TablePage>();
+        Assert.Contains("Dense", tablePage.Markup);
+        Assert.Contains("w3-small", tablePage.Markup);
+        Assert.Contains("AdditionalAttributes", tablePage.Markup);
+
+        var drawerPage = context.Render<DrawerPage>();
+        Assert.Contains("CloseButtonLabel", drawerPage.Markup);
+        Assert.Contains("Close drawer", drawerPage.Markup);
+        Assert.Contains("Surface and Black", drawerPage.Markup);
+
+        var menuPage = context.Render<MenuPage>();
+        Assert.Contains("PanelClass", menuPage.Markup);
+        Assert.Contains("Trigger button type attribute", menuPage.Markup);
+        Assert.Contains("Surface / Black", menuPage.Markup);
+
+        var progressPage = context.Render<ProgressCircularPage>();
+        Assert.Contains("AccessibilityLabel", progressPage.Markup);
+        Assert.Contains("Progressbar accessible label", progressPage.Markup);
+        Assert.Contains("circular progress indicator in two modes", progressPage.Markup);
     }
 
     [Fact]

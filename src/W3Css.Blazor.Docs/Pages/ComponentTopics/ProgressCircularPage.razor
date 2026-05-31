@@ -6,7 +6,7 @@
     <h1>W3ProgressCircular</h1>
     <DocPager PreviousHref="components/progress" PreviousText="Progress" NextHref="components/stepper" NextText="Stepper" />
 
-    <p class="w3-large">`W3ProgressCircular` renders a MudBlazor-style circular progress indicator in two modes: determinate and indeterminate.</p>
+    <p class="w3-large">`W3ProgressCircular` renders a circular progress indicator in two modes: determinate and indeterminate.</p>
     <p>Use it in upload progress, data sync, import states, background tasks, and anywhere a compact circular status marker fits better than a bar.</p>
 
     <DocExample Title="Circular Indeterminate" Description="Use this style when the duration is unknown or work is ongoing." Code="@IndeterminateCode">
@@ -36,11 +36,13 @@
                 <tr><td>Color</td><td>W3Color</td><td>Teal</td><td>Active ring color</td></tr>
                 <tr><td>TextColor</td><td>W3Color</td><td>Teal</td><td>Root text and label color</td></tr>
                 <tr><td>Label</td><td>string?</td><td>null</td><td>Custom center label when `ShowLabel` is true</td></tr>
+                <tr><td>AccessibilityLabel</td><td>string?</td><td>Progress</td><td>Progressbar accessible label</td></tr>
                 <tr><td>ShowLabel</td><td>bool</td><td>false</td><td>Renders label in center</td></tr>
                 <tr><td>Size</td><td>double</td><td>48</td><td>Outer diameter in CSS px</td></tr>
                 <tr><td>Thickness</td><td>double</td><td>4</td><td>Stroke width in CSS px</td></tr>
                 <tr><td>Class</td><td>string?</td><td>null</td><td>Additional classes</td></tr>
                 <tr><td>Style</td><td>string?</td><td>null</td><td>Inline root style</td></tr>
+                <tr><td>AdditionalAttributes</td><td>IReadOnlyDictionary&lt;string, object&gt;?</td><td>null</td><td>Extra root attributes</td></tr>
             </tbody>
         </W3Table>
     </section>

@@ -57,16 +57,20 @@
                 <tr><td>IconClass</td><td>string?</td><td>null</td><td>Classes passed to the inner `W3Icon`</td></tr>
                 <tr><td>IconElementClass</td><td>string?</td><td>null</td><td>Additional class on the inner icon element</td></tr>
                 <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Icon text for icon fonts such as Material Icons, or custom icon content</td></tr>
-                <tr><td>Color / TextColor</td><td>W3Color</td><td>None / None</td><td>Button background and text color classes</td></tr>
+                <tr><td>Color</td><td>W3Color</td><td>None</td><td>Button background color class</td></tr>
+                <tr><td>TextColor</td><td>W3Color</td><td>None</td><td>Button text color class</td></tr>
                 <tr><td>Size</td><td>W3Size</td><td>Default</td><td>Button size class</td></tr>
                 <tr><td>Round</td><td>W3Round</td><td>Medium</td><td>Rounded button class</td></tr>
                 <tr><td>Border</td><td>bool</td><td>false</td><td>`w3-border`</td></tr>
                 <tr><td>Circle</td><td>bool</td><td>false</td><td>`w3-circle` plus stable square icon-button sizing</td></tr>
-                <tr><td>Toggle / Pressed</td><td>bool</td><td>false / false</td><td>`aria-pressed` and pressed visual state for toggle tools</td></tr>
+                <tr><td>Toggle</td><td>bool</td><td>false</td><td>Enables `aria-pressed` for toggle-style icon commands</td></tr>
+                <tr><td>Pressed</td><td>bool</td><td>false</td><td>Pressed visual state when `Toggle` is true</td></tr>
                 <tr><td>Disabled</td><td>bool</td><td>false</td><td>`disabled` plus `w3-disabled`</td></tr>
                 <tr><td>Type</td><td>string</td><td>button</td><td>Button type attribute</td></tr>
                 <tr><td>OnClick</td><td>EventCallback&lt;MouseEventArgs&gt;</td><td>empty</td><td>Click callback</td></tr>
-                <tr><td>Class / Style</td><td>string?</td><td>null</td><td>Additional root classes and inline style</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional root classes</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline style on the button</td></tr>
+                <tr><td>AdditionalAttributes</td><td>IReadOnlyDictionary&lt;string,object&gt;?</td><td>null</td><td>Extra attributes on the icon button element</td></tr>
             </tbody>
         </W3Table>
     </section>

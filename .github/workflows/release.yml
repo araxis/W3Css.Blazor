@@ -11,13 +11,17 @@ on:
         required: false
         default: '0.1.0'
       publish:
-        description: 'Publish the package to NuGet'
+        description: 'Publish the package'
         required: false
         default: false
         type: boolean
 
 permissions:
   contents: write
+
+concurrency:
+  group: release-${{ github.ref_name }}
+  cancel-in-progress: false
 
 jobs:
   release:
@@ -66,6 +70,7 @@ jobs:
           Add-Content -Path $env:GITHUB_OUTPUT -Value "tag=$tag"
           Add-Content -Path $env:GITHUB_OUTPUT -Value "version=$version"
           Add-Content -Path $env:GITHUB_OUTPUT -Value "release_notes=$releaseNotes"
+          Add-Content -Path $env:GITHUB_OUTPUT -Value "publish=${{ github.event_name == 'push' || github.event.inputs.publish == 'true' }}"
 
       - name: Restore
         run: dotnet restore W3Css.Blazor.slnx
@@ -82,7 +87,9 @@ jobs:
             --configuration Release \
             --no-build \
             --output artifacts/packages \
-            -p:Version=${{ steps.release.outputs.version }}
+            -p:Version=${{ steps.release.outputs.version }} \
+            -p:PackageVersion=${{ steps.release.outputs.version }} \
+            -p:ContinuousIntegrationBuild=true
 
       - name: Create GitHub release
         uses: softprops/action-gh-release@v3
@@ -92,17 +99,23 @@ jobs:
           body_path: ${{ steps.release.outputs.release_notes }}
           files: artifacts/packages/*.nupkg
 
-      - name: Publish package
-        if: github.event_name == 'push' || github.event.inputs.publish == 'true'
+      - name: Validate publish configuration
+        if: steps.release.outputs.publish == 'true'
+        shell: pwsh
         env:
-          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+          PACKAGE_API_KEY: ${{ secrets.NUGET_API_KEY }}
         run: |
-          if ([string]::IsNullOrWhiteSpace("$env:NUGET_API_KEY")) {
-            Write-Host 'NUGET_API_KEY secret is not set. Set this secret to publish to nuget.org.'
-            exit 0
+          if ([string]::IsNullOrWhiteSpace("$env:PACKAGE_API_KEY")) {
+            Write-Error 'Package publishing secret is not set.'
+            exit 1
           }
 
+      - name: Publish package
+        if: steps.release.outputs.publish == 'true'
+        env:
+          PACKAGE_API_KEY: ${{ secrets.NUGET_API_KEY }}
+        run: |
           dotnet nuget push artifacts/packages/*.nupkg \
-            --api-key "$env:NUGET_API_KEY" \
+            --api-key "$PACKAGE_API_KEY" \
             --source https://api.nuget.org/v3/index.json \
             --skip-duplicate

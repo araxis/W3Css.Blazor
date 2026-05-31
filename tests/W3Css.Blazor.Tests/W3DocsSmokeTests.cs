@@ -839,9 +839,11 @@ public sealed class W3DocsSmokeTests
 
         var selectPage = context.Render<SelectPage>();
         Assert.Contains("Raised when the selected value changes", selectPage.Markup);
+        Assert.Contains("PlaceholderDisabled", selectPage.Markup);
         Assert.Contains("Extra attributes on the select element", selectPage.Markup);
 
         var selectItemPage = context.Render<SelectItemPage>();
+        Assert.Contains("Three (disabled)", selectItemPage.Markup);
         Assert.Contains("Extra attributes on the option element", selectItemPage.Markup);
 
         var checkboxPage = context.Render<CheckboxPage>();

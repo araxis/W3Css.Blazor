@@ -10,6 +10,10 @@
         disabled="@Disabled"
         value="@CurrentValueAsString"
         @onchange="EventCallback.Factory.CreateBinder<string?>(this, value => CurrentValueAsString = value, CurrentValueAsString)">
+    @if (!string.IsNullOrWhiteSpace(Placeholder))
+    {
+        <option value="" disabled="@PlaceholderDisabled">@Placeholder</option>
+    }
     @ChildContent
 </select>
 
@@ -18,6 +22,12 @@
 
     [Parameter]
     public string? Id { get; set; }
+
+    [Parameter]
+    public string? Placeholder { get; set; }
+
+    [Parameter]
+    public bool PlaceholderDisabled { get; set; } = true;
 
     [Parameter]
     public RenderFragment? ChildContent { get; set; }

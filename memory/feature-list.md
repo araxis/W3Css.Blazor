@@ -114,7 +114,7 @@ This model is intentionally similar to mature Blazor libraries, while keeping im
 | `W3RadioGroup` | Implemented | Binds grouped `W3Radio` options through shared value and selection events. |
 | `W3DropZone` | Implemented | Large-file input and drag/drop surface component. |
 | `W3Autocomplete` | Implemented | Searchable listbox/combo with templates and keyboard interaction. |
-| `W3Select` | Implemented | Generic select wrapper with validation patterns. |
+| `W3Select` | Implemented | Generic select wrapper with validation patterns and first-class disabled placeholder support. |
 | `W3SelectItem` | Implemented | Typed option helper used inside `W3Select` and W3.CSS-first composition. |
 | `W3Checkbox` | Implemented | Checkbox with validation and label support. |
 | `W3Radio` | Implemented | Typed radio button wrapper. |
@@ -225,7 +225,7 @@ This model is intentionally similar to mature Blazor libraries, while keeping im
 | Content display and timeline | Implemented | Tree, chat, timeline, data table, rating, drop zone, and gallery coverage. |
 | Feedback and loading | Implemented | Spinner, skeleton, toast, file, autocomplete, and alert coverage. |
 | Package validation | Implemented | `dotnet pack` generates `W3Css.Blazor.0.1.0.nupkg`; CI uploads package artifact. |
-| Test count | Implemented | `dotnet test` reports 422 passing tests. |
+| Test count | Implemented | `dotnet test` reports 425 passing tests. |
 
 ## Component Compatibility Backlog
 

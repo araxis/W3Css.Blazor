@@ -38,12 +38,12 @@
                 <W3Select TValue="string"
                           Id="validation-stage"
                           @bind-Value="ValidationModel.Stage"
+                          Placeholder="Choose a stage"
                           Border="true"
                           Round="W3Round.Medium">
-                    <option value="">Choose a stage</option>
-                    <option value="preview">Preview</option>
-                    <option value="stable">Stable</option>
-                    <option value="maintenance">Maintenance</option>
+                    <W3SelectItem TValue="string" Value="@("preview")">Preview</W3SelectItem>
+                    <W3SelectItem TValue="string" Value="@("stable")">Stable</W3SelectItem>
+                    <W3SelectItem TValue="string" Value="@("maintenance")">Maintenance</W3SelectItem>
                 </W3Select>
             </W3Field>
 
@@ -172,12 +172,12 @@
         <W3Select TValue="string"
                   Id="release-stage"
                   @bind-Value="model.Stage"
+                  Placeholder="Choose a stage"
                   Border="true"
                   Round="W3Round.Medium">
-            <option value="">Choose a stage</option>
-            <option value="preview">Preview</option>
-            <option value="stable">Stable</option>
-            <option value="maintenance">Maintenance</option>
+            <W3SelectItem TValue="string" Value="@("preview")">Preview</W3SelectItem>
+            <W3SelectItem TValue="string" Value="@("stable")">Stable</W3SelectItem>
+            <W3SelectItem TValue="string" Value="@("maintenance")">Maintenance</W3SelectItem>
         </W3Select>
     </W3Field>
 

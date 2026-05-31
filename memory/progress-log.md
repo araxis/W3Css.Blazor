@@ -707,3 +707,6 @@ Last updated: 2026-05-31
 - Continued the documentation/API consistency review with the tab and toggle-group docs.
 - Added an add/close tabs docs example, documented the current `W3Tabs` add/close parameters, corrected the tabs default color rows, documented `W3TabPanel.Closeable`, and added a docs smoke test for the rendered add/close workflow.
 - Updated `W3ToggleGroup` docs to include the `SelectedValueChanged` and `SelectedValuesChanged` bind callbacks, corrected the selected-color default row, and kept the page text W3.CSS-focused.
+- Continued the small docs/API gap pass for `W3Table`, `W3Drawer`, `W3Menu`, and `W3ProgressCircular`.
+- Added missing parameter rows for `Dense`, `CloseButtonLabel`, `PanelClass`, `Type`, `AccessibilityLabel`, and inherited attributes where those pages needed explicit pass-through documentation.
+- Corrected stale default rows for drawer/menu surface colors, added focused docs smoke coverage, restarted the local docs server on `http://localhost:5016`, and verified `/components/menu` renders the updated rows with no browser console errors.

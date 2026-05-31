@@ -1,0 +1,10 @@
+.w3-form-fieldset {
+    border: 0;
+    margin: 0;
+    min-width: 0;
+    padding: 0;
+}
+
+.w3-form-fieldset:disabled {
+    opacity: 0.72;
+}

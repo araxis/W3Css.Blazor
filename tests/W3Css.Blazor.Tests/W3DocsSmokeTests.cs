@@ -828,6 +828,8 @@ public sealed class W3DocsSmokeTests
 
         var formPage = context.Render<FormPage>();
         Assert.Contains("EditContext", formPage.Markup);
+        Assert.Contains("Busy Submit State", formPage.Markup);
+        Assert.Contains("Disables child controls through the form fieldset", formPage.Markup);
         Assert.Contains("Extra attributes on the EditForm element", formPage.Markup);
 
         var fieldPage = context.Render<FieldPage>();

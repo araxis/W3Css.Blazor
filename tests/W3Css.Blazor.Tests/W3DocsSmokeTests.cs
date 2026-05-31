@@ -58,6 +58,7 @@ using ToggleGroupPage = W3Css.Blazor.Docs.Pages.ComponentTopics.ToggleGroupPage;
 using MaskPage = W3Css.Blazor.Docs.Pages.ComponentTopics.MaskPage;
 using StepperPage = W3Css.Blazor.Docs.Pages.ComponentTopics.StepperPage;
 using SwitchPage = W3Css.Blazor.Docs.Pages.ComponentTopics.SwitchPage;
+using TabsPage = W3Css.Blazor.Docs.Pages.ComponentTopics.TabsPage;
 using OverlayPage = W3Css.Blazor.Docs.Pages.ComponentTopics.OverlayPage;
 using TimeInputPage = W3Css.Blazor.Docs.Pages.ComponentTopics.TimeInputPage;
 using TimelinePage = W3Css.Blazor.Docs.Pages.ComponentTopics.TimelinePage;
@@ -126,6 +127,7 @@ public sealed class W3DocsSmokeTests
     [InlineData(typeof(TimelinePage), "/components/timeline")]
     [InlineData(typeof(ChatPage), "/components/chat")]
     [InlineData(typeof(StepperPage), "/components/stepper")]
+    [InlineData(typeof(TabsPage), "/components/tabs")]
     [InlineData(typeof(MessageBoxPage), "/components/message-box")]
     [InlineData(typeof(ToggleGroupPage), "/components/toggle-group")]
     [InlineData(typeof(MaskPage), "/components/mask")]
@@ -317,6 +319,29 @@ public sealed class W3DocsSmokeTests
         runButton.Click();
 
         Assert.Contains("Last action: Run check", cut.Markup);
+    }
+
+    [Fact]
+    public void TabsPageShowsAddAndCloseTabInteraction()
+    {
+        using var context = new BunitContext();
+        var cut = context.Render<TabsPage>();
+
+        Assert.Contains("Add And Close Tabs", cut.Markup);
+        Assert.Contains("ShowAddButton", cut.Markup);
+        Assert.Contains("CloseButtonLabel", cut.Markup);
+
+        cut.FindAll("button")
+            .Single(button => button.GetAttribute("aria-label") == "Add workspace tab")
+            .Click();
+
+        Assert.Contains("Workspace 3", cut.Markup);
+
+        cut.FindAll("button")
+            .Single(button => button.GetAttribute("aria-label") == "Close tab Workspace 1")
+            .Click();
+
+        Assert.Contains("Last closed: workspace-1", cut.Markup);
     }
 
     [Fact]

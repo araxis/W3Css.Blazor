@@ -53,13 +53,16 @@
                 <tr><td>Position</td><td>W3FabPosition</td><td>Inline</td><td>Placement class for anchored or fixed buttons</td></tr>
                 <tr><td>Fixed</td><td>bool</td><td>false</td><td>`position: fixed` instead of absolute placement</td></tr>
                 <tr><td>Offset</td><td>int</td><td>24</td><td>Corner offset in pixels through `--w3-fab-offset`</td></tr>
-                <tr><td>Color / TextColor</td><td>W3Color</td><td>Teal / White</td><td>Button background and text color classes</td></tr>
+                <tr><td>Color</td><td>W3Color</td><td>Teal</td><td>Button background color class</td></tr>
+                <tr><td>TextColor</td><td>W3Color</td><td>White</td><td>Button text color class</td></tr>
                 <tr><td>Size</td><td>W3Size</td><td>Large</td><td>Button text/icon size class</td></tr>
                 <tr><td>Depth</td><td>W3CardDepth</td><td>Four</td><td>W3.CSS card shadow class</td></tr>
                 <tr><td>Disabled</td><td>bool</td><td>false</td><td>`disabled` plus `w3-disabled`</td></tr>
                 <tr><td>Type</td><td>string</td><td>button</td><td>Button type attribute</td></tr>
                 <tr><td>OnClick</td><td>EventCallback&lt;MouseEventArgs&gt;</td><td>empty</td><td>Click callback</td></tr>
-                <tr><td>Class / Style</td><td>string?</td><td>null</td><td>Additional root classes and inline style</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional root classes</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline style on the button</td></tr>
+                <tr><td>AdditionalAttributes</td><td>IReadOnlyDictionary&lt;string,object&gt;?</td><td>null</td><td>Extra attributes on the floating action button element</td></tr>
             </tbody>
         </W3Table>
     </section>

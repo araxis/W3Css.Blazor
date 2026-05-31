@@ -735,3 +735,11 @@ Last updated: 2026-05-31
 - Added missing inherited `AdditionalAttributes` rows and split grouped color/label rows so each public parameter is documented directly.
 - Added focused docs smoke coverage for the updated content/media parameter rows.
 - Verified focused docs smoke tests, Release build, 386-test Release suite, package creation, hygiene scans, and `/components/image-list` in the in-app browser with no console errors or horizontal overflow.
+
+## 2026-05-31 - Actions And Utilities API Docs Pass
+
+- Continued the docs/API gap pass for action and utility pages: `W3Button`, `W3ButtonGroup`, `W3IconButton`, `W3ToggleIconButton`, `W3Fab`, `W3Tag`, `W3Badge`, `W3Chip`, `W3ChipSet`, `W3Avatar`, `W3AvatarGroup`, `W3Footer`, `W3Spacer`, `W3Stack`, and `W3Divider`.
+- Added missing inherited `AdditionalAttributes` rows and split grouped color/state rows so each public parameter is documented directly.
+- Corrected the `W3ChipSet` selected chip background default to `Primary`.
+- Added focused docs smoke coverage for the updated action/utility parameter rows.
+- Verified focused docs smoke tests, Release build, 387-test Release suite, package creation, hygiene scans, and `/components/icon-button` in the in-app browser with no console errors or horizontal overflow.

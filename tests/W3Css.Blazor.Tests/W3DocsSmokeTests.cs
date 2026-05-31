@@ -6,10 +6,12 @@ using AppBarPage = W3Css.Blazor.Docs.Pages.ComponentTopics.AppBarPage;
 using AppShellPage = W3Css.Blazor.Docs.Pages.ComponentTopics.AppShellPage;
 using AutocompletePage = W3Css.Blazor.Docs.Pages.ComponentTopics.AutocompletePage;
 using AvatarPage = W3Css.Blazor.Docs.Pages.ComponentTopics.AvatarPage;
+using BadgePage = W3Css.Blazor.Docs.Pages.ComponentTopics.BadgePage;
 using LinkPage = W3Css.Blazor.Docs.Pages.ComponentTopics.LinkPage;
 using FormPage = W3Css.Blazor.Docs.Pages.ComponentTopics.FormPage;
 using BottomNavigationPage = W3Css.Blazor.Docs.Pages.ComponentTopics.BottomNavigationPage;
 using BreadcrumbPage = W3Css.Blazor.Docs.Pages.ComponentTopics.BreadcrumbPage;
+using ButtonPage = W3Css.Blazor.Docs.Pages.ComponentTopics.ButtonPage;
 using ButtonGroupPage = W3Css.Blazor.Docs.Pages.ComponentTopics.ButtonGroupPage;
 using ChatPage = W3Css.Blazor.Docs.Pages.ComponentTopics.ChatPage;
 using CollapsePage = W3Css.Blazor.Docs.Pages.ComponentTopics.CollapsePage;
@@ -72,6 +74,7 @@ using NotePage = W3Css.Blazor.Docs.Pages.ComponentTopics.NotePage;
 using QuotePage = W3Css.Blazor.Docs.Pages.ComponentTopics.QuotePage;
 using StepperPage = W3Css.Blazor.Docs.Pages.ComponentTopics.StepperPage;
 using SwitchPage = W3Css.Blazor.Docs.Pages.ComponentTopics.SwitchPage;
+using TagPage = W3Css.Blazor.Docs.Pages.ComponentTopics.TagPage;
 using TabsPage = W3Css.Blazor.Docs.Pages.ComponentTopics.TabsPage;
 using TablePage = W3Css.Blazor.Docs.Pages.ComponentTopics.TablePage;
 using OverlayPage = W3Css.Blazor.Docs.Pages.ComponentTopics.OverlayPage;
@@ -570,6 +573,63 @@ public sealed class W3DocsSmokeTests
 
         var highlighterPage = context.Render<HighlighterPage>();
         Assert.Contains("Extra attributes on the root span", highlighterPage.Markup);
+    }
+
+    [Fact]
+    public void ActionAndUtilityApiPagesDocumentCurrentParameterRows()
+    {
+        using var context = new BunitContext();
+
+        var buttonPage = context.Render<ButtonPage>();
+        Assert.Contains("Extra attributes on the button element", buttonPage.Markup);
+
+        var buttonGroupPage = context.Render<ButtonGroupPage>();
+        Assert.Contains("Extra attributes on the button group root", buttonGroupPage.Markup);
+
+        var iconButtonPage = context.Render<IconButtonPage>();
+        Assert.Contains("Button background color class", iconButtonPage.Markup);
+        Assert.Contains("Pressed visual state when", iconButtonPage.Markup);
+        Assert.Contains("Extra attributes on the icon button element", iconButtonPage.Markup);
+
+        var toggleIconButtonPage = context.Render<ToggleIconButtonPage>();
+        Assert.Contains("Button background color class.", toggleIconButtonPage.Markup);
+        Assert.Contains("Extra attributes on the toggle icon button element.", toggleIconButtonPage.Markup);
+
+        var fabPage = context.Render<FabPage>();
+        Assert.Contains("Button background color class", fabPage.Markup);
+        Assert.Contains("Extra attributes on the floating action button element", fabPage.Markup);
+
+        var tagPage = context.Render<TagPage>();
+        Assert.Contains("Extra attributes on the tag element", tagPage.Markup);
+
+        var badgePage = context.Render<BadgePage>();
+        Assert.Contains("Extra attributes on the badge element", badgePage.Markup);
+
+        var chipPage = context.Render<ChipPage>();
+        Assert.Contains("Per-chip active background color", chipPage.Markup);
+        Assert.Contains("Extra attributes on the chip button", chipPage.Markup);
+
+        var chipSetPage = context.Render<ChipSetPage>();
+        Assert.Contains("Primary", chipSetPage.Markup);
+        Assert.Contains("Extra attributes on the chip set root", chipSetPage.Markup);
+
+        var avatarPage = context.Render<AvatarPage>();
+        Assert.Contains("Extra attributes on the avatar root", avatarPage.Markup);
+
+        var avatarGroupPage = context.Render<AvatarGroupPage>();
+        Assert.Contains("Extra attributes on the avatar group root", avatarGroupPage.Markup);
+
+        var footerPage = context.Render<FooterPage>();
+        Assert.Contains("Extra attributes on the footer element", footerPage.Markup);
+
+        var spacerPage = context.Render<SpacerPage>();
+        Assert.Contains("Extra attributes on the spacer element", spacerPage.Markup);
+
+        var stackPage = context.Render<StackPage>();
+        Assert.Contains("Extra attributes on the stack root", stackPage.Markup);
+
+        var dividerPage = context.Render<DividerPage>();
+        Assert.Contains("Extra attributes on the divider element", dividerPage.Markup);
     }
 
     [Fact]

@@ -7,15 +7,15 @@
     <DocPager PreviousHref="components/select" PreviousText="W3Select" NextHref="components/checkbox" NextText="Checkbox" />
 
     <p class="w3-large">`W3SelectItem` is a typed item helper for `W3Select` and reusable select APIs.</p>
-        <p>Use the `Value` parameter for typed item values and optional `Disabled` for unavailable choices.</p>
+    <p>Use the `Value` parameter for typed item values, `Disabled` for unavailable choices, and `W3Select.Placeholder` for the empty prompt.</p>
 
-        <DocExample Title="Typed Select Items" Code="@SelectItemCode">
-            <W3Select TValue="int" @bind-Value="selectedValue" Class="w3-border">
-                <W3SelectItem TValue="int" Value="@(1)">One</W3SelectItem>
-                <W3SelectItem TValue="int" Value="@(2)">Two</W3SelectItem>
-                <W3SelectItem TValue="int" Value="@(3)" Disabled="true">Three (disabled)</W3SelectItem>
-            </W3Select>
-        </DocExample>
+    <DocExample Title="Typed Select Items" Code="@SelectItemCode">
+        <W3Select TValue="int" @bind-Value="selectedValue" Class="w3-border">
+            <W3SelectItem TValue="int" Value="@(1)">One</W3SelectItem>
+            <W3SelectItem TValue="int" Value="@(2)">Two</W3SelectItem>
+            <W3SelectItem TValue="int" Value="@(3)" Disabled="true">Three (disabled)</W3SelectItem>
+        </W3Select>
+    </DocExample>
 
     <section class="doc-section">
         <h2>Parameters</h2>

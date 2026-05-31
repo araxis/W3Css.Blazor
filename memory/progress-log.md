@@ -41,6 +41,17 @@ Last updated: 2026-05-31
   - `dotnet pack src/W3Css.Blazor/W3Css.Blazor.csproj --configuration Release --no-build --output artifacts/packages /nr:false`;
   - hygiene scans found no blocked naming additions, no comparison naming matches, no tool/provider traces in project-visible paths, and no exact package key matches;
   - browser-verified `/components/form` after restarting the docs server on port 5016: busy submit emits `aria-busy`, disables the child fieldset while saving, returns to normal after save, has no visible error, no horizontal overflow, and no recent browser errors from the page load.
+- Continued the form-control UX audit on `W3Select`:
+  - added `Placeholder` and `PlaceholderDisabled` parameters so select prompts render as empty first options without requiring a manual item;
+  - updated select and validation docs examples to use typed `W3SelectItem` options with the first-class placeholder API;
+  - cleaned the select item docs copy and indentation around disabled options;
+  - added focused placeholder, enabled-placeholder, binder, and docs smoke coverage.
+- Verification:
+  - focused select/docs tests: 123 passing;
+  - `dotnet build W3Css.Blazor.slnx --configuration Release /nr:false` (0 warnings, 0 errors);
+  - `dotnet test tests/W3Css.Blazor.Tests/W3Css.Blazor.Tests.csproj --configuration Release --no-build /nr:false` (425 passing);
+  - `dotnet pack src/W3Css.Blazor/W3Css.Blazor.csproj --configuration Release --no-build --output artifacts/packages /nr:false`;
+  - browser-verified `/components/select` after restarting the docs server on port 5016: placeholder renders first and disabled, selecting `Medium` updates the native select, the parameter row/code snippet are visible, and no visible error appears.
 - Re-synced memory folder with current source state after major component/parity/theming work already on `main`.
 - Verified again:
   - `dotnet build W3Css.Blazor.slnx --configuration Release` (0 warnings, 0 errors).

@@ -7,15 +7,12 @@
     <DocPager PreviousHref="components/autocomplete" PreviousText="Autocomplete" NextHref="components/select-item" NextText="Select Item" />
 
     <p class="w3-large">`W3Select` renders a generic Blazor select control with the W3.CSS `w3-select` class.</p>
-    <p>Use `TValue` to match the bound value type.</p>
+    <p>Use `TValue` to match the bound value type, and set `Placeholder` when an empty first option should guide required selections.</p>
 
     <DocExample Title="Basic Select" Code="@BasicCode">
         <EditForm Model="@SelectModel">
             <W3Field TValue="string" Label="Size" ForId="select-size" For="@(() => SelectModel.Size)">
-                <W3Select TValue="string" Id="select-size" @bind-Value="SelectModel.Size" Border="true">
-                    <W3SelectItem TValue="string" Value="@string.Empty">
-                        Choose a size
-                    </W3SelectItem>
+                <W3Select TValue="string" Id="select-size" @bind-Value="SelectModel.Size" Placeholder="Choose a size" Border="true">
                     <W3SelectItem TValue="string" Value="@("small")">Small</W3SelectItem>
                     <W3SelectItem TValue="string" Value="@("medium")">Medium</W3SelectItem>
                     <W3SelectItem TValue="string" Value="@("large")">Large</W3SelectItem>
@@ -36,6 +33,8 @@
                 <tr><td>ValueChanged</td><td>EventCallback&lt;TValue&gt;</td><td>none</td><td>Raised when the selected value changes</td></tr>
                 <tr><td>ValueExpression</td><td>Expression&lt;Func&lt;TValue&gt;&gt;?</td><td>null</td><td>Validation expression for EditForm scenarios</td></tr>
                 <tr><td>Id</td><td>string?</td><td>null</td><td>`id` attribute</td></tr>
+                <tr><td>Placeholder</td><td>string?</td><td>null</td><td>Empty first option label</td></tr>
+                <tr><td>PlaceholderDisabled</td><td>bool</td><td>true</td><td>Controls whether the placeholder option is disabled</td></tr>
                 <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>`W3SelectItem` elements</td></tr>
                 <tr><td>Disabled</td><td>bool</td><td>false</td><td>`disabled` attribute</td></tr>
                 <tr><td>Border</td><td>bool</td><td>false</td><td>`w3-border`</td></tr>
@@ -56,10 +55,7 @@
     private readonly SelectExampleModel SelectModel = new();
 
     private const string BasicCode = """
-<W3Select TValue="string" @bind-Value="model.Size" Border="true">
-    <W3SelectItem TValue="string" Value="@string.Empty">
-        Choose a size
-    </W3SelectItem>
+<W3Select TValue="string" @bind-Value="model.Size" Placeholder="Choose a size" Border="true">
     <W3SelectItem TValue="string" Value="@("small")">Small</W3SelectItem>
     <W3SelectItem TValue="string" Value="@("medium")">Medium</W3SelectItem>
     <W3SelectItem TValue="string" Value="@("large")">Large</W3SelectItem>

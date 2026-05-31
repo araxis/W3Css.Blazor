@@ -17,7 +17,7 @@ Last updated: 2026-05-31
 - Current docs routes in `src/W3Css.Blazor.Docs/Pages/ComponentTopics`: 118 pages.
 - Tests in project source: 66 `.cs` test files.
 - Test suite status:
-  - `dotnet test tests/W3Css.Blazor.Tests/W3Css.Blazor.Tests.csproj --configuration Release` -> **422 passing tests**.
+  - `dotnet test tests/W3Css.Blazor.Tests/W3Css.Blazor.Tests.csproj --configuration Release` -> **425 passing tests**.
 - Build status:
   - `dotnet build W3Css.Blazor.slnx --configuration Release` → **0 warnings, 0 errors**.
 
@@ -65,5 +65,6 @@ Last updated: 2026-05-31
 - The form-control UX audit added input-time updates to `W3TextArea`, refreshed its docs example/API table, and verified the rendered docs page.
 - The field UX audit added stable spacing hooks and customizable validation message classes to `W3Field`, refreshed the docs example/API table, and verified the rendered field page.
 - The form submit UX audit added `Busy`/`Disabled` child-control disablement to `W3Form`, exposed `aria-busy`, refreshed the docs example/API table, and verified the rendered form page.
+- The select UX audit added first-class `Placeholder` and `PlaceholderDisabled` support to `W3Select`, refreshed the select and validation examples, and verified the rendered select page.
 - Neutral terminology cleanup is complete; source, docs, tests, and memory no longer use external comparison-library names for the compatibility work.
 - Remaining planned work is optional: extra theme tokens, focus-ring/theming polish, and `W3SwipeArea`-style pointer gesture support.

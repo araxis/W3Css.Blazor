@@ -63,12 +63,16 @@
                 <tr><td>MaxHeight</td><td>string?</td><td>null</td><td>Scrollable chat max height</td></tr>
                 <tr><td>ShowAvatars</td><td>bool</td><td>true</td><td>Default avatar visibility</td></tr>
                 <tr><td>AvatarSize</td><td>int</td><td>36</td><td>Default avatar size in pixels</td></tr>
-                <tr><td>Color, TextColor</td><td>W3Color</td><td>None</td><td>Root list colors</td></tr>
-                <tr><td>MessageColor, MessageTextColor</td><td>W3Color</td><td>LightGrey / Black</td><td>Default received message bubble colors</td></tr>
-                <tr><td>OwnMessageColor, OwnMessageTextColor</td><td>W3Color</td><td>Teal / White</td><td>Default own message bubble colors</td></tr>
+                <tr><td>Color</td><td>W3Color</td><td>None</td><td>Root list background color class</td></tr>
+                <tr><td>TextColor</td><td>W3Color</td><td>None</td><td>Root list text color class</td></tr>
+                <tr><td>MessageColor</td><td>W3Color</td><td>LightGrey</td><td>Default received message bubble background</td></tr>
+                <tr><td>MessageTextColor</td><td>W3Color</td><td>Black</td><td>Default received message bubble text</td></tr>
+                <tr><td>OwnMessageColor</td><td>W3Color</td><td>Teal</td><td>Default own message bubble background</td></tr>
+                <tr><td>OwnMessageTextColor</td><td>W3Color</td><td>White</td><td>Default own message bubble text</td></tr>
                 <tr><td>Round</td><td>W3Round</td><td>Large</td><td>Default bubble roundness</td></tr>
                 <tr><td>Class</td><td>string?</td><td>null</td><td>Additional classes on the message list</td></tr>
                 <tr><td>Style</td><td>string?</td><td>null</td><td>Inline styles on the message list</td></tr>
+                <tr><td>AdditionalAttributes</td><td>IReadOnlyDictionary&lt;string,object&gt;?</td><td>null</td><td>Extra attributes on the chat root</td></tr>
             </tbody>
         </W3Table>
     </section>
@@ -85,20 +89,25 @@
                 <tr><td>DateTime</td><td>string?</td><td>null</td><td>`datetime` attribute on the `time` element</td></tr>
                 <tr><td>Text</td><td>string?</td><td>null</td><td>Message text when no child content is supplied</td></tr>
                 <tr><td>Status</td><td>string?</td><td>null</td><td>Optional delivery/read status footer</td></tr>
-                <tr><td>AvatarSrc, AvatarAlt</td><td>string?</td><td>null / empty</td><td>Avatar image source and alt text</td></tr>
+                <tr><td>AvatarSrc</td><td>string?</td><td>null</td><td>Avatar image source</td></tr>
+                <tr><td>AvatarAlt</td><td>string</td><td>empty</td><td>Avatar image alt text</td></tr>
                 <tr><td>Initials</td><td>string?</td><td>null</td><td>Avatar initials fallback</td></tr>
                 <tr><td>AvatarSize</td><td>int</td><td>0</td><td>Per-message avatar size override</td></tr>
                 <tr><td>ShowAvatar</td><td>bool?</td><td>null</td><td>Per-message avatar visibility override</td></tr>
                 <tr><td>Own</td><td>bool</td><td>false</td><td>Right-aligned own message layout</td></tr>
                 <tr><td>Compact</td><td>bool</td><td>false</td><td>Compact bubble padding</td></tr>
                 <tr><td>Border</td><td>bool</td><td>false</td><td>`w3-border` on the bubble</td></tr>
-                <tr><td>AvatarColor, AvatarTextColor</td><td>W3Color</td><td>LightGrey / Black</td><td>Avatar colors</td></tr>
-                <tr><td>Color, TextColor</td><td>W3Color</td><td>None</td><td>Received bubble colors</td></tr>
-                <tr><td>OwnColor, OwnTextColor</td><td>W3Color</td><td>None</td><td>Own bubble color overrides</td></tr>
+                <tr><td>AvatarColor</td><td>W3Color</td><td>LightGrey</td><td>Avatar background color class</td></tr>
+                <tr><td>AvatarTextColor</td><td>W3Color</td><td>Black</td><td>Avatar text color class</td></tr>
+                <tr><td>Color</td><td>W3Color</td><td>None</td><td>Received bubble background color override</td></tr>
+                <tr><td>TextColor</td><td>W3Color</td><td>None</td><td>Received bubble text color override</td></tr>
+                <tr><td>OwnColor</td><td>W3Color</td><td>None</td><td>Own bubble background color override</td></tr>
+                <tr><td>OwnTextColor</td><td>W3Color</td><td>None</td><td>Own bubble text color override</td></tr>
                 <tr><td>Round</td><td>W3Round</td><td>None</td><td>Bubble roundness override</td></tr>
                 <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Custom message body content</td></tr>
                 <tr><td>Class</td><td>string?</td><td>null</td><td>Additional classes on the message article</td></tr>
                 <tr><td>Style</td><td>string?</td><td>null</td><td>Inline styles on the message article</td></tr>
+                <tr><td>AdditionalAttributes</td><td>IReadOnlyDictionary&lt;string,object&gt;?</td><td>null</td><td>Extra attributes on the message article</td></tr>
             </tbody>
         </W3Table>
     </section>

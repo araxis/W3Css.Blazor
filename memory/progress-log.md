@@ -728,3 +728,10 @@ Last updated: 2026-05-31
 - Continued the docs/API gap pass for feedback and overlay pages: `W3Alert`, `W3Toast`, `W3Overlay`, `W3Popover`, `W3FocusTrap`, `W3Spinner`, and `W3Skeleton`.
 - Added missing inherited attribute rows, corrected the popover content color default row, and added focused docs smoke coverage for the updated pages.
 - Verified focused docs smoke tests, Release build, 385-test Release suite, package creation, and `/components/popover` in the in-app browser with no console errors or horizontal overflow.
+
+## 2026-05-31 - Content And Media API Docs Pass
+
+- Continued the docs/API gap pass for content and media pages: `W3Image`, `W3ImageList`, `W3ImageListItem`, `W3Slideshow`, `W3Slide`, `W3Chat`, `W3ChatMessage`, `W3Code`, `W3Note`, `W3Quote`, `W3Icon`, and `W3Highlighter`.
+- Added missing inherited `AdditionalAttributes` rows and split grouped color/label rows so each public parameter is documented directly.
+- Added focused docs smoke coverage for the updated content/media parameter rows.
+- Verified focused docs smoke tests, Release build, 386-test Release suite, package creation, hygiene scans, and `/components/image-list` in the in-app browser with no console errors or horizontal overflow.

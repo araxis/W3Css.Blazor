@@ -50,6 +50,8 @@
             </thead>
             <tbody>
                 <tr><td>Value</td><td>string?</td><td>null</td><td>Hex color value</td></tr>
+                <tr><td>ValueChanged</td><td>EventCallback&lt;string?&gt;</td><td>none</td><td>Raised when the selected color changes</td></tr>
+                <tr><td>ValueExpression</td><td>Expression&lt;Func&lt;string?&gt;&gt;?</td><td>null</td><td>Validation expression for EditForm scenarios</td></tr>
                 <tr><td>Id</td><td>string?</td><td>null</td><td>`id` attribute</td></tr>
                 <tr><td>ShowPalette</td><td>bool</td><td>false</td><td>Renders the preview/hex/palette picker instead of the bare native input</td></tr>
                 <tr><td>Palette</td><td>IReadOnlyList&lt;string&gt;</td><td>16 presets</td><td>Preset swatches shown when ShowPalette is enabled</td></tr>
@@ -63,6 +65,7 @@
                 <tr><td>TextColor</td><td>W3Color</td><td>None</td><td>Text color class</td></tr>
                 <tr><td>Class</td><td>string?</td><td>null</td><td>Additional CSS classes</td></tr>
                 <tr><td>Style</td><td>string?</td><td>null</td><td>Inline style</td></tr>
+                <tr><td>AdditionalAttributes</td><td>IReadOnlyDictionary&lt;string,object&gt;?</td><td>null</td><td>Extra attributes on the picker root or native color input</td></tr>
             </tbody>
         </W3Table>
     </section>

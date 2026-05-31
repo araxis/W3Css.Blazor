@@ -33,6 +33,8 @@
             <tbody>
                 <tr><td>TValue</td><td>type</td><td>required</td><td>Bound value type</td></tr>
                 <tr><td>Value</td><td>TValue</td><td>default</td><td>Blazor input value</td></tr>
+                <tr><td>ValueChanged</td><td>EventCallback&lt;TValue&gt;</td><td>none</td><td>Raised when the selected value changes</td></tr>
+                <tr><td>ValueExpression</td><td>Expression&lt;Func&lt;TValue&gt;&gt;?</td><td>null</td><td>Validation expression for EditForm scenarios</td></tr>
                 <tr><td>Id</td><td>string?</td><td>null</td><td>`id` attribute</td></tr>
                 <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>`W3SelectItem` elements</td></tr>
                 <tr><td>Disabled</td><td>bool</td><td>false</td><td>`disabled` attribute</td></tr>
@@ -42,6 +44,7 @@
                 <tr><td>Round</td><td>W3Round</td><td>None</td><td>Rounded corner class</td></tr>
                 <tr><td>Class</td><td>string?</td><td>null</td><td>Additional CSS classes</td></tr>
                 <tr><td>Style</td><td>string?</td><td>null</td><td>Inline style</td></tr>
+                <tr><td>AdditionalAttributes</td><td>IReadOnlyDictionary&lt;string,object&gt;?</td><td>null</td><td>Extra attributes on the select element</td></tr>
             </tbody>
         </W3Table>
     </section>

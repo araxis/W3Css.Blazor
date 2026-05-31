@@ -743,3 +743,11 @@ Last updated: 2026-05-31
 - Corrected the `W3ChipSet` selected chip background default to `Primary`.
 - Added focused docs smoke coverage for the updated action/utility parameter rows.
 - Verified focused docs smoke tests, Release build, 387-test Release suite, package creation, hygiene scans, and `/components/icon-button` in the in-app browser with no console errors or horizontal overflow.
+
+## 2026-05-31 - Forms And Inputs API Docs Pass
+
+- Continued the docs/API gap pass for forms and input pages: `W3Input`, `W3TextArea`, `W3Form`, `W3Field`, `W3Select`, `W3SelectItem`, `W3Checkbox`, `W3RadioGroup`, `W3Radio`, `W3Mask`, `W3NumberInput`, `W3DateInput`, `W3TimeInput`, `W3Slider`, `W3Switch`, `W3ColorInput`, `W3FileInput`, `W3Autocomplete`, and `W3DropZone`.
+- Added missing inherited `AdditionalAttributes` rows plus binding callback and expression rows for validation-friendly inputs.
+- Split grouped drop-zone callback/color/class rows and corrected current defaults for switch, autocomplete, and drop-zone surface colors.
+- Added focused docs smoke coverage for the updated forms/input parameter rows.
+- Verified focused docs smoke tests, Release build, 394-test Release suite, package creation, hygiene scans, and `/components/autocomplete` in the in-app browser with no console errors or horizontal overflow.

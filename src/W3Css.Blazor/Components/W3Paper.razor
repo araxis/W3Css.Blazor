@@ -25,20 +25,20 @@
     };
 
     /// <summary>
-    /// MudBlazor-compatible paper elevation value.
+    /// Paper elevation value.
     /// 0 renders a flat surface; 1 uses <c>w3-card</c>; 2 uses <c>w3-card-2</c>; 3+ uses <c>w3-card-4</c>.
     /// </summary>
     [Parameter]
     public int Elevation { get; set; } = 1;
 
     /// <summary>
-    /// MudBlazor-compatible square mode; <see langword="true"/> disables rounded corners.
+    /// Square mode; <see langword="true"/> disables rounded corners.
     /// </summary>
     [Parameter]
     public bool Square { get; set; }
 
     /// <summary>
-    /// MudBlazor-compatible outlined mode adds <c>w3-border</c>.
+    /// Outlined mode adds <c>w3-border</c>.
     /// </summary>
     [Parameter]
     public bool Outlined { get; set; }
@@ -51,7 +51,7 @@
     public W3Color Color { get; set; } = W3Color.Surface;
 
     /// <summary>
-    /// MudBlazor-compatible foreground text color.
+    /// Foreground text color.
     /// </summary>
     [Parameter]
     public W3Color TextColor { get; set; } = W3Color.None;

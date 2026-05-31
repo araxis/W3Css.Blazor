@@ -17,7 +17,7 @@ Last updated: 2026-05-31
 - Current docs routes in `src/W3Css.Blazor.Docs/Pages/ComponentTopics`: 118 pages.
 - Tests in project source: 65 `.cs` test files.
 - Test suite status:
-  - `dotnet test tests/W3Css.Blazor.Tests/W3Css.Blazor.Tests.csproj --configuration Release` → **376 passing tests**.
+  - `dotnet test tests/W3Css.Blazor.Tests/W3Css.Blazor.Tests.csproj --configuration Release` → **383 passing tests**.
 - Build status:
   - `dotnet build W3Css.Blazor.slnx --configuration Release` → **0 warnings, 0 errors**.
 
@@ -53,4 +53,5 @@ Last updated: 2026-05-31
 - Documentation consistency review is in progress; `W3Tabs` now documents the add/close tab API and current defaults, and `W3ToggleGroup` documents bind callbacks plus current selected-color defaults.
 - The small docs/API gap pass now covers `W3Table`, `W3Drawer`, `W3Menu`, and `W3ProgressCircular` parameter tables with focused docs smoke coverage.
 - The second docs/API gap pass now covers `W3DataTable`, `W3DateRangePicker`, `W3MessageBox`, `W3Modal`, and `W3Navbar` parameter tables with focused docs smoke coverage.
+- The third docs/API gap pass now covers `W3Chart`, `W3Collapse`, `W3Paper`, `W3Panel`, `W3Container`, `W3Row`, `W3Column`, `W3Grid`, and `W3Flex` parameter tables with focused docs smoke coverage.
 - Remaining planned work is optional: extra theme tokens, focus-ring/theming polish, and `W3SwipeArea`-style pointer gesture support.

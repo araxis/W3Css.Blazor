@@ -715,3 +715,7 @@ Last updated: 2026-05-31
 - Corrected stale default rows for data table surface/active page colors, modal content surface color, and navbar active color.
 - Removed old comparison wording from date range and message box docs so the pages stay focused on the library behavior.
 - Verified focused docs smoke tests, Release build, 376-test Release suite, package creation, and `/components/date-range-picker` in the in-app browser with no console errors.
+- Continued the docs/API gap pass for `W3Chart`, `W3Collapse`, `W3Paper`, `W3Panel`, `W3Container`, `W3Row`, `W3Column`, `W3Grid`, and `W3Flex`.
+- Added missing rows for child content, inherited class/style/attribute passthrough, chart colors, and separate chart width/height parameters where needed.
+- Corrected the paper default color row to `Surface`, cleaned stale comparison wording from touched docs/API comments, and added focused docs smoke coverage for the updated pages.
+- Verified selected-page parameter coverage, focused docs smoke tests, Release build, 383-test Release suite, package creation, and `/components/chart` in the in-app browser with no console errors or horizontal overflow.

@@ -17,9 +17,9 @@
        @onchange="HandleChange" />
 
 @code {
-    // MudBlazor compatibility: mirrors MudMask. Formats input against a mask
-    // pattern where '0' = digit, 'a' = letter, '*' = alphanumeric, and any other
-    // character is a literal delimiter. The bound value is the masked text.
+    // Formats input against a mask pattern where '0' = digit, 'a' = letter,
+    // '*' = alphanumeric, and any other character is a literal delimiter.
+    // The bound value is the masked text.
     private string InputCssClass => BuildControlClass("w3-input", "w3-mask");
 
     /// <summary>

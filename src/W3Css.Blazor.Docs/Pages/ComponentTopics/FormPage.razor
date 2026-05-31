@@ -6,10 +6,10 @@
     <h1>W3Form</h1>
     <DocPager PreviousHref="components/mask" PreviousText="Mask" NextHref="components/number-input" NextText="Number Input" />
 
-    <p class="w3-large"><code>W3Form</code> is a MudBlazor-compatible form wrapper over Blazor <code>EditForm</code>.</p>
-    <p>Use it when migrating MudBlazor layouts that rely on <code>&lt;MudForm&gt;</code> while staying with W3.CSS-first components.</p>
+    <p class="w3-large"><code>W3Form</code> is a form wrapper over Blazor <code>EditForm</code>.</p>
+    <p>Use it when a layout needs submit callbacks, editable context access, and W3.CSS-first form composition.</p>
 
-    <DocExample Title="Basic Mud-style form wrapper" Description="Submit callbacks receive the current edit context for standard Blazor validation workflows." Code="@BasicFormCode">
+    <DocExample Title="Basic Form Wrapper" Description="Submit callbacks receive the current edit context for standard Blazor validation workflows." Code="@BasicFormCode">
         <W3Form Model="@_formModel" OnValidSubmit="HandleSubmit">
             <W3Field TValue="string" Label="Full Name" For="@(() => _formModel.Name)" ForId="form-name">
                 <W3Input @bind-Value="_formModel.Name" Id="form-name" Placeholder="Jane Example" Border="true" />

@@ -43,37 +43,37 @@ Last updated: 2026-05-31
 
 ## 2026-05-29
 
-- Opened a dedicated **MudBlazor parity** track: identify every MudBlazor user-facing component not yet wrapped/aliased in the library and close the gaps W3.CSS-first.
-- Recorded the parity plan in the docs site itself: populated the previously empty `Product Readiness Backlog` (`ExpansionBacklog`) in `src/W3Css.Blazor.Docs/Pages/Components.razor` with the remaining MudBlazor candidates (`W3MessageBox`, `W3ToggleGroup`/`W3ToggleItem`, `W3ColorPicker`, `W3Mask`, `W3DynamicTabs`, `W3Hidden`, `W3ScrollToTop`, `W3PageContentNavigation`, `W3SwipeArea` [Later], `W3Chart` [Later]).
+- Opened a dedicated **component compatibility** track: identify every reference library user-facing component not yet wrapped/aliased in the library and close the gaps W3.CSS-first.
+- Recorded the parity plan in the docs site itself: populated the previously empty `Product Readiness Backlog` (`ExpansionBacklog`) in `src/W3Css.Blazor.Docs/Pages/Components.razor` with the remaining reference library candidates (`W3MessageBox`, `W3ToggleGroup`/`W3ToggleItem`, `W3ColorPicker`, `W3Mask`, `W3DynamicTabs`, `W3Hidden`, `W3ScrollToTop`, `W3PageContentNavigation`, `W3SwipeArea` [Later], `W3Chart` [Later]).
 - Implemented the first parity slice — layout/content primitives (all CSS-first, no JS):
-  - `W3Spacer` (MudSpacer) — flex filler; `src/W3Css.Blazor/Components/W3Spacer.razor` + `.razor.css`.
-  - `W3Footer` (MudFooter) — semantic `<footer>` with color/border/fixed (`w3-bottom`) options; `W3Footer.razor` + `.razor.css`.
-  - `W3AvatarGroup` (MudAvatarGroup) — overlapping `W3Avatar` row via scoped `::deep` overlap CSS; `W3AvatarGroup.razor` + `.razor.css`.
+  - `W3Spacer` — flex filler; `src/W3Css.Blazor/Components/W3Spacer.razor` + `.razor.css`.
+  - `W3Footer` — semantic `<footer>` with color/border/fixed (`w3-bottom`) options; `W3Footer.razor` + `.razor.css`.
+  - `W3AvatarGroup` — overlapping `W3Avatar` row via scoped `::deep` overlap CSS; `W3AvatarGroup.razor` + `.razor.css`.
 - Added docs topics `/components/spacer`, `/components/footer`, `/components/avatar-group` with examples and parameter tables.
 - Spliced pager chains: Divider → **Spacer** → **Footer** → Container, and Avatar → **Avatar Group** → Icons.
 - Registered the three topics in `Components.razor` catalog (Layout And Surfaces; Actions, Content, And Media) and `NavMenu.razor` sidebar.
-- Added route + index-link coverage in `tests/W3Css.Blazor.Tests/W3DocsSmokeTests.cs` and dedicated rendering tests in `tests/W3Css.Blazor.Tests/W3MudParityLayoutTests.cs`.
+- Added route + index-link coverage in `tests/W3Css.Blazor.Tests/W3DocsSmokeTests.cs` and dedicated rendering tests in `tests/W3Css.Blazor.Tests/W3LayoutCompatibilityTests.cs`.
 - Verification:
   - `dotnet build W3Css.Blazor.slnx --configuration Release` ✅ (0 errors; pre-existing BL0006 warning only)
   - `dotnet test tests/W3Css.Blazor.Tests/W3Css.Blazor.Tests.csproj --configuration Release --no-build` ✅ (**372 tests**)
 - Implemented the second parity slice — confirm prompt + segmented selection (CSS-first, no JS):
-  - `W3MessageBox` (MudMessageBox) — inline `@bind-Visible` confirm/alert over `W3Dialog`/`W3Modal`; `bool?` result (Yes=true, No=false, Cancel/dismiss=null) plus `OnYes`/`OnNo`/`OnCancel`. `src/W3Css.Blazor/Components/W3MessageBox.razor`.
-  - `W3ToggleGroup<TValue>` + `W3ToggleItem<TValue>` (MudToggleGroup/MudToggleItem) — single/multi segmented selector using the `W3ChipSet`/`W3Chip` cascading owner/item pattern over `w3-bar`/`w3-button`, items expose `aria-pressed`. `W3ToggleGroup.razor` + `W3ToggleItem.razor`.
+  - `W3MessageBox` — inline `@bind-Visible` confirm/alert over `W3Dialog`/`W3Modal`; `bool?` result (Yes=true, No=false, Cancel/dismiss=null) plus `OnYes`/`OnNo`/`OnCancel`. `src/W3Css.Blazor/Components/W3MessageBox.razor`.
+  - `W3ToggleGroup<TValue>` + `W3ToggleItem<TValue>` — single/multi segmented selector using the `W3ChipSet`/`W3Chip` cascading owner/item pattern over `w3-bar`/`w3-button`, items expose `aria-pressed`. `W3ToggleGroup.razor` + `W3ToggleItem.razor`.
   - Docs topics `/components/message-box` (interactive Yes/No/Cancel demo) and `/components/toggle-group` (single + multi demos); pagers Dialog → **Message Box** → Tooltip and Switch → **Toggle Group** → Color Input.
   - Registered in `Components.razor` catalog + `NavMenu.razor`; removed both from the docs `Product Readiness Backlog`.
-  - Tests: route + index-link coverage in `W3DocsSmokeTests.cs`; behavior tests in `tests/W3Css.Blazor.Tests/W3MudParityInteractiveTests.cs`.
+  - Tests: route + index-link coverage in `W3DocsSmokeTests.cs`; behavior tests in `tests/W3Css.Blazor.Tests/W3InteractiveCompatibilityTests.cs`.
   - Verification: `dotnet build … -c Release` ✅ (0 errors); `dotnet test … --no-build` ✅ (**379 tests**).
 - Implemented the third parity slice — masked input, full color picker, dynamic tabs (CSS-first, no JS):
-  - `W3Mask` (MudMask) — `W3FormComponentBase<string?>` input that formats against a pattern (`0`=digit, `a`=letter, `*`=alphanumeric, others literal); bound value is masked text. `src/W3Css.Blazor/Components/W3Mask.razor`.
-  - `W3ColorPicker` (MudColorPicker) — preview swatch + native picker + hex field + preset palette over Blazor `Value`/`ValueChanged`; hex entry validated. `W3ColorPicker.razor` + `.razor.css`.
-  - `W3DynamicTabs` (MudDynamicTabs) + `W3DynamicTabItem` model — closeable/addable tab bar over `w3-bar`/`w3-button` with `OnAddTab`/`OnCloseTab` and `@bind-ActiveValue`. `W3DynamicTabs.razor` + `.razor.css`, model at `src/W3Css.Blazor/W3DynamicTabItem.cs`.
+  - `W3Mask` — `W3FormComponentBase<string?>` input that formats against a pattern (`0`=digit, `a`=letter, `*`=alphanumeric, others literal); bound value is masked text. `src/W3Css.Blazor/Components/W3Mask.razor`.
+  - `W3ColorPicker` — preview swatch + native picker + hex field + preset palette over Blazor `Value`/`ValueChanged`; hex entry validated. `W3ColorPicker.razor` + `.razor.css`.
+  - `W3DynamicTabs` + `W3DynamicTabItem` model — closeable/addable tab bar over `w3-bar`/`w3-button` with `OnAddTab`/`OnCloseTab` and `@bind-ActiveValue`. `W3DynamicTabs.razor` + `.razor.css`, model at `src/W3Css.Blazor/W3DynamicTabItem.cs`.
   - Docs topics `/components/mask`, `/components/color-picker`, `/components/dynamic-tabs`; pagers Text Field → **Mask** → Numeric Field, Color Input → **Color Picker** → File Input, Tabs → **Dynamic Tabs** → Accordion. Registered in `Components.razor` + `NavMenu.razor`; removed all three from the docs backlog.
-  - Tests: routes/index-links in `W3DocsSmokeTests.cs`; behavior tests in `tests/W3Css.Blazor.Tests/W3MudParitySlice3Tests.cs`.
+  - Tests: routes/index-links in `W3DocsSmokeTests.cs`; behavior tests in `tests/W3Css.Blazor.Tests/W3FormUtilityCompatibilityTests.cs`.
   - Verification: `dotnet build … -c Release` ✅ (0 errors); `dotnet test … --no-build` ✅ (**387 tests**). Browser-verified on the running docs server (port 5015): color picker (22 swatches + hex), mask live-formats `1234567890`→`(123) 456-7890`, dynamic tabs add 2→3 and close 3→2 with no Blazor error UI.
-- **Pivoted strategy → W3.CSS-loyal consolidation (no MudBlazor alias shims).** Per the new design rule ([[decisions]]), removed the alias layer and folded unique features into canonical components:
+- **Pivoted strategy → W3.CSS-loyal consolidation (no reference library alias shims).** Per the new design rule ([[decisions]]), removed the alias layer and folded unique features into canonical components:
   - Folds: `W3SimpleTable`→`W3Table.Dense`; `W3DataGrid`→`W3DataTable` (already had selection); `W3ColorPicker`→`W3ColorInput.ShowPalette` (palette/preview/hex); `W3DynamicTabs`→`W3Tabs` (`ShowAddButton`/`OnAddTab`, `Closeable`/`ShowCloseButtons`/`OnCloseTab`, per-panel `W3TabPanel.Closeable`); `W3Dialog`→`W3Modal.Actions`, and `W3MessageBox` rebuilt on `W3Modal`.
   - Deleted 15 alias components + the `W3SnackbarSeverity` enum, their 15 docs pages, sidebar/catalog entries, and re-linked all pager chains (Divider→Spacer→Footer→Container untouched; new joins e.g. Tabs→Accordion, Color Input→File Input, Toast→Modal→Overlay→Message Box→Tooltip, Table→Data Table→Tree View, Slideshow→Code).
-  - Deleted 10 alias test files; reworked `W3MudParitySlice3Tests` (Mask + `W3ColorInput.ShowPalette` + `W3Tabs` closeable/addable) and the dialog tests → one `W3Modal.Actions` test.
+  - Deleted 10 alias test files; reworked `W3FormUtilityCompatibilityTests` (Mask + `W3ColorInput.ShowPalette` + `W3Tabs` closeable/addable) and the dialog tests → one `W3Modal.Actions` test.
   - Verification: `dotnet build W3Css.Blazor.slnx -c Release` ✅ (0 errors, 0 warnings); `dotnet test` ✅ (**346 tests**). Browser-verified on the docs server: Color Input renders (color-picker gone from nav), Message Box opens on `W3Modal`, deleted `/components/dialog` shows a graceful Not Found, sidebar down to 118 links.
 - Added `W3ScrollToTop` (genuinely-missing capability): back-to-top button that appears past a scroll threshold and smooth-scrolls up. `src/W3Css.Blazor/Components/W3ScrollToTop.razor` (+ `.razor.css`) with `wwwroot/w3ScrollToTop.js` (scroll listener + `scrollTo`, `DotNetObjectReference` callback, `IAsyncDisposable`, `JSDisconnectedException`-safe). Docs `/components/scroll-to-top` (pager Stepper → Scroll To Top → Spinner), nav/catalog wiring, smoke route + index link, and `W3ScrollToTopTests` (loose JS interop). Removed it from the docs backlog.
 - Doc cleanups: corrected the stale `W3Dialog` reference on the Message Box page to `W3Modal`; the Color Input page now documents the `ShowPalette` picker (example + `ShowPalette`/`Palette`/`Label` rows).
@@ -81,15 +81,15 @@ Last updated: 2026-05-31
 - Added `W3PageContentNavigation` + `W3PageSection` (last non-deferred missing capability): in-page table-of-contents scrollspy. `src/W3Css.Blazor/Components/W3PageContentNavigation.razor` (+ `.razor.css`) with `wwwroot/w3PageContentNavigation.js` (`IntersectionObserver`, `DotNetObjectReference` `SetActive` callback, `IAsyncDisposable`, `JSDisconnectedException`-safe). Docs `/components/page-content-navigation` (pager Breadcrumb → Page Content Navigation → Link), nav/catalog wiring, smoke route + index link, and `W3PageContentNavigationTests`. Removed it from the docs backlog.
 - Verification: `dotnet build … -c Release` ✅ (0 errors); `dotnet test … --no-build` ✅ (**352 tests**). Page renders with the TOC links and the active-highlight path is unit-tested; the headless preview reports `window.innerHeight === 0` so the IntersectionObserver scrollspy couldn't be exercised there (no JS errors; works in a real browser).
 - Per the new commit policy, committed the session in focused commits on `test/docs-smoke`: W3.CSS-loyal consolidation, memory sync, and this component as separate commits.
-- Added `W3Chart` + `W3ChartSeries` (the last deferred parity item, accepted by the user): a dependency-free, script-free SVG chart (`MudChart` parity) supporting Bar, Line, Pie, and Donut with legend, axis labels, gridlines, per-series colors, and `<title>` tooltips. Geometry lives in `Internal/W3ChartGeometry.cs` (pure, unit-tested); the component renders the layout as SVG, emitting `<text>` via a `RenderFragment` builder because Razor reserves the `<text>` tag. Docs `/components/chart` (pager Timeline → Chart → Chat), nav/catalog wiring, smoke route + index link, and `W3ChartTests` (geometry + render). Removed from the docs backlog.
+- Added `W3Chart` + `W3ChartSeries` (the last deferred parity item, accepted by the user): a dependency-free, script-free SVG chart chart supporting Bar, Line, Pie, and Donut with legend, axis labels, gridlines, per-series colors, and `<title>` tooltips. Geometry lives in `Internal/W3ChartGeometry.cs` (pure, unit-tested); the component renders the layout as SVG, emitting `<text>` via a `RenderFragment` builder because Razor reserves the `<text>` tag. Docs `/components/chart` (pager Timeline → Chart → Chat), nav/catalog wiring, smoke route + index link, and `W3ChartTests` (geometry + render). Removed from the docs backlog.
 - Verification: `dotnet build … -c Release` ✅ (0 errors, 0 warnings); `dotnet test … --no-build` ✅ (**360 tests**). Browser-verified on a fresh docs server: Bar (8 rects/2 series), Line (2 polylines), Pie (4 slices), Donut (4 slices + hole) all render with legends and axis labels, no Blazor error UI. Committed as its own focused commit.
-- Parity status: the MudBlazor parity backlog is effectively complete; only the niche `W3SwipeArea` (pointer/JS gesture) remains deferred.
-- New direction (user): make every component really easy to use and give the library **strong theming/customization** (the named weak spot, shared with MudBlazor). Shipped the MVP **theme token system**: `W3Theme` (record: primary/secondary/accent/surface/border/radius/font + optional dark) and `W3ThemeProvider` (emits CSS custom properties on `.w3-theme-root` + a `[data-w3-dark]` block + token utility classes like `.w3-primary`/`.w3-surface`; cascades the theme). Added `W3Color.Primary/Secondary/Accent/Surface` tokens wired through `W3ClassMaps`, so `Color="W3Color.Primary"` adopts the theme. Non-breaking/opt-in; W3.CSS-loyal (no `w3.css` edits, no deps, no JS). Docs `/components/theming` (pager Color Schemes → Theming → Trends) with a live theme editor; `W3ThemeTests`. `dotnet build` ✅ (0/0); `dotnet test` ✅ (**369 tests**). Browser-verified: editing the Primary color input updates `--w3-primary` and recolors the Primary button live (`#1976d2` → `#ff0000`), no errors. Recorded the architecture in `memory/decisions.md`. Then refined the architecture: moved the token utility classes + `:root` defaults into a bundled always-on `wwwroot/w3-theme.css` (linked next to `w3.css`), and slimmed `W3ThemeProvider` to emit only variable overrides. Tokens now render with sensible defaults app-wide (even without a provider) — the right foundation for "themed by default" and no duplication. Browser-verified: `w3-theme.css` loads, Primary token defaults to `#1976d2`, provider override recolors it live to `#00aa55`. `dotnet test` ✅ (369). Next: Phase 2 "themed by default" (flip selected component defaults to tokens) + ease-of-use pass.
+- Parity status: the component compatibility backlog is effectively complete; only the niche `W3SwipeArea` (pointer/JS gesture) remains deferred.
+- New direction (user): make every component really easy to use and give the library **strong theming/customization** (the named weak spot, shared with reference library). Shipped the MVP **theme token system**: `W3Theme` (record: primary/secondary/accent/surface/border/radius/font + optional dark) and `W3ThemeProvider` (emits CSS custom properties on `.w3-theme-root` + a `[data-w3-dark]` block + token utility classes like `.w3-primary`/`.w3-surface`; cascades the theme). Added `W3Color.Primary/Secondary/Accent/Surface` tokens wired through `W3ClassMaps`, so `Color="W3Color.Primary"` adopts the theme. Non-breaking/opt-in; W3.CSS-loyal (no `w3.css` edits, no deps, no JS). Docs `/components/theming` (pager Color Schemes → Theming → Trends) with a live theme editor; `W3ThemeTests`. `dotnet build` ✅ (0/0); `dotnet test` ✅ (**369 tests**). Browser-verified: editing the Primary color input updates `--w3-primary` and recolors the Primary button live (`#1976d2` → `#ff0000`), no errors. Recorded the architecture in `memory/decisions.md`. Then refined the architecture: moved the token utility classes + `:root` defaults into a bundled always-on `wwwroot/w3-theme.css` (linked next to `w3.css`), and slimmed `W3ThemeProvider` to emit only variable overrides. Tokens now render with sensible defaults app-wide (even without a provider) — the right foundation for "themed by default" and no duplication. Browser-verified: `w3-theme.css` loads, Primary token defaults to `#1976d2`, provider override recolors it live to `#00aa55`. `dotnet test` ✅ (369). Next: Phase 2 "themed by default" (flip selected component defaults to tokens) + ease-of-use pass.
 - Code review follow-up: made `W3ChartGeometry` and its records `internal` (they had leaked as `public`, inconsistent with the `internal` convention for `W3ClassBuilder`/`W3ClassMaps`) and added `<InternalsVisibleTo Include="W3Css.Blazor.Tests" />` so the geometry stays directly testable without expanding the public API. Null-guarded `W3ChartSeries.Data` against `NRE` (+ regression test). Documented that `W3ScrollToTop.VisibleHeight` is applied at initialization and that `W3Chart` expects non-negative values. `dotnet test` ✅ (**361 tests**).
 
 ## 2026-05-28
 
-- Added `W3SimpleTable` MudBlazor compatibility wrapper and docs page:
+- Added `W3SimpleTable` component compatibility wrapper and docs page:
   - Implemented `src/W3Css.Blazor/Components/W3SimpleTable.razor` as a thin alias over `W3Table` with `Dense`/`Hover` support.
   - Added docs page `src/W3Css.Blazor.Docs/Pages/ComponentTopics/SimpleTablePage.razor`.
   - Added `W3SimpleTable` navigation/categorization entries in `Components.razor` and `NavMenu.razor`.
@@ -99,7 +99,7 @@ Last updated: 2026-05-31
   - Verification pending: test count and doc route assertions after the current build/test pass.
 
 - Added `W3Link`:
-  - Implemented `src/W3Css.Blazor/Components/W3Link.razor` as a MudBlazor-style link primitive with anchor/button/command fallback and disabled span rendering.
+  - Implemented `src/W3Css.Blazor/Components/W3Link.razor` as a W3.CSS-first link primitive with anchor/button/command fallback and disabled span rendering.
   - Added docs topic `/components/link` and threaded pager updates (`Breadcrumb` → `Link` → `Dropdown`).
   - Updated `Components.razor` category catalog, `NavMenu.razor`, and neighboring docs (`BreadcrumbPage.razor`, `DropdownPage.razor`) to preserve a coherent navigation order.
   - Added `tests/W3Css.Blazor.Tests/W3LinkTests.cs` for rendering, classes, click handling, and disabled behavior, and fixed namespace/assertion issues from initial draft.
@@ -112,7 +112,7 @@ Last updated: 2026-05-31
     - `dotnet build W3Css.Blazor.slnx -c Release` ✅
     - `dotnet test tests/W3Css.Blazor.Tests/W3Css.Blazor.Tests.csproj -c Release --no-build` ✅ (346 tests)
 
-- Added MudBlazor-style `W3ProgressCircular` (circular progress component):
+- Added W3.CSS-first `W3ProgressCircular` (circular progress component):
   - Implemented isolated styling in `src/W3Css.Blazor/Components/W3ProgressCircular.razor.css` for determinate/indeterminate rendering, text-centered labels, and animation.
   - Wired `W3ProgressCircular` markup classes to text color classes so SVG stroke styling follows component colors.
   - Added component docs at `/components/progress-circular` with examples and parameter table.
@@ -123,12 +123,12 @@ Last updated: 2026-05-31
   - Verification:
     - `dotnet test tests/W3Css.Blazor.Tests/W3Css.Blazor.Tests.csproj --no-restore --verbosity minimal` ✅ (336 tests)
 
-- Continued MudBlazor parity expansion with:
+- Continued component compatibility expansion with:
   - Implemented `W3DataGrid<TItem>` in `src/W3Css.Blazor/Components/W3DataGrid.razor` as a compatibility wrapper over `W3DataTable<TItem>`.
   - Added `W3ExpansionPanel` in `src/W3Css.Blazor/Components/W3ExpansionPanel.razor` with `Text`/`IsExpanded` alias behavior and two-way binding compatibility.
   - Added docs topics:
-    - `/components/data-grid` with Mud-style paging/search/alias examples.
-    - `/components/expansion-panel` with Mud-style expansion-state alias examples.
+    - `/components/data-grid` with W3.CSS-first paging/search/alias examples.
+    - `/components/expansion-panel` with W3.CSS-first expansion-state alias examples.
   - Wired new topics into docs navigation (`NavMenu.razor`) and component index category lists (`Components.razor`) with pager updates.
   - Updated docs smoke coverage in `tests/W3Css.Blazor.Tests/W3DocsSmokeTests.cs` to include route and nav-link assertions for `data-grid`.
   - Updated memory artifacts:
@@ -141,9 +141,9 @@ Last updated: 2026-05-31
 
 ## 2026-05-27
 
-- Added MudBlazor-style `W3Carousel` parity wrapper over `W3Slideshow`:
+- Added W3.CSS-first `W3Carousel` parity wrapper over `W3Slideshow`:
   - Implemented `W3Carousel` in `src/W3Css.Blazor/Components/W3Carousel.razor` with aliases: `ShowArrows`, `ShowBullets`, `ShowDots`, `AutoCycle`, and `CycleInterval`.
-  - Added Mud-style examples and API table in new docs page: `/components/carousel`.
+  - Added W3.CSS-first examples and API table in new docs page: `/components/carousel`.
   - Wired carousel into sidebar and component index category content (`Actions, content, and media`).
   - Updated nearby docs pager chains so slideshow now flows into carousel.
 - Added component route coverage and content checks for carousel in docs smoke tests.
@@ -155,8 +155,8 @@ Last updated: 2026-05-31
   - `memory/current-state.md` (test count + component list + nav docs).
   - `memory/feature-list.md` (new component row + updated test count).
   - `memory/progress-log.md`.
-- Added MudBlazor-style text input compatibility (`W3TextField`) and docs smoke coverage:
-  - Implemented `W3TextField` as a MudBlazor-compatible wrapper over `W3Input` in `src/W3Css.Blazor/Components/W3TextField.razor`.
+- Added W3.CSS-first text input compatibility (`W3TextField`) and docs smoke coverage:
+  - Implemented `W3TextField` as a W3.CSS-first wrapper over `W3Input` in `src/W3Css.Blazor/Components/W3TextField.razor`.
   - Added docs topic `/components/text-field` to `src/W3Css.Blazor.Docs/Pages/ComponentTopics/TextFieldPage.razor`.
   - Added tests in `tests/W3Css.Blazor.Tests/W3TextFieldTests.cs` and docs smoke checks in `tests/W3Css.Blazor.Tests/W3DocsSmokeTests.cs`.
   - Synced memory updates for the new component and test count across memory files.
@@ -170,7 +170,7 @@ Last updated: 2026-05-31
   - Created `.github/workflows/release.yml` for tag/manual release runs.
   - Workflow validates build and test, creates release artifacts with configured version, creates a GitHub release from `docs/release-notes/<version>.md`, and publishes to NuGet when credentials are available.
   - Added memory sync updates to document Phase 14 progress and next release-handoff step.
-- Added MudBlazor-parity `W3Dialog` component coverage and docs:
+- Added component compatibility `W3Dialog` component coverage and docs:
   - Added `W3Dialog` component implementation (`src/W3Css.Blazor/Components/W3Dialog.razor`) with `Actions`-driven footer, close-button handling, backdrop/escape disabling, and `OnClose` callback.
   - Added `/components/dialog` docs topic and inserted it into component index + overlay navigation.
   - Updated docs smoke tests (`W3DocsSmokeTests`) to include dialog route/link/markup checks.
@@ -719,3 +719,6 @@ Last updated: 2026-05-31
 - Added missing rows for child content, inherited class/style/attribute passthrough, chart colors, and separate chart width/height parameters where needed.
 - Corrected the paper default color row to `Surface`, cleaned stale comparison wording from touched docs/API comments, and added focused docs smoke coverage for the updated pages.
 - Verified selected-page parameter coverage, focused docs smoke tests, Release build, 383-test Release suite, package creation, and `/components/chart` in the in-app browser with no console errors or horizontal overflow.
+- Continued neutral terminology cleanup across source comments, docs catalog text, component topic pages, test class/file names, and memory notes.
+- Renamed the remaining compatibility test files/classes to neutral names and removed external comparison-library names from source, docs, tests, and memory.
+- Verified docs smoke tests, compatibility-focused tests, Release build, 383-test Release suite, package creation, and `/components` in the in-app browser with neutral catalog text, no console errors, and no horizontal overflow.

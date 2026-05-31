@@ -21,7 +21,7 @@ Last updated: 2026-05-31
   - `W3Theme` + `W3ThemeProvider`
   - bundled `w3-theme.css` for token defaults and utility classes.
 - JS is scoped only to behavior-only components and cleanly disposed.
-- MudBlazor compatibility strategy:
+- Component compatibility strategy:
   - fold features into canonical components when possible,
   - add new component only when required capability is missing,
   - avoid alias components that duplicate concepts.

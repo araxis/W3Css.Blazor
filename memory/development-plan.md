@@ -29,7 +29,7 @@ Last updated: 2026-05-31
 
 ## Phase 6: W3.CSS-Loyal Consolidation (Complete)
 
-- MudBlazor-compatibility work is implemented as:
+- Component compatibility work is implemented as:
   - New capabilities where absent (`W3Spacer`, `W3Footer`, `W3AvatarGroup`, `W3MessageBox`, `W3Mask`, `W3ToggleGroup`, `W3ToggleItem`, `W3DateRangePicker`, etc.).
   - Feature folds into canonical components (`W3Table.Dense`, `W3ColorInput.ShowPalette`, `W3Tabs` close/add, `W3Modal.Actions`).
   - Alias shims that duplicate canonical concepts were intentionally removed.

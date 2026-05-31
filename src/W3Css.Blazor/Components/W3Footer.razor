@@ -8,8 +8,7 @@
 </footer>
 
 @code {
-    // MudBlazor compatibility: mirrors MudFooter, a page/app footer region.
-    // Stays W3.CSS-first by composing w3 color, border, and fixed-position classes.
+    // Page/app footer region that composes W3.CSS color, border, and fixed-position classes.
     private string CssClass => BuildClass(
         "w3-footer",
         Fixed ? "w3-bottom" : null,

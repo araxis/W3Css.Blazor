@@ -1,7 +1,7 @@
 namespace W3Css.Blazor;
 
 /// <summary>
-/// A section descriptor for <c>W3PageContentNavigation</c> (MudBlazor <c>MudPageContentNavigation</c> parity).
+/// A section descriptor for <c>W3PageContentNavigation</c>.
 /// </summary>
 public sealed class W3PageSection
 {

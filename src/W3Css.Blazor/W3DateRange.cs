@@ -1,7 +1,7 @@
 namespace W3Css.Blazor;
 
 /// <summary>
-/// Represents a MudBlazor-style date range value used by the date range picker wrapper.
+/// Represents a date range value used by the date range picker wrapper.
 /// </summary>
 public sealed class W3DateRange
 {

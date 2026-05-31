@@ -5,7 +5,7 @@ using W3Css.Blazor.Components;
 
 namespace W3Css.Blazor.Tests;
 
-public sealed class W3MudParityInteractiveTests
+public sealed class W3InteractiveCompatibilityTests
 {
     [Fact]
     public void MessageBoxShowsContentAndReportsYesResult()

@@ -47,11 +47,12 @@ Last updated: 2026-05-31
 
 ## Current Progress
 
-- MudBlazor parity strategy is W3.CSS loyal: missing concepts are added as new reusable components where needed and duplicate alias components are intentionally avoided.
+- Component compatibility strategy is W3.CSS loyal: missing concepts are added as new reusable components where needed and duplicate alias components are intentionally avoided.
 - The "themed by default" pass is complete for surface and primary intent defaults in most components.
 - Public API hardening is in progress; `W3Slide` now uses the shared component base and forwards unmatched attributes to the rendered active slide.
 - Documentation consistency review is in progress; `W3Tabs` now documents the add/close tab API and current defaults, and `W3ToggleGroup` documents bind callbacks plus current selected-color defaults.
 - The small docs/API gap pass now covers `W3Table`, `W3Drawer`, `W3Menu`, and `W3ProgressCircular` parameter tables with focused docs smoke coverage.
 - The second docs/API gap pass now covers `W3DataTable`, `W3DateRangePicker`, `W3MessageBox`, `W3Modal`, and `W3Navbar` parameter tables with focused docs smoke coverage.
 - The third docs/API gap pass now covers `W3Chart`, `W3Collapse`, `W3Paper`, `W3Panel`, `W3Container`, `W3Row`, `W3Column`, `W3Grid`, and `W3Flex` parameter tables with focused docs smoke coverage.
+- Neutral terminology cleanup is in progress; source, docs, tests, and memory no longer use external comparison-library names for the compatibility work.
 - Remaining planned work is optional: extra theme tokens, focus-ring/theming polish, and `W3SwipeArea`-style pointer gesture support.

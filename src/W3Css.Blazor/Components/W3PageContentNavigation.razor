@@ -31,9 +31,8 @@
 
 @code {
     // A genuinely-missing capability (no W3.CSS equivalent): an in-page
-    // table-of-contents that highlights the section currently in view, matching
-    // MudBlazor's MudPageContentNavigation. Uses a tiny IntersectionObserver JS
-    // module; the active state and rendering stay in Blazor.
+    // table-of-contents that highlights the section currently in view. Uses a
+    // tiny IntersectionObserver JS module; the active state and rendering stay in Blazor.
     private DotNetObjectReference<W3PageContentNavigation>? selfRef;
     private IJSObjectReference? module;
     private IJSObjectReference? handle;

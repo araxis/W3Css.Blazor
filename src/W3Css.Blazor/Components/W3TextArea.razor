@@ -9,7 +9,8 @@
           rows="@Rows"
           disabled="@Disabled"
           readonly="@ReadOnly"
-          @onchange="EventCallback.Factory.CreateBinder<string?>(this, value => CurrentValueAsString = value, CurrentValueAsString)">@CurrentValueAsString</textarea>
+          @oninput="HandleInput"
+          @onchange="HandleChange">@CurrentValueAsString</textarea>
 
 @code {
     private string TextAreaCssClass => BuildControlClass("w3-input");
@@ -25,6 +26,25 @@
 
     [Parameter]
     public bool ReadOnly { get; set; }
+
+    [Parameter]
+    public bool UpdateOnInput { get; set; }
+
+    private void HandleInput(ChangeEventArgs args)
+    {
+        if (UpdateOnInput)
+        {
+            CurrentValueAsString = args.Value?.ToString();
+        }
+    }
+
+    private void HandleChange(ChangeEventArgs args)
+    {
+        if (!UpdateOnInput)
+        {
+            CurrentValueAsString = args.Value?.ToString();
+        }
+    }
 
     protected override bool TryParseValueFromString(string? value, out string? result, out string validationErrorMessage)
     {

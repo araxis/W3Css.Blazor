@@ -17,6 +17,17 @@
         </EditForm>
     </DocExample>
 
+    <DocExample Title="Live Draft" Description="Use UpdateOnInput when counters, previews, or filters should react while the user types." Code="@LiveCode">
+        <W3TextArea Id="live-draft"
+                    @bind-Value="TextAreaModel.LiveDraft"
+                    Rows="3"
+                    Placeholder="Type a short update"
+                    Border="true"
+                    Round="W3Round.Medium"
+                    UpdateOnInput="true" />
+        <p class="w3-small w3-text-grey w3-margin-top">@TextAreaModel.LiveDraft.Length characters</p>
+    </DocExample>
+
     <section class="doc-section">
         <h2>Parameters</h2>
         <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
@@ -30,6 +41,7 @@
                 <tr><td>Id</td><td>string?</td><td>null</td><td>`id` attribute</td></tr>
                 <tr><td>Rows</td><td>int?</td><td>null</td><td>Rows attribute</td></tr>
                 <tr><td>Placeholder</td><td>string?</td><td>null</td><td>Placeholder attribute</td></tr>
+                <tr><td>UpdateOnInput</td><td>bool</td><td>false</td><td>Updates `Value` on `input` instead of `change`</td></tr>
                 <tr><td>ReadOnly</td><td>bool</td><td>false</td><td>`readonly` attribute</td></tr>
                 <tr><td>Disabled</td><td>bool</td><td>false</td><td>`disabled` attribute</td></tr>
                 <tr><td>Border</td><td>bool</td><td>false</td><td>`w3-border`</td></tr>
@@ -55,8 +67,20 @@
 </W3Field>
 """;
 
+    private const string LiveCode = """
+<W3TextArea Id="live-draft"
+            @bind-Value="model.LiveDraft"
+            Rows="3"
+            Placeholder="Type a short update"
+            Border="true"
+            Round="W3Round.Medium"
+            UpdateOnInput="true" />
+<p class="w3-small w3-text-grey w3-margin-top">@model.LiveDraft.Length characters</p>
+""";
+
     private sealed class TextAreaExampleModel
     {
         public string Message { get; set; } = string.Empty;
+        public string LiveDraft { get; set; } = string.Empty;
     }
 }

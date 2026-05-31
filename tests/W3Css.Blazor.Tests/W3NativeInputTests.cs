@@ -8,6 +8,62 @@ namespace W3Css.Blazor.Tests;
 public sealed class W3NativeInputTests
 {
     [Fact]
+    public void TextAreaRendersNativeAttributesAndUpdatesOnChange()
+    {
+        using var context = new BunitContext();
+        var value = "Initial note";
+        var cut = context.Render<W3TextArea>(parameters => parameters
+            .Add(p => p.Value, value)
+            .Add(p => p.ValueChanged, EventCallback.Factory.Create<string?>(this, next => value = next ?? string.Empty))
+            .Add(p => p.ValueExpression, () => value)
+            .Add(p => p.Id, "team-note")
+            .Add(p => p.Placeholder, "Write a note")
+            .Add(p => p.Rows, 5)
+            .Add(p => p.Border, true)
+            .Add(p => p.Color, W3Color.White)
+            .Add(p => p.TextColor, W3Color.Black)
+            .Add(p => p.Round, W3Round.Medium)
+            .Add(p => p.Class, "note-control")
+            .Add(p => p.Style, "min-height: 8rem;")
+            .AddUnmatched("aria-label", "Team note"));
+
+        var textArea = cut.Find("textarea");
+
+        Assert.Equal("team-note", textArea.GetAttribute("id"));
+        Assert.Contains("w3-input", textArea.GetAttribute("class"));
+        Assert.Contains("w3-border", textArea.GetAttribute("class"));
+        Assert.Contains("w3-white", textArea.GetAttribute("class"));
+        Assert.Contains("w3-text-black", textArea.GetAttribute("class"));
+        Assert.Contains("w3-round", textArea.GetAttribute("class"));
+        Assert.Contains("note-control", textArea.GetAttribute("class"));
+        Assert.Equal("Write a note", textArea.GetAttribute("placeholder"));
+        Assert.Equal("5", textArea.GetAttribute("rows"));
+        Assert.Equal("min-height: 8rem;", textArea.GetAttribute("style"));
+        Assert.Equal("Team note", textArea.GetAttribute("aria-label"));
+        Assert.Equal("Initial note", textArea.TextContent);
+
+        textArea.Change("Updated note");
+
+        Assert.Equal("Updated note", value);
+    }
+
+    [Fact]
+    public void TextAreaCanUpdateOnInput()
+    {
+        using var context = new BunitContext();
+        var value = string.Empty;
+        var cut = context.Render<W3TextArea>(parameters => parameters
+            .Add(p => p.Value, value)
+            .Add(p => p.ValueChanged, EventCallback.Factory.Create<string?>(this, next => value = next ?? string.Empty))
+            .Add(p => p.ValueExpression, () => value)
+            .Add(p => p.UpdateOnInput, true));
+
+        cut.Find("textarea").Input("Live draft");
+
+        Assert.Equal("Live draft", value);
+    }
+
+    [Fact]
     public void NumberInputRendersNativeAttributesAndUpdatesIntegerValue()
     {
         using var context = new BunitContext();

@@ -83,6 +83,14 @@ dotnet pack src/W3Css.Blazor/W3Css.Blazor.csproj --configuration Release
 dotnet run --project src/W3Css.Blazor.Docs
 ```
 
+Run the package consumer smoke check after publishing a version:
+
+```bash
+pwsh ./tools/package-consumer-smoke.ps1
+```
+
+Pass `-PackageVersion 0.1.0` to check a specific published version.
+
 ## Branches And Commits
 
 Branch names:

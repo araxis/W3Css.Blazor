@@ -43,6 +43,7 @@ Last updated: 2026-05-31
 - Release workflow builds, tests, packs, creates release artifacts, and publishes packages on `v*` tag pushes when the publishing secret is configured.
 - First package release is published as `W3Css.Blazor` version `0.1.0`.
 - GitHub release `v0.1.0` is published with `W3Css.Blazor.0.1.0.nupkg`.
+- Package consumer smoke tooling verifies install, component compilation, publish output, and bundled static assets from the public package feed.
 
 ## Current Progress
 

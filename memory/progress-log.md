@@ -698,3 +698,6 @@ Last updated: 2026-05-31
 - Merged package automation into `main`, retagged the unpushed local `v0.1.0` tag onto the merged commit, and pushed the tag.
 - Verified the release workflow passed for `v0.1.0`: restore, build, 370 tests, pack, GitHub release creation, publish configuration validation, and package publishing all succeeded.
 - Verified the public package feed lists `W3Css.Blazor` version `0.1.0` after indexing completed.
+- Started release-hardening phase with package consumer smoke tooling.
+- Added `tools/package-consumer-smoke.ps1` to create a disposable Blazor WebAssembly app, install a published package version from the public feed, compile real W3 components, publish the app, and verify the bundled static asset is present.
+- Verified `./tools/package-consumer-smoke.ps1 -PackageVersion 0.1.0` and default `./tools/package-consumer-smoke.ps1`: clean consumer app created, `W3Css.Blazor` 0.1.0 installed from the public feed, W3 components compiled, app published, and bundled stylesheet content was found.

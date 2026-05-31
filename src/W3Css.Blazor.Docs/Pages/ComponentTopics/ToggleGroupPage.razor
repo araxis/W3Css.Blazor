@@ -39,6 +39,8 @@
                 <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
             </thead>
             <tbody>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>`W3ToggleItem` children</td></tr>
+                <tr><td>Label</td><td>string</td><td>Toggle group</td><td><code>aria-label</code> on the group root</td></tr>
                 <tr><td>SelectedValue</td><td>TValue?</td><td>default</td><td>Single-select value (<code>@@bind-SelectedValue</code>)</td></tr>
                 <tr><td>SelectedValueChanged</td><td>EventCallback&lt;TValue?&gt;</td><td>empty</td><td>Single-select change callback</td></tr>
                 <tr><td>SelectedValues</td><td>IReadOnlyCollection&lt;TValue&gt;</td><td>empty</td><td>Multi-select values (<code>@@bind-SelectedValues</code>)</td></tr>
@@ -47,9 +49,14 @@
                 <tr><td>Vertical</td><td>bool</td><td>false</td><td>Stacks items with <code>w3-bar-block</code></td></tr>
                 <tr><td>Border</td><td>bool</td><td>true</td><td>Group border</td></tr>
                 <tr><td>Round</td><td>W3Round</td><td>None</td><td>Group corner rounding</td></tr>
-                <tr><td>ActiveColor / ActiveTextColor</td><td>W3Color</td><td>Primary / White</td><td>Selected item colors</td></tr>
-                <tr><td>Color / TextColor</td><td>W3Color</td><td>None</td><td>Unselected item colors</td></tr>
+                <tr><td>ActiveColor</td><td>W3Color</td><td>Primary</td><td>Selected item background color</td></tr>
+                <tr><td>ActiveTextColor</td><td>W3Color</td><td>White</td><td>Selected item text color</td></tr>
+                <tr><td>Color</td><td>W3Color</td><td>None</td><td>Unselected item background color</td></tr>
+                <tr><td>TextColor</td><td>W3Color</td><td>None</td><td>Unselected item text color</td></tr>
                 <tr><td>Disabled</td><td>bool</td><td>false</td><td>Disables the whole group</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional root classes</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline style on the group root</td></tr>
+                <tr><td>AdditionalAttributes</td><td>IReadOnlyDictionary&lt;string, object&gt;?</td><td>null</td><td>Extra attributes on the toggle group root</td></tr>
             </tbody>
         </W3Table>
 
@@ -62,8 +69,18 @@
                 <tr><td>Value</td><td>TValue</td><td>required</td><td>Item value</td></tr>
                 <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Item label</td></tr>
                 <tr><td>IconClass</td><td>string?</td><td>null</td><td>Leading icon class</td></tr>
+                <tr><td>Active</td><td>bool</td><td>false</td><td>Forces the selected style on this item</td></tr>
                 <tr><td>Disabled</td><td>bool</td><td>false</td><td>Disables this item</td></tr>
-                <tr><td>OnSelected</td><td>EventCallback&lt;TValue&gt;</td><td>—</td><td>Per-item toggle callback</td></tr>
+                <tr><td>Border</td><td>bool</td><td>false</td><td>Item border class</td></tr>
+                <tr><td>Size</td><td>W3Size</td><td>Default</td><td>W3.CSS text size class on the item</td></tr>
+                <tr><td>Color</td><td>W3Color</td><td>None</td><td>Unselected item background override</td></tr>
+                <tr><td>TextColor</td><td>W3Color</td><td>None</td><td>Unselected item text override</td></tr>
+                <tr><td>ActiveColor</td><td>W3Color</td><td>None</td><td>Selected item background override</td></tr>
+                <tr><td>ActiveTextColor</td><td>W3Color</td><td>None</td><td>Selected item text override</td></tr>
+                <tr><td>OnSelected</td><td>EventCallback&lt;TValue&gt;</td><td>empty</td><td>Per-item toggle callback</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional button classes</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline style on the button</td></tr>
+                <tr><td>AdditionalAttributes</td><td>IReadOnlyDictionary&lt;string, object&gt;?</td><td>null</td><td>Extra attributes on the toggle item button</td></tr>
             </tbody>
         </W3Table>
         <p class="doc-muted">Items render as <code>w3-bar-item w3-button</code> with <code>aria-pressed</code> reflecting selection.</p>

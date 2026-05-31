@@ -52,12 +52,13 @@
                 <tr><td>LineColor</td><td>W3Color</td><td>LightGrey</td><td>Default marker rail border color</td></tr>
                 <tr><td>MarkerColor</td><td>W3Color</td><td>Teal</td><td>Default marker background color</td></tr>
                 <tr><td>MarkerTextColor</td><td>W3Color</td><td>White</td><td>Default marker text color</td></tr>
-                <tr><td>ContentColor</td><td>W3Color</td><td>White</td><td>Default item surface color</td></tr>
+                <tr><td>ContentColor</td><td>W3Color</td><td>Surface</td><td>Default item surface color</td></tr>
                 <tr><td>ContentTextColor</td><td>W3Color</td><td>None</td><td>Default item text color</td></tr>
                 <tr><td>TextColor</td><td>W3Color</td><td>None</td><td>Text color on the root list</td></tr>
                 <tr><td>Round</td><td>W3Round</td><td>Medium</td><td>Default item roundness</td></tr>
                 <tr><td>Class</td><td>string?</td><td>null</td><td>Additional classes on the list</td></tr>
                 <tr><td>Style</td><td>string?</td><td>null</td><td>Inline styles on the list</td></tr>
+                <tr><td>AdditionalAttributes</td><td>IReadOnlyDictionary&lt;string, object&gt;?</td><td>null</td><td>Extra attributes on the timeline list</td></tr>
             </tbody>
         </W3Table>
     </section>
@@ -77,14 +78,18 @@
                 <tr><td>IconClass</td><td>string?</td><td>null</td><td>Optional marker icon class</td></tr>
                 <tr><td>MarkerContent</td><td>RenderFragment?</td><td>null</td><td>Custom marker content</td></tr>
                 <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Item body</td></tr>
-                <tr><td>Active, Completed</td><td>bool</td><td>false</td><td>State classes for current and completed events</td></tr>
+                <tr><td>Active</td><td>bool</td><td>false</td><td>State class for the current event</td></tr>
+                <tr><td>Completed</td><td>bool</td><td>false</td><td>State class for completed events</td></tr>
                 <tr><td>Border</td><td>bool</td><td>true</td><td>`w3-border` on the content surface</td></tr>
                 <tr><td>LineColor</td><td>W3Color</td><td>None</td><td>Per-item line color override</td></tr>
-                <tr><td>MarkerColor, MarkerTextColor</td><td>W3Color</td><td>None</td><td>Per-item marker color override</td></tr>
-                <tr><td>ContentColor, ContentTextColor</td><td>W3Color</td><td>None</td><td>Per-item content color override</td></tr>
+                <tr><td>MarkerColor</td><td>W3Color</td><td>None</td><td>Per-item marker background color override</td></tr>
+                <tr><td>MarkerTextColor</td><td>W3Color</td><td>None</td><td>Per-item marker text color override</td></tr>
+                <tr><td>ContentColor</td><td>W3Color</td><td>None</td><td>Per-item content background color override</td></tr>
+                <tr><td>ContentTextColor</td><td>W3Color</td><td>None</td><td>Per-item content text color override</td></tr>
                 <tr><td>Round</td><td>W3Round</td><td>None</td><td>Per-item roundness override</td></tr>
                 <tr><td>Class</td><td>string?</td><td>null</td><td>Additional classes on the list item</td></tr>
                 <tr><td>Style</td><td>string?</td><td>null</td><td>Inline styles on the list item</td></tr>
+                <tr><td>AdditionalAttributes</td><td>IReadOnlyDictionary&lt;string, object&gt;?</td><td>null</td><td>Extra attributes on the timeline item</td></tr>
             </tbody>
         </W3Table>
     </section>

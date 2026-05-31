@@ -78,21 +78,37 @@
                 <tr><td>StepActivated</td><td>EventCallback&lt;string&gt;</td><td>empty</td><td>Raised after a step button is activated</td></tr>
                 <tr><td>CompletedValues</td><td>IReadOnlyCollection&lt;string&gt;</td><td>[]</td><td>Completed markers and progress calculation</td></tr>
                 <tr><td>Linear</td><td>bool</td><td>false</td><td>Disables future incomplete steps</td></tr>
-                <tr><td>Vertical and Compact</td><td>bool</td><td>false</td><td>Component-scoped step layout classes</td></tr>
-                <tr><td>ShowNumbers and ShowDescriptions</td><td>bool</td><td>true</td><td>Marker and supporting text visibility</td></tr>
+                <tr><td>Vertical</td><td>bool</td><td>false</td><td>Stacks steps vertically</td></tr>
+                <tr><td>Compact</td><td>bool</td><td>false</td><td>Uses compact component-scoped spacing</td></tr>
+                <tr><td>ShowNumbers</td><td>bool</td><td>true</td><td>Shows numeric step markers</td></tr>
+                <tr><td>ShowDescriptions</td><td>bool</td><td>true</td><td>Shows supporting text under step titles</td></tr>
                 <tr><td>ShowPanels</td><td>bool</td><td>true</td><td>Renders the active step content region</td></tr>
-                <tr><td>ShowProgress and ShowProgressLabel</td><td>bool</td><td>false</td><td>Composes `W3Progress` above the steps</td></tr>
+                <tr><td>ShowProgress</td><td>bool</td><td>false</td><td>Composes `W3Progress` above the steps</td></tr>
+                <tr><td>ShowProgressLabel</td><td>bool</td><td>false</td><td>Shows text inside the composed progress bar</td></tr>
                 <tr><td>ProgressLabelText</td><td>string?</td><td>percentage</td><td>Custom progress label text</td></tr>
-                <tr><td>Border and PanelBorder</td><td>bool</td><td>false/true</td><td>Root and panel border classes</td></tr>
-                <tr><td>Card and CardDepth</td><td>W3 options</td><td>false/Two</td><td>Root W3.CSS card class</td></tr>
-                <tr><td>Round, Color, TextColor</td><td>W3 options</td><td>None</td><td>Root W3.CSS surface classes</td></tr>
-                <tr><td>ActiveColor, CompletedColor, ErrorColor</td><td>W3Color</td><td>Teal, Green, Red</td><td>Step marker and active button classes</td></tr>
-                <tr><td>ActiveTextColor, CompletedTextColor, ErrorTextColor</td><td>W3Color</td><td>White</td><td>Step marker text classes</td></tr>
-                <tr><td>MarkerColor and MarkerTextColor</td><td>W3Color</td><td>LightGrey and Black</td><td>Inactive marker classes</td></tr>
-                <tr><td>PanelColor and PanelTextColor</td><td>W3Color</td><td>White and None</td><td>Active panel classes</td></tr>
-                <tr><td>ProgressColor, ProgressTextColor, ProgressTrackColor</td><td>W3Color</td><td>Teal, White, LightGrey</td><td>Composed progress bar classes</td></tr>
+                <tr><td>Border</td><td>bool</td><td>false</td><td>Root border class</td></tr>
+                <tr><td>PanelBorder</td><td>bool</td><td>true</td><td>Active panel border class</td></tr>
+                <tr><td>Card</td><td>bool</td><td>false</td><td>Root W3.CSS card class</td></tr>
+                <tr><td>CardDepth</td><td>W3CardDepth</td><td>Two</td><td>Root card shadow depth when `Card` is true</td></tr>
+                <tr><td>Round</td><td>W3Round</td><td>None</td><td>Root W3.CSS round class</td></tr>
+                <tr><td>Color</td><td>W3Color</td><td>None</td><td>Root background color class</td></tr>
+                <tr><td>TextColor</td><td>W3Color</td><td>None</td><td>Root text color class</td></tr>
+                <tr><td>ActiveColor</td><td>W3Color</td><td>Primary</td><td>Active step marker and button background</td></tr>
+                <tr><td>ActiveTextColor</td><td>W3Color</td><td>White</td><td>Active step marker text color</td></tr>
+                <tr><td>CompletedColor</td><td>W3Color</td><td>Green</td><td>Completed step marker background</td></tr>
+                <tr><td>CompletedTextColor</td><td>W3Color</td><td>White</td><td>Completed step marker text color</td></tr>
+                <tr><td>ErrorColor</td><td>W3Color</td><td>Red</td><td>Error step marker background</td></tr>
+                <tr><td>ErrorTextColor</td><td>W3Color</td><td>White</td><td>Error step marker text color</td></tr>
+                <tr><td>MarkerColor</td><td>W3Color</td><td>LightGrey</td><td>Inactive marker background</td></tr>
+                <tr><td>MarkerTextColor</td><td>W3Color</td><td>Black</td><td>Inactive marker text color</td></tr>
+                <tr><td>PanelColor</td><td>W3Color</td><td>Surface</td><td>Active panel background color class</td></tr>
+                <tr><td>PanelTextColor</td><td>W3Color</td><td>None</td><td>Active panel text color class</td></tr>
+                <tr><td>ProgressColor</td><td>W3Color</td><td>Teal</td><td>Composed progress bar background</td></tr>
+                <tr><td>ProgressTextColor</td><td>W3Color</td><td>White</td><td>Composed progress bar text color</td></tr>
+                <tr><td>ProgressTrackColor</td><td>W3Color</td><td>LightGrey</td><td>Composed progress track background</td></tr>
                 <tr><td>Class</td><td>string?</td><td>null</td><td>Additional root classes</td></tr>
                 <tr><td>Style</td><td>string?</td><td>null</td><td>Inline style on the root wrapper</td></tr>
+                <tr><td>AdditionalAttributes</td><td>IReadOnlyDictionary&lt;string, object&gt;?</td><td>null</td><td>Extra attributes on the stepper root</td></tr>
             </tbody>
         </W3Table>
     </section>

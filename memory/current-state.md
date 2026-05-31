@@ -5,7 +5,9 @@ Last updated: 2026-05-31
 ## Repository
 
 - Current branch: `main`.
-- Local tag `v0.1.0` points at current `HEAD`; it has not been pushed.
+- Public repository has been recreated with clean public history.
+- `main` is protected for PR-first changes.
+- Local tag `v0.1.0` exists; it has not been pushed.
 - Solution: `W3Css.Blazor.slnx`.
 - SDK: `.NET 10.0.300` (`global.json`).
 

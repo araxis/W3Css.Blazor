@@ -39,7 +39,10 @@ Last updated: 2026-05-31
   - created clean snapshot repository at `D:\Projects\W3Css-clean-public` with one neutral initial commit;
   - verified the clean snapshot scan found no provider/tooling traces in tracked files or commit history;
   - verified clean snapshot build/test/pack (`370` passing tests).
-- Remote delete/recreate is blocked until GitHub CLI is authorized with repository deletion scope. `gh repo delete araxis/W3Css.Blazor --yes` returned missing `delete_repo` scope; `gh auth refresh -h github.com -s delete_repo` needs interactive authorization.
+- Deleted and recreated `araxis/W3Css.Blazor` as a public repository with the same name.
+- Pushed the clean one-commit `main` history from `D:\Projects\W3Css-clean-public`.
+- Protected `main` for PR-first changes, enforced for administrators, with linear history and no force-push/delete.
+- Kept `v0.1.0` local so the release workflow is not triggered during repository setup.
 
 ## 2026-05-29
 

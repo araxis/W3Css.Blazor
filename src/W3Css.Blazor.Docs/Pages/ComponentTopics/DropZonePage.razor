@@ -67,7 +67,10 @@
             <tbody>
                 <tr><td>OnChange</td><td>EventCallback&lt;InputFileChangeEventArgs&gt;</td><td>none</td><td>Blazor file selection event</td></tr>
                 <tr><td>SelectedFilesChanged</td><td>EventCallback&lt;IReadOnlyList&lt;IBrowserFile&gt;&gt;</td><td>none</td><td>Normalized selected-file list after browse or drop</td></tr>
-                <tr><td>OnDragEnter / OnDragOver / OnDragLeave / OnDrop</td><td>EventCallback&lt;DragEventArgs&gt;</td><td>none</td><td>Drag state callbacks for UI behavior</td></tr>
+                <tr><td>OnDragEnter</td><td>EventCallback&lt;DragEventArgs&gt;</td><td>none</td><td>Raised when dragged files enter the zone</td></tr>
+                <tr><td>OnDragOver</td><td>EventCallback&lt;DragEventArgs&gt;</td><td>none</td><td>Raised while dragged files remain over the zone</td></tr>
+                <tr><td>OnDragLeave</td><td>EventCallback&lt;DragEventArgs&gt;</td><td>none</td><td>Raised when dragged files leave the zone</td></tr>
+                <tr><td>OnDrop</td><td>EventCallback&lt;DragEventArgs&gt;</td><td>none</td><td>Raised when files are dropped on the zone</td></tr>
                 <tr><td>Id</td><td>string?</td><td>generated</td><td>`id` attribute and label target</td></tr>
                 <tr><td>Name</td><td>string?</td><td>null</td><td>`name` attribute</td></tr>
                 <tr><td>Accept</td><td>string?</td><td>null</td><td>`accept` attribute</td></tr>
@@ -81,18 +84,25 @@
                 <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Custom drop-zone content</td></tr>
                 <tr><td>ShowBrowseButton</td><td>bool</td><td>true</td><td>Renders the visible browse button label</td></tr>
                 <tr><td>BrowseLabel</td><td>string</td><td>Choose files</td><td>Visible browse button text</td></tr>
-                <tr><td>BrowseButtonColor / BrowseButtonTextColor</td><td>W3Color</td><td>Teal / White</td><td>Browse button color classes</td></tr>
+                <tr><td>BrowseButtonColor</td><td>W3Color</td><td>Teal</td><td>Browse button background color class</td></tr>
+                <tr><td>BrowseButtonTextColor</td><td>W3Color</td><td>White</td><td>Browse button text color class</td></tr>
                 <tr><td>ShowSelectedFiles</td><td>bool</td><td>true</td><td>Renders selected-file list after change</td></tr>
                 <tr><td>ShowFileSize</td><td>bool</td><td>true</td><td>Shows file sizes in the selected-file list</td></tr>
                 <tr><td>MaximumFileCount</td><td>int</td><td>10</td><td>Maximum files read for selected-file display</td></tr>
                 <tr><td>Compact</td><td>bool</td><td>false</td><td>Reduced drop-zone height</td></tr>
                 <tr><td>Border</td><td>bool</td><td>true</td><td>`w3-border`</td></tr>
                 <tr><td>Round</td><td>W3Round</td><td>Medium</td><td>Rounded corner class</td></tr>
-                <tr><td>Color / TextColor</td><td>W3Color</td><td>White / Black</td><td>Background and text color classes</td></tr>
+                <tr><td>Color</td><td>W3Color</td><td>Surface</td><td>Drop-zone background color class</td></tr>
+                <tr><td>TextColor</td><td>W3Color</td><td>Black</td><td>Drop-zone text color class</td></tr>
                 <tr><td>BorderColor</td><td>W3Color</td><td>Teal</td><td>Border color class</td></tr>
-                <tr><td>DragColor / DragTextColor</td><td>W3Color</td><td>PaleBlue / Black</td><td>Applied while dragging over the zone</td></tr>
-                <tr><td>BrowseButtonClass / ContentClass / SelectedFilesClass</td><td>string?</td><td>null</td><td>Additional scoped classes for rendered regions</td></tr>
-                <tr><td>Class / Style</td><td>string?</td><td>null</td><td>Additional root classes and inline style</td></tr>
+                <tr><td>DragColor</td><td>W3Color</td><td>PaleBlue</td><td>Background color while dragging over the zone</td></tr>
+                <tr><td>DragTextColor</td><td>W3Color</td><td>Black</td><td>Text color while dragging over the zone</td></tr>
+                <tr><td>BrowseButtonClass</td><td>string?</td><td>null</td><td>Additional browse button classes</td></tr>
+                <tr><td>ContentClass</td><td>string?</td><td>null</td><td>Additional content-region classes</td></tr>
+                <tr><td>SelectedFilesClass</td><td>string?</td><td>null</td><td>Additional selected-file list classes</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional root classes</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline style on the root wrapper</td></tr>
+                <tr><td>AdditionalAttributes</td><td>IReadOnlyDictionary&lt;string,object&gt;?</td><td>null</td><td>Extra attributes on the drop-zone root</td></tr>
             </tbody>
         </W3Table>
     </section>

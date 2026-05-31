@@ -28,14 +28,15 @@
             </thead>
             <tbody>
                 <tr><td>TValue</td><td>type</td><td>required</td><td>Bound value type for the radio group.</td></tr>
-                <tr><td>Value</td><td>TValue</td><td>default</td><td>Current group value.</td></tr>
-                <tr><td>ValueChanged</td><td>EventCallback&lt;TValue&gt;</td><td>none</td><td>Raised when selected value changes.</td></tr>
+                <tr><td>Value</td><td>TValue?</td><td>default</td><td>Current group value.</td></tr>
+                <tr><td>ValueChanged</td><td>EventCallback&lt;TValue?&gt;</td><td>none</td><td>Raised when selected value changes.</td></tr>
                 <tr><td>Label</td><td>string</td><td>Radio Group</td><td>Accessibility label for the radio wrapper.</td></tr>
                 <tr><td>Name</td><td>string?</td><td>null</td><td>Shared radio `name` value when child radios omit `Name`.</td></tr>
                 <tr><td>Disabled</td><td>bool</td><td>false</td><td>Disables all child radios.</td></tr>
                 <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Collection of `W3Radio` children.</td></tr>
                 <tr><td>Class</td><td>string?</td><td>null</td><td>Additional wrapper classes.</td></tr>
                 <tr><td>Style</td><td>string?</td><td>null</td><td>Inline styles on the wrapper.</td></tr>
+                <tr><td>AdditionalAttributes</td><td>IReadOnlyDictionary&lt;string,object&gt;?</td><td>null</td><td>Extra attributes on the radio group wrapper.</td></tr>
             </tbody>
         </W3Table>
     </section>

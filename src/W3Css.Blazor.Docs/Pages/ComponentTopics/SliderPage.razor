@@ -45,6 +45,8 @@
             <tbody>
                 <tr><td>TValue</td><td>numeric type</td><td>required</td><td>Bound range value type</td></tr>
                 <tr><td>Value</td><td>TValue</td><td>default</td><td>Blazor input value</td></tr>
+                <tr><td>ValueChanged</td><td>EventCallback&lt;TValue&gt;</td><td>none</td><td>Raised when the slider value changes</td></tr>
+                <tr><td>ValueExpression</td><td>Expression&lt;Func&lt;TValue&gt;&gt;?</td><td>null</td><td>Validation expression for EditForm scenarios</td></tr>
                 <tr><td>Id</td><td>string?</td><td>null</td><td>`id` attribute</td></tr>
                 <tr><td>Min</td><td>TValue</td><td>default</td><td>`min` attribute</td></tr>
                 <tr><td>Max</td><td>TValue</td><td>default</td><td>`max` attribute</td></tr>
@@ -57,6 +59,7 @@
                 <tr><td>Round</td><td>W3Round</td><td>None</td><td>Rounded corner class</td></tr>
                 <tr><td>Class</td><td>string?</td><td>null</td><td>Additional CSS classes</td></tr>
                 <tr><td>Style</td><td>string?</td><td>null</td><td>Inline style</td></tr>
+                <tr><td>AdditionalAttributes</td><td>IReadOnlyDictionary&lt;string,object&gt;?</td><td>null</td><td>Extra attributes on the range input</td></tr>
             </tbody>
         </W3Table>
     </section>

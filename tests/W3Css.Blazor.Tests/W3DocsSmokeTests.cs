@@ -7,7 +7,9 @@ using AppShellPage = W3Css.Blazor.Docs.Pages.ComponentTopics.AppShellPage;
 using AutocompletePage = W3Css.Blazor.Docs.Pages.ComponentTopics.AutocompletePage;
 using AvatarPage = W3Css.Blazor.Docs.Pages.ComponentTopics.AvatarPage;
 using BadgePage = W3Css.Blazor.Docs.Pages.ComponentTopics.BadgePage;
+using CheckboxPage = W3Css.Blazor.Docs.Pages.ComponentTopics.CheckboxPage;
 using LinkPage = W3Css.Blazor.Docs.Pages.ComponentTopics.LinkPage;
+using FieldPage = W3Css.Blazor.Docs.Pages.ComponentTopics.FieldPage;
 using FormPage = W3Css.Blazor.Docs.Pages.ComponentTopics.FormPage;
 using BottomNavigationPage = W3Css.Blazor.Docs.Pages.ComponentTopics.BottomNavigationPage;
 using BreadcrumbPage = W3Css.Blazor.Docs.Pages.ComponentTopics.BreadcrumbPage;
@@ -41,12 +43,14 @@ using IconButtonPage = W3Css.Blazor.Docs.Pages.ComponentTopics.IconButtonPage;
 using IconsPage = W3Css.Blazor.Docs.Pages.ComponentTopics.IconsPage;
 using ImagePage = W3Css.Blazor.Docs.Pages.ComponentTopics.ImagePage;
 using ImageListPage = W3Css.Blazor.Docs.Pages.ComponentTopics.ImageListPage;
+using InputPage = W3Css.Blazor.Docs.Pages.ComponentTopics.InputPage;
 using ListItemPage = W3Css.Blazor.Docs.Pages.ComponentTopics.ListItemPage;
 using MenuPage = W3Css.Blazor.Docs.Pages.ComponentTopics.MenuPage;
 using ModalPage = W3Css.Blazor.Docs.Pages.ComponentTopics.ModalPage;
 using NavMenuPage = W3Css.Blazor.Docs.Pages.ComponentTopics.NavMenuPage;
 using NavbarPage = W3Css.Blazor.Docs.Pages.ComponentTopics.NavbarPage;
 using RadioGroupPage = W3Css.Blazor.Docs.Pages.ComponentTopics.RadioGroupPage;
+using RadioPage = W3Css.Blazor.Docs.Pages.ComponentTopics.RadioPage;
 using NumberInputPage = W3Css.Blazor.Docs.Pages.ComponentTopics.NumberInputPage;
 using DateRangePickerPage = W3Css.Blazor.Docs.Pages.ComponentTopics.DateRangePickerPage;
 using PaperPage = W3Css.Blazor.Docs.Pages.ComponentTopics.PaperPage;
@@ -79,6 +83,8 @@ using TabsPage = W3Css.Blazor.Docs.Pages.ComponentTopics.TabsPage;
 using TablePage = W3Css.Blazor.Docs.Pages.ComponentTopics.TablePage;
 using OverlayPage = W3Css.Blazor.Docs.Pages.ComponentTopics.OverlayPage;
 using TimeInputPage = W3Css.Blazor.Docs.Pages.ComponentTopics.TimeInputPage;
+using SelectPage = W3Css.Blazor.Docs.Pages.ComponentTopics.SelectPage;
+using TextAreaPage = W3Css.Blazor.Docs.Pages.ComponentTopics.TextAreaPage;
 using TimelinePage = W3Css.Blazor.Docs.Pages.ComponentTopics.TimelinePage;
 using ToastPage = W3Css.Blazor.Docs.Pages.ComponentTopics.ToastPage;
 using ToolbarPage = W3Css.Blazor.Docs.Pages.ComponentTopics.ToolbarPage;
@@ -128,12 +134,18 @@ public sealed class W3DocsSmokeTests
     [InlineData(typeof(SkeletonPage), "/components/skeleton")]
     [InlineData(typeof(DataTablePage), "/components/data-table")]
     [InlineData(typeof(FormPage), "/components/form")]
+    [InlineData(typeof(FieldPage), "/components/field")]
+    [InlineData(typeof(InputPage), "/components/input")]
+    [InlineData(typeof(TextAreaPage), "/components/text-area")]
+    [InlineData(typeof(SelectPage), "/components/select")]
+    [InlineData(typeof(CheckboxPage), "/components/checkbox")]
+    [InlineData(typeof(RadioPage), "/components/radio")]
     [InlineData(typeof(NumberInputPage), "/components/number-input")]
-        [InlineData(typeof(PaperPage), "/components/paper")]
-        [InlineData(typeof(DateInputPage), "/components/date-input")]
-        [InlineData(typeof(DateRangePickerPage), "/components/date-range-picker")]
-        [InlineData(typeof(TimeInputPage), "/components/time-input")]
-        [InlineData(typeof(ProgressCircularPage), "/components/progress-circular")]
+    [InlineData(typeof(PaperPage), "/components/paper")]
+    [InlineData(typeof(DateInputPage), "/components/date-input")]
+    [InlineData(typeof(DateRangePickerPage), "/components/date-range-picker")]
+    [InlineData(typeof(TimeInputPage), "/components/time-input")]
+    [InlineData(typeof(ProgressCircularPage), "/components/progress-circular")]
     [InlineData(typeof(SliderPage), "/components/slider")]
     [InlineData(typeof(RatingPage), "/components/rating")]
     [InlineData(typeof(SwitchPage), "/components/switch")]
@@ -630,6 +642,77 @@ public sealed class W3DocsSmokeTests
 
         var dividerPage = context.Render<DividerPage>();
         Assert.Contains("Extra attributes on the divider element", dividerPage.Markup);
+    }
+
+    [Fact]
+    public void FormsAndInputsApiPagesDocumentCurrentParameterRows()
+    {
+        using var context = new BunitContext();
+        context.JSInterop.Mode = JSRuntimeMode.Loose;
+
+        var inputPage = context.Render<InputPage>();
+        Assert.Contains("Validation expression for EditForm scenarios", inputPage.Markup);
+        Assert.Contains("Extra attributes on the input element", inputPage.Markup);
+
+        var textAreaPage = context.Render<TextAreaPage>();
+        Assert.Contains("Extra attributes on the textarea element", textAreaPage.Markup);
+
+        var formPage = context.Render<FormPage>();
+        Assert.Contains("EditContext", formPage.Markup);
+        Assert.Contains("Extra attributes on the EditForm element", formPage.Markup);
+
+        var fieldPage = context.Render<FieldPage>();
+        Assert.Contains("Extra attributes on the field root", fieldPage.Markup);
+
+        var selectPage = context.Render<SelectPage>();
+        Assert.Contains("Raised when the selected value changes", selectPage.Markup);
+        Assert.Contains("Extra attributes on the select element", selectPage.Markup);
+
+        var selectItemPage = context.Render<SelectItemPage>();
+        Assert.Contains("Extra attributes on the option element", selectItemPage.Markup);
+
+        var checkboxPage = context.Render<CheckboxPage>();
+        Assert.Contains("Extra attributes on the checkbox input", checkboxPage.Markup);
+
+        var radioGroupPage = context.Render<RadioGroupPage>();
+        Assert.Contains("EventCallback&lt;TValue?&gt;", radioGroupPage.Markup);
+        Assert.Contains("Extra attributes on the radio group wrapper", radioGroupPage.Markup);
+
+        var radioPage = context.Render<RadioPage>();
+        Assert.Contains("Extra attributes on the radio input", radioPage.Markup);
+
+        var maskPage = context.Render<MaskPage>();
+        Assert.Contains("Extra attributes on the masked input", maskPage.Markup);
+
+        var numberInputPage = context.Render<NumberInputPage>();
+        Assert.Contains("Extra attributes on the number input", numberInputPage.Markup);
+
+        var dateInputPage = context.Render<DateInputPage>();
+        Assert.Contains("Extra attributes on the date input", dateInputPage.Markup);
+
+        var timeInputPage = context.Render<TimeInputPage>();
+        Assert.Contains("Extra attributes on the time input", timeInputPage.Markup);
+
+        var sliderPage = context.Render<SliderPage>();
+        Assert.Contains("Extra attributes on the range input", sliderPage.Markup);
+
+        var switchPage = context.Render<SwitchPage>();
+        Assert.Contains("Primary", switchPage.Markup);
+        Assert.Contains("Extra attributes on the checkbox input", switchPage.Markup);
+
+        var colorInputPage = context.Render<ColorInputPage>();
+        Assert.Contains("Extra attributes on the picker root or native color input", colorInputPage.Markup);
+
+        var fileInputPage = context.Render<FileInputPage>();
+        Assert.Contains("Extra attributes on the file input", fileInputPage.Markup);
+
+        var autocompletePage = context.Render<AutocompletePage>();
+        Assert.Contains("Surface", autocompletePage.Markup);
+        Assert.Contains("Extra attributes on the autocomplete input", autocompletePage.Markup);
+
+        var dropZonePage = context.Render<DropZonePage>();
+        Assert.Contains("Drop-zone background color class", dropZonePage.Markup);
+        Assert.Contains("Extra attributes on the drop-zone root", dropZonePage.Markup);
     }
 
     [Fact]

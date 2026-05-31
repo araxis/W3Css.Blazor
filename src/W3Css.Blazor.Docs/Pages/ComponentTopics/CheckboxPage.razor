@@ -29,6 +29,8 @@
             </thead>
             <tbody>
                 <tr><td>Value</td><td>bool</td><td>false</td><td>Checked state</td></tr>
+                <tr><td>ValueChanged</td><td>EventCallback&lt;bool&gt;</td><td>none</td><td>Raised when the checked state changes</td></tr>
+                <tr><td>ValueExpression</td><td>Expression&lt;Func&lt;bool&gt;&gt;?</td><td>null</td><td>Validation expression for EditForm scenarios</td></tr>
                 <tr><td>Id</td><td>string?</td><td>null</td><td>`id` attribute</td></tr>
                 <tr><td>Label</td><td>string?</td><td>null</td><td>Label text</td></tr>
                 <tr><td>LabelClass</td><td>string?</td><td>null</td><td>Additional wrapper label classes</td></tr>
@@ -40,6 +42,7 @@
                 <tr><td>Round</td><td>W3Round</td><td>None</td><td>Rounded corner class</td></tr>
                 <tr><td>Class</td><td>string?</td><td>null</td><td>Additional input classes</td></tr>
                 <tr><td>Style</td><td>string?</td><td>null</td><td>Inline style on the input</td></tr>
+                <tr><td>AdditionalAttributes</td><td>IReadOnlyDictionary&lt;string,object&gt;?</td><td>null</td><td>Extra attributes on the checkbox input</td></tr>
             </tbody>
         </W3Table>
     </section>

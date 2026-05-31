@@ -6,8 +6,8 @@
     <h1>W3DateRangePicker</h1>
     <DocPager PreviousHref="components/number-input" PreviousText="Number Input" NextHref="components/date-input" NextText="Date Input" />
 
-    <p class="w3-large"><code>W3DateRangePicker</code> is a MudBlazor-style alias that composes two native date inputs into a reusable range picker surface.</p>
-    <p>Use it when forms require start and end dates and you want Mud-compatible naming with W3.CSS input styling.</p>
+    <p class="w3-large"><code>W3DateRangePicker</code> composes two native date inputs into a reusable range picker surface.</p>
+    <p>Use it when forms require start and end dates with W3.CSS input styling and Blazor-owned range state.</p>
 
     <DocExample Title="Basic Date Range" Description="Bind a single range value and let the component emit updates when start/end dates change." Code="@RangeCode">
         <EditForm Model="@RangeModel">
@@ -24,7 +24,7 @@
         </EditForm>
     </DocExample>
 
-    <DocExample Title="Immediate Range Updates" Description="Use <code>Immediate</code> for input-time change updates, which mirrors MudBlazor defaults in many date scenarios." Code="@ImmediateCode">
+    <DocExample Title="Immediate Range Updates" Description="Use <code>Immediate</code> for input-time change updates when the form should react as dates are typed." Code="@ImmediateCode">
         <W3DateRangePicker @bind-Value="AuditRange"
                            Min="new DateOnly(2026, 1, 1)"
                            Max="new DateOnly(2026, 12, 31)"
@@ -46,15 +46,22 @@
             </thead>
             <tbody>
                 <tr><td>Value</td><td>W3DateRange?</td><td>null</td><td>Range bound value</td></tr>
-                <tr><td>ValueChanged</td><td>EventCallback&lt;W3DateRange?&gt;</td><td>null</td><td>Two-way binding callback for range value</td></tr>
+                <tr><td>ValueChanged</td><td>EventCallback&lt;W3DateRange?&gt;</td><td>empty</td><td>Two-way binding callback for range value</td></tr>
+                <tr><td>ValueExpression</td><td>Expression&lt;Func&lt;W3DateRange?&gt;&gt;?</td><td>null</td><td>Optional form/edit context expression</td></tr>
                 <tr><td>FromLabel</td><td>string</td><td>From</td><td>Left label</td></tr>
                 <tr><td>ToLabel</td><td>string</td><td>To</td><td>Right label</td></tr>
                 <tr><td>Min</td><td>DateOnly?</td><td>null</td><td>Common minimum bound</td></tr>
                 <tr><td>Max</td><td>DateOnly?</td><td>null</td><td>Common maximum bound</td></tr>
                 <tr><td>UpdateOnInput</td><td>bool</td><td>false</td><td>Native input update mode</td></tr>
-                <tr><td>Immediate</td><td>bool?</td><td>null</td><td>MudBlazor-compatible alias for <code>UpdateOnInput</code></td></tr>
+                <tr><td>Immediate</td><td>bool?</td><td>null</td><td>Alias for <code>UpdateOnInput</code></td></tr>
                 <tr><td>ReadOnly</td><td>bool</td><td>false</td><td>Disables user editing</td></tr>
                 <tr><td>Disabled</td><td>bool</td><td>false</td><td>Disables both date pickers</td></tr>
+                <tr><td>Border</td><td>bool</td><td>false</td><td>Shared border on both date inputs</td></tr>
+                <tr><td>Color / TextColor</td><td>W3Color</td><td>None / None</td><td>Shared input color classes</td></tr>
+                <tr><td>Round</td><td>W3Round</td><td>None</td><td>Shared input rounding</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional wrapper classes</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline wrapper style</td></tr>
+                <tr><td>AdditionalAttributes</td><td>IReadOnlyDictionary&lt;string, object&gt;?</td><td>null</td><td>Extra attributes on the wrapper</td></tr>
             </tbody>
         </W3Table>
     </section>

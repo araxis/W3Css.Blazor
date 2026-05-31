@@ -124,9 +124,10 @@
                 <tr><td>Selectable</td><td>bool</td><td>false</td><td>Enables `aria-selected` and selected row color</td></tr>
                 <tr><td>SelectedItem</td><td>TItem?</td><td>null</td><td>Bindable selected row</td></tr>
                 <tr><td>SelectedItemChanged</td><td>EventCallback&lt;TItem?&gt;</td><td>empty</td><td>Selection binding callback</td></tr>
+                <tr><td>SelectedItems</td><td>IEnumerable&lt;TItem&gt;?</td><td>null</td><td>Optional selected item set for multi-row selection wrappers</td></tr>
                 <tr><td>RowClicked</td><td>EventCallback&lt;TItem&gt;</td><td>empty</td><td>Row click callback</td></tr>
                 <tr><td>SelectedColor</td><td>W3Color</td><td>PaleBlue</td><td>Selected row background class</td></tr>
-                <tr><td>Color</td><td>W3Color</td><td>White</td><td>`W3Table` background color</td></tr>
+                <tr><td>Color</td><td>W3Color</td><td>Surface</td><td>`W3Table` background color</td></tr>
                 <tr><td>TextColor</td><td>W3Color</td><td>None</td><td>`W3Table` text color</td></tr>
                 <tr><td>HeaderColor</td><td>W3Color</td><td>LightGrey</td><td>Header background color</td></tr>
                 <tr><td>HeaderTextColor</td><td>W3Color</td><td>Black</td><td>Header text color</td></tr>
@@ -134,7 +135,7 @@
                 <tr><td>ToolbarTextColor</td><td>W3Color</td><td>Black</td><td>Toolbar text color</td></tr>
                 <tr><td>LoadingColor</td><td>W3Color</td><td>PaleBlue</td><td>Loading panel background color</td></tr>
                 <tr><td>LoadingTextColor</td><td>W3Color</td><td>Black</td><td>Loading panel text color</td></tr>
-                <tr><td>ActivePageColor</td><td>W3Color</td><td>Teal</td><td>Active pagination background color</td></tr>
+                <tr><td>ActivePageColor</td><td>W3Color</td><td>Primary</td><td>Active pagination background color</td></tr>
                 <tr><td>ActivePageTextColor</td><td>W3Color</td><td>White</td><td>Active pagination text color</td></tr>
                 <tr><td>Striped</td><td>bool</td><td>true</td><td>`W3Table` striped rows</td></tr>
                 <tr><td>Bordered</td><td>bool</td><td>true</td><td>`W3Table` bordered rows</td></tr>
@@ -147,6 +148,7 @@
                 <tr><td>NextText</td><td>string</td><td>Next</td><td>Next page text</td></tr>
                 <tr><td>Class</td><td>string?</td><td>null</td><td>Additional classes on the root section</td></tr>
                 <tr><td>Style</td><td>string?</td><td>null</td><td>Inline styles on the root section</td></tr>
+                <tr><td>AdditionalAttributes</td><td>IReadOnlyDictionary&lt;string, object&gt;?</td><td>null</td><td>Extra attributes on the root section</td></tr>
             </tbody>
         </W3Table>
     </section>

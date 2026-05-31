@@ -710,3 +710,8 @@ Last updated: 2026-05-31
 - Continued the small docs/API gap pass for `W3Table`, `W3Drawer`, `W3Menu`, and `W3ProgressCircular`.
 - Added missing parameter rows for `Dense`, `CloseButtonLabel`, `PanelClass`, `Type`, `AccessibilityLabel`, and inherited attributes where those pages needed explicit pass-through documentation.
 - Corrected stale default rows for drawer/menu surface colors, added focused docs smoke coverage, restarted the local docs server on `http://localhost:5016`, and verified `/components/menu` renders the updated rows with no browser console errors.
+- Continued the docs/API gap pass for `W3DataTable`, `W3DateRangePicker`, `W3MessageBox`, `W3Modal`, and `W3Navbar`.
+- Added missing parameter rows for selected items, range value expression, message box visibility and child content, modal actions, navbar active value binding, and inherited attributes.
+- Corrected stale default rows for data table surface/active page colors, modal content surface color, and navbar active color.
+- Removed old comparison wording from date range and message box docs so the pages stay focused on the library behavior.
+- Verified focused docs smoke tests, Release build, 376-test Release suite, package creation, and `/components/date-range-picker` in the in-app browser with no console errors.

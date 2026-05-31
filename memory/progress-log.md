@@ -767,3 +767,11 @@ Last updated: 2026-05-31
 - Corrected current defaults and descriptions where docs had drifted from component source.
 - Added focused docs smoke coverage for the updated foundation and utility parameter rows.
 - Verified focused docs smoke tests, Release build, 413-test Release suite, package creation, hygiene scans, and `/components/card` in the in-app browser with no console errors or horizontal overflow.
+
+## 2026-05-31 - Final API Attribute Docs Audit
+
+- Ran the remaining component docs/API audit and closed the last parameter tables without inherited attribute rows.
+- Updated breadcrumb, list, progress, rating, stepper, timeline, toggle group, and tree view docs with explicit pass-through attribute coverage.
+- Split remaining grouped workflow/timeline/toggle rows so public parameters are documented directly, and corrected current defaults for progress, stepper, and timeline surfaces.
+- Added focused docs smoke coverage plus route assertions for the remaining touched routes.
+- Verified focused docs smoke tests, Release build, 416-test Release suite, package creation, hygiene scans, and `/components/toggle-group` in the in-app browser with no console errors or horizontal overflow.

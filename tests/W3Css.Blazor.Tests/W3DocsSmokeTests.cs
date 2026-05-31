@@ -55,6 +55,7 @@ using IconsPage = W3Css.Blazor.Docs.Pages.ComponentTopics.IconsPage;
 using ImagePage = W3Css.Blazor.Docs.Pages.ComponentTopics.ImagePage;
 using ImageListPage = W3Css.Blazor.Docs.Pages.ComponentTopics.ImageListPage;
 using InputPage = W3Css.Blazor.Docs.Pages.ComponentTopics.InputPage;
+using ListPage = W3Css.Blazor.Docs.Pages.ComponentTopics.ListPage;
 using ListItemPage = W3Css.Blazor.Docs.Pages.ComponentTopics.ListItemPage;
 using MenuPage = W3Css.Blazor.Docs.Pages.ComponentTopics.MenuPage;
 using ModalPage = W3Css.Blazor.Docs.Pages.ComponentTopics.ModalPage;
@@ -70,6 +71,7 @@ using PanelPage = W3Css.Blazor.Docs.Pages.ComponentTopics.PanelPage;
 using ResponsivePage = W3Css.Blazor.Docs.Pages.ComponentTopics.ResponsivePage;
 using ToggleIconButtonPage = W3Css.Blazor.Docs.Pages.ComponentTopics.ToggleIconButtonPage;
 using PopoverPage = W3Css.Blazor.Docs.Pages.ComponentTopics.PopoverPage;
+using ProgressPage = W3Css.Blazor.Docs.Pages.ComponentTopics.ProgressPage;
 using RatingPage = W3Css.Blazor.Docs.Pages.ComponentTopics.RatingPage;
 using RowPage = W3Css.Blazor.Docs.Pages.ComponentTopics.RowPage;
 using SliderPage = W3Css.Blazor.Docs.Pages.ComponentTopics.SliderPage;
@@ -175,6 +177,7 @@ public sealed class W3DocsSmokeTests
     [InlineData(typeof(DateRangePickerPage), "/components/date-range-picker")]
     [InlineData(typeof(TimeInputPage), "/components/time-input")]
     [InlineData(typeof(ProgressCircularPage), "/components/progress-circular")]
+    [InlineData(typeof(ProgressPage), "/components/progress")]
     [InlineData(typeof(SliderPage), "/components/slider")]
     [InlineData(typeof(RatingPage), "/components/rating")]
     [InlineData(typeof(SwitchPage), "/components/switch")]
@@ -184,6 +187,7 @@ public sealed class W3DocsSmokeTests
     [InlineData(typeof(AutocompletePage), "/components/autocomplete")]
     [InlineData(typeof(SelectItemPage), "/components/select-item")]
     [InlineData(typeof(ListItemPage), "/components/list-item")]
+    [InlineData(typeof(ListPage), "/components/list")]
     [InlineData(typeof(NavMenuPage), "/components/nav-menu")]
     [InlineData(typeof(BottomNavigationPage), "/components/bottom-navigation")]
     [InlineData(typeof(BreadcrumbPage), "/components/breadcrumb")]
@@ -568,6 +572,46 @@ public sealed class W3DocsSmokeTests
 
         var bordersPage = context.Render<BordersPage>();
         Assert.Contains("Extra attributes on the border wrapper", bordersPage.Markup);
+    }
+
+    [Fact]
+    public void RemainingDataAndWorkflowApiPagesDocumentCurrentParameterRows()
+    {
+        using var context = new BunitContext();
+
+        var breadcrumbPage = context.Render<BreadcrumbPage>();
+        Assert.Contains("Extra attributes on the breadcrumb nav", breadcrumbPage.Markup);
+        Assert.Contains("Extra attributes on the breadcrumb item", breadcrumbPage.Markup);
+
+        var listPage = context.Render<ListPage>();
+        Assert.Contains("Extra attributes on the list element", listPage.Markup);
+
+        var listItemPage = context.Render<ListItemPage>();
+        Assert.Contains("Extra attributes on the rendered list item", listItemPage.Markup);
+
+        var progressPage = context.Render<ProgressPage>();
+        Assert.Contains("Primary", progressPage.Markup);
+        Assert.Contains("Extra attributes on the progress track", progressPage.Markup);
+
+        var ratingPage = context.Render<RatingPage>();
+        Assert.Contains("Extra attributes on the rating group", ratingPage.Markup);
+
+        var stepperPage = context.Render<StepperPage>();
+        Assert.Contains("Active step marker and button background", stepperPage.Markup);
+        Assert.Contains("Extra attributes on the stepper root", stepperPage.Markup);
+
+        var timelinePage = context.Render<TimelinePage>();
+        Assert.Contains("Default item surface color", timelinePage.Markup);
+        Assert.Contains("Extra attributes on the timeline list", timelinePage.Markup);
+        Assert.Contains("Extra attributes on the timeline item", timelinePage.Markup);
+
+        var toggleGroupPage = context.Render<ToggleGroupPage>();
+        Assert.Contains("Selected item background color", toggleGroupPage.Markup);
+        Assert.Contains("Extra attributes on the toggle group root", toggleGroupPage.Markup);
+        Assert.Contains("Extra attributes on the toggle item button", toggleGroupPage.Markup);
+
+        var treeViewPage = context.Render<TreeViewPage>();
+        Assert.Contains("Extra attributes on the tree root", treeViewPage.Markup);
     }
 
     [Fact]

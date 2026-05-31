@@ -111,14 +111,13 @@ This model is intentionally similar to mature Blazor libraries, while keeping im
 | `W3ToggleGroup<TValue>` / `W3ToggleItem<TValue>` | Implemented | Segmented single/multi selector with `aria-pressed` items. |
 | `W3ColorInput` | Implemented | Native color input with compact/full-width modes, plus an opt-in `ShowPalette` picker (preview + native + hex field + preset palette) that absorbed the former W3ColorPicker. |
 | `W3FileInput` | Implemented | `InputFile` wrapper with accept/multiple/listing. |
-| `W3RadioGroup` | Implemented | Binds grouped `W3Radio` options through shared value and selection events. |
 | `W3DropZone` | Implemented | Large-file input and drag/drop surface component. |
 | `W3Autocomplete` | Implemented | Searchable listbox/combo with templates and keyboard interaction. |
 | `W3Select` | Implemented | Generic select wrapper with validation patterns and first-class disabled placeholder support. |
 | `W3SelectItem` | Implemented | Typed option helper used inside `W3Select` and W3.CSS-first composition. |
-| `W3Checkbox` | Implemented | Checkbox with validation and label support. |
-| `W3Radio` | Implemented | Typed radio button wrapper. |
-| `W3RadioGroup` | Implemented | Coordinates grouped `W3Radio` selection through shared value binding. |
+| `W3Checkbox` | Implemented | Checkbox with validation-friendly binding, required state, and label spacing hooks. |
+| `W3Radio` | Implemented | Typed radio button wrapper with required state and label spacing hooks. |
+| `W3RadioGroup` | Implemented | Coordinates grouped `W3Radio` selection through shared value binding and Blazor validation state. |
 | `W3TextArea` | Implemented | Text area wrapper with validation support and optional input-time updates. |
 | `W3Field` | Implemented | Label/help/validation wrapper for form fields, with stable spacing hooks and custom validation message classes. |
 | `W3Form` | Implemented | W3.CSS-first form wrapper using EditForm-style callbacks, child-control disabled/busy states, and class/style passthrough. |
@@ -225,7 +224,7 @@ This model is intentionally similar to mature Blazor libraries, while keeping im
 | Content display and timeline | Implemented | Tree, chat, timeline, data table, rating, drop zone, and gallery coverage. |
 | Feedback and loading | Implemented | Spinner, skeleton, toast, file, autocomplete, and alert coverage. |
 | Package validation | Implemented | `dotnet pack` generates `W3Css.Blazor.0.1.0.nupkg`; CI uploads package artifact. |
-| Test count | Implemented | `dotnet test` reports 425 passing tests. |
+| Test count | Implemented | `dotnet test` reports 428 passing tests. |
 
 ## Component Compatibility Backlog
 

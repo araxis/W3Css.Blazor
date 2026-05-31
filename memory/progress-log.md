@@ -52,6 +52,19 @@ Last updated: 2026-05-31
   - `dotnet test tests/W3Css.Blazor.Tests/W3Css.Blazor.Tests.csproj --configuration Release --no-build /nr:false` (425 passing);
   - `dotnet pack src/W3Css.Blazor/W3Css.Blazor.csproj --configuration Release --no-build --output artifacts/packages /nr:false`;
   - browser-verified `/components/select` after restarting the docs server on port 5016: placeholder renders first and disabled, selecting `Medium` updates the native select, the parameter row/code snippet are visible, and no visible error appears.
+- Continued the form-control UX audit on choice inputs:
+  - added first-class required-state support to `W3Checkbox` and `W3Radio`;
+  - added stable choice-label spacing hooks for checkbox and radio labels without modifying the bundled W3.CSS source;
+  - made `W3RadioGroup` validation-aware through the Blazor input base path, including validation CSS and `aria-invalid`;
+  - documented required checkbox and radio-group examples using Blazor validation messages with `novalidate`;
+  - added focused choice input validation tests and docs smoke coverage.
+- Verification:
+  - focused choice/docs tests: 121 passing;
+  - `dotnet build W3Css.Blazor.slnx --configuration Release /nr:false` (0 warnings, 0 errors);
+  - `dotnet test tests/W3Css.Blazor.Tests/W3Css.Blazor.Tests.csproj --configuration Release --no-build /nr:false` (428 passing);
+  - `dotnet pack src/W3Css.Blazor/W3Css.Blazor.csproj --configuration Release --no-build --output artifacts/packages /nr:false`;
+  - hygiene scans found no blocked naming additions, no comparison naming matches, no tool/provider traces in project-visible paths, and no exact package key matches;
+  - browser-verified `/components/radio-group` and `/components/checkbox` after restarting the docs server on port 5016: required messages appear, clear after selection, required/aria attributes render, no visible error appears.
 - Re-synced memory folder with current source state after major component/parity/theming work already on `main`.
 - Verified again:
   - `dotnet build W3Css.Blazor.slnx --configuration Release` (0 warnings, 0 errors).

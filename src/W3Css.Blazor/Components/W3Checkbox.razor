@@ -4,7 +4,7 @@
 {
     <label class="@LabelCssClass">
         @Control
-        <span>@LabelContent</span>
+        <span class="w3-choice-label-text">@LabelContent</span>
     </label>
 }
 else
@@ -15,7 +15,7 @@ else
 @code {
     private string CheckboxCssClass => BuildControlClass("w3-check");
     private bool HasLabel => ChildContent is not null || !string.IsNullOrWhiteSpace(Label);
-    private string LabelCssClass => new W3Css.Blazor.Internal.W3ClassBuilder().Add("w3-block").Add(LabelClass).ToString();
+    private string LabelCssClass => new W3Css.Blazor.Internal.W3ClassBuilder().Add("w3-block").Add("w3-choice-label").Add("w3-checkbox-label").Add(LabelClass).ToString();
     private RenderFragment LabelContent => ChildContent ?? (builder => builder.AddContent(0, Label));
 
     private RenderFragment Control => builder =>
@@ -29,7 +29,12 @@ else
         builder.AddAttribute(6, "style", Style);
         builder.AddAttribute(7, "disabled", Disabled);
         builder.AddAttribute(8, "checked", BindConverter.FormatValue(CurrentValue));
-        builder.AddAttribute(9, "onchange", EventCallback.Factory.CreateBinder<bool>(this, value => CurrentValue = value, CurrentValue));
+        builder.AddAttribute(9, "required", Required);
+        if (Required)
+        {
+            builder.AddAttribute(10, "aria-required", "true");
+        }
+        builder.AddAttribute(11, "onchange", EventCallback.Factory.CreateBinder<bool>(this, value => CurrentValue = value, CurrentValue));
         builder.CloseElement();
     };
 
@@ -41,6 +46,9 @@ else
 
     [Parameter]
     public string? LabelClass { get; set; }
+
+    [Parameter]
+    public bool Required { get; set; }
 
     [Parameter]
     public RenderFragment? ChildContent { get; set; }

@@ -17,7 +17,7 @@ Last updated: 2026-05-31
 - Current docs routes in `src/W3Css.Blazor.Docs/Pages/ComponentTopics`: 118 pages.
 - Tests in project source: 65 `.cs` test files.
 - Test suite status:
-  - `dotnet test tests/W3Css.Blazor.Tests/W3Css.Blazor.Tests.csproj --configuration Release` -> **400 passing tests**.
+  - `dotnet test tests/W3Css.Blazor.Tests/W3Css.Blazor.Tests.csproj --configuration Release` -> **413 passing tests**.
 - Build status:
   - `dotnet build W3Css.Blazor.slnx --configuration Release` → **0 warnings, 0 errors**.
 
@@ -60,5 +60,6 @@ Last updated: 2026-05-31
 - The seventh docs/API gap pass now covers `W3Button`, `W3ButtonGroup`, `W3IconButton`, `W3ToggleIconButton`, `W3Fab`, `W3Tag`, `W3Badge`, `W3Chip`, `W3ChipSet`, `W3Avatar`, `W3AvatarGroup`, `W3Footer`, `W3Spacer`, `W3Stack`, and `W3Divider` parameter tables with focused docs smoke coverage.
 - The eighth docs/API gap pass now covers `W3Input`, `W3TextArea`, `W3Form`, `W3Field`, `W3Select`, `W3SelectItem`, `W3Checkbox`, `W3RadioGroup`, `W3Radio`, `W3Mask`, `W3NumberInput`, `W3DateInput`, `W3TimeInput`, `W3Slider`, `W3Switch`, `W3ColorInput`, `W3FileInput`, `W3Autocomplete`, and `W3DropZone` parameter tables with focused docs smoke coverage.
 - The ninth docs/API gap pass now covers `W3Accordion`, `W3AccordionItem`, `W3Dropdown`, `W3Pagination`, `W3Sidebar`, `W3Tooltip`, `W3ScrollToTop`, `W3Link`, `W3PageContentNavigation`, and `W3PageSection` parameter/property tables with focused docs smoke coverage.
+- The tenth docs/API gap pass now covers `W3Bar`, `W3BarItem`, `W3Card`, `W3CellRow`, `W3Cell`, `W3DisplayContainer`, `W3Display`, `W3Responsive`, `W3Spacing`, `W3Text`, `W3Effect`, `W3Animate`, `W3HoverColor`, `W3Direction`, and `W3Border` parameter tables with focused docs smoke coverage.
 - Neutral terminology cleanup is complete; source, docs, tests, and memory no longer use external comparison-library names for the compatibility work.
 - Remaining planned work is optional: extra theme tokens, focus-ring/theming polish, and `W3SwipeArea`-style pointer gesture support.

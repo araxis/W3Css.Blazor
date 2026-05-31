@@ -466,6 +466,34 @@ public sealed class W3DocsSmokeTests
     }
 
     [Fact]
+    public void NavigationApiPagesDocumentCurrentParameterRows()
+    {
+        using var context = new BunitContext();
+
+        var appShellPage = context.Render<AppShellPage>();
+        Assert.Contains("Extra attributes on the root shell", appShellPage.Markup);
+        Assert.Contains("Slot-level inline styles", appShellPage.Markup);
+
+        var appBarPage = context.Render<AppBarPage>();
+        Assert.Contains("Surface", appBarPage.Markup);
+        Assert.Contains("Extra attributes on the header root", appBarPage.Markup);
+
+        var navMenuPage = context.Render<NavMenuPage>();
+        Assert.Contains("Inherited active item background", navMenuPage.Markup);
+        Assert.Contains("Extra attributes on the nav root", navMenuPage.Markup);
+        Assert.Contains("Extra classes, style, and attributes on the rendered item", navMenuPage.Markup);
+
+        var toolbarPage = context.Render<ToolbarPage>();
+        Assert.Contains("Extra attributes on the toolbar root", toolbarPage.Markup);
+        Assert.Contains("Control gap in pixels", toolbarPage.Markup);
+
+        var bottomNavigationPage = context.Render<BottomNavigationPage>();
+        Assert.Contains("Surface and Black", bottomNavigationPage.Markup);
+        Assert.Contains("Primary and White", bottomNavigationPage.Markup);
+        Assert.Contains("Extra attributes on the nav root", bottomNavigationPage.Markup);
+    }
+
+    [Fact]
     public void NavbarPageRendersDropdownExampleAndKeepsItInteractive()
     {
         using var context = new BunitContext();

@@ -97,14 +97,15 @@
                 <tr><td>Card</td><td>bool</td><td>false</td><td>Uses `CardDepth` to add a W3.CSS card class</td></tr>
                 <tr><td>CardDepth</td><td>W3CardDepth</td><td>Four</td><td>Card depth class when Card is true</td></tr>
                 <tr><td>Round</td><td>W3Round</td><td>None</td><td>Rounded utility class</td></tr>
-                <tr><td>Color</td><td>W3Color</td><td>None</td><td>Menu background color</td></tr>
+                <tr><td>Color</td><td>W3Color</td><td>Surface</td><td>Menu background color</td></tr>
                 <tr><td>TextColor</td><td>W3Color</td><td>None</td><td>Menu text color</td></tr>
-                <tr><td>ActiveColor</td><td>W3Color</td><td>Teal</td><td>Inherited active item background</td></tr>
+                <tr><td>ActiveColor</td><td>W3Color</td><td>Primary</td><td>Inherited active item background</td></tr>
                 <tr><td>ActiveTextColor</td><td>W3Color</td><td>White</td><td>Inherited active item text color</td></tr>
                 <tr><td>HoverColor</td><td>W3Color</td><td>LightGrey</td><td>Inherited item hover background</td></tr>
                 <tr><td>HoverTextColor</td><td>W3Color</td><td>None</td><td>Inherited item hover text color</td></tr>
                 <tr><td>Class</td><td>string?</td><td>null</td><td>Additional nav classes</td></tr>
                 <tr><td>Style</td><td>string?</td><td>null</td><td>Inline style on the nav</td></tr>
+                <tr><td>AdditionalAttributes</td><td>IReadOnlyDictionary&lt;string, object&gt;?</td><td>null</td><td>Extra attributes on the nav root</td></tr>
             </tbody>
         </W3Table>
     </section>
@@ -124,7 +125,7 @@
                 <tr><td>W3NavMenuGroup</td><td>Color and TextColor</td><td>W3Color</td><td>None</td><td>Group button or title colors</td></tr>
                 <tr><td>W3NavMenuGroup</td><td>HoverColor and HoverTextColor</td><td>W3Color</td><td>Owner values</td><td>Group button hover classes</td></tr>
                 <tr><td>W3NavMenuGroup</td><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Group items</td></tr>
-                <tr><td>W3NavMenuGroup</td><td>Class and Style</td><td>string?</td><td>null</td><td>Group wrapper classes and style</td></tr>
+                <tr><td>W3NavMenuGroup</td><td>Class / Style / AdditionalAttributes</td><td>string? / dictionary?</td><td>null</td><td>Extra classes, style, and attributes on the group wrapper</td></tr>
                 <tr><td>W3NavMenuItem</td><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Custom label content</td></tr>
                 <tr><td>W3NavMenuItem</td><td>Href</td><td>string?</td><td>null</td><td>Renders `NavLink` when set</td></tr>
                 <tr><td>W3NavMenuItem</td><td>Target</td><td>string?</td><td>null</td><td>Anchor target attribute</td></tr>
@@ -141,7 +142,7 @@
                 <tr><td>W3NavMenuItem</td><td>ActiveColor and ActiveTextColor</td><td>W3Color</td><td>Owner values</td><td>Item active color overrides</td></tr>
                 <tr><td>W3NavMenuItem</td><td>HoverColor and HoverTextColor</td><td>W3Color</td><td>Owner values</td><td>Item hover classes</td></tr>
                 <tr><td>W3NavMenuItem</td><td>OnClick</td><td>EventCallback&lt;MouseEventArgs&gt;</td><td>none</td><td>Raised on item click</td></tr>
-                <tr><td>W3NavMenuItem</td><td>Class and Style</td><td>string?</td><td>null</td><td>Item classes and inline style</td></tr>
+                <tr><td>W3NavMenuItem</td><td>Class / Style / AdditionalAttributes</td><td>string? / dictionary?</td><td>null</td><td>Extra classes, style, and attributes on the rendered item</td></tr>
             </tbody>
         </W3Table>
     </section>

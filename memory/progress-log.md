@@ -722,3 +722,6 @@ Last updated: 2026-05-31
 - Continued neutral terminology cleanup across source comments, docs catalog text, component topic pages, test class/file names, and memory notes.
 - Renamed the remaining compatibility test files/classes to neutral names and removed external comparison-library names from source, docs, tests, and memory.
 - Verified docs smoke tests, compatibility-focused tests, Release build, 383-test Release suite, package creation, and `/components` in the in-app browser with neutral catalog text, no console errors, and no horizontal overflow.
+- Continued the docs/API gap pass for navigation and app-structure pages: `W3AppShell`, `W3AppBar`, `W3NavMenu`, `W3Toolbar`, and `W3BottomNavigation`.
+- Added missing inherited attribute rows, corrected current surface/primary default rows, and added focused docs smoke coverage for the updated pages.
+- Verified focused docs smoke tests, Release build, 384-test Release suite, package creation, and `/components/bottom-navigation` in the in-app browser with no console errors or horizontal overflow.

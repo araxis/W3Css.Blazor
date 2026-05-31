@@ -725,3 +725,6 @@ Last updated: 2026-05-31
 - Continued the docs/API gap pass for navigation and app-structure pages: `W3AppShell`, `W3AppBar`, `W3NavMenu`, `W3Toolbar`, and `W3BottomNavigation`.
 - Added missing inherited attribute rows, corrected current surface/primary default rows, and added focused docs smoke coverage for the updated pages.
 - Verified focused docs smoke tests, Release build, 384-test Release suite, package creation, and `/components/bottom-navigation` in the in-app browser with no console errors or horizontal overflow.
+- Continued the docs/API gap pass for feedback and overlay pages: `W3Alert`, `W3Toast`, `W3Overlay`, `W3Popover`, `W3FocusTrap`, `W3Spinner`, and `W3Skeleton`.
+- Added missing inherited attribute rows, corrected the popover content color default row, and added focused docs smoke coverage for the updated pages.
+- Verified focused docs smoke tests, Release build, 385-test Release suite, package creation, and `/components/popover` in the in-app browser with no console errors or horizontal overflow.

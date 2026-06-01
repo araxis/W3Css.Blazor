@@ -59,7 +59,8 @@
                               SortKey="@((ProjectRow project) => project.Updated)" />
             </ChildContent>
             <RowActions Context="project">
-                <W3Button Size="W3Size.Small" Border="true" Round="W3Round.Medium">Open @project.Name</W3Button>
+                <W3Button Size="W3Size.Small" Border="true" Round="W3Round.Medium">Open</W3Button>
+                <W3Button Size="W3Size.Small" Color="W3Color.Primary" TextColor="W3Color.White" Round="W3Round.Medium">Assign</W3Button>
             </RowActions>
         </W3DataTable>
 
@@ -101,6 +102,10 @@
                 <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>`W3DataColumn` definitions</td></tr>
                 <tr><td>Toolbar</td><td>RenderFragment?</td><td>null</td><td>Custom toolbar content beside search</td></tr>
                 <tr><td>RowActions</td><td>RenderFragment&lt;TItem&gt;?</td><td>null</td><td>Optional actions column</td></tr>
+                <tr><td>RowActionsHeaderClass</td><td>string?</td><td>null</td><td>Additional classes on the actions header cell</td></tr>
+                <tr><td>RowActionsCellClass</td><td>string?</td><td>null</td><td>Additional classes on each actions body cell</td></tr>
+                <tr><td>RowActionsClass</td><td>string?</td><td>null</td><td>Additional classes on each row action group</td></tr>
+                <tr><td>RowActionsGap</td><td>int</td><td>8</td><td>Gap between row action controls in pixels</td></tr>
                 <tr><td>EmptyContent</td><td>RenderFragment?</td><td>null</td><td>Custom empty row content</td></tr>
                 <tr><td>LoadingContent</td><td>RenderFragment?</td><td>null</td><td>Custom loading content</td></tr>
                 <tr><td>Id</td><td>string?</td><td>null</td><td>Stable prefix for generated control ids</td></tr>
@@ -267,7 +272,8 @@
                       SortKey="@((ProjectRow project) => project.Updated)" />
     </ChildContent>
     <RowActions Context="project">
-        <W3Button Size="W3Size.Small" Border="true" Round="W3Round.Medium">Open @project.Name</W3Button>
+        <W3Button Size="W3Size.Small" Border="true" Round="W3Round.Medium">Open</W3Button>
+        <W3Button Size="W3Size.Small" Color="W3Color.Primary" TextColor="W3Color.White" Round="W3Round.Medium">Assign</W3Button>
     </RowActions>
 </W3DataTable>
 """;

@@ -4,6 +4,8 @@ namespace W3Css.Blazor.Tests;
 
 public sealed class W3ReleaseQualityTests
 {
+    private const string CurrentVersion = "0.2.0";
+
     [Fact]
     public void ReadmeDocumentsCurrentAppPrimitivesAndBranchFlow()
     {
@@ -24,10 +26,36 @@ public sealed class W3ReleaseQualityTests
         var developmentPlan = ReadRepositoryFile("memory", "development-plan.md");
         var projectMemory = ReadRepositoryFile("memory", "project-memory.md");
 
-        Assert.Contains("post-0.1.0 changes", currentState);
+        Assert.Contains("version `0.2.0`", currentState);
         Assert.Contains("Package And Release Readiness (Complete)", developmentPlan);
-        Assert.Contains("Future releases", projectMemory);
+        Assert.Contains("Current package baseline", projectMemory);
         Assert.DoesNotContain("points at current `HEAD`", currentState);
+    }
+
+    [Fact]
+    public void PackageVersionAndReleaseNotesStayAligned()
+    {
+        var project = ReadRepositoryFile("src", "W3Css.Blazor", "W3Css.Blazor.csproj");
+        var changelog = ReadRepositoryFile("CHANGELOG.md");
+        var releaseNotesPath = PathFromRepositoryRoot("docs", "release-notes", $"{CurrentVersion}.md");
+
+        Assert.Contains($"<Version>{CurrentVersion}</Version>", project);
+        Assert.Contains($"docs/release-notes/{CurrentVersion}.md", project);
+        Assert.Contains($"## {CurrentVersion} - 2026-06-01", changelog);
+        Assert.True(File.Exists(releaseNotesPath), $"Release notes file is missing: {releaseNotesPath}");
+    }
+
+    [Fact]
+    public void ConsumerSmokeCoversCurrentAppPrimitives()
+    {
+        var smoke = ReadRepositoryFile("tools", "package-consumer-smoke.ps1");
+
+        Assert.Contains("W3ThemeProvider", smoke);
+        Assert.Contains("W3Card", smoke);
+        Assert.Contains("W3DataTable", smoke);
+        Assert.Contains("W3ActionRow", smoke);
+        Assert.Contains("W3EmptyState", smoke);
+        Assert.Contains("PackageSource", smoke);
     }
 
     [Fact]

@@ -70,7 +70,8 @@ jobs:
 
           $releaseNotes = "docs/release-notes/$version.md"
           if (-not (Test-Path $releaseNotes)) {
-            $releaseNotes = 'docs/release-notes/0.1.0.md'
+            Write-Error "Release notes file was not found: $releaseNotes"
+            exit 1
           }
 
           Add-Content -Path $env:GITHUB_OUTPUT -Value "tag=$tag"

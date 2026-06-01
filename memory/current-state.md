@@ -17,7 +17,7 @@ Last updated: 2026-06-01
 - Current docs routes in `src/W3Css.Blazor.Docs/Pages/ComponentTopics`: 118 pages.
 - Tests in project source: 67 `.cs` test files.
 - Test suite status:
-  - `dotnet test tests/W3Css.Blazor.Tests/W3Css.Blazor.Tests.csproj --configuration Release` -> **430 passing tests**.
+  - `dotnet test tests/W3Css.Blazor.Tests/W3Css.Blazor.Tests.csproj --configuration Release` -> **432 passing tests**.
 - Build status:
   - `dotnet build W3Css.Blazor.slnx --configuration Release` → **0 warnings, 0 errors**.
 
@@ -69,5 +69,6 @@ Last updated: 2026-06-01
 - The choice-input UX audit added required-state support and label spacing hooks to `W3Checkbox`/`W3Radio`, made `W3RadioGroup` validation-aware, refreshed checkbox/radio docs, and verified the rendered docs pages.
 - The value-input UX audit added required-state and validation ARIA support to `W3NumberInput`, `W3DateInput`, and `W3TimeInput`, refreshed required validation examples, and verified the rendered docs pages.
 - The remaining input-control UX audit added validation, required-state, and accessibility polish to `W3Slider`, `W3Switch`, `W3Rating`, `W3ColorInput`, `W3FileInput`, `W3DropZone`, and `W3Autocomplete`, refreshed docs/examples, and verified the rendered docs pages.
+- The focus and keyboard polish pass added theme-controlled focus tokens (`FocusColor`, `FocusWidth`, `FocusOffset`) plus bundled `:focus-visible` styles for links, buttons, inputs, and interactive roles; docs and browser verification cover the theming page.
 - Neutral terminology cleanup is complete; source, docs, tests, and memory no longer use external comparison-library names for the compatibility work.
-- Remaining planned work is optional: extra theme tokens, focus-ring/theming polish, and `W3SwipeArea`-style pointer gesture support.
+- Remaining planned work is optional: additional theme token expansion, visual quality sweeps, and `W3SwipeArea`-style pointer gesture support.

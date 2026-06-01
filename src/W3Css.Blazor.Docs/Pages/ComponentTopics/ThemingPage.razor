@@ -62,12 +62,14 @@
                 <tr><td>Background / OnBackground</td><td><code>--w3-background</code> / <code>--w3-on-background</code></td><td>#f6f7f9 / #1f2933</td><td>page surface — the <code>.w3-theme-root</code> wrapper</td></tr>
                 <tr><td>Border</td><td><code>--w3-border</code></td><td>#e0e0e0</td><td><code>w3-border-surface</code></td></tr>
                 <tr><td>Radius</td><td><code>--w3-radius</code></td><td>4px</td><td>rounded elements inside the provider</td></tr>
+                <tr><td>FocusColor / FocusWidth / FocusOffset</td><td><code>--w3-focus-color</code> / <code>--w3-focus-width</code> / <code>--w3-focus-offset</code></td><td>primary / 2px / 2px</td><td>keyboard focus rings for links, buttons, inputs, and interactive roles</td></tr>
                 <tr><td>FontFamily</td><td>(font-family)</td><td>inherit</td><td>theme scope</td></tr>
                 <tr><td>Dark</td><td>—</td><td>DefaultDark</td><td>dark variant when <code>Dark="true"</code></td></tr>
             </tbody>
         </W3Table>
         <p class="doc-muted">Link <code>_content/W3Css.Blazor/w3css-blazor.css</code> once (it bundles the framework + this token layer). Tokens then render with sensible defaults everywhere; a <code>W3ThemeProvider</code> only overrides the variables within its subtree (and toggles dark mode).</p>
         <p class="doc-muted">The provider's <code>.w3-theme-root</code> wrapper is itself a themed page surface (it paints <code>Background</code> / <code>OnBackground</code>), so wrapping an app or region themes the whole page — including dark mode — with <strong>no per-mode app CSS</strong>. Custom (non-component) elements should consume the variables (<code>var(--w3-surface)</code>, <code>var(--w3-on-background)</code>, …) rather than carry their own dark-mode rules.</p>
+        <p class="doc-muted">Keyboard focus rings are part of the token layer. Set <code>FocusColor</code>, <code>FocusWidth</code>, or <code>FocusOffset</code> when the brand theme needs stronger or softer focus treatment.</p>
     </section>
 
     <DocPager PreviousHref="components/color-schemes" PreviousText="Color Schemes" NextHref="components/trends" NextText="Trends" />
@@ -100,7 +102,7 @@
 <link rel="stylesheet" href="_content/W3Css.Blazor/w3css-blazor.css" />
 
 <!-- anywhere you want to override the defaults: -->
-<W3ThemeProvider Theme="@(new W3Theme { Primary = "#6750A4", Secondary = "#625B71" })">
+<W3ThemeProvider Theme="@(new W3Theme { Primary = "#6750A4", Secondary = "#625B71", FocusColor = "#6750A4" })">
     <App />
 </W3ThemeProvider>
 

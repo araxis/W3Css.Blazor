@@ -17,6 +17,7 @@
             aria-expanded="@AriaExpanded"
             aria-controls="@MenuId"
             disabled="@Disabled"
+            @onkeydown="HandleTriggerKeyDownAsync"
             @onclick="ToggleAsync">
         @if (TriggerContent is not null)
         {
@@ -46,7 +47,7 @@
              @onclick="CloseAsync"></div>
     }
 
-    <CascadingValue Value="this" IsFixed="true">
+    <CascadingValue Value="this">
         <div id="@MenuId"
              @ref="PanelElement"
              class="@PanelCssClass"
@@ -58,6 +59,7 @@
 </div>
 
 @code {
+    private readonly List<W3MenuItem> items = [];
     private readonly string menuId = $"w3-menu-{Guid.NewGuid():N}";
 
     private ElementReference RootElement { get; set; }
@@ -120,6 +122,8 @@
 
     private bool currentOpen;
     private bool? lastOpenParameter;
+    private W3MenuItem? activeItem;
+    private W3MenuItem? pendingFocusItem;
 
     [Parameter]
     public string? Id { get; set; }
@@ -213,6 +217,7 @@
         if (!FixedPosition)
         {
             await DisposeMenuReferenceAsync();
+            await FocusPendingItemAsync();
             return;
         }
 
@@ -227,10 +232,12 @@
         if (MenuReference is null)
         {
             MenuReference = await Module.InvokeAsync<IJSObjectReference>("connect", RootElement, TriggerElement, PanelElement, options);
+            await FocusPendingItemAsync();
             return;
         }
 
         await MenuReference.InvokeVoidAsync("update", options);
+        await FocusPendingItemAsync();
     }
 
     protected override void OnParametersSet()
@@ -239,6 +246,11 @@
         {
             currentOpen = Open;
             lastOpenParameter = Open;
+
+            if (!currentOpen)
+            {
+                activeItem = null;
+            }
         }
     }
 
@@ -257,6 +269,54 @@
         await SetOpenAsync(false);
     }
 
+    internal void Register(W3MenuItem item)
+    {
+        if (items.Contains(item))
+        {
+            return;
+        }
+
+        items.Add(item);
+
+        if (currentOpen && activeItem is null && IsSelectable(item))
+        {
+            activeItem = item;
+        }
+    }
+
+    internal void Unregister(W3MenuItem item)
+    {
+        items.Remove(item);
+
+        if (ReferenceEquals(activeItem, item))
+        {
+            activeItem = currentOpen ? GetFirstSelectableItem() : null;
+        }
+    }
+
+    internal int? GetItemTabIndex(W3MenuItem item)
+    {
+        if (!currentOpen || !IsSelectable(item))
+        {
+            return -1;
+        }
+
+        activeItem ??= GetFirstSelectableItem();
+
+        return ReferenceEquals(activeItem, item) ? 0 : -1;
+    }
+
+    internal async Task HandleItemKeyDownAsync(W3MenuItem item, KeyboardEventArgs args)
+    {
+        if (!currentOpen || !IsSelectable(item))
+        {
+            return;
+        }
+
+        activeItem = item;
+        await HandleNavigationKeyDownAsync(args);
+    }
+
     private async Task SetOpenAsync(bool open)
     {
         if (currentOpen == open)
@@ -267,9 +327,167 @@
         currentOpen = open;
         Open = open;
         lastOpenParameter = open;
+        activeItem = currentOpen ? GetFirstSelectableItem() : null;
 
         await OpenChanged.InvokeAsync(open);
         await InvokeAsync(StateHasChanged);
+    }
+
+    private async Task HandleTriggerKeyDownAsync(KeyboardEventArgs args)
+    {
+        if (Disabled)
+        {
+            return;
+        }
+
+        if (IsArrowDown(args.Key))
+        {
+            await OpenAndFocusAsync(GetFirstSelectableItem);
+            return;
+        }
+
+        if (IsArrowUp(args.Key))
+        {
+            await OpenAndFocusAsync(GetLastSelectableItem);
+        }
+    }
+
+    private async Task HandleNavigationKeyDownAsync(KeyboardEventArgs args)
+    {
+        if (IsArrowDown(args.Key))
+        {
+            await FocusItemAsync(GetAdjacentSelectableItem(1));
+            return;
+        }
+
+        if (IsArrowUp(args.Key))
+        {
+            await FocusItemAsync(GetAdjacentSelectableItem(-1));
+            return;
+        }
+
+        if (args.Key == "Home")
+        {
+            await FocusItemAsync(GetFirstSelectableItem());
+            return;
+        }
+
+        if (args.Key == "End")
+        {
+            await FocusItemAsync(GetLastSelectableItem());
+            return;
+        }
+
+        if (args.Key == "Escape")
+        {
+            await SetOpenAsync(false);
+            await TryFocusTriggerAsync();
+        }
+    }
+
+    private async Task OpenAndFocusAsync(Func<W3MenuItem?> itemSelector)
+    {
+        if (!currentOpen)
+        {
+            await SetOpenAsync(true);
+        }
+
+        await FocusItemAsync(itemSelector());
+    }
+
+    private async Task FocusItemAsync(W3MenuItem? item)
+    {
+        if (item is null)
+        {
+            return;
+        }
+
+        activeItem = item;
+        pendingFocusItem = item;
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private async Task FocusPendingItemAsync()
+    {
+        if (pendingFocusItem is null)
+        {
+            return;
+        }
+
+        var item = pendingFocusItem;
+        pendingFocusItem = null;
+        await TryFocusItemAsync(item);
+    }
+
+    private async Task TryFocusItemAsync(W3MenuItem item)
+    {
+        try
+        {
+            await item.FocusAsync();
+        }
+        catch (InvalidOperationException)
+        {
+        }
+        catch (JSException)
+        {
+        }
+    }
+
+    private async Task TryFocusTriggerAsync()
+    {
+        try
+        {
+            await TriggerElement.FocusAsync();
+        }
+        catch (InvalidOperationException)
+        {
+        }
+        catch (JSException)
+        {
+        }
+    }
+
+    private W3MenuItem? GetAdjacentSelectableItem(int direction)
+    {
+        var selectableItems = items.Where(IsSelectable).ToList();
+        if (selectableItems.Count == 0)
+        {
+            return null;
+        }
+
+        var currentIndex = activeItem is null ? -1 : selectableItems.IndexOf(activeItem);
+        if (currentIndex < 0)
+        {
+            return direction >= 0 ? selectableItems[0] : selectableItems[^1];
+        }
+
+        var nextIndex = (currentIndex + direction + selectableItems.Count) % selectableItems.Count;
+        return selectableItems[nextIndex];
+    }
+
+    private W3MenuItem? GetFirstSelectableItem()
+    {
+        return items.FirstOrDefault(IsSelectable);
+    }
+
+    private W3MenuItem? GetLastSelectableItem()
+    {
+        return items.LastOrDefault(IsSelectable);
+    }
+
+    private static bool IsSelectable(W3MenuItem item)
+    {
+        return !item.Disabled;
+    }
+
+    private static bool IsArrowDown(string key)
+    {
+        return key is "ArrowDown" or "Down";
+    }
+
+    private static bool IsArrowUp(string key)
+    {
+        return key is "ArrowUp" or "Up";
     }
 
     private static string? CombineStyle(params string?[] styles)

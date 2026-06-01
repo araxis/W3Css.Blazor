@@ -399,6 +399,87 @@ public sealed class W3NavigationTests
     }
 
     [Fact]
+    public void MenuSupportsKeyboardNavigationAcrossSelectableItems()
+    {
+        using var context = new BunitContext();
+        context.JSInterop.Mode = JSRuntimeMode.Loose;
+
+        var open = false;
+        var cut = context.Render<W3Menu>(parameters => parameters
+            .Add(p => p.OpenChanged, EventCallback.Factory.Create<bool>(this, value => open = value))
+            .Add(p => p.ChildContent, builder =>
+            {
+                builder.OpenComponent<W3MenuItem>(0);
+                builder.AddAttribute(1, nameof(W3MenuItem.Text), "Rename");
+                builder.CloseComponent();
+
+                builder.OpenComponent<W3MenuItem>(2);
+                builder.AddAttribute(3, nameof(W3MenuItem.Text), "Duplicate");
+                builder.CloseComponent();
+
+                builder.OpenComponent<W3MenuDivider>(4);
+                builder.CloseComponent();
+
+                builder.OpenComponent<W3MenuItem>(5);
+                builder.AddAttribute(6, nameof(W3MenuItem.Text), "Delete");
+                builder.AddAttribute(7, nameof(W3MenuItem.Destructive), true);
+                builder.CloseComponent();
+
+                builder.OpenComponent<W3MenuItem>(8);
+                builder.AddAttribute(9, nameof(W3MenuItem.Text), "Locked");
+                builder.AddAttribute(10, nameof(W3MenuItem.Disabled), true);
+                builder.CloseComponent();
+            }));
+
+        cut.Find(".w3-menu-trigger").KeyDown(new KeyboardEventArgs { Key = "ArrowDown" });
+
+        cut.WaitForAssertion(() =>
+        {
+            Assert.True(open);
+            var items = cut.FindAll("[role='menuitem']");
+            Assert.Equal("0", items[0].GetAttribute("tabindex"));
+            Assert.Equal("-1", items[1].GetAttribute("tabindex"));
+            Assert.Equal("-1", items[2].GetAttribute("tabindex"));
+            Assert.Null(items[3].GetAttribute("tabindex"));
+        });
+
+        cut.FindAll("[role='menuitem']")[0].KeyDown(new KeyboardEventArgs { Key = "ArrowDown" });
+
+        cut.WaitForAssertion(() =>
+        {
+            var items = cut.FindAll("[role='menuitem']");
+            Assert.Equal("-1", items[0].GetAttribute("tabindex"));
+            Assert.Equal("0", items[1].GetAttribute("tabindex"));
+        });
+
+        cut.FindAll("[role='menuitem']")[1].KeyDown(new KeyboardEventArgs { Key = "End" });
+
+        cut.WaitForAssertion(() =>
+        {
+            var items = cut.FindAll("[role='menuitem']");
+            Assert.Equal("0", items[2].GetAttribute("tabindex"));
+            Assert.Null(items[3].GetAttribute("tabindex"));
+        });
+
+        cut.FindAll("[role='menuitem']")[2].KeyDown(new KeyboardEventArgs { Key = "ArrowDown" });
+
+        cut.WaitForAssertion(() =>
+        {
+            var items = cut.FindAll("[role='menuitem']");
+            Assert.Equal("0", items[0].GetAttribute("tabindex"));
+            Assert.Equal("-1", items[2].GetAttribute("tabindex"));
+        });
+
+        cut.FindAll("[role='menuitem']")[0].KeyDown(new KeyboardEventArgs { Key = "Escape" });
+
+        cut.WaitForAssertion(() =>
+        {
+            Assert.False(open);
+            Assert.DoesNotContain("w3-show", cut.Find("[role='menu']").GetAttribute("class"));
+        });
+    }
+
+    [Fact]
     public void MenuSupportsIconOnlyTriggerWithAccessibleLabel()
     {
         using var context = new BunitContext();

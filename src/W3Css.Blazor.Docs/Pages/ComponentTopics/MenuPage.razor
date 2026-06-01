@@ -8,6 +8,7 @@
 
     <p class="w3-large">`W3Menu` renders a Blazor-controlled command menu with W3.CSS dropdown styling and menu semantics.</p>
     <p>Use it for app-bar overflow actions, row action menus, editor commands, and contextual operations that need icons, descriptions, shortcuts, disabled items, or destructive commands.</p>
+    <p>Keyboard users can open the menu from the trigger with arrow keys, move through selectable commands, and close the menu with Escape.</p>
 
     <DocExample Title="Command Menu" Description="Menu items close the menu after selection by default, while disabled items remain non-interactive." Code="@CommandCode">
         <W3Menu Label="Actions"
@@ -117,6 +118,21 @@
                 <tr><td>W3MenuItem</td><td>Disabled</td><td>bool</td><td>Non-interactive item with `aria-disabled`</td></tr>
                 <tr><td>W3MenuItem</td><td>CloseOnClick</td><td>bool</td><td>Opt out of owner close-on-select behavior</td></tr>
                 <tr><td>W3MenuDivider</td><td>Class / Style</td><td>string?</td><td>Separator customization</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Keyboard Interaction</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Key</th><th>Behavior</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>ArrowDown</td><td>Opens the menu from the trigger or moves to the next selectable item.</td></tr>
+                <tr><td>ArrowUp</td><td>Opens the menu from the trigger at the last item or moves to the previous selectable item.</td></tr>
+                <tr><td>Home / End</td><td>Moves to the first or last selectable menu item.</td></tr>
+                <tr><td>Escape</td><td>Closes the menu and returns focus to the trigger.</td></tr>
             </tbody>
         </W3Table>
     </section>

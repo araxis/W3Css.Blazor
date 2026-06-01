@@ -1,13 +1,17 @@
 @using Microsoft.AspNetCore.Components.Web
 @using W3Css.Blazor.Internal
 @inherits W3ComponentBase
+@implements IDisposable
 
 @if (Disabled)
 {
     <span @attributes="AdditionalAttributes"
+          @ref="ItemElement"
           class="@CssClass"
           style="@Style"
           role="menuitem"
+          @onkeydown="HandleKeyDownAsync"
+          @onkeydown:stopPropagation="true"
           aria-disabled="true">
         @ItemContent
     </span>
@@ -15,11 +19,15 @@
 else if (!string.IsNullOrWhiteSpace(Href))
 {
     <a @attributes="AdditionalAttributes"
+       @ref="ItemElement"
        href="@Href"
        target="@Target"
        class="@CssClass"
        style="@Style"
        role="menuitem"
+       tabindex="@TabIndex"
+       @onkeydown="HandleKeyDownAsync"
+       @onkeydown:stopPropagation="true"
        @onclick="HandleClickAsync">
         @ItemContent
     </a>
@@ -27,10 +35,14 @@ else if (!string.IsNullOrWhiteSpace(Href))
 else
 {
     <button @attributes="AdditionalAttributes"
+            @ref="ItemElement"
             type="@Type"
             class="@CssClass"
             style="@Style"
             role="menuitem"
+            tabindex="@TabIndex"
+            @onkeydown="HandleKeyDownAsync"
+            @onkeydown:stopPropagation="true"
             @onclick="HandleClickAsync">
         @ItemContent
     </button>
@@ -39,6 +51,10 @@ else
 @code {
     [CascadingParameter]
     internal W3Menu? Owner { get; set; }
+
+    private ElementReference ItemElement { get; set; }
+
+    private int? TabIndex => Owner?.GetItemTabIndex(this);
 
     private string CssClass => BuildClass(
         "w3-bar-item",
@@ -164,6 +180,11 @@ else
     [Parameter]
     public EventCallback<MouseEventArgs> OnClick { get; set; }
 
+    protected override void OnInitialized()
+    {
+        Owner?.Register(this);
+    }
+
     private W3Color ResolveTextColor()
     {
         return TextColor != W3Color.None ? TextColor : Destructive ? W3Color.Red : W3Color.None;
@@ -190,5 +211,25 @@ else
         {
             await Owner.CloseAsync();
         }
+    }
+
+    private async Task HandleKeyDownAsync(KeyboardEventArgs args)
+    {
+        if (Disabled || Owner is null)
+        {
+            return;
+        }
+
+        await Owner.HandleItemKeyDownAsync(this, args);
+    }
+
+    internal async Task FocusAsync()
+    {
+        await ItemElement.FocusAsync();
+    }
+
+    public void Dispose()
+    {
+        Owner?.Unregister(this);
     }
 }

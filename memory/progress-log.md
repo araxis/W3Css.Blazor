@@ -4,6 +4,18 @@ Last updated: 2026-06-01
 
 ## 2026-06-01
 
+- Continued the keyboard interaction polish pass on `W3Menu`:
+  - added ArrowDown/ArrowUp movement across selectable menu items;
+  - added Home/End first-or-last selectable item focus;
+  - added Escape close behavior that returns focus to the trigger;
+  - switched menu item owner cascading to state-aware updates so roving item `tabindex` stays current;
+  - documented the menu keyboard interaction table and added focused navigation/docs coverage.
+- Verification:
+  - focused menu/docs tests: 11 passing;
+  - `dotnet test tests/W3Css.Blazor.Tests/W3Css.Blazor.Tests.csproj --configuration Release` (441 passing);
+  - `dotnet build W3Css.Blazor.slnx --configuration Release` (0 warnings, 0 errors);
+  - `dotnet pack src/W3Css.Blazor/W3Css.Blazor.csproj --configuration Release --no-build`;
+  - browser-verified `/components/menu` after restarting the docs server on port 5016: the keyboard section renders, ArrowDown opens and focuses the first command, ArrowDown moves to the next command, Escape closes and returns focus to the trigger, no visible error appears, and no horizontal overflow appears.
 - Continued the keyboard interaction polish pass on `W3BottomNavigation`:
   - added ArrowRight/ArrowDown and ArrowLeft/ArrowUp movement across selectable items;
   - added Home/End first-or-last selectable item selection;

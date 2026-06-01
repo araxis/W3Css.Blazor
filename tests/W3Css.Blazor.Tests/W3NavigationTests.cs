@@ -792,6 +792,55 @@ public sealed class W3NavigationTests
     }
 
     [Fact]
+    public void BottomNavigationSupportsKeyboardNavigationAcrossSelectableItems()
+    {
+        using var context = new BunitContext();
+        var value = "home";
+        var cut = context.Render<W3BottomNavigation>(parameters => parameters
+            .Add(p => p.Value, value)
+            .Add(p => p.ValueChanged, EventCallback.Factory.Create<string?>(this, next => value = next ?? string.Empty))
+            .Add(p => p.ChildContent, builder =>
+            {
+                builder.OpenComponent<W3BottomNavigationItem>(0);
+                builder.AddAttribute(1, nameof(W3BottomNavigationItem.Value), "home");
+                builder.AddAttribute(2, nameof(W3BottomNavigationItem.Text), "Home");
+                builder.CloseComponent();
+
+                builder.OpenComponent<W3BottomNavigationItem>(3);
+                builder.AddAttribute(4, nameof(W3BottomNavigationItem.Text), "Disabled");
+                builder.AddAttribute(5, nameof(W3BottomNavigationItem.Disabled), true);
+                builder.CloseComponent();
+
+                builder.OpenComponent<W3BottomNavigationItem>(6);
+                builder.AddAttribute(7, nameof(W3BottomNavigationItem.Value), "search");
+                builder.AddAttribute(8, nameof(W3BottomNavigationItem.Text), "Search");
+                builder.CloseComponent();
+
+                builder.OpenComponent<W3BottomNavigationItem>(9);
+                builder.AddAttribute(10, nameof(W3BottomNavigationItem.Value), "settings");
+                builder.AddAttribute(11, nameof(W3BottomNavigationItem.Text), "Settings");
+                builder.CloseComponent();
+            }));
+
+        cut.Find("[aria-pressed='true']").KeyDown(new KeyboardEventArgs { Key = "ArrowRight" });
+
+        Assert.Equal("search", value);
+        Assert.Contains("Search", cut.Find("[aria-pressed='true']").TextContent);
+
+        cut.Find("[aria-pressed='true']").KeyDown(new KeyboardEventArgs { Key = "ArrowLeft" });
+        Assert.Equal("home", value);
+
+        cut.Find("[aria-pressed='true']").KeyDown(new KeyboardEventArgs { Key = "End" });
+        Assert.Equal("settings", value);
+
+        cut.Find("[aria-pressed='true']").KeyDown(new KeyboardEventArgs { Key = "ArrowRight" });
+        Assert.Equal("home", value);
+
+        cut.Find("[aria-pressed='true']").KeyDown(new KeyboardEventArgs { Key = "Home" });
+        Assert.Equal("home", value);
+    }
+
+    [Fact]
     public void BreadcrumbRendersSemanticLinksAndCurrentItem()
     {
         using var context = new BunitContext();

@@ -45,6 +45,15 @@ public sealed record W3Theme
     /// <summary>Default corner radius exposed as <c>--w3-radius</c>.</summary>
     public string Radius { get; init; } = "4px";
 
+    /// <summary>Keyboard focus ring color exposed as <c>--w3-focus-color</c>.</summary>
+    public string FocusColor { get; init; } = "var(--w3-primary)";
+
+    /// <summary>Keyboard focus ring width exposed as <c>--w3-focus-width</c>.</summary>
+    public string FocusWidth { get; init; } = "2px";
+
+    /// <summary>Keyboard focus ring offset exposed as <c>--w3-focus-offset</c>.</summary>
+    public string FocusOffset { get; init; } = "2px";
+
     /// <summary>Base font family applied within the theme scope.</summary>
     public string FontFamily { get; init; } = "inherit";
 
@@ -73,6 +82,7 @@ public sealed record W3Theme
         OnSurface = "#f5f5f5",
         Background = "#15171a",
         OnBackground = "#e6e8eb",
-        Border = "#3a3a3a"
+        Border = "#3a3a3a",
+        FocusColor = "var(--w3-primary)"
     };
 }

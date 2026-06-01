@@ -4,6 +4,17 @@ Last updated: 2026-06-01
 
 ## 2026-06-01
 
+- Continued the theme and keyboard polish pass:
+  - added `FocusColor`, `FocusWidth`, and `FocusOffset` to `W3Theme`;
+  - emitted focus variables from `W3ThemeProvider`;
+  - added bundled `:focus-visible` rules for links, buttons, inputs, and interactive role surfaces without modifying the shipped W3.CSS source;
+  - documented the focus tokens on the theming page and added focused theme/docs coverage.
+- Verification:
+  - focused theme/docs tests: 127 passing;
+  - `dotnet build W3Css.Blazor.slnx --configuration Release /nr:false` (0 warnings, 0 errors);
+  - `dotnet test tests/W3Css.Blazor.Tests/W3Css.Blazor.Tests.csproj --configuration Release --no-build /nr:false` (432 passing);
+  - `dotnet pack src/W3Css.Blazor/W3Css.Blazor.csproj --configuration Release --no-build --output artifacts/packages /nr:false`;
+  - browser-verified `/components/theming` after restarting the docs server on port 5016: the bundled stylesheet loads, focus tokens resolve, and no visible error or horizontal overflow appears.
 - Continued the form-control UX audit on remaining input controls:
   - added accessible range labels/value text and validation ARIA to `W3Slider`;
   - added required-state and validation polish to `W3Switch`, `W3Rating`, `W3ColorInput`, `W3FileInput`, `W3DropZone`, and `W3Autocomplete`;

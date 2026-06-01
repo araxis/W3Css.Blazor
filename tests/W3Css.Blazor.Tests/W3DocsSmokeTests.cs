@@ -364,6 +364,17 @@ public sealed class W3DocsSmokeTests
     }
 
     [Fact]
+    public void ThemingPageDocumentsFocusTokens()
+    {
+        using var context = new BunitContext();
+        var cut = context.Render<ThemingPage>();
+
+        Assert.Contains("FocusColor", cut.Markup);
+        Assert.Contains("--w3-focus-color", cut.Markup);
+        Assert.Contains("keyboard focus rings", cut.Markup);
+    }
+
+    [Fact]
     public void AppBarPageShowsShellExamplesAndMenuInteraction()
     {
         using var context = new BunitContext();

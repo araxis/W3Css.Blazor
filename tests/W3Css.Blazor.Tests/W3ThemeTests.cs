@@ -25,7 +25,15 @@ public sealed class W3ThemeTests
         using var context = new BunitContext();
 
         var cut = context.Render<W3ThemeProvider>(parameters => parameters
-            .Add(p => p.Theme, new W3Theme { Primary = "#abcdef", Surface = "#101010", Radius = "9px" })
+            .Add(p => p.Theme, new W3Theme
+            {
+                Primary = "#abcdef",
+                Surface = "#101010",
+                Radius = "9px",
+                FocusColor = "#fedcba",
+                FocusWidth = "3px",
+                FocusOffset = "4px"
+            })
             .Add(p => p.ChildContent, "content"));
 
         var markup = cut.Markup;
@@ -33,6 +41,9 @@ public sealed class W3ThemeTests
         Assert.Contains("--w3-primary:#abcdef", markup);
         Assert.Contains("--w3-surface:#101010", markup);
         Assert.Contains("--w3-radius:9px", markup);
+        Assert.Contains("--w3-focus-color:#fedcba", markup);
+        Assert.Contains("--w3-focus-width:3px", markup);
+        Assert.Contains("--w3-focus-offset:4px", markup);
 
         var root = cut.Find("div.w3-theme-root");
         Assert.False(root.HasAttribute("data-w3-dark"));
@@ -64,5 +75,26 @@ public sealed class W3ThemeTests
             .Add(b => b.ChildContent, "Save"));
 
         Assert.Contains("w3-primary", cut.Find("button").GetAttribute("class"));
+    }
+
+    [Fact]
+    public void ThemeStylesheetDefinesTokenizedFocusVisibleRules()
+    {
+        var css = File.ReadAllText(Path.Combine(
+            AppContext.BaseDirectory,
+            "..",
+            "..",
+            "..",
+            "..",
+            "..",
+            "src",
+            "W3Css.Blazor",
+            "wwwroot",
+            "w3-theme.css"));
+
+        Assert.Contains("--w3-focus-color: var(--w3-primary);", css);
+        Assert.Contains(":focus-visible", css);
+        Assert.Contains("outline: var(--w3-focus-width) solid var(--w3-focus-color) !important;", css);
+        Assert.Contains("[aria-disabled=\"true\"]", css);
     }
 }

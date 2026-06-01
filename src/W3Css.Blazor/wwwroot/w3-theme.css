@@ -20,6 +20,9 @@
     --w3-on-background: #1f2933;
     --w3-border: #e0e0e0;
     --w3-radius: 4px;
+    --w3-focus-color: var(--w3-primary);
+    --w3-focus-width: 2px;
+    --w3-focus-offset: 2px;
 }
 
 /* The provider wrapper is a themed page surface, so wrapping an app/region in
@@ -49,6 +52,16 @@
 .w3-border-surface { border-color: var(--w3-border) !important; }
 
 .w3-theme-root [class*="w3-round"] { border-radius: var(--w3-radius) !important; }
+
+:where(a, button, input, select, textarea, summary, [tabindex]:not([tabindex="-1"]), [role="button"], [role="menuitem"], [role="tab"], [role="option"]):focus-visible {
+    outline: var(--w3-focus-width) solid var(--w3-focus-color) !important;
+    outline-offset: var(--w3-focus-offset);
+}
+
+:where(button, input, select, textarea):disabled:focus-visible,
+:where(.w3-disabled, [aria-disabled="true"]):focus-visible {
+    outline: none !important;
+}
 
 /* In a dark theme scope, neutral borders adopt the themed border so dark
    surfaces don't show harsh light-grey edges. Light mode is untouched. */

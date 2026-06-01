@@ -454,6 +454,9 @@ public sealed class W3DocsSmokeTests
         Assert.Contains("PanelClass", menuPage.Markup);
         Assert.Contains("Trigger button type attribute", menuPage.Markup);
         Assert.Contains("Surface / Black", menuPage.Markup);
+        Assert.Contains("Keyboard Interaction", menuPage.Markup);
+        Assert.Contains("ArrowDown", menuPage.Markup);
+        Assert.Contains("Escape", menuPage.Markup);
 
         var progressPage = context.Render<ProgressCircularPage>();
         Assert.Contains("AccessibilityLabel", progressPage.Markup);

@@ -42,7 +42,7 @@ This model is intentionally similar to mature Blazor libraries, while keeping im
 | --- | --- | --- |
 | `W3Container` | Implemented | Core wrapper with background/text/roundness/color options. |
 | `W3Panel` | Implemented | General panel with content and style variants. |
-| `W3Card` | Implemented | Cards with header/body/footer slot classes and rich color/rounding options. |
+| `W3Card` | Implemented | Cards with header/body/footer slots, right-aligned action rows, and rich color/rounding options. |
 | `W3Paper` | Implemented | W3.CSS-first paper surface wrapper with elevation, square, and outlined modes. |
 | `W3Row` | Implemented | W3.CSS row layout wrapper. |
 | `W3Column` | Implemented | Responsive small/medium/large column spans. |

@@ -48,4 +48,28 @@ public sealed class W3CardTests
         Assert.Contains("custom-card", root.GetAttribute("class"));
         Assert.Equal("max-width:520px", root.GetAttribute("style"));
     }
+
+    [Fact]
+    public void RendersOptionalActionRowInFooter()
+    {
+        using var context = new BunitContext();
+        var cut = context.Render<W3Card>(parameters => parameters
+            .Add(p => p.FooterColor, W3Color.LightGrey)
+            .Add(p => p.FooterClass, "footer-extra")
+            .Add(p => p.ActionsClass, "actions-extra")
+            .Add(p => p.ActionsGap, 12)
+            .Add(p => p.ChildContent, "<p>Body</p>")
+            .Add(p => p.Footer, "<small>Updated today</small>")
+            .Add(p => p.Actions, "<button class=\"w3-button\">Cancel</button><button class=\"w3-button w3-primary\">Save</button>"));
+
+        var footer = cut.Find(".footer-extra");
+        var content = cut.Find(".w3-card-footer-content");
+        var actions = cut.Find(".w3-card-actions");
+
+        Assert.Contains("w3-light-grey", footer.GetAttribute("class"));
+        Assert.Contains("Updated today", content.TextContent);
+        Assert.Contains("actions-extra", actions.GetAttribute("class"));
+        Assert.Equal("--w3-card-actions-gap:12px", actions.GetAttribute("style"));
+        Assert.Equal(2, actions.QuerySelectorAll("button").Length);
+    }
 }

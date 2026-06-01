@@ -223,7 +223,8 @@
             new("Menu", "W3Menu provides command menus with icons, descriptions, dividers, disabled items, and close-on-select behavior.", "Documented", "components/menu"),
             new("Pagination", "Page navigation buttons using W3.CSS bar styles.", "Documented", "components/pagination"),
             new("Stepper", "W3Stepper renders multi-step workflows with progress, active panels, completed/error/disabled states, and linear navigation.", "Documented", "components/stepper"),
-            new("Scroll To Top", "W3ScrollToTop shows a back-to-top button after scrolling past a threshold (small JS for the scroll listener).", "Documented", "components/scroll-to-top")
+            new("Scroll To Top", "W3ScrollToTop shows a back-to-top button after scrolling past a threshold (small JS for the scroll listener).", "Documented", "components/scroll-to-top"),
+            new("Swipe Area", "W3SwipeArea turns cards, galleries, and mobile panels into pointer gesture surfaces.", "Documented", "components/swipe-area")
         ]),
         new("Feedback And Overlays", "Status, progress, modal surfaces, tooltips, and side surfaces.", [
             new("Alert", "Semantic status messages using W3.CSS color classes.", "Documented", "components/alert"),
@@ -256,8 +257,6 @@
 
     private static readonly ExpansionCandidate[] ExpansionBacklog =
     [
-        new("W3Hidden", "Layout And Surfaces", "Breakpoint show/hide convenience.", "Thin alias over W3Display responsive visibility classes.", "Low"),
-        new("W3SwipeArea", "Utilities", "Pointer gesture surface.", "Requires pointer/JS interop; deferred while keeping CSS-first principle.", "Later"),
     ];
 
     private sealed record ComponentCategory(string Name, string Description, ComponentTopic[] Topics);

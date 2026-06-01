@@ -1,6 +1,6 @@
 # W3Css.Blazor Project Memory
 
-Last updated: 2026-05-31
+Last updated: 2026-06-01
 
 ## Snapshot
 
@@ -9,9 +9,9 @@ Last updated: 2026-05-31
 - Version baseline: `0.1.0`.
 - .NET target: `net10.0` (`10.0.300` SDK).
 - Current state:
-  - 124 component `.razor` files.
-  - 118 docs topic pages.
-  - 370 passing tests.
+  - 125 component `.razor` files.
+  - 119 docs topic pages.
+  - 453 passing tests.
   - Build: `dotnet build W3Css.Blazor.slnx --configuration Release` (0 warnings, 0 errors).
 
 ## Architecture
@@ -41,7 +41,7 @@ Last updated: 2026-05-31
 2. Optional polish:
    - semantic color-token expansion,
    - focus-ring/theming refinements,
-   - gesture-only `W3SwipeArea` if required.
+   - visual quality sweeps.
 
 ## Memory Files
 

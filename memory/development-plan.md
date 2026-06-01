@@ -39,8 +39,7 @@ Last updated: 2026-05-31
 - Theme-token MVP shipped and themed-by-default polish completed for most components.
 - Remaining work is optional but valuable:
   - finish remaining semantic color tokens if desired,
-  - optional focus-ring/theming polish,
-  - `W3SwipeArea` decision and implementation only if gesture interactions are required.
+  - optional focus-ring/theming polish.
 
 ## Current Status Check
 

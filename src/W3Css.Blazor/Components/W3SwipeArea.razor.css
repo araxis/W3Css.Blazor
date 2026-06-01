@@ -1,0 +1,12 @@
+.w3-swipe-area {
+    display: block;
+    user-select: none;
+}
+
+.w3-swipe-area:not(.w3-disabled) {
+    cursor: grab;
+}
+
+.w3-swipe-area.w3-disabled {
+    cursor: not-allowed;
+}

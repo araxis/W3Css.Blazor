@@ -82,6 +82,7 @@ using SpinnerPage = W3Css.Blazor.Docs.Pages.ComponentTopics.SpinnerPage;
 using StackPage = W3Css.Blazor.Docs.Pages.ComponentTopics.StackPage;
 using SpacingPage = W3Css.Blazor.Docs.Pages.ComponentTopics.SpacingPage;
 using ScrollToTopPage = W3Css.Blazor.Docs.Pages.ComponentTopics.ScrollToTopPage;
+using SwipeAreaPage = W3Css.Blazor.Docs.Pages.ComponentTopics.SwipeAreaPage;
 using PageContentNavigationPage = W3Css.Blazor.Docs.Pages.ComponentTopics.PageContentNavigationPage;
 using ChartPage = W3Css.Blazor.Docs.Pages.ComponentTopics.ChartPage;
 using ThemingPage = W3Css.Blazor.Docs.Pages.ComponentTopics.ThemingPage;
@@ -715,6 +716,11 @@ public sealed class W3DocsSmokeTests
         var scrollToTopPage = context.Render<ScrollToTopPage>();
         Assert.Contains("Button border class", scrollToTopPage.Markup);
         Assert.Contains("Extra attributes on the scroll button", scrollToTopPage.Markup);
+
+        var swipeAreaPage = context.Render<SwipeAreaPage>();
+        Assert.Contains("Minimum dominant-axis movement", swipeAreaPage.Markup);
+        Assert.Contains("Extra attributes on the swipe root", swipeAreaPage.Markup);
+        Assert.Contains("W3SwipeEventArgs", swipeAreaPage.Markup);
 
         var linkPage = context.Render<LinkPage>();
         Assert.Contains("Extra attributes on the rendered link, button, or span", linkPage.Markup);

@@ -1,0 +1,232 @@
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+<div @attributes="AdditionalAttributes"
+     class="@CssClass"
+     style="@RootStyle"
+     role="@Role"
+     aria-label="@AriaLabel"
+     aria-disabled="@(Disabled ? "true" : null)"
+     @onpointerdown="HandlePointerDown"
+     @onpointerup="HandlePointerUp"
+     @onpointercancel="HandlePointerCancel">
+    @ChildContent
+</div>
+
+@code {
+    private long? activePointerId;
+    private double startX;
+    private double startY;
+    private DateTimeOffset startedAt;
+
+    private string CssClass => BuildClass(
+        "w3-swipe-area",
+        Disabled ? "w3-disabled" : null,
+        Border ? "w3-border" : null,
+        Round.ToClass(),
+        Color.ToBackgroundClass(),
+        TextColor.ToTextClass());
+
+    private string? RootStyle => BuildStyle();
+
+    /// <summary>
+    /// Content that receives pointer gestures.
+    /// </summary>
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    /// <summary>
+    /// Minimum dominant-axis movement in CSS pixels before a gesture is accepted.
+    /// </summary>
+    [Parameter]
+    public double Threshold { get; set; } = 48;
+
+    /// <summary>
+    /// Maximum cross-axis movement in CSS pixels for an accepted gesture.
+    /// </summary>
+    [Parameter]
+    public double Restraint { get; set; } = 80;
+
+    /// <summary>
+    /// CSS touch-action value for the gesture surface.
+    /// </summary>
+    [Parameter]
+    public string TouchAction { get; set; } = "pan-y";
+
+    /// <summary>
+    /// Disables gesture detection.
+    /// </summary>
+    [Parameter]
+    public bool Disabled { get; set; }
+
+    /// <summary>
+    /// Optional WAI-ARIA role for the root surface.
+    /// </summary>
+    [Parameter]
+    public string? Role { get; set; } = "region";
+
+    /// <summary>
+    /// Accessible label for the gesture surface.
+    /// </summary>
+    [Parameter]
+    public string? AriaLabel { get; set; }
+
+    /// <summary>
+    /// Adds the W3.CSS border class.
+    /// </summary>
+    [Parameter]
+    public bool Border { get; set; }
+
+    /// <summary>
+    /// Rounded corner style.
+    /// </summary>
+    [Parameter]
+    public W3Round Round { get; set; } = W3Round.None;
+
+    /// <summary>
+    /// Surface background color.
+    /// </summary>
+    [Parameter]
+    public W3Color Color { get; set; } = W3Color.None;
+
+    /// <summary>
+    /// Surface text color.
+    /// </summary>
+    [Parameter]
+    public W3Color TextColor { get; set; } = W3Color.None;
+
+    /// <summary>
+    /// Raised for any accepted swipe direction.
+    /// </summary>
+    [Parameter]
+    public EventCallback<W3SwipeEventArgs> OnSwipe { get; set; }
+
+    /// <summary>
+    /// Raised when a leftward gesture is accepted.
+    /// </summary>
+    [Parameter]
+    public EventCallback<W3SwipeEventArgs> OnSwipeLeft { get; set; }
+
+    /// <summary>
+    /// Raised when a rightward gesture is accepted.
+    /// </summary>
+    [Parameter]
+    public EventCallback<W3SwipeEventArgs> OnSwipeRight { get; set; }
+
+    /// <summary>
+    /// Raised when an upward gesture is accepted.
+    /// </summary>
+    [Parameter]
+    public EventCallback<W3SwipeEventArgs> OnSwipeUp { get; set; }
+
+    /// <summary>
+    /// Raised when a downward gesture is accepted.
+    /// </summary>
+    [Parameter]
+    public EventCallback<W3SwipeEventArgs> OnSwipeDown { get; set; }
+
+    private void HandlePointerDown(PointerEventArgs args)
+    {
+        if (Disabled)
+        {
+            return;
+        }
+
+        activePointerId = args.PointerId;
+        startX = args.ClientX;
+        startY = args.ClientY;
+        startedAt = DateTimeOffset.UtcNow;
+    }
+
+    private async Task HandlePointerUp(PointerEventArgs args)
+    {
+        if (Disabled || activePointerId is null || args.PointerId != activePointerId)
+        {
+            return;
+        }
+
+        var deltaX = args.ClientX - startX;
+        var deltaY = args.ClientY - startY;
+        var duration = DateTimeOffset.UtcNow - startedAt;
+
+        activePointerId = null;
+
+        var accepted = TryCreateSwipe(deltaX, deltaY, duration, out var swipe);
+        if (accepted && swipe is not null)
+        {
+            await RaiseSwipeAsync(swipe);
+        }
+    }
+
+    private void HandlePointerCancel()
+    {
+        activePointerId = null;
+    }
+
+    private bool TryCreateSwipe(double deltaX, double deltaY, TimeSpan duration, out W3SwipeEventArgs? swipe)
+    {
+        var absoluteX = Math.Abs(deltaX);
+        var absoluteY = Math.Abs(deltaY);
+        var threshold = Math.Max(0, Threshold);
+        var restraint = Math.Max(0, Restraint);
+
+        W3SwipeDirection? direction = null;
+
+        if (absoluteX >= threshold && absoluteX > absoluteY && absoluteY <= restraint)
+        {
+            direction = deltaX < 0 ? W3SwipeDirection.Left : W3SwipeDirection.Right;
+        }
+        else if (absoluteY >= threshold && absoluteY > absoluteX && absoluteX <= restraint)
+        {
+            direction = deltaY < 0 ? W3SwipeDirection.Up : W3SwipeDirection.Down;
+        }
+
+        if (direction is null)
+        {
+            swipe = null;
+            return false;
+        }
+
+        var distance = Math.Sqrt((deltaX * deltaX) + (deltaY * deltaY));
+        swipe = new W3SwipeEventArgs(direction.Value, deltaX, deltaY, distance, duration);
+        return true;
+    }
+
+    private async Task RaiseSwipeAsync(W3SwipeEventArgs swipe)
+    {
+        await OnSwipe.InvokeAsync(swipe);
+
+        switch (swipe.Direction)
+        {
+            case W3SwipeDirection.Left:
+                await OnSwipeLeft.InvokeAsync(swipe);
+                break;
+            case W3SwipeDirection.Right:
+                await OnSwipeRight.InvokeAsync(swipe);
+                break;
+            case W3SwipeDirection.Up:
+                await OnSwipeUp.InvokeAsync(swipe);
+                break;
+            case W3SwipeDirection.Down:
+                await OnSwipeDown.InvokeAsync(swipe);
+                break;
+        }
+    }
+
+    private string? BuildStyle()
+    {
+        var parts = new List<string>();
+
+        if (!string.IsNullOrWhiteSpace(TouchAction))
+        {
+            parts.Add($"touch-action: {TouchAction}");
+        }
+
+        if (!string.IsNullOrWhiteSpace(Style))
+        {
+            parts.Add(Style);
+        }
+
+        return parts.Count == 0 ? null : string.Join("; ", parts);
+    }
+}

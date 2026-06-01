@@ -1,5 +1,6 @@
 using Bunit;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using W3Css.Blazor;
 using W3Css.Blazor.Components;
 
@@ -86,6 +87,55 @@ public sealed class W3StepperTests
     }
 
     [Fact]
+    public void StepperSupportsKeyboardNavigationAcrossActivatableSteps()
+    {
+        using var context = new BunitContext();
+        var active = "cart";
+        var cut = context.Render<W3Stepper>(parameters => parameters
+            .Add(p => p.ActiveValue, active)
+            .Add(p => p.ActiveValueChanged, EventCallback.Factory.Create<string>(this, value => active = value))
+            .Add(p => p.ChildContent, builder =>
+            {
+                builder.OpenComponent<W3Step>(0);
+                builder.AddAttribute(1, nameof(W3Step.Value), "cart");
+                builder.AddAttribute(2, nameof(W3Step.Title), "Cart");
+                builder.AddAttribute(3, nameof(W3Step.ChildContent), (RenderFragment)(content => content.AddContent(0, "Cart panel")));
+                builder.CloseComponent();
+
+                builder.OpenComponent<W3Step>(4);
+                builder.AddAttribute(5, nameof(W3Step.Value), "shipping");
+                builder.AddAttribute(6, nameof(W3Step.Title), "Shipping");
+                builder.AddAttribute(7, nameof(W3Step.Disabled), true);
+                builder.AddAttribute(8, nameof(W3Step.ChildContent), (RenderFragment)(content => content.AddContent(0, "Shipping panel")));
+                builder.CloseComponent();
+
+                builder.OpenComponent<W3Step>(9);
+                builder.AddAttribute(10, nameof(W3Step.Value), "review");
+                builder.AddAttribute(11, nameof(W3Step.Title), "Review");
+                builder.AddAttribute(12, nameof(W3Step.ChildContent), (RenderFragment)(content => content.AddContent(0, "Review panel")));
+                builder.CloseComponent();
+            }));
+
+        cut.WaitForAssertion(() => Assert.Equal(3, cut.FindAll(".w3-stepper-item").Count));
+
+        cut.Find("button[aria-current='step']").KeyDown(new KeyboardEventArgs { Key = "ArrowRight" });
+
+        Assert.Equal("review", active);
+        Assert.Contains("Review panel", cut.Find("[role='region']").TextContent);
+
+        cut.Find("button[aria-current='step']").KeyDown(new KeyboardEventArgs { Key = "ArrowLeft" });
+
+        Assert.Equal("cart", active);
+        Assert.Contains("Cart panel", cut.Find("[role='region']").TextContent);
+
+        cut.Find("button[aria-current='step']").KeyDown(new KeyboardEventArgs { Key = "End" });
+        Assert.Equal("review", active);
+
+        cut.Find("button[aria-current='step']").KeyDown(new KeyboardEventArgs { Key = "Home" });
+        Assert.Equal("cart", active);
+    }
+
+    [Fact]
     public void LinearStepperDisablesFutureIncompleteStepsAndSupportsErrorState()
     {
         using var context = new BunitContext();
@@ -125,6 +175,26 @@ public sealed class W3StepperTests
         Assert.Contains("w3-stepper-error", cut.FindAll(".w3-stepper-item")[2].GetAttribute("class"));
 
         Assert.Equal("shipping", active);
+    }
+
+    [Fact]
+    public void LinearStepperKeyboardRespectsFutureIncompleteSteps()
+    {
+        using var context = new BunitContext();
+        var active = "shipping";
+        var cut = context.Render<W3Stepper>(parameters => parameters
+            .Add(p => p.ActiveValue, active)
+            .Add(p => p.ActiveValueChanged, EventCallback.Factory.Create<string>(this, value => active = value))
+            .Add(p => p.CompletedValues, ["cart"])
+            .Add(p => p.Linear, true)
+            .Add(p => p.ChildContent, StepDefinitions()));
+
+        cut.WaitForAssertion(() => Assert.Equal(3, cut.FindAll(".w3-stepper-item").Count));
+
+        cut.Find("button[aria-current='step']").KeyDown(new KeyboardEventArgs { Key = "End" });
+
+        Assert.Equal("shipping", active);
+        Assert.Contains("Shipping panel", cut.Find("[role='region']").TextContent);
     }
 
     private static RenderFragment StepDefinitions()

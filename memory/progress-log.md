@@ -4,6 +4,17 @@ Last updated: 2026-06-01
 
 ## 2026-06-01
 
+- Continued the keyboard interaction polish pass on `W3Stepper`:
+  - added ArrowRight/ArrowDown and ArrowLeft/ArrowUp activation across enabled workflow steps;
+  - added Home/End first-or-last activatable step selection;
+  - kept keyboard activation behind the same disabled and linear workflow rules as pointer activation;
+  - documented the stepper keyboard interaction table and added focused stepper/docs coverage.
+- Verification:
+  - focused stepper/docs tests: 6 passing;
+  - `dotnet test tests/W3Css.Blazor.Tests/W3Css.Blazor.Tests.csproj --configuration Release` (438 passing);
+  - `dotnet build W3Css.Blazor.slnx --configuration Release` (0 warnings, 0 errors);
+  - `dotnet pack src/W3Css.Blazor/W3Css.Blazor.csproj --configuration Release --no-build`;
+  - browser-verified `/components/stepper` after restarting the docs server on port 5016: the keyboard section renders, no visible error appears, and no horizontal overflow appears.
 - Continued the keyboard interaction polish pass on `W3Rating`:
   - added ArrowRight/ArrowUp increase and ArrowLeft/ArrowDown decrease behavior;
   - added Home/End first-or-last rating selection;

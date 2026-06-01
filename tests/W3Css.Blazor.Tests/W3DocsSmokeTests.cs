@@ -482,6 +482,9 @@ public sealed class W3DocsSmokeTests
         var messageBoxPage = context.Render<MessageBoxPage>();
         Assert.Contains("VisibleChanged", messageBoxPage.Markup);
         Assert.Contains("ChildContent", messageBoxPage.Markup);
+        Assert.Contains("AriaLabelledBy", messageBoxPage.Markup);
+        Assert.Contains("Keyboard Interaction", messageBoxPage.Markup);
+        Assert.Contains("Escape", messageBoxPage.Markup);
         Assert.Contains("confirm and alert prompt", messageBoxPage.Markup);
 
         var modalPage = context.Render<ModalPage>();

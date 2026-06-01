@@ -4,6 +4,16 @@ Last updated: 2026-06-01
 
 ## 2026-06-01
 
+- Continued the accessibility polish pass on `W3MessageBox`:
+  - added explicit `AriaLabel` and `AriaLabelledBy` parameters forwarded to the underlying modal;
+  - documented message-box labeling guidance and Escape dismissal behavior;
+  - added focused rendering/docs coverage for explicit labels and labelled-by references.
+- Verification:
+  - focused message-box/docs tests: 6 passing;
+  - `dotnet test tests/W3Css.Blazor.Tests/W3Css.Blazor.Tests.csproj --configuration Release` (447 passing);
+  - `dotnet build W3Css.Blazor.slnx --configuration Release` (0 warnings, 0 errors);
+  - `dotnet pack src/W3Css.Blazor/W3Css.Blazor.csproj --configuration Release --no-build`;
+  - browser-verified `/components/message-box` after restarting the docs server on port 5016: the keyboard and labeling guidance renders, the message box opens with a resolving title reference, Escape closes it and reports a cancelled result, no visible error appears, and no horizontal overflow appears.
 - Continued the accessibility polish pass on `W3Modal`:
   - added explicit `AriaLabel` and `AriaLabelledBy` parameters;
   - stopped emitting `aria-labelledby` when no matching title id exists;

@@ -2,6 +2,20 @@
 
 All notable changes to W3Css.Blazor will be documented in this file.
 
+## 0.3.0 - 2026-06-01
+
+### Adoption Polish
+
+- Added end-to-end adoption patterns for app shell dashboards, validated settings forms, searchable data tables, and modal/message-box workflows.
+- Improved README onboarding with a shorter install path, a first app screen sample, and direct links to key adoption docs.
+- Added XML documentation summaries for selected high-use public APIs.
+- Added a documentation guard test that fails when selected public API summaries are missing.
+
+### Release Quality
+
+- Updated package metadata, versions documentation, changelog, and release notes for 0.3.0.
+- Kept the vendored W3.CSS source unchanged.
+
 ## 0.2.0 - 2026-06-01
 
 ### App Components

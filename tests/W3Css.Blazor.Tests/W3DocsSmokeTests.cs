@@ -92,6 +92,7 @@ using SpacerPage = W3Css.Blazor.Docs.Pages.ComponentTopics.SpacerPage;
 using FooterPage = W3Css.Blazor.Docs.Pages.ComponentTopics.FooterPage;
 using AvatarGroupPage = W3Css.Blazor.Docs.Pages.ComponentTopics.AvatarGroupPage;
 using MessageBoxPage = W3Css.Blazor.Docs.Pages.ComponentTopics.MessageBoxPage;
+using PatternsPage = W3Css.Blazor.Docs.Pages.Patterns;
 using ToggleGroupPage = W3Css.Blazor.Docs.Pages.ComponentTopics.ToggleGroupPage;
 using MaskPage = W3Css.Blazor.Docs.Pages.ComponentTopics.MaskPage;
 using NotePage = W3Css.Blazor.Docs.Pages.ComponentTopics.NotePage;
@@ -118,6 +119,7 @@ namespace W3Css.Blazor.Tests;
 public sealed class W3DocsSmokeTests
 {
     [Theory]
+    [InlineData(typeof(PatternsPage), "/patterns")]
     [InlineData(typeof(ComponentsIndexPage), "/components")]
     [InlineData(typeof(NavbarPage), "/components/navbar")]
     [InlineData(typeof(FiltersPage), "/components/filters")]
@@ -237,6 +239,7 @@ public sealed class W3DocsSmokeTests
         Assert.Contains("W3Css.Blazor Components", cut.Markup);
         Assert.Contains("Component Categories", cut.Markup);
         Assert.Contains("Product Readiness Backlog", cut.Markup);
+        Assert.NotEmpty(cut.FindAll("a[href='patterns']"));
         Assert.NotEmpty(cut.FindAll("a[href='components/navbar']"));
         Assert.NotEmpty(cut.FindAll("a[href='components/versions']"));
         Assert.NotEmpty(cut.FindAll("a[href='components/app-shell']"));
@@ -340,6 +343,25 @@ public sealed class W3DocsSmokeTests
         Assert.Contains("W3BottomNavigation", cut.Markup);
         Assert.Contains("W3Menu", cut.Markup);
         Assert.Contains("Form", cut.Markup);
+    }
+
+    [Fact]
+    public void PatternsPageRendersAdoptionExamples()
+    {
+        using var context = new BunitContext();
+        var cut = context.Render<PatternsPage>();
+
+        Assert.Contains("App Shell Dashboard", cut.Markup);
+        Assert.Contains("Validated Settings Form", cut.Markup);
+        Assert.Contains("Searchable Data Table With Empty/Error State", cut.Markup);
+        Assert.Contains("Modal/Message-Box Workflow With Action Spacing", cut.Markup);
+        Assert.Contains("W3AppShell", cut.Markup);
+        Assert.Contains("W3Form", cut.Markup);
+        Assert.Contains("W3DataTable", cut.Markup);
+        Assert.Contains("W3MessageBox", cut.Markup);
+        Assert.NotEmpty(cut.FindAll("a[href='components/theming']"));
+        Assert.NotEmpty(cut.FindAll("a[href='components/app-shell']"));
+        Assert.NotEmpty(cut.FindAll("a[href='components/data-table']"));
     }
 
     [Fact]

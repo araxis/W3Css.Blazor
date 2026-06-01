@@ -32,6 +32,9 @@
     [Parameter]
     public W3Animation Animation { get; set; } = W3Animation.None;
 
+    /// <summary>
+    /// Updates the bound value on each input event instead of waiting for the change event.
+    /// </summary>
     [Parameter]
     public bool UpdateOnInput { get; set; }
 

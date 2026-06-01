@@ -34,8 +34,7 @@ Add the stylesheet to the host page — one file is all you need:
 
 `w3css-blazor.css` bundles the base W3.CSS framework **and** the design-token layer
 (CSS variables + token classes), so themed colors and dark mode resolve out of the
-box. Brand the whole app from one place by wrapping it in `W3ThemeProvider` — see
-the Theming docs.
+box. Brand the whole app from one place by wrapping it in `W3ThemeProvider`.
 
 <details>
 <summary>Prefer the two files separately?</summary>
@@ -50,37 +49,68 @@ The bundle is just these two concatenated; you can link them individually instea
 `w3.css` is the pristine, unmodified framework; `w3-theme.css` is the token layer.
 </details>
 
-## First Components
+## First App Screen
 
 ```razor
 <W3ThemeProvider Theme="W3Theme.Default">
-    <W3Button Color="W3Color.Primary" Round="W3Round.Medium">Save</W3Button>
-
-    <W3Alert Kind="W3AlertKind.Success" Title="Saved">
-        Your changes were saved.
-    </W3Alert>
-
-    <W3Card Depth="W3CardDepth.Four" Round="W3Round.Medium">
-        <p>Card content</p>
-
-        <Actions>
-            <W3Button Border="true">Cancel</W3Button>
-            <W3Button Color="W3Color.Primary" TextColor="W3Color.White">Save</W3Button>
-        </Actions>
-    </W3Card>
-
-    <W3ActionRow Label="Table actions" JustifyStart="true">
-        <W3Button Border="true">Edit</W3Button>
-        <W3Button Border="true">Archive</W3Button>
-    </W3ActionRow>
-
-    <W3Image Src="logo.svg" Alt="Application logo" Width="96" Height="96" Responsive="true" />
+    <W3AppShell HeaderColor="W3Color.Teal"
+                HeaderTextColor="W3Color.White"
+                SidebarColor="W3Color.White">
+        <Header>
+            <W3AppBar Title="Operations"
+                      ShowMenuButton="true"
+                      ActionsClass="w3-hide-small">
+                <Actions>
+                    <W3Button Border="true" TextColor="W3Color.White">Export</W3Button>
+                </Actions>
+            </W3AppBar>
+        </Header>
+        <Sidebar>
+            <nav class="w3-bar-block" aria-label="Application sections">
+                <a class="w3-bar-item w3-button w3-teal" href="">Overview</a>
+                <a class="w3-bar-item w3-button" href="settings">Settings</a>
+            </nav>
+        </Sidebar>
+        <ChildContent>
+            <W3DataTable TItem="TaskRow"
+                         Items="tasks"
+                         SearchPlaceholder="Search tasks"
+                         EmptyText="No tasks found">
+                <ChildContent>
+                    <W3DataColumn TItem="TaskRow" Title="Task" CellText="@((TaskRow task) => task.Name)" />
+                    <W3DataColumn TItem="TaskRow" Title="Owner" CellText="@((TaskRow task) => task.Owner)" />
+                    <W3DataColumn TItem="TaskRow" Title="State" CellText="@((TaskRow task) => task.State)" />
+                </ChildContent>
+                <RowActions Context="task">
+                    <W3Button Size="W3Size.Small" Border="true">Open</W3Button>
+                </RowActions>
+            </W3DataTable>
+        </ChildContent>
+    </W3AppShell>
 </W3ThemeProvider>
+
+@code {
+    private readonly TaskRow[] tasks =
+    [
+        new("Review settings form", "Nora", "Ready"),
+        new("Audit data states", "Iris", "Queued")
+    ];
+
+    private sealed record TaskRow(string Name, string Owner, string State);
+}
 ```
 
 For app screens, start with the layout and data primitives that already handle the
 repetitive spacing work: `W3AppShell`, `W3AppBar`, `W3Card`, `W3DataTable`,
 `W3Form`, `W3EmptyState`, and `W3ActionRow`.
+
+## Adoption Links
+
+- [Patterns](src/W3Css.Blazor.Docs/Pages/Patterns.razor): complete dashboard, form, table, and modal workflows.
+- [Theming](src/W3Css.Blazor.Docs/Pages/ComponentTopics/ThemingPage.razor): brand tokens, dark surfaces, and focus/status colors.
+- [Versions](src/W3Css.Blazor.Docs/Pages/ComponentTopics/VersionsPage.razor): package version, bundled stylesheet paths, and upgrade checks.
+- [0.3.0 release notes](docs/release-notes/0.3.0.md): adoption-polish release details.
+- [Package smoke script](tools/package-consumer-smoke.ps1): clean consumer-app package validation.
 
 ## Repository Layout
 
@@ -105,7 +135,7 @@ Run the package consumer smoke check after publishing a version:
 pwsh ./tools/package-consumer-smoke.ps1
 ```
 
-Pass `-PackageVersion 0.2.0` to check a specific published version.
+Pass `-PackageVersion 0.3.0` to check a specific published version.
 Pass `-PackageSource artifacts/packages` to check a locally packed version before tagging.
 
 ## Branches And Commits

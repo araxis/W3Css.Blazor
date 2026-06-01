@@ -35,6 +35,11 @@ Last updated: 2026-06-01
 
 - Theme-token MVP, semantic status tokens, themed-by-default polish, and focus-ring/theming polish are shipped.
 
+## Phase 8: Adoption Polish (In Progress)
+
+- 0.3.0 stays non-breaking and avoids broad new component surface.
+- Adds first-screen adoption patterns, README onboarding improvements, selected public XML documentation guard coverage, package/release metadata, and browser verification for top adoption pages.
+
 ## Current Status Check
 
 - Verification now passes on the current HEAD:
@@ -42,4 +47,4 @@ Last updated: 2026-06-01
   - `dotnet test tests/W3Css.Blazor.Tests/W3Css.Blazor.Tests.csproj --configuration Release --no-build`
 
 - Components implemented: 127 component files plus docs topic coverage.
-- Test coverage: 472 passing tests.
+- Test coverage: 493 passing tests.

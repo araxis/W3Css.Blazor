@@ -41,6 +41,9 @@
     [Parameter]
     public EventCallback<EditContext> OnInvalidSubmit { get; set; }
 
+    /// <summary>
+    /// Disables the form fieldset and marks the form busy while a submit or save operation is running.
+    /// </summary>
     [Parameter]
     public bool Busy { get; set; }
 

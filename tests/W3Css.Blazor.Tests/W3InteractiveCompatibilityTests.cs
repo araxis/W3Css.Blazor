@@ -25,6 +25,8 @@ public sealed class W3InteractiveCompatibilityTests
             .Add(m => m.OnResult, (bool? r) => result = r));
 
         Assert.Contains("w3-show", cut.Find(".w3-modal").GetAttribute("class"));
+        Assert.Equal("w3-modal-title", cut.Find("[role='dialog']").GetAttribute("aria-labelledby"));
+        Assert.Null(cut.Find("[role='dialog']").GetAttribute("aria-label"));
         Assert.Contains("Delete item?", cut.Markup);
         Assert.Contains("This action cannot be undone.", cut.Markup);
 
@@ -32,6 +34,32 @@ public sealed class W3InteractiveCompatibilityTests
 
         Assert.True(result);
         Assert.False(visible);
+    }
+
+    [Fact]
+    public void MessageBoxForwardsExplicitAccessibleLabelsToModal()
+    {
+        using var context = new BunitContext();
+
+        var labelledBox = context.Render<W3MessageBox>(parameters => parameters
+            .Add(m => m.Visible, true)
+            .Add(m => m.AriaLabel, "Export finished")
+            .Add(m => m.Message, "Your export is ready.")
+            .Add(m => m.YesText, "Got it"));
+
+        var labelledDialog = labelledBox.Find("[role='dialog']");
+        Assert.Equal("Export finished", labelledDialog.GetAttribute("aria-label"));
+        Assert.Null(labelledDialog.GetAttribute("aria-labelledby"));
+
+        var referencedBox = context.Render<W3MessageBox>(parameters => parameters
+            .Add(m => m.Visible, true)
+            .Add(m => m.AriaLabelledBy, "message-heading")
+            .Add(m => m.MessageContent, (RenderFragment)(builder => builder.AddMarkupContent(0, "<h2 id=\"message-heading\">Archive item?</h2>")))
+            .Add(m => m.YesText, "Archive"));
+
+        var referencedDialog = referencedBox.Find("[role='dialog']");
+        Assert.Equal("message-heading", referencedDialog.GetAttribute("aria-labelledby"));
+        Assert.Null(referencedDialog.GetAttribute("aria-label"));
     }
 
     [Fact]

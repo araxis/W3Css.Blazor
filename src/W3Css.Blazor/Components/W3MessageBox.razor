@@ -5,6 +5,8 @@
          OpenChanged="HandleOpenChangedAsync"
          Id="@Id"
          Title="@Title"
+         AriaLabel="@AriaLabel"
+         AriaLabelledBy="@AriaLabelledBy"
          ShowCloseButton="@ShowCloseButton"
          CloseOnBackdrop="@(!DisableBackdropClick)"
          CloseOnEscape="@(!DisableEscapeKeyDown)"
@@ -62,6 +64,18 @@
     /// </summary>
     [Parameter]
     public string? Title { get; set; }
+
+    /// <summary>
+    /// Accessible dialog label forwarded to the underlying modal when no title or labelled-by reference is used.
+    /// </summary>
+    [Parameter]
+    public string? AriaLabel { get; set; }
+
+    /// <summary>
+    /// Custom id reference for a visible heading that labels the underlying modal.
+    /// </summary>
+    [Parameter]
+    public string? AriaLabelledBy { get; set; }
 
     /// <summary>
     /// Plain-text message body. Ignored when <see cref="MessageContent"/> is set.

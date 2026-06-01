@@ -8,6 +8,7 @@
 
     <p class="w3-large">`W3MessageBox` is a confirm and alert prompt built on `W3Modal`.</p>
     <p>Control it with <code>@@bind-Visible</code>. The result is reported as <code>bool?</code>: <code>true</code> for Yes, <code>false</code> for No, and <code>null</code> when the user cancels or dismisses.</p>
+    <p>Use `Title`, `AriaLabel`, or `AriaLabelledBy` so the prompt has an accessible dialog label.</p>
 
     <DocExample Title="Confirm Before Deleting" Code="@ConfirmCode">
         <W3Button Color="W3Color.Red" TextColor="W3Color.White" OnClick="() => confirmVisible = true">Delete item</W3Button>
@@ -33,6 +34,18 @@
     </DocExample>
 
     <section class="doc-section">
+        <h2>Keyboard Interaction</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Key</th><th>Behavior</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Escape</td><td>Dismisses the message box and reports a `null` result unless `DisableEscapeKeyDown` is enabled.</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
         <h2>Parameters</h2>
         <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
             <thead>
@@ -43,6 +56,8 @@
                 <tr><td>VisibleChanged</td><td>EventCallback&lt;bool&gt;</td><td>empty</td><td>Visibility binding callback</td></tr>
                 <tr><td>Id</td><td>string?</td><td>null</td><td>Dialog id forwarded to the underlying modal</td></tr>
                 <tr><td>Title</td><td>string?</td><td>null</td><td>Dialog header text</td></tr>
+                <tr><td>AriaLabel</td><td>string?</td><td>null</td><td>Accessible label when no title or labelled-by reference is used</td></tr>
+                <tr><td>AriaLabelledBy</td><td>string?</td><td>null</td><td>Custom id reference for a visible message-box heading</td></tr>
                 <tr><td>Message</td><td>string?</td><td>null</td><td>Plain-text body</td></tr>
                 <tr><td>MessageContent</td><td>RenderFragment?</td><td>null</td><td>Rich body that overrides Message</td></tr>
                 <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Additional content appended below the message</td></tr>

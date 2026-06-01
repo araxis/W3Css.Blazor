@@ -11,7 +11,7 @@ Last updated: 2026-06-01
 - Current state:
   - 125 component `.razor` files.
   - 119 docs topic pages.
-  - 453 passing tests.
+  - 459 passing tests.
   - Build: `dotnet build W3Css.Blazor.slnx --configuration Release` (0 warnings, 0 errors).
 
 ## Architecture
@@ -39,7 +39,6 @@ Last updated: 2026-06-01
    - push current `main` commits when ready.
    - push `v0.1.0` only after confirming the NuGet publish path/secret.
 2. Optional polish:
-   - semantic color-token expansion,
    - focus-ring/theming refinements,
    - visual quality sweeps.
 

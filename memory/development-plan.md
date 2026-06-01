@@ -36,9 +36,8 @@ Last updated: 2026-05-31
 
 ## Phase 7: Theming, Defaults, And Ease Of Use (In Progress)
 
-- Theme-token MVP shipped and themed-by-default polish completed for most components.
+- Theme-token MVP shipped, semantic status tokens shipped, and themed-by-default polish completed for most components.
 - Remaining work is optional but valuable:
-  - finish remaining semantic color tokens if desired,
   - optional focus-ring/theming polish.
 
 ## Current Status Check

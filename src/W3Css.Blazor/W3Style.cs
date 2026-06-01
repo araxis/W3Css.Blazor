@@ -90,7 +90,17 @@ public enum W3Color
     /// <summary>Theme accent token (requires a <c>W3ThemeProvider</c>).</summary>
     Accent,
     /// <summary>Theme surface token (requires a <c>W3ThemeProvider</c>).</summary>
-    Surface
+    Surface,
+    /// <summary>Theme information status token (requires a <c>W3ThemeProvider</c>).</summary>
+    Info,
+    /// <summary>Theme success status token (requires a <c>W3ThemeProvider</c>).</summary>
+    Success,
+    /// <summary>Theme warning status token (requires a <c>W3ThemeProvider</c>).</summary>
+    Warning,
+    /// <summary>Theme danger status token (requires a <c>W3ThemeProvider</c>).</summary>
+    Danger,
+    /// <summary>Theme note status token (requires a <c>W3ThemeProvider</c>).</summary>
+    Note
 }
 
 /// <summary>

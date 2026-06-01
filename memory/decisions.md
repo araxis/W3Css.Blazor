@@ -37,8 +37,8 @@ Last updated: 2026-05-31
   - `W3Theme` (records tokens)
   - `W3ThemeProvider` (scope provider)
   - Bundled `wwwroot/w3-theme.css` for baseline token variables and utility classes.
-- Core token colors now include `Primary`, `Secondary`, `Accent`, `Surface`, `Border`, plus optional dark-mode variant.
-- Theming is app-visible by defaults (`W3Color.Primary/Secondary/Accent/Surface` tokens are used where relevant).
+- Core token colors now include `Primary`, `Secondary`, `Accent`, `Surface`, `Border`, status tokens (`Info`, `Success`, `Warning`, `Danger`, `Note`), plus optional dark-mode variants.
+- Theming is app-visible by defaults (`W3Color.Primary/Secondary/Accent/Surface/Info/Success/Warning/Danger/Note` tokens are used where relevant).
 - `w3.css` itself is not modified.
 
 ## Docs And Testing

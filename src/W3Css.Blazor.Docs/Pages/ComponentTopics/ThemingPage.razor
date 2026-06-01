@@ -6,7 +6,7 @@
     <h1>Theming &amp; Customization</h1>
     <DocPager PreviousHref="components/color-schemes" PreviousText="Color Schemes" NextHref="components/trends" NextText="Trends" />
 
-    <p class="w3-large">Brand the whole app from one place. `W3ThemeProvider` turns a `W3Theme` into CSS variables, and components opt in with the themed `W3Color` tokens — `Primary`, `Secondary`, `Accent`, `Surface`.</p>
+    <p class="w3-large">Brand the whole app from one place. `W3ThemeProvider` turns a `W3Theme` into CSS variables, and components opt in with themed `W3Color` tokens for brand, surface, and status colors.</p>
     <p>W3.CSS has no variable layer, so the library provides this token system. It is non-breaking: existing fixed palette colors (`W3Color.Teal`, …) keep working; you adopt theming where you want it.</p>
 
     <DocExample Title="Two-Line Setup" Code="@SetupCode">
@@ -38,6 +38,13 @@
                             <W3Button Color="W3Color.Accent">Accent</W3Button>
                         </p>
                         <p>
+                            <W3Tag Color="W3Color.Success">Success</W3Tag>
+                            <W3Tag Color="W3Color.Warning">Warning</W3Tag>
+                            <W3Tag Color="W3Color.Danger">Danger</W3Tag>
+                            <W3Tag Color="W3Color.Info">Info</W3Tag>
+                            <W3Tag Color="W3Color.Note">Note</W3Tag>
+                        </p>
+                        <p>
                             <W3Tag Color="W3Color.Primary">Primary tag</W3Tag>
                             <W3Tag Color="W3Color.Accent">Accent tag</W3Tag>
                             <span class="w3-text-secondary w3-large">Secondary text</span>
@@ -61,6 +68,11 @@
                 <tr><td>Surface / OnSurface</td><td><code>--w3-surface</code> / <code>--w3-on-surface</code></td><td>#fff / #1a1a1a</td><td><code>W3Color.Surface</code> → <code>w3-surface</code></td></tr>
                 <tr><td>Background / OnBackground</td><td><code>--w3-background</code> / <code>--w3-on-background</code></td><td>#f6f7f9 / #1f2933</td><td>page surface — the <code>.w3-theme-root</code> wrapper</td></tr>
                 <tr><td>Border</td><td><code>--w3-border</code></td><td>#e0e0e0</td><td><code>w3-border-surface</code></td></tr>
+                <tr><td>Info / OnInfo</td><td><code>--w3-info</code> / <code>--w3-on-info</code></td><td>#0a6fc2 / #fff</td><td><code>W3Color.Info</code>, <code>W3AlertKind.Info</code>, and <code>w3-info</code></td></tr>
+                <tr><td>Success / OnSuccess</td><td><code>--w3-success</code> / <code>--w3-on-success</code></td><td>#008a00 / #fff</td><td><code>W3Color.Success</code>, <code>W3AlertKind.Success</code>, and <code>w3-success</code></td></tr>
+                <tr><td>Warning / OnWarning</td><td><code>--w3-warning</code> / <code>--w3-on-warning</code></td><td>#ffb305 / #000</td><td><code>W3Color.Warning</code>, <code>W3AlertKind.Warning</code>, and <code>w3-warning</code></td></tr>
+                <tr><td>Danger / OnDanger</td><td><code>--w3-danger</code> / <code>--w3-on-danger</code></td><td>#dd0000 / #fff</td><td><code>W3Color.Danger</code>, <code>W3AlertKind.Danger</code>, and <code>w3-danger</code></td></tr>
+                <tr><td>Note / OnNote</td><td><code>--w3-note</code> / <code>--w3-on-note</code></td><td>#fff599 / #000</td><td><code>W3Color.Note</code>, <code>W3AlertKind.Note</code>, and <code>w3-note</code></td></tr>
                 <tr><td>Radius</td><td><code>--w3-radius</code></td><td>4px</td><td>rounded elements inside the provider</td></tr>
                 <tr><td>FocusColor / FocusWidth / FocusOffset</td><td><code>--w3-focus-color</code> / <code>--w3-focus-width</code> / <code>--w3-focus-offset</code></td><td>primary / 2px / 2px</td><td>keyboard focus rings for links, buttons, inputs, and interactive roles</td></tr>
                 <tr><td>FontFamily</td><td>(font-family)</td><td>inherit</td><td>theme scope</td></tr>
@@ -69,6 +81,7 @@
         </W3Table>
         <p class="doc-muted">Link <code>_content/W3Css.Blazor/w3css-blazor.css</code> once (it bundles the framework + this token layer). Tokens then render with sensible defaults everywhere; a <code>W3ThemeProvider</code> only overrides the variables within its subtree (and toggles dark mode).</p>
         <p class="doc-muted">The provider's <code>.w3-theme-root</code> wrapper is itself a themed page surface (it paints <code>Background</code> / <code>OnBackground</code>), so wrapping an app or region themes the whole page — including dark mode — with <strong>no per-mode app CSS</strong>. Custom (non-component) elements should consume the variables (<code>var(--w3-surface)</code>, <code>var(--w3-on-background)</code>, …) rather than carry their own dark-mode rules.</p>
+        <p class="doc-muted">Status tokens keep alerts, toasts, badges, tags, text, borders, and hover states on the same semantic palette. Their defaults match the bundled W3.CSS status colors, so overriding them is opt-in.</p>
         <p class="doc-muted">Keyboard focus rings are part of the token layer. Set <code>FocusColor</code>, <code>FocusWidth</code>, or <code>FocusOffset</code> when the brand theme needs stronger or softer focus treatment.</p>
     </section>
 
@@ -115,6 +128,8 @@
         <W3Button Color="W3Color.Primary">Primary</W3Button>
         <W3Button Color="W3Color.Secondary">Secondary</W3Button>
         <W3Button Color="W3Color.Accent">Accent</W3Button>
+        <W3Tag Color="W3Color.Success">Success</W3Tag>
+        <W3Tag Color="W3Color.Warning">Warning</W3Tag>
     </div>
 </W3ThemeProvider>
 

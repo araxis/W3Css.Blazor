@@ -19,6 +19,16 @@
     --w3-background: #f6f7f9;
     --w3-on-background: #1f2933;
     --w3-border: #e0e0e0;
+    --w3-info: #0a6fc2;
+    --w3-on-info: #ffffff;
+    --w3-success: #008a00;
+    --w3-on-success: #ffffff;
+    --w3-warning: #ffb305;
+    --w3-on-warning: #000000;
+    --w3-danger: #dd0000;
+    --w3-on-danger: #ffffff;
+    --w3-note: #fff599;
+    --w3-on-note: #000000;
     --w3-radius: 4px;
     --w3-focus-color: var(--w3-primary);
     --w3-focus-width: 2px;
@@ -50,6 +60,41 @@
 .w3-surface { background-color: var(--w3-surface) !important; color: var(--w3-on-surface) !important; }
 .w3-text-surface { color: var(--w3-on-surface) !important; }
 .w3-border-surface { border-color: var(--w3-border) !important; }
+
+.w3-info { background-color: var(--w3-info) !important; color: var(--w3-on-info) !important; }
+.w3-text-info { color: var(--w3-info) !important; }
+.w3-border-info { border-color: var(--w3-info) !important; }
+.w3-hover-info:hover { background-color: var(--w3-info) !important; color: var(--w3-on-info) !important; }
+.w3-hover-text-info:hover { color: var(--w3-info) !important; }
+.w3-hover-border-info:hover { border-color: var(--w3-info) !important; }
+
+.w3-success { background-color: var(--w3-success) !important; color: var(--w3-on-success) !important; }
+.w3-text-success { color: var(--w3-success) !important; }
+.w3-border-success { border-color: var(--w3-success) !important; }
+.w3-hover-success:hover { background-color: var(--w3-success) !important; color: var(--w3-on-success) !important; }
+.w3-hover-text-success:hover { color: var(--w3-success) !important; }
+.w3-hover-border-success:hover { border-color: var(--w3-success) !important; }
+
+.w3-warning { background-color: var(--w3-warning) !important; color: var(--w3-on-warning) !important; }
+.w3-text-warning { color: var(--w3-warning) !important; }
+.w3-border-warning { border-color: var(--w3-warning) !important; }
+.w3-hover-warning:hover { background-color: var(--w3-warning) !important; color: var(--w3-on-warning) !important; }
+.w3-hover-text-warning:hover { color: var(--w3-warning) !important; }
+.w3-hover-border-warning:hover { border-color: var(--w3-warning) !important; }
+
+.w3-danger { background-color: var(--w3-danger) !important; color: var(--w3-on-danger) !important; }
+.w3-text-danger { color: var(--w3-danger) !important; }
+.w3-border-danger { border-color: var(--w3-danger) !important; }
+.w3-hover-danger:hover { background-color: var(--w3-danger) !important; color: var(--w3-on-danger) !important; }
+.w3-hover-text-danger:hover { color: var(--w3-danger) !important; }
+.w3-hover-border-danger:hover { border-color: var(--w3-danger) !important; }
+
+.w3-note { background-color: var(--w3-note) !important; color: var(--w3-on-note) !important; }
+.w3-text-note { color: var(--w3-note) !important; }
+.w3-border-note { border-color: var(--w3-note) !important; }
+.w3-hover-note:hover { background-color: var(--w3-note) !important; color: var(--w3-on-note) !important; }
+.w3-hover-text-note:hover { color: var(--w3-note) !important; }
+.w3-hover-border-note:hover { border-color: var(--w3-note) !important; }
 
 .w3-theme-root [class*="w3-round"] { border-radius: var(--w3-radius) !important; }
 

@@ -178,6 +178,23 @@ public enum W3AlertKind
 }
 
 /// <summary>
+/// Semantic state variants for empty-state and recovery surfaces.
+/// </summary>
+public enum W3EmptyStateKind
+{
+    /// <summary>Neutral empty or zero-result state.</summary>
+    Empty,
+    /// <summary>Informational state.</summary>
+    Info,
+    /// <summary>Successful completion state.</summary>
+    Success,
+    /// <summary>Warning state.</summary>
+    Warning,
+    /// <summary>Error or failed-load state.</summary>
+    Error
+}
+
+/// <summary>
 /// Fixed placement options for toast providers.
 /// </summary>
 public enum W3ToastPosition

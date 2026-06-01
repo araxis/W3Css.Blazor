@@ -70,7 +70,7 @@
         }
     </DocExample>
 
-    <DocExample Title="Loading And Empty States" Description="Use the built-in states while data is loading or when filters return no rows." Code="@StatesCode">
+    <DocExample Title="Loading, Empty, And Error States" Description="Use built-in states while data is loading, when filters return no rows, or when a data source fails." Code="@StatesCode">
         <W3Grid Padding="true" Style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));">
             <W3DataTable TItem="ProjectRow"
                          Loading="true"
@@ -83,6 +83,17 @@
             <W3DataTable TItem="ProjectRow"
                          Items="EmptyProjects"
                          EmptyText="No projects match this view"
+                         EmptyDescription="Clear the filters or create a new project."
+                         Searchable="false">
+                <ChildContent>
+                    <W3DataColumn TItem="ProjectRow" Title="Project" CellText="@((ProjectRow project) => project.Name)" />
+                </ChildContent>
+            </W3DataTable>
+
+            <W3DataTable TItem="ProjectRow"
+                         Error="true"
+                         ErrorText="Projects could not load"
+                         ErrorDescription="Check the connection and retry."
                          Searchable="false">
                 <ChildContent>
                     <W3DataColumn TItem="ProjectRow" Title="Project" CellText="@((ProjectRow project) => project.Name)" />
@@ -108,11 +119,17 @@
                 <tr><td>RowActionsGap</td><td>int</td><td>8</td><td>Gap between row action controls in pixels</td></tr>
                 <tr><td>EmptyContent</td><td>RenderFragment?</td><td>null</td><td>Custom empty row content</td></tr>
                 <tr><td>LoadingContent</td><td>RenderFragment?</td><td>null</td><td>Custom loading content</td></tr>
+                <tr><td>ErrorContent</td><td>RenderFragment?</td><td>null</td><td>Custom error-state content</td></tr>
                 <tr><td>Id</td><td>string?</td><td>null</td><td>Stable prefix for generated control ids</td></tr>
                 <tr><td>AriaLabel</td><td>string</td><td>Data table</td><td>Accessible table label</td></tr>
                 <tr><td>Loading</td><td>bool</td><td>false</td><td>Renders a status panel instead of table rows</td></tr>
+                <tr><td>Error</td><td>bool</td><td>false</td><td>Renders an error recovery state instead of table rows</td></tr>
                 <tr><td>LoadingText</td><td>string</td><td>Loading data...</td><td>Default loading text</td></tr>
                 <tr><td>EmptyText</td><td>string</td><td>No records found.</td><td>Default empty-state text</td></tr>
+                <tr><td>EmptyDescription</td><td>string?</td><td>null</td><td>Default empty-state supporting text</td></tr>
+                <tr><td>ErrorText</td><td>string</td><td>Could not load data.</td><td>Default error-state title</td></tr>
+                <tr><td>ErrorDescription</td><td>string?</td><td>null</td><td>Default error-state supporting text</td></tr>
+                <tr><td>ShowEmptyIcon</td><td>bool</td><td>true</td><td>Shows the default empty-state marker</td></tr>
                 <tr><td>Searchable</td><td>bool</td><td>true</td><td>Renders a W3.CSS-styled search input</td></tr>
                 <tr><td>SearchText</td><td>string?</td><td>null</td><td>Bindable search text</td></tr>
                 <tr><td>SearchTextChanged</td><td>EventCallback&lt;string?&gt;</td><td>empty</td><td>Search binding callback</td></tr>
@@ -140,6 +157,8 @@
                 <tr><td>ToolbarTextColor</td><td>W3Color</td><td>Black</td><td>Toolbar text color</td></tr>
                 <tr><td>LoadingColor</td><td>W3Color</td><td>PaleBlue</td><td>Loading panel background color</td></tr>
                 <tr><td>LoadingTextColor</td><td>W3Color</td><td>Black</td><td>Loading panel text color</td></tr>
+                <tr><td>ErrorColor</td><td>W3Color</td><td>PaleRed</td><td>Error-state background color</td></tr>
+                <tr><td>ErrorTextColor</td><td>W3Color</td><td>Black</td><td>Error-state text color</td></tr>
                 <tr><td>ActivePageColor</td><td>W3Color</td><td>Primary</td><td>Active pagination background color</td></tr>
                 <tr><td>ActivePageTextColor</td><td>W3Color</td><td>White</td><td>Active pagination text color</td></tr>
                 <tr><td>Striped</td><td>bool</td><td>true</td><td>`W3Table` striped rows</td></tr>
@@ -186,6 +205,7 @@
         <h2>Related</h2>
         <p><NavLink href="components/table">Table</NavLink> remains the low-level W3.CSS table wrapper.</p>
         <p><NavLink href="components/tree-view">Tree View</NavLink> covers hierarchical data and nested navigation.</p>
+        <p><NavLink href="components/empty-state">Empty State</NavLink> provides the reusable state surface used by table zero-result and error states.</p>
         <p><NavLink href="components/filters">Filters</NavLink> shows manual Blazor filtering over tables and lists.</p>
         <p><NavLink href="components/pagination">Pagination</NavLink> is reused for the table footer controls.</p>
     </section>
@@ -290,6 +310,17 @@
 <W3DataTable TItem="ProjectRow"
              Items="Array.Empty<ProjectRow>()"
              EmptyText="No projects match this view"
+             EmptyDescription="Clear the filters or create a new project."
+             Searchable="false">
+    <ChildContent>
+        <W3DataColumn TItem="ProjectRow" Title="Project" CellText="@((ProjectRow project) => project.Name)" />
+    </ChildContent>
+</W3DataTable>
+
+<W3DataTable TItem="ProjectRow"
+             Error="true"
+             ErrorText="Projects could not load"
+             ErrorDescription="Check the connection and retry."
              Searchable="false">
     <ChildContent>
         <W3DataColumn TItem="ProjectRow" Title="Project" CellText="@((ProjectRow project) => project.Name)" />

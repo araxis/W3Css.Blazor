@@ -1092,3 +1092,11 @@ Last updated: 2026-06-01
 - Made the release workflow resolve an omitted manual version from the project file instead of carrying a stale default.
 - Added release-quality tests that guard README branch guidance, post-release memory wording, and neutral comparison-library language in public docs.
 - Verified focused release-quality tests, Release build, 466-test Release suite, and package creation.
+
+## 2026-06-01 - Empty State Pattern Pass
+
+- Added `W3EmptyState` for reusable zero-result, failed-load, success, warning, and informational recovery surfaces.
+- Added compact, centered, action, marker, color, role, live-region, and pass-through hooks while keeping the component CSS-first and script-free.
+- Integrated the default empty/error surfaces into `W3DataTable`, including error-state parameters and custom error content.
+- Added a dedicated Empty State docs page, docs navigation/catalog entries, pager chain updates, and refreshed data-table state examples.
+- Verified focused component/docs tests, Release build, the 470-test Release suite, and package creation.

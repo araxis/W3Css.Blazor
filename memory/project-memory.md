@@ -9,9 +9,9 @@ Last updated: 2026-06-01
 - Version baseline: `0.1.0`.
 - .NET target: `net10.0` (`10.0.300` SDK).
 - Current state:
-  - 126 component `.razor` files.
-  - 120 docs topic pages.
-  - 466 passing tests.
+  - 127 component `.razor` files.
+  - 121 docs topic pages.
+  - 470 passing tests.
   - Build: `dotnet build W3Css.Blazor.slnx --configuration Release` (0 warnings, 0 errors).
 
 ## Architecture

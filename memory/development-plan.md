@@ -41,5 +41,5 @@ Last updated: 2026-06-01
   - `dotnet build W3Css.Blazor.slnx --configuration Release`
   - `dotnet test tests/W3Css.Blazor.Tests/W3Css.Blazor.Tests.csproj --configuration Release --no-build`
 
-- Components implemented: 126 component files plus docs topic coverage.
-- Test coverage: 466 passing tests.
+- Components implemented: 127 component files plus docs topic coverage.
+- Test coverage: 470 passing tests.

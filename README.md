@@ -80,7 +80,7 @@ The bundle is just these two concatenated; you can link them individually instea
 
 For app screens, start with the layout and data primitives that already handle the
 repetitive spacing work: `W3AppShell`, `W3AppBar`, `W3Card`, `W3DataTable`,
-`W3Form`, and `W3ActionRow`.
+`W3Form`, `W3EmptyState`, and `W3ActionRow`.
 
 ## Repository Layout
 

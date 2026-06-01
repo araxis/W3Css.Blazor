@@ -1,0 +1,120 @@
+@page "/components/empty-state"
+
+<PageTitle>W3EmptyState</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3EmptyState</h1>
+    <DocPager PreviousHref="components/skeleton" PreviousText="Skeleton" NextHref="components/toast" NextText="Toast" />
+
+    <p class="w3-large">`W3EmptyState` gives empty, zero-result, failed-load, and recovery surfaces a consistent structure.</p>
+    <p>Use it inside cards, tables, drawers, app shells, and dashboards when the screen needs a clear next step.</p>
+
+    <DocExample Title="Empty Result" Description="Use a short title, helpful description, and one primary recovery action." Code="@EmptyCode">
+        <W3EmptyState Title="No projects yet"
+                      Description="Create a project to start tracking tasks, owners, and reviews.">
+            <Actions>
+                <W3Button Color="W3Color.Primary" TextColor="W3Color.White" Round="W3Round.Medium">Create project</W3Button>
+                <W3Button Border="true" Round="W3Round.Medium">Import</W3Button>
+            </Actions>
+        </W3EmptyState>
+    </DocExample>
+
+    <DocExample Title="Error Recovery" Description="Use the error variant for failed data loads with a retry action." Code="@ErrorCode">
+        <W3EmptyState Kind="W3EmptyStateKind.Error"
+                      Title="Projects could not load"
+                      Description="Check the connection and try again."
+                      Role="alert"
+                      AriaLive="assertive">
+            <Actions>
+                <W3Button Color="W3Color.Danger" TextColor="W3Color.White" Round="W3Round.Medium">Retry</W3Button>
+                <W3Button Border="true" Round="W3Round.Medium">Open status</W3Button>
+            </Actions>
+        </W3EmptyState>
+    </DocExample>
+
+    <DocExample Title="Compact Table State" Description="Compact states fit inside table cells, list panels, and narrow drawers." Code="@CompactCode">
+        <W3EmptyState Title="No rows match the filters"
+                      Description="Clear the filters or search for another owner."
+                      Compact="true"
+                      Border="false"
+                      ShowIcon="false" />
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Title</td><td>string?</td><td>No results</td><td>Primary state title</td></tr>
+                <tr><td>Description</td><td>string?</td><td>null</td><td>Supporting state copy</td></tr>
+                <tr><td>Icon</td><td>string?</td><td>kind default</td><td>Compact marker text</td></tr>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Additional body content</td></tr>
+                <tr><td>Actions</td><td>RenderFragment?</td><td>null</td><td>Recovery or next-step commands</td></tr>
+                <tr><td>Kind</td><td>W3EmptyStateKind</td><td>Empty</td><td>Default colors and marker</td></tr>
+                <tr><td>Label</td><td>string</td><td>Empty state</td><td>`aria-label` when `AriaLabelledBy` is not set</td></tr>
+                <tr><td>AriaLabelledBy</td><td>string?</td><td>null</td><td>`aria-labelledby` on the root</td></tr>
+                <tr><td>Role</td><td>string</td><td>status</td><td>Root semantic role</td></tr>
+                <tr><td>AriaLive</td><td>string</td><td>polite</td><td>Live-region urgency</td></tr>
+                <tr><td>ActionsLabel</td><td>string</td><td>State actions</td><td>Action group label</td></tr>
+                <tr><td>ShowIcon</td><td>bool</td><td>true</td><td>Shows the state marker</td></tr>
+                <tr><td>Centered</td><td>bool</td><td>true</td><td>Centers state text and actions</td></tr>
+                <tr><td>Compact</td><td>bool</td><td>false</td><td>Uses reduced padding</td></tr>
+                <tr><td>Border</td><td>bool</td><td>true</td><td>`w3-border`</td></tr>
+                <tr><td>Round</td><td>W3Round</td><td>Medium</td><td>Rounded corner class</td></tr>
+                <tr><td>Gap</td><td>int</td><td>12</td><td>Vertical gap in pixels</td></tr>
+                <tr><td>ActionsGap</td><td>int</td><td>8</td><td>Action gap in pixels</td></tr>
+                <tr><td>Color</td><td>W3Color</td><td>None</td><td>Background color, or kind default</td></tr>
+                <tr><td>TextColor</td><td>W3Color</td><td>None</td><td>Text color class</td></tr>
+                <tr><td>AccentColor</td><td>W3Color</td><td>None</td><td>Marker background, or kind default</td></tr>
+                <tr><td>IconTextColor</td><td>W3Color</td><td>White</td><td>Marker text color</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional root classes</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline styles on the root</td></tr>
+                <tr><td>AdditionalAttributes</td><td>IReadOnlyDictionary&lt;string, object&gt;?</td><td>null</td><td>Extra attributes on the root</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Related</h2>
+        <p><NavLink href="components/skeleton">Skeleton</NavLink> covers known layouts while data is loading.</p>
+        <p><NavLink href="components/data-table">Data Table</NavLink> uses empty states for zero-result and failed-load surfaces.</p>
+        <p><NavLink href="components/alert">Alert</NavLink> covers inline status messages that are not full-state surfaces.</p>
+    </section>
+
+    <DocPager PreviousHref="components/skeleton" PreviousText="Skeleton" NextHref="components/toast" NextText="Toast" />
+</W3Container>
+
+@code {
+    private const string EmptyCode = """
+<W3EmptyState Title="No projects yet"
+              Description="Create a project to start tracking tasks, owners, and reviews.">
+    <Actions>
+        <W3Button Color="W3Color.Primary" TextColor="W3Color.White">Create project</W3Button>
+        <W3Button Border="true">Import</W3Button>
+    </Actions>
+</W3EmptyState>
+""";
+
+    private const string ErrorCode = """
+<W3EmptyState Kind="W3EmptyStateKind.Error"
+              Title="Projects could not load"
+              Description="Check the connection and try again."
+              Role="alert"
+              AriaLive="assertive">
+    <Actions>
+        <W3Button Color="W3Color.Danger" TextColor="W3Color.White">Retry</W3Button>
+        <W3Button Border="true">Open status</W3Button>
+    </Actions>
+</W3EmptyState>
+""";
+
+    private const string CompactCode = """
+<W3EmptyState Title="No rows match the filters"
+              Description="Clear the filters or search for another owner."
+              Compact="true"
+              Border="false"
+              ShowIcon="false" />
+""";
+}

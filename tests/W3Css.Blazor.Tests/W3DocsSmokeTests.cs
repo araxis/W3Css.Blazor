@@ -42,6 +42,7 @@ using DrawerPage = W3Css.Blazor.Docs.Pages.ComponentTopics.DrawerPage;
 using DropZonePage = W3Css.Blazor.Docs.Pages.ComponentTopics.DropZonePage;
 using DropdownPage = W3Css.Blazor.Docs.Pages.ComponentTopics.DropdownPage;
 using EffectsPage = W3Css.Blazor.Docs.Pages.ComponentTopics.EffectsPage;
+using EmptyStatePage = W3Css.Blazor.Docs.Pages.ComponentTopics.EmptyStatePage;
 using FabPage = W3Css.Blazor.Docs.Pages.ComponentTopics.FabPage;
 using ProgressCircularPage = W3Css.Blazor.Docs.Pages.ComponentTopics.ProgressCircularPage;
 using FileInputPage = W3Css.Blazor.Docs.Pages.ComponentTopics.FileInputPage;
@@ -158,6 +159,7 @@ public sealed class W3DocsSmokeTests
     [InlineData(typeof(FabPage), "/components/fab")]
     [InlineData(typeof(ButtonGroupPage), "/components/button-group")]
     [InlineData(typeof(ActionRowPage), "/components/action-row")]
+    [InlineData(typeof(EmptyStatePage), "/components/empty-state")]
     [InlineData(typeof(ChipPage), "/components/chip")]
     [InlineData(typeof(RadioGroupPage), "/components/radio-group")]
     [InlineData(typeof(LinkPage), "/components/link")]
@@ -263,6 +265,7 @@ public sealed class W3DocsSmokeTests
         Assert.NotEmpty(cut.FindAll("a[href='components/link']"));
         Assert.NotEmpty(cut.FindAll("a[href='components/highlighter']"));
         Assert.NotEmpty(cut.FindAll("a[href='components/skeleton']"));
+        Assert.NotEmpty(cut.FindAll("a[href='components/empty-state']"));
         Assert.NotEmpty(cut.FindAll("a[href='components/data-table']"));
         Assert.NotEmpty(cut.FindAll("a[href='components/button']"));
         Assert.NotEmpty(cut.FindAll("a[href='components/input']"));
@@ -320,6 +323,7 @@ public sealed class W3DocsSmokeTests
         Assert.Contains("Select Item", cut.Markup);
         Assert.Contains("W3Avatar", cut.Markup);
         Assert.Contains("W3Skeleton", cut.Markup);
+        Assert.Contains("W3EmptyState", cut.Markup);
         Assert.Contains("W3Timeline", cut.Markup);
         Assert.Contains("List Item", cut.Markup);
         Assert.Contains("W3Rating", cut.Markup);

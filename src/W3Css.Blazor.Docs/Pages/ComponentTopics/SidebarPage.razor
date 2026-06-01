@@ -8,11 +8,12 @@
 
     <p class="w3-large">`W3Sidebar` renders a W3.CSS fixed sidebar with optional overlay dismissal.</p>
     <p>Use `Open` or `@@bind-Open` to control visibility from Blazor.</p>
+    <p>Keyboard users can close an open sidebar with Escape when focus is inside the sidebar.</p>
 
     <DocExample Title="Sidebar With Overlay" Code="@BasicCode">
         <W3Button Color="W3Color.Teal" TextColor="W3Color.White" Round="W3Round.Medium" OnClick="@(() => SidebarOpen = true)">Open sidebar</W3Button>
 
-        <W3Sidebar @bind-Open="SidebarOpen" Width="260" Overlay="true">
+        <W3Sidebar @bind-Open="SidebarOpen" Width="260" Overlay="true" Label="Primary sidebar">
             <Header>
                 <W3Container Color="W3Color.Teal" TextColor="W3Color.White">
                     <h3>Menu</h3>
@@ -40,6 +41,18 @@
     </DocExample>
 
     <section class="doc-section">
+        <h2>Keyboard Interaction</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Key</th><th>Behavior</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Escape</td><td>Closes the open sidebar when focus is inside the sidebar.</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
         <h2>Parameters</h2>
         <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
             <thead>
@@ -55,6 +68,7 @@
                 <tr><td>Position</td><td>W3SidebarPosition</td><td>Left</td><td>`left:0` or `right:0`</td></tr>
                 <tr><td>Color</td><td>W3Color</td><td>Surface</td><td>Sidebar background color</td></tr>
                 <tr><td>TextColor</td><td>W3Color</td><td>None</td><td>Sidebar text color</td></tr>
+                <tr><td>Label</td><td>string?</td><td>null</td><td>Optional `aria-label` for the sidebar region</td></tr>
                 <tr><td>Header</td><td>RenderFragment?</td><td>null</td><td>Optional header slot</td></tr>
                 <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Sidebar body content</td></tr>
                 <tr><td>Class</td><td>string?</td><td>null</td><td>Additional sidebar classes</td></tr>
@@ -80,7 +94,7 @@
     private const string BasicCode = """
 <W3Button OnClick="@(() => sidebarOpen = true)">Open sidebar</W3Button>
 
-<W3Sidebar @bind-Open="sidebarOpen" Width="260" Overlay="true">
+<W3Sidebar @bind-Open="sidebarOpen" Width="260" Overlay="true" Label="Primary sidebar">
     <Header>
         <W3Container Color="W3Color.Teal" TextColor="W3Color.White">
             <h3>Menu</h3>

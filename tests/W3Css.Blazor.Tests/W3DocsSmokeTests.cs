@@ -695,6 +695,9 @@ public sealed class W3DocsSmokeTests
 
         var sidebarPage = context.Render<SidebarPage>();
         Assert.Contains("Surface", sidebarPage.Markup);
+        Assert.Contains("Keyboard Interaction", sidebarPage.Markup);
+        Assert.Contains("Escape", sidebarPage.Markup);
+        Assert.Contains("Optional `aria-label` for the sidebar region", sidebarPage.Markup);
         Assert.Contains("Extra attributes on the sidebar element", sidebarPage.Markup);
 
         var tooltipPage = context.Render<TooltipPage>();

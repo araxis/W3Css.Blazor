@@ -192,6 +192,7 @@ public sealed class W3OverlayTests
             .Add(p => p.Collapse, true)
             .Add(p => p.Color, W3Color.White)
             .Add(p => p.TextColor, W3Color.Black)
+            .Add(p => p.Label, "Primary sidebar")
             .Add(p => p.Header, (RenderFragment)(header => header.AddContent(0, "Menu header")))
             .Add(p => p.Class, "sidebar-extra")
             .Add(p => p.Style, "top: 1rem;")
@@ -217,10 +218,34 @@ public sealed class W3OverlayTests
         Assert.Contains("top: 1rem", sidebar.GetAttribute("style"));
         Assert.Contains("Menu header", sidebar.TextContent);
         Assert.Equal("false", sidebar.GetAttribute("aria-hidden"));
+        Assert.Equal("Primary sidebar", sidebar.GetAttribute("aria-label"));
+        Assert.Equal("0", sidebar.GetAttribute("tabindex"));
 
         overlay.Click();
 
         Assert.False(open);
+    }
+
+    [Fact]
+    public void SidebarClosesWithEscapeWhenFocusedInside()
+    {
+        using var context = new BunitContext();
+        var open = true;
+        var cut = context.Render<W3Sidebar>(parameters => parameters
+            .Add(p => p.Open, open)
+            .Add(p => p.OpenChanged, EventCallback.Factory.Create<bool>(this, value => open = value))
+            .Add(p => p.ChildContent, "Navigation"));
+
+        cut.Find("aside").KeyDown(new KeyboardEventArgs { Key = "Escape" });
+
+        cut.WaitForAssertion(() =>
+        {
+            Assert.False(open);
+            var sidebar = cut.Find("aside");
+            Assert.Contains("w3-hide", sidebar.GetAttribute("class"));
+            Assert.Equal("true", sidebar.GetAttribute("aria-hidden"));
+            Assert.Null(sidebar.GetAttribute("tabindex"));
+        });
     }
 
     [Fact]

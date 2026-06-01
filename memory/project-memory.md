@@ -6,12 +6,12 @@ Last updated: 2026-06-01
 
 - Repo target: Blazor component suite over W3.CSS (small, CSS-first, practical defaults).
 - Branch: `main`.
-- Current package baseline: `0.4.0` release candidate.
+- Current package baseline: published `0.4.0`.
 - .NET target: `net10.0` (`10.0.300` SDK).
 - Current state:
   - 127 component `.razor` files.
   - 121 docs topic pages plus the top-level Patterns guide.
-  - 477 passing tests for the 0.4.0 quality-hardening release candidate.
+  - 477 passing tests for the 0.4.0 quality-hardening release.
   - Build: `dotnet build W3Css.Blazor.slnx --configuration Release` (0 warnings, 0 errors).
 
 ## Architecture
@@ -35,9 +35,7 @@ Last updated: 2026-06-01
 
 ## Current Priority
 
-1. 0.4.0 quality hardening:
-   - local release checks are complete; next step is PR/CI, merge, tag, release workflow, and public package smoke.
-2. Future releases:
+1. Future releases:
    - plan normal version-bump, release-note, tag, publish, and consumer-smoke slices.
 
 ## Memory Files

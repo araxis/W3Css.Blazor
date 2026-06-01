@@ -26,7 +26,7 @@ public sealed class W3ReleaseQualityTests
         var developmentPlan = ReadRepositoryFile("memory", "development-plan.md");
         var projectMemory = ReadRepositoryFile("memory", "project-memory.md");
 
-        Assert.Contains("version `0.3.0`", currentState);
+        Assert.Contains("version `0.4.0`", currentState);
         Assert.Contains("Package And Release Readiness (Complete)", developmentPlan);
         Assert.Contains("Current package baseline", projectMemory);
         Assert.DoesNotContain("points at current `HEAD`", currentState);

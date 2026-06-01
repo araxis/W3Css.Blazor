@@ -1059,3 +1059,9 @@ Last updated: 2026-06-01
 - Added `JustifyCenter` and `JustifyEnd` to `W3Stack` for centered groups and right-aligned wrapping action rows.
 - Refreshed stack docs with an action-row example and API table rows.
 - Extended component and docs smoke tests for the new alignment classes and documentation.
+
+## 2026-06-01 - Card Action Row Polish
+
+- Added an optional `Actions` slot to `W3Card` that renders a wrapping, right-aligned footer command row.
+- Added `ActionsClass` and `ActionsGap` for controlled spacing without manual footer margins.
+- Refreshed card docs with an app-card action example and extended card/docs smoke tests.

@@ -569,6 +569,9 @@ public sealed class W3DocsSmokeTests
         Assert.Contains("BodyColor", cardPage.Markup);
         Assert.Contains("Surface", cardPage.Markup);
         Assert.Contains("Body content slot", cardPage.Markup);
+        Assert.Contains("Card Actions", cardPage.Markup);
+        Assert.Contains("Optional wrapping, right-aligned footer actions", cardPage.Markup);
+        Assert.Contains("ActionsGap", cardPage.Markup);
         Assert.Contains("Extra attributes on the card root", cardPage.Markup);
 
         var cellsPage = context.Render<CellsPage>();

@@ -23,6 +23,26 @@
         </W3Card>
     </DocExample>
 
+    <DocExample Title="Card Actions" Description="Use the actions slot for wrapping, right-aligned commands in app cards." Code="@ActionsCode">
+        <W3Card Depth="W3CardDepth.Two"
+                Round="W3Round.Medium"
+                BodyClass="w3-padding-16"
+                FooterColor="W3Color.Surface"
+                FooterClass="w3-padding-16">
+            <ChildContent>
+                <h2 class="w3-large">Release checklist</h2>
+                <p class="doc-muted">Review package metadata, generated assets, and docs before tagging.</p>
+            </ChildContent>
+            <Footer>
+                <small>Last checked 2 minutes ago</small>
+            </Footer>
+            <Actions>
+                <W3Button Border="true" Round="W3Round.Medium">Review</W3Button>
+                <W3Button Color="W3Color.Primary" TextColor="W3Color.White" Round="W3Round.Medium">Publish</W3Button>
+            </Actions>
+        </W3Card>
+    </DocExample>
+
     <section class="doc-section">
         <h2>Parameters</h2>
         <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
@@ -35,12 +55,15 @@
                 <tr><td>Round</td><td>W3Round</td><td>None</td><td>Rounded corner class</td></tr>
                 <tr><td>Header</td><td>RenderFragment</td><td>null</td><td>Optional header slot</td></tr>
                 <tr><td>Footer</td><td>RenderFragment</td><td>null</td><td>Optional footer slot</td></tr>
+                <tr><td>Actions</td><td>RenderFragment?</td><td>null</td><td>Optional wrapping, right-aligned footer actions</td></tr>
                 <tr><td>HeaderColor</td><td>W3Color</td><td>None</td><td>Header background color</td></tr>
                 <tr><td>BodyColor</td><td>W3Color</td><td>Surface</td><td>Body background color</td></tr>
                 <tr><td>FooterColor</td><td>W3Color</td><td>None</td><td>Footer background color</td></tr>
                 <tr><td>HeaderClass</td><td>string?</td><td>null</td><td>Additional header container classes</td></tr>
                 <tr><td>BodyClass</td><td>string?</td><td>null</td><td>Additional body container classes</td></tr>
                 <tr><td>FooterClass</td><td>string?</td><td>null</td><td>Additional footer container classes</td></tr>
+                <tr><td>ActionsClass</td><td>string?</td><td>null</td><td>Additional classes on the actions row</td></tr>
+                <tr><td>ActionsGap</td><td>int</td><td>8</td><td>Action row gap in pixels</td></tr>
                 <tr><td>Class</td><td>string?</td><td>null</td><td>Additional root card classes</td></tr>
                 <tr><td>Style</td><td>string?</td><td>null</td><td>Root card inline style</td></tr>
                 <tr><td>AdditionalAttributes</td><td>IReadOnlyDictionary&lt;string, object&gt;?</td><td>null</td><td>Extra attributes on the card root</td></tr>
@@ -71,6 +94,20 @@
 <W3Card Depth="W3CardDepth.Four" Round="W3Round.Medium" FooterColor="W3Color.LightGrey" FooterClass="w3-padding-16">
     <ChildContent><p>Body content stays in a `w3-container` block.</p></ChildContent>
     <Footer><small>Footer content</small></Footer>
+</W3Card>
+""";
+
+    private const string ActionsCode = """
+<W3Card Depth="W3CardDepth.Two" Round="W3Round.Medium" FooterClass="w3-padding-16">
+    <ChildContent>
+        <h2 class="w3-large">Release checklist</h2>
+        <p>Review package metadata, generated assets, and docs before tagging.</p>
+    </ChildContent>
+    <Footer><small>Last checked 2 minutes ago</small></Footer>
+    <Actions>
+        <W3Button Border="true" Round="W3Round.Medium">Review</W3Button>
+        <W3Button Color="W3Color.Primary" TextColor="W3Color.White" Round="W3Round.Medium">Publish</W3Button>
+    </Actions>
 </W3Card>
 """;
 }

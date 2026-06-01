@@ -89,4 +89,5 @@ Last updated: 2026-06-01
 - Neutral terminology cleanup is complete; source, docs, tests, and memory no longer use external comparison-library names for the compatibility work.
 - The semantic theme-token expansion added provider-controlled Info/Success/Warning/Danger/Note tokens that match existing W3.CSS status colors by default and can be reused through `W3Color` values, alert kinds, toasts, text, borders, and hover utilities.
 - The stack alignment polish added center/end main-axis alignment to `W3Stack`, making wrapped action rows easier to build without one-off CSS.
+- The card action-row polish added an optional wrapping right-aligned `W3Card.Actions` footer slot for app cards with reliable button spacing.
 - Remaining planned work is optional: visual quality sweeps.

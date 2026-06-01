@@ -1,0 +1,11 @@
+.w3-card-footer-content + .w3-card-actions {
+    margin-top: 12px;
+}
+
+.w3-card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--w3-card-actions-gap, 8px);
+}

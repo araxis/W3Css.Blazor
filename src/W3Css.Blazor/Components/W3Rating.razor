@@ -22,7 +22,8 @@
                 aria-checked="@GetAriaChecked(rating)"
                 aria-label="@GetRatingLabel(rating)"
                 disabled="@IsInteractionDisabled"
-                @onclick="() => SetValueAsync(rating)">
+                @onclick="() => SetValueAsync(rating)"
+                @onkeydown="HandleKeyDownAsync">
             <span class="@GetIconClass(rating)" aria-hidden="true"></span>
         </button>
     }
@@ -92,6 +93,51 @@
         }
 
         var nextValue = Clearable && rating == ClampedValue ? 0 : rating;
+        await ApplyValueAsync(nextValue);
+    }
+
+    private async Task HandleKeyDownAsync(KeyboardEventArgs args)
+    {
+        if (IsInteractionDisabled)
+        {
+            return;
+        }
+
+        switch (args.Key)
+        {
+            case "ArrowRight":
+            case "Right":
+            case "ArrowUp":
+            case "Up":
+                await ApplyValueAsync(Math.Min(SafeMax, ClampedValue + 1));
+                break;
+            case "ArrowLeft":
+            case "Left":
+            case "ArrowDown":
+            case "Down":
+                await ApplyValueAsync(Math.Max(Clearable ? 0 : 1, ClampedValue - 1));
+                break;
+            case "Home":
+                await ApplyValueAsync(1);
+                break;
+            case "End":
+                await ApplyValueAsync(SafeMax);
+                break;
+            case "Backspace":
+            case "Delete":
+            case "Del":
+                if (Clearable)
+                {
+                    await ApplyValueAsync(0);
+                }
+
+                break;
+        }
+    }
+
+    private async Task ApplyValueAsync(int nextValue)
+    {
+        nextValue = Math.Clamp(nextValue, 0, SafeMax);
         Value = nextValue;
         await ValueChanged.InvokeAsync(nextValue);
 

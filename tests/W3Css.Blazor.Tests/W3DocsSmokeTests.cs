@@ -609,6 +609,8 @@ public sealed class W3DocsSmokeTests
 
         var ratingPage = context.Render<RatingPage>();
         Assert.Contains("Required Rating", ratingPage.Markup);
+        Assert.Contains("Keyboard Interaction", ratingPage.Markup);
+        Assert.Contains("ArrowRight", ratingPage.Markup);
         Assert.Contains("Extra attributes on the rating group", ratingPage.Markup);
 
         var stepperPage = context.Render<StepperPage>();

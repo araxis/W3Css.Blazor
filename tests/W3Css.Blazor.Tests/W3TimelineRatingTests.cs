@@ -1,5 +1,6 @@
 using Bunit;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using W3Css.Blazor;
 using W3Css.Blazor.Components;
 
@@ -112,6 +113,56 @@ public sealed class W3TimelineRatingTests
         Assert.Equal(0, value);
         Assert.All(cut.FindAll("button[role='radio']"), button => Assert.Equal("false", button.GetAttribute("aria-checked")));
         Assert.Contains("0 / 5", cut.Find(".w3-rating-value").TextContent);
+    }
+
+    [Fact]
+    public void RatingSupportsKeyboardAdjustment()
+    {
+        using var context = new BunitContext();
+        var value = 2;
+        var cut = context.Render<W3Rating>(parameters => parameters
+            .Add(p => p.Value, value)
+            .Add(p => p.ValueChanged, next => value = next)
+            .Add(p => p.Max, 5)
+            .Add(p => p.Clearable, true)
+            .Add(p => p.ShowValue, true));
+
+        var ratingButton = cut.Find("button[role='radio']");
+
+        ratingButton.KeyDown(new KeyboardEventArgs { Key = "ArrowRight" });
+        Assert.Equal(3, value);
+        Assert.Equal("true", cut.FindAll("button[role='radio']")[2].GetAttribute("aria-checked"));
+
+        ratingButton.KeyDown(new KeyboardEventArgs { Key = "ArrowLeft" });
+        Assert.Equal(2, value);
+
+        ratingButton.KeyDown(new KeyboardEventArgs { Key = "End" });
+        Assert.Equal(5, value);
+        Assert.Contains("5 / 5", cut.Find(".w3-rating-value").TextContent);
+
+        ratingButton.KeyDown(new KeyboardEventArgs { Key = "Home" });
+        Assert.Equal(1, value);
+
+        ratingButton.KeyDown(new KeyboardEventArgs { Key = "Delete" });
+        Assert.Equal(0, value);
+        Assert.Contains("0 / 5", cut.Find(".w3-rating-value").TextContent);
+    }
+
+    [Fact]
+    public void RatingKeyboardDecreaseStopsAtOneWhenNotClearable()
+    {
+        using var context = new BunitContext();
+        var value = 1;
+        var cut = context.Render<W3Rating>(parameters => parameters
+            .Add(p => p.Value, value)
+            .Add(p => p.ValueChanged, next => value = next)
+            .Add(p => p.Max, 5));
+
+        cut.Find("button[role='radio']").KeyDown(new KeyboardEventArgs { Key = "ArrowLeft" });
+        Assert.Equal(1, value);
+
+        cut.Find("button[role='radio']").KeyDown(new KeyboardEventArgs { Key = "Backspace" });
+        Assert.Equal(1, value);
     }
 
     [Fact]

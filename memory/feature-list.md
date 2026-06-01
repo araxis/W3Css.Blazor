@@ -121,7 +121,7 @@ This model is intentionally similar to mature Blazor libraries, while keeping im
 | `W3TextArea` | Implemented | Text area wrapper with validation support and optional input-time updates. |
 | `W3Field` | Implemented | Label/help/validation wrapper for form fields, with stable spacing hooks and custom validation message classes. |
 | `W3Form` | Implemented | W3.CSS-first form wrapper using EditForm-style callbacks, child-control disabled/busy states, and class/style passthrough. |
-| `W3Rating` | Implemented | Icon-first rating input component with optional validation expression and required-state support. |
+| `W3Rating` | Implemented | Icon-first rating input component with optional validation expression, required-state support, and arrow/Home/End/Delete keyboard adjustment. |
 | `W3DateRangePicker` | Implemented | Date range selector composed from two `W3DateInput` controls (range capability a single date input lacks). |
 
 ## Navigation
@@ -224,7 +224,7 @@ This model is intentionally similar to mature Blazor libraries, while keeping im
 | Content display and timeline | Implemented | Tree, chat, timeline, data table, rating, drop zone, and gallery coverage. |
 | Feedback and loading | Implemented | Spinner, skeleton, toast, file, autocomplete, and alert coverage. |
 | Package validation | Implemented | `dotnet pack` generates `W3Css.Blazor.0.1.0.nupkg`; CI uploads package artifact. |
-| Test count | Implemented | `dotnet test` reports 434 passing tests. |
+| Test count | Implemented | `dotnet test` reports 436 passing tests. |
 
 ## Component Compatibility Backlog
 

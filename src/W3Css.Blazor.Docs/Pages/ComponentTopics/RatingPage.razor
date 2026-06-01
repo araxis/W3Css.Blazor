@@ -8,7 +8,7 @@
     <DocPager PreviousHref="components/slider" PreviousText="Slider" NextHref="components/switch" NextText="Switch" />
 
     <p class="w3-large">`W3Rating` renders a compact icon rating control for reviews, preference scoring, and quick feedback forms.</p>
-    <p>Use it when a bounded score is easier to pick with icons than with a numeric input or slider. Add `novalidate` on the form when validation messages should handle required feedback.</p>
+    <p>Use it when a bounded score is easier to pick with icons than with a numeric input or slider. Keyboard users can adjust the score with arrow keys, jump with Home/End, and clear a clearable rating with Delete or Backspace. Add `novalidate` on the form when validation messages should handle required feedback.</p>
 
     <DocExample Title="Interactive Rating" Code="@InteractiveCode">
         <W3Rating @bind-Value="ReviewRating"
@@ -42,6 +42,21 @@
             <W3Button Type="submit" Color="W3Color.Teal" TextColor="W3Color.White">Validate</W3Button>
         </EditForm>
     </DocExample>
+
+    <section class="doc-section">
+        <h2>Keyboard Interaction</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Key</th><th>Behavior</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>ArrowRight / ArrowUp</td><td>Increases the selected rating by one.</td></tr>
+                <tr><td>ArrowLeft / ArrowDown</td><td>Decreases the selected rating by one.</td></tr>
+                <tr><td>Home / End</td><td>Selects the first or last rating.</td></tr>
+                <tr><td>Delete / Backspace</td><td>Clears the rating when <code>Clearable</code> is enabled.</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
 
     <section class="doc-section">
         <h2>Parameters</h2>

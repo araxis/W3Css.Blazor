@@ -1,0 +1,58 @@
+.w3-empty-state {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: var(--w3-empty-state-gap, 12px);
+    min-width: 0;
+    padding: 24px;
+    text-align: left;
+}
+
+.w3-empty-state-centered {
+    text-align: center;
+}
+
+.w3-empty-state-compact {
+    padding: 16px;
+}
+
+.w3-empty-state-icon {
+    align-items: center;
+    border-radius: 999px;
+    display: inline-flex;
+    font-size: 0.875rem;
+    font-weight: 700;
+    height: 40px;
+    justify-content: center;
+    line-height: 1;
+    min-width: 40px;
+    padding: 0 8px;
+}
+
+.w3-empty-state-body {
+    max-width: 40rem;
+    min-width: 0;
+}
+
+.w3-empty-state-title {
+    font-weight: 700;
+    margin: 0;
+}
+
+.w3-empty-state-description {
+    margin: 6px 0 0;
+    opacity: 0.82;
+}
+
+.w3-empty-state-body > :last-child {
+    margin-bottom: 0;
+}
+
+.w3-empty-state-actions {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--w3-empty-state-actions-gap, 8px);
+    justify-content: center;
+    max-width: 100%;
+}

@@ -44,7 +44,27 @@
         </div>
     }
 
-    @if (Loading)
+    @if (Error)
+    {
+        @if (ErrorContent is not null)
+        {
+            <div class="@ErrorCssClass" role="alert">
+                @ErrorContent
+            </div>
+        }
+        else
+        {
+            <W3EmptyState Kind="W3EmptyStateKind.Error"
+                          Title="@ErrorText"
+                          Description="@ErrorDescription"
+                          Role="alert"
+                          AriaLive="assertive"
+                          Compact="true"
+                          Color="@ErrorColor"
+                          TextColor="@ErrorTextColor" />
+        }
+    }
+    else if (Loading)
     {
         <div class="@LoadingCssClass" role="status">
             @if (LoadingContent is not null)
@@ -125,7 +145,12 @@
                             }
                             else
                             {
-                                @EmptyText
+                                <W3EmptyState Title="@EmptyText"
+                                              Description="@EmptyDescription"
+                                              Compact="true"
+                                              Border="false"
+                                              Color="W3Color.None"
+                                              ShowIcon="@ShowEmptyIcon" />
                             }
                         </td>
                     </tr>
@@ -248,6 +273,13 @@
         .Add(LoadingTextColor.ToTextClass())
         .ToString();
 
+    private string ErrorCssClass => new W3ClassBuilder()
+        .Add("w3-panel")
+        .Add("w3-padding")
+        .Add(ErrorColor.ToBackgroundClass())
+        .Add(ErrorTextColor.ToTextClass())
+        .ToString();
+
     [Parameter]
     public IEnumerable<TItem>? Items { get; set; }
 
@@ -267,6 +299,9 @@
     public RenderFragment? LoadingContent { get; set; }
 
     [Parameter]
+    public RenderFragment? ErrorContent { get; set; }
+
+    [Parameter]
     public string? Id { get; set; }
 
     [Parameter]
@@ -276,10 +311,25 @@
     public bool Loading { get; set; }
 
     [Parameter]
+    public bool Error { get; set; }
+
+    [Parameter]
     public string LoadingText { get; set; } = "Loading data...";
 
     [Parameter]
     public string EmptyText { get; set; } = "No records found.";
+
+    [Parameter]
+    public string? EmptyDescription { get; set; }
+
+    [Parameter]
+    public string ErrorText { get; set; } = "Could not load data.";
+
+    [Parameter]
+    public string? ErrorDescription { get; set; }
+
+    [Parameter]
+    public bool ShowEmptyIcon { get; set; } = true;
 
     [Parameter]
     public bool Searchable { get; set; } = true;
@@ -376,6 +426,12 @@
 
     [Parameter]
     public W3Color LoadingTextColor { get; set; } = W3Color.Black;
+
+    [Parameter]
+    public W3Color ErrorColor { get; set; } = W3Color.PaleRed;
+
+    [Parameter]
+    public W3Color ErrorTextColor { get; set; } = W3Color.Black;
 
     [Parameter]
     public W3Color ActivePageColor { get; set; } = W3Color.Primary;

@@ -132,11 +132,55 @@ public sealed class W3DataTableTests
         var empty = context.Render<W3DataTable<ProjectRow>>(parameters => parameters
             .Add(p => p.Items, Array.Empty<ProjectRow>())
             .Add(p => p.EmptyText, "Nothing here")
+            .Add(p => p.EmptyDescription, "Try another filter")
+            .Add(p => p.ShowEmptyIcon, false)
             .Add(p => p.EmptyContent, builder => builder.AddContent(0, "Custom empty"))
             .Add(p => p.ChildContent, ColumnDefinitions()));
 
         Assert.Contains("Custom empty", empty.Find("tbody").TextContent);
         Assert.DoesNotContain("Nothing here", empty.Find("tbody").TextContent);
+
+        var defaultEmpty = context.Render<W3DataTable<ProjectRow>>(parameters => parameters
+            .Add(p => p.Items, Array.Empty<ProjectRow>())
+            .Add(p => p.EmptyText, "Nothing here")
+            .Add(p => p.EmptyDescription, "Try another filter")
+            .Add(p => p.ShowEmptyIcon, false)
+            .Add(p => p.ChildContent, ColumnDefinitions()));
+
+        Assert.Contains("w3-empty-state", defaultEmpty.Find(".w3-empty-state").GetAttribute("class"));
+        Assert.Contains("Nothing here", defaultEmpty.Find(".w3-empty-state").TextContent);
+        Assert.Contains("Try another filter", defaultEmpty.Find(".w3-empty-state").TextContent);
+        Assert.Empty(defaultEmpty.FindAll(".w3-empty-state-icon"));
+    }
+
+    [Fact]
+    public void DataTableSupportsErrorState()
+    {
+        using var context = new BunitContext();
+        var error = context.Render<W3DataTable<ProjectRow>>(parameters => parameters
+            .Add(p => p.Error, true)
+            .Add(p => p.ErrorText, "Rows could not load")
+            .Add(p => p.ErrorDescription, "Try again")
+            .Add(p => p.ErrorColor, W3Color.PaleRed)
+            .Add(p => p.ErrorTextColor, W3Color.Black)
+            .Add(p => p.ChildContent, ColumnDefinitions()));
+
+        var state = error.Find(".w3-empty-state");
+
+        Assert.Equal("alert", state.GetAttribute("role"));
+        Assert.Equal("assertive", state.GetAttribute("aria-live"));
+        Assert.Contains("Rows could not load", state.TextContent);
+        Assert.Contains("Try again", state.TextContent);
+        Assert.Contains("w3-pale-red", state.GetAttribute("class"));
+        Assert.Empty(error.FindAll("table"));
+
+        var customError = context.Render<W3DataTable<ProjectRow>>(parameters => parameters
+            .Add(p => p.Error, true)
+            .Add(p => p.ErrorContent, builder => builder.AddContent(0, "Custom error"))
+            .Add(p => p.ChildContent, ColumnDefinitions()));
+
+        Assert.Contains("Custom error", customError.Find("[role='alert']").TextContent);
+        Assert.Empty(customError.FindAll(".w3-empty-state"));
     }
 
     [Fact]

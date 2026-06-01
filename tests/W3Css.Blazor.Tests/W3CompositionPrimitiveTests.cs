@@ -190,4 +190,69 @@ public sealed class W3CompositionPrimitiveTests
         Assert.Equal("actions-heading", row.GetAttribute("aria-labelledby"));
         Assert.Contains("w3-action-row-center", row.GetAttribute("class"));
     }
+
+    [Fact]
+    public void EmptyStateRendersRecoverySurface()
+    {
+        using var context = new BunitContext();
+        var cut = context.Render<W3EmptyState>(parameters => parameters
+            .Add(p => p.Kind, W3EmptyStateKind.Error)
+            .Add(p => p.Title, "Projects could not load")
+            .Add(p => p.Description, "Check the connection and retry.")
+            .Add(p => p.Icon, "!")
+            .Add(p => p.Label, "Project load state")
+            .Add(p => p.Role, "alert")
+            .Add(p => p.AriaLive, "assertive")
+            .Add(p => p.Compact, true)
+            .Add(p => p.Centered, false)
+            .Add(p => p.Border, true)
+            .Add(p => p.Round, W3Round.Large)
+            .Add(p => p.Gap, 16)
+            .Add(p => p.ActionsGap, 10)
+            .Add(p => p.Color, W3Color.PaleRed)
+            .Add(p => p.TextColor, W3Color.Black)
+            .Add(p => p.AccentColor, W3Color.Danger)
+            .Add(p => p.IconTextColor, W3Color.White)
+            .Add(p => p.Class, "state-extra")
+            .Add(p => p.Style, "max-width: 32rem;")
+            .Add(p => p.ChildContent, "<p>Server timed out.</p>")
+            .Add(p => p.Actions, "<button type=\"button\">Retry</button>"));
+
+        var state = cut.Find("section");
+        var actions = cut.Find(".w3-empty-state-actions");
+
+        Assert.Equal("alert", state.GetAttribute("role"));
+        Assert.Equal("Project load state", state.GetAttribute("aria-label"));
+        Assert.Equal("assertive", state.GetAttribute("aria-live"));
+        Assert.Contains("w3-empty-state", state.GetAttribute("class"));
+        Assert.Contains("w3-empty-state-compact", state.GetAttribute("class"));
+        Assert.Contains("w3-border", state.GetAttribute("class"));
+        Assert.Contains("w3-round-large", state.GetAttribute("class"));
+        Assert.Contains("w3-pale-red", state.GetAttribute("class"));
+        Assert.Contains("w3-text-black", state.GetAttribute("class"));
+        Assert.Contains("state-extra", state.GetAttribute("class"));
+        Assert.Equal("--w3-empty-state-gap:16px;max-width: 32rem", state.GetAttribute("style"));
+        Assert.Contains("w3-danger", cut.Find(".w3-empty-state-icon").GetAttribute("class"));
+        Assert.Contains("Projects could not load", state.TextContent);
+        Assert.Contains("Server timed out.", state.TextContent);
+        Assert.Equal("State actions", actions.GetAttribute("aria-label"));
+        Assert.Equal("--w3-empty-state-actions-gap:10px", actions.GetAttribute("style"));
+        Assert.Equal(1, actions.QuerySelectorAll("button").Length);
+    }
+
+    [Fact]
+    public void EmptyStateUsesLabelledByWhenProvided()
+    {
+        using var context = new BunitContext();
+        var cut = context.Render<W3EmptyState>(parameters => parameters
+            .Add(p => p.AriaLabelledBy, "empty-heading")
+            .Add(p => p.ShowIcon, false)
+            .Add(p => p.Title, "No rows"));
+
+        var state = cut.Find(".w3-empty-state");
+
+        Assert.Null(state.GetAttribute("aria-label"));
+        Assert.Equal("empty-heading", state.GetAttribute("aria-labelledby"));
+        Assert.Empty(cut.FindAll(".w3-empty-state-icon"));
+    }
 }

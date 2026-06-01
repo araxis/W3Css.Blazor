@@ -1,0 +1,181 @@
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+<section @attributes="AdditionalAttributes"
+         class="@CssClass"
+         style="@StyleValue"
+         role="@Role"
+         aria-label="@AriaLabel"
+         aria-labelledby="@AriaLabelledBy"
+         aria-live="@AriaLive">
+    @if (ShowIcon && !string.IsNullOrWhiteSpace(EffectiveIcon))
+    {
+        <div class="@IconCssClass" aria-hidden="true">@EffectiveIcon</div>
+    }
+
+    <div class="w3-empty-state-body">
+        @if (!string.IsNullOrWhiteSpace(Title))
+        {
+            <p class="w3-empty-state-title">@Title</p>
+        }
+
+        @if (!string.IsNullOrWhiteSpace(Description))
+        {
+            <p class="w3-empty-state-description">@Description</p>
+        }
+
+        @ChildContent
+    </div>
+
+    @if (Actions is not null)
+    {
+        <div class="w3-empty-state-actions"
+             role="group"
+             aria-label="@ActionsLabel"
+             style="@ActionsStyleValue">
+            @Actions
+        </div>
+    }
+</section>
+
+@code {
+    private string CssClass => BuildClass(
+        "w3-empty-state",
+        Compact ? "w3-empty-state-compact" : null,
+        Centered ? "w3-empty-state-centered" : null,
+        Border ? "w3-border" : null,
+        Round.ToClass(),
+        EffectiveColor.ToBackgroundClass(),
+        TextColor.ToTextClass());
+
+    private string IconCssClass => new W3ClassBuilder()
+        .Add("w3-empty-state-icon")
+        .Add(EffectiveAccentColor.ToBackgroundClass())
+        .Add(IconTextColor.ToTextClass())
+        .ToString();
+
+    private string? StyleValue => CombineStyle(
+        Gap >= 0 ? $"--w3-empty-state-gap:{Gap}px" : null,
+        Style);
+
+    private string? ActionsStyleValue => ActionsGap >= 0 ? $"--w3-empty-state-actions-gap:{ActionsGap}px" : null;
+
+    private string? AriaLabel => string.IsNullOrWhiteSpace(AriaLabelledBy) ? Label : null;
+
+    private W3Color EffectiveColor => Color == W3Color.None ? ResolveDefaultColor() : Color;
+
+    private W3Color EffectiveAccentColor => AccentColor == W3Color.None ? ResolveDefaultAccentColor() : AccentColor;
+
+    private string EffectiveIcon => string.IsNullOrWhiteSpace(Icon) ? ResolveDefaultIcon() : Icon;
+
+    [Parameter]
+    public string? Title { get; set; } = "No results";
+
+    [Parameter]
+    public string? Description { get; set; }
+
+    [Parameter]
+    public string? Icon { get; set; }
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public RenderFragment? Actions { get; set; }
+
+    [Parameter]
+    public W3EmptyStateKind Kind { get; set; } = W3EmptyStateKind.Empty;
+
+    [Parameter]
+    public string Label { get; set; } = "Empty state";
+
+    [Parameter]
+    public string? AriaLabelledBy { get; set; }
+
+    [Parameter]
+    public string Role { get; set; } = "status";
+
+    [Parameter]
+    public string AriaLive { get; set; } = "polite";
+
+    [Parameter]
+    public string ActionsLabel { get; set; } = "State actions";
+
+    [Parameter]
+    public bool ShowIcon { get; set; } = true;
+
+    [Parameter]
+    public bool Centered { get; set; } = true;
+
+    [Parameter]
+    public bool Compact { get; set; }
+
+    [Parameter]
+    public bool Border { get; set; } = true;
+
+    [Parameter]
+    public W3Round Round { get; set; } = W3Round.Medium;
+
+    [Parameter]
+    public int Gap { get; set; } = 12;
+
+    [Parameter]
+    public int ActionsGap { get; set; } = 8;
+
+    [Parameter]
+    public W3Color Color { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color TextColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color AccentColor { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color IconTextColor { get; set; } = W3Color.White;
+
+    private W3Color ResolveDefaultColor()
+    {
+        return Kind switch
+        {
+            W3EmptyStateKind.Error => W3Color.PaleRed,
+            W3EmptyStateKind.Success => W3Color.PaleGreen,
+            W3EmptyStateKind.Warning => W3Color.PaleYellow,
+            W3EmptyStateKind.Info => W3Color.PaleBlue,
+            _ => W3Color.Surface
+        };
+    }
+
+    private W3Color ResolveDefaultAccentColor()
+    {
+        return Kind switch
+        {
+            W3EmptyStateKind.Error => W3Color.Danger,
+            W3EmptyStateKind.Success => W3Color.Success,
+            W3EmptyStateKind.Warning => W3Color.Warning,
+            W3EmptyStateKind.Info => W3Color.Info,
+            _ => W3Color.Primary
+        };
+    }
+
+    private string ResolveDefaultIcon()
+    {
+        return Kind switch
+        {
+            W3EmptyStateKind.Error => "!",
+            W3EmptyStateKind.Success => "OK",
+            W3EmptyStateKind.Warning => "!",
+            W3EmptyStateKind.Info => "i",
+            _ => "-"
+        };
+    }
+
+    private static string? CombineStyle(params string?[] styles)
+    {
+        var style = string.Join(';', styles
+            .Where(value => !string.IsNullOrWhiteSpace(value))
+            .Select(value => value!.Trim().TrimEnd(';')));
+
+        return string.IsNullOrWhiteSpace(style) ? null : style;
+    }
+}

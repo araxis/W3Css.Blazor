@@ -247,6 +247,7 @@ public partial class NavMenu : IAsyncDisposable
             new("components/avatar-group", "Avatar Group"),
             new("components/icons", "Icons"),
             new("components/skeleton", "Skeleton", Keywords: "placeholder loading"),
+            new("components/empty-state", "Empty State", Keywords: "empty zero error recovery state"),
             new("components/chip", "Chip"),
         ]),
         new(null,

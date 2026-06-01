@@ -40,12 +40,13 @@ Last updated: 2026-06-01
 - 0.3.0 stays non-breaking and avoids broad new component surface.
 - Added first-screen adoption patterns, README onboarding improvements, selected public XML documentation guard coverage, package/release metadata, local/public package smoke verification, and browser verification for top adoption pages.
 
-## Phase 9: Quality Hardening (Local Slice Complete)
+## Phase 9: Quality Hardening (Complete)
 
 - 0.4.0 stays non-breaking and avoids broad new component surface.
 - Expand XML documentation coverage and guards across exported public APIs.
 - Add docs/API parity coverage for public component parameters.
 - Add automated browser quality sweep tooling for adoption and high-risk interactive docs routes.
+- Published `v0.4.0` after main CI, release workflow, and public package smoke passed.
 
 ## Current Status Check
 
@@ -57,4 +58,4 @@ Last updated: 2026-06-01
   - `pwsh ./tools/docs-browser-sweep.ps1 -BaseUrl http://localhost:5017 -StartServer`
 
 - Components implemented: 127 component files plus docs topic coverage.
-- Test coverage: 477 passing tests for the 0.4.0 release candidate.
+- Test coverage: 477 passing tests for the 0.4.0 release.

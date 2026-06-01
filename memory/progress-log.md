@@ -11,7 +11,7 @@ Last updated: 2026-06-01
   - replaced the selected public API XML guard with broad exported public API coverage;
   - added a component docs/API parity guard for public parameter tables;
   - added `tools/docs-browser-sweep.ps1` for Playwright-backed route, console-error, and horizontal-overflow checks;
-  - updated README, Versions docs, and memory files for the release candidate.
+  - updated README, Versions docs, and memory files for the release.
 - Verification for the 0.4.0 quality-hardening slice:
   - `dotnet build W3Css.Blazor.slnx --configuration Release /nr:false` (0 warnings, 0 errors);
   - `dotnet test W3Css.Blazor.slnx --configuration Release --no-build /nr:false` (477 passing);
@@ -19,6 +19,12 @@ Last updated: 2026-06-01
   - `pwsh ./tools/package-consumer-smoke.ps1 -PackageVersion 0.4.0 -PackageSource artifacts/packages`;
   - `pwsh ./tools/docs-browser-sweep.ps1 -BaseUrl http://localhost:5017 -StartServer` (23 routes across desktop and mobile, no console errors or horizontal overflow).
 - Fixed app-bar action edge spacing so bordered trailing actions in contained app shells do not sit flush against the clipping boundary; browser-measured the Patterns dashboard with an 8 px right gap and no horizontal overflow.
+- Release completion:
+  - merged the 0.4.0 quality-hardening slice into `main`;
+  - waited for the `main` CI and Pages runs to pass;
+  - tagged `v0.4.0` on the merged release commit;
+  - verified the release workflow passed through restore, build, test, pack, release artifact creation, publish configuration validation, and package publishing;
+  - verified `./tools/package-consumer-smoke.ps1 -PackageVersion 0.4.0` from the public package feed.
 
 - Started the 0.3.0 adoption-polish release slice:
   - bumped package metadata to `0.3.0`;

@@ -4,6 +4,17 @@ Last updated: 2026-06-01
 
 ## 2026-06-01
 
+- Continued the keyboard interaction polish pass on `W3Tabs`:
+  - added ArrowRight/ArrowDown and ArrowLeft/ArrowUp activation across enabled tabs;
+  - added Home/End first-or-last enabled tab activation;
+  - added Delete handling for closeable focused tabs;
+  - documented the tab keyboard interaction table and added focused navigation/docs coverage.
+- Verification:
+  - focused navigation/docs tests: 142 passing;
+  - `dotnet build W3Css.Blazor.slnx --configuration Release /nr:false` (0 warnings, 0 errors);
+  - `dotnet test tests/W3Css.Blazor.Tests/W3Css.Blazor.Tests.csproj --configuration Release --no-build /nr:false` (434 passing);
+  - `dotnet pack src/W3Css.Blazor/W3Css.Blazor.csproj --configuration Release --no-build --output artifacts/packages /nr:false`;
+  - browser-verified `/components/tabs` after restarting the docs server on port 5016: the keyboard section renders, arrow/Home activation works, and no visible error or horizontal overflow appears.
 - Continued the theme and keyboard polish pass:
   - added `FocusColor`, `FocusWidth`, and `FocusOffset` to `W3Theme`;
   - emitted focus variables from `W3ThemeProvider`;

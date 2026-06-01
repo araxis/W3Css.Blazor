@@ -30,6 +30,13 @@
         </W3Stack>
     </DocExample>
 
+    <DocExample Title="Action Row" Description="Use wrapping and end alignment for dialog, form, and card actions that need reliable spacing." Code="@ActionRowCode">
+        <W3Stack Horizontal="true" Wrap="true" AlignCenter="true" JustifyEnd="true" Gap="8">
+            <W3Button Border="true" Round="W3Round.Medium">Cancel</W3Button>
+            <W3Button Color="W3Color.Primary" TextColor="W3Color.White" Round="W3Round.Medium">Save changes</W3Button>
+        </W3Stack>
+    </DocExample>
+
     <section class="doc-section">
         <h2>Parameters</h2>
         <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
@@ -41,6 +48,8 @@
                 <tr><td>Horizontal</td><td>bool</td><td>false</td><td>Row direction instead of column direction</td></tr>
                 <tr><td>Wrap</td><td>bool</td><td>false</td><td>Allows row content to wrap</td></tr>
                 <tr><td>AlignCenter</td><td>bool</td><td>false</td><td>Centers children on the cross axis</td></tr>
+                <tr><td>JustifyCenter</td><td>bool</td><td>false</td><td>Centers children on the main axis</td></tr>
+                <tr><td>JustifyEnd</td><td>bool</td><td>false</td><td>Aligns children to the end of the main axis</td></tr>
                 <tr><td>JustifyBetween</td><td>bool</td><td>false</td><td>Spaces children across the main axis</td></tr>
                 <tr><td>Gap</td><td>int</td><td>16</td><td>Gap in pixels</td></tr>
                 <tr><td>Color</td><td>W3Color</td><td>None</td><td>Background color class</td></tr>
@@ -74,6 +83,13 @@
     <W3Tag Color="W3Color.Teal" TextColor="W3Color.White" Round="W3Round.Medium">Live</W3Tag>
     <span>Production workspace</span>
     <W3Button Size="W3Size.Small" Border="true">Open</W3Button>
+</W3Stack>
+""";
+
+    private const string ActionRowCode = """
+<W3Stack Horizontal="true" Wrap="true" AlignCenter="true" JustifyEnd="true" Gap="8">
+    <W3Button Border="true" Round="W3Round.Medium">Cancel</W3Button>
+    <W3Button Color="W3Color.Primary" TextColor="W3Color.White" Round="W3Round.Medium">Save changes</W3Button>
 </W3Stack>
 """;
 }

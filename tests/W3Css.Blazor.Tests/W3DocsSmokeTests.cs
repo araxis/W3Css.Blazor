@@ -864,6 +864,8 @@ public sealed class W3DocsSmokeTests
         Assert.Contains("Extra attributes on the spacer element", spacerPage.Markup);
 
         var stackPage = context.Render<StackPage>();
+        Assert.Contains("Action Row", stackPage.Markup);
+        Assert.Contains("JustifyEnd", stackPage.Markup);
         Assert.Contains("Extra attributes on the stack root", stackPage.Markup);
 
         var dividerPage = context.Render<DividerPage>();

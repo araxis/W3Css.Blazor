@@ -4,6 +4,16 @@ Last updated: 2026-06-01
 
 ## 2026-06-01
 
+- Continued the keyboard interaction polish pass on `W3Popover`:
+  - added Escape close behavior with focus returned to the trigger;
+  - connected trigger `aria-controls` to a generated popover content id;
+  - documented the popover keyboard interaction table and added focused overlay/docs coverage.
+- Verification:
+  - focused popover/docs tests: 2 passing;
+  - `dotnet test tests/W3Css.Blazor.Tests/W3Css.Blazor.Tests.csproj --configuration Release` (443 passing);
+  - `dotnet build W3Css.Blazor.slnx --configuration Release` (0 warnings, 0 errors);
+  - `dotnet pack src/W3Css.Blazor/W3Css.Blazor.csproj --configuration Release --no-build`;
+  - browser-verified `/components/popover` after restarting the docs server on port 5016: the keyboard section renders, Escape closes the open popover and returns focus to the trigger, no visible error appears, and no horizontal overflow appears.
 - Continued the keyboard interaction polish pass on `W3Dropdown`:
   - added ArrowDown/ArrowUp open behavior from the dropdown trigger;
   - added Escape close behavior with focus returned to the trigger;

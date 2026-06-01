@@ -1,0 +1,73 @@
+@namespace W3Css.Blazor.Tests
+@using System.ComponentModel.DataAnnotations
+@using Microsoft.AspNetCore.Components.Forms
+@using W3Css.Blazor.Components
+
+<EditForm EditContext="@EditContext">
+    <DataAnnotationsValidator />
+
+    <W3Field TValue="int"
+             Label="Seats"
+             ForId="required-seats"
+             For="@(() => Model.Seats)"
+             HelpText="Choose between 1 and 12 seats.">
+        <W3NumberInput TValue="int"
+                       Id="required-seats"
+                       @bind-Value="Model.Seats"
+                       Min="1"
+                       Max="12"
+                       Step="1"
+                       Required="true"
+                       Border="true" />
+    </W3Field>
+
+    <W3Field TValue="DateOnly?"
+             Label="Start date"
+             ForId="required-date"
+             For="@(() => Model.StartDate)"
+             HelpText="Choose a date.">
+        <W3DateInput Id="required-date"
+                     @bind-Value="Model.StartDate"
+                     Required="true"
+                     Border="true" />
+    </W3Field>
+
+    <W3Field TValue="TimeOnly?"
+             Label="Start time"
+             ForId="required-time"
+             For="@(() => Model.StartTime)"
+             HelpText="Choose a time.">
+        <W3TimeInput Id="required-time"
+                     @bind-Value="Model.StartTime"
+                     Required="true"
+                     Border="true" />
+    </W3Field>
+</EditForm>
+
+@code {
+    public ValueInputValidationModel Model { get; } = new();
+
+    public EditContext EditContext { get; private set; } = default!;
+
+    protected override void OnInitialized()
+    {
+        EditContext = new EditContext(Model);
+    }
+
+    public bool Validate()
+    {
+        return EditContext.Validate();
+    }
+
+    public sealed class ValueInputValidationModel
+    {
+        [Range(1, 12, ErrorMessage = "Enter a seat count from 1 to 12.")]
+        public int Seats { get; set; }
+
+        [Required(ErrorMessage = "Choose a start date.")]
+        public DateOnly? StartDate { get; set; }
+
+        [Required(ErrorMessage = "Choose a start time.")]
+        public TimeOnly? StartTime { get; set; }
+    }
+}

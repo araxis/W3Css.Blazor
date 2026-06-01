@@ -1,6 +1,19 @@
 # Progress Log
 
-Last updated: 2026-05-31
+Last updated: 2026-06-01
+
+## 2026-06-01
+
+- Continued the form-control UX audit on value inputs:
+  - added `Required`, `aria-required`, and validation-driven `aria-invalid` support to `W3NumberInput`, `W3DateInput`, and `W3TimeInput`;
+  - added required number/date/time docs examples with live validation-friendly updates and `novalidate` forms;
+  - added focused native input and validation-host coverage plus docs smoke coverage.
+- Verification:
+  - focused native input/docs tests: 130 passing;
+  - `dotnet build W3Css.Blazor.slnx --configuration Release /nr:false` (0 warnings, 0 errors);
+  - `dotnet test tests/W3Css.Blazor.Tests/W3Css.Blazor.Tests.csproj --configuration Release --no-build /nr:false` (429 passing);
+  - `dotnet pack src/W3Css.Blazor/W3Css.Blazor.csproj --configuration Release --no-build --output artifacts/packages /nr:false`;
+  - browser-verified `/components/number-input`, `/components/date-input`, and `/components/time-input` after restarting the docs server on port 5016: required messages appear, clear after valid input, required/ARIA validation attributes render, and no visible error appears.
 
 ## 2026-05-31
 

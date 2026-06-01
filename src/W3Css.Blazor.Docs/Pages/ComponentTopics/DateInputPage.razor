@@ -1,4 +1,5 @@
 @page "/components/date-input"
+@using System.ComponentModel.DataAnnotations
 
 <PageTitle>W3DateInput</PageTitle>
 
@@ -7,7 +8,7 @@
     <DocPager PreviousHref="components/date-range-picker" PreviousText="Date Range Picker" NextHref="components/time-input" NextText="Time Input" />
 
     <p class="w3-large">`W3DateInput` wraps the native browser date control for nullable `DateOnly` values.</p>
-    <p>Use it for booking dates, filters, deadlines, and schedule forms where native platform date entry is enough.</p>
+    <p>Use it for booking dates, filters, deadlines, and schedule forms where native platform date entry is enough. Add `novalidate` on the form when validation messages should handle required feedback.</p>
 
     <DocExample Title="Date Field" Description="Date values are formatted as `yyyy-MM-dd` for the native input and parsed back into `DateOnly?`." Code="@BasicCode">
         <EditForm Model="@ScheduleModel">
@@ -29,6 +30,23 @@
         </div>
     </DocExample>
 
+    <DocExample Title="Required Date" Description="Use Required with a nullable date and a validation attribute when a date must be chosen." Code="@RequiredCode">
+        <EditForm Model="@RequiredDateModel" OnValidSubmit="HandleRequiredSubmit" OnInvalidSubmit="HandleRequiredSubmit" novalidate>
+            <DataAnnotationsValidator />
+            <W3Field TValue="DateOnly?" Label="Start date" ForId="required-date" For="@(() => RequiredDateModel.StartDate)" HelpText="Choose a date before continuing.">
+                <W3DateInput Id="required-date"
+                             @bind-Value="RequiredDateModel.StartDate"
+                             Min="@MinimumDate"
+                             Max="@MaximumDate"
+                             Required="true"
+                             UpdateOnInput="true"
+                             Border="true"
+                             Round="W3Round.Medium" />
+            </W3Field>
+            <W3Button Type="submit" Color="W3Color.Teal" TextColor="W3Color.White">Validate</W3Button>
+        </EditForm>
+    </DocExample>
+
     <section class="doc-section">
         <h2>Parameters</h2>
         <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
@@ -44,6 +62,7 @@
                 <tr><td>Max</td><td>DateOnly?</td><td>null</td><td>`max` attribute in `yyyy-MM-dd` format</td></tr>
                 <tr><td>UpdateOnInput</td><td>bool</td><td>false</td><td>Updates on `input` instead of `change`</td></tr>
                 <tr><td>ReadOnly</td><td>bool</td><td>false</td><td>`readonly` attribute</td></tr>
+                <tr><td>Required</td><td>bool</td><td>false</td><td>`required` and `aria-required` attributes</td></tr>
                 <tr><td>Disabled</td><td>bool</td><td>false</td><td>`disabled` attribute</td></tr>
                 <tr><td>Border</td><td>bool</td><td>false</td><td>`w3-border`</td></tr>
                 <tr><td>Color</td><td>W3Color</td><td>None</td><td>Background color class</td></tr>
@@ -61,6 +80,7 @@
 
 @code {
     private readonly DateInputExampleModel ScheduleModel = new();
+    private readonly RequiredDateInputExampleModel RequiredDateModel = new();
     private static readonly DateOnly MinimumDate = new(2026, 1, 1);
     private static readonly DateOnly MaximumDate = new(2026, 12, 31);
 
@@ -82,9 +102,52 @@
 </div>
 """;
 
+    private const string RequiredCode = """
+@using System.ComponentModel.DataAnnotations
+
+<EditForm Model="@model" OnValidSubmit="HandleSubmit" OnInvalidSubmit="HandleSubmit" novalidate>
+    <DataAnnotationsValidator />
+    <W3Field TValue="DateOnly?" Label="Start date" ForId="required-date" For="@(() => model.StartDate)" HelpText="Choose a date before continuing.">
+        <W3DateInput Id="required-date"
+                     @bind-Value="model.StartDate"
+                     Min="new DateOnly(2026, 1, 1)"
+                     Max="new DateOnly(2026, 12, 31)"
+                     Required="true"
+                     UpdateOnInput="true"
+                     Border="true"
+                     Round="W3Round.Medium" />
+    </W3Field>
+    <W3Button Type="submit" Color="W3Color.Teal" TextColor="W3Color.White">Validate</W3Button>
+</EditForm>
+
+@code {
+    private readonly RequiredDateInputExampleModel model = new();
+
+    private void HandleSubmit()
+    {
+    }
+
+    private sealed class RequiredDateInputExampleModel
+    {
+        [Required(ErrorMessage = "Choose a start date.")]
+        public DateOnly? StartDate { get; set; }
+    }
+}
+""";
+
     private sealed class DateInputExampleModel
     {
         public DateOnly? StartDate { get; set; } = new DateOnly(2026, 6, 15);
         public DateOnly? FilterDate { get; set; } = new DateOnly(2026, 7, 1);
+    }
+
+    private sealed class RequiredDateInputExampleModel
+    {
+        [Required(ErrorMessage = "Choose a start date.")]
+        public DateOnly? StartDate { get; set; }
+    }
+
+    private void HandleRequiredSubmit()
+    {
     }
 }

@@ -106,13 +106,13 @@ This model is intentionally similar to mature Blazor libraries, while keeping im
 | `W3NumberInput<TValue>` | Implemented | Native numeric input with W3.CSS styling, parsing helpers, required state, and validation ARIA support. |
 | `W3DateInput` | Implemented | Date picker input with range/date binding helpers, required state, and validation ARIA support. |
 | `W3TimeInput` | Implemented | Native time input with range/formatting helpers, required state, and validation ARIA support. |
-| `W3Slider<TValue>` | Implemented | Native range input wrapper with step/min/max. |
-| `W3Switch` | Implemented | Accessible toggle-style checkbox. |
+| `W3Slider<TValue>` | Implemented | Native range input wrapper with step/min/max, accessible label/value text, and validation ARIA support. |
+| `W3Switch` | Implemented | Accessible toggle-style checkbox with required-state and validation ARIA support. |
 | `W3ToggleGroup<TValue>` / `W3ToggleItem<TValue>` | Implemented | Segmented single/multi selector with `aria-pressed` items. |
-| `W3ColorInput` | Implemented | Native color input with compact/full-width modes, plus an opt-in `ShowPalette` picker (preview + native + hex field + preset palette) that absorbed the former W3ColorPicker. |
-| `W3FileInput` | Implemented | `InputFile` wrapper with accept/multiple/listing. |
-| `W3DropZone` | Implemented | Large-file input and drag/drop surface component. |
-| `W3Autocomplete` | Implemented | Searchable listbox/combo with templates and keyboard interaction. |
+| `W3ColorInput` | Implemented | Native color input with compact/full-width modes, required-state and validation ARIA support, plus an opt-in `ShowPalette` picker (preview + native + hex field + preset palette) that absorbed the former W3ColorPicker. |
+| `W3FileInput` | Implemented | `InputFile` wrapper with accept/multiple/listing, required-state support, accessible input labeling, and selected-file list labeling. |
+| `W3DropZone` | Implemented | Large-file input and drag/drop surface component with required-state support and selected-file list labeling. |
+| `W3Autocomplete` | Implemented | Searchable listbox/combo with templates, keyboard interaction, required-state support, and validation ARIA. |
 | `W3Select` | Implemented | Generic select wrapper with validation patterns and first-class disabled placeholder support. |
 | `W3SelectItem` | Implemented | Typed option helper used inside `W3Select` and W3.CSS-first composition. |
 | `W3Checkbox` | Implemented | Checkbox with validation-friendly binding, required state, and label spacing hooks. |
@@ -121,7 +121,7 @@ This model is intentionally similar to mature Blazor libraries, while keeping im
 | `W3TextArea` | Implemented | Text area wrapper with validation support and optional input-time updates. |
 | `W3Field` | Implemented | Label/help/validation wrapper for form fields, with stable spacing hooks and custom validation message classes. |
 | `W3Form` | Implemented | W3.CSS-first form wrapper using EditForm-style callbacks, child-control disabled/busy states, and class/style passthrough. |
-| `W3Rating` | Implemented | Icon-first rating input component. |
+| `W3Rating` | Implemented | Icon-first rating input component with optional validation expression and required-state support. |
 | `W3DateRangePicker` | Implemented | Date range selector composed from two `W3DateInput` controls (range capability a single date input lacks). |
 
 ## Navigation
@@ -224,7 +224,7 @@ This model is intentionally similar to mature Blazor libraries, while keeping im
 | Content display and timeline | Implemented | Tree, chat, timeline, data table, rating, drop zone, and gallery coverage. |
 | Feedback and loading | Implemented | Spinner, skeleton, toast, file, autocomplete, and alert coverage. |
 | Package validation | Implemented | `dotnet pack` generates `W3Css.Blazor.0.1.0.nupkg`; CI uploads package artifact. |
-| Test count | Implemented | `dotnet test` reports 429 passing tests. |
+| Test count | Implemented | `dotnet test` reports 430 passing tests. |
 
 ## Component Compatibility Backlog
 

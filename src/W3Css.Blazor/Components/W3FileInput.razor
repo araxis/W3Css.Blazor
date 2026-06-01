@@ -10,11 +10,14 @@
            accept="@Accept"
            multiple="@Multiple"
            disabled="@Disabled"
+           required="@Required"
+           aria-label="@AriaLabel"
+           aria-required="@AriaRequired"
            OnChange="@HandleChange" />
 
 @if (ShowSelectedFiles && SelectedFiles.Count > 0)
 {
-    <ul class="@SelectedListCssClass" aria-live="polite">
+    <ul class="@SelectedListCssClass" aria-live="polite" aria-label="@SelectedFilesLabel">
         @foreach (var file in SelectedFiles)
         {
             <li>@file.Name</li>
@@ -24,6 +27,7 @@
 
 @code {
     private IReadOnlyList<IBrowserFile> SelectedFiles { get; set; } = [];
+    private string? AriaRequired => Required ? "true" : null;
 
     private string InputCssClass => new W3ClassBuilder()
         .Add("w3-input")
@@ -59,6 +63,12 @@
     public bool Disabled { get; set; }
 
     [Parameter]
+    public bool Required { get; set; }
+
+    [Parameter]
+    public string? AriaLabel { get; set; }
+
+    [Parameter]
     public bool Border { get; set; }
 
     [Parameter]
@@ -78,6 +88,9 @@
 
     [Parameter]
     public string? SelectedFilesClass { get; set; }
+
+    [Parameter]
+    public string SelectedFilesLabel { get; set; } = "Selected files";
 
     [Parameter]
     public EventCallback<InputFileChangeEventArgs> OnChange { get; set; }

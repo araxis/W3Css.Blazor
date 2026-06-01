@@ -20,6 +20,7 @@ public sealed class W3AutocompleteTests
             .Add(p => p.Items, ["Ada Lovelace", "Grace Hopper", "Linus Torvalds"])
             .Add(p => p.Id, "owner-autocomplete")
             .Add(p => p.Placeholder, "Search people")
+            .Add(p => p.Required, true)
             .Add(p => p.Border, true)
             .Add(p => p.Color, W3Color.White)
             .Add(p => p.TextColor, W3Color.Black)
@@ -40,6 +41,8 @@ public sealed class W3AutocompleteTests
         Assert.Equal("max-width: 20rem;", root.GetAttribute("style"));
         Assert.Equal("owner-autocomplete", input.GetAttribute("id"));
         Assert.Equal("combobox", input.GetAttribute("role"));
+        Assert.True(input.HasAttribute("required"));
+        Assert.Equal("true", input.GetAttribute("aria-required"));
         Assert.Equal("Search people", input.GetAttribute("placeholder"));
         Assert.Contains("w3-input", input.GetAttribute("class"));
         Assert.Contains("w3-border", input.GetAttribute("class"));

@@ -1,4 +1,5 @@
 @using W3Css.Blazor.Internal
+@using Microsoft.AspNetCore.Components.Forms
 @inherits W3FormComponentBase<string?>
 
 @if (ShowPalette)
@@ -14,14 +15,20 @@
                    class="w3-color-input-native"
                    value="@PreviewColor"
                    disabled="@Disabled"
+                   required="@Required"
                    aria-label="@($"{Label} picker")"
+                   aria-required="@AriaRequired"
+                   aria-invalid="@AriaInvalid"
                    @oninput="HandleInput"
                    @onchange="HandleChange" />
             <input type="text"
-                   class="w3-input w3-color-input-hex"
+                   class="@HexInputCssClass"
                    value="@CurrentValueAsString"
                    disabled="@Disabled"
+                   required="@Required"
                    aria-label="@($"{Label} hex value")"
+                   aria-required="@AriaRequired"
+                   aria-invalid="@AriaInvalid"
                    @onchange="HandleHexChange" />
         </div>
 
@@ -53,6 +60,10 @@ else
            class="@ColorCssClass"
            style="@Style"
            disabled="@Disabled"
+           required="@Required"
+           aria-label="@AriaLabel"
+           aria-required="@AriaRequired"
+           aria-invalid="@AriaInvalid"
            value="@CurrentValueAsString"
            @oninput="HandleInput"
            @onchange="HandleChange" />
@@ -62,13 +73,23 @@ else
     // The canonical W3.CSS color control: a native color input by default, with
     // an opt-in palette/preview/hex picker for design-tooling workflows.
     private string ColorCssClass => BuildControlClass("w3-input", "w3-color-input", FullWidth ? "w3-color-input-block" : null);
+    private string? AriaLabel => string.IsNullOrWhiteSpace(Label) ? null : Label;
+    private string? AriaRequired => Required ? "true" : null;
+    private string? AriaInvalid => EditContext?.GetValidationMessages(FieldIdentifier).Any() == true ? "true" : null;
 
     private string PickerCssClass => new W3ClassBuilder()
         .Add("w3-color-input-picker")
         .AddIf(Border, "w3-border")
         .Add(Round.ToClass())
         .AddIf(Disabled, "w3-disabled")
+        .Add(CssClass)
         .Add(Class)
+        .ToString();
+
+    private string HexInputCssClass => new W3ClassBuilder()
+        .Add("w3-input")
+        .Add("w3-color-input-hex")
+        .Add(CssClass)
         .ToString();
 
     private string PreviewColor => string.IsNullOrWhiteSpace(CurrentValueAsString) ? "#ffffff" : CurrentValueAsString!;
@@ -83,6 +104,9 @@ else
 
     [Parameter]
     public bool FullWidth { get; set; }
+
+    [Parameter]
+    public bool Required { get; set; }
 
     [Parameter]
     public bool UpdateOnInput { get; set; } = true;

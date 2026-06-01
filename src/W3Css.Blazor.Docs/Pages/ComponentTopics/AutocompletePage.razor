@@ -1,4 +1,5 @@
 @page "/components/autocomplete"
+@using System.ComponentModel.DataAnnotations
 
 <PageTitle>W3Autocomplete</PageTitle>
 
@@ -7,7 +8,7 @@
     <DocPager PreviousHref="components/drop-zone" PreviousText="Drop Zone" NextHref="components/select" NextText="Select" />
 
     <p class="w3-large"><code>W3Autocomplete&lt;TValue&gt;</code> renders a searchable input and W3.CSS-styled listbox for selecting an item from a typed collection.</p>
-    <p>Use it when a select list would be too long, but a full data grid or dialog would be too much.</p>
+    <p>Use it when a select list would be too long, but a full data grid or dialog would be too much. Add `novalidate` on the form when validation messages should handle required feedback.</p>
 
     <DocExample Title="Searchable People" Description="Bind to the selected value and let the component filter by display text while the user types." Code="@PeopleCode">
         <EditForm Model="@AutocompleteModel">
@@ -42,6 +43,23 @@
         <p class="w3-small">Selected workspace: <strong>@(AutocompleteModel.Workspace?.Name ?? "None")</strong></p>
     </DocExample>
 
+    <DocExample Title="Required Autocomplete" Description="Use Required with a validation attribute when a typed selection must be chosen." Code="@RequiredCode">
+        <EditForm Model="@RequiredAutocompleteModel" OnValidSubmit="HandleRequiredSubmit" OnInvalidSubmit="HandleRequiredSubmit" novalidate>
+            <DataAnnotationsValidator />
+            <W3Field TValue="string" Label="Reviewer" ForId="required-reviewer" For="@(() => RequiredAutocompleteModel.Reviewer)" HelpText="Type and select a reviewer.">
+                <W3Autocomplete TValue="string"
+                                Id="required-reviewer"
+                                @bind-Value="RequiredAutocompleteModel.Reviewer"
+                                Items="People"
+                                Placeholder="Search reviewers"
+                                Required="true"
+                                Border="true"
+                                Round="W3Round.Medium" />
+            </W3Field>
+            <W3Button Type="submit" Color="W3Color.Teal" TextColor="W3Color.White">Validate</W3Button>
+        </EditForm>
+    </DocExample>
+
     <section class="doc-section">
         <h2>Parameters</h2>
         <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
@@ -66,6 +84,7 @@
                 <tr><td>Loading</td><td>bool</td><td>false</td><td>Shows LoadingText instead of results</td></tr>
                 <tr><td>LoadingText</td><td>string</td><td>Loading...</td><td>Text displayed while Loading is true</td></tr>
                 <tr><td>ReadOnly</td><td>bool</td><td>false</td><td>`readonly` attribute and prevents opening</td></tr>
+                <tr><td>Required</td><td>bool</td><td>false</td><td>`required` and `aria-required` attributes</td></tr>
                 <tr><td>Disabled</td><td>bool</td><td>false</td><td>`disabled` attribute</td></tr>
                 <tr><td>OpenOnFocus</td><td>bool</td><td>true</td><td>Opens the list when the input receives focus</td></tr>
                 <tr><td>CloseOnOutsideClick</td><td>bool</td><td>true</td><td>Renders the close layer while open</td></tr>
@@ -113,6 +132,7 @@
 
 @code {
     private readonly AutocompleteExampleModel AutocompleteModel = new();
+    private readonly RequiredAutocompleteExampleModel RequiredAutocompleteModel = new();
 
     private static readonly string[] People =
     [
@@ -159,10 +179,53 @@
 </W3Autocomplete>
 """;
 
+    private const string RequiredCode = """
+@using System.ComponentModel.DataAnnotations
+
+<EditForm Model="@model" OnValidSubmit="HandleSubmit" OnInvalidSubmit="HandleSubmit" novalidate>
+    <DataAnnotationsValidator />
+    <W3Field TValue="string" Label="Reviewer" ForId="required-reviewer" For="@(() => model.Reviewer)" HelpText="Type and select a reviewer.">
+        <W3Autocomplete TValue="string"
+                        Id="required-reviewer"
+                        @bind-Value="model.Reviewer"
+                        Items="people"
+                        Placeholder="Search reviewers"
+                        Required="true"
+                        Border="true"
+                        Round="W3Round.Medium" />
+    </W3Field>
+    <W3Button Type="submit" Color="W3Color.Teal" TextColor="W3Color.White">Validate</W3Button>
+</EditForm>
+
+@code {
+    private readonly RequiredAutocompleteExampleModel model = new();
+
+    private void HandleSubmit()
+    {
+    }
+
+    private sealed class RequiredAutocompleteExampleModel
+    {
+        [Required(ErrorMessage = "Choose a reviewer.")]
+        public string? Reviewer { get; set; }
+    }
+}
+""";
+
     private sealed class AutocompleteExampleModel
     {
         public string? Owner { get; set; }
         public WorkspaceOption? Workspace { get; set; }
+    }
+
+    private sealed class RequiredAutocompleteExampleModel
+    {
+        [Required(ErrorMessage = "Choose a reviewer.")]
+        public string? Reviewer { get; set; }
+    }
+
+    private void HandleRequiredSubmit()
+    {
     }
 
     private sealed record WorkspaceOption(string Id, string Name, string Team);

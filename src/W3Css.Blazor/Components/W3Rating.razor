@@ -1,11 +1,16 @@
+@using System.Linq.Expressions
+@using Microsoft.AspNetCore.Components.Forms
 @using W3Css.Blazor.Internal
 @inherits W3ComponentBase
+@implements IDisposable
 
 <div @attributes="AdditionalAttributes"
      class="@CssClass"
      style="@StyleValue"
      role="radiogroup"
      aria-label="@Label"
+     aria-required="@AriaRequired"
+     aria-invalid="@AriaInvalid"
      aria-readonly="@AriaReadOnly"
      aria-disabled="@AriaDisabled">
     @for (var index = 1; index <= SafeMax; index++)
@@ -37,11 +42,16 @@
     private string AriaReadOnly => ReadOnly ? "true" : "false";
 
     private string AriaDisabled => Disabled ? "true" : "false";
+    private string? AriaRequired => Required ? "true" : null;
+    private string? AriaInvalid => HasFieldIdentifier && CascadedEditContext?.GetValidationMessages(fieldIdentifier).Any() == true ? "true" : null;
+    private string? ValidationCssClass => HasFieldIdentifier ? CascadedEditContext?.FieldCssClass(fieldIdentifier) : null;
+    private bool HasFieldIdentifier => CascadedEditContext is not null && ValueExpression is not null;
 
     private string CssClass => BuildClass(
         "w3-rating",
         ReadOnly ? "w3-rating-readonly" : null,
-        Disabled ? "w3-rating-disabled" : null);
+        Disabled ? "w3-rating-disabled" : null,
+        ValidationCssClass);
 
     private string? StyleValue => CombineStyle(Gap >= 0 ? $"--w3-rating-gap:{Gap}px" : null, Style);
 
@@ -84,13 +94,27 @@
         var nextValue = Clearable && rating == ClampedValue ? 0 : rating;
         Value = nextValue;
         await ValueChanged.InvokeAsync(nextValue);
+
+        if (HasFieldIdentifier)
+        {
+            CascadedEditContext!.NotifyFieldChanged(fieldIdentifier);
+        }
     }
+
+    private FieldIdentifier fieldIdentifier;
+    private EditContext? previousEditContext;
+
+    [CascadingParameter]
+    private EditContext? CascadedEditContext { get; set; }
 
     [Parameter]
     public int Value { get; set; }
 
     [Parameter]
     public EventCallback<int> ValueChanged { get; set; }
+
+    [Parameter]
+    public Expression<Func<int>>? ValueExpression { get; set; }
 
     [Parameter]
     public int Max { get; set; } = 5;
@@ -103,6 +127,9 @@
 
     [Parameter]
     public bool Disabled { get; set; }
+
+    [Parameter]
+    public bool Required { get; set; }
 
     [Parameter]
     public bool Clearable { get; set; }
@@ -127,6 +154,42 @@
 
     [Parameter]
     public int Gap { get; set; } = 2;
+
+    protected override void OnParametersSet()
+    {
+        if (previousEditContext != CascadedEditContext)
+        {
+            if (previousEditContext is not null)
+            {
+                previousEditContext.OnValidationStateChanged -= HandleValidationStateChanged;
+            }
+
+            if (CascadedEditContext is not null)
+            {
+                CascadedEditContext.OnValidationStateChanged += HandleValidationStateChanged;
+            }
+
+            previousEditContext = CascadedEditContext;
+        }
+
+        if (CascadedEditContext is not null && ValueExpression is not null)
+        {
+            fieldIdentifier = FieldIdentifier.Create(ValueExpression);
+        }
+    }
+
+    private void HandleValidationStateChanged(object? sender, ValidationStateChangedEventArgs args)
+    {
+        _ = InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose()
+    {
+        if (previousEditContext is not null)
+        {
+            previousEditContext.OnValidationStateChanged -= HandleValidationStateChanged;
+        }
+    }
 
     private static string? CombineStyle(params string?[] styles)
     {

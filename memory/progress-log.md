@@ -4,6 +4,17 @@ Last updated: 2026-06-01
 
 ## 2026-06-01
 
+- Continued the form-control UX audit on remaining input controls:
+  - added accessible range labels/value text and validation ARIA to `W3Slider`;
+  - added required-state and validation polish to `W3Switch`, `W3Rating`, `W3ColorInput`, `W3FileInput`, `W3DropZone`, and `W3Autocomplete`;
+  - refreshed required validation and accessibility examples across the related docs pages;
+  - added focused validation-host coverage and docs smoke coverage.
+- Verification:
+  - focused native input/docs tests: 148 passing;
+  - `dotnet build W3Css.Blazor.slnx --configuration Release /nr:false` (0 warnings, 0 errors);
+  - `dotnet test tests/W3Css.Blazor.Tests/W3Css.Blazor.Tests.csproj --configuration Release --no-build /nr:false` (430 passing);
+  - `dotnet pack src/W3Css.Blazor/W3Css.Blazor.csproj --configuration Release --no-build --output artifacts/packages /nr:false`;
+  - browser-verified `/components/switch`, `/components/rating`, and `/components/autocomplete` required flows, plus `/components/slider`, `/components/color-input`, `/components/file-input`, and `/components/drop-zone` static rendering with no visible error or horizontal overflow.
 - Continued the form-control UX audit on value inputs:
   - added `Required`, `aria-required`, and validation-driven `aria-invalid` support to `W3NumberInput`, `W3DateInput`, and `W3TimeInput`;
   - added required number/date/time docs examples with live validation-friendly updates and `novalidate` forms;

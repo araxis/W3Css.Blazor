@@ -15,6 +15,7 @@
         <W3DropZone Id="dropzone-assets"
                     Accept=".png,.jpg,.svg"
                     Multiple="true"
+                    Required="true"
                     AccumulateFiles="true"
                     AcceptHint="PNG, JPG, or SVG"
                     BorderColor="W3Color.Teal"
@@ -75,6 +76,7 @@
                 <tr><td>Name</td><td>string?</td><td>null</td><td>`name` attribute</td></tr>
                 <tr><td>Accept</td><td>string?</td><td>null</td><td>`accept` attribute</td></tr>
                 <tr><td>Multiple</td><td>bool</td><td>false</td><td>`multiple` attribute</td></tr>
+                <tr><td>Required</td><td>bool</td><td>false</td><td>`required` and `aria-required` attributes on the native file input</td></tr>
                 <tr><td>AccumulateFiles</td><td>bool</td><td>true</td><td>Keeps adding files to multi-file zones across later browse or drop actions</td></tr>
                 <tr><td>Disabled</td><td>bool</td><td>false</td><td>`disabled`, `aria-disabled`, and `w3-disabled`</td></tr>
                 <tr><td>Label</td><td>string</td><td>Drop files here</td><td>Default visible title and input label</td></tr>
@@ -100,6 +102,7 @@
                 <tr><td>BrowseButtonClass</td><td>string?</td><td>null</td><td>Additional browse button classes</td></tr>
                 <tr><td>ContentClass</td><td>string?</td><td>null</td><td>Additional content-region classes</td></tr>
                 <tr><td>SelectedFilesClass</td><td>string?</td><td>null</td><td>Additional selected-file list classes</td></tr>
+                <tr><td>SelectedFilesLabel</td><td>string</td><td>Selected files</td><td>`aria-label` on the selected-file list</td></tr>
                 <tr><td>Class</td><td>string?</td><td>null</td><td>Additional root classes</td></tr>
                 <tr><td>Style</td><td>string?</td><td>null</td><td>Inline style on the root wrapper</td></tr>
                 <tr><td>AdditionalAttributes</td><td>IReadOnlyDictionary&lt;string,object&gt;?</td><td>null</td><td>Extra attributes on the drop-zone root</td></tr>
@@ -129,6 +132,7 @@
 <W3DropZone Id="dropzone-assets"
             Accept=".png,.jpg,.svg"
             Multiple="true"
+            Required="true"
             AccumulateFiles="true"
             AcceptHint="PNG, JPG, or SVG"
             BorderColor="W3Color.Teal"

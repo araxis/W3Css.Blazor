@@ -1,4 +1,5 @@
 @page "/components/rating"
+@using System.ComponentModel.DataAnnotations
 
 <PageTitle>W3Rating</PageTitle>
 
@@ -7,7 +8,7 @@
     <DocPager PreviousHref="components/slider" PreviousText="Slider" NextHref="components/switch" NextText="Switch" />
 
     <p class="w3-large">`W3Rating` renders a compact icon rating control for reviews, preference scoring, and quick feedback forms.</p>
-    <p>Use it when a bounded score is easier to pick with icons than with a numeric input or slider.</p>
+    <p>Use it when a bounded score is easier to pick with icons than with a numeric input or slider. Add `novalidate` on the form when validation messages should handle required feedback.</p>
 
     <DocExample Title="Interactive Rating" Code="@InteractiveCode">
         <W3Rating @bind-Value="ReviewRating"
@@ -26,6 +27,22 @@
                   Size="W3Size.XLarge" />
     </DocExample>
 
+    <DocExample Title="Required Rating" Description="Use Required with a validation expression and a range rule when a score must be chosen." Code="@RequiredCode">
+        <EditForm Model="@RequiredRatingModel" OnValidSubmit="HandleRequiredSubmit" OnInvalidSubmit="HandleRequiredSubmit" novalidate>
+            <DataAnnotationsValidator />
+            <W3Field TValue="int" Label="Satisfaction" For="@(() => RequiredRatingModel.Score)" HelpText="Choose a score before continuing.">
+                <W3Rating Value="@RequiredRatingModel.Score"
+                          ValueChanged="@((int next) => RequiredRatingModel.Score = next)"
+                          ValueExpression="@(() => RequiredRatingModel.Score)"
+                          Label="Satisfaction score"
+                          Required="true"
+                          Clearable="true"
+                          ShowValue="true" />
+            </W3Field>
+            <W3Button Type="submit" Color="W3Color.Teal" TextColor="W3Color.White">Validate</W3Button>
+        </EditForm>
+    </DocExample>
+
     <section class="doc-section">
         <h2>Parameters</h2>
         <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
@@ -35,10 +52,12 @@
             <tbody>
                 <tr><td>Value</td><td>int</td><td>0</td><td>Current selected rating</td></tr>
                 <tr><td>ValueChanged</td><td>EventCallback&lt;int&gt;</td><td>empty</td><td><code>@@bind-Value</code> support</td></tr>
+                <tr><td>ValueExpression</td><td>Expression&lt;Func&lt;int&gt;&gt;?</td><td>null</td><td>Validation expression for EditForm scenarios</td></tr>
                 <tr><td>Max</td><td>int</td><td>5</td><td>Number of rating buttons</td></tr>
                 <tr><td>Label</td><td>string</td><td>Rating</td><td>`aria-label` on the radiogroup</td></tr>
                 <tr><td>ReadOnly</td><td>bool</td><td>false</td><td>Disables interaction while keeping the value visible</td></tr>
                 <tr><td>Disabled</td><td>bool</td><td>false</td><td>`aria-disabled`, `disabled`, and `w3-disabled`</td></tr>
+                <tr><td>Required</td><td>bool</td><td>false</td><td>`aria-required` on the rating group</td></tr>
                 <tr><td>Clearable</td><td>bool</td><td>false</td><td>Clicking the selected score clears to zero</td></tr>
                 <tr><td>ShowValue</td><td>bool</td><td>false</td><td>Displays `Value / Max` text beside the icons</td></tr>
                 <tr><td>IconClass</td><td>string</td><td>fa fa-star</td><td>Selected icon class</td></tr>
@@ -59,6 +78,7 @@
 
 @code {
     private int ReviewRating { get; set; } = 3;
+    private readonly RequiredRatingExampleModel RequiredRatingModel = new();
 
     private const string InteractiveCode = """
 <W3Rating @bind-Value="reviewRating"
@@ -75,4 +95,46 @@
           Color="W3Color.Teal"
           Size="W3Size.XLarge" />
 """;
+
+    private const string RequiredCode = """
+@using System.ComponentModel.DataAnnotations
+
+<EditForm Model="@model" OnValidSubmit="HandleSubmit" OnInvalidSubmit="HandleSubmit" novalidate>
+    <DataAnnotationsValidator />
+    <W3Field TValue="int" Label="Satisfaction" For="@(() => model.Score)" HelpText="Choose a score before continuing.">
+        <W3Rating Value="@model.Score"
+                  ValueChanged="@((int next) => model.Score = next)"
+                  ValueExpression="@(() => model.Score)"
+                  Label="Satisfaction score"
+                  Required="true"
+                  Clearable="true"
+                  ShowValue="true" />
+    </W3Field>
+    <W3Button Type="submit" Color="W3Color.Teal" TextColor="W3Color.White">Validate</W3Button>
+</EditForm>
+
+@code {
+    private readonly RequiredRatingExampleModel model = new();
+
+    private void HandleSubmit()
+    {
+    }
+
+    private sealed class RequiredRatingExampleModel
+    {
+        [Range(1, 5, ErrorMessage = "Choose a satisfaction score.")]
+        public int Score { get; set; }
+    }
+}
+""";
+
+    private sealed class RequiredRatingExampleModel
+    {
+        [Range(1, 5, ErrorMessage = "Choose a satisfaction score.")]
+        public int Score { get; set; }
+    }
+
+    private void HandleRequiredSubmit()
+    {
+    }
 }

@@ -11,6 +11,7 @@
      class="@RootCssClass"
      style="@Style"
      aria-disabled="@AriaDisabled"
+     aria-required="@AriaRequired"
      @ondragenter="HandleDragEnterAsync"
      @ondragover="HandleDragOverAsync"
      @ondragleave="HandleDragLeaveAsync"
@@ -25,7 +26,9 @@
                accept="@Accept"
                multiple="@Multiple"
                disabled="@Disabled"
+               required="@Required"
                aria-label="@InputLabel"
+               aria-required="@AriaRequired"
                OnChange="@HandleChangeAsync" />
 
     <div class="@ContentCssClass">
@@ -55,7 +58,7 @@
 
 @if (ShowSelectedFiles && SelectedFiles.Count > 0)
 {
-    <ul class="@SelectedListCssClass" aria-live="polite">
+    <ul class="@SelectedListCssClass" aria-live="polite" aria-label="@SelectedFilesLabel">
         @foreach (var file in SelectedFiles)
         {
             <li>
@@ -91,6 +94,7 @@
     private int EffectiveMaximumFileCount => Math.Max(1, MaximumFileCount);
 
     private string AriaDisabled => Disabled ? "true" : "false";
+    private string? AriaRequired => Required ? "true" : null;
 
     private string RootCssClass => BuildClass(
         "w3-drop-zone",
@@ -142,6 +146,9 @@
 
     [Parameter]
     public bool Disabled { get; set; }
+
+    [Parameter]
+    public bool Required { get; set; }
 
     [Parameter]
     public bool Border { get; set; } = true;
@@ -211,6 +218,9 @@
 
     [Parameter]
     public string? SelectedFilesClass { get; set; }
+
+    [Parameter]
+    public string SelectedFilesLabel { get; set; } = "Selected files";
 
     [Parameter]
     public RenderFragment? ChildContent { get; set; }

@@ -256,6 +256,8 @@ public sealed class W3NativeInputTests
             .Add(p => p.ValueChanged, EventCallback.Factory.Create<int>(this, next => value = next))
             .Add(p => p.ValueExpression, () => value)
             .Add(p => p.Id, "volume-slider")
+            .Add(p => p.Label, "Volume")
+            .Add(p => p.ValueText, "40 percent")
             .Add(p => p.Min, 0)
             .Add(p => p.Max, 100)
             .Add(p => p.Step, "5")
@@ -270,6 +272,8 @@ public sealed class W3NativeInputTests
 
         Assert.Equal("range", input.GetAttribute("type"));
         Assert.Equal("volume-slider", input.GetAttribute("id"));
+        Assert.Equal("Volume", input.GetAttribute("aria-label"));
+        Assert.Equal("40 percent", input.GetAttribute("aria-valuetext"));
         Assert.Contains("w3-input", input.GetAttribute("class"));
         Assert.Contains("w3-border", input.GetAttribute("class"));
         Assert.Contains("w3-white", input.GetAttribute("class"));
@@ -322,6 +326,7 @@ public sealed class W3NativeInputTests
             .Add(p => p.TextColor, W3Color.Black)
             .Add(p => p.LabelClass, "label-extra")
             .Add(p => p.TrackClass, "track-extra")
+            .Add(p => p.Required, true)
             .Add(p => p.Class, "switch-extra")
             .Add(p => p.Style, "gap: 0.75rem;"));
 
@@ -338,6 +343,8 @@ public sealed class W3NativeInputTests
         Assert.Equal("notification-switch", input.GetAttribute("id"));
         Assert.Equal("switch", input.GetAttribute("role"));
         Assert.Equal("false", input.GetAttribute("aria-checked"));
+        Assert.True(input.HasAttribute("required"));
+        Assert.Equal("true", input.GetAttribute("aria-required"));
         Assert.Contains("w3-light-grey", track.GetAttribute("class"));
         Assert.Contains("w3-border", track.GetAttribute("class"));
         Assert.Contains("w3-round", track.GetAttribute("class"));
@@ -364,6 +371,8 @@ public sealed class W3NativeInputTests
             .Add(p => p.ValueExpression, () => value)
             .Add(p => p.Id, "accent-color")
             .Add(p => p.FullWidth, true)
+            .Add(p => p.Required, true)
+            .Add(p => p.Label, "Accent color")
             .Add(p => p.Border, true)
             .Add(p => p.Color, W3Color.White)
             .Add(p => p.TextColor, W3Color.Black)
@@ -375,6 +384,9 @@ public sealed class W3NativeInputTests
 
         Assert.Equal("color", input.GetAttribute("type"));
         Assert.Equal("accent-color", input.GetAttribute("id"));
+        Assert.True(input.HasAttribute("required"));
+        Assert.Equal("true", input.GetAttribute("aria-required"));
+        Assert.Equal("Accent color", input.GetAttribute("aria-label"));
         Assert.Contains("w3-input", input.GetAttribute("class"));
         Assert.Contains("w3-color-input", input.GetAttribute("class"));
         Assert.Contains("w3-color-input-block", input.GetAttribute("class"));
@@ -399,6 +411,8 @@ public sealed class W3NativeInputTests
             .Add(p => p.Name, "asset")
             .Add(p => p.Accept, ".png,.jpg")
             .Add(p => p.Multiple, true)
+            .Add(p => p.Required, true)
+            .Add(p => p.AriaLabel, "Asset file")
             .Add(p => p.Border, true)
             .Add(p => p.Round, W3Round.Medium)
             .Add(p => p.Color, W3Color.White)
@@ -414,6 +428,9 @@ public sealed class W3NativeInputTests
         Assert.Equal("asset", input.GetAttribute("name"));
         Assert.Equal(".png,.jpg", input.GetAttribute("accept"));
         Assert.True(input.HasAttribute("multiple"));
+        Assert.True(input.HasAttribute("required"));
+        Assert.Equal("true", input.GetAttribute("aria-required"));
+        Assert.Equal("Asset file", input.GetAttribute("aria-label"));
         Assert.Contains("w3-input", input.GetAttribute("class"));
         Assert.Contains("w3-file-input", input.GetAttribute("class"));
         Assert.Contains("w3-border", input.GetAttribute("class"));
@@ -422,5 +439,55 @@ public sealed class W3NativeInputTests
         Assert.Contains("w3-text-black", input.GetAttribute("class"));
         Assert.Contains("file-control", input.GetAttribute("class"));
         Assert.Equal("max-width: 24rem;", input.GetAttribute("style"));
+    }
+
+    [Fact]
+    public async Task RemainingInputsReportValidationStateThroughFieldMessages()
+    {
+        using var context = new BunitContext();
+        var cut = context.Render<W3InputUxValidationHost>();
+
+        var isValid = await cut.InvokeAsync(() => cut.Instance.Validate());
+
+        Assert.False(isValid);
+        Assert.Contains("Choose a volume.", cut.Markup);
+        Assert.Contains("Enable sync to continue.", cut.Markup);
+        Assert.Contains("Choose a satisfaction score.", cut.Markup);
+        Assert.Contains("Choose an accent color.", cut.Markup);
+        Assert.Contains("Select a reviewer.", cut.Markup);
+
+        var slider = cut.Find("#required-slider");
+        var switchInput = cut.Find("#required-switch");
+        var rating = cut.Find("[role='radiogroup'][aria-label='Satisfaction score']");
+        var color = cut.Find("#required-color");
+        var autocomplete = cut.Find("#required-reviewer");
+
+        Assert.Equal("true", slider.GetAttribute("aria-invalid"));
+        Assert.Contains("invalid", slider.GetAttribute("class"));
+        Assert.Equal("true", switchInput.GetAttribute("aria-invalid"));
+        Assert.Equal("true", switchInput.GetAttribute("aria-required"));
+        Assert.Contains("invalid", cut.Find("label.w3-switch").GetAttribute("class"));
+        Assert.Equal("true", rating.GetAttribute("aria-invalid"));
+        Assert.Equal("true", rating.GetAttribute("aria-required"));
+        Assert.Contains("invalid", rating.GetAttribute("class"));
+        Assert.Equal("true", color.GetAttribute("aria-invalid"));
+        Assert.Equal("true", color.GetAttribute("aria-required"));
+        Assert.Equal("true", autocomplete.GetAttribute("aria-invalid"));
+        Assert.Equal("true", autocomplete.GetAttribute("aria-required"));
+
+        slider.Input("50");
+        switchInput.Change(true);
+        cut.FindAll("button[role='radio']")[2].Click();
+        color.Input("#336699");
+        autocomplete.Input("Ada");
+        cut.Find(".w3-autocomplete-option").Click();
+
+        isValid = await cut.InvokeAsync(() => cut.Instance.Validate());
+
+        Assert.True(isValid);
+        Assert.DoesNotContain("Enable sync to continue.", cut.Markup);
+        Assert.DoesNotContain("Choose a satisfaction score.", cut.Markup);
+        Assert.DoesNotContain("Choose an accent color.", cut.Markup);
+        Assert.DoesNotContain("Select a reviewer.", cut.Markup);
     }
 }

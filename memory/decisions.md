@@ -1,6 +1,6 @@
 # Decisions
 
-Last updated: 2026-05-31
+Last updated: 2026-06-01
 
 ## Identity And Targets
 
@@ -9,10 +9,9 @@ Last updated: 2026-05-31
 - SDK pin: `10.0.300`.
 - Repository branch convention:
   - `work/<short-topic>`
-  - `feature/<short-topic>`
   - `fix/<short-topic>`
   - `docs/<short-topic>`
-  - `release/<version>`
+  - `chore/<short-topic>`
 
 ## Component Architecture
 

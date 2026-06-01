@@ -9,9 +9,9 @@ Last updated: 2026-06-01
 - Version baseline: `0.1.0`.
 - .NET target: `net10.0` (`10.0.300` SDK).
 - Current state:
-  - 125 component `.razor` files.
-  - 119 docs topic pages.
-  - 459 passing tests.
+  - 126 component `.razor` files.
+  - 120 docs topic pages.
+  - 466 passing tests.
   - Build: `dotnet build W3Css.Blazor.slnx --configuration Release` (0 warnings, 0 errors).
 
 ## Architecture
@@ -35,11 +35,11 @@ Last updated: 2026-06-01
 
 ## Current Priority
 
-1. Release-readiness completion:
-   - push current `main` commits when ready.
-   - push `v0.1.0` only after confirming the NuGet publish path/secret.
-2. Optional polish:
-   - visual quality sweeps.
+1. Post-release quality:
+   - keep README, changelog, and memory aligned with current package state.
+   - continue small visual/API quality sweeps as normal PR slices.
+2. Future releases:
+   - bump package version, add release notes, tag, and verify consumer smoke checks.
 
 ## Memory Files
 

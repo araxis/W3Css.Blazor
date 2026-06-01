@@ -5,7 +5,7 @@ Last updated: 2026-06-01
 ## Repository
 
 - Canonical branch: `main`.
-- Tag `v0.1.0` points at current `HEAD` and has been pushed.
+- Tag `v0.1.0` marks the first public package release; current `main` has post-0.1.0 changes.
 - Solution: `W3Css.Blazor.slnx`.
 - SDK: `.NET 10.0.300` (`global.json`).
 
@@ -17,7 +17,7 @@ Last updated: 2026-06-01
 - Current docs routes in `src/W3Css.Blazor.Docs/Pages/ComponentTopics`: 120 pages.
 - Tests in project source: 58 `.cs` test files.
 - Test suite status:
-  - `dotnet test tests/W3Css.Blazor.Tests/W3Css.Blazor.Tests.csproj --configuration Release --no-build` -> **463 passing tests**.
+  - `dotnet test tests/W3Css.Blazor.Tests/W3Css.Blazor.Tests.csproj --configuration Release --no-build` -> **466 passing tests**.
 - Build status:
   - `dotnet build W3Css.Blazor.slnx --configuration Release` → **0 warnings, 0 errors**.
 
@@ -50,6 +50,7 @@ Last updated: 2026-06-01
 - Component compatibility strategy is W3.CSS loyal: missing concepts are added as new reusable components where needed and duplicate alias components are intentionally avoided.
 - The "themed by default" pass is complete for surface and primary intent defaults in most components.
 - Public API hardening is in progress; `W3Slide` now uses the shared component base and forwards unmatched attributes to the rendered active slide.
+- README, changelog, and memory release-state cleanup now reflect the post-0.1.0 branch flow and package state.
 - Documentation consistency review is complete for current component topic parameter tables; each implemented rendering surface now has explicit inherited attribute rows where applicable.
 - The small docs/API gap pass now covers `W3Table`, `W3Drawer`, `W3Menu`, and `W3ProgressCircular` parameter tables with focused docs smoke coverage.
 - The second docs/API gap pass now covers `W3DataTable`, `W3DateRangePicker`, `W3MessageBox`, `W3Modal`, and `W3Navbar` parameter tables with focused docs smoke coverage.

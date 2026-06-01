@@ -9,7 +9,7 @@ on:
       version:
         description: 'Release version to build, package, and publish.'
         required: false
-        default: '0.1.0'
+        default: ''
       publish:
         description: 'Publish the package'
         required: false
@@ -51,7 +51,13 @@ jobs:
           }
 
           if ([string]::IsNullOrWhiteSpace($version)) {
-            $version = '0.1.0'
+            [xml]$project = Get-Content 'src/W3Css.Blazor/W3Css.Blazor.csproj'
+            $version = [string]($project.Project.PropertyGroup.Version | Select-Object -First 1)
+          }
+
+          if ([string]::IsNullOrWhiteSpace($version)) {
+            Write-Error 'Release version could not be resolved.'
+            exit 1
           }
 
           if (-not $version.StartsWith('v')) {

@@ -32,7 +32,7 @@ All notable changes to W3Css.Blazor will be documented in this file.
 ### Components
 
 - Consolidated to one canonical, W3.CSS-loyal component per concept; folded
-  MudBlazor-equivalent features into existing components instead of shipping alias
+  common app-component features into existing components instead of shipping alias
   shims (removed `W3TextField`, `W3NumericField`, `W3DatePicker`, `W3TimePicker`,
   `W3ProgressLinear`, `W3Snackbar`, `W3Carousel`, `W3ExpansionPanels`, `W3SimpleTable`,
   `W3DataGrid`, `W3ColorPicker`, `W3DynamicTabs`, `W3Dialog`, and related types).

@@ -736,6 +736,9 @@ public sealed class W3DocsSmokeTests
         var alertPage = context.Render<W3Css.Blazor.Docs.Pages.ComponentTopics.AlertPage>();
         Assert.Contains("Extra attributes on the alert panel", alertPage.Markup);
         Assert.Contains("ARIA role", alertPage.Markup);
+        Assert.Contains("VisibleChanged", alertPage.Markup);
+        Assert.Contains("CloseButtonLabel", alertPage.Markup);
+        Assert.Contains("Dismissible Alert", alertPage.Markup);
 
         var toastPage = context.Render<ToastPage>();
         Assert.Contains("Extra attributes on the toast root", toastPage.Markup);

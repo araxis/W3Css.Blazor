@@ -2,11 +2,14 @@
 @inherits W3ComponentBase
 
 <div @attributes="AdditionalAttributes"
+     id="@Id"
      class="@ModalCssClass"
      style="@Style"
      role="dialog"
      aria-modal="@AriaOpen"
-     aria-labelledby="@TitleId"
+     aria-hidden="@AriaHidden"
+     aria-labelledby="@AriaLabelledByValue"
+     aria-label="@AriaLabelValue"
      tabindex="-1"
      @onclick="CloseFromBackdropAsync"
      @onkeydown="HandleKeyDownAsync">
@@ -57,7 +60,12 @@
 
 @code {
     private string TitleId => Id is null ? "w3-modal-title" : $"{Id}-title";
-    private string AriaOpen => Open ? "true" : "false";
+    private string? AriaOpen => Open ? "true" : null;
+    private string AriaHidden => Open ? "false" : "true";
+    private string? AriaLabelledByValue => !string.IsNullOrWhiteSpace(AriaLabelledBy)
+        ? AriaLabelledBy
+        : !string.IsNullOrWhiteSpace(Title) ? TitleId : null;
+    private string? AriaLabelValue => string.IsNullOrWhiteSpace(AriaLabelledByValue) ? AriaLabel : null;
 
     private string ModalCssClass => BuildClass(
         "w3-modal",
@@ -83,6 +91,12 @@
 
     [Parameter]
     public string? Title { get; set; }
+
+    [Parameter]
+    public string? AriaLabel { get; set; }
+
+    [Parameter]
+    public string? AriaLabelledBy { get; set; }
 
     [Parameter]
     public RenderFragment? Header { get; set; }

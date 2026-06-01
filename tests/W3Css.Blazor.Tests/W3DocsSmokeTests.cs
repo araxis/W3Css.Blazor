@@ -487,6 +487,9 @@ public sealed class W3DocsSmokeTests
         var modalPage = context.Render<ModalPage>();
         Assert.Contains("Actions", modalPage.Markup);
         Assert.Contains("Surface and None", modalPage.Markup);
+        Assert.Contains("AriaLabelledBy", modalPage.Markup);
+        Assert.Contains("Keyboard Interaction", modalPage.Markup);
+        Assert.Contains("Escape", modalPage.Markup);
         Assert.Contains("AdditionalAttributes", modalPage.Markup);
 
         var navbarPage = context.Render<NavbarPage>();

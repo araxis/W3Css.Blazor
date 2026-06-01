@@ -7,7 +7,7 @@
     <DocPager PreviousHref="components/validation" PreviousText="Validation" NextHref="components/accordion" NextText="Accordion" />
 
     <p class="w3-large">`W3Tabs` renders W3.CSS bar buttons and a Blazor-controlled active panel.</p>
-    <p>Use `W3TabPanel` children for each tab. Bind `ActiveValue` when the parent needs to control the selected tab.</p>
+    <p>Use `W3TabPanel` children for each tab. Bind `ActiveValue` when the parent needs to control the selected tab. Keyboard users can move between enabled tabs with arrow keys, jump with Home/End, and close closeable tabs with Delete.</p>
 
     <DocExample Title="Basic Tabs" Code="@BasicCode">
         <W3Tabs @bind-ActiveValue="ActiveTab" ActiveColor="W3Color.Teal" ActiveTextColor="W3Color.White">
@@ -43,6 +43,21 @@
         <p class="doc-muted">Open tabs: @(DynamicTabs.Count == 0 ? "none" : string.Join(", ", DynamicTabs.Select(tab => tab.Title)))</p>
         <p class="doc-muted">Last closed: @(LastClosedTab ?? "none")</p>
     </DocExample>
+
+    <section class="doc-section">
+        <h2>Keyboard Interaction</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Key</th><th>Behavior</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>ArrowRight / ArrowDown</td><td>Activates the next enabled tab.</td></tr>
+                <tr><td>ArrowLeft / ArrowUp</td><td>Activates the previous enabled tab.</td></tr>
+                <tr><td>Home / End</td><td>Activates the first or last enabled tab.</td></tr>
+                <tr><td>Delete</td><td>Invokes the close callback for a closeable focused tab.</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
 
     <section class="doc-section">
         <h2>W3Tabs Parameters</h2>

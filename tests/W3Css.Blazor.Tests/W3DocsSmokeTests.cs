@@ -417,6 +417,9 @@ public sealed class W3DocsSmokeTests
         Assert.Contains("Add And Close Tabs", cut.Markup);
         Assert.Contains("ShowAddButton", cut.Markup);
         Assert.Contains("CloseButtonLabel", cut.Markup);
+        Assert.Contains("Keyboard Interaction", cut.Markup);
+        Assert.Contains("ArrowRight", cut.Markup);
+        Assert.Contains("Delete", cut.Markup);
 
         cut.FindAll("button")
             .Single(button => button.GetAttribute("aria-label") == "Add workspace tab")

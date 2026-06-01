@@ -65,6 +65,81 @@ public sealed class W3NavigationTests
     }
 
     [Fact]
+    public void TabsSupportKeyboardNavigationAcrossEnabledTabs()
+    {
+        using var context = new BunitContext();
+        var active = "overview";
+        var cut = context.Render<W3Tabs>(parameters => parameters
+            .Add(p => p.ActiveValue, active)
+            .Add(p => p.ActiveValueChanged, EventCallback.Factory.Create<string>(this, value => active = value))
+            .Add(p => p.ChildContent, builder =>
+            {
+                builder.OpenComponent<W3TabPanel>(0);
+                builder.AddAttribute(1, nameof(W3TabPanel.Value), "overview");
+                builder.AddAttribute(2, nameof(W3TabPanel.Title), "Overview");
+                builder.AddAttribute(3, nameof(W3TabPanel.ChildContent), (RenderFragment)(content => content.AddContent(0, "Overview content")));
+                builder.CloseComponent();
+                builder.OpenComponent<W3TabPanel>(4);
+                builder.AddAttribute(5, nameof(W3TabPanel.Value), "disabled");
+                builder.AddAttribute(6, nameof(W3TabPanel.Title), "Disabled");
+                builder.AddAttribute(7, nameof(W3TabPanel.Disabled), true);
+                builder.AddAttribute(8, nameof(W3TabPanel.ChildContent), (RenderFragment)(content => content.AddContent(0, "Disabled content")));
+                builder.CloseComponent();
+                builder.OpenComponent<W3TabPanel>(9);
+                builder.AddAttribute(10, nameof(W3TabPanel.Value), "details");
+                builder.AddAttribute(11, nameof(W3TabPanel.Title), "Details");
+                builder.AddAttribute(12, nameof(W3TabPanel.ChildContent), (RenderFragment)(content => content.AddContent(0, "Details content")));
+                builder.CloseComponent();
+            }));
+
+        var overviewTab = cut.Find("button[role='tab']");
+        overviewTab.KeyDown(new KeyboardEventArgs { Key = "ArrowRight" });
+
+        Assert.Equal("details", active);
+        Assert.Contains("Details content", cut.Markup);
+
+        overviewTab.KeyDown(new KeyboardEventArgs { Key = "ArrowLeft" });
+
+        Assert.Equal("overview", active);
+        Assert.Contains("Overview content", cut.Markup);
+
+        overviewTab.KeyDown(new KeyboardEventArgs { Key = "End" });
+        Assert.Equal("details", active);
+
+        overviewTab.KeyDown(new KeyboardEventArgs { Key = "Home" });
+        Assert.Equal("overview", active);
+    }
+
+    [Fact]
+    public void TabsDeleteKeyClosesCloseableFocusedTab()
+    {
+        using var context = new BunitContext();
+        string? closed = null;
+        var cut = context.Render<W3Tabs>(parameters => parameters
+            .Add(p => p.ActiveValue, "overview")
+            .Add(p => p.ShowCloseButtons, true)
+            .Add(p => p.Closeable, true)
+            .Add(p => p.OnCloseTab, EventCallback.Factory.Create<string>(this, value => closed = value))
+            .Add(p => p.ChildContent, builder =>
+            {
+                builder.OpenComponent<W3TabPanel>(0);
+                builder.AddAttribute(1, nameof(W3TabPanel.Value), "overview");
+                builder.AddAttribute(2, nameof(W3TabPanel.Title), "Overview");
+                builder.AddAttribute(3, nameof(W3TabPanel.ChildContent), (RenderFragment)(content => content.AddContent(0, "Overview content")));
+                builder.CloseComponent();
+                builder.OpenComponent<W3TabPanel>(4);
+                builder.AddAttribute(5, nameof(W3TabPanel.Value), "details");
+                builder.AddAttribute(6, nameof(W3TabPanel.Title), "Details");
+                builder.AddAttribute(7, nameof(W3TabPanel.ChildContent), (RenderFragment)(content => content.AddContent(0, "Details content")));
+                builder.CloseComponent();
+            }));
+
+        cut.Find("button[role='tab']").KeyDown(new KeyboardEventArgs { Key = "Delete" });
+
+        Assert.Equal("overview", closed);
+    }
+
+    [Fact]
     public void AccordionRendersWrapperClasses()
     {
         using var context = new BunitContext();

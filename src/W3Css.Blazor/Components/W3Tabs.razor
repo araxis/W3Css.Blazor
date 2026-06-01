@@ -16,7 +16,8 @@
                         aria-controls="@panel.PanelId"
                         id="@panel.TabId"
                         disabled="@panel.Disabled"
-                        @onclick="() => ActivateAsync(panel)">
+                        @onclick="() => ActivateAsync(panel)"
+                        @onkeydown="args => HandleTabKeyDownAsync(panel, args)">
                     @panel.Title
                 </button>
                 @if (ShowCloseButtons && (Closeable || panel.Closeable))
@@ -200,6 +201,71 @@
 
         ActiveValue = panel.Value;
         await ActiveValueChanged.InvokeAsync(panel.Value);
+    }
+
+    private async Task HandleTabKeyDownAsync(W3TabPanel panel, KeyboardEventArgs args)
+    {
+        switch (args.Key)
+        {
+            case "ArrowRight":
+            case "Right":
+            case "ArrowDown":
+            case "Down":
+                await ActivateAdjacentAsync(1);
+                break;
+            case "ArrowLeft":
+            case "Left":
+            case "ArrowUp":
+            case "Up":
+                await ActivateAdjacentAsync(-1);
+                break;
+            case "Home":
+                await ActivateBoundaryAsync(first: true);
+                break;
+            case "End":
+                await ActivateBoundaryAsync(first: false);
+                break;
+            case "Delete":
+            case "Del":
+                if (CanClose(panel))
+                {
+                    await CloseAsync(panel);
+                }
+
+                break;
+        }
+    }
+
+    private async Task ActivateAdjacentAsync(int offset)
+    {
+        var enabledPanels = panels.Where(panel => !panel.Disabled).ToArray();
+
+        if (enabledPanels.Length == 0)
+        {
+            return;
+        }
+
+        var current = ActivePanel;
+        var currentIndex = current is null ? -1 : Array.IndexOf(enabledPanels, current);
+        var nextIndex = currentIndex < 0
+            ? 0
+            : (currentIndex + offset + enabledPanels.Length) % enabledPanels.Length;
+
+        await ActivateAsync(enabledPanels[nextIndex]);
+    }
+
+    private Task ActivateBoundaryAsync(bool first)
+    {
+        var panel = first
+            ? panels.FirstOrDefault(panel => !panel.Disabled)
+            : panels.LastOrDefault(panel => !panel.Disabled);
+
+        return panel is null ? Task.CompletedTask : ActivateAsync(panel);
+    }
+
+    private bool CanClose(W3TabPanel panel)
+    {
+        return ShowCloseButtons && (Closeable || panel.Closeable);
     }
 
     private Task CloseAsync(W3TabPanel panel) => OnCloseTab.InvokeAsync(panel.Value);

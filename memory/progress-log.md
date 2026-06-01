@@ -4,6 +4,17 @@ Last updated: 2026-06-01
 
 ## 2026-06-01
 
+- Continued the keyboard interaction polish pass on `W3Dropdown`:
+  - added ArrowDown/ArrowUp open behavior from the dropdown trigger;
+  - added Escape close behavior with focus returned to the trigger;
+  - connected trigger `aria-controls` to a generated dropdown content id;
+  - documented the dropdown keyboard interaction table and added focused navigation/docs coverage.
+- Verification:
+  - focused dropdown/docs tests: 6 passing;
+  - `dotnet test tests/W3Css.Blazor.Tests/W3Css.Blazor.Tests.csproj --configuration Release` (442 passing);
+  - `dotnet build W3Css.Blazor.slnx --configuration Release` (0 warnings, 0 errors);
+  - `dotnet pack src/W3Css.Blazor/W3Css.Blazor.csproj --configuration Release --no-build`;
+  - browser-verified `/components/dropdown` after restarting the docs server on port 5016: the keyboard section renders, ArrowDown opens the closed dropdown, Escape closes it and keeps focus on the trigger, no visible error appears, and no horizontal overflow appears.
 - Continued the keyboard interaction polish pass on `W3Menu`:
   - added ArrowDown/ArrowUp movement across selectable menu items;
   - added Home/End first-or-last selectable item focus;

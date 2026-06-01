@@ -138,7 +138,7 @@ This model is intentionally similar to mature Blazor libraries, while keeping im
 | `W3NavMenu` / `W3NavMenuGroup` / `W3NavMenuItem` | Implemented | Grouped navigation with route-aware links, badges, and command actions. |
 | `W3Breadcrumb` / `W3BreadcrumbItem` | Implemented | Ordered breadcrumb path component. |
 | `W3PageContentNavigation` / `W3PageSection` | Implemented | In-page table-of-contents scrollspy; `IntersectionObserver` via `w3PageContentNavigation.js` highlights the section in view. |
-| `W3Dropdown` | Implemented | Stateful dropdown with outside-click close behavior. |
+| `W3Dropdown` | Implemented | Stateful dropdown with outside-click close behavior, content-control linkage, ArrowUp/ArrowDown open behavior, and Escape close behavior. |
 | `W3Stepper` / `W3Step` | Implemented | Workflow step components with arrow/Home/End keyboard navigation across steps allowed by disabled and linear workflow rules. |
 | `W3ScrollToTop` | Implemented | Back-to-top button that appears past a scroll threshold and smooth-scrolls up (small `w3ScrollToTop.js` for the scroll listener). |
 | `W3Menu` / `W3MenuItem` / `W3MenuDivider` | Implemented | Command menus with disabled items, descriptions, close-on-select, roving item focus, and Arrow/Home/End/Escape keyboard navigation. |
@@ -224,7 +224,7 @@ This model is intentionally similar to mature Blazor libraries, while keeping im
 | Content display and timeline | Implemented | Tree, chat, timeline, data table, rating, drop zone, and gallery coverage. |
 | Feedback and loading | Implemented | Spinner, skeleton, toast, file, autocomplete, and alert coverage. |
 | Package validation | Implemented | `dotnet pack` generates `W3Css.Blazor.0.1.0.nupkg`; CI uploads package artifact. |
-| Test count | Implemented | `dotnet test` reports 441 passing tests. |
+| Test count | Implemented | `dotnet test` reports 442 passing tests. |
 
 ## Component Compatibility Backlog
 

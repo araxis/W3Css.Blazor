@@ -8,6 +8,7 @@
 
     <p class="w3-large">`W3Dropdown` renders a Blazor-controlled W3.CSS click dropdown.</p>
     <p>Use it for small menus where open state belongs in Blazor rather than script.</p>
+    <p>Keyboard users can open the dropdown with arrow keys and close it with Escape.</p>
 
     <DocExample Title="Dropdown Menu" Code="@BasicCode">
         <W3Dropdown Label="Components" ButtonColor="W3Color.Teal" ButtonTextColor="W3Color.White" @bind-Open="DropdownOpen">
@@ -48,6 +49,19 @@
                 <tr><td>Class</td><td>string?</td><td>null</td><td>Additional wrapper classes</td></tr>
                 <tr><td>Style</td><td>string?</td><td>null</td><td>Inline style on the wrapper</td></tr>
                 <tr><td>AdditionalAttributes</td><td>IReadOnlyDictionary&lt;string,object&gt;?</td><td>null</td><td>Extra attributes on the dropdown wrapper</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Keyboard Interaction</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Key</th><th>Behavior</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>ArrowDown / ArrowUp</td><td>Opens the dropdown from the trigger.</td></tr>
+                <tr><td>Escape</td><td>Closes the dropdown and returns focus to the trigger.</td></tr>
             </tbody>
         </W3Table>
     </section>

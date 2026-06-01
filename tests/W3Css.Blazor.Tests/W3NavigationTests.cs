@@ -226,8 +226,11 @@ public sealed class W3NavigationTests
         Assert.Equal("min-width: 12rem;", root.GetAttribute("style"));
         Assert.Contains("w3-teal", button.GetAttribute("class"));
         Assert.Contains("w3-text-white", button.GetAttribute("class"));
+        Assert.Equal("true", button.GetAttribute("aria-haspopup"));
+        Assert.Equal("false", button.GetAttribute("aria-expanded"));
         Assert.Contains("w3-white", content.GetAttribute("class"));
         Assert.Contains("w3-text-black", content.GetAttribute("class"));
+        Assert.Equal(button.GetAttribute("aria-controls"), content.GetAttribute("id"));
         Assert.DoesNotContain("w3-show", content.GetAttribute("class"));
 
         button.Click();
@@ -255,6 +258,40 @@ public sealed class W3NavigationTests
         Assert.False(open);
         Assert.DoesNotContain("w3-dropdown-open", cut.Find(".w3-dropdown-click").GetAttribute("class"));
         Assert.DoesNotContain("w3-show", cut.Find(".w3-dropdown-content").GetAttribute("class"));
+    }
+
+    [Fact]
+    public void DropdownSupportsKeyboardOpenAndEscapeClose()
+    {
+        using var context = new BunitContext();
+        context.JSInterop.Mode = JSRuntimeMode.Loose;
+
+        var open = false;
+        var cut = context.Render<W3Dropdown>(parameters => parameters
+            .Add(p => p.Label, "Menu")
+            .Add(p => p.Open, open)
+            .Add(p => p.OpenChanged, EventCallback.Factory.Create<bool>(this, value => open = value))
+            .Add(p => p.ChildContent, "Menu content"));
+
+        cut.Find("button").KeyDown(new KeyboardEventArgs { Key = "ArrowDown" });
+
+        cut.WaitForAssertion(() =>
+        {
+            Assert.True(open);
+            Assert.Contains("w3-dropdown-open", cut.Find(".w3-dropdown-click").GetAttribute("class"));
+            Assert.Contains("w3-show", cut.Find(".w3-dropdown-content").GetAttribute("class"));
+            Assert.Equal("true", cut.Find("button").GetAttribute("aria-expanded"));
+        });
+
+        cut.Find(".w3-dropdown-content").KeyDown(new KeyboardEventArgs { Key = "Escape" });
+
+        cut.WaitForAssertion(() =>
+        {
+            Assert.False(open);
+            Assert.DoesNotContain("w3-dropdown-open", cut.Find(".w3-dropdown-click").GetAttribute("class"));
+            Assert.DoesNotContain("w3-show", cut.Find(".w3-dropdown-content").GetAttribute("class"));
+            Assert.Equal("false", cut.Find("button").GetAttribute("aria-expanded"));
+        });
     }
 
     [Fact]

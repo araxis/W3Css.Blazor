@@ -17,7 +17,7 @@ Last updated: 2026-06-01
 - Current docs routes in `src/W3Css.Blazor.Docs/Pages/ComponentTopics`: 118 pages.
 - Tests in project source: 67 `.cs` test files.
 - Test suite status:
-  - `dotnet test tests/W3Css.Blazor.Tests/W3Css.Blazor.Tests.csproj --configuration Release` -> **441 passing tests**.
+  - `dotnet test tests/W3Css.Blazor.Tests/W3Css.Blazor.Tests.csproj --configuration Release` -> **442 passing tests**.
 - Build status:
   - `dotnet build W3Css.Blazor.slnx --configuration Release` → **0 warnings, 0 errors**.
 
@@ -76,5 +76,6 @@ Last updated: 2026-06-01
 - The pagination keyboard polish pass added arrow-key and Home/End handling to `W3Pagination`, refreshed pagination docs, and verified the rendered pagination page.
 - The bottom-navigation keyboard polish pass added arrow-key and Home/End handling to `W3BottomNavigation` while skipping disabled and value-less items, refreshed bottom-navigation docs, and verified the rendered bottom-navigation page.
 - The menu keyboard polish pass added roving item focus, ArrowUp/ArrowDown, Home/End, and Escape handling to `W3Menu`, refreshed menu docs, and verified the rendered menu page.
+- The dropdown keyboard polish pass added ArrowUp/ArrowDown open behavior, Escape close behavior, trigger focus return, and content-control linkage to `W3Dropdown`, refreshed dropdown docs, and verified the rendered dropdown page.
 - Neutral terminology cleanup is complete; source, docs, tests, and memory no longer use external comparison-library names for the compatibility work.
 - Remaining planned work is optional: additional theme token expansion, visual quality sweeps, and `W3SwipeArea`-style pointer gesture support.

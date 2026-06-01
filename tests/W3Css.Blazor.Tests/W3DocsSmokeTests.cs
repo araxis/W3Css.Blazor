@@ -681,6 +681,9 @@ public sealed class W3DocsSmokeTests
 
         var dropdownPage = context.Render<DropdownPage>();
         Assert.Contains("Surface", dropdownPage.Markup);
+        Assert.Contains("Keyboard Interaction", dropdownPage.Markup);
+        Assert.Contains("ArrowDown", dropdownPage.Markup);
+        Assert.Contains("Escape", dropdownPage.Markup);
         Assert.Contains("Extra attributes on the dropdown wrapper", dropdownPage.Markup);
 
         var paginationPage = context.Render<PaginationPage>();

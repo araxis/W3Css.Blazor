@@ -1,12 +1,18 @@
+@using Microsoft.AspNetCore.Components.Web
+@using Microsoft.JSInterop
 @using W3Css.Blazor.Internal
 @inherits W3ComponentBase
 
 <div @attributes="AdditionalAttributes"
      class="@CssClass"
-     style="@Style">
+     style="@Style"
+     @onkeydown="HandleKeyDownAsync">
     <button type="button"
+            @ref="TriggerElement"
             class="@ButtonCssClass"
+            aria-haspopup="true"
             aria-expanded="@AriaExpanded"
+            aria-controls="@ContentId"
             disabled="@Disabled"
             @onclick="ToggleAsync">
         @if (ButtonContent is not null)
@@ -26,12 +32,17 @@
              @onclick="CloseAsync"></div>
     }
 
-    <div class="@ContentCssClass">
+    <div id="@ContentId"
+         class="@ContentCssClass">
         @ChildContent
     </div>
 </div>
 
 @code {
+    private readonly string contentId = $"w3-dropdown-{Guid.NewGuid():N}";
+
+    private ElementReference TriggerElement { get; set; }
+
     private string CssClass => BuildClass(
         "w3-dropdown-click",
         Open ? "w3-dropdown-open" : null,
@@ -55,6 +66,8 @@
         .ToString();
 
     private string AriaExpanded => Open ? "true" : "false";
+
+    private string ContentId => contentId;
 
     [Parameter]
     public string Label { get; set; } = "Menu";
@@ -105,18 +118,61 @@
             return;
         }
 
-        Open = !Open;
-        await OpenChanged.InvokeAsync(Open);
+        await SetOpenAsync(!Open);
     }
 
     private async Task CloseAsync()
     {
-        if (!Open)
+        await SetOpenAsync(false);
+    }
+
+    private async Task HandleKeyDownAsync(KeyboardEventArgs args)
+    {
+        if (Disabled)
         {
             return;
         }
 
-        Open = false;
-        await OpenChanged.InvokeAsync(false);
+        if (IsOpenKey(args.Key) && !Open)
+        {
+            await SetOpenAsync(true);
+            return;
+        }
+
+        if (args.Key == "Escape" && Open)
+        {
+            await SetOpenAsync(false);
+            await TryFocusTriggerAsync();
+        }
+    }
+
+    private async Task SetOpenAsync(bool open)
+    {
+        if (Open == open)
+        {
+            return;
+        }
+
+        Open = open;
+        await OpenChanged.InvokeAsync(open);
+    }
+
+    private async Task TryFocusTriggerAsync()
+    {
+        try
+        {
+            await TriggerElement.FocusAsync();
+        }
+        catch (InvalidOperationException)
+        {
+        }
+        catch (JSException)
+        {
+        }
+    }
+
+    private static bool IsOpenKey(string key)
+    {
+        return key is "ArrowDown" or "Down" or "ArrowUp" or "Up";
     }
 }

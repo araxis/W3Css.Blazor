@@ -17,7 +17,7 @@ Last updated: 2026-06-01
 - Current docs routes in `src/W3Css.Blazor.Docs/Pages/ComponentTopics`: 118 pages.
 - Tests in project source: 67 `.cs` test files.
 - Test suite status:
-  - `dotnet test tests/W3Css.Blazor.Tests/W3Css.Blazor.Tests.csproj --configuration Release` -> **448 passing tests**.
+  - `dotnet test tests/W3Css.Blazor.Tests/W3Css.Blazor.Tests.csproj --configuration Release` -> **449 passing tests**.
 - Build status:
   - `dotnet build W3Css.Blazor.slnx --configuration Release` → **0 warnings, 0 errors**.
 
@@ -82,5 +82,6 @@ Last updated: 2026-06-01
 - The modal accessibility polish pass added explicit `AriaLabel`/`AriaLabelledBy` support, stopped emitting broken title references for custom-header/no-title dialogs, refreshed modal docs, and verified the rendered modal page.
 - The message-box accessibility polish pass added explicit `AriaLabel`/`AriaLabelledBy` pass-through to `W3MessageBox`, refreshed message-box keyboard and labeling docs, and verified the rendered message-box page.
 - The drawer accessibility polish pass added explicit `AriaLabelledBy` support to `W3Drawer`, refreshed drawer keyboard and labeling docs, and verified the rendered drawer page.
+- The alert behavior polish pass added opt-in dismissible alerts with visible binding, dismissal callbacks, and configurable live-region announcements; refreshed alert docs and verified the rendered alert page.
 - Neutral terminology cleanup is complete; source, docs, tests, and memory no longer use external comparison-library names for the compatibility work.
 - Remaining planned work is optional: additional theme token expansion, visual quality sweeps, and `W3SwipeArea`-style pointer gesture support.

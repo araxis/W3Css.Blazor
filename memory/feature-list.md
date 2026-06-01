@@ -172,7 +172,7 @@ This model is intentionally similar to mature Blazor libraries, while keeping im
 | `W3Spinner` | Implemented | Accessible status spinner with size/color variants. |
 | `W3Skeleton` | Implemented | Placeholder loading component. |
 | `W3Slideshow` / `W3Slide` | Implemented | Script-free slideshow with controls/indicators. |
-| `W3Alert` | Implemented | W3.CSS alert surfaces for status and feedback. |
+| `W3Alert` | Implemented | W3.CSS alert surfaces for status and feedback with opt-in dismissal, visible binding, and live-region overrides. |
 
 ## Theming And Assets
 
@@ -224,7 +224,7 @@ This model is intentionally similar to mature Blazor libraries, while keeping im
 | Content display and timeline | Implemented | Tree, chat, timeline, data table, rating, drop zone, and gallery coverage. |
 | Feedback and loading | Implemented | Spinner, skeleton, toast, file, autocomplete, and alert coverage. |
 | Package validation | Implemented | `dotnet pack` generates `W3Css.Blazor.0.1.0.nupkg`; CI uploads package artifact. |
-| Test count | Implemented | `dotnet test` reports 448 passing tests. |
+| Test count | Implemented | `dotnet test` reports 449 passing tests. |
 
 ## Component Compatibility Backlog
 

@@ -22,6 +22,21 @@
         </W3Alert>
     </DocExample>
 
+    <DocExample Title="Dismissible Alert" Description="Use the close button for inline messages the user can clear without leaving the page." Code="@DismissibleCode">
+        <W3Alert Kind="W3AlertKind.Warning"
+                 Title="Review needed"
+                 Round="W3Round.Medium"
+                 @bind-Visible="DismissibleAlertVisible"
+                 ShowCloseButton="true"
+                 CloseButtonLabel="Dismiss review alert">
+            Two fields still need review before publishing.
+        </W3Alert>
+        @if (!DismissibleAlertVisible)
+        {
+            <W3Button Border="true" OnClick="@(() => DismissibleAlertVisible = true)">Show alert</W3Button>
+        }
+    </DocExample>
+
     <section class="doc-section">
         <h2>Parameters</h2>
         <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
@@ -34,6 +49,12 @@
                 <tr><td>Title</td><td>string?</td><td>null</td><td>Optional strong title</td></tr>
                 <tr><td>Round</td><td>W3Round</td><td>None</td><td>Rounded corner class</td></tr>
                 <tr><td>Role</td><td>string</td><td>status</td><td>ARIA role</td></tr>
+                <tr><td>AriaLive</td><td>string?</td><td>null</td><td>Optional ARIA live-region urgency</td></tr>
+                <tr><td>Visible</td><td>bool</td><td>true</td><td>Controls whether the alert renders</td></tr>
+                <tr><td>VisibleChanged</td><td>EventCallback&lt;bool&gt;</td><td>empty</td><td>Visibility binding callback</td></tr>
+                <tr><td>ShowCloseButton</td><td>bool</td><td>false</td><td>Renders the dismiss button</td></tr>
+                <tr><td>CloseButtonLabel</td><td>string</td><td>Dismiss alert</td><td>Dismiss button aria-label</td></tr>
+                <tr><td>OnDismiss</td><td>EventCallback</td><td>empty</td><td>Raised after the dismiss button hides the alert</td></tr>
                 <tr><td>Class</td><td>string?</td><td>null</td><td>Additional classes on the alert panel</td></tr>
                 <tr><td>Style</td><td>string?</td><td>null</td><td>Inline styles on the alert panel</td></tr>
                 <tr><td>AdditionalAttributes</td><td>IReadOnlyDictionary&lt;string, object&gt;?</td><td>null</td><td>Extra attributes on the alert panel</td></tr>
@@ -55,6 +76,18 @@
     private const string RoleCode = """
 <W3Alert Kind="W3AlertKind.Danger" Title="Error" Role="alert">
     The save operation failed.
+</W3Alert>
+""";
+
+    private bool DismissibleAlertVisible { get; set; } = true;
+
+    private const string DismissibleCode = """
+<W3Alert Kind="W3AlertKind.Warning"
+         Title="Review needed"
+         @bind-Visible="alertVisible"
+         ShowCloseButton="true"
+         CloseButtonLabel="Dismiss review alert">
+    Two fields still need review before publishing.
 </W3Alert>
 """;
 }

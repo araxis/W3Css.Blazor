@@ -1,19 +1,37 @@
 @using W3Css.Blazor.Internal
 @inherits W3ComponentBase
 
-<div @attributes="AdditionalAttributes"
-     class="@CssClass"
-     style="@Style"
-     role="@Role">
-    @if (!string.IsNullOrWhiteSpace(Title))
-    {
-        <strong class="w3-alert-title">@Title</strong>@(" ")
-    }
-    @ChildContent
-</div>
+@if (Visible)
+{
+    <div @attributes="AdditionalAttributes"
+         class="@CssClass"
+         style="@Style"
+         role="@Role"
+         aria-live="@AriaLive">
+        @if (ShowCloseButton)
+        {
+            <button type="button"
+                    class="w3-button w3-display-topright"
+                    aria-label="@CloseButtonLabel"
+                    @onclick="DismissAsync">
+                &times;
+            </button>
+        }
+
+        @if (!string.IsNullOrWhiteSpace(Title))
+        {
+            <strong class="w3-alert-title">@Title</strong>@(" ")
+        }
+        @ChildContent
+    </div>
+}
 
 @code {
-    private string CssClass => BuildClass("w3-panel", Kind.ToClass(), Round.ToClass());
+    private string CssClass => BuildClass(
+        "w3-panel",
+        ShowCloseButton ? "w3-display-container" : null,
+        Kind.ToClass(),
+        Round.ToClass());
 
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
@@ -29,4 +47,34 @@
 
     [Parameter]
     public string Role { get; set; } = "status";
+
+    [Parameter]
+    public string? AriaLive { get; set; }
+
+    [Parameter]
+    public bool Visible { get; set; } = true;
+
+    [Parameter]
+    public EventCallback<bool> VisibleChanged { get; set; }
+
+    [Parameter]
+    public bool ShowCloseButton { get; set; }
+
+    [Parameter]
+    public string CloseButtonLabel { get; set; } = "Dismiss alert";
+
+    [Parameter]
+    public EventCallback OnDismiss { get; set; }
+
+    private async Task DismissAsync()
+    {
+        if (!Visible)
+        {
+            return;
+        }
+
+        Visible = false;
+        await VisibleChanged.InvokeAsync(false);
+        await OnDismiss.InvokeAsync();
+    }
 }

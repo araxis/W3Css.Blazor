@@ -4,6 +4,17 @@ Last updated: 2026-06-01
 
 ## 2026-06-01
 
+- Continued the feedback behavior polish pass on `W3Alert`:
+  - added opt-in dismissible alerts with a close button, `Visible` binding, `VisibleChanged`, and `OnDismiss`;
+  - added configurable `AriaLive` announcements for alert surfaces;
+  - documented dismissible alert usage and updated the alert parameter table;
+  - added focused rendering/docs coverage for dismissal, callbacks, live-region attributes, and the new docs section.
+- Verification:
+  - focused alert/docs tests: 3 passing;
+  - `dotnet test tests/W3Css.Blazor.Tests/W3Css.Blazor.Tests.csproj --configuration Release` (449 passing);
+  - `dotnet build W3Css.Blazor.slnx --configuration Release` (0 warnings, 0 errors);
+  - `dotnet pack src/W3Css.Blazor/W3Css.Blazor.csproj --configuration Release --no-build`;
+  - browser-verified `/components/alert` after restarting the docs server on port 5016: the dismissible alert section renders, the close button hides the alert, the reset button restores it, no visible error appears, and no horizontal overflow appears.
 - Continued the accessibility polish pass on `W3Drawer`:
   - added explicit `AriaLabelledBy` support for custom-header drawers;
   - kept `AriaLabel` as the fallback accessible name when no title or labelled-by reference is used;

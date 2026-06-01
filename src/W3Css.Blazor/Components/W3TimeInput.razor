@@ -1,4 +1,5 @@
 @using System.Globalization
+@using Microsoft.AspNetCore.Components.Forms
 @inherits W3FormComponentBase<TimeOnly?>
 
 <input @attributes="AdditionalAttributes"
@@ -12,6 +13,9 @@
        step="@Step"
        disabled="@Disabled"
        readonly="@ReadOnly"
+       required="@Required"
+       aria-required="@AriaRequired"
+       aria-invalid="@AriaInvalid"
        value="@CurrentValueAsString"
        @oninput="HandleInput"
        @onchange="HandleChange" />
@@ -19,6 +23,8 @@
 @code {
     private static readonly string[] TimeFormats = ["HH:mm", "HH:mm:ss", "HH:mm:ss.fff"];
     private string TimeCssClass => BuildControlClass("w3-input");
+    private string? AriaRequired => Required ? "true" : null;
+    private string? AriaInvalid => EditContext?.GetValidationMessages(FieldIdentifier).Any() == true ? "true" : null;
 
     [Parameter]
     public string? Id { get; set; }
@@ -34,6 +40,9 @@
 
     [Parameter]
     public bool ReadOnly { get; set; }
+
+    [Parameter]
+    public bool Required { get; set; }
 
     [Parameter]
     public bool UpdateOnInput { get; set; }

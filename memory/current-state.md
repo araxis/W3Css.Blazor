@@ -1,6 +1,6 @@
 # Current State
 
-Last updated: 2026-05-31
+Last updated: 2026-06-01
 
 ## Repository
 
@@ -17,7 +17,7 @@ Last updated: 2026-05-31
 - Current docs routes in `src/W3Css.Blazor.Docs/Pages/ComponentTopics`: 118 pages.
 - Tests in project source: 67 `.cs` test files.
 - Test suite status:
-  - `dotnet test tests/W3Css.Blazor.Tests/W3Css.Blazor.Tests.csproj --configuration Release` -> **428 passing tests**.
+  - `dotnet test tests/W3Css.Blazor.Tests/W3Css.Blazor.Tests.csproj --configuration Release` -> **429 passing tests**.
 - Build status:
   - `dotnet build W3Css.Blazor.slnx --configuration Release` → **0 warnings, 0 errors**.
 
@@ -67,5 +67,6 @@ Last updated: 2026-05-31
 - The form submit UX audit added `Busy`/`Disabled` child-control disablement to `W3Form`, exposed `aria-busy`, refreshed the docs example/API table, and verified the rendered form page.
 - The select UX audit added first-class `Placeholder` and `PlaceholderDisabled` support to `W3Select`, refreshed the select and validation examples, and verified the rendered select page.
 - The choice-input UX audit added required-state support and label spacing hooks to `W3Checkbox`/`W3Radio`, made `W3RadioGroup` validation-aware, refreshed checkbox/radio docs, and verified the rendered docs pages.
+- The value-input UX audit added required-state and validation ARIA support to `W3NumberInput`, `W3DateInput`, and `W3TimeInput`, refreshed required validation examples, and verified the rendered docs pages.
 - Neutral terminology cleanup is complete; source, docs, tests, and memory no longer use external comparison-library names for the compatibility work.
 - Remaining planned work is optional: extra theme tokens, focus-ring/theming polish, and `W3SwipeArea`-style pointer gesture support.

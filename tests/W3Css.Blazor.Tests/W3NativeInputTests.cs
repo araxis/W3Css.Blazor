@@ -77,6 +77,7 @@ public sealed class W3NativeInputTests
             .Add(p => p.Min, 1)
             .Add(p => p.Max, 12)
             .Add(p => p.Step, "1")
+            .Add(p => p.Required, true)
             .Add(p => p.Border, true)
             .Add(p => p.Color, W3Color.White)
             .Add(p => p.TextColor, W3Color.Black)
@@ -98,6 +99,8 @@ public sealed class W3NativeInputTests
         Assert.Equal("1", input.GetAttribute("min"));
         Assert.Equal("12", input.GetAttribute("max"));
         Assert.Equal("1", input.GetAttribute("step"));
+        Assert.True(input.HasAttribute("required"));
+        Assert.Equal("true", input.GetAttribute("aria-required"));
         Assert.Equal("max-width: 8rem;", input.GetAttribute("style"));
 
         input.Change("8");
@@ -134,6 +137,7 @@ public sealed class W3NativeInputTests
             .Add(p => p.Id, "start-date")
             .Add(p => p.Min, new DateOnly(2026, 1, 1))
             .Add(p => p.Max, new DateOnly(2026, 12, 31))
+            .Add(p => p.Required, true)
             .Add(p => p.Border, true)
             .Add(p => p.Color, W3Color.White)
             .Add(p => p.TextColor, W3Color.Black)
@@ -154,6 +158,8 @@ public sealed class W3NativeInputTests
         Assert.Equal("2026-06-15", input.GetAttribute("value"));
         Assert.Equal("2026-01-01", input.GetAttribute("min"));
         Assert.Equal("2026-12-31", input.GetAttribute("max"));
+        Assert.True(input.HasAttribute("required"));
+        Assert.Equal("true", input.GetAttribute("aria-required"));
         Assert.Equal("max-width: 12rem;", input.GetAttribute("style"));
 
         input.Change("2026-07-04");
@@ -174,6 +180,7 @@ public sealed class W3NativeInputTests
             .Add(p => p.Min, new TimeOnly(8, 0))
             .Add(p => p.Max, new TimeOnly(18, 0))
             .Add(p => p.Step, "900")
+            .Add(p => p.Required, true)
             .Add(p => p.Border, true)
             .Add(p => p.Color, W3Color.White)
             .Add(p => p.TextColor, W3Color.Black)
@@ -195,11 +202,48 @@ public sealed class W3NativeInputTests
         Assert.Equal("08:00", input.GetAttribute("min"));
         Assert.Equal("18:00", input.GetAttribute("max"));
         Assert.Equal("900", input.GetAttribute("step"));
+        Assert.True(input.HasAttribute("required"));
+        Assert.Equal("true", input.GetAttribute("aria-required"));
         Assert.Equal("max-width: 10rem;", input.GetAttribute("style"));
 
         input.Change("10:45");
 
         Assert.Equal(new TimeOnly(10, 45), value);
+    }
+
+    [Fact]
+    public async Task ValueInputsReportRequiredValidationStateThroughFieldMessages()
+    {
+        using var context = new BunitContext();
+        var cut = context.Render<W3ValueInputValidationHost>();
+
+        var isValid = await cut.InvokeAsync(() => cut.Instance.Validate());
+
+        Assert.False(isValid);
+        Assert.Contains("Enter a seat count from 1 to 12.", cut.Markup);
+        Assert.Contains("Choose a start date.", cut.Markup);
+        Assert.Contains("Choose a start time.", cut.Markup);
+
+        var inputs = cut.FindAll("input");
+
+        Assert.All(inputs, input =>
+        {
+            Assert.Equal("true", input.GetAttribute("aria-invalid"));
+            Assert.Contains("invalid", input.GetAttribute("class"));
+            Assert.True(input.HasAttribute("required"));
+            Assert.Equal("true", input.GetAttribute("aria-required"));
+        });
+
+        inputs[0].Change("4");
+        inputs[1].Change("2026-06-15");
+        inputs[2].Change("09:30");
+
+        isValid = await cut.InvokeAsync(() => cut.Instance.Validate());
+
+        Assert.True(isValid);
+        Assert.DoesNotContain("Enter a seat count from 1 to 12.", cut.Markup);
+        Assert.DoesNotContain("Choose a start date.", cut.Markup);
+        Assert.DoesNotContain("Choose a start time.", cut.Markup);
     }
 
     [Fact]

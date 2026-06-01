@@ -1,4 +1,5 @@
 @page "/components/time-input"
+@using System.ComponentModel.DataAnnotations
 
 <PageTitle>W3TimeInput</PageTitle>
 
@@ -7,7 +8,7 @@
     <DocPager PreviousHref="components/date-input" PreviousText="Date Input" NextHref="components/slider" NextText="Slider" />
 
     <p class="w3-large">`W3TimeInput` wraps the native browser time control for nullable `TimeOnly` values.</p>
-    <p>Use it with date inputs for schedule forms, booking tools, reminders, and time-of-day filters.</p>
+    <p>Use it with date inputs for schedule forms, booking tools, reminders, and time-of-day filters. Add `novalidate` on the form when validation messages should handle required feedback.</p>
 
     <DocExample Title="Time Field" Description="Time values are formatted for native `input type=time` and parsed back into `TimeOnly?`." Code="@BasicCode">
         <EditForm Model="@TimeModel">
@@ -34,6 +35,24 @@
         </div>
     </DocExample>
 
+    <DocExample Title="Required Time" Description="Use Required with a nullable time and a validation attribute when a time must be chosen." Code="@RequiredCode">
+        <EditForm Model="@RequiredTimeModel" OnValidSubmit="HandleRequiredSubmit" OnInvalidSubmit="HandleRequiredSubmit" novalidate>
+            <DataAnnotationsValidator />
+            <W3Field TValue="TimeOnly?" Label="Start time" ForId="required-time" For="@(() => RequiredTimeModel.StartTime)" HelpText="Choose a time before continuing.">
+                <W3TimeInput Id="required-time"
+                             @bind-Value="RequiredTimeModel.StartTime"
+                             Min="@MinimumTime"
+                             Max="@MaximumTime"
+                             Step="900"
+                             Required="true"
+                             UpdateOnInput="true"
+                             Border="true"
+                             Round="W3Round.Medium" />
+            </W3Field>
+            <W3Button Type="submit" Color="W3Color.Teal" TextColor="W3Color.White">Validate</W3Button>
+        </EditForm>
+    </DocExample>
+
     <section class="doc-section">
         <h2>Parameters</h2>
         <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
@@ -50,6 +69,7 @@
                 <tr><td>Step</td><td>string</td><td>null</td><td>`step` seconds such as 900 for 15 minutes</td></tr>
                 <tr><td>UpdateOnInput</td><td>bool</td><td>false</td><td>Updates on `input` instead of `change`</td></tr>
                 <tr><td>ReadOnly</td><td>bool</td><td>false</td><td>`readonly` attribute</td></tr>
+                <tr><td>Required</td><td>bool</td><td>false</td><td>`required` and `aria-required` attributes</td></tr>
                 <tr><td>Disabled</td><td>bool</td><td>false</td><td>`disabled` attribute</td></tr>
                 <tr><td>Border</td><td>bool</td><td>false</td><td>`w3-border`</td></tr>
                 <tr><td>Color</td><td>W3Color</td><td>None</td><td>Background color class</td></tr>
@@ -73,6 +93,7 @@
 
 @code {
     private readonly TimeInputExampleModel TimeModel = new();
+    private readonly RequiredTimeInputExampleModel RequiredTimeModel = new();
     private static readonly TimeOnly MinimumTime = new(8, 0);
     private static readonly TimeOnly MaximumTime = new(18, 0);
 
@@ -99,10 +120,54 @@
 </div>
 """;
 
+    private const string RequiredCode = """
+@using System.ComponentModel.DataAnnotations
+
+<EditForm Model="@model" OnValidSubmit="HandleSubmit" OnInvalidSubmit="HandleSubmit" novalidate>
+    <DataAnnotationsValidator />
+    <W3Field TValue="TimeOnly?" Label="Start time" ForId="required-time" For="@(() => model.StartTime)" HelpText="Choose a time before continuing.">
+        <W3TimeInput Id="required-time"
+                     @bind-Value="model.StartTime"
+                     Min="new TimeOnly(8, 0)"
+                     Max="new TimeOnly(18, 0)"
+                     Step="900"
+                     Required="true"
+                     UpdateOnInput="true"
+                     Border="true"
+                     Round="W3Round.Medium" />
+    </W3Field>
+    <W3Button Type="submit" Color="W3Color.Teal" TextColor="W3Color.White">Validate</W3Button>
+</EditForm>
+
+@code {
+    private readonly RequiredTimeInputExampleModel model = new();
+
+    private void HandleSubmit()
+    {
+    }
+
+    private sealed class RequiredTimeInputExampleModel
+    {
+        [Required(ErrorMessage = "Choose a start time.")]
+        public TimeOnly? StartTime { get; set; }
+    }
+}
+""";
+
     private sealed class TimeInputExampleModel
     {
         public TimeOnly? StartTime { get; set; } = new TimeOnly(9, 30);
         public DateOnly? AppointmentDate { get; set; } = new DateOnly(2026, 6, 15);
         public TimeOnly? AppointmentTime { get; set; } = new TimeOnly(10, 0);
+    }
+
+    private sealed class RequiredTimeInputExampleModel
+    {
+        [Required(ErrorMessage = "Choose a start time.")]
+        public TimeOnly? StartTime { get; set; }
+    }
+
+    private void HandleRequiredSubmit()
+    {
     }
 }

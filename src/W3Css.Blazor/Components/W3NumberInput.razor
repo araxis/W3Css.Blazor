@@ -1,5 +1,6 @@
 @typeparam TValue
 @using System.Globalization
+@using Microsoft.AspNetCore.Components.Forms
 @inherits W3FormComponentBase<TValue>
 
 <input @attributes="AdditionalAttributes"
@@ -14,6 +15,9 @@
        step="@Step"
        disabled="@Disabled"
        readonly="@ReadOnly"
+       required="@Required"
+       aria-required="@AriaRequired"
+       aria-invalid="@AriaInvalid"
        value="@CurrentValueAsString"
        @oninput="HandleInput"
        @onchange="HandleChange" />
@@ -22,6 +26,8 @@
     private string NumberCssClass => BuildControlClass("w3-input");
     private string? MinAsString => FormatNumber(Min);
     private string? MaxAsString => FormatNumber(Max);
+    private string? AriaRequired => Required ? "true" : null;
+    private string? AriaInvalid => EditContext?.GetValidationMessages(FieldIdentifier).Any() == true ? "true" : null;
 
     [Parameter]
     public string? Id { get; set; }
@@ -40,6 +46,9 @@
 
     [Parameter]
     public bool ReadOnly { get; set; }
+
+    [Parameter]
+    public bool Required { get; set; }
 
     [Parameter]
     public bool UpdateOnInput { get; set; }

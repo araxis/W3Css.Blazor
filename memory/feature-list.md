@@ -1,6 +1,6 @@
 # Feature List
 
-Last updated: 2026-05-31
+Last updated: 2026-06-01
 
 Status values:
 
@@ -103,9 +103,9 @@ This model is intentionally similar to mature Blazor libraries, while keeping im
 | --- | --- | --- |
 | `W3Input` | Implemented | Validation-friendly text input with `w3-input`. |
 | `W3Mask` | Implemented | Masked input with digit, letter, alphanumeric tokens, and literal delimiters. |
-| `W3NumberInput<TValue>` | Implemented | Native numeric input with W3.CSS styling and parsing helpers. |
-| `W3DateInput` | Implemented | Date picker input with range/date binding helpers. |
-| `W3TimeInput` | Implemented | Native time input with range and formatting support. |
+| `W3NumberInput<TValue>` | Implemented | Native numeric input with W3.CSS styling, parsing helpers, required state, and validation ARIA support. |
+| `W3DateInput` | Implemented | Date picker input with range/date binding helpers, required state, and validation ARIA support. |
+| `W3TimeInput` | Implemented | Native time input with range/formatting helpers, required state, and validation ARIA support. |
 | `W3Slider<TValue>` | Implemented | Native range input wrapper with step/min/max. |
 | `W3Switch` | Implemented | Accessible toggle-style checkbox. |
 | `W3ToggleGroup<TValue>` / `W3ToggleItem<TValue>` | Implemented | Segmented single/multi selector with `aria-pressed` items. |
@@ -224,7 +224,7 @@ This model is intentionally similar to mature Blazor libraries, while keeping im
 | Content display and timeline | Implemented | Tree, chat, timeline, data table, rating, drop zone, and gallery coverage. |
 | Feedback and loading | Implemented | Spinner, skeleton, toast, file, autocomplete, and alert coverage. |
 | Package validation | Implemented | `dotnet pack` generates `W3Css.Blazor.0.1.0.nupkg`; CI uploads package artifact. |
-| Test count | Implemented | `dotnet test` reports 428 passing tests. |
+| Test count | Implemented | `dotnet test` reports 429 passing tests. |
 
 ## Component Compatibility Backlog
 

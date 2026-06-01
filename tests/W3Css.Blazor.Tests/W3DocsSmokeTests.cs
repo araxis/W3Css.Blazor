@@ -863,12 +863,15 @@ public sealed class W3DocsSmokeTests
         Assert.Contains("Extra attributes on the masked input", maskPage.Markup);
 
         var numberInputPage = context.Render<NumberInputPage>();
+        Assert.Contains("Required Number", numberInputPage.Markup);
         Assert.Contains("Extra attributes on the number input", numberInputPage.Markup);
 
         var dateInputPage = context.Render<DateInputPage>();
+        Assert.Contains("Required Date", dateInputPage.Markup);
         Assert.Contains("Extra attributes on the date input", dateInputPage.Markup);
 
         var timeInputPage = context.Render<TimeInputPage>();
+        Assert.Contains("Required Time", timeInputPage.Markup);
         Assert.Contains("Extra attributes on the time input", timeInputPage.Markup);
 
         var sliderPage = context.Render<SliderPage>();

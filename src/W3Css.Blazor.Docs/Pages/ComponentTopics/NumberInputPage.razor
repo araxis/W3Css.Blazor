@@ -1,4 +1,5 @@
 @page "/components/number-input"
+@using System.ComponentModel.DataAnnotations
 
 <PageTitle>W3NumberInput</PageTitle>
 
@@ -7,7 +8,7 @@
     <DocPager PreviousHref="components/form" PreviousText="Form" NextHref="components/date-range-picker" NextText="Date Range Picker" />
 
     <p class="w3-large"><code>W3NumberInput&lt;TValue&gt;</code> renders a validation-friendly native number input with W3.CSS input styling.</p>
-    <p>Use it for quantities, settings, numeric filters, and compact app forms without bringing in a picker dependency.</p>
+    <p>Use it for quantities, settings, numeric filters, and compact app forms without bringing in a picker dependency. Add `novalidate` on the form when validation messages should handle required feedback.</p>
 
     <DocExample Title="Integer Number" Description="Bind `TValue` to the numeric type your model uses and keep normal Blazor validation behavior." Code="@IntegerCode">
         <EditForm Model="@NumberModel">
@@ -35,6 +36,25 @@
                        Color="W3Color.White" />
     </DocExample>
 
+    <DocExample Title="Required Number" Description="Use Required with a validation attribute when zero or empty values are not acceptable." Code="@RequiredCode">
+        <EditForm Model="@RequiredNumberModel" OnValidSubmit="HandleRequiredSubmit" OnInvalidSubmit="HandleRequiredSubmit" novalidate>
+            <DataAnnotationsValidator />
+            <W3Field TValue="int" Label="Seats" ForId="required-seats" For="@(() => RequiredNumberModel.Seats)" HelpText="Choose between 1 and 12 seats.">
+                <W3NumberInput TValue="int"
+                               Id="required-seats"
+                               @bind-Value="RequiredNumberModel.Seats"
+                               Min="1"
+                               Max="12"
+                               Step="1"
+                               Required="true"
+                               UpdateOnInput="true"
+                               Border="true"
+                               Round="W3Round.Medium" />
+            </W3Field>
+            <W3Button Type="submit" Color="W3Color.Teal" TextColor="W3Color.White">Validate</W3Button>
+        </EditForm>
+    </DocExample>
+
     <section class="doc-section">
         <h2>Parameters</h2>
         <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
@@ -53,6 +73,7 @@
                 <tr><td>Placeholder</td><td>string</td><td>null</td><td>`placeholder` attribute</td></tr>
                 <tr><td>UpdateOnInput</td><td>bool</td><td>false</td><td>Updates on `input` instead of `change`</td></tr>
                 <tr><td>ReadOnly</td><td>bool</td><td>false</td><td>`readonly` attribute</td></tr>
+                <tr><td>Required</td><td>bool</td><td>false</td><td>`required` and `aria-required` attributes</td></tr>
                 <tr><td>Disabled</td><td>bool</td><td>false</td><td>`disabled` attribute</td></tr>
                 <tr><td>Border</td><td>bool</td><td>false</td><td>`w3-border`</td></tr>
                 <tr><td>Color</td><td>W3Color</td><td>None</td><td>Background color class</td></tr>
@@ -77,6 +98,7 @@
 
 @code {
     private readonly NumberInputExampleModel NumberModel = new();
+    private readonly RequiredNumberInputExampleModel RequiredNumberModel = new();
 
     private const string IntegerCode = """
 <W3Field TValue="int" Label="Seats" ForId="number-seats" For="@(() => model.Seats)" HelpText="Choose between 1 and 12 seats.">
@@ -102,9 +124,54 @@
                Color="W3Color.White" />
 """;
 
+    private const string RequiredCode = """
+@using System.ComponentModel.DataAnnotations
+
+<EditForm Model="@model" OnValidSubmit="HandleSubmit" OnInvalidSubmit="HandleSubmit" novalidate>
+    <DataAnnotationsValidator />
+    <W3Field TValue="int" Label="Seats" ForId="required-seats" For="@(() => model.Seats)" HelpText="Choose between 1 and 12 seats.">
+        <W3NumberInput TValue="int"
+                       Id="required-seats"
+                       @bind-Value="model.Seats"
+                       Min="1"
+                       Max="12"
+                       Step="1"
+                       Required="true"
+                       UpdateOnInput="true"
+                       Border="true"
+                       Round="W3Round.Medium" />
+    </W3Field>
+    <W3Button Type="submit" Color="W3Color.Teal" TextColor="W3Color.White">Validate</W3Button>
+</EditForm>
+
+@code {
+    private readonly RequiredNumberInputExampleModel model = new();
+
+    private void HandleSubmit()
+    {
+    }
+
+    private sealed class RequiredNumberInputExampleModel
+    {
+        [Range(1, 12, ErrorMessage = "Choose between 1 and 12 seats.")]
+        public int Seats { get; set; }
+    }
+}
+""";
+
     private sealed class NumberInputExampleModel
     {
         public int Seats { get; set; } = 4;
         public decimal Price { get; set; } = 29.95m;
+    }
+
+    private sealed class RequiredNumberInputExampleModel
+    {
+        [Range(1, 12, ErrorMessage = "Choose between 1 and 12 seats.")]
+        public int Seats { get; set; }
+    }
+
+    private void HandleRequiredSubmit()
+    {
     }
 }

@@ -7,7 +7,21 @@
     <DocPager PreviousHref="components/nav-menu" PreviousText="Nav Menu" NextHref="components/breadcrumb" NextText="Breadcrumb" />
 
     <p class="w3-large">`W3BottomNavigation` provides mobile-first app navigation with W3.CSS bar and button styling.</p>
-    <p>Use it for phone layouts, PWAs, dashboards, and app shells where the main destinations should stay reachable at the bottom of the screen.</p>
+    <p>Use it for phone layouts, PWAs, dashboards, and app shells where the main destinations should stay reachable at the bottom of the screen. Keyboard users can move across selectable items with arrow keys and jump to the first or last selectable item with Home/End.</p>
+
+    <section class="doc-section">
+        <h2>Keyboard Interaction</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Key</th><th>Behavior</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>ArrowRight / ArrowDown</td><td>Selects the next enabled item that has a value.</td></tr>
+                <tr><td>ArrowLeft / ArrowUp</td><td>Selects the previous enabled item that has a value.</td></tr>
+                <tr><td>Home / End</td><td>Selects the first or last enabled item that has a value.</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
 
     <DocExample Title="Mobile App Navigation" Description="Contained mode lets docs and app previews demonstrate fixed-bottom behavior without covering the whole page." Code="@MobileCode">
         <div class="bottom-nav-phone w3-border w3-white">

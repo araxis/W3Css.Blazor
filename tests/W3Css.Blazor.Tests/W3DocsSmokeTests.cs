@@ -659,6 +659,9 @@ public sealed class W3DocsSmokeTests
         var bottomNavigationPage = context.Render<BottomNavigationPage>();
         Assert.Contains("Surface and Black", bottomNavigationPage.Markup);
         Assert.Contains("Primary and White", bottomNavigationPage.Markup);
+        Assert.Contains("Keyboard Interaction", bottomNavigationPage.Markup);
+        Assert.Contains("ArrowRight", bottomNavigationPage.Markup);
+        Assert.Contains("Home", bottomNavigationPage.Markup);
         Assert.Contains("Extra attributes on the nav root", bottomNavigationPage.Markup);
     }
 

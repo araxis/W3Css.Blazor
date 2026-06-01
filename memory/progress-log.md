@@ -4,6 +4,17 @@ Last updated: 2026-06-01
 
 ## 2026-06-01
 
+- Continued the keyboard interaction polish pass on `W3BottomNavigation`:
+  - added ArrowRight/ArrowDown and ArrowLeft/ArrowUp movement across selectable items;
+  - added Home/End first-or-last selectable item selection;
+  - skipped disabled and value-less items while reusing the existing selection path;
+  - documented the bottom-navigation keyboard interaction table and added focused navigation/docs coverage.
+- Verification:
+  - focused bottom-navigation/docs tests: 5 passing;
+  - `dotnet test tests/W3Css.Blazor.Tests/W3Css.Blazor.Tests.csproj --configuration Release` (440 passing);
+  - `dotnet build W3Css.Blazor.slnx --configuration Release` (0 warnings, 0 errors);
+  - `dotnet pack src/W3Css.Blazor/W3Css.Blazor.csproj --configuration Release --no-build`;
+  - browser-verified `/components/bottom-navigation` after restarting the docs server on port 5016: the keyboard section renders, no visible error appears, and no horizontal overflow appears.
 - Continued the keyboard interaction polish pass on `W3Pagination`:
   - added ArrowRight/ArrowDown and ArrowLeft/ArrowUp page movement;
   - added Home/End first-or-last page selection;

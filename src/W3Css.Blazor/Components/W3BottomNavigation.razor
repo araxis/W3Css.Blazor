@@ -5,12 +5,15 @@
     <nav @attributes="AdditionalAttributes"
          class="@CssClass"
          style="@Style"
-         aria-label="@Label">
+         aria-label="@Label"
+         @onkeydown="HandleKeyDownAsync">
         @ChildContent
     </nav>
 </CascadingValue>
 
 @code {
+    private readonly List<W3BottomNavigationItem> items = [];
+
     private string CssClass => BuildClass(
         "w3-bar",
         "w3-bottom-navigation",
@@ -87,6 +90,25 @@
             && string.Equals(Value, value, StringComparison.Ordinal);
     }
 
+    internal void Register(W3BottomNavigationItem item)
+    {
+        if (items.Contains(item))
+        {
+            return;
+        }
+
+        items.Add(item);
+        _ = InvokeAsync(StateHasChanged);
+    }
+
+    internal void Unregister(W3BottomNavigationItem item)
+    {
+        if (items.Remove(item))
+        {
+            _ = InvokeAsync(StateHasChanged);
+        }
+    }
+
     internal async Task SelectAsync(string? value)
     {
         if (string.Equals(Value, value, StringComparison.Ordinal))
@@ -97,5 +119,62 @@
         Value = value;
         await ValueChanged.InvokeAsync(value);
         await InvokeAsync(StateHasChanged);
+    }
+
+    private async Task HandleKeyDownAsync(KeyboardEventArgs args)
+    {
+        switch (args.Key)
+        {
+            case "ArrowRight":
+            case "Right":
+            case "ArrowDown":
+            case "Down":
+                await SelectAdjacentAsync(1);
+                break;
+            case "ArrowLeft":
+            case "Left":
+            case "ArrowUp":
+            case "Up":
+                await SelectAdjacentAsync(-1);
+                break;
+            case "Home":
+                await SelectBoundaryAsync(first: true);
+                break;
+            case "End":
+                await SelectBoundaryAsync(first: false);
+                break;
+        }
+    }
+
+    private async Task SelectAdjacentAsync(int offset)
+    {
+        var selectableItems = GetSelectableItems();
+
+        if (selectableItems.Length == 0)
+        {
+            return;
+        }
+
+        var currentIndex = Array.FindIndex(selectableItems, item => IsActive(item.Value));
+        var nextIndex = currentIndex < 0
+            ? 0
+            : (currentIndex + offset + selectableItems.Length) % selectableItems.Length;
+
+        await SelectAsync(selectableItems[nextIndex].Value);
+    }
+
+    private Task SelectBoundaryAsync(bool first)
+    {
+        var selectableItems = GetSelectableItems();
+        var item = first ? selectableItems.FirstOrDefault() : selectableItems.LastOrDefault();
+
+        return item is null ? Task.CompletedTask : SelectAsync(item.Value);
+    }
+
+    private W3BottomNavigationItem[] GetSelectableItems()
+    {
+        return items
+            .Where(item => !item.Disabled && !string.IsNullOrWhiteSpace(item.Value))
+            .ToArray();
     }
 }

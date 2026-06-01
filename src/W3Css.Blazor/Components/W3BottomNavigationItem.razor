@@ -1,6 +1,7 @@
 @using Microsoft.AspNetCore.Components.Web
 @using W3Css.Blazor.Internal
 @inherits W3ComponentBase
+@implements IDisposable
 
 @if (Disabled)
 {
@@ -258,5 +259,15 @@ else
         }
 
         await OnClick.InvokeAsync(args);
+    }
+
+    protected override void OnInitialized()
+    {
+        Owner?.Register(this);
+    }
+
+    public void Dispose()
+    {
+        Owner?.Unregister(this);
     }
 }

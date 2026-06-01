@@ -31,6 +31,7 @@ public sealed class W3OverlayTests
         var content = cut.Find(".w3-modal-content");
 
         Assert.Contains("w3-modal", modal.GetAttribute("class"));
+        Assert.Equal("details", modal.GetAttribute("id"));
         Assert.Contains("w3-show", modal.GetAttribute("class"));
         Assert.Contains("modal-extra", modal.GetAttribute("class"));
         Assert.Equal("padding-top: 4rem;", modal.GetAttribute("style"));
@@ -41,11 +42,46 @@ public sealed class W3OverlayTests
         Assert.Contains("modal-content-extra", content.GetAttribute("class"));
         Assert.Equal("max-width: 32rem;", content.GetAttribute("style"));
         Assert.Equal("true", modal.GetAttribute("aria-modal"));
+        Assert.Equal("false", modal.GetAttribute("aria-hidden"));
         Assert.Equal("details-title", modal.GetAttribute("aria-labelledby"));
+        Assert.Null(modal.GetAttribute("aria-label"));
 
         cut.Find("button").Click();
 
         Assert.False(open);
+    }
+
+    [Fact]
+    public void ModalSupportsExplicitAccessibleLabelWithoutTitle()
+    {
+        using var context = new BunitContext();
+        var cut = context.Render<W3Modal>(parameters => parameters
+            .Add(p => p.Open, true)
+            .Add(p => p.AriaLabel, "Preferences")
+            .Add(p => p.ChildContent, "Modal body"));
+
+        var modal = cut.Find("[role='dialog']");
+
+        Assert.Equal("Preferences", modal.GetAttribute("aria-label"));
+        Assert.Null(modal.GetAttribute("aria-labelledby"));
+        Assert.Equal("true", modal.GetAttribute("aria-modal"));
+        Assert.Equal("false", modal.GetAttribute("aria-hidden"));
+    }
+
+    [Fact]
+    public void ModalSupportsCustomLabelledByReference()
+    {
+        using var context = new BunitContext();
+        var cut = context.Render<W3Modal>(parameters => parameters
+            .Add(p => p.Open, true)
+            .Add(p => p.AriaLabelledBy, "custom-modal-heading")
+            .Add(p => p.Header, (RenderFragment)(header => header.AddMarkupContent(0, "<h2 id=\"custom-modal-heading\">Preferences</h2>")))
+            .Add(p => p.ChildContent, "Modal body"));
+
+        var modal = cut.Find("[role='dialog']");
+
+        Assert.Equal("custom-modal-heading", modal.GetAttribute("aria-labelledby"));
+        Assert.Null(modal.GetAttribute("aria-label"));
     }
 
     [Fact]

@@ -4,6 +4,18 @@ Last updated: 2026-06-01
 
 ## 2026-06-01
 
+- Continued the accessibility polish pass on `W3Modal`:
+  - added explicit `AriaLabel` and `AriaLabelledBy` parameters;
+  - stopped emitting `aria-labelledby` when no matching title id exists;
+  - rendered the `Id` parameter on the modal root while keeping it as the default title id prefix;
+  - added closed-state `aria-hidden` and open-state-only `aria-modal`;
+  - documented modal labeling and keyboard interaction guidance.
+- Verification:
+  - focused modal/docs tests: 7 passing;
+  - `dotnet test tests/W3Css.Blazor.Tests/W3Css.Blazor.Tests.csproj --configuration Release` (446 passing);
+  - `dotnet build W3Css.Blazor.slnx --configuration Release` (0 warnings, 0 errors);
+  - `dotnet pack src/W3Css.Blazor/W3Css.Blazor.csproj --configuration Release --no-build`;
+  - browser-verified `/components/modal` after restarting the docs server on port 5016: the keyboard and labeling guidance renders, the modal root id is present, the title reference resolves, Escape closes the modal, no visible error appears, and no horizontal overflow appears.
 - Continued the keyboard interaction polish pass on `W3Sidebar`:
   - added Escape close behavior when focus is inside the sidebar;
   - made the open sidebar surface focusable with `tabindex="0"`;

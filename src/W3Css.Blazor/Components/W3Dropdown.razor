@@ -69,45 +69,87 @@
 
     private string ContentId => contentId;
 
+    /// <summary>
+    /// Gets or sets the accessible label text.
+    /// </summary>
     [Parameter]
     public string Label { get; set; } = "Menu";
 
+    /// <summary>
+    /// Gets or sets the button content value.
+    /// </summary>
     [Parameter]
     public RenderFragment? ButtonContent { get; set; }
 
+    /// <summary>
+    /// Gets or sets the content rendered inside the component.
+    /// </summary>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 
+    /// <summary>
+    /// Gets or sets the open value.
+    /// </summary>
     [Parameter]
     public bool Open { get; set; }
 
+    /// <summary>
+    /// Gets or sets the callback raised when the open value changes.
+    /// </summary>
     [Parameter]
     public EventCallback<bool> OpenChanged { get; set; }
 
+    /// <summary>
+    /// Gets or sets whether the component is disabled.
+    /// </summary>
     [Parameter]
     public bool Disabled { get; set; }
 
+    /// <summary>
+    /// Gets or sets the mobile value.
+    /// </summary>
     [Parameter]
     public bool Mobile { get; set; }
 
+    /// <summary>
+    /// Gets or sets the card value.
+    /// </summary>
     [Parameter]
     public bool Card { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the animate value.
+    /// </summary>
     [Parameter]
     public bool Animate { get; set; }
 
+    /// <summary>
+    /// Gets or sets the close on outside click value.
+    /// </summary>
     [Parameter]
     public bool CloseOnOutsideClick { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the button color value.
+    /// </summary>
     [Parameter]
     public W3Color ButtonColor { get; set; } = W3Color.None;
 
+    /// <summary>
+    /// Gets or sets the button text color value.
+    /// </summary>
     [Parameter]
     public W3Color ButtonTextColor { get; set; } = W3Color.None;
 
+    /// <summary>
+    /// Gets or sets the content color value.
+    /// </summary>
     [Parameter]
     public W3Color ContentColor { get; set; } = W3Color.Surface;
 
+    /// <summary>
+    /// Gets or sets the content text color value.
+    /// </summary>
     [Parameter]
     public W3Color ContentTextColor { get; set; } = W3Color.Black;
 

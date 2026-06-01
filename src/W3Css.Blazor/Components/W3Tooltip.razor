@@ -29,27 +29,51 @@
         .Add(TextClass)
         .ToString();
 
+    /// <summary>
+    /// Gets or sets the content rendered inside the component.
+    /// </summary>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 
+    /// <summary>
+    /// Gets or sets the text value.
+    /// </summary>
     [Parameter]
     public string? Text { get; set; }
 
+    /// <summary>
+    /// Gets or sets the tooltip content value.
+    /// </summary>
     [Parameter]
     public RenderFragment? TooltipContent { get; set; }
 
+    /// <summary>
+    /// Gets or sets the text class value.
+    /// </summary>
     [Parameter]
     public string? TextClass { get; set; }
 
+    /// <summary>
+    /// Gets or sets the tooltip style value.
+    /// </summary>
     [Parameter]
     public string? TooltipStyle { get; set; }
 
+    /// <summary>
+    /// Gets or sets the background color class.
+    /// </summary>
     [Parameter]
     public W3Color Color { get; set; } = W3Color.Black;
 
+    /// <summary>
+    /// Gets or sets the text color class.
+    /// </summary>
     [Parameter]
     public W3Color TextColor { get; set; } = W3Color.White;
 
+    /// <summary>
+    /// Gets or sets the round value.
+    /// </summary>
     [Parameter]
     public W3Round Round { get; set; } = W3Round.Medium;
 }

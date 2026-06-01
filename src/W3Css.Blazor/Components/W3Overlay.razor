@@ -36,18 +36,33 @@
         }
     }
 
+    /// <summary>
+    /// Gets or sets the visible value.
+    /// </summary>
     [Parameter]
     public bool Visible { get; set; }
 
+    /// <summary>
+    /// Gets or sets the callback raised when the visible value changes.
+    /// </summary>
     [Parameter]
     public EventCallback<bool> VisibleChanged { get; set; }
 
+    /// <summary>
+    /// Gets or sets the auto close value.
+    /// </summary>
     [Parameter]
     public bool AutoClose { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the contained value.
+    /// </summary>
     [Parameter]
     public bool Contained { get; set; }
 
+    /// <summary>
+    /// Gets or sets the callback raised by the component action.
+    /// </summary>
     [Parameter]
     public EventCallback OnClick { get; set; }
 

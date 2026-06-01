@@ -29,24 +29,45 @@
 
     private IReadOnlyList<TextSegment> Segments => BuildSegments();
 
+    /// <summary>
+    /// Gets or sets the text value.
+    /// </summary>
     [Parameter]
     public string? Text { get; set; }
 
+    /// <summary>
+    /// Gets or sets the search value.
+    /// </summary>
     [Parameter]
     public string? Search { get; set; }
 
+    /// <summary>
+    /// Gets or sets the case sensitive value.
+    /// </summary>
     [Parameter]
     public bool CaseSensitive { get; set; }
 
+    /// <summary>
+    /// Gets or sets the max matches value.
+    /// </summary>
     [Parameter]
     public int? MaxMatches { get; set; }
 
+    /// <summary>
+    /// Gets or sets the background color class.
+    /// </summary>
     [Parameter]
     public W3Color Color { get; set; } = W3Color.Yellow;
 
+    /// <summary>
+    /// Gets or sets the text color class.
+    /// </summary>
     [Parameter]
     public W3Color TextColor { get; set; } = W3Color.Black;
 
+    /// <summary>
+    /// Gets or sets the round value.
+    /// </summary>
     [Parameter]
     public W3Round Round { get; set; } = W3Round.Small;
 

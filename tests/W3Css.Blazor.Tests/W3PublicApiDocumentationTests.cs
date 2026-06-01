@@ -1,43 +1,104 @@
+using System.Reflection;
 using System.Xml.Linq;
+using Microsoft.AspNetCore.Components;
 using W3Css.Blazor.Components;
 
 namespace W3Css.Blazor.Tests;
 
 public sealed class W3PublicApiDocumentationTests
 {
-    [Theory]
-    [InlineData("T:W3Css.Blazor.W3Theme")]
-    [InlineData("P:W3Css.Blazor.W3Theme.Primary")]
-    [InlineData("P:W3Css.Blazor.Components.W3ThemeProvider.Theme")]
-    [InlineData("P:W3Css.Blazor.Components.W3ThemeProvider.Dark")]
-    [InlineData("P:W3Css.Blazor.Components.W3AppShell.Header")]
-    [InlineData("P:W3Css.Blazor.Components.W3AppShell.SidebarOpen")]
-    [InlineData("P:W3Css.Blazor.Components.W3AppShell.SidebarWidth")]
-    [InlineData("P:W3Css.Blazor.Components.W3AppBar.Title")]
-    [InlineData("P:W3Css.Blazor.Components.W3Form.Busy")]
-    [InlineData("P:W3Css.Blazor.Components.W3Input.UpdateOnInput")]
-    [InlineData("P:W3Css.Blazor.Components.W3DataTable`1.Items")]
-    [InlineData("P:W3Css.Blazor.Components.W3DataTable`1.Searchable")]
-    [InlineData("P:W3Css.Blazor.Components.W3DataTable`1.RowActions")]
-    [InlineData("P:W3Css.Blazor.Components.W3DataTable`1.Error")]
-    [InlineData("P:W3Css.Blazor.Components.W3Modal.Actions")]
-    [InlineData("P:W3Css.Blazor.Components.W3ActionRow.Label")]
-    [InlineData("P:W3Css.Blazor.Components.W3EmptyState.Kind")]
-    [InlineData("P:W3Css.Blazor.Components.W3Menu.Open")]
-    [InlineData("P:W3Css.Blazor.Components.W3Tabs.ActiveValue")]
-    public void SelectedPublicApiMembersHaveXmlSummaries(string memberName)
+    [Fact]
+    public void ExportedPublicApiMembersHaveXmlSummaries()
     {
-        var xml = XDocument.Load(GetDocumentationPath());
-        var member = xml.Descendants("member")
-            .SingleOrDefault(element => string.Equals((string?)element.Attribute("name"), memberName, StringComparison.Ordinal));
+        var summaries = XDocument.Load(GetDocumentationPath())
+            .Descendants("member")
+            .Select(element => new
+            {
+                Name = (string?)element.Attribute("name") ?? string.Empty,
+                Summary = string.Join(' ', element.Elements("summary").Select(summary => summary.Value.Trim()))
+            })
+            .Where(member => !string.IsNullOrWhiteSpace(member.Name))
+            .ToDictionary(member => member.Name, member => member.Summary, StringComparer.Ordinal);
 
-        Assert.NotNull(member);
+        var missing = EnumerateDocumentedPublicMemberNames()
+            .Where(memberName => !HasSummary(summaries, memberName))
+            .Order(StringComparer.Ordinal)
+            .ToArray();
 
-        var summary = string.Join(' ', member!
-            .Elements("summary")
-            .Select(element => element.Value.Trim()));
+        Assert.True(
+            missing.Length == 0,
+            "Missing XML summaries for public API members:" + Environment.NewLine + string.Join(Environment.NewLine, missing));
+    }
 
-        Assert.False(string.IsNullOrWhiteSpace(summary), $"Missing XML summary for {memberName}.");
+    private static IEnumerable<string> EnumerateDocumentedPublicMemberNames()
+    {
+        var assembly = typeof(W3Button).Assembly;
+
+        foreach (var type in assembly.GetExportedTypes()
+            .Where(type => type.Namespace?.StartsWith("W3Css.Blazor", StringComparison.Ordinal) == true)
+            .Where(type => type.Name != "_Imports")
+            .OrderBy(type => type.FullName, StringComparer.Ordinal))
+        {
+            yield return "T:" + GetXmlTypeName(type);
+
+            foreach (var field in type.GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly)
+                .Where(field => field.IsLiteral)
+                .OrderBy(field => field.Name, StringComparer.Ordinal))
+            {
+                yield return "F:" + GetXmlTypeName(type) + "." + field.Name;
+            }
+
+            foreach (var property in type.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static | BindingFlags.DeclaredOnly)
+                .Where(property => property.GetMethod is not null)
+                .Where(property => property.GetCustomAttribute<CascadingParameterAttribute>(inherit: true) is null)
+                .OrderBy(property => property.Name, StringComparer.Ordinal))
+            {
+                yield return "P:" + GetXmlTypeName(type) + "." + property.Name;
+            }
+
+            foreach (var @event in type.GetEvents(BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static | BindingFlags.DeclaredOnly)
+                .OrderBy(@event => @event.Name, StringComparer.Ordinal))
+            {
+                yield return "E:" + GetXmlTypeName(type) + "." + @event.Name;
+            }
+
+            foreach (var method in type.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static | BindingFlags.DeclaredOnly)
+                .Where(method => !method.IsSpecialName)
+                .Where(method => !method.IsDefined(typeof(System.Runtime.CompilerServices.CompilerGeneratedAttribute), inherit: false))
+                .Where(method => !IsInfrastructureMethod(method))
+                .OrderBy(method => method.Name, StringComparer.Ordinal))
+            {
+                yield return "M:" + GetXmlTypeName(type) + "." + method.Name;
+            }
+        }
+    }
+
+    private static bool HasSummary(IReadOnlyDictionary<string, string> summaries, string memberName)
+    {
+        if (summaries.TryGetValue(memberName, out var exactSummary))
+        {
+            return !string.IsNullOrWhiteSpace(exactSummary);
+        }
+
+        if (!memberName.StartsWith("M:", StringComparison.Ordinal))
+        {
+            return false;
+        }
+
+        return summaries
+            .Where(member => member.Key.StartsWith(memberName + "(", StringComparison.Ordinal))
+            .Any(member => !string.IsNullOrWhiteSpace(member.Value));
+    }
+
+    private static string GetXmlTypeName(Type type)
+    {
+        return (type.FullName ?? type.Name).Replace('+', '.');
+    }
+
+    private static bool IsInfrastructureMethod(MethodInfo method)
+    {
+        return method.Name is "Dispose" or "DisposeAsync" or "Equals" or "GetHashCode" or "ToString" or "Deconstruct"
+            || method.Name.StartsWith("<Clone>$", StringComparison.Ordinal);
     }
 
     private static string GetDocumentationPath()

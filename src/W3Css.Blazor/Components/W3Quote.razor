@@ -26,27 +26,51 @@
         .Add("w3-text-grey")
         .ToString();
 
+    /// <summary>
+    /// Gets or sets the content rendered inside the component.
+    /// </summary>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 
+    /// <summary>
+    /// Gets or sets the cite value.
+    /// </summary>
     [Parameter]
     public string? Cite { get; set; }
 
+    /// <summary>
+    /// Gets or sets the left bar value.
+    /// </summary>
     [Parameter]
     public bool LeftBar { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the right bar value.
+    /// </summary>
     [Parameter]
     public bool RightBar { get; set; }
 
+    /// <summary>
+    /// Gets or sets the background color class.
+    /// </summary>
     [Parameter]
     public W3Color Color { get; set; } = W3Color.LightGrey;
 
+    /// <summary>
+    /// Gets or sets the text color class.
+    /// </summary>
     [Parameter]
     public W3Color TextColor { get; set; } = W3Color.Black;
 
+    /// <summary>
+    /// Gets or sets the border color value.
+    /// </summary>
     [Parameter]
     public W3Color BorderColor { get; set; } = W3Color.None;
 
+    /// <summary>
+    /// Gets or sets the round value.
+    /// </summary>
     [Parameter]
     public W3Round Round { get; set; } = W3Round.None;
 }

@@ -72,6 +72,9 @@
         .Add(PanelTextColor.ToTextClass())
         .ToString();
 
+    /// <summary>
+    /// Gets or sets the content rendered inside the component.
+    /// </summary>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 
@@ -81,30 +84,57 @@
     [Parameter]
     public string? ActiveValue { get; set; }
 
+    /// <summary>
+    /// Gets or sets the callback raised when the active value value changes.
+    /// </summary>
     [Parameter]
     public EventCallback<string> ActiveValueChanged { get; set; }
 
+    /// <summary>
+    /// Gets or sets the border value.
+    /// </summary>
     [Parameter]
     public bool Border { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the panel border value.
+    /// </summary>
     [Parameter]
     public bool PanelBorder { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the background color class.
+    /// </summary>
     [Parameter]
     public W3Color Color { get; set; } = W3Color.None;
 
+    /// <summary>
+    /// Gets or sets the text color class.
+    /// </summary>
     [Parameter]
     public W3Color TextColor { get; set; } = W3Color.None;
 
+    /// <summary>
+    /// Gets or sets the active color value.
+    /// </summary>
     [Parameter]
     public W3Color ActiveColor { get; set; } = W3Color.Primary;
 
+    /// <summary>
+    /// Gets or sets the active text color value.
+    /// </summary>
     [Parameter]
     public W3Color ActiveTextColor { get; set; } = W3Color.Black;
 
+    /// <summary>
+    /// Gets or sets the panel color value.
+    /// </summary>
     [Parameter]
     public W3Color PanelColor { get; set; } = W3Color.Surface;
 
+    /// <summary>
+    /// Gets or sets the panel text color value.
+    /// </summary>
     [Parameter]
     public W3Color PanelTextColor { get; set; } = W3Color.None;
 

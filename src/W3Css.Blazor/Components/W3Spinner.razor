@@ -42,24 +42,45 @@ else
 
     private string? AriaLabelValue => ShowLabel ? null : Label;
 
+    /// <summary>
+    /// Gets or sets the accessible label text.
+    /// </summary>
     [Parameter]
     public string Label { get; set; } = "Loading";
 
+    /// <summary>
+    /// Gets or sets the accessible label text.
+    /// </summary>
     [Parameter]
     public bool ShowLabel { get; set; }
 
+    /// <summary>
+    /// Gets or sets the inline value.
+    /// </summary>
     [Parameter]
     public bool Inline { get; set; }
 
+    /// <summary>
+    /// Gets or sets the centered value.
+    /// </summary>
     [Parameter]
     public bool Centered { get; set; }
 
+    /// <summary>
+    /// Gets or sets the size value.
+    /// </summary>
     [Parameter]
     public W3Size Size { get; set; } = W3Size.Large;
 
+    /// <summary>
+    /// Gets or sets the text color class.
+    /// </summary>
     [Parameter]
     public W3Color TextColor { get; set; } = W3Color.Teal;
 
+    /// <summary>
+    /// Gets or sets the AriaLive attribute value.
+    /// </summary>
     [Parameter]
     public string AriaLive { get; set; } = "polite";
 }

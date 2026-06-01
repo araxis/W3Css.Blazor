@@ -16,24 +16,45 @@
         Color.ToBackgroundClass(),
         TextColor.ToTextClass());
 
+    /// <summary>
+    /// Gets or sets the content rendered inside the component.
+    /// </summary>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 
+    /// <summary>
+    /// Gets or sets the small value.
+    /// </summary>
     [Parameter]
     public int Small { get; set; }
 
+    /// <summary>
+    /// Gets or sets the medium value.
+    /// </summary>
     [Parameter]
     public int Medium { get; set; }
 
+    /// <summary>
+    /// Gets or sets the large value.
+    /// </summary>
     [Parameter]
     public int Large { get; set; }
 
+    /// <summary>
+    /// Gets or sets the rest value.
+    /// </summary>
     [Parameter]
     public bool Rest { get; set; }
 
+    /// <summary>
+    /// Gets or sets the background color class.
+    /// </summary>
     [Parameter]
     public W3Color Color { get; set; } = W3Color.None;
 
+    /// <summary>
+    /// Gets or sets the text color class.
+    /// </summary>
     [Parameter]
     public W3Color TextColor { get; set; } = W3Color.None;
 

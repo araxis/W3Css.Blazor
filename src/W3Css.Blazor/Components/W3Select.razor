@@ -20,15 +20,27 @@
 @code {
     private string SelectCssClass => BuildControlClass("w3-select");
 
+    /// <summary>
+    /// Gets or sets the rendered element id.
+    /// </summary>
     [Parameter]
     public string? Id { get; set; }
 
+    /// <summary>
+    /// Gets or sets the placeholder value.
+    /// </summary>
     [Parameter]
     public string? Placeholder { get; set; }
 
+    /// <summary>
+    /// Gets or sets the placeholder disabled value.
+    /// </summary>
     [Parameter]
     public bool PlaceholderDisabled { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the content rendered inside the component.
+    /// </summary>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 

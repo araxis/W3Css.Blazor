@@ -24,24 +24,45 @@ else
         TextColor.ToTextClass(),
         Round.ToClass());
 
+    /// <summary>
+    /// Gets or sets the content rendered inside the component.
+    /// </summary>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 
+    /// <summary>
+    /// Gets or sets the inline value.
+    /// </summary>
     [Parameter]
     public bool Inline { get; set; }
 
+    /// <summary>
+    /// Gets or sets the effect value.
+    /// </summary>
     [Parameter]
     public W3EffectStyle Effect { get; set; } = W3EffectStyle.None;
 
+    /// <summary>
+    /// Gets or sets the hover effect value.
+    /// </summary>
     [Parameter]
     public W3HoverEffect HoverEffect { get; set; } = W3HoverEffect.None;
 
+    /// <summary>
+    /// Gets or sets the background color class.
+    /// </summary>
     [Parameter]
     public W3Color Color { get; set; } = W3Color.None;
 
+    /// <summary>
+    /// Gets or sets the text color class.
+    /// </summary>
     [Parameter]
     public W3Color TextColor { get; set; } = W3Color.None;
 
+    /// <summary>
+    /// Gets or sets the round value.
+    /// </summary>
     [Parameter]
     public W3Round Round { get; set; } = W3Round.None;
 }

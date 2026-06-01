@@ -4,7 +4,7 @@ namespace W3Css.Blazor.Tests;
 
 public sealed class W3ReleaseQualityTests
 {
-    private const string CurrentVersion = "0.3.0";
+    private const string CurrentVersion = "0.4.0";
 
     [Fact]
     public void ReadmeDocumentsCurrentAppPrimitivesAndBranchFlow()
@@ -56,6 +56,45 @@ public sealed class W3ReleaseQualityTests
         Assert.Contains("W3ActionRow", smoke);
         Assert.Contains("W3EmptyState", smoke);
         Assert.Contains("PackageSource", smoke);
+    }
+
+    [Fact]
+    public void BrowserSweepCoversAdoptionAndInteractiveRoutes()
+    {
+        var sweep = ReadRepositoryFile("tools", "docs-browser-sweep.ps1");
+
+        foreach (var route in new[]
+        {
+            "/",
+            "/components",
+            "/patterns",
+            "/components/theming",
+            "/components/app-shell",
+            "/components/form",
+            "/components/data-table",
+            "/components/modal",
+            "/components/empty-state",
+            "/components/versions",
+            "/components/tabs",
+            "/components/menu",
+            "/components/dropdown",
+            "/components/popover",
+            "/components/sidebar",
+            "/components/message-box",
+            "/components/drawer",
+            "/components/autocomplete",
+            "/components/drop-zone",
+            "/components/bottom-navigation",
+            "/components/rating",
+            "/components/stepper",
+            "/components/pagination",
+        })
+        {
+            Assert.Contains($"\"{route}\"", sweep);
+        }
+
+        Assert.Contains("consoleErrors", sweep);
+        Assert.Contains("scrollWidth", sweep);
     }
 
     [Fact]

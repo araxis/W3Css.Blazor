@@ -85,6 +85,23 @@
         <p class="doc-muted">Keyboard focus rings are part of the token layer. Set <code>FocusColor</code>, <code>FocusWidth</code>, or <code>FocusOffset</code> when the brand theme needs stronger or softer focus treatment.</p>
     </section>
 
+    <section class="doc-section">
+        <h2>W3ThemeProvider Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Theme</td><td>W3Theme</td><td>W3Theme.Default</td><td>CSS variable values emitted for the themed scope</td></tr>
+                <tr><td>Dark</td><td>bool</td><td>false</td><td>Uses the dark theme variant for the provider subtree</td></tr>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Themed content inside the provider</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional classes on the theme root</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline styles on the theme root</td></tr>
+                <tr><td>AdditionalAttributes</td><td>IReadOnlyDictionary&lt;string, object&gt;?</td><td>null</td><td>Extra attributes on the theme root</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
     <DocPager PreviousHref="components/color-schemes" PreviousText="Color Schemes" NextHref="components/trends" NextText="Trends" />
 </W3Container>
 

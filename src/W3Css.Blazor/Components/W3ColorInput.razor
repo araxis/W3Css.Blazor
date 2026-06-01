@@ -99,15 +99,27 @@ else
         .AddIf(selected, "w3-color-input-swatch-selected")
         .ToString();
 
+    /// <summary>
+    /// Gets or sets the rendered element id.
+    /// </summary>
     [Parameter]
     public string? Id { get; set; }
 
+    /// <summary>
+    /// Gets or sets the full width value.
+    /// </summary>
     [Parameter]
     public bool FullWidth { get; set; }
 
+    /// <summary>
+    /// Gets or sets whether a value is required for form validation.
+    /// </summary>
     [Parameter]
     public bool Required { get; set; }
 
+    /// <summary>
+    /// Gets or sets the update on input value.
+    /// </summary>
     [Parameter]
     public bool UpdateOnInput { get; set; } = true;
 

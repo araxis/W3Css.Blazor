@@ -55,42 +55,81 @@
     private string RoleValue => Role ?? (Kind == W3AlertKind.Danger ? "alert" : "status");
     private string AriaLiveValue => AriaLive ?? (Kind == W3AlertKind.Danger ? "assertive" : "polite");
 
+    /// <summary>
+    /// Gets or sets the content rendered inside the component.
+    /// </summary>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 
+    /// <summary>
+    /// Gets or sets the title value.
+    /// </summary>
     [Parameter]
     public string? Title { get; set; }
 
+    /// <summary>
+    /// Gets or sets the kind value.
+    /// </summary>
     [Parameter]
     public W3AlertKind Kind { get; set; } = W3AlertKind.Info;
 
+    /// <summary>
+    /// Gets or sets the round value.
+    /// </summary>
     [Parameter]
     public W3Round Round { get; set; } = W3Round.Medium;
 
+    /// <summary>
+    /// Gets or sets the card value.
+    /// </summary>
     [Parameter]
     public bool Card { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the animate value.
+    /// </summary>
     [Parameter]
     public bool Animate { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the show close button value.
+    /// </summary>
     [Parameter]
     public bool ShowCloseButton { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the accessible label text.
+    /// </summary>
     [Parameter]
     public string CloseButtonLabel { get; set; } = "Dismiss notification";
 
+    /// <summary>
+    /// Gets or sets the action text value.
+    /// </summary>
     [Parameter]
     public string? ActionText { get; set; }
 
+    /// <summary>
+    /// Gets or sets the callback raised by the component action.
+    /// </summary>
     [Parameter]
     public EventCallback OnAction { get; set; }
 
+    /// <summary>
+    /// Gets or sets the callback raised by the component action.
+    /// </summary>
     [Parameter]
     public EventCallback OnDismiss { get; set; }
 
+    /// <summary>
+    /// Gets or sets the role value.
+    /// </summary>
     [Parameter]
     public string? Role { get; set; }
 
+    /// <summary>
+    /// Gets or sets the AriaLive attribute value.
+    /// </summary>
     [Parameter]
     public string? AriaLive { get; set; }
 

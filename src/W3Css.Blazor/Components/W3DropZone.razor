@@ -132,114 +132,225 @@
         .Add(SelectedFilesClass)
         .ToString();
 
+    /// <summary>
+    /// Gets or sets the rendered element id.
+    /// </summary>
     [Parameter]
     public string? Id { get; set; }
 
+    /// <summary>
+    /// Gets or sets the name value.
+    /// </summary>
     [Parameter]
     public string? Name { get; set; }
 
+    /// <summary>
+    /// Gets or sets the accept value.
+    /// </summary>
     [Parameter]
     public string? Accept { get; set; }
 
+    /// <summary>
+    /// Gets or sets the multiple value.
+    /// </summary>
     [Parameter]
     public bool Multiple { get; set; }
 
+    /// <summary>
+    /// Gets or sets whether the component is disabled.
+    /// </summary>
     [Parameter]
     public bool Disabled { get; set; }
 
+    /// <summary>
+    /// Gets or sets whether a value is required for form validation.
+    /// </summary>
     [Parameter]
     public bool Required { get; set; }
 
+    /// <summary>
+    /// Gets or sets the border value.
+    /// </summary>
     [Parameter]
     public bool Border { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the compact value.
+    /// </summary>
     [Parameter]
     public bool Compact { get; set; }
 
+    /// <summary>
+    /// Gets or sets the round value.
+    /// </summary>
     [Parameter]
     public W3Round Round { get; set; } = W3Round.Medium;
 
+    /// <summary>
+    /// Gets or sets the background color class.
+    /// </summary>
     [Parameter]
     public W3Color Color { get; set; } = W3Color.Surface;
 
+    /// <summary>
+    /// Gets or sets the text color class.
+    /// </summary>
     [Parameter]
     public W3Color TextColor { get; set; } = W3Color.Black;
 
+    /// <summary>
+    /// Gets or sets the border color value.
+    /// </summary>
     [Parameter]
     public W3Color BorderColor { get; set; } = W3Color.Teal;
 
+    /// <summary>
+    /// Gets or sets the drag color value.
+    /// </summary>
     [Parameter]
     public W3Color DragColor { get; set; } = W3Color.PaleBlue;
 
+    /// <summary>
+    /// Gets or sets the drag text color value.
+    /// </summary>
     [Parameter]
     public W3Color DragTextColor { get; set; } = W3Color.Black;
 
+    /// <summary>
+    /// Gets or sets the accessible label text.
+    /// </summary>
     [Parameter]
     public string Label { get; set; } = "Drop files here";
 
+    /// <summary>
+    /// Gets or sets the description value.
+    /// </summary>
     [Parameter]
     public string? Description { get; set; } = "or click to browse";
 
+    /// <summary>
+    /// Gets or sets the accept hint value.
+    /// </summary>
     [Parameter]
     public string? AcceptHint { get; set; }
 
+    /// <summary>
+    /// Gets or sets the AriaLabel attribute value.
+    /// </summary>
     [Parameter]
     public string? AriaLabel { get; set; }
 
+    /// <summary>
+    /// Gets or sets the show selected files value.
+    /// </summary>
     [Parameter]
     public bool ShowSelectedFiles { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the show file size value.
+    /// </summary>
     [Parameter]
     public bool ShowFileSize { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the show browse button value.
+    /// </summary>
     [Parameter]
     public bool ShowBrowseButton { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the accessible label text.
+    /// </summary>
     [Parameter]
     public string BrowseLabel { get; set; } = "Choose files";
 
+    /// <summary>
+    /// Gets or sets the accumulate files value.
+    /// </summary>
     [Parameter]
     public bool AccumulateFiles { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the browse button color value.
+    /// </summary>
     [Parameter]
     public W3Color BrowseButtonColor { get; set; } = W3Color.Teal;
 
+    /// <summary>
+    /// Gets or sets the browse button text color value.
+    /// </summary>
     [Parameter]
     public W3Color BrowseButtonTextColor { get; set; } = W3Color.White;
 
+    /// <summary>
+    /// Gets or sets the maximum file count value.
+    /// </summary>
     [Parameter]
     public int MaximumFileCount { get; set; } = 10;
 
+    /// <summary>
+    /// Gets or sets the content class value.
+    /// </summary>
     [Parameter]
     public string? ContentClass { get; set; }
 
+    /// <summary>
+    /// Gets or sets the browse button class value.
+    /// </summary>
     [Parameter]
     public string? BrowseButtonClass { get; set; }
 
+    /// <summary>
+    /// Gets or sets the selected files class value.
+    /// </summary>
     [Parameter]
     public string? SelectedFilesClass { get; set; }
 
+    /// <summary>
+    /// Gets or sets the accessible label text.
+    /// </summary>
     [Parameter]
     public string SelectedFilesLabel { get; set; } = "Selected files";
 
+    /// <summary>
+    /// Gets or sets the content rendered inside the component.
+    /// </summary>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 
+    /// <summary>
+    /// Gets or sets the callback raised by the component action.
+    /// </summary>
     [Parameter]
     public EventCallback<InputFileChangeEventArgs> OnChange { get; set; }
 
+    /// <summary>
+    /// Gets or sets the callback raised when the selected files value changes.
+    /// </summary>
     [Parameter]
     public EventCallback<IReadOnlyList<IBrowserFile>> SelectedFilesChanged { get; set; }
 
+    /// <summary>
+    /// Gets or sets the callback raised by the component action.
+    /// </summary>
     [Parameter]
     public EventCallback<DragEventArgs> OnDragEnter { get; set; }
 
+    /// <summary>
+    /// Gets or sets the callback raised by the component action.
+    /// </summary>
     [Parameter]
     public EventCallback<DragEventArgs> OnDragOver { get; set; }
 
+    /// <summary>
+    /// Gets or sets the callback raised by the component action.
+    /// </summary>
     [Parameter]
     public EventCallback<DragEventArgs> OnDragLeave { get; set; }
 
+    /// <summary>
+    /// Gets or sets the callback raised by the component action.
+    /// </summary>
     [Parameter]
     public EventCallback<DragEventArgs> OnDrop { get; set; }
 

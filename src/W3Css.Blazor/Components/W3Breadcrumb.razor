@@ -28,36 +28,69 @@
         .Add(ListClass)
         .ToString();
 
+    /// <summary>
+    /// Gets or sets the content rendered inside the component.
+    /// </summary>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 
+    /// <summary>
+    /// Gets or sets the accessible label text.
+    /// </summary>
     [Parameter]
     public string Label { get; set; } = "Breadcrumb";
 
+    /// <summary>
+    /// Gets or sets the separator value.
+    /// </summary>
     [Parameter]
     public string Separator { get; set; } = "/";
 
+    /// <summary>
+    /// Gets or sets the list class value.
+    /// </summary>
     [Parameter]
     public string? ListClass { get; set; }
 
+    /// <summary>
+    /// Gets or sets the small value.
+    /// </summary>
     [Parameter]
     public bool Small { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the border value.
+    /// </summary>
     [Parameter]
     public bool Border { get; set; }
 
+    /// <summary>
+    /// Gets or sets the card value.
+    /// </summary>
     [Parameter]
     public bool Card { get; set; }
 
+    /// <summary>
+    /// Gets or sets the card depth value.
+    /// </summary>
     [Parameter]
     public W3CardDepth CardDepth { get; set; } = W3CardDepth.Two;
 
+    /// <summary>
+    /// Gets or sets the round value.
+    /// </summary>
     [Parameter]
     public W3Round Round { get; set; } = W3Round.None;
 
+    /// <summary>
+    /// Gets or sets the background color class.
+    /// </summary>
     [Parameter]
     public W3Color Color { get; set; } = W3Color.None;
 
+    /// <summary>
+    /// Gets or sets the text color class.
+    /// </summary>
     [Parameter]
     public W3Color TextColor { get; set; } = W3Color.None;
 }

@@ -122,72 +122,141 @@
         .Add(MenuClass)
         .ToString();
 
+    /// <summary>
+    /// Gets or sets the rendered element id.
+    /// </summary>
     [Parameter]
     public string? Id { get; set; }
 
+    /// <summary>
+    /// Gets or sets the placeholder value.
+    /// </summary>
     [Parameter]
     public string? Placeholder { get; set; }
 
+    /// <summary>
+    /// Gets or sets the input class value.
+    /// </summary>
     [Parameter]
     public string? InputClass { get; set; }
 
+    /// <summary>
+    /// Gets or sets the input style value.
+    /// </summary>
     [Parameter]
     public string? InputStyle { get; set; }
 
+    /// <summary>
+    /// Gets or sets the menu class value.
+    /// </summary>
     [Parameter]
     public string? MenuClass { get; set; }
 
+    /// <summary>
+    /// Gets or sets the items value.
+    /// </summary>
     [Parameter]
     public IEnumerable<TValue> Items { get; set; } = [];
 
+    /// <summary>
+    /// Gets or sets the text selector value.
+    /// </summary>
     [Parameter]
     public Func<TValue, string>? TextSelector { get; set; }
 
+    /// <summary>
+    /// Gets or sets the filter value.
+    /// </summary>
     [Parameter]
     public Func<TValue, string, bool>? Filter { get; set; }
 
+    /// <summary>
+    /// Gets or sets the item template value.
+    /// </summary>
     [Parameter]
     public RenderFragment<TValue>? ItemTemplate { get; set; }
 
+    /// <summary>
+    /// Gets or sets the item selected value.
+    /// </summary>
     [Parameter]
     public EventCallback<TValue> ItemSelected { get; set; }
 
+    /// <summary>
+    /// Gets or sets whether the input is read-only.
+    /// </summary>
     [Parameter]
     public bool ReadOnly { get; set; }
 
+    /// <summary>
+    /// Gets or sets whether a value is required for form validation.
+    /// </summary>
     [Parameter]
     public bool Required { get; set; }
 
+    /// <summary>
+    /// Gets or sets the open on focus value.
+    /// </summary>
     [Parameter]
     public bool OpenOnFocus { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the close on outside click value.
+    /// </summary>
     [Parameter]
     public bool CloseOnOutsideClick { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the loading value.
+    /// </summary>
     [Parameter]
     public bool Loading { get; set; }
 
+    /// <summary>
+    /// Gets or sets the loading text value.
+    /// </summary>
     [Parameter]
     public string LoadingText { get; set; } = "Loading...";
 
+    /// <summary>
+    /// Gets or sets the no results text value.
+    /// </summary>
     [Parameter]
     public string NoResultsText { get; set; } = "No results";
 
+    /// <summary>
+    /// Gets or sets the max items value.
+    /// </summary>
     [Parameter]
     public int MaxItems { get; set; } = 8;
 
+    /// <summary>
+    /// Gets or sets the min search length value.
+    /// </summary>
     [Parameter]
     public int MinSearchLength { get; set; }
 
+    /// <summary>
+    /// Gets or sets the card value.
+    /// </summary>
     [Parameter]
     public bool Card { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the menu color value.
+    /// </summary>
     [Parameter]
     public W3Color MenuColor { get; set; } = W3Color.Surface;
 
+    /// <summary>
+    /// Gets or sets the menu text color value.
+    /// </summary>
     [Parameter]
     public W3Color MenuTextColor { get; set; } = W3Color.Black;
 
+    /// <summary>
+    /// Gets or sets the active color value.
+    /// </summary>
     [Parameter]
     public W3Color ActiveColor { get; set; } = W3Color.LightGrey;
 

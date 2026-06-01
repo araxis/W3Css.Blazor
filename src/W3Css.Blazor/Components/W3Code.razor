@@ -19,12 +19,21 @@ else
 
     private string? Content => Code;
 
+    /// <summary>
+    /// Gets or sets the code value.
+    /// </summary>
     [Parameter]
     public string? Code { get; set; }
 
+    /// <summary>
+    /// Gets or sets the inline value.
+    /// </summary>
     [Parameter]
     public bool Inline { get; set; }
 
+    /// <summary>
+    /// Gets or sets the content rendered inside the component.
+    /// </summary>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 }

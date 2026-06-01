@@ -135,93 +135,183 @@
 
     private string AnimationClass => Position == W3SidebarPosition.Right ? "w3-animate-right" : "w3-animate-left";
 
+    /// <summary>
+    /// Gets or sets the rendered element id.
+    /// </summary>
     [Parameter]
     public string? Id { get; set; }
 
+    /// <summary>
+    /// Gets or sets the open value.
+    /// </summary>
     [Parameter]
     public bool Open { get; set; }
 
+    /// <summary>
+    /// Gets or sets the callback raised when the open value changes.
+    /// </summary>
     [Parameter]
     public EventCallback<bool> OpenChanged { get; set; }
 
+    /// <summary>
+    /// Gets or sets the variant value.
+    /// </summary>
     [Parameter]
     public W3DrawerVariant Variant { get; set; } = W3DrawerVariant.Temporary;
 
+    /// <summary>
+    /// Gets or sets the overlay value.
+    /// </summary>
     [Parameter]
     public bool Overlay { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the close on overlay value.
+    /// </summary>
     [Parameter]
     public bool CloseOnOverlay { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the close on escape value.
+    /// </summary>
     [Parameter]
     public bool CloseOnEscape { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the show close button value.
+    /// </summary>
     [Parameter]
     public bool ShowCloseButton { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the accessible label text.
+    /// </summary>
     [Parameter]
     public string CloseButtonLabel { get; set; } = "Close drawer";
 
+    /// <summary>
+    /// Gets or sets the contained value.
+    /// </summary>
     [Parameter]
     public bool Contained { get; set; }
 
+    /// <summary>
+    /// Gets or sets the animate value.
+    /// </summary>
     [Parameter]
     public bool Animate { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the card value.
+    /// </summary>
     [Parameter]
     public bool Card { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the border value.
+    /// </summary>
     [Parameter]
     public bool Border { get; set; }
 
+    /// <summary>
+    /// Gets or sets the width value.
+    /// </summary>
     [Parameter]
     public int Width { get; set; } = 280;
 
+    /// <summary>
+    /// Gets or sets the position value.
+    /// </summary>
     [Parameter]
     public W3SidebarPosition Position { get; set; } = W3SidebarPosition.Left;
 
+    /// <summary>
+    /// Gets or sets the title value.
+    /// </summary>
     [Parameter]
     public string? Title { get; set; }
 
+    /// <summary>
+    /// Gets or sets the AriaLabel attribute value.
+    /// </summary>
     [Parameter]
     public string? AriaLabel { get; set; }
 
+    /// <summary>
+    /// Gets or sets the AriaLabelledBy attribute value.
+    /// </summary>
     [Parameter]
     public string? AriaLabelledBy { get; set; }
 
+    /// <summary>
+    /// Gets or sets the background color class.
+    /// </summary>
     [Parameter]
     public W3Color Color { get; set; } = W3Color.Surface;
 
+    /// <summary>
+    /// Gets or sets the text color class.
+    /// </summary>
     [Parameter]
     public W3Color TextColor { get; set; } = W3Color.Black;
 
+    /// <summary>
+    /// Gets or sets the header color value.
+    /// </summary>
     [Parameter]
     public W3Color HeaderColor { get; set; } = W3Color.Teal;
 
+    /// <summary>
+    /// Gets or sets the header text color value.
+    /// </summary>
     [Parameter]
     public W3Color HeaderTextColor { get; set; } = W3Color.White;
 
+    /// <summary>
+    /// Gets or sets the footer color value.
+    /// </summary>
     [Parameter]
     public W3Color FooterColor { get; set; } = W3Color.LightGrey;
 
+    /// <summary>
+    /// Gets or sets the footer text color value.
+    /// </summary>
     [Parameter]
     public W3Color FooterTextColor { get; set; } = W3Color.Black;
 
+    /// <summary>
+    /// Gets or sets the header class value.
+    /// </summary>
     [Parameter]
     public string? HeaderClass { get; set; }
 
+    /// <summary>
+    /// Gets or sets the body class value.
+    /// </summary>
     [Parameter]
     public string? BodyClass { get; set; }
 
+    /// <summary>
+    /// Gets or sets the footer class value.
+    /// </summary>
     [Parameter]
     public string? FooterClass { get; set; }
 
+    /// <summary>
+    /// Gets or sets the header value.
+    /// </summary>
     [Parameter]
     public RenderFragment? Header { get; set; }
 
+    /// <summary>
+    /// Gets or sets the content rendered inside the component.
+    /// </summary>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 
+    /// <summary>
+    /// Gets or sets the footer value.
+    /// </summary>
     [Parameter]
     public RenderFragment? Footer { get; set; }
 

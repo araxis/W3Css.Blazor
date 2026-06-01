@@ -153,51 +153,99 @@
     [CascadingParameter]
     private EditContext? CascadedEditContext { get; set; }
 
+    /// <summary>
+    /// Gets or sets the value value.
+    /// </summary>
     [Parameter]
     public int Value { get; set; }
 
+    /// <summary>
+    /// Gets or sets the callback raised when the value value changes.
+    /// </summary>
     [Parameter]
     public EventCallback<int> ValueChanged { get; set; }
 
+    /// <summary>
+    /// Gets or sets the value expression value.
+    /// </summary>
     [Parameter]
     public Expression<Func<int>>? ValueExpression { get; set; }
 
+    /// <summary>
+    /// Gets or sets the max value.
+    /// </summary>
     [Parameter]
     public int Max { get; set; } = 5;
 
+    /// <summary>
+    /// Gets or sets the accessible label text.
+    /// </summary>
     [Parameter]
     public string Label { get; set; } = "Rating";
 
+    /// <summary>
+    /// Gets or sets whether the input is read-only.
+    /// </summary>
     [Parameter]
     public bool ReadOnly { get; set; }
 
+    /// <summary>
+    /// Gets or sets whether the component is disabled.
+    /// </summary>
     [Parameter]
     public bool Disabled { get; set; }
 
+    /// <summary>
+    /// Gets or sets whether a value is required for form validation.
+    /// </summary>
     [Parameter]
     public bool Required { get; set; }
 
+    /// <summary>
+    /// Gets or sets the clearable value.
+    /// </summary>
     [Parameter]
     public bool Clearable { get; set; }
 
+    /// <summary>
+    /// Gets or sets the show value value.
+    /// </summary>
     [Parameter]
     public bool ShowValue { get; set; }
 
+    /// <summary>
+    /// Gets or sets the icon class value.
+    /// </summary>
     [Parameter]
     public string IconClass { get; set; } = "fa fa-star";
 
+    /// <summary>
+    /// Gets or sets the empty icon class value.
+    /// </summary>
     [Parameter]
     public string EmptyIconClass { get; set; } = "fa fa-star-o";
 
+    /// <summary>
+    /// Gets or sets the background color class.
+    /// </summary>
     [Parameter]
     public W3Color Color { get; set; } = W3Color.Amber;
 
+    /// <summary>
+    /// Gets or sets the empty color value.
+    /// </summary>
     [Parameter]
     public W3Color EmptyColor { get; set; } = W3Color.Grey;
 
+    /// <summary>
+    /// Gets or sets the size value.
+    /// </summary>
     [Parameter]
     public W3Size Size { get; set; } = W3Size.Large;
 
+    /// <summary>
+    /// Gets or sets the gap value.
+    /// </summary>
     [Parameter]
     public int Gap { get; set; } = 2;
 

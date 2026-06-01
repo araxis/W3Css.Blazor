@@ -85,7 +85,9 @@
 
 .w3-app-bar-actions {
     flex: 0 0 auto;
+    gap: 8px;
     justify-content: flex-end;
+    padding-right: 8px;
 }
 
 .w3-app-bar:not(.w3-app-bar-has-title) .w3-app-bar-nav,

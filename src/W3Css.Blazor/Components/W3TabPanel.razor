@@ -4,12 +4,21 @@
     [CascadingParameter]
     internal W3Tabs? Owner { get; set; }
 
+    /// <summary>
+    /// Gets or sets the value value.
+    /// </summary>
     [Parameter, EditorRequired]
     public string Value { get; set; } = string.Empty;
 
+    /// <summary>
+    /// Gets or sets the title value.
+    /// </summary>
     [Parameter, EditorRequired]
     public string Title { get; set; } = string.Empty;
 
+    /// <summary>
+    /// Gets or sets whether the component is disabled.
+    /// </summary>
     [Parameter]
     public bool Disabled { get; set; }
 
@@ -19,6 +28,9 @@
     [Parameter]
     public bool Closeable { get; set; }
 
+    /// <summary>
+    /// Gets or sets the content rendered inside the component.
+    /// </summary>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 

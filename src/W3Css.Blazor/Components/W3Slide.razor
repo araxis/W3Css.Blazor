@@ -5,36 +5,69 @@
     [CascadingParameter]
     internal W3Slideshow? Owner { get; set; }
 
+    /// <summary>
+    /// Gets or sets the value value.
+    /// </summary>
     [Parameter, EditorRequired]
     public string Value { get; set; } = string.Empty;
 
+    /// <summary>
+    /// Gets or sets the title value.
+    /// </summary>
     [Parameter]
     public string? Title { get; set; }
 
+    /// <summary>
+    /// Gets or sets the caption value.
+    /// </summary>
     [Parameter]
     public string? Caption { get; set; }
 
+    /// <summary>
+    /// Gets or sets the src value.
+    /// </summary>
     [Parameter]
     public string? Src { get; set; }
 
+    /// <summary>
+    /// Gets or sets the alt value.
+    /// </summary>
     [Parameter]
     public string Alt { get; set; } = string.Empty;
 
+    /// <summary>
+    /// Gets or sets the width value.
+    /// </summary>
     [Parameter]
     public int? Width { get; set; }
 
+    /// <summary>
+    /// Gets or sets the height value.
+    /// </summary>
     [Parameter]
     public int? Height { get; set; }
 
+    /// <summary>
+    /// Gets or sets the loading value.
+    /// </summary>
     [Parameter]
     public string? Loading { get; set; } = "lazy";
 
+    /// <summary>
+    /// Gets or sets the responsive value.
+    /// </summary>
     [Parameter]
     public bool Responsive { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets whether the component is disabled.
+    /// </summary>
     [Parameter]
     public bool Disabled { get; set; }
 
+    /// <summary>
+    /// Gets or sets the content rendered inside the component.
+    /// </summary>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 

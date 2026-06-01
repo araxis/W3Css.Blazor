@@ -124,81 +124,159 @@
         .Add(IndicatorContainerClass)
         .ToString();
 
+    /// <summary>
+    /// Gets or sets the content rendered inside the component.
+    /// </summary>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 
+    /// <summary>
+    /// Gets or sets the accessible label text.
+    /// </summary>
     [Parameter]
     public string Label { get; set; } = "Slideshow";
 
+    /// <summary>
+    /// Gets or sets the active value value.
+    /// </summary>
     [Parameter]
     public string? ActiveValue { get; set; }
 
+    /// <summary>
+    /// Gets or sets the callback raised when the active value value changes.
+    /// </summary>
     [Parameter]
     public EventCallback<string> ActiveValueChanged { get; set; }
 
+    /// <summary>
+    /// Gets or sets the show controls value.
+    /// </summary>
     [Parameter]
     public bool ShowControls { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the show indicators value.
+    /// </summary>
     [Parameter]
     public bool ShowIndicators { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the show captions value.
+    /// </summary>
     [Parameter]
     public bool ShowCaptions { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the keyboard value.
+    /// </summary>
     [Parameter]
     public bool Keyboard { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the wrap value.
+    /// </summary>
     [Parameter]
     public bool Wrap { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the auto advance value.
+    /// </summary>
     [Parameter]
     public bool AutoAdvance { get; set; }
 
+    /// <summary>
+    /// Gets or sets the interval value.
+    /// </summary>
     [Parameter]
     public int Interval { get; set; } = 5000;
 
+    /// <summary>
+    /// Gets or sets the accessible label text.
+    /// </summary>
     [Parameter]
     public string PreviousLabel { get; set; } = "Previous slide";
 
+    /// <summary>
+    /// Gets or sets the accessible label text.
+    /// </summary>
     [Parameter]
     public string NextLabel { get; set; } = "Next slide";
 
+    /// <summary>
+    /// Gets or sets the animation value.
+    /// </summary>
     [Parameter]
     public W3Animation Animation { get; set; } = W3Animation.None;
 
+    /// <summary>
+    /// Gets or sets the background color class.
+    /// </summary>
     [Parameter]
     public W3Color Color { get; set; } = W3Color.None;
 
+    /// <summary>
+    /// Gets or sets the text color class.
+    /// </summary>
     [Parameter]
     public W3Color TextColor { get; set; } = W3Color.None;
 
+    /// <summary>
+    /// Gets or sets the control color value.
+    /// </summary>
     [Parameter]
     public W3Color ControlColor { get; set; } = W3Color.Black;
 
+    /// <summary>
+    /// Gets or sets the control text color value.
+    /// </summary>
     [Parameter]
     public W3Color ControlTextColor { get; set; } = W3Color.White;
 
+    /// <summary>
+    /// Gets or sets the control class value.
+    /// </summary>
     [Parameter]
     public string? ControlClass { get; set; }
 
+    /// <summary>
+    /// Gets or sets the caption color value.
+    /// </summary>
     [Parameter]
     public W3Color CaptionColor { get; set; } = W3Color.Black;
 
+    /// <summary>
+    /// Gets or sets the caption text color value.
+    /// </summary>
     [Parameter]
     public W3Color CaptionTextColor { get; set; } = W3Color.White;
 
+    /// <summary>
+    /// Gets or sets the caption class value.
+    /// </summary>
     [Parameter]
     public string? CaptionClass { get; set; }
 
+    /// <summary>
+    /// Gets or sets the active indicator color value.
+    /// </summary>
     [Parameter]
     public W3Color ActiveIndicatorColor { get; set; } = W3Color.White;
 
+    /// <summary>
+    /// Gets or sets the indicator text color value.
+    /// </summary>
     [Parameter]
     public W3Color IndicatorTextColor { get; set; } = W3Color.White;
 
+    /// <summary>
+    /// Gets or sets the indicator class value.
+    /// </summary>
     [Parameter]
     public string? IndicatorClass { get; set; }
 
+    /// <summary>
+    /// Gets or sets the indicator container class value.
+    /// </summary>
     [Parameter]
     public string? IndicatorContainerClass { get; set; }
 

@@ -19,18 +19,33 @@
         Round.ToClass(),
         Border ? "w3-border" : null);
 
+    /// <summary>
+    /// Gets or sets the title value.
+    /// </summary>
     [Parameter]
     public string? Title { get; set; }
 
+    /// <summary>
+    /// Gets or sets the role value.
+    /// </summary>
     [Parameter]
     public string Role { get; set; } = "note";
 
+    /// <summary>
+    /// Gets or sets the border value.
+    /// </summary>
     [Parameter]
     public bool Border { get; set; }
 
+    /// <summary>
+    /// Gets or sets the round value.
+    /// </summary>
     [Parameter]
     public W3Round Round { get; set; } = W3Round.None;
 
+    /// <summary>
+    /// Gets or sets the content rendered inside the component.
+    /// </summary>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 }

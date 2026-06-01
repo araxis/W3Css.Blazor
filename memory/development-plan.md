@@ -40,11 +40,21 @@ Last updated: 2026-06-01
 - 0.3.0 stays non-breaking and avoids broad new component surface.
 - Added first-screen adoption patterns, README onboarding improvements, selected public XML documentation guard coverage, package/release metadata, local/public package smoke verification, and browser verification for top adoption pages.
 
+## Phase 9: Quality Hardening (Local Slice Complete)
+
+- 0.4.0 stays non-breaking and avoids broad new component surface.
+- Expand XML documentation coverage and guards across exported public APIs.
+- Add docs/API parity coverage for public component parameters.
+- Add automated browser quality sweep tooling for adoption and high-risk interactive docs routes.
+
 ## Current Status Check
 
 - Verification now passes on the current HEAD:
   - `dotnet build W3Css.Blazor.slnx --configuration Release`
-  - `dotnet test tests/W3Css.Blazor.Tests/W3Css.Blazor.Tests.csproj --configuration Release --no-build`
+  - `dotnet test W3Css.Blazor.slnx --configuration Release --no-build /nr:false`
+  - `dotnet pack src/W3Css.Blazor/W3Css.Blazor.csproj --configuration Release --no-build --output artifacts/packages /nr:false`
+  - `pwsh ./tools/package-consumer-smoke.ps1 -PackageVersion 0.4.0 -PackageSource artifacts/packages`
+  - `pwsh ./tools/docs-browser-sweep.ps1 -BaseUrl http://localhost:5017 -StartServer`
 
 - Components implemented: 127 component files plus docs topic coverage.
-- Test coverage: 493 passing tests.
+- Test coverage: 477 passing tests for the 0.4.0 release candidate.

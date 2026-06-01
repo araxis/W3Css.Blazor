@@ -64,45 +64,87 @@
 
     private string? ActionsStyleValue => ActionsGap >= 0 ? $"--w3-card-actions-gap:{ActionsGap}px" : null;
 
+    /// <summary>
+    /// Gets or sets the content rendered inside the component.
+    /// </summary>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 
+    /// <summary>
+    /// Gets or sets the header value.
+    /// </summary>
     [Parameter]
     public RenderFragment? Header { get; set; }
 
+    /// <summary>
+    /// Gets or sets the footer value.
+    /// </summary>
     [Parameter]
     public RenderFragment? Footer { get; set; }
 
+    /// <summary>
+    /// Gets or sets the actions value.
+    /// </summary>
     [Parameter]
     public RenderFragment? Actions { get; set; }
 
+    /// <summary>
+    /// Gets or sets the depth value.
+    /// </summary>
     [Parameter]
     public W3CardDepth Depth { get; set; } = W3CardDepth.Default;
 
+    /// <summary>
+    /// Gets or sets the round value.
+    /// </summary>
     [Parameter]
     public W3Round Round { get; set; } = W3Round.None;
 
+    /// <summary>
+    /// Gets or sets the header color value.
+    /// </summary>
     [Parameter]
     public W3Color HeaderColor { get; set; } = W3Color.None;
 
+    /// <summary>
+    /// Gets or sets the body color value.
+    /// </summary>
     [Parameter]
     public W3Color BodyColor { get; set; } = W3Color.Surface;
 
+    /// <summary>
+    /// Gets or sets the footer color value.
+    /// </summary>
     [Parameter]
     public W3Color FooterColor { get; set; } = W3Color.None;
 
+    /// <summary>
+    /// Gets or sets the header class value.
+    /// </summary>
     [Parameter]
     public string? HeaderClass { get; set; }
 
+    /// <summary>
+    /// Gets or sets the body class value.
+    /// </summary>
     [Parameter]
     public string? BodyClass { get; set; }
 
+    /// <summary>
+    /// Gets or sets the footer class value.
+    /// </summary>
     [Parameter]
     public string? FooterClass { get; set; }
 
+    /// <summary>
+    /// Gets or sets the actions class value.
+    /// </summary>
     [Parameter]
     public string? ActionsClass { get; set; }
 
+    /// <summary>
+    /// Gets or sets the actions gap value.
+    /// </summary>
     [Parameter]
     public int ActionsGap { get; set; } = 8;
 }

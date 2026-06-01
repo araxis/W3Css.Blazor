@@ -148,21 +148,39 @@
 
     private string? MenuExpandedValue => MenuExpanded?.ToString().ToLowerInvariant();
 
+    /// <summary>
+    /// Gets or sets the leading value.
+    /// </summary>
     [Parameter]
     public RenderFragment? Leading { get; set; }
 
+    /// <summary>
+    /// Gets or sets the title content value.
+    /// </summary>
     [Parameter]
     public RenderFragment? TitleContent { get; set; }
 
+    /// <summary>
+    /// Gets or sets the subtitle content value.
+    /// </summary>
     [Parameter]
     public RenderFragment? SubtitleContent { get; set; }
 
+    /// <summary>
+    /// Gets or sets the content rendered inside the component.
+    /// </summary>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 
+    /// <summary>
+    /// Gets or sets the actions value.
+    /// </summary>
     [Parameter]
     public RenderFragment? Actions { get; set; }
 
+    /// <summary>
+    /// Gets or sets the menu button content value.
+    /// </summary>
     [Parameter]
     public RenderFragment? MenuButtonContent { get; set; }
 
@@ -172,84 +190,165 @@
     [Parameter]
     public string? Title { get; set; }
 
+    /// <summary>
+    /// Gets or sets the subtitle value.
+    /// </summary>
     [Parameter]
     public string? Subtitle { get; set; }
 
+    /// <summary>
+    /// Gets or sets the title href value.
+    /// </summary>
     [Parameter]
     public string? TitleHref { get; set; }
 
+    /// <summary>
+    /// Gets or sets the title target value.
+    /// </summary>
     [Parameter]
     public string? TitleTarget { get; set; }
 
+    /// <summary>
+    /// Gets or sets the accessible label text.
+    /// </summary>
     [Parameter]
     public string NavigationLabel { get; set; } = "App bar navigation";
 
+    /// <summary>
+    /// Gets or sets the show menu button value.
+    /// </summary>
     [Parameter]
     public bool ShowMenuButton { get; set; }
 
+    /// <summary>
+    /// Gets or sets the accessible label text.
+    /// </summary>
     [Parameter]
     public string MenuButtonAriaLabel { get; set; } = "Toggle navigation";
 
+    /// <summary>
+    /// Gets or sets the menu text value.
+    /// </summary>
     [Parameter]
     public string MenuText { get; set; } = "Menu";
 
+    /// <summary>
+    /// Gets or sets the menu icon class value.
+    /// </summary>
     [Parameter]
     public string? MenuIconClass { get; set; } = "fa fa-bars";
 
+    /// <summary>
+    /// Gets or sets the menu icon only value.
+    /// </summary>
     [Parameter]
     public bool MenuIconOnly { get; set; }
 
+    /// <summary>
+    /// Gets or sets the menu expanded value.
+    /// </summary>
     [Parameter]
     public bool? MenuExpanded { get; set; }
 
+    /// <summary>
+    /// Gets or sets the menu controls value.
+    /// </summary>
     [Parameter]
     public string? MenuControls { get; set; }
 
+    /// <summary>
+    /// Gets or sets the callback raised by the component action.
+    /// </summary>
     [Parameter]
     public EventCallback<MouseEventArgs> OnMenuClick { get; set; }
 
+    /// <summary>
+    /// Gets or sets the mobile value.
+    /// </summary>
     [Parameter]
     public bool Mobile { get; set; }
 
+    /// <summary>
+    /// Gets or sets the dense value.
+    /// </summary>
     [Parameter]
     public bool Dense { get; set; }
 
+    /// <summary>
+    /// Gets or sets the prominent value.
+    /// </summary>
     [Parameter]
     public bool Prominent { get; set; }
 
+    /// <summary>
+    /// Gets or sets the border value.
+    /// </summary>
     [Parameter]
     public bool Border { get; set; }
 
+    /// <summary>
+    /// Gets or sets the card value.
+    /// </summary>
     [Parameter]
     public bool Card { get; set; }
 
+    /// <summary>
+    /// Gets or sets the card depth value.
+    /// </summary>
     [Parameter]
     public W3CardDepth CardDepth { get; set; } = W3CardDepth.Four;
 
+    /// <summary>
+    /// Gets or sets the round value.
+    /// </summary>
     [Parameter]
     public W3Round Round { get; set; } = W3Round.None;
 
+    /// <summary>
+    /// Gets or sets the position value.
+    /// </summary>
     [Parameter]
     public W3AppBarPosition Position { get; set; } = W3AppBarPosition.Static;
 
+    /// <summary>
+    /// Gets or sets the background color class.
+    /// </summary>
     [Parameter]
     public W3Color Color { get; set; } = W3Color.Surface;
 
+    /// <summary>
+    /// Gets or sets the text color class.
+    /// </summary>
     [Parameter]
     public W3Color TextColor { get; set; } = W3Color.None;
 
+    /// <summary>
+    /// Gets or sets the leading class value.
+    /// </summary>
     [Parameter]
     public string? LeadingClass { get; set; }
 
+    /// <summary>
+    /// Gets or sets the title class value.
+    /// </summary>
     [Parameter]
     public string? TitleClass { get; set; }
 
+    /// <summary>
+    /// Gets or sets the nav class value.
+    /// </summary>
     [Parameter]
     public string? NavClass { get; set; }
 
+    /// <summary>
+    /// Gets or sets the actions class value.
+    /// </summary>
     [Parameter]
     public string? ActionsClass { get; set; }
 
+    /// <summary>
+    /// Gets or sets the menu button class value.
+    /// </summary>
     [Parameter]
     public string? MenuButtonClass { get; set; }
 

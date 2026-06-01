@@ -18,7 +18,7 @@ Status values:
 | Common component base | Implemented | Supports `Class`, `Style`, and `AdditionalAttributes`. |
 | Shared style enums | Implemented | Includes color, size, roundness, card depth, alert kind, toast position, image effect, display position, visibility, cell alignment, animation, text direction, border side, border bar, padding, top padding, margin, text alignment, text style, font family, effect style, and hover effect. |
 | XML documentation | In progress | Public enums and core component APIs documented; continuing as new APIs land. |
-| Package metadata | Implemented | Version is pinned to `0.1.0`; repository URL and package policy are populated in project and release metadata. |
+| Package metadata | Implemented | Version is pinned to `0.2.0`; repository URL and package policy are populated in project and release metadata. |
 
 ## Component Category Model
 
@@ -224,8 +224,8 @@ This model is intentionally similar to mature Blazor libraries, while keeping im
 | Overlay behavior | Implemented | Modal, tooltip, toast, sidebar, focus trap, menu, overlay interactions, and backdrop composition. |
 | Content display and timeline | Implemented | Tree, chat, timeline, data table, rating, drop zone, and gallery coverage. |
 | Feedback and loading | Implemented | Spinner, skeleton, toast, file, autocomplete, and alert coverage. |
-| Package validation | Implemented | `dotnet pack` generates `W3Css.Blazor.0.1.0.nupkg`; CI uploads package artifact. |
-| Test count | Implemented | `dotnet test` reports 459 passing tests. |
+| Package validation | Implemented | `dotnet pack` generates `W3Css.Blazor.0.2.0.nupkg`; CI uploads package artifact. |
+| Test count | Implemented | `dotnet test` reports 472 passing tests. |
 
 ## Component Compatibility Backlog
 

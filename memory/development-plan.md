@@ -22,7 +22,7 @@ Last updated: 2026-06-01
 ## Phase 5: Package And Release Readiness (Complete)
 
 - Package metadata, release automation, first public package release, and consumer smoke tooling are in place.
-- Future releases should be planned as normal version-bump and release-note slices.
+- Future releases should be planned as normal version-bump, release-note, tag, and consumer-smoke slices.
 
 ## Phase 6: W3.CSS-Loyal Consolidation (Complete)
 
@@ -42,4 +42,4 @@ Last updated: 2026-06-01
   - `dotnet test tests/W3Css.Blazor.Tests/W3Css.Blazor.Tests.csproj --configuration Release --no-build`
 
 - Components implemented: 127 component files plus docs topic coverage.
-- Test coverage: 470 passing tests.
+- Test coverage: 472 passing tests.

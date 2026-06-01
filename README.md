@@ -105,7 +105,8 @@ Run the package consumer smoke check after publishing a version:
 pwsh ./tools/package-consumer-smoke.ps1
 ```
 
-Pass `-PackageVersion 0.1.0` to check a specific published version.
+Pass `-PackageVersion 0.2.0` to check a specific published version.
+Pass `-PackageSource artifacts/packages` to check a locally packed version before tagging.
 
 ## Branches And Commits
 

@@ -6,12 +6,12 @@ Last updated: 2026-06-01
 
 - Repo target: Blazor component suite over W3.CSS (small, CSS-first, practical defaults).
 - Branch: `main`.
-- Version baseline: `0.1.0`.
+- Current package baseline: `0.2.0`.
 - .NET target: `net10.0` (`10.0.300` SDK).
 - Current state:
   - 127 component `.razor` files.
   - 121 docs topic pages.
-  - 470 passing tests.
+  - 472 passing tests.
   - Build: `dotnet build W3Css.Blazor.slnx --configuration Release` (0 warnings, 0 errors).
 
 ## Architecture
@@ -35,11 +35,11 @@ Last updated: 2026-06-01
 
 ## Current Priority
 
-1. Post-release quality:
-   - keep README, changelog, and memory aligned with current package state.
+1. Release completion:
+   - merge the 0.2.0 release-readiness slice.
+   - tag `v0.2.0`, publish package artifacts, and verify consumer smoke checks.
+2. Future quality:
    - continue small visual/API quality sweeps as normal PR slices.
-2. Future releases:
-   - bump package version, add release notes, tag, and verify consumer smoke checks.
 
 ## Memory Files
 

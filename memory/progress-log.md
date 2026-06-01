@@ -4,6 +4,15 @@ Last updated: 2026-06-01
 
 ## 2026-06-01
 
+- Final release-readiness pass:
+  - bumped package metadata to `0.2.0`;
+  - added `docs/release-notes/0.2.0.md` and a matching changelog section;
+  - updated the Versions docs page and README package-smoke example to the current release target;
+  - hardened the release workflow so version-specific release notes are required;
+  - expanded package consumer smoke tooling so a clean consumer project can install from either a local package folder or the public feed and compile current app primitives: theme provider, card actions, data table, action row, and empty state;
+  - added release-quality tests for package version alignment and consumer smoke coverage;
+  - verified a locally packed `W3Css.Blazor.0.2.0.nupkg` with the package consumer smoke script against `artifacts/packages`.
+
 - Continued the app-structure visual polish pass on `W3AppBar`:
   - added explicit root classes for leading, title, navigation, and action slot presence;
   - changed title layout to fill available horizontal space so navigation and actions behave as trailing app-bar content;

@@ -2,6 +2,35 @@
 
 All notable changes to W3Css.Blazor will be documented in this file.
 
+## 0.2.0 - 2026-06-01
+
+### App Components
+
+- Added and polished app-grade primitives for shell, navigation, data, feedback,
+  action layout, empty states, drawers, menus, popovers, swipe areas, and page
+  content navigation.
+- Added consistent wrapping action rows for forms, tables, cards, dialogs, and
+  compact command surfaces.
+- Integrated reusable empty/error surfaces into data-table flows.
+
+### Accessibility And UX
+
+- Added required-state, validation, ARIA, and input-time behavior polish across
+  form controls.
+- Added keyboard support and focus handling across tabs, rating, stepper,
+  pagination, bottom navigation, menus, dropdowns, popovers, sidebars, modals,
+  message boxes, drawers, alerts, and focus traps.
+- Added theme-controlled focus rings and semantic status tokens.
+
+### Documentation And Release Quality
+
+- Completed current component topic API tables and docs smoke coverage.
+- Updated package metadata and release notes for the current release.
+- Expanded the public package consumer smoke check to compile current app
+  primitives in a clean consumer project.
+- Hardened release automation so a release fails when version-specific release
+  notes are missing.
+
 ## 0.1.0 - 2026-05-31
 
 ### Foundation

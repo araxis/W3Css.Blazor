@@ -2,6 +2,7 @@
 param(
     [string]$PackageId = 'W3Css.Blazor',
     [string]$PackageVersion,
+    [string]$PackageSource = 'https://api.nuget.org/v3/index.json',
     [string]$Configuration = 'Release',
     [string]$WorkRoot = [System.IO.Path]::Combine([System.IO.Path]::GetTempPath(), 'w3css-blazor-package-smoke'),
     [switch]$KeepWorkspace
@@ -63,7 +64,7 @@ try {
         $appDir
     )
 
-    Write-Step "Installing $PackageId $PackageVersion from the public package feed"
+    Write-Step "Installing $PackageId $PackageVersion from $PackageSource"
     Invoke-Checked 'dotnet' @(
         'add',
         $projectFile,
@@ -72,7 +73,7 @@ try {
         '--version',
         $PackageVersion,
         '--source',
-        'https://api.nuget.org/v3/index.json'
+        $PackageSource
     )
 
     $importsPath = Join-Path $appDir '_Imports.razor'
@@ -96,16 +97,55 @@ try {
 
 <PageTitle>W3Css.Blazor package smoke</PageTitle>
 
-<W3Container Class="w3-padding">
-    <W3Alert Kind="W3AlertKind.Success" Title="Package smoke">
-        The package is installed and rendering components.
-    </W3Alert>
+<W3ThemeProvider Theme="W3Theme.Default">
+    <W3Container Class="w3-padding">
+        <W3Alert Kind="W3AlertKind.Success" Title="Package smoke">
+            The package is installed and rendering components.
+        </W3Alert>
 
-    <W3Card Depth="W3CardDepth.Four" Round="W3Round.Medium" Class="w3-margin-top">
-        <p>Card content from the package consumer app.</p>
-        <W3Button Color="W3Color.Teal" Round="W3Round.Medium">Save</W3Button>
-    </W3Card>
-</W3Container>
+        <W3Card Depth="W3CardDepth.Four" Round="W3Round.Medium" Class="w3-margin-top">
+            <ChildContent>
+                <p>Card content from the package consumer app.</p>
+            </ChildContent>
+            <Actions>
+                <W3Button Border="true">Cancel</W3Button>
+                <W3Button Color="W3Color.Teal" Round="W3Round.Medium">Save</W3Button>
+            </Actions>
+        </W3Card>
+
+        <W3DataTable TItem="ProjectRow"
+                     Items="Projects"
+                     Searchable="true"
+                     SearchPlaceholder="Find projects"
+                     AriaLabel="Package smoke projects"
+                     Class="w3-margin-top">
+            <ChildContent>
+                <W3DataColumn TItem="ProjectRow" Title="Name" CellText="project => project.Name" />
+                <W3DataColumn TItem="ProjectRow" Title="Status" CellText="project => project.Status" />
+            </ChildContent>
+            <RowActions Context="project">
+                <W3ActionRow Label="@($"{project.Name} actions")" Gap="6">
+                    <W3Button Border="true">Open</W3Button>
+                </W3ActionRow>
+            </RowActions>
+        </W3DataTable>
+
+        <W3EmptyState Title="Smoke check ready"
+                      Description="Current app primitives compile in a clean consumer project."
+                      Kind="W3EmptyStateKind.Success"
+                      Class="w3-margin-top" />
+    </W3Container>
+</W3ThemeProvider>
+
+@code {
+    private static readonly ProjectRow[] Projects =
+    [
+        new("Dashboard", "Ready"),
+        new("Backlog", "Review")
+    ];
+
+    private sealed record ProjectRow(string Name, string Status);
+}
 '@
 
     Invoke-Checked 'dotnet' @('restore', $projectFile)

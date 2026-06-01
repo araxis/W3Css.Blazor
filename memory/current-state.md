@@ -5,7 +5,7 @@ Last updated: 2026-06-01
 ## Repository
 
 - Canonical branch: `main`.
-- Tag `v0.1.0` marks the first public package release; current `main` has post-0.1.0 changes.
+- Tag `v0.1.0` marks the first public package release; current release-readiness work targets version `0.2.0`.
 - Solution: `W3Css.Blazor.slnx`.
 - SDK: `.NET 10.0.300` (`global.json`).
 
@@ -17,7 +17,7 @@ Last updated: 2026-06-01
 - Current docs routes in `src/W3Css.Blazor.Docs/Pages/ComponentTopics`: 121 pages.
 - Tests in project source: 58 `.cs` test files.
 - Test suite status:
-  - `dotnet test tests/W3Css.Blazor.Tests/W3Css.Blazor.Tests.csproj --configuration Release --no-build` -> **470 passing tests**.
+  - `dotnet test tests/W3Css.Blazor.Tests/W3Css.Blazor.Tests.csproj --configuration Release --no-build` -> **472 passing tests**.
 - Build status:
   - `dotnet build W3Css.Blazor.slnx --configuration Release` → **0 warnings, 0 errors**.
 
@@ -36,13 +36,14 @@ Last updated: 2026-06-01
 
 - W3.CSS source file is not modified.
 - Package metadata is set to:
-  - Version `0.1.0`.
+  - Version `0.2.0`.
   - `Directory.Build.props` repository URL + type (`https://github.com/araxis/W3Css.Blazor`).
   - `PackageProjectUrl`, `RepositoryUrl`, `RepositoryType`, and release notes in `src/W3Css.Blazor/W3Css.Blazor.csproj`.
 - README includes package version and MIT license badges.
 - Release workflow builds, tests, packs, creates release artifacts, and publishes packages on `v*` tag pushes when the publishing secret is configured.
 - First package release is published as `W3Css.Blazor` version `0.1.0`.
-- GitHub release `v0.1.0` is published with `W3Css.Blazor.0.1.0.nupkg`.
+- Current package metadata and release notes are prepared for version `0.2.0`.
+- GitHub release `v0.1.0` is published with `W3Css.Blazor.0.1.0.nupkg`; `v0.2.0` is the next release target.
 - Package consumer smoke tooling verifies install, component compilation, publish output, and bundled static assets from the public package feed.
 
 ## Current Progress
@@ -50,7 +51,7 @@ Last updated: 2026-06-01
 - Component compatibility strategy is W3.CSS loyal: missing concepts are added as new reusable components where needed and duplicate alias components are intentionally avoided.
 - The "themed by default" pass is complete for surface and primary intent defaults in most components.
 - Public API hardening is in progress; `W3Slide` now uses the shared component base and forwards unmatched attributes to the rendered active slide.
-- README, changelog, and memory release-state cleanup now reflect the post-0.1.0 branch flow and package state.
+- README, changelog, release notes, and memory release-state cleanup now reflect the 0.2.0 release-readiness target.
 - Documentation consistency review is complete for current component topic parameter tables; each implemented rendering surface now has explicit inherited attribute rows where applicable.
 - The small docs/API gap pass now covers `W3Table`, `W3Drawer`, `W3Menu`, and `W3ProgressCircular` parameter tables with focused docs smoke coverage.
 - The second docs/API gap pass now covers `W3DataTable`, `W3DateRangePicker`, `W3MessageBox`, `W3Modal`, and `W3Navbar` parameter tables with focused docs smoke coverage.
@@ -94,4 +95,4 @@ Last updated: 2026-06-01
 - The data-table action-row polish added a wrapping, right-aligned row-action group with gap and class hooks for compact command cells.
 - The reusable action-row polish added `W3ActionRow` for forms, generic tables, list suffixes, and dialog/card-style command areas that need consistent wrapping gaps.
 - The empty-state pattern pass added `W3EmptyState`, a dedicated docs page, and `W3DataTable` zero-result/error integration for reusable app recovery states.
-- Remaining planned work is optional: visual quality sweeps.
+- Remaining planned work is optional: visual quality sweeps after the 0.2.0 release is published and consumer-smoke verified.

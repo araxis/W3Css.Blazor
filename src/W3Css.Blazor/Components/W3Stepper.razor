@@ -37,7 +37,8 @@
                                 aria-current="@GetAriaCurrent(active)"
                                 aria-controls="@step.PanelId"
                                 aria-disabled="@GetAriaDisabled(canActivate)"
-                                @onclick="() => ActivateAsync(step, index)">
+                                @onclick="() => ActivateAsync(step, index)"
+                                @onkeydown="args => HandleStepKeyDownAsync(step, args)">
                             @if (ShowNumbers)
                             {
                                 <span class="@GetMarkerCssClass(active, completed, error)" aria-hidden="true">
@@ -275,6 +276,68 @@
         await StepActivated.InvokeAsync(step.Value);
     }
 
+    private async Task HandleStepKeyDownAsync(W3Step step, KeyboardEventArgs args)
+    {
+        switch (args.Key)
+        {
+            case "ArrowRight":
+            case "Right":
+            case "ArrowDown":
+            case "Down":
+                await ActivateAdjacentAsync(step, 1);
+                break;
+            case "ArrowLeft":
+            case "Left":
+            case "ArrowUp":
+            case "Up":
+                await ActivateAdjacentAsync(step, -1);
+                break;
+            case "Home":
+                await ActivateBoundaryAsync(first: true);
+                break;
+            case "End":
+                await ActivateBoundaryAsync(first: false);
+                break;
+        }
+    }
+
+    private async Task ActivateAdjacentAsync(W3Step source, int offset)
+    {
+        var activatableSteps = steps
+            .Select((step, index) => new StepActivationTarget(step, index))
+            .Where(target => CanActivate(target.Step, target.Index))
+            .ToArray();
+
+        if (activatableSteps.Length == 0)
+        {
+            return;
+        }
+
+        var currentIndex = Array.FindIndex(activatableSteps, target => ReferenceEquals(target.Step, source));
+        if (currentIndex < 0 && ActiveStep is not null)
+        {
+            currentIndex = Array.FindIndex(activatableSteps, target => ReferenceEquals(target.Step, ActiveStep));
+        }
+        var nextIndex = currentIndex < 0
+            ? 0
+            : (currentIndex + offset + activatableSteps.Length) % activatableSteps.Length;
+        var next = activatableSteps[nextIndex];
+
+        await ActivateAsync(next.Step, next.Index);
+    }
+
+    private Task ActivateBoundaryAsync(bool first)
+    {
+        var activatableSteps = steps
+            .Select((step, index) => new StepActivationTarget(step, index))
+            .Where(target => CanActivate(target.Step, target.Index))
+            .OrderBy(target => target.Index)
+            .ToArray();
+        var target = first ? activatableSteps.FirstOrDefault() : activatableSteps.LastOrDefault();
+
+        return target is null ? Task.CompletedTask : ActivateAsync(target.Step, target.Index);
+    }
+
     private bool CanActivate(W3Step step, int index)
     {
         if (step.Disabled)
@@ -368,4 +431,6 @@
             .Add(textColor.ToTextClass())
             .ToString();
     }
+
+    private sealed record StepActivationTarget(W3Step Step, int Index);
 }

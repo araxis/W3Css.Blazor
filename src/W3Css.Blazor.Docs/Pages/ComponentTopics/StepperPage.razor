@@ -7,7 +7,21 @@
     <DocPager PreviousHref="components/progress-circular" PreviousText="Progress Circular" NextHref="components/scroll-to-top" NextText="Scroll To Top" />
 
     <p class="w3-large">`W3Stepper` renders multi-step workflows with progress, completed states, error states, disabled steps, and active panel content.</p>
-    <p>Use it for checkout flows, onboarding, setup wizards, approvals, and app screens where people need to understand what is done and what comes next.</p>
+    <p>Use it for checkout flows, onboarding, setup wizards, approvals, and app screens where people need to understand what is done and what comes next. Keyboard users can move across activatable steps with arrow keys and jump to the first or last available step with Home/End.</p>
+
+    <section class="doc-section">
+        <h2>Keyboard Interaction</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Key</th><th>Behavior</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>ArrowRight / ArrowDown</td><td>Activates the next enabled step allowed by the current workflow rules.</td></tr>
+                <tr><td>ArrowLeft / ArrowUp</td><td>Activates the previous enabled step allowed by the current workflow rules.</td></tr>
+                <tr><td>Home / End</td><td>Activates the first or last enabled step allowed by the current workflow rules.</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
 
     <DocExample Title="Linear Checkout Flow" Description="The linear mode allows the current step and the first incomplete step while completed values drive the progress bar." Code="@CheckoutCode">
         <W3Stepper Label="Checkout progress"

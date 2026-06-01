@@ -614,6 +614,9 @@ public sealed class W3DocsSmokeTests
         Assert.Contains("Extra attributes on the rating group", ratingPage.Markup);
 
         var stepperPage = context.Render<StepperPage>();
+        Assert.Contains("Keyboard Interaction", stepperPage.Markup);
+        Assert.Contains("ArrowRight", stepperPage.Markup);
+        Assert.Contains("Home", stepperPage.Markup);
         Assert.Contains("Active step marker and button background", stepperPage.Markup);
         Assert.Contains("Extra attributes on the stepper root", stepperPage.Markup);
 

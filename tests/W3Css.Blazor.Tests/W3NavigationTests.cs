@@ -920,6 +920,38 @@ public sealed class W3NavigationTests
     }
 
     [Fact]
+    public void PaginationSupportsKeyboardNavigation()
+    {
+        using var context = new BunitContext();
+        var page = 2;
+        var cut = context.Render<W3Pagination>(parameters => parameters
+            .Add(p => p.PageCount, 4)
+            .Add(p => p.CurrentPage, page)
+            .Add(p => p.CurrentPageChanged, EventCallback.Factory.Create<int>(this, value => page = value)));
+
+        var activeButton = cut.Find("[aria-current='page']");
+
+        activeButton.KeyDown(new KeyboardEventArgs { Key = "ArrowRight" });
+        Assert.Equal(3, page);
+        Assert.Equal("3", cut.Find("[aria-current='page']").TextContent);
+
+        cut.Find("[aria-current='page']").KeyDown(new KeyboardEventArgs { Key = "ArrowLeft" });
+        Assert.Equal(2, page);
+
+        cut.Find("[aria-current='page']").KeyDown(new KeyboardEventArgs { Key = "End" });
+        Assert.Equal(4, page);
+
+        cut.Find("[aria-current='page']").KeyDown(new KeyboardEventArgs { Key = "ArrowRight" });
+        Assert.Equal(4, page);
+
+        cut.Find("[aria-current='page']").KeyDown(new KeyboardEventArgs { Key = "Home" });
+        Assert.Equal(1, page);
+
+        cut.Find("[aria-current='page']").KeyDown(new KeyboardEventArgs { Key = "ArrowLeft" });
+        Assert.Equal(1, page);
+    }
+
+    [Fact]
     public void ProgressRendersClampedWidthAndLabel()
     {
         using var context = new BunitContext();

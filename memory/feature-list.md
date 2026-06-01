@@ -131,7 +131,7 @@ This model is intentionally similar to mature Blazor libraries, while keeping im
 | `W3Tabs` | Implemented | Blazor-controlled tabs with arrow/Home/End keyboard activation; supports optional closeable (`ShowCloseButtons`/`Closeable`, `OnCloseTab`, Delete key) and addable (`ShowAddButton`, `OnAddTab`) modes that absorbed the former W3DynamicTabs. |
 | `W3TabPanel` | Implemented | Paired tab panel with active state and per-panel `Closeable` flag. |
 | `W3Accordion` / `W3AccordionItem` | Implemented | Disclosure primitives with accessible states. |
-| `W3Pagination` | Implemented | Button pagination with current-page binding. |
+| `W3Pagination` | Implemented | Button pagination with current-page binding and arrow/Home/End keyboard navigation. |
 | `W3Progress` | Implemented | Determinate progress bar. |
 | `W3ProgressCircular` | Implemented | Circular progress component with determinate/indeterminate modes. |
 | `W3Navbar` / `W3NavbarItem` | Implemented | App-style navbar with mobile behavior and dropdown support. |
@@ -224,7 +224,7 @@ This model is intentionally similar to mature Blazor libraries, while keeping im
 | Content display and timeline | Implemented | Tree, chat, timeline, data table, rating, drop zone, and gallery coverage. |
 | Feedback and loading | Implemented | Spinner, skeleton, toast, file, autocomplete, and alert coverage. |
 | Package validation | Implemented | `dotnet pack` generates `W3Css.Blazor.0.1.0.nupkg`; CI uploads package artifact. |
-| Test count | Implemented | `dotnet test` reports 438 passing tests. |
+| Test count | Implemented | `dotnet test` reports 439 passing tests. |
 
 ## Component Compatibility Backlog
 

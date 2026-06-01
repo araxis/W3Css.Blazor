@@ -151,7 +151,7 @@ This model is intentionally similar to mature Blazor libraries, while keeping im
 | Component | Status | Notes |
 | --- | --- | --- |
 | `W3Table` | Implemented | Standard table with striped/bordered/hoverable/responsive options and `Dense` (`w3-small`) row density. |
-| `W3DataTable<TItem>` / `W3DataColumn<TItem>` | Implemented | App data table over `W3Table` with search, sort, paging, loading/empty states, selection, and row actions. |
+| `W3DataTable<TItem>` / `W3DataColumn<TItem>` | Implemented | App data table over `W3Table` with search, sort, paging, loading/empty states, selection, and wrapped row actions. |
 | `W3TreeView<TItem>` | Implemented | Hierarchical tree with expansion/selection state and templated nodes. |
 | `W3List` / `W3ListItem` | Implemented | Lists and clickable list rows. |
 | `W3Timeline` / `W3TimelineItem` | Implemented | Activity/audit/release timelines. |

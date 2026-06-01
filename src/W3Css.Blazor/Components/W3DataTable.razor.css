@@ -30,6 +30,20 @@
     text-transform: uppercase;
 }
 
+.w3-data-table-actions-header,
+.w3-data-table-actions-cell {
+    text-align: right;
+    white-space: nowrap;
+}
+
+.w3-data-table-actions {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--w3-data-table-actions-gap, 8px);
+}
+
 .w3-data-table-footer {
     display: flex;
     flex-wrap: wrap;

@@ -1065,3 +1065,9 @@ Last updated: 2026-06-01
 - Added an optional `Actions` slot to `W3Card` that renders a wrapping, right-aligned footer command row.
 - Added `ActionsClass` and `ActionsGap` for controlled spacing without manual footer margins.
 - Refreshed card docs with an app-card action example and extended card/docs smoke tests.
+
+## 2026-06-01 - Data Table Action Row Polish
+
+- Wrapped `W3DataTable` row actions in a right-aligned, wrapping action group.
+- Added `RowActionsHeaderClass`, `RowActionsCellClass`, `RowActionsClass`, and `RowActionsGap` hooks.
+- Refreshed the data-table row-action docs example with multiple actions and extended table/docs smoke coverage.

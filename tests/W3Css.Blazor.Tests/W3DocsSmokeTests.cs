@@ -481,6 +481,8 @@ public sealed class W3DocsSmokeTests
         Assert.Contains("SelectedItems", dataTablePage.Markup);
         Assert.Contains("Surface", dataTablePage.Markup);
         Assert.Contains("Primary", dataTablePage.Markup);
+        Assert.Contains("RowActionsGap", dataTablePage.Markup);
+        Assert.Contains("Gap between row action controls", dataTablePage.Markup);
 
         var dateRangePage = context.Render<DateRangePickerPage>();
         Assert.Contains("ValueExpression", dateRangePage.Markup);

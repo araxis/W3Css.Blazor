@@ -110,7 +110,7 @@
 
                     @if (RowActions is not null)
                     {
-                        <th scope="col">@RowActionsHeader</th>
+                        <th scope="col" class="@RowActionsHeaderCssClass">@RowActionsHeader</th>
                     }
                 </tr>
             </thead>
@@ -154,8 +154,10 @@
 
                             @if (RowActions is not null)
                             {
-                                <td>
-                                    @RowActions(item)
+                                <td class="@RowActionsCellCssClass">
+                                    <div class="@RowActionsCssClass" style="@RowActionsStyleValue">
+                                        @RowActions(item)
+                                    </div>
                                 </td>
                             }
                         </tr>
@@ -221,6 +223,23 @@
         .Add(HeaderColor.ToBackgroundClass())
         .Add(HeaderTextColor.ToTextClass())
         .ToString();
+
+    private string RowActionsHeaderCssClass => new W3ClassBuilder()
+        .Add("w3-data-table-actions-header")
+        .Add(RowActionsHeaderClass)
+        .ToString();
+
+    private string RowActionsCellCssClass => new W3ClassBuilder()
+        .Add("w3-data-table-actions-cell")
+        .Add(RowActionsCellClass)
+        .ToString();
+
+    private string RowActionsCssClass => new W3ClassBuilder()
+        .Add("w3-data-table-actions")
+        .Add(RowActionsClass)
+        .ToString();
+
+    private string? RowActionsStyleValue => RowActionsGap >= 0 ? $"--w3-data-table-actions-gap:{RowActionsGap}px" : null;
 
     private string LoadingCssClass => new W3ClassBuilder()
         .Add("w3-panel")
@@ -300,6 +319,18 @@
 
     [Parameter]
     public string RowActionsHeader { get; set; } = "Actions";
+
+    [Parameter]
+    public string? RowActionsHeaderClass { get; set; }
+
+    [Parameter]
+    public string? RowActionsCellClass { get; set; }
+
+    [Parameter]
+    public string? RowActionsClass { get; set; }
+
+    [Parameter]
+    public int RowActionsGap { get; set; } = 8;
 
     [Parameter]
     public bool Selectable { get; set; }

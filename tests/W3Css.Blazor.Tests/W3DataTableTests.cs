@@ -150,11 +150,30 @@ public sealed class W3DataTableTests
             .Add(p => p.SelectedColor, W3Color.PaleGreen)
             .Add(p => p.SelectedItemChanged, value => selected = value)
             .Add(p => p.RowActionsHeader, "Tools")
-            .Add(p => p.RowActions, row => builder => builder.AddContent(0, $"Open {row.Name}"))
+            .Add(p => p.RowActionsHeaderClass, "tools-header")
+            .Add(p => p.RowActionsCellClass, "tools-cell")
+            .Add(p => p.RowActionsClass, "tools-actions")
+            .Add(p => p.RowActionsGap, 12)
+            .Add(p => p.RowActions, row => builder =>
+            {
+                builder.OpenElement(0, "button");
+                builder.AddAttribute(1, "type", "button");
+                builder.AddContent(2, $"Open {row.Name}");
+                builder.CloseElement();
+                builder.OpenElement(3, "button");
+                builder.AddAttribute(4, "type", "button");
+                builder.AddContent(5, $"Archive {row.Name}");
+                builder.CloseElement();
+            })
             .Add(p => p.ChildContent, ColumnDefinitions()));
 
         Assert.Contains("Open Apollo", cut.Markup);
         Assert.Contains("Tools", cut.Find("thead").TextContent);
+        Assert.Contains("tools-header", cut.Find(".w3-data-table-actions-header").GetAttribute("class"));
+        Assert.Contains("tools-cell", cut.Find(".w3-data-table-actions-cell").GetAttribute("class"));
+        Assert.Contains("tools-actions", cut.Find(".w3-data-table-actions").GetAttribute("class"));
+        Assert.Equal("--w3-data-table-actions-gap:12px", cut.Find(".w3-data-table-actions").GetAttribute("style"));
+        Assert.Equal(2, cut.Find(".w3-data-table-actions").QuerySelectorAll("button").Length);
 
         cut.FindAll("tbody tr")[1].Click();
 

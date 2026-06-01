@@ -448,6 +448,9 @@ public sealed class W3DocsSmokeTests
         var drawerPage = context.Render<DrawerPage>();
         Assert.Contains("CloseButtonLabel", drawerPage.Markup);
         Assert.Contains("Close drawer", drawerPage.Markup);
+        Assert.Contains("AriaLabelledBy", drawerPage.Markup);
+        Assert.Contains("Keyboard Interaction", drawerPage.Markup);
+        Assert.Contains("Escape", drawerPage.Markup);
         Assert.Contains("Surface and Black", drawerPage.Markup);
 
         var menuPage = context.Render<MenuPage>();

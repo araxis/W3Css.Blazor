@@ -8,6 +8,7 @@
 
     <p class="w3-large">`W3Drawer` composes W3.CSS sidebar behavior into an app drawer with temporary and persistent variants.</p>
     <p>Use it when a site or app needs a side navigation, inspector, or settings surface with Blazor-controlled open state.</p>
+    <p>Give custom-header drawers a `Title`, `AriaLabel`, or `AriaLabelledBy` so the drawer surface has a clear accessible name.</p>
 
     <DocExample Title="Temporary Navigation Drawer" Description="Contained mode keeps the drawer inside demos, app previews, and embedded shells while preserving W3.CSS sidebar behavior." Code="@TemporaryCode">
         <div class="drawer-demo-frame w3-border w3-white">
@@ -102,6 +103,18 @@
     </DocExample>
 
     <section class="doc-section">
+        <h2>Keyboard Interaction</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Key</th><th>Behavior</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Escape</td><td>Closes the drawer when `CloseOnEscape` is enabled.</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
         <h2>Parameters</h2>
         <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
             <thead>
@@ -124,7 +137,8 @@
                 <tr><td>Width</td><td>int</td><td>280</td><td>Width in pixels</td></tr>
                 <tr><td>Position</td><td>W3SidebarPosition</td><td>Left</td><td>`left:0` or `right:0`</td></tr>
                 <tr><td>Title</td><td>string?</td><td>null</td><td>Default header title and accessible label</td></tr>
-                <tr><td>AriaLabel</td><td>string?</td><td>null</td><td>Accessible label when no title is rendered</td></tr>
+                <tr><td>AriaLabel</td><td>string?</td><td>null</td><td>Accessible label when no title or labelled-by reference is used</td></tr>
+                <tr><td>AriaLabelledBy</td><td>string?</td><td>null</td><td>Custom id reference for a visible drawer heading</td></tr>
                 <tr><td>Header</td><td>RenderFragment?</td><td>null</td><td>Custom header slot</td></tr>
                 <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Drawer body content</td></tr>
                 <tr><td>Footer</td><td>RenderFragment?</td><td>null</td><td>Footer slot</td></tr>

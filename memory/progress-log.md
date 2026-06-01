@@ -4,6 +4,17 @@ Last updated: 2026-06-01
 
 ## 2026-06-01
 
+- Continued the accessibility polish pass on `W3Drawer`:
+  - added explicit `AriaLabelledBy` support for custom-header drawers;
+  - kept `AriaLabel` as the fallback accessible name when no title or labelled-by reference is used;
+  - documented drawer labeling guidance and Escape dismissal behavior;
+  - added focused rendering/docs coverage for explicit labels and labelled-by references.
+- Verification:
+  - focused drawer/docs tests: 5 passing;
+  - `dotnet test tests/W3Css.Blazor.Tests/W3Css.Blazor.Tests.csproj --configuration Release` (448 passing);
+  - `dotnet build W3Css.Blazor.slnx --configuration Release` (0 warnings, 0 errors);
+  - `dotnet pack src/W3Css.Blazor/W3Css.Blazor.csproj --configuration Release --no-build`;
+  - browser-verified `/components/drawer` after restarting the docs server on port 5016: the keyboard and labeling guidance renders, the drawer opens with a resolving title reference, Escape closes it, no visible error appears, and no horizontal overflow appears.
 - Continued the accessibility polish pass on `W3MessageBox`:
   - added explicit `AriaLabel` and `AriaLabelledBy` parameters forwarded to the underlying modal;
   - documented message-box labeling guidance and Escape dismissal behavior;

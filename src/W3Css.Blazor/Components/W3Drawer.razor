@@ -15,7 +15,7 @@
        role="@Role"
        aria-modal="@AriaModal"
        aria-hidden="@AriaHidden"
-       aria-labelledby="@AriaLabelledBy"
+       aria-labelledby="@AriaLabelledByValue"
        aria-label="@AriaLabelValue"
        tabindex="-1"
        @onkeydown="HandleKeyDownAsync">
@@ -68,9 +68,11 @@
 
     private string TitleId => string.IsNullOrWhiteSpace(Id) ? generatedTitleId : $"{Id}-title";
 
-    private string? AriaLabelledBy => !string.IsNullOrWhiteSpace(Title) ? TitleId : null;
+    private string? AriaLabelledByValue => !string.IsNullOrWhiteSpace(AriaLabelledBy)
+        ? AriaLabelledBy
+        : !string.IsNullOrWhiteSpace(Title) ? TitleId : null;
 
-    private string? AriaLabelValue => string.IsNullOrWhiteSpace(Title) ? AriaLabel : null;
+    private string? AriaLabelValue => string.IsNullOrWhiteSpace(AriaLabelledByValue) ? AriaLabel : null;
 
     private string AriaHidden => Open ? "false" : "true";
 
@@ -183,6 +185,9 @@
 
     [Parameter]
     public string? AriaLabel { get; set; }
+
+    [Parameter]
+    public string? AriaLabelledBy { get; set; }
 
     [Parameter]
     public W3Color Color { get; set; } = W3Color.Surface;

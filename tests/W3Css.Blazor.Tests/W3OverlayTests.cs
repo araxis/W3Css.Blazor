@@ -344,6 +344,7 @@ public sealed class W3OverlayTests
         Assert.Equal("true", drawer.GetAttribute("aria-modal"));
         Assert.Equal("false", drawer.GetAttribute("aria-hidden"));
         Assert.Equal("workspace-drawer-title", drawer.GetAttribute("aria-labelledby"));
+        Assert.Null(drawer.GetAttribute("aria-label"));
         Assert.Contains("Workspace", header.TextContent);
         Assert.Contains("drawer-header-extra", header.GetAttribute("class"));
         Assert.Contains("drawer-body-extra", body.GetAttribute("class"));
@@ -355,6 +356,30 @@ public sealed class W3OverlayTests
         overlay.Click();
 
         Assert.False(open);
+    }
+
+    [Fact]
+    public void DrawerSupportsExplicitAccessibleLabels()
+    {
+        using var context = new BunitContext();
+        var labelled = context.Render<W3Drawer>(parameters => parameters
+            .Add(p => p.Open, true)
+            .Add(p => p.AriaLabel, "Workspace settings")
+            .Add(p => p.ChildContent, "Settings"));
+
+        var labelledDrawer = labelled.Find("aside");
+        Assert.Equal("Workspace settings", labelledDrawer.GetAttribute("aria-label"));
+        Assert.Null(labelledDrawer.GetAttribute("aria-labelledby"));
+
+        var referenced = context.Render<W3Drawer>(parameters => parameters
+            .Add(p => p.Open, true)
+            .Add(p => p.AriaLabelledBy, "drawer-heading")
+            .Add(p => p.Header, (RenderFragment)(header => header.AddMarkupContent(0, "<h2 id=\"drawer-heading\">Inspector</h2>")))
+            .Add(p => p.ChildContent, "Inspector body"));
+
+        var referencedDrawer = referenced.Find("aside");
+        Assert.Equal("drawer-heading", referencedDrawer.GetAttribute("aria-labelledby"));
+        Assert.Null(referencedDrawer.GetAttribute("aria-label"));
     }
 
     [Fact]

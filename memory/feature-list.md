@@ -164,7 +164,7 @@ This model is intentionally similar to mature Blazor libraries, while keeping im
 | `W3MessageBox` | Implemented | Confirm/alert prompt with `@bind-Visible`, explicit accessible labeling, and `bool?` Yes/No/Cancel result. |
 | `W3Tooltip` | Implemented | CSS-first tooltip wrapper. |
 | `W3Popover` | Implemented | Action/detail overlays with anchored popover behavior, content-control linkage, and Escape close behavior. |
-| `W3Drawer` | Implemented | Side drawer for temporary/persistent overlays. |
+| `W3Drawer` | Implemented | Side drawer for temporary/persistent overlays with Escape dismissal and explicit accessible labeling. |
 | `W3FocusTrap` | Implemented | Focus containment helper for overlay interactions. |
 | `W3Overlay` | Implemented | Standalone backdrop layer with optional containment and auto-close behavior. |
 | `W3Toast` | Implemented | Toast surface with service + provider integration. |
@@ -224,7 +224,7 @@ This model is intentionally similar to mature Blazor libraries, while keeping im
 | Content display and timeline | Implemented | Tree, chat, timeline, data table, rating, drop zone, and gallery coverage. |
 | Feedback and loading | Implemented | Spinner, skeleton, toast, file, autocomplete, and alert coverage. |
 | Package validation | Implemented | `dotnet pack` generates `W3Css.Blazor.0.1.0.nupkg`; CI uploads package artifact. |
-| Test count | Implemented | `dotnet test` reports 447 passing tests. |
+| Test count | Implemented | `dotnet test` reports 448 passing tests. |
 
 ## Component Compatibility Backlog
 

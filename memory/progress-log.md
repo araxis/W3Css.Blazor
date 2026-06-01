@@ -1053,3 +1053,9 @@ Last updated: 2026-06-01
 - Added `W3Color.Info`, `W3Color.Success`, `W3Color.Warning`, `W3Color.Danger`, and `W3Color.Note` so semantic colors can be used anywhere color parameters are accepted.
 - Updated `W3ThemeProvider` variable output, regenerated the single-file stylesheet bundle, refreshed theming docs, and added focused theme/docs smoke coverage.
 - Verified focused theme/docs tests, Release build, the 459-test Release suite, package creation, and `/components/theming` in the in-app browser with rendered status-token examples, no console errors, and no horizontal overflow.
+
+## 2026-06-01 - Stack Alignment Polish
+
+- Added `JustifyCenter` and `JustifyEnd` to `W3Stack` for centered groups and right-aligned wrapping action rows.
+- Refreshed stack docs with an action-row example and API table rows.
+- Extended component and docs smoke tests for the new alignment classes and documentation.

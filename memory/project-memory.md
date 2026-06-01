@@ -39,7 +39,6 @@ Last updated: 2026-06-01
    - push current `main` commits when ready.
    - push `v0.1.0` only after confirming the NuGet publish path/secret.
 2. Optional polish:
-   - focus-ring/theming refinements,
    - visual quality sweeps.
 
 ## Memory Files

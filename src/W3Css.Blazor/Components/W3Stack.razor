@@ -13,6 +13,8 @@
         Horizontal ? "w3-stack-horizontal" : "w3-stack-vertical",
         Wrap ? "w3-stack-wrap" : null,
         AlignCenter ? "w3-stack-align-center" : null,
+        JustifyCenter ? "w3-stack-justify-center" : null,
+        JustifyEnd ? "w3-stack-justify-end" : null,
         JustifyBetween ? "w3-stack-justify-between" : null,
         Color.ToBackgroundClass(),
         TextColor.ToTextClass());
@@ -30,6 +32,12 @@
 
     [Parameter]
     public bool AlignCenter { get; set; }
+
+    [Parameter]
+    public bool JustifyCenter { get; set; }
+
+    [Parameter]
+    public bool JustifyEnd { get; set; }
 
     [Parameter]
     public bool JustifyBetween { get; set; }

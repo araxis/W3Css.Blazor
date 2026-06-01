@@ -66,7 +66,7 @@ This model is intentionally similar to mature Blazor libraries, while keeping im
 | `W3AppBar` | Implemented | App header composition with title-fill layout, menu, trailing nav/actions, and placement options. |
 | `W3Toolbar` | Implemented | Dense action rows for editors, tables, and dashboards. |
 | `W3Divider` | Implemented | Divider utility and section breaks. |
-| `W3Stack` | Implemented | Simple vertical/horizontal spacing container. |
+| `W3Stack` | Implemented | Simple vertical/horizontal spacing container with wrapping, gap, and main-axis alignment helpers for action rows. |
 | `W3Spacer` | Implemented | W3.CSS-first flex filler for bars/toolbars. |
 | `W3Footer` | Implemented | W3.CSS-first footer region with color/border/fixed options. |
 

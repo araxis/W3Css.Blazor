@@ -47,6 +47,8 @@ public sealed class W3CompositionPrimitiveTests
             .Add(p => p.Horizontal, true)
             .Add(p => p.Wrap, true)
             .Add(p => p.AlignCenter, true)
+            .Add(p => p.JustifyCenter, true)
+            .Add(p => p.JustifyEnd, true)
             .Add(p => p.JustifyBetween, true)
             .Add(p => p.Gap, 10)
             .Add(p => p.Color, W3Color.PaleBlue)
@@ -61,6 +63,8 @@ public sealed class W3CompositionPrimitiveTests
         Assert.Contains("w3-stack-horizontal", stack.GetAttribute("class"));
         Assert.Contains("w3-stack-wrap", stack.GetAttribute("class"));
         Assert.Contains("w3-stack-align-center", stack.GetAttribute("class"));
+        Assert.Contains("w3-stack-justify-center", stack.GetAttribute("class"));
+        Assert.Contains("w3-stack-justify-end", stack.GetAttribute("class"));
         Assert.Contains("w3-stack-justify-between", stack.GetAttribute("class"));
         Assert.Contains("w3-pale-blue", stack.GetAttribute("class"));
         Assert.Contains("w3-text-black", stack.GetAttribute("class"));

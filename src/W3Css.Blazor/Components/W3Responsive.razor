@@ -9,6 +9,9 @@
 @code {
     private string CssClass => BuildClass("w3-responsive");
 
+    /// <summary>
+    /// Gets or sets the content rendered inside the component.
+    /// </summary>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 }

@@ -19,45 +19,87 @@
         Color.ToBackgroundClass(),
         TextColor.ToTextClass());
 
+    /// <summary>
+    /// Gets or sets the content rendered inside the component.
+    /// </summary>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 
+    /// <summary>
+    /// Gets or sets the accessible label text.
+    /// </summary>
     [Parameter]
     public string Label { get; set; } = "Navigation";
 
+    /// <summary>
+    /// Gets or sets the active value value.
+    /// </summary>
     [Parameter]
     public string? ActiveValue { get; set; }
 
+    /// <summary>
+    /// Gets or sets the callback raised when the active value value changes.
+    /// </summary>
     [Parameter]
     public EventCallback<string> ActiveValueChanged { get; set; }
 
+    /// <summary>
+    /// Gets or sets the block value.
+    /// </summary>
     [Parameter]
     public bool Block { get; set; }
 
+    /// <summary>
+    /// Gets or sets the mobile value.
+    /// </summary>
     [Parameter]
     public bool Mobile { get; set; }
 
+    /// <summary>
+    /// Gets or sets the border value.
+    /// </summary>
     [Parameter]
     public bool Border { get; set; }
 
+    /// <summary>
+    /// Gets or sets the card value.
+    /// </summary>
     [Parameter]
     public bool Card { get; set; }
 
+    /// <summary>
+    /// Gets or sets the card depth value.
+    /// </summary>
     [Parameter]
     public W3CardDepth CardDepth { get; set; } = W3CardDepth.Four;
 
+    /// <summary>
+    /// Gets or sets the round value.
+    /// </summary>
     [Parameter]
     public W3Round Round { get; set; } = W3Round.None;
 
+    /// <summary>
+    /// Gets or sets the background color class.
+    /// </summary>
     [Parameter]
     public W3Color Color { get; set; } = W3Color.None;
 
+    /// <summary>
+    /// Gets or sets the text color class.
+    /// </summary>
     [Parameter]
     public W3Color TextColor { get; set; } = W3Color.None;
 
+    /// <summary>
+    /// Gets or sets the active color value.
+    /// </summary>
     [Parameter]
     public W3Color ActiveColor { get; set; } = W3Color.Primary;
 
+    /// <summary>
+    /// Gets or sets the active text color value.
+    /// </summary>
     [Parameter]
     public W3Color ActiveTextColor { get; set; } = W3Color.White;
 

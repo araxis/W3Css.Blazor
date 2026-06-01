@@ -125,21 +125,39 @@
     private W3MenuItem? activeItem;
     private W3MenuItem? pendingFocusItem;
 
+    /// <summary>
+    /// Gets or sets the rendered element id.
+    /// </summary>
     [Parameter]
     public string? Id { get; set; }
 
+    /// <summary>
+    /// Gets or sets the accessible label text.
+    /// </summary>
     [Parameter]
     public string Label { get; set; } = "Menu";
 
+    /// <summary>
+    /// Gets or sets the accessible label text.
+    /// </summary>
     [Parameter]
     public string? MenuLabel { get; set; }
 
+    /// <summary>
+    /// Gets or sets the icon class value.
+    /// </summary>
     [Parameter]
     public string? IconClass { get; set; }
 
+    /// <summary>
+    /// Gets or sets the trigger content value.
+    /// </summary>
     [Parameter]
     public RenderFragment? TriggerContent { get; set; }
 
+    /// <summary>
+    /// Gets or sets the content rendered inside the component.
+    /// </summary>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 
@@ -149,69 +167,135 @@
     [Parameter]
     public bool Open { get; set; }
 
+    /// <summary>
+    /// Gets or sets the callback raised when the open value changes.
+    /// </summary>
     [Parameter]
     public EventCallback<bool> OpenChanged { get; set; }
 
+    /// <summary>
+    /// Gets or sets whether the component is disabled.
+    /// </summary>
     [Parameter]
     public bool Disabled { get; set; }
 
+    /// <summary>
+    /// Gets or sets the close on outside click value.
+    /// </summary>
     [Parameter]
     public bool CloseOnOutsideClick { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the close on select value.
+    /// </summary>
     [Parameter]
     public bool CloseOnSelect { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the show caret value.
+    /// </summary>
     [Parameter]
     public bool ShowCaret { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the icon only value.
+    /// </summary>
     [Parameter]
     public bool IconOnly { get; set; }
 
+    /// <summary>
+    /// Gets or sets the fixed position value.
+    /// </summary>
     [Parameter]
     public bool FixedPosition { get; set; }
 
+    /// <summary>
+    /// Gets or sets the trigger border value.
+    /// </summary>
     [Parameter]
     public bool TriggerBorder { get; set; }
 
+    /// <summary>
+    /// Gets or sets the trigger round value.
+    /// </summary>
     [Parameter]
     public W3Round TriggerRound { get; set; } = W3Round.Medium;
 
+    /// <summary>
+    /// Gets or sets the trigger color value.
+    /// </summary>
     [Parameter]
     public W3Color TriggerColor { get; set; } = W3Color.None;
 
+    /// <summary>
+    /// Gets or sets the trigger text color value.
+    /// </summary>
     [Parameter]
     public W3Color TriggerTextColor { get; set; } = W3Color.None;
 
+    /// <summary>
+    /// Gets or sets the trigger class value.
+    /// </summary>
     [Parameter]
     public string? TriggerClass { get; set; }
 
+    /// <summary>
+    /// Gets or sets the placement value.
+    /// </summary>
     [Parameter]
     public W3MenuPlacement Placement { get; set; } = W3MenuPlacement.BottomStart;
 
+    /// <summary>
+    /// Gets or sets the card value.
+    /// </summary>
     [Parameter]
     public bool Card { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the card depth value.
+    /// </summary>
     [Parameter]
     public W3CardDepth CardDepth { get; set; } = W3CardDepth.Four;
 
+    /// <summary>
+    /// Gets or sets the round value.
+    /// </summary>
     [Parameter]
     public W3Round Round { get; set; } = W3Round.Medium;
 
+    /// <summary>
+    /// Gets or sets the animate value.
+    /// </summary>
     [Parameter]
     public bool Animate { get; set; }
 
+    /// <summary>
+    /// Gets or sets the panel color value.
+    /// </summary>
     [Parameter]
     public W3Color PanelColor { get; set; } = W3Color.Surface;
 
+    /// <summary>
+    /// Gets or sets the panel text color value.
+    /// </summary>
     [Parameter]
     public W3Color PanelTextColor { get; set; } = W3Color.Black;
 
+    /// <summary>
+    /// Gets or sets the panel class value.
+    /// </summary>
     [Parameter]
     public string? PanelClass { get; set; }
 
+    /// <summary>
+    /// Gets or sets the min width value.
+    /// </summary>
     [Parameter]
     public int MinWidth { get; set; } = 192;
 
+    /// <summary>
+    /// Gets or sets the rendered button type.
+    /// </summary>
     [Parameter]
     public string Type { get; set; } = "button";
 

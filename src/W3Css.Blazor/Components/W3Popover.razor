@@ -84,60 +84,117 @@
 
     private string ContentId => contentId;
 
+    /// <summary>
+    /// Gets or sets the accessible label text.
+    /// </summary>
     [Parameter]
     public string Label { get; set; } = "Open popover";
 
+    /// <summary>
+    /// Gets or sets the trigger content value.
+    /// </summary>
     [Parameter]
     public RenderFragment? TriggerContent { get; set; }
 
+    /// <summary>
+    /// Gets or sets the content rendered inside the component.
+    /// </summary>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 
+    /// <summary>
+    /// Gets or sets the open value.
+    /// </summary>
     [Parameter]
     public bool Open { get; set; }
 
+    /// <summary>
+    /// Gets or sets the callback raised when the open value changes.
+    /// </summary>
     [Parameter]
     public EventCallback<bool> OpenChanged { get; set; }
 
+    /// <summary>
+    /// Gets or sets whether the component is disabled.
+    /// </summary>
     [Parameter]
     public bool Disabled { get; set; }
 
+    /// <summary>
+    /// Gets or sets the card value.
+    /// </summary>
     [Parameter]
     public bool Card { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the animate value.
+    /// </summary>
     [Parameter]
     public bool Animate { get; set; }
 
+    /// <summary>
+    /// Gets or sets the close on outside click value.
+    /// </summary>
     [Parameter]
     public bool CloseOnOutsideClick { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the placement value.
+    /// </summary>
     [Parameter]
     public W3PopoverPlacement Placement { get; set; } = W3PopoverPlacement.Bottom;
 
+    /// <summary>
+    /// Gets or sets the width value.
+    /// </summary>
     [Parameter]
     public string? Width { get; set; } = "18rem";
 
+    /// <summary>
+    /// Gets or sets the trigger class value.
+    /// </summary>
     [Parameter]
     public string? TriggerClass { get; set; }
 
+    /// <summary>
+    /// Gets or sets the content class value.
+    /// </summary>
     [Parameter]
     public string? ContentClass { get; set; }
 
+    /// <summary>
+    /// Gets or sets the content style value.
+    /// </summary>
     [Parameter]
     public string? ContentStyle { get; set; }
 
+    /// <summary>
+    /// Gets or sets the trigger color value.
+    /// </summary>
     [Parameter]
     public W3Color TriggerColor { get; set; } = W3Color.None;
 
+    /// <summary>
+    /// Gets or sets the trigger text color value.
+    /// </summary>
     [Parameter]
     public W3Color TriggerTextColor { get; set; } = W3Color.None;
 
+    /// <summary>
+    /// Gets or sets the content color value.
+    /// </summary>
     [Parameter]
     public W3Color ContentColor { get; set; } = W3Color.Surface;
 
+    /// <summary>
+    /// Gets or sets the content text color value.
+    /// </summary>
     [Parameter]
     public W3Color ContentTextColor { get; set; } = W3Color.Black;
 
+    /// <summary>
+    /// Gets or sets the round value.
+    /// </summary>
     [Parameter]
     public W3Round Round { get; set; } = W3Round.Medium;
 

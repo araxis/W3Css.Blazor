@@ -109,7 +109,7 @@ repetitive spacing work: `W3AppShell`, `W3AppBar`, `W3Card`, `W3DataTable`,
 - [Patterns](src/W3Css.Blazor.Docs/Pages/Patterns.razor): complete dashboard, form, table, and modal workflows.
 - [Theming](src/W3Css.Blazor.Docs/Pages/ComponentTopics/ThemingPage.razor): brand tokens, dark surfaces, and focus/status colors.
 - [Versions](src/W3Css.Blazor.Docs/Pages/ComponentTopics/VersionsPage.razor): package version, bundled stylesheet paths, and upgrade checks.
-- [0.3.0 release notes](docs/release-notes/0.3.0.md): adoption-polish release details.
+- [0.4.0 release notes](docs/release-notes/0.4.0.md): quality-hardening release details.
 - [Package smoke script](tools/package-consumer-smoke.ps1): clean consumer-app package validation.
 
 ## Repository Layout
@@ -135,8 +135,16 @@ Run the package consumer smoke check after publishing a version:
 pwsh ./tools/package-consumer-smoke.ps1
 ```
 
-Pass `-PackageVersion 0.3.0` to check a specific published version.
+Pass `-PackageVersion 0.4.0` to check a specific published version.
 Pass `-PackageSource artifacts/packages` to check a locally packed version before tagging.
+
+Run the browser quality sweep against a running docs site:
+
+```bash
+pwsh ./tools/docs-browser-sweep.ps1
+```
+
+Pass `-StartServer` to let the sweep start the docs app locally before checking top adoption and interactive routes.
 
 ## Branches And Commits
 

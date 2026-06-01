@@ -25,21 +25,39 @@
     private string? AriaRequired => Required ? "true" : null;
     private string? AriaInvalid => EditContext?.GetValidationMessages(FieldIdentifier).Any() == true ? "true" : null;
 
+    /// <summary>
+    /// Gets or sets the rendered element id.
+    /// </summary>
     [Parameter]
     public string? Id { get; set; }
 
+    /// <summary>
+    /// Gets or sets the min value.
+    /// </summary>
     [Parameter]
     public DateOnly? Min { get; set; }
 
+    /// <summary>
+    /// Gets or sets the max value.
+    /// </summary>
     [Parameter]
     public DateOnly? Max { get; set; }
 
+    /// <summary>
+    /// Gets or sets whether the input is read-only.
+    /// </summary>
     [Parameter]
     public bool ReadOnly { get; set; }
 
+    /// <summary>
+    /// Gets or sets whether a value is required for form validation.
+    /// </summary>
     [Parameter]
     public bool Required { get; set; }
 
+    /// <summary>
+    /// Gets or sets the update on input value.
+    /// </summary>
     [Parameter]
     public bool UpdateOnInput { get; set; }
 

@@ -28,36 +28,69 @@
         string.IsNullOrWhiteSpace(MinItemWidth) ? null : $"--w3-image-list-min:{MinItemWidth}",
         Style);
 
+    /// <summary>
+    /// Gets or sets the content rendered inside the component.
+    /// </summary>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 
+    /// <summary>
+    /// Gets or sets the accessible label text.
+    /// </summary>
     [Parameter]
     public string Label { get; set; } = "Image list";
 
+    /// <summary>
+    /// Gets or sets the columns value.
+    /// </summary>
     [Parameter]
     public int Columns { get; set; } = 3;
 
+    /// <summary>
+    /// Gets or sets the gap value.
+    /// </summary>
     [Parameter]
     public int Gap { get; set; } = 12;
 
+    /// <summary>
+    /// Gets or sets the min item width value.
+    /// </summary>
     [Parameter]
     public string? MinItemWidth { get; set; } = "12rem";
 
+    /// <summary>
+    /// Gets or sets the dense value.
+    /// </summary>
     [Parameter]
     public bool Dense { get; set; }
 
+    /// <summary>
+    /// Gets or sets the background color class.
+    /// </summary>
     [Parameter]
     public W3Color Color { get; set; } = W3Color.None;
 
+    /// <summary>
+    /// Gets or sets the text color class.
+    /// </summary>
     [Parameter]
     public W3Color TextColor { get; set; } = W3Color.None;
 
+    /// <summary>
+    /// Gets or sets the caption color value.
+    /// </summary>
     [Parameter]
     public W3Color CaptionColor { get; set; } = W3Color.White;
 
+    /// <summary>
+    /// Gets or sets the caption text color value.
+    /// </summary>
     [Parameter]
     public W3Color CaptionTextColor { get; set; } = W3Color.Black;
 
+    /// <summary>
+    /// Gets or sets the round value.
+    /// </summary>
     [Parameter]
     public W3Round Round { get; set; } = W3Round.Medium;
 

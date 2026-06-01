@@ -27,60 +27,117 @@
         Color.ToBackgroundClass(),
         TextColor.ToTextClass());
 
+    /// <summary>
+    /// Gets or sets the accessible label text.
+    /// </summary>
     [Parameter]
     public string Label { get; set; } = "Bottom navigation";
 
+    /// <summary>
+    /// Gets or sets the value value.
+    /// </summary>
     [Parameter]
     public string? Value { get; set; }
 
+    /// <summary>
+    /// Gets or sets the callback raised when the value value changes.
+    /// </summary>
     [Parameter]
     public EventCallback<string?> ValueChanged { get; set; }
 
+    /// <summary>
+    /// Gets or sets the content rendered inside the component.
+    /// </summary>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 
+    /// <summary>
+    /// Gets or sets the fixed value.
+    /// </summary>
     [Parameter]
     public bool Fixed { get; set; }
 
+    /// <summary>
+    /// Gets or sets the contained value.
+    /// </summary>
     [Parameter]
     public bool Contained { get; set; }
 
+    /// <summary>
+    /// Gets or sets the equal width value.
+    /// </summary>
     [Parameter]
     public bool EqualWidth { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the dense value.
+    /// </summary>
     [Parameter]
     public bool Dense { get; set; }
 
+    /// <summary>
+    /// Gets or sets the show labels value.
+    /// </summary>
     [Parameter]
     public bool ShowLabels { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the border value.
+    /// </summary>
     [Parameter]
     public bool Border { get; set; }
 
+    /// <summary>
+    /// Gets or sets the card value.
+    /// </summary>
     [Parameter]
     public bool Card { get; set; }
 
+    /// <summary>
+    /// Gets or sets the card depth value.
+    /// </summary>
     [Parameter]
     public W3CardDepth CardDepth { get; set; } = W3CardDepth.Two;
 
+    /// <summary>
+    /// Gets or sets the round value.
+    /// </summary>
     [Parameter]
     public W3Round Round { get; set; } = W3Round.None;
 
+    /// <summary>
+    /// Gets or sets the background color class.
+    /// </summary>
     [Parameter]
     public W3Color Color { get; set; } = W3Color.Surface;
 
+    /// <summary>
+    /// Gets or sets the text color class.
+    /// </summary>
     [Parameter]
     public W3Color TextColor { get; set; } = W3Color.Black;
 
+    /// <summary>
+    /// Gets or sets the active color value.
+    /// </summary>
     [Parameter]
     public W3Color ActiveColor { get; set; } = W3Color.Primary;
 
+    /// <summary>
+    /// Gets or sets the active text color value.
+    /// </summary>
     [Parameter]
     public W3Color ActiveTextColor { get; set; } = W3Color.White;
 
+    /// <summary>
+    /// Gets or sets the hover color value.
+    /// </summary>
     [Parameter]
     public W3Color HoverColor { get; set; } = W3Color.LightGrey;
 
+    /// <summary>
+    /// Gets or sets the hover text color value.
+    /// </summary>
     [Parameter]
     public W3Color HoverTextColor { get; set; } = W3Color.None;
 

@@ -7,42 +7,81 @@
     [CascadingParameter]
     internal W3DataTable<TItem>? Owner { get; set; }
 
+    /// <summary>
+    /// Gets or sets the title value.
+    /// </summary>
     [Parameter, EditorRequired]
     public string Title { get; set; } = string.Empty;
 
+    /// <summary>
+    /// Gets or sets the header content value.
+    /// </summary>
     [Parameter]
     public RenderFragment? HeaderContent { get; set; }
 
+    /// <summary>
+    /// Gets or sets the cell template value.
+    /// </summary>
     [Parameter]
     public RenderFragment<TItem>? CellTemplate { get; set; }
 
+    /// <summary>
+    /// Gets or sets the cell text value.
+    /// </summary>
     [Parameter]
     public Func<TItem, object?>? CellText { get; set; }
 
+    /// <summary>
+    /// Gets or sets the sort key value.
+    /// </summary>
     [Parameter]
     public Func<TItem, object?>? SortKey { get; set; }
 
+    /// <summary>
+    /// Gets or sets the search value value.
+    /// </summary>
     [Parameter]
     public Func<TItem, string?>? SearchValue { get; set; }
 
+    /// <summary>
+    /// Gets or sets the sortable value.
+    /// </summary>
     [Parameter]
     public bool Sortable { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the visible value.
+    /// </summary>
     [Parameter]
     public bool Visible { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the align value.
+    /// </summary>
     [Parameter]
     public W3TextAlignment Align { get; set; } = W3TextAlignment.None;
 
+    /// <summary>
+    /// Gets or sets the header class value.
+    /// </summary>
     [Parameter]
     public string? HeaderClass { get; set; }
 
+    /// <summary>
+    /// Gets or sets the cell class value.
+    /// </summary>
     [Parameter]
     public string? CellClass { get; set; }
 
+    /// <summary>
+    /// Gets or sets the header style value.
+    /// </summary>
     [Parameter]
     public string? HeaderStyle { get; set; }
 
+    /// <summary>
+    /// Gets or sets the cell style value.
+    /// </summary>
     [Parameter]
     public string? CellStyle { get; set; }
 

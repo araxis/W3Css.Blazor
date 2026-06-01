@@ -26,24 +26,45 @@
     private string? MaxAsString => FormatNumber(Max);
     private string? AriaInvalid => EditContext?.GetValidationMessages(FieldIdentifier).Any() == true ? "true" : null;
 
+    /// <summary>
+    /// Gets or sets the rendered element id.
+    /// </summary>
     [Parameter]
     public string? Id { get; set; }
 
+    /// <summary>
+    /// Gets or sets the accessible label text.
+    /// </summary>
     [Parameter]
     public string? Label { get; set; }
 
+    /// <summary>
+    /// Gets or sets the value text value.
+    /// </summary>
     [Parameter]
     public string? ValueText { get; set; }
 
+    /// <summary>
+    /// Gets or sets the min value.
+    /// </summary>
     [Parameter]
     public TValue? Min { get; set; }
 
+    /// <summary>
+    /// Gets or sets the max value.
+    /// </summary>
     [Parameter]
     public TValue? Max { get; set; }
 
+    /// <summary>
+    /// Gets or sets the step value.
+    /// </summary>
     [Parameter]
     public string? Step { get; set; }
 
+    /// <summary>
+    /// Gets or sets the update on input value.
+    /// </summary>
     [Parameter]
     public bool UpdateOnInput { get; set; } = true;
 

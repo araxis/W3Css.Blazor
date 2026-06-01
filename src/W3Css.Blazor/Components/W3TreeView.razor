@@ -40,96 +40,189 @@
         Dense ? "w3-tree-view-dense" : null,
         ShowLines ? null : "w3-tree-view-lines-disabled");
 
+    /// <summary>
+    /// Gets or sets the items value.
+    /// </summary>
     [Parameter]
     public IEnumerable<TItem>? Items { get; set; }
 
+    /// <summary>
+    /// Gets or sets the children selector value.
+    /// </summary>
     [Parameter]
     public Func<TItem, IEnumerable<TItem>?>? ChildrenSelector { get; set; }
 
+    /// <summary>
+    /// Gets or sets the text selector value.
+    /// </summary>
     [Parameter]
     public Func<TItem, string>? TextSelector { get; set; }
 
+    /// <summary>
+    /// Gets or sets the value selector value.
+    /// </summary>
     [Parameter]
     public Func<TItem, string?>? ValueSelector { get; set; }
 
+    /// <summary>
+    /// Gets or sets the href selector value.
+    /// </summary>
     [Parameter]
     public Func<TItem, string?>? HrefSelector { get; set; }
 
+    /// <summary>
+    /// Gets or sets the target selector value.
+    /// </summary>
     [Parameter]
     public Func<TItem, string?>? TargetSelector { get; set; }
 
+    /// <summary>
+    /// Gets or sets the disabled selector value.
+    /// </summary>
     [Parameter]
     public Func<TItem, bool>? DisabledSelector { get; set; }
 
+    /// <summary>
+    /// Gets or sets the item template value.
+    /// </summary>
     [Parameter]
     public RenderFragment<TItem>? ItemTemplate { get; set; }
 
+    /// <summary>
+    /// Gets or sets the expanded values value.
+    /// </summary>
     [Parameter]
     public IReadOnlyCollection<string> ExpandedValues { get; set; } = [];
 
+    /// <summary>
+    /// Gets or sets the callback raised when the expanded values value changes.
+    /// </summary>
     [Parameter]
     public EventCallback<IReadOnlyCollection<string>> ExpandedValuesChanged { get; set; }
 
+    /// <summary>
+    /// Gets or sets the selected value value.
+    /// </summary>
     [Parameter]
     public string? SelectedValue { get; set; }
 
+    /// <summary>
+    /// Gets or sets the callback raised when the selected value value changes.
+    /// </summary>
     [Parameter]
     public EventCallback<string?> SelectedValueChanged { get; set; }
 
+    /// <summary>
+    /// Gets or sets the item selected value.
+    /// </summary>
     [Parameter]
     public EventCallback<TItem> ItemSelected { get; set; }
 
+    /// <summary>
+    /// Gets or sets the accessible label text.
+    /// </summary>
     [Parameter]
     public string Label { get; set; } = "Tree view";
 
+    /// <summary>
+    /// Gets or sets the empty text value.
+    /// </summary>
     [Parameter]
     public string EmptyText { get; set; } = "No items";
 
+    /// <summary>
+    /// Gets or sets the selectable value.
+    /// </summary>
     [Parameter]
     public bool Selectable { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the expand on item click value.
+    /// </summary>
     [Parameter]
     public bool ExpandOnItemClick { get; set; }
 
+    /// <summary>
+    /// Gets or sets the default expanded value.
+    /// </summary>
     [Parameter]
     public bool DefaultExpanded { get; set; }
 
+    /// <summary>
+    /// Gets or sets the dense value.
+    /// </summary>
     [Parameter]
     public bool Dense { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the show lines value.
+    /// </summary>
     [Parameter]
     public bool ShowLines { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the border value.
+    /// </summary>
     [Parameter]
     public bool Border { get; set; }
 
+    /// <summary>
+    /// Gets or sets the card value.
+    /// </summary>
     [Parameter]
     public bool Card { get; set; }
 
+    /// <summary>
+    /// Gets or sets the card depth value.
+    /// </summary>
     [Parameter]
     public W3CardDepth CardDepth { get; set; } = W3CardDepth.Two;
 
+    /// <summary>
+    /// Gets or sets the round value.
+    /// </summary>
     [Parameter]
     public W3Round Round { get; set; } = W3Round.None;
 
+    /// <summary>
+    /// Gets or sets the background color class.
+    /// </summary>
     [Parameter]
     public W3Color Color { get; set; } = W3Color.None;
 
+    /// <summary>
+    /// Gets or sets the text color class.
+    /// </summary>
     [Parameter]
     public W3Color TextColor { get; set; } = W3Color.None;
 
+    /// <summary>
+    /// Gets or sets the selected color value.
+    /// </summary>
     [Parameter]
     public W3Color SelectedColor { get; set; } = W3Color.PaleBlue;
 
+    /// <summary>
+    /// Gets or sets the toggle color value.
+    /// </summary>
     [Parameter]
     public W3Color ToggleColor { get; set; } = W3Color.None;
 
+    /// <summary>
+    /// Gets or sets the item class value.
+    /// </summary>
     [Parameter]
     public string? ItemClass { get; set; }
 
+    /// <summary>
+    /// Gets or sets the label class value.
+    /// </summary>
     [Parameter]
     public string? LabelClass { get; set; }
 
+    /// <summary>
+    /// Gets or sets the toggle class value.
+    /// </summary>
     [Parameter]
     public string? ToggleClass { get; set; }
 

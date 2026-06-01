@@ -135,66 +135,129 @@
         return OnClick.InvokeAsync(args);
     }
 
+    /// <summary>
+    /// Gets or sets the content rendered inside the component.
+    /// </summary>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 
+    /// <summary>
+    /// Gets or sets the text value.
+    /// </summary>
     [Parameter]
     public string? Text { get; set; }
 
+    /// <summary>
+    /// Gets or sets the start icon class name value.
+    /// </summary>
     [Parameter]
     public string? StartIconClassName { get; set; }
 
+    /// <summary>
+    /// Gets or sets the start content value.
+    /// </summary>
     [Parameter]
     public RenderFragment? StartContent { get; set; }
 
+    /// <summary>
+    /// Gets or sets the end content value.
+    /// </summary>
     [Parameter]
     public RenderFragment? EndContent { get; set; }
 
+    /// <summary>
+    /// Gets or sets the icon class value.
+    /// </summary>
     [Parameter]
     public string? IconClass { get; set; }
 
+    /// <summary>
+    /// Gets or sets the link target URL.
+    /// </summary>
     [Parameter]
     public string? Href { get; set; }
 
+    /// <summary>
+    /// Gets or sets the link target browsing context.
+    /// </summary>
     [Parameter]
     public string? Target { get; set; }
 
+    /// <summary>
+    /// Gets or sets the rel value.
+    /// </summary>
     [Parameter]
     public string? Rel { get; set; }
 
+    /// <summary>
+    /// Gets or sets the dense value.
+    /// </summary>
     [Parameter]
     public bool Dense { get; set; }
 
+    /// <summary>
+    /// Gets or sets the divider value.
+    /// </summary>
     [Parameter]
     public bool Divider { get; set; }
 
+    /// <summary>
+    /// Gets or sets the active value.
+    /// </summary>
     [Parameter]
     public bool Active { get; set; }
 
+    /// <summary>
+    /// Gets or sets whether the component is disabled.
+    /// </summary>
     [Parameter]
     public bool Disabled { get; set; }
 
+    /// <summary>
+    /// Gets or sets the rendered button type.
+    /// </summary>
     [Parameter]
     public string Type { get; set; } = "button";
 
+    /// <summary>
+    /// Gets or sets the background color class.
+    /// </summary>
     [Parameter]
     public W3Color Color { get; set; } = W3Color.None;
 
+    /// <summary>
+    /// Gets or sets the text color class.
+    /// </summary>
     [Parameter]
     public W3Color TextColor { get; set; } = W3Color.None;
 
+    /// <summary>
+    /// Gets or sets the active color value.
+    /// </summary>
     [Parameter]
     public W3Color ActiveColor { get; set; } = W3Color.None;
 
+    /// <summary>
+    /// Gets or sets the active text color value.
+    /// </summary>
     [Parameter]
     public W3Color ActiveTextColor { get; set; } = W3Color.None;
 
+    /// <summary>
+    /// Gets or sets the hover color value.
+    /// </summary>
     [Parameter]
     public W3Color HoverColor { get; set; } = W3Color.LightGrey;
 
+    /// <summary>
+    /// Gets or sets the hover text color value.
+    /// </summary>
     [Parameter]
     public W3Color HoverTextColor { get; set; } = W3Color.None;
 
+    /// <summary>
+    /// Gets or sets the callback raised by the component action.
+    /// </summary>
     [Parameter]
     public EventCallback<MouseEventArgs> OnClick { get; set; }
 }

@@ -26,48 +26,93 @@
         MaxHeight is null ? null : $"--w3-chat-max-height:{MaxHeight}",
         Style);
 
+    /// <summary>
+    /// Gets or sets the content rendered inside the component.
+    /// </summary>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 
+    /// <summary>
+    /// Gets or sets the accessible label text.
+    /// </summary>
     [Parameter]
     public string Label { get; set; } = "Chat";
 
+    /// <summary>
+    /// Gets or sets the dense value.
+    /// </summary>
     [Parameter]
     public bool Dense { get; set; }
 
+    /// <summary>
+    /// Gets or sets the reverse value.
+    /// </summary>
     [Parameter]
     public bool Reverse { get; set; }
 
+    /// <summary>
+    /// Gets or sets the gap value.
+    /// </summary>
     [Parameter]
     public int Gap { get; set; } = 12;
 
+    /// <summary>
+    /// Gets or sets the max height value.
+    /// </summary>
     [Parameter]
     public string? MaxHeight { get; set; }
 
+    /// <summary>
+    /// Gets or sets the show avatars value.
+    /// </summary>
     [Parameter]
     public bool ShowAvatars { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the avatar size value.
+    /// </summary>
     [Parameter]
     public int AvatarSize { get; set; } = 36;
 
+    /// <summary>
+    /// Gets or sets the background color class.
+    /// </summary>
     [Parameter]
     public W3Color Color { get; set; } = W3Color.None;
 
+    /// <summary>
+    /// Gets or sets the text color class.
+    /// </summary>
     [Parameter]
     public W3Color TextColor { get; set; } = W3Color.None;
 
+    /// <summary>
+    /// Gets or sets the message color value.
+    /// </summary>
     [Parameter]
     public W3Color MessageColor { get; set; } = W3Color.LightGrey;
 
+    /// <summary>
+    /// Gets or sets the message text color value.
+    /// </summary>
     [Parameter]
     public W3Color MessageTextColor { get; set; } = W3Color.Black;
 
+    /// <summary>
+    /// Gets or sets the own message color value.
+    /// </summary>
     [Parameter]
     public W3Color OwnMessageColor { get; set; } = W3Color.Teal;
 
+    /// <summary>
+    /// Gets or sets the own message text color value.
+    /// </summary>
     [Parameter]
     public W3Color OwnMessageTextColor { get; set; } = W3Color.White;
 
+    /// <summary>
+    /// Gets or sets the round value.
+    /// </summary>
     [Parameter]
     public W3Round Round { get; set; } = W3Round.Large;
 

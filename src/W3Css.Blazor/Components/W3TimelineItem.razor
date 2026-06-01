@@ -105,54 +105,105 @@
         ? Owner?.EffectiveRound ?? W3Round.Medium
         : Round;
 
+    /// <summary>
+    /// Gets or sets the title value.
+    /// </summary>
     [Parameter]
     public string? Title { get; set; }
 
+    /// <summary>
+    /// Gets or sets the subtitle value.
+    /// </summary>
     [Parameter]
     public string? Subtitle { get; set; }
 
+    /// <summary>
+    /// Gets or sets the time value.
+    /// </summary>
     [Parameter]
     public string? Time { get; set; }
 
+    /// <summary>
+    /// Gets or sets the date time value.
+    /// </summary>
     [Parameter]
     public string? DateTime { get; set; }
 
+    /// <summary>
+    /// Gets or sets the marker value.
+    /// </summary>
     [Parameter]
     public string? Marker { get; set; }
 
+    /// <summary>
+    /// Gets or sets the icon class value.
+    /// </summary>
     [Parameter]
     public string? IconClass { get; set; }
 
+    /// <summary>
+    /// Gets or sets the marker content value.
+    /// </summary>
     [Parameter]
     public RenderFragment? MarkerContent { get; set; }
 
+    /// <summary>
+    /// Gets or sets the content rendered inside the component.
+    /// </summary>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 
+    /// <summary>
+    /// Gets or sets the active value.
+    /// </summary>
     [Parameter]
     public bool Active { get; set; }
 
+    /// <summary>
+    /// Gets or sets the completed value.
+    /// </summary>
     [Parameter]
     public bool Completed { get; set; }
 
+    /// <summary>
+    /// Gets or sets the border value.
+    /// </summary>
     [Parameter]
     public bool Border { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the line color value.
+    /// </summary>
     [Parameter]
     public W3Color LineColor { get; set; } = W3Color.None;
 
+    /// <summary>
+    /// Gets or sets the marker color value.
+    /// </summary>
     [Parameter]
     public W3Color MarkerColor { get; set; } = W3Color.None;
 
+    /// <summary>
+    /// Gets or sets the marker text color value.
+    /// </summary>
     [Parameter]
     public W3Color MarkerTextColor { get; set; } = W3Color.None;
 
+    /// <summary>
+    /// Gets or sets the content color value.
+    /// </summary>
     [Parameter]
     public W3Color ContentColor { get; set; } = W3Color.None;
 
+    /// <summary>
+    /// Gets or sets the content text color value.
+    /// </summary>
     [Parameter]
     public W3Color ContentTextColor { get; set; } = W3Color.None;
 
+    /// <summary>
+    /// Gets or sets the round value.
+    /// </summary>
     [Parameter]
     public W3Round Round { get; set; } = W3Round.None;
 }

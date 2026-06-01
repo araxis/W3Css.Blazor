@@ -2,6 +2,20 @@
 
 All notable changes to W3Css.Blazor will be documented in this file.
 
+## 0.4.0 - 2026-06-01
+
+### Quality Hardening
+
+- Expanded IntelliSense-facing XML documentation coverage across exported public APIs and component parameters.
+- Added broad XML documentation guard coverage for exported public API members.
+- Added component docs/API parity guard coverage so documented component topic pages stay aligned with public parameters.
+- Added a Playwright-backed docs browser sweep for top adoption and high-risk interactive pages, covering console errors and horizontal overflow.
+
+### Documentation And Release Quality
+
+- Updated package metadata, README adoption links, versions documentation, release notes, and memory files for 0.4.0.
+- Kept the vendored W3.CSS source unchanged.
+
 ## 0.3.0 - 2026-06-01
 
 ### Adoption Polish

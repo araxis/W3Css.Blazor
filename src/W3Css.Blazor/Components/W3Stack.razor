@@ -21,33 +21,63 @@
 
     private string? StyleValue => CombineStyle(Gap >= 0 ? $"--w3-stack-gap:{Gap}px" : null, Style);
 
+    /// <summary>
+    /// Gets or sets the content rendered inside the component.
+    /// </summary>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 
+    /// <summary>
+    /// Gets or sets the horizontal value.
+    /// </summary>
     [Parameter]
     public bool Horizontal { get; set; }
 
+    /// <summary>
+    /// Gets or sets the wrap value.
+    /// </summary>
     [Parameter]
     public bool Wrap { get; set; }
 
+    /// <summary>
+    /// Gets or sets the align center value.
+    /// </summary>
     [Parameter]
     public bool AlignCenter { get; set; }
 
+    /// <summary>
+    /// Gets or sets the justify center value.
+    /// </summary>
     [Parameter]
     public bool JustifyCenter { get; set; }
 
+    /// <summary>
+    /// Gets or sets the justify end value.
+    /// </summary>
     [Parameter]
     public bool JustifyEnd { get; set; }
 
+    /// <summary>
+    /// Gets or sets the justify between value.
+    /// </summary>
     [Parameter]
     public bool JustifyBetween { get; set; }
 
+    /// <summary>
+    /// Gets or sets the gap value.
+    /// </summary>
     [Parameter]
     public int Gap { get; set; } = 16;
 
+    /// <summary>
+    /// Gets or sets the background color class.
+    /// </summary>
     [Parameter]
     public W3Color Color { get; set; } = W3Color.None;
 
+    /// <summary>
+    /// Gets or sets the text color class.
+    /// </summary>
     [Parameter]
     public W3Color TextColor { get; set; } = W3Color.None;
 

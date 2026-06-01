@@ -22,24 +22,45 @@
 
     private string CssClass => BuildClass("w3-focus-trap");
 
+    /// <summary>
+    /// Gets or sets the content rendered inside the component.
+    /// </summary>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 
+    /// <summary>
+    /// Gets or sets the active value.
+    /// </summary>
     [Parameter]
     public bool Active { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the auto focus value.
+    /// </summary>
     [Parameter]
     public bool AutoFocus { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the restore focus value.
+    /// </summary>
     [Parameter]
     public bool RestoreFocus { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the initial focus selector value.
+    /// </summary>
     [Parameter]
     public string? InitialFocusSelector { get; set; }
 
+    /// <summary>
+    /// Gets or sets the AriaLabel attribute value.
+    /// </summary>
     [Parameter]
     public string? AriaLabel { get; set; }
 
+    /// <summary>
+    /// Gets or sets the tab index value.
+    /// </summary>
     [Parameter]
     public int? TabIndex { get; set; } = -1;
 

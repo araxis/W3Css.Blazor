@@ -15,18 +15,33 @@
 @code {
     private string TextAreaCssClass => BuildControlClass("w3-input");
 
+    /// <summary>
+    /// Gets or sets the rendered element id.
+    /// </summary>
     [Parameter]
     public string? Id { get; set; }
 
+    /// <summary>
+    /// Gets or sets the placeholder value.
+    /// </summary>
     [Parameter]
     public string? Placeholder { get; set; }
 
+    /// <summary>
+    /// Gets or sets the rows value.
+    /// </summary>
     [Parameter]
     public int? Rows { get; set; }
 
+    /// <summary>
+    /// Gets or sets whether the input is read-only.
+    /// </summary>
     [Parameter]
     public bool ReadOnly { get; set; }
 
+    /// <summary>
+    /// Gets or sets the update on input value.
+    /// </summary>
     [Parameter]
     public bool UpdateOnInput { get; set; }
 

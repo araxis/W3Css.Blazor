@@ -25,18 +25,33 @@ else
         Size.ToClass(),
         TextColor.ToTextClass());
 
+    /// <summary>
+    /// Gets or sets the icon class value.
+    /// </summary>
     [Parameter]
     public string? IconClass { get; set; }
 
+    /// <summary>
+    /// Gets or sets the accessible label text.
+    /// </summary>
     [Parameter]
     public string? Label { get; set; }
 
+    /// <summary>
+    /// Gets or sets the content rendered inside the component.
+    /// </summary>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 
+    /// <summary>
+    /// Gets or sets the size value.
+    /// </summary>
     [Parameter]
     public W3Size Size { get; set; } = W3Size.Default;
 
+    /// <summary>
+    /// Gets or sets the text color class.
+    /// </summary>
     [Parameter]
     public W3Color TextColor { get; set; } = W3Color.None;
 }

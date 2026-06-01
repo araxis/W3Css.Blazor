@@ -88,6 +88,7 @@
                 <tr><td>FixedPosition</td><td>bool</td><td>false</td><td>Positions the panel against the viewport so row menus can escape table or overflow wrappers</td></tr>
                 <tr><td>TriggerBorder / TriggerRound</td><td>bool / W3Round</td><td>false / Medium</td><td>Trigger border and round classes</td></tr>
                 <tr><td>TriggerColor / TriggerTextColor</td><td>W3Color</td><td>None / None</td><td>Trigger color classes</td></tr>
+                <tr><td>TriggerClass</td><td>string?</td><td>null</td><td>Additional classes on the trigger button</td></tr>
                 <tr><td>Placement</td><td>W3MenuPlacement</td><td>BottomStart</td><td>Panel placement class</td></tr>
                 <tr><td>Card / CardDepth / Round</td><td>bool / W3CardDepth / W3Round</td><td>true / Four / Medium</td><td>Panel card and round classes</td></tr>
                 <tr><td>Animate</td><td>bool</td><td>false</td><td>`w3-animate-opacity` on the panel</td></tr>
@@ -113,10 +114,13 @@
                 <tr><td>W3MenuItem</td><td>Shortcut / EndContent</td><td>string? / RenderFragment?</td><td>Right-aligned shortcut or custom suffix</td></tr>
                 <tr><td>W3MenuItem</td><td>Href / Target</td><td>string?</td><td>Renders an anchor item when `Href` is set</td></tr>
                 <tr><td>W3MenuItem</td><td>IconClass</td><td>string?</td><td>Left icon class</td></tr>
+                <tr><td>W3MenuItem</td><td>OnClick</td><td>EventCallback&lt;MouseEventArgs&gt;</td><td>Callback raised when the item is selected</td></tr>
                 <tr><td>W3MenuItem</td><td>Dense</td><td>bool</td><td>Compact row sizing</td></tr>
                 <tr><td>W3MenuItem</td><td>Destructive</td><td>bool</td><td>Danger styling for destructive commands</td></tr>
                 <tr><td>W3MenuItem</td><td>Disabled</td><td>bool</td><td>Non-interactive item with `aria-disabled`</td></tr>
                 <tr><td>W3MenuItem</td><td>CloseOnClick</td><td>bool</td><td>Opt out of owner close-on-select behavior</td></tr>
+                <tr><td>W3MenuItem</td><td>Color / TextColor</td><td>W3Color</td><td>Item background and text color classes</td></tr>
+                <tr><td>W3MenuItem</td><td>HoverColor / HoverTextColor</td><td>W3Color</td><td>Item hover color classes</td></tr>
                 <tr><td>W3MenuDivider</td><td>Class / Style</td><td>string?</td><td>Separator customization</td></tr>
             </tbody>
         </W3Table>

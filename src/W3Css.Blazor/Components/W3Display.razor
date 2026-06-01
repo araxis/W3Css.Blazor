@@ -15,21 +15,39 @@
         Color.ToBackgroundClass(),
         TextColor.ToTextClass());
 
+    /// <summary>
+    /// Gets or sets the content rendered inside the component.
+    /// </summary>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 
+    /// <summary>
+    /// Gets or sets the position value.
+    /// </summary>
     [Parameter]
     public W3DisplayPosition Position { get; set; } = W3DisplayPosition.None;
 
+    /// <summary>
+    /// Gets or sets the show on hover value.
+    /// </summary>
     [Parameter]
     public bool ShowOnHover { get; set; }
 
+    /// <summary>
+    /// Gets or sets the visibility value.
+    /// </summary>
     [Parameter]
     public W3Visibility Visibility { get; set; } = W3Visibility.Default;
 
+    /// <summary>
+    /// Gets or sets the background color class.
+    /// </summary>
     [Parameter]
     public W3Color Color { get; set; } = W3Color.None;
 
+    /// <summary>
+    /// Gets or sets the text color class.
+    /// </summary>
     [Parameter]
     public W3Color TextColor { get; set; } = W3Color.None;
 }

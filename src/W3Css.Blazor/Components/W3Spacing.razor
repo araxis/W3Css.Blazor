@@ -17,27 +17,51 @@
         TextColor.ToTextClass(),
         Round.ToClass());
 
+    /// <summary>
+    /// Gets or sets the content rendered inside the component.
+    /// </summary>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 
+    /// <summary>
+    /// Gets or sets the section value.
+    /// </summary>
     [Parameter]
     public bool Section { get; set; }
 
+    /// <summary>
+    /// Gets or sets the margin value.
+    /// </summary>
     [Parameter]
     public W3Margin Margin { get; set; } = W3Margin.None;
 
+    /// <summary>
+    /// Gets or sets the padding value.
+    /// </summary>
     [Parameter]
     public W3Padding Padding { get; set; } = W3Padding.None;
 
+    /// <summary>
+    /// Gets or sets the top padding value.
+    /// </summary>
     [Parameter]
     public W3TopPadding TopPadding { get; set; } = W3TopPadding.None;
 
+    /// <summary>
+    /// Gets or sets the background color class.
+    /// </summary>
     [Parameter]
     public W3Color Color { get; set; } = W3Color.None;
 
+    /// <summary>
+    /// Gets or sets the text color class.
+    /// </summary>
     [Parameter]
     public W3Color TextColor { get; set; } = W3Color.None;
 
+    /// <summary>
+    /// Gets or sets the round value.
+    /// </summary>
     [Parameter]
     public W3Round Round { get; set; } = W3Round.None;
 }

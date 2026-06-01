@@ -286,9 +286,15 @@
     [Parameter]
     public IEnumerable<TItem>? Items { get; set; }
 
+    /// <summary>
+    /// Gets or sets the content rendered inside the component.
+    /// </summary>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 
+    /// <summary>
+    /// Gets or sets the toolbar value.
+    /// </summary>
     [Parameter]
     public RenderFragment? Toolbar { get; set; }
 
@@ -298,21 +304,39 @@
     [Parameter]
     public RenderFragment<TItem>? RowActions { get; set; }
 
+    /// <summary>
+    /// Gets or sets the empty content value.
+    /// </summary>
     [Parameter]
     public RenderFragment? EmptyContent { get; set; }
 
+    /// <summary>
+    /// Gets or sets the loading content value.
+    /// </summary>
     [Parameter]
     public RenderFragment? LoadingContent { get; set; }
 
+    /// <summary>
+    /// Gets or sets the error content value.
+    /// </summary>
     [Parameter]
     public RenderFragment? ErrorContent { get; set; }
 
+    /// <summary>
+    /// Gets or sets the rendered element id.
+    /// </summary>
     [Parameter]
     public string? Id { get; set; }
 
+    /// <summary>
+    /// Gets or sets the AriaLabel attribute value.
+    /// </summary>
     [Parameter]
     public string AriaLabel { get; set; } = "Data table";
 
+    /// <summary>
+    /// Gets or sets the loading value.
+    /// </summary>
     [Parameter]
     public bool Loading { get; set; }
 
@@ -322,21 +346,39 @@
     [Parameter]
     public bool Error { get; set; }
 
+    /// <summary>
+    /// Gets or sets the loading text value.
+    /// </summary>
     [Parameter]
     public string LoadingText { get; set; } = "Loading data...";
 
+    /// <summary>
+    /// Gets or sets the empty text value.
+    /// </summary>
     [Parameter]
     public string EmptyText { get; set; } = "No records found.";
 
+    /// <summary>
+    /// Gets or sets the empty description value.
+    /// </summary>
     [Parameter]
     public string? EmptyDescription { get; set; }
 
+    /// <summary>
+    /// Gets or sets the error text value.
+    /// </summary>
     [Parameter]
     public string ErrorText { get; set; } = "Could not load data.";
 
+    /// <summary>
+    /// Gets or sets the error description value.
+    /// </summary>
     [Parameter]
     public string? ErrorDescription { get; set; }
 
+    /// <summary>
+    /// Gets or sets the show empty icon value.
+    /// </summary>
     [Parameter]
     public bool ShowEmptyIcon { get; set; } = true;
 
@@ -346,60 +388,117 @@
     [Parameter]
     public bool Searchable { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the search text value.
+    /// </summary>
     [Parameter]
     public string? SearchText { get; set; }
 
+    /// <summary>
+    /// Gets or sets the callback raised when the search text value changes.
+    /// </summary>
     [Parameter]
     public EventCallback<string?> SearchTextChanged { get; set; }
 
+    /// <summary>
+    /// Gets or sets the accessible label text.
+    /// </summary>
     [Parameter]
     public string SearchLabel { get; set; } = "Search";
 
+    /// <summary>
+    /// Gets or sets the search placeholder value.
+    /// </summary>
     [Parameter]
     public string SearchPlaceholder { get; set; } = "Search table";
 
+    /// <summary>
+    /// Gets or sets the search input class value.
+    /// </summary>
     [Parameter]
     public string? SearchInputClass { get; set; }
 
+    /// <summary>
+    /// Gets or sets the filter value.
+    /// </summary>
     [Parameter]
     public Func<TItem, string?, bool>? Filter { get; set; }
 
+    /// <summary>
+    /// Gets or sets the pageable value.
+    /// </summary>
     [Parameter]
     public bool Pageable { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the page size value.
+    /// </summary>
     [Parameter]
     public int PageSize { get; set; } = 10;
 
+    /// <summary>
+    /// Gets or sets the current page value.
+    /// </summary>
     [Parameter]
     public int CurrentPage { get; set; } = 1;
 
+    /// <summary>
+    /// Gets or sets the callback raised when the current page value changes.
+    /// </summary>
     [Parameter]
     public EventCallback<int> CurrentPageChanged { get; set; }
 
+    /// <summary>
+    /// Gets or sets the show count value.
+    /// </summary>
     [Parameter]
     public bool ShowCount { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the row actions header value.
+    /// </summary>
     [Parameter]
     public string RowActionsHeader { get; set; } = "Actions";
 
+    /// <summary>
+    /// Gets or sets the row actions header class value.
+    /// </summary>
     [Parameter]
     public string? RowActionsHeaderClass { get; set; }
 
+    /// <summary>
+    /// Gets or sets the row actions cell class value.
+    /// </summary>
     [Parameter]
     public string? RowActionsCellClass { get; set; }
 
+    /// <summary>
+    /// Gets or sets the row actions class value.
+    /// </summary>
     [Parameter]
     public string? RowActionsClass { get; set; }
 
+    /// <summary>
+    /// Gets or sets the row actions gap value.
+    /// </summary>
     [Parameter]
     public int RowActionsGap { get; set; } = 8;
 
+    /// <summary>
+    /// Gets or sets the selectable value.
+    /// </summary>
     [Parameter]
     public bool Selectable { get; set; }
 
+    /// <summary>
+    /// Gets or sets the selected item value.
+    /// </summary>
     [Parameter]
     public TItem? SelectedItem { get; set; }
 
+    /// <summary>
+    /// Gets or sets the callback raised when the selected item value changes.
+    /// </summary>
     [Parameter]
     public EventCallback<TItem?> SelectedItemChanged { get; set; }
 
@@ -409,72 +508,141 @@
     [Parameter]
     public IEnumerable<TItem>? SelectedItems { get; set; }
 
+    /// <summary>
+    /// Gets or sets the row clicked value.
+    /// </summary>
     [Parameter]
     public EventCallback<TItem> RowClicked { get; set; }
 
+    /// <summary>
+    /// Gets or sets the selected color value.
+    /// </summary>
     [Parameter]
     public W3Color SelectedColor { get; set; } = W3Color.PaleBlue;
 
+    /// <summary>
+    /// Gets or sets the background color class.
+    /// </summary>
     [Parameter]
     public W3Color Color { get; set; } = W3Color.Surface;
 
+    /// <summary>
+    /// Gets or sets the text color class.
+    /// </summary>
     [Parameter]
     public W3Color TextColor { get; set; } = W3Color.None;
 
+    /// <summary>
+    /// Gets or sets the header color value.
+    /// </summary>
     [Parameter]
     public W3Color HeaderColor { get; set; } = W3Color.LightGrey;
 
+    /// <summary>
+    /// Gets or sets the header text color value.
+    /// </summary>
     [Parameter]
     public W3Color HeaderTextColor { get; set; } = W3Color.Black;
 
+    /// <summary>
+    /// Gets or sets the toolbar color value.
+    /// </summary>
     [Parameter]
     public W3Color ToolbarColor { get; set; } = W3Color.LightGrey;
 
+    /// <summary>
+    /// Gets or sets the toolbar text color value.
+    /// </summary>
     [Parameter]
     public W3Color ToolbarTextColor { get; set; } = W3Color.Black;
 
+    /// <summary>
+    /// Gets or sets the loading color value.
+    /// </summary>
     [Parameter]
     public W3Color LoadingColor { get; set; } = W3Color.PaleBlue;
 
+    /// <summary>
+    /// Gets or sets the loading text color value.
+    /// </summary>
     [Parameter]
     public W3Color LoadingTextColor { get; set; } = W3Color.Black;
 
+    /// <summary>
+    /// Gets or sets the error color value.
+    /// </summary>
     [Parameter]
     public W3Color ErrorColor { get; set; } = W3Color.PaleRed;
 
+    /// <summary>
+    /// Gets or sets the error text color value.
+    /// </summary>
     [Parameter]
     public W3Color ErrorTextColor { get; set; } = W3Color.Black;
 
+    /// <summary>
+    /// Gets or sets the active page color value.
+    /// </summary>
     [Parameter]
     public W3Color ActivePageColor { get; set; } = W3Color.Primary;
 
+    /// <summary>
+    /// Gets or sets the active page text color value.
+    /// </summary>
     [Parameter]
     public W3Color ActivePageTextColor { get; set; } = W3Color.White;
 
+    /// <summary>
+    /// Gets or sets the striped value.
+    /// </summary>
     [Parameter]
     public bool Striped { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the bordered value.
+    /// </summary>
     [Parameter]
     public bool Bordered { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the border value.
+    /// </summary>
     [Parameter]
     public bool Border { get; set; }
 
+    /// <summary>
+    /// Gets or sets the hoverable value.
+    /// </summary>
     [Parameter]
     public bool Hoverable { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the centered value.
+    /// </summary>
     [Parameter]
     public bool Centered { get; set; }
 
+    /// <summary>
+    /// Gets or sets the responsive value.
+    /// </summary>
     [Parameter]
     public bool Responsive { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the accessible label text.
+    /// </summary>
     [Parameter]
     public string PaginationAriaLabel { get; set; } = "Data table pagination";
 
+    /// <summary>
+    /// Gets or sets the previous text value.
+    /// </summary>
     [Parameter]
     public string PreviousText { get; set; } = "Previous";
 
+    /// <summary>
+    /// Gets or sets the next text value.
+    /// </summary>
     [Parameter]
     public string NextText { get; set; } = "Next";
 

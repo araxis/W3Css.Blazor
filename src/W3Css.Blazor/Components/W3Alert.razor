@@ -33,36 +33,69 @@
         Kind.ToClass(),
         Round.ToClass());
 
+    /// <summary>
+    /// Gets or sets the content rendered inside the component.
+    /// </summary>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 
+    /// <summary>
+    /// Gets or sets the title value.
+    /// </summary>
     [Parameter]
     public string? Title { get; set; }
 
+    /// <summary>
+    /// Gets or sets the kind value.
+    /// </summary>
     [Parameter]
     public W3AlertKind Kind { get; set; } = W3AlertKind.Info;
 
+    /// <summary>
+    /// Gets or sets the round value.
+    /// </summary>
     [Parameter]
     public W3Round Round { get; set; } = W3Round.None;
 
+    /// <summary>
+    /// Gets or sets the role value.
+    /// </summary>
     [Parameter]
     public string Role { get; set; } = "status";
 
+    /// <summary>
+    /// Gets or sets the AriaLive attribute value.
+    /// </summary>
     [Parameter]
     public string? AriaLive { get; set; }
 
+    /// <summary>
+    /// Gets or sets the visible value.
+    /// </summary>
     [Parameter]
     public bool Visible { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the callback raised when the visible value changes.
+    /// </summary>
     [Parameter]
     public EventCallback<bool> VisibleChanged { get; set; }
 
+    /// <summary>
+    /// Gets or sets the show close button value.
+    /// </summary>
     [Parameter]
     public bool ShowCloseButton { get; set; }
 
+    /// <summary>
+    /// Gets or sets the accessible label text.
+    /// </summary>
     [Parameter]
     public string CloseButtonLabel { get; set; } = "Dismiss alert";
 
+    /// <summary>
+    /// Gets or sets the callback raised by the component action.
+    /// </summary>
     [Parameter]
     public EventCallback OnDismiss { get; set; }
 

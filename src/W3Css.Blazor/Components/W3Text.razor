@@ -25,27 +25,51 @@ else
         Color.ToBackgroundClass(),
         TextColor.ToTextClass());
 
+    /// <summary>
+    /// Gets or sets the content rendered inside the component.
+    /// </summary>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 
+    /// <summary>
+    /// Gets or sets the inline value.
+    /// </summary>
     [Parameter]
     public bool Inline { get; set; }
 
+    /// <summary>
+    /// Gets or sets the alignment value.
+    /// </summary>
     [Parameter]
     public W3TextAlignment Alignment { get; set; } = W3TextAlignment.None;
 
+    /// <summary>
+    /// Gets or sets the text style value.
+    /// </summary>
     [Parameter]
     public W3TextStyle TextStyle { get; set; } = W3TextStyle.None;
 
+    /// <summary>
+    /// Gets or sets the font value.
+    /// </summary>
     [Parameter]
     public W3FontFamily Font { get; set; } = W3FontFamily.None;
 
+    /// <summary>
+    /// Gets or sets the size value.
+    /// </summary>
     [Parameter]
     public W3Size Size { get; set; } = W3Size.Default;
 
+    /// <summary>
+    /// Gets or sets the background color class.
+    /// </summary>
     [Parameter]
     public W3Color Color { get; set; } = W3Color.None;
 
+    /// <summary>
+    /// Gets or sets the text color class.
+    /// </summary>
     [Parameter]
     public W3Color TextColor { get; set; } = W3Color.None;
 }

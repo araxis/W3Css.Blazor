@@ -35,27 +35,51 @@
         !string.IsNullOrWhiteSpace(Height) ? $"--w3-skeleton-height:{Height}" : null,
         Style);
 
+    /// <summary>
+    /// Gets or sets the lines value.
+    /// </summary>
     [Parameter]
     public int Lines { get; set; } = 1;
 
+    /// <summary>
+    /// Gets or sets the width value.
+    /// </summary>
     [Parameter]
     public string? Width { get; set; }
 
+    /// <summary>
+    /// Gets or sets the height value.
+    /// </summary>
     [Parameter]
     public string? Height { get; set; }
 
+    /// <summary>
+    /// Gets or sets the accessible label text.
+    /// </summary>
     [Parameter]
     public string Label { get; set; } = "Loading";
 
+    /// <summary>
+    /// Gets or sets the circle value.
+    /// </summary>
     [Parameter]
     public bool Circle { get; set; }
 
+    /// <summary>
+    /// Gets or sets the animate value.
+    /// </summary>
     [Parameter]
     public bool Animate { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the round value.
+    /// </summary>
     [Parameter]
     public W3Round Round { get; set; } = W3Round.Medium;
 
+    /// <summary>
+    /// Gets or sets the background color class.
+    /// </summary>
     [Parameter]
     public W3Color Color { get; set; } = W3Color.LightGrey;
 

@@ -87,30 +87,57 @@
         .Add(FooterTextColor.ToTextClass())
         .ToString();
 
+    /// <summary>
+    /// Gets or sets the rendered element id.
+    /// </summary>
     [Parameter]
     public string? Id { get; set; }
 
+    /// <summary>
+    /// Gets or sets the open value.
+    /// </summary>
     [Parameter]
     public bool Open { get; set; }
 
+    /// <summary>
+    /// Gets or sets the callback raised when the open value changes.
+    /// </summary>
     [Parameter]
     public EventCallback<bool> OpenChanged { get; set; }
 
+    /// <summary>
+    /// Gets or sets the title value.
+    /// </summary>
     [Parameter]
     public string? Title { get; set; }
 
+    /// <summary>
+    /// Gets or sets the AriaLabel attribute value.
+    /// </summary>
     [Parameter]
     public string? AriaLabel { get; set; }
 
+    /// <summary>
+    /// Gets or sets the AriaLabelledBy attribute value.
+    /// </summary>
     [Parameter]
     public string? AriaLabelledBy { get; set; }
 
+    /// <summary>
+    /// Gets or sets the header value.
+    /// </summary>
     [Parameter]
     public RenderFragment? Header { get; set; }
 
+    /// <summary>
+    /// Gets or sets the content rendered inside the component.
+    /// </summary>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 
+    /// <summary>
+    /// Gets or sets the footer value.
+    /// </summary>
     [Parameter]
     public RenderFragment? Footer { get; set; }
 
@@ -120,45 +147,87 @@
     [Parameter]
     public RenderFragment? Actions { get; set; }
 
+    /// <summary>
+    /// Gets or sets the show close button value.
+    /// </summary>
     [Parameter]
     public bool ShowCloseButton { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the accessible label text.
+    /// </summary>
     [Parameter]
     public string CloseButtonLabel { get; set; } = "Close";
 
+    /// <summary>
+    /// Gets or sets the close on backdrop value.
+    /// </summary>
     [Parameter]
     public bool CloseOnBackdrop { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the close on escape value.
+    /// </summary>
     [Parameter]
     public bool CloseOnEscape { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the card value.
+    /// </summary>
     [Parameter]
     public bool Card { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the animate value.
+    /// </summary>
     [Parameter]
     public bool Animate { get; set; }
 
+    /// <summary>
+    /// Gets or sets the content class value.
+    /// </summary>
     [Parameter]
     public string? ContentClass { get; set; }
 
+    /// <summary>
+    /// Gets or sets the content style value.
+    /// </summary>
     [Parameter]
     public string? ContentStyle { get; set; }
 
+    /// <summary>
+    /// Gets or sets the content color value.
+    /// </summary>
     [Parameter]
     public W3Color ContentColor { get; set; } = W3Color.Surface;
 
+    /// <summary>
+    /// Gets or sets the content text color value.
+    /// </summary>
     [Parameter]
     public W3Color ContentTextColor { get; set; } = W3Color.None;
 
+    /// <summary>
+    /// Gets or sets the header color value.
+    /// </summary>
     [Parameter]
     public W3Color HeaderColor { get; set; } = W3Color.Teal;
 
+    /// <summary>
+    /// Gets or sets the header text color value.
+    /// </summary>
     [Parameter]
     public W3Color HeaderTextColor { get; set; } = W3Color.White;
 
+    /// <summary>
+    /// Gets or sets the footer color value.
+    /// </summary>
     [Parameter]
     public W3Color FooterColor { get; set; } = W3Color.LightGrey;
 
+    /// <summary>
+    /// Gets or sets the footer text color value.
+    /// </summary>
     [Parameter]
     public W3Color FooterTextColor { get; set; } = W3Color.Black;
 

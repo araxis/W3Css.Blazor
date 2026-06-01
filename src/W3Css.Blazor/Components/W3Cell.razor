@@ -15,18 +15,33 @@
         Color.ToBackgroundClass(),
         TextColor.ToTextClass());
 
+    /// <summary>
+    /// Gets or sets the content rendered inside the component.
+    /// </summary>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 
+    /// <summary>
+    /// Gets or sets the alignment value.
+    /// </summary>
     [Parameter]
     public W3CellAlignment Alignment { get; set; } = W3CellAlignment.Default;
 
+    /// <summary>
+    /// Gets or sets the mobile value.
+    /// </summary>
     [Parameter]
     public bool Mobile { get; set; }
 
+    /// <summary>
+    /// Gets or sets the background color class.
+    /// </summary>
     [Parameter]
     public W3Color Color { get; set; } = W3Color.None;
 
+    /// <summary>
+    /// Gets or sets the text color class.
+    /// </summary>
     [Parameter]
     public W3Color TextColor { get; set; } = W3Color.None;
 }

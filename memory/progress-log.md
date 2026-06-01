@@ -4,6 +4,22 @@ Last updated: 2026-06-01
 
 ## 2026-06-01
 
+- Started the 0.4.0 quality-hardening release slice:
+  - bumped package metadata to `0.4.0`;
+  - added `docs/release-notes/0.4.0.md` and a matching changelog section;
+  - expanded XML documentation coverage across component parameters and component type summaries;
+  - replaced the selected public API XML guard with broad exported public API coverage;
+  - added a component docs/API parity guard for public parameter tables;
+  - added `tools/docs-browser-sweep.ps1` for Playwright-backed route, console-error, and horizontal-overflow checks;
+  - updated README, Versions docs, and memory files for the release candidate.
+- Verification for the 0.4.0 quality-hardening slice:
+  - `dotnet build W3Css.Blazor.slnx --configuration Release /nr:false` (0 warnings, 0 errors);
+  - `dotnet test W3Css.Blazor.slnx --configuration Release --no-build /nr:false` (477 passing);
+  - `dotnet pack src/W3Css.Blazor/W3Css.Blazor.csproj --configuration Release --no-build --output artifacts/packages /nr:false`;
+  - `pwsh ./tools/package-consumer-smoke.ps1 -PackageVersion 0.4.0 -PackageSource artifacts/packages`;
+  - `pwsh ./tools/docs-browser-sweep.ps1 -BaseUrl http://localhost:5017 -StartServer` (23 routes across desktop and mobile, no console errors or horizontal overflow).
+- Fixed app-bar action edge spacing so bordered trailing actions in contained app shells do not sit flush against the clipping boundary; browser-measured the Patterns dashboard with an 8 px right gap and no horizontal overflow.
+
 - Started the 0.3.0 adoption-polish release slice:
   - bumped package metadata to `0.3.0`;
   - added `docs/release-notes/0.3.0.md` and a matching changelog section;

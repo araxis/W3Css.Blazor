@@ -33,21 +33,39 @@
         "w3-toast-provider",
         Position.ToClass());
 
+    /// <summary>
+    /// Gets or sets the position value.
+    /// </summary>
     [Parameter]
     public W3ToastPosition Position { get; set; } = W3ToastPosition.BottomRight;
 
+    /// <summary>
+    /// Gets or sets the max visible value.
+    /// </summary>
     [Parameter]
     public int MaxVisible { get; set; } = 5;
 
+    /// <summary>
+    /// Gets or sets the default duration value.
+    /// </summary>
     [Parameter]
     public TimeSpan? DefaultDuration { get; set; } = TimeSpan.FromSeconds(5);
 
+    /// <summary>
+    /// Gets or sets the show close button value.
+    /// </summary>
     [Parameter]
     public bool ShowCloseButton { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the AriaLive attribute value.
+    /// </summary>
     [Parameter]
     public string AriaLive { get; set; } = "polite";
 
+    /// <summary>
+    /// Gets or sets the accessible label text.
+    /// </summary>
     [Parameter]
     public string Label { get; set; } = "Notifications";
 

@@ -28,30 +28,57 @@
     private string HelpCssClass => new W3Css.Blazor.Internal.W3ClassBuilder().Add("w3-field-help").Add("w3-small").Add("w3-text-grey").Add(HelpClass).ToString();
     private string ValidationCssClass => new W3Css.Blazor.Internal.W3ClassBuilder().Add("w3-field-validation").Add("w3-text-red").Add("w3-small").Add(ValidationClass).ToString();
 
+    /// <summary>
+    /// Gets or sets the accessible label text.
+    /// </summary>
     [Parameter]
     public string? Label { get; set; }
 
+    /// <summary>
+    /// Gets or sets the for id value.
+    /// </summary>
     [Parameter]
     public string? ForId { get; set; }
 
+    /// <summary>
+    /// Gets or sets the for value.
+    /// </summary>
     [Parameter]
     public Expression<Func<TValue>>? For { get; set; }
 
+    /// <summary>
+    /// Gets or sets the help text value.
+    /// </summary>
     [Parameter]
     public string? HelpText { get; set; }
 
+    /// <summary>
+    /// Gets or sets the label class value.
+    /// </summary>
     [Parameter]
     public string? LabelClass { get; set; }
 
+    /// <summary>
+    /// Gets or sets the help class value.
+    /// </summary>
     [Parameter]
     public string? HelpClass { get; set; }
 
+    /// <summary>
+    /// Gets or sets the validation class value.
+    /// </summary>
     [Parameter]
     public string? ValidationClass { get; set; }
 
+    /// <summary>
+    /// Gets or sets the compact value.
+    /// </summary>
     [Parameter]
     public bool Compact { get; set; }
 
+    /// <summary>
+    /// Gets or sets the content rendered inside the component.
+    /// </summary>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 }

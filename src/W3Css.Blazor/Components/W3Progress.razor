@@ -45,30 +45,57 @@
 
     private string BarStyle => $"width:{Percent.ToString("0.##", CultureInfo.InvariantCulture)}%";
 
+    /// <summary>
+    /// Gets or sets the value value.
+    /// </summary>
     [Parameter]
     public double Value { get; set; }
 
+    /// <summary>
+    /// Gets or sets the max value.
+    /// </summary>
     [Parameter]
     public double Max { get; set; } = 100;
 
+    /// <summary>
+    /// Gets or sets the accessible label text.
+    /// </summary>
     [Parameter]
     public bool ShowLabel { get; set; }
 
+    /// <summary>
+    /// Gets or sets the accessible label text.
+    /// </summary>
     [Parameter]
     public string? Label { get; set; }
 
+    /// <summary>
+    /// Gets or sets the background color class.
+    /// </summary>
     [Parameter]
     public W3Color Color { get; set; } = W3Color.Primary;
 
+    /// <summary>
+    /// Gets or sets the text color class.
+    /// </summary>
     [Parameter]
     public W3Color TextColor { get; set; } = W3Color.White;
 
+    /// <summary>
+    /// Gets or sets the track color value.
+    /// </summary>
     [Parameter]
     public W3Color TrackColor { get; set; } = W3Color.LightGrey;
 
+    /// <summary>
+    /// Gets or sets the round value.
+    /// </summary>
     [Parameter]
     public W3Round Round { get; set; } = W3Round.None;
 
+    /// <summary>
+    /// Gets or sets the content rendered inside the component.
+    /// </summary>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 }

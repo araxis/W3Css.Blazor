@@ -103,66 +103,129 @@
         ? Owner?.EffectiveRound ?? W3Round.Large
         : Round;
 
+    /// <summary>
+    /// Gets or sets the author value.
+    /// </summary>
     [Parameter]
     public string? Author { get; set; }
 
+    /// <summary>
+    /// Gets or sets the time value.
+    /// </summary>
     [Parameter]
     public string? Time { get; set; }
 
+    /// <summary>
+    /// Gets or sets the date time value.
+    /// </summary>
     [Parameter]
     public string? DateTime { get; set; }
 
+    /// <summary>
+    /// Gets or sets the text value.
+    /// </summary>
     [Parameter]
     public string? Text { get; set; }
 
+    /// <summary>
+    /// Gets or sets the status value.
+    /// </summary>
     [Parameter]
     public string? Status { get; set; }
 
+    /// <summary>
+    /// Gets or sets the avatar src value.
+    /// </summary>
     [Parameter]
     public string? AvatarSrc { get; set; }
 
+    /// <summary>
+    /// Gets or sets the avatar alt value.
+    /// </summary>
     [Parameter]
     public string AvatarAlt { get; set; } = string.Empty;
 
+    /// <summary>
+    /// Gets or sets the initials value.
+    /// </summary>
     [Parameter]
     public string? Initials { get; set; }
 
+    /// <summary>
+    /// Gets or sets the avatar size value.
+    /// </summary>
     [Parameter]
     public int AvatarSize { get; set; }
 
+    /// <summary>
+    /// Gets or sets the show avatar value.
+    /// </summary>
     [Parameter]
     public bool? ShowAvatar { get; set; }
 
+    /// <summary>
+    /// Gets or sets the own value.
+    /// </summary>
     [Parameter]
     public bool Own { get; set; }
 
+    /// <summary>
+    /// Gets or sets the compact value.
+    /// </summary>
     [Parameter]
     public bool Compact { get; set; }
 
+    /// <summary>
+    /// Gets or sets the border value.
+    /// </summary>
     [Parameter]
     public bool Border { get; set; }
 
+    /// <summary>
+    /// Gets or sets the avatar color value.
+    /// </summary>
     [Parameter]
     public W3Color AvatarColor { get; set; } = W3Color.LightGrey;
 
+    /// <summary>
+    /// Gets or sets the avatar text color value.
+    /// </summary>
     [Parameter]
     public W3Color AvatarTextColor { get; set; } = W3Color.Black;
 
+    /// <summary>
+    /// Gets or sets the background color class.
+    /// </summary>
     [Parameter]
     public W3Color Color { get; set; } = W3Color.None;
 
+    /// <summary>
+    /// Gets or sets the text color class.
+    /// </summary>
     [Parameter]
     public W3Color TextColor { get; set; } = W3Color.None;
 
+    /// <summary>
+    /// Gets or sets the own color value.
+    /// </summary>
     [Parameter]
     public W3Color OwnColor { get; set; } = W3Color.None;
 
+    /// <summary>
+    /// Gets or sets the own text color value.
+    /// </summary>
     [Parameter]
     public W3Color OwnTextColor { get; set; } = W3Color.None;
 
+    /// <summary>
+    /// Gets or sets the round value.
+    /// </summary>
     [Parameter]
     public W3Round Round { get; set; } = W3Round.None;
 
+    /// <summary>
+    /// Gets or sets the content rendered inside the component.
+    /// </summary>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 }

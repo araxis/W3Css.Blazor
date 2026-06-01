@@ -137,12 +137,21 @@
     [Parameter]
     public RenderFragment? Header { get; set; }
 
+    /// <summary>
+    /// Gets or sets the sidebar value.
+    /// </summary>
     [Parameter]
     public RenderFragment? Sidebar { get; set; }
 
+    /// <summary>
+    /// Gets or sets the content rendered inside the component.
+    /// </summary>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 
+    /// <summary>
+    /// Gets or sets the footer value.
+    /// </summary>
     [Parameter]
     public RenderFragment? Footer { get; set; }
 
@@ -152,15 +161,27 @@
     [Parameter]
     public bool SidebarOpen { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the callback raised when the sidebar open value changes.
+    /// </summary>
     [Parameter]
     public EventCallback<bool> SidebarOpenChanged { get; set; }
 
+    /// <summary>
+    /// Gets or sets the sidebar overlay value.
+    /// </summary>
     [Parameter]
     public bool SidebarOverlay { get; set; }
 
+    /// <summary>
+    /// Gets or sets the sidebar collapse value.
+    /// </summary>
     [Parameter]
     public bool SidebarCollapse { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the sidebar animate value.
+    /// </summary>
     [Parameter]
     public bool SidebarAnimate { get; set; } = true;
 
@@ -170,78 +191,153 @@
     [Parameter]
     public int SidebarWidth { get; set; } = 260;
 
+    /// <summary>
+    /// Gets or sets the sidebar position value.
+    /// </summary>
     [Parameter]
     public W3SidebarPosition SidebarPosition { get; set; } = W3SidebarPosition.Left;
 
+    /// <summary>
+    /// Gets or sets the accessible label text.
+    /// </summary>
     [Parameter]
     public string SidebarLabel { get; set; } = "Sidebar";
 
+    /// <summary>
+    /// Gets or sets the main id value.
+    /// </summary>
     [Parameter]
     public string MainId { get; set; } = "main";
 
+    /// <summary>
+    /// Gets or sets the main padded value.
+    /// </summary>
     [Parameter]
     public bool MainPadded { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the contained value.
+    /// </summary>
     [Parameter]
     public bool Contained { get; set; }
 
+    /// <summary>
+    /// Gets or sets the background color class.
+    /// </summary>
     [Parameter]
     public W3Color Color { get; set; } = W3Color.None;
 
+    /// <summary>
+    /// Gets or sets the text color class.
+    /// </summary>
     [Parameter]
     public W3Color TextColor { get; set; } = W3Color.None;
 
+    /// <summary>
+    /// Gets or sets the header color value.
+    /// </summary>
     [Parameter]
     public W3Color HeaderColor { get; set; } = W3Color.None;
 
+    /// <summary>
+    /// Gets or sets the header text color value.
+    /// </summary>
     [Parameter]
     public W3Color HeaderTextColor { get; set; } = W3Color.None;
 
+    /// <summary>
+    /// Gets or sets the sidebar color value.
+    /// </summary>
     [Parameter]
     public W3Color SidebarColor { get; set; } = W3Color.White;
 
+    /// <summary>
+    /// Gets or sets the sidebar text color value.
+    /// </summary>
     [Parameter]
     public W3Color SidebarTextColor { get; set; } = W3Color.None;
 
+    /// <summary>
+    /// Gets or sets the footer color value.
+    /// </summary>
     [Parameter]
     public W3Color FooterColor { get; set; } = W3Color.None;
 
+    /// <summary>
+    /// Gets or sets the footer text color value.
+    /// </summary>
     [Parameter]
     public W3Color FooterTextColor { get; set; } = W3Color.None;
 
+    /// <summary>
+    /// Gets or sets the header class value.
+    /// </summary>
     [Parameter]
     public string? HeaderClass { get; set; }
 
+    /// <summary>
+    /// Gets or sets the body class value.
+    /// </summary>
     [Parameter]
     public string? BodyClass { get; set; }
 
+    /// <summary>
+    /// Gets or sets the sidebar class value.
+    /// </summary>
     [Parameter]
     public string? SidebarClass { get; set; }
 
+    /// <summary>
+    /// Gets or sets the overlay class value.
+    /// </summary>
     [Parameter]
     public string? OverlayClass { get; set; }
 
+    /// <summary>
+    /// Gets or sets the main class value.
+    /// </summary>
     [Parameter]
     public string? MainClass { get; set; }
 
+    /// <summary>
+    /// Gets or sets the footer class value.
+    /// </summary>
     [Parameter]
     public string? FooterClass { get; set; }
 
+    /// <summary>
+    /// Gets or sets the header style value.
+    /// </summary>
     [Parameter]
     public string? HeaderStyle { get; set; }
 
+    /// <summary>
+    /// Gets or sets the body style value.
+    /// </summary>
     [Parameter]
     public string? BodyStyle { get; set; }
 
+    /// <summary>
+    /// Gets or sets the sidebar style value.
+    /// </summary>
     [Parameter]
     public string? SidebarStyle { get; set; }
 
+    /// <summary>
+    /// Gets or sets the overlay style value.
+    /// </summary>
     [Parameter]
     public string? OverlayStyle { get; set; }
 
+    /// <summary>
+    /// Gets or sets the main style value.
+    /// </summary>
     [Parameter]
     public string? MainStyle { get; set; }
 
+    /// <summary>
+    /// Gets or sets the footer style value.
+    /// </summary>
     [Parameter]
     public string? FooterStyle { get; set; }
 

@@ -19,36 +19,69 @@
         Circle ? "w3-circle" : null,
         Border ? "w3-border" : null);
 
+    /// <summary>
+    /// Gets or sets the src value.
+    /// </summary>
     [Parameter, EditorRequired]
     public string Src { get; set; } = string.Empty;
 
+    /// <summary>
+    /// Gets or sets the alt value.
+    /// </summary>
     [Parameter]
     public string Alt { get; set; } = string.Empty;
 
+    /// <summary>
+    /// Gets or sets the width value.
+    /// </summary>
     [Parameter]
     public int? Width { get; set; }
 
+    /// <summary>
+    /// Gets or sets the height value.
+    /// </summary>
     [Parameter]
     public int? Height { get; set; }
 
+    /// <summary>
+    /// Gets or sets the loading value.
+    /// </summary>
     [Parameter]
     public string? Loading { get; set; } = "lazy";
 
+    /// <summary>
+    /// Gets or sets the responsive value.
+    /// </summary>
     [Parameter]
     public bool Responsive { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the hover opacity value.
+    /// </summary>
     [Parameter]
     public bool HoverOpacity { get; set; }
 
+    /// <summary>
+    /// Gets or sets the border value.
+    /// </summary>
     [Parameter]
     public bool Border { get; set; }
 
+    /// <summary>
+    /// Gets or sets the circle value.
+    /// </summary>
     [Parameter]
     public bool Circle { get; set; }
 
+    /// <summary>
+    /// Gets or sets the round value.
+    /// </summary>
     [Parameter]
     public W3Round Round { get; set; } = W3Round.None;
 
+    /// <summary>
+    /// Gets or sets the effect value.
+    /// </summary>
     [Parameter]
     public W3ImageEffect Effect { get; set; } = W3ImageEffect.None;
 }

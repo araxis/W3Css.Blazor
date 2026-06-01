@@ -32,24 +32,45 @@ else
 
     private string Orientation => Vertical ? "vertical" : "horizontal";
 
+    /// <summary>
+    /// Gets or sets the content rendered inside the component.
+    /// </summary>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 
+    /// <summary>
+    /// Gets or sets the vertical value.
+    /// </summary>
     [Parameter]
     public bool Vertical { get; set; }
 
+    /// <summary>
+    /// Gets or sets the strong value.
+    /// </summary>
     [Parameter]
     public bool Strong { get; set; }
 
+    /// <summary>
+    /// Gets or sets the margin value.
+    /// </summary>
     [Parameter]
     public W3Margin Margin { get; set; } = W3Margin.Top | W3Margin.Bottom;
 
+    /// <summary>
+    /// Gets or sets the background color class.
+    /// </summary>
     [Parameter]
     public W3Color Color { get; set; } = W3Color.None;
 
+    /// <summary>
+    /// Gets or sets the text color class.
+    /// </summary>
     [Parameter]
     public W3Color TextColor { get; set; } = W3Color.None;
 
+    /// <summary>
+    /// Gets or sets the border color value.
+    /// </summary>
     [Parameter]
     public W3Color BorderColor { get; set; } = W3Color.LightGrey;
 }

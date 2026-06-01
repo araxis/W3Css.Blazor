@@ -8,6 +8,7 @@ Last updated: 2026-05-31
 - Target framework: `net10.0`.
 - SDK pin: `10.0.300`.
 - Repository branch convention:
+  - `work/<short-topic>`
   - `feature/<short-topic>`
   - `fix/<short-topic>`
   - `docs/<short-topic>`
@@ -28,7 +29,7 @@ Last updated: 2026-05-31
   2) add a new component only when the capability is genuinely missing.
 - Removed/removed-by-design aliases include: `W3TextField`, `W3NumericField`, `W3DatePicker`, `W3TimePicker`, `W3ProgressLinear`, `W3Snackbar`, `W3Carousel`, `W3CarouselItem`, `W3ExpansionPanel`, `W3ExpansionPanels`, `W3SimpleTable`, `W3DataGrid`, `W3ColorPicker`, `W3DynamicTabs`, and `W3Dialog` wrappers.
 - A duplicate hidden component is intentionally not added; responsive show/hide is covered by `W3Display`/`W3Responsive`.
-- `W3SwipeArea` is deferred (`Later`) as the only niche parity candidate not implemented yet (pointer/JS gesture focused).
+- `W3SwipeArea` is implemented as the pointer gesture component; it uses Blazor pointer events rather than a script module.
 
 ## Theming And Customization
 

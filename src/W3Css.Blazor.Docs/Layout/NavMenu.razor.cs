@@ -200,6 +200,7 @@ public partial class NavMenu : IAsyncDisposable
             new("components/progress-circular", "Progress Circular", Keywords: "spinner loading"),
             new("components/stepper", "Stepper", Keywords: "wizard steps"),
             new("components/scroll-to-top", "Scroll To Top", Keywords: "back to top"),
+            new("components/swipe-area", "Swipe Area", Keywords: "gesture pointer touch mobile"),
             new("components/spinner", "Spinner", Keywords: "loading"),
             new("components/toast", "Toast", Keywords: "snackbar notification message"),
         ]),

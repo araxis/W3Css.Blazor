@@ -1,0 +1,133 @@
+@page "/components/swipe-area"
+
+<PageTitle>W3SwipeArea</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>W3SwipeArea</h1>
+    <DocPager PreviousHref="components/scroll-to-top" PreviousText="Scroll To Top" NextHref="components/spinner" NextText="Spinner" />
+
+    <p class="w3-large"><code>W3SwipeArea</code> turns any W3.CSS surface into a pointer gesture region for mobile cards, galleries, drawers, and app command panes.</p>
+    <p>The component uses native pointer events and Blazor callbacks. No extra script file is required, and the vendored W3.CSS file stays untouched.</p>
+
+    <DocExample Title="Card Swipe Actions" Description="Swipe left or right across the card to update the state text." Code="@CardCode">
+        <W3SwipeArea AriaLabel="Invoice gesture card"
+                     Border="true"
+                     Round="W3Round.Large"
+                     Color="W3Color.White"
+                     TouchAction="pan-y"
+                     Class="w3-padding"
+                     OnSwipeLeft="@(_ => SetCardAction("Archived"))"
+                     OnSwipeRight="@(_ => SetCardAction("Kept"))">
+            <div class="w3-row">
+                <div class="w3-col s8">
+                    <strong>Invoice review</strong>
+                    <p class="doc-muted w3-margin-bottom">Swipe left to archive, right to keep.</p>
+                </div>
+                <div class="w3-col s4 w3-right-align">
+                    <W3Tag Color="W3Color.PaleBlue" TextColor="W3Color.Black">@CardAction</W3Tag>
+                </div>
+            </div>
+        </W3SwipeArea>
+    </DocExample>
+
+    <DocExample Title="Vertical Gestures" Description="Vertical gestures are useful for stacked mobile panels and compact readers." Code="@VerticalCode">
+        <W3SwipeArea AriaLabel="Priority gesture panel"
+                     Border="true"
+                     Round="W3Round.Medium"
+                     Color="W3Color.PaleGreen"
+                     TextColor="W3Color.Black"
+                     TouchAction="none"
+                     Class="w3-padding"
+                     OnSwipeUp="@(_ => SetPriority("Higher"))"
+                     OnSwipeDown="@(_ => SetPriority("Lower"))">
+            <p class="w3-margin-top"><strong>Priority</strong></p>
+            <p class="doc-muted">Swipe up to raise priority, or down to lower it.</p>
+            <W3Badge Color="W3Color.Green" TextColor="W3Color.White">@Priority</W3Badge>
+        </W3SwipeArea>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Parameters</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Gesture surface content</td></tr>
+                <tr><td>Threshold</td><td>double</td><td>48</td><td>Minimum dominant-axis movement in CSS pixels</td></tr>
+                <tr><td>Restraint</td><td>double</td><td>80</td><td>Maximum cross-axis movement in CSS pixels</td></tr>
+                <tr><td>TouchAction</td><td>string</td><td>pan-y</td><td>CSS <code>touch-action</code> value on the root surface</td></tr>
+                <tr><td>Disabled</td><td>bool</td><td>false</td><td>Stops gesture detection and adds <code>aria-disabled</code></td></tr>
+                <tr><td>Role</td><td>string?</td><td>region</td><td>Optional WAI-ARIA role on the root surface</td></tr>
+                <tr><td>AriaLabel</td><td>string?</td><td>null</td><td>Accessible label for the gesture surface</td></tr>
+                <tr><td>Border</td><td>bool</td><td>false</td><td>Adds the W3.CSS border class</td></tr>
+                <tr><td>Round</td><td>W3Round</td><td>None</td><td>Rounded corner class</td></tr>
+                <tr><td>Color</td><td>W3Color</td><td>None</td><td>Surface background color</td></tr>
+                <tr><td>TextColor</td><td>W3Color</td><td>None</td><td>Surface text color</td></tr>
+                <tr><td>OnSwipe</td><td>EventCallback&lt;W3SwipeEventArgs&gt;</td><td>none</td><td>Raised for any accepted swipe direction</td></tr>
+                <tr><td>OnSwipeLeft</td><td>EventCallback&lt;W3SwipeEventArgs&gt;</td><td>none</td><td>Raised for leftward gestures</td></tr>
+                <tr><td>OnSwipeRight</td><td>EventCallback&lt;W3SwipeEventArgs&gt;</td><td>none</td><td>Raised for rightward gestures</td></tr>
+                <tr><td>OnSwipeUp</td><td>EventCallback&lt;W3SwipeEventArgs&gt;</td><td>none</td><td>Raised for upward gestures</td></tr>
+                <tr><td>OnSwipeDown</td><td>EventCallback&lt;W3SwipeEventArgs&gt;</td><td>none</td><td>Raised for downward gestures</td></tr>
+                <tr><td>Class</td><td>string?</td><td>null</td><td>Additional root classes</td></tr>
+                <tr><td>Style</td><td>string?</td><td>null</td><td>Inline style on the root surface</td></tr>
+                <tr><td>AdditionalAttributes</td><td>IReadOnlyDictionary&lt;string, object&gt;?</td><td>null</td><td>Extra attributes on the swipe root</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <section class="doc-section">
+        <h2>Event Data</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Name</th><th>Type</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Direction</td><td>W3SwipeDirection</td><td>Left, Right, Up, or Down</td></tr>
+                <tr><td>DeltaX</td><td>double</td><td>Horizontal movement in CSS pixels</td></tr>
+                <tr><td>DeltaY</td><td>double</td><td>Vertical movement in CSS pixels</td></tr>
+                <tr><td>Distance</td><td>double</td><td>Straight-line gesture distance</td></tr>
+                <tr><td>Duration</td><td>TimeSpan</td><td>Time between pointer down and pointer up</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
+
+    <DocPager PreviousHref="components/scroll-to-top" PreviousText="Scroll To Top" NextHref="components/spinner" NextText="Spinner" />
+</W3Container>
+
+@code {
+    private string CardAction { get; set; } = "Ready";
+
+    private string Priority { get; set; } = "Normal";
+
+    private void SetCardAction(string action) => CardAction = action;
+
+    private void SetPriority(string priority) => Priority = priority;
+
+    private const string CardCode = """
+<W3SwipeArea AriaLabel="Invoice gesture card"
+             Border="true"
+             Round="W3Round.Large"
+             Color="W3Color.White"
+             TouchAction="pan-y"
+             Class="w3-padding"
+             OnSwipeLeft="@(_ => cardAction = "Archived")"
+             OnSwipeRight="@(_ => cardAction = "Kept")">
+    <strong>Invoice review</strong>
+    <p>Swipe left to archive, right to keep.</p>
+</W3SwipeArea>
+""";
+
+    private const string VerticalCode = """
+<W3SwipeArea AriaLabel="Priority gesture panel"
+             Border="true"
+             Round="W3Round.Medium"
+             Color="W3Color.PaleGreen"
+             TextColor="W3Color.Black"
+             TouchAction="none"
+             OnSwipeUp="@(_ => priority = "Higher")"
+             OnSwipeDown="@(_ => priority = "Lower")">
+    <strong>Priority</strong>
+</W3SwipeArea>
+""";
+}

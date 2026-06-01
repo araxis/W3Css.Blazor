@@ -1036,3 +1036,12 @@ Last updated: 2026-06-01
 - Split remaining grouped workflow/timeline/toggle rows so public parameters are documented directly, and corrected current defaults for progress, stepper, and timeline surfaces.
 - Added focused docs smoke coverage plus route assertions for the remaining touched routes.
 - Verified focused docs smoke tests, Release build, 416-test Release suite, package creation, hygiene scans, and `/components/toggle-group` in the in-app browser with no console errors or horizontal overflow.
+
+## 2026-06-01 - Swipe Area Feature Pass
+
+- Added `W3SwipeArea` as the remaining pointer gesture surface for cards, galleries, mobile panels, and compact app regions.
+- Added typed `W3SwipeDirection` and `W3SwipeEventArgs` payloads with dominant-axis threshold/restraint detection and directional callbacks.
+- Added scoped swipe-area CSS, docs navigation/catalog entries, a dedicated `/components/swipe-area` page, and pager links between Scroll To Top and Spinner.
+- Removed stale low-risk backlog rows from the docs catalog because no queued second-round component gaps remain.
+- Added focused component tests and docs smoke coverage for the new route and parameter table.
+- Verified focused docs/component tests, Release build, the 453-test Release suite, package creation, and `/components/swipe-area` in the in-app browser with swipe interaction, no console errors, and no horizontal overflow.

@@ -141,6 +141,7 @@ This model is intentionally similar to mature Blazor libraries, while keeping im
 | `W3Dropdown` | Implemented | Stateful dropdown with outside-click close behavior, content-control linkage, ArrowUp/ArrowDown open behavior, and Escape close behavior. |
 | `W3Stepper` / `W3Step` | Implemented | Workflow step components with arrow/Home/End keyboard navigation across steps allowed by disabled and linear workflow rules. |
 | `W3ScrollToTop` | Implemented | Back-to-top button that appears past a scroll threshold and smooth-scrolls up (small `w3ScrollToTop.js` for the scroll listener). |
+| `W3SwipeArea` | Implemented | Pointer gesture surface with threshold/restraint detection, directional callbacks, and typed swipe event data. |
 | `W3Menu` / `W3MenuItem` / `W3MenuDivider` | Implemented | Command menus with disabled items, descriptions, close-on-select, roving item focus, and Arrow/Home/End/Escape keyboard navigation. |
 | `W3BottomNavigation` | Implemented | Mobile bottom navigation with icon/label/badge support and arrow/Home/End keyboard navigation across selectable items. |
 | `W3Link` | Implemented | W3.CSS-first link/button primitive with optional underline control and disabled non-interactive fallback. |
@@ -238,7 +239,7 @@ The component compatibility backlog is effectively complete. One niche candidate
 
 | Candidate | Category | Priority | W3.CSS-first approach |
 | --- | --- | --- | --- |
-| `W3SwipeArea` | Utilities | Later | Needs pointer/JS interop; deferred to keep the CSS-first principle — implement only if a real need arises. |
+| None | - | - | No low-risk second-round component gaps are currently queued. |
 
 Notes:
 

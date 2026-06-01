@@ -13,11 +13,11 @@ Last updated: 2026-06-01
 
 - W3.CSS 5.01 is shipped in `src/W3Css.Blazor/wwwroot/w3css/5/w3.css`.
 - Current components in `src/W3Css.Blazor/Components`:
-  - 124 `.razor` component files present.
-- Current docs routes in `src/W3Css.Blazor.Docs/Pages/ComponentTopics`: 118 pages.
-- Tests in project source: 67 `.cs` test files.
+  - 125 `.razor` component files present.
+- Current docs routes in `src/W3Css.Blazor.Docs/Pages/ComponentTopics`: 119 pages.
+- Tests in project source: 58 `.cs` test files.
 - Test suite status:
-  - `dotnet test tests/W3Css.Blazor.Tests/W3Css.Blazor.Tests.csproj --configuration Release` -> **449 passing tests**.
+  - `dotnet test tests/W3Css.Blazor.Tests/W3Css.Blazor.Tests.csproj --configuration Release` -> **453 passing tests**.
 - Build status:
   - `dotnet build W3Css.Blazor.slnx --configuration Release` → **0 warnings, 0 errors**.
 
@@ -26,7 +26,7 @@ Last updated: 2026-06-01
 - Implemented library includes:
   - Layout/surface: `W3Container`, `W3Panel`, `W3Card`, `W3Paper`, `W3Display`, `W3DisplayContainer`, `W3Flex`, `W3Grid`, `W3Row`, `W3Column`, `W3Cell`, `W3CellRow`, `W3Spacing`, `W3Text`, `W3Effect`, `W3Animate`, `W3HoverColor`, `W3Direction`, `W3Border`.
   - Inputs and forms: `W3Input`, `W3Field`, `W3Form`, `W3Select`, `W3SelectItem`, `W3Checkbox`, `W3RadioGroup`, `W3Radio`, `W3TextArea`, `W3Mask`, `W3NumberInput`, `W3DateInput`, `W3TimeInput`, `W3Slider`, `W3Switch`, `W3ColorInput`, `W3FileInput`, `W3Autocomplete`, `W3DropZone`.
-  - Navigation and page structure: `W3Bar`, `W3BarItem`, `W3AppShell`, `W3Navbar`, `W3NavbarItem`, `W3NavMenu`, `W3NavMenuGroup`, `W3NavMenuItem`, `W3Breadcrumb`, `W3BreadcrumbItem`, `W3Dropdown`, `W3Tabs`, `W3TabPanel`, `W3Sidebar`, `W3Pagination`, `W3Stepper`, `W3Step`, `W3BottomNavigation`, `W3BottomNavigationItem`, `W3Menu`, `W3MenuItem`, `W3MenuDivider`, `W3Tooltip`, `W3Popover`, `W3Drawer`, `W3ScrollToTop`, `W3AppBar`, `W3Toolbar`, `W3Link`, `W3PageContentNavigation`, `W3PageSection`.
+  - Navigation and page structure: `W3Bar`, `W3BarItem`, `W3AppShell`, `W3Navbar`, `W3NavbarItem`, `W3NavMenu`, `W3NavMenuGroup`, `W3NavMenuItem`, `W3Breadcrumb`, `W3BreadcrumbItem`, `W3Dropdown`, `W3Tabs`, `W3TabPanel`, `W3Sidebar`, `W3Pagination`, `W3Stepper`, `W3Step`, `W3BottomNavigation`, `W3BottomNavigationItem`, `W3Menu`, `W3MenuItem`, `W3MenuDivider`, `W3Tooltip`, `W3Popover`, `W3Drawer`, `W3ScrollToTop`, `W3SwipeArea`, `W3AppBar`, `W3Toolbar`, `W3Link`, `W3PageContentNavigation`, `W3PageSection`.
   - Data display: `W3Table`, `W3DataTable`, `W3DataColumn`, `W3List`, `W3ListItem`, `W3Timeline`, `W3TimelineItem`, `W3TreeView`, `W3Chart`.
   - Feedback and overlays: `W3Alert`, `W3Spinner`, `W3MessageBox`, `W3Modal`, `W3Toast`, `W3ToastProvider`, `W3ToastService`, `W3ToastMessage`, `W3ToastOptions`, `W3ToastPosition`, `W3Overlay`, `W3FocusTrap`, `W3Skeleton`.
   - Content/media/utilities: `W3Image`, `W3ImageList`, `W3ImageListItem`, `W3Slideshow`, `W3Slide`, `W3Chat`, `W3ChatMessage`, `W3Code`, `W3Note`, `W3Quote`, `W3Icon`, `W3Highlighter`, `W3Button`, `W3IconButton`, `W3ToggleIconButton`, `W3Fab`, `W3Tag`, `W3Chip`, `W3ChipSet`, `W3Badge`, `W3Avatar`, `W3AvatarGroup`, `W3Footer`, `W3Spacer`, `W3Progress`, `W3ProgressCircular`, `W3Stack`, `W3Divider`, `W3Skeleton`.
@@ -85,5 +85,6 @@ Last updated: 2026-06-01
 - The alert behavior polish pass added opt-in dismissible alerts with visible binding, dismissal callbacks, and configurable live-region announcements; refreshed alert docs and verified the rendered alert page.
 - The dialog action-spacing polish pass replaced modal action bars with a wrapping right-aligned action row, removed manual message-box button margins, refreshed modal/message-box docs, and verified rendered modal pages.
 - The app-bar layout polish pass added explicit slot-presence classes and title-fill behavior so navigation/actions align as trailing app-bar content without large auto-margin gaps.
+- The swipe-area feature pass added `W3SwipeArea`, `W3SwipeDirection`, and `W3SwipeEventArgs` for pointer gesture surfaces with directional callbacks, docs, and bUnit coverage.
 - Neutral terminology cleanup is complete; source, docs, tests, and memory no longer use external comparison-library names for the compatibility work.
-- Remaining planned work is optional: additional theme token expansion, visual quality sweeps, and `W3SwipeArea`-style pointer gesture support.
+- Remaining planned work is optional: additional theme token expansion and visual quality sweeps.

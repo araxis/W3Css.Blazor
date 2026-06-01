@@ -17,6 +17,12 @@ Last updated: 2026-06-01
   - `dotnet pack src/W3Css.Blazor/W3Css.Blazor.csproj --configuration Release --no-build --output artifacts/packages /nr:false`;
   - `pwsh ./tools/package-consumer-smoke.ps1 -PackageVersion 0.3.0 -PackageSource artifacts/packages`;
   - browser sweep for `/`, `/components`, `/components/theming`, `/components/app-shell`, `/components/form`, `/components/data-table`, `/components/modal`, `/components/empty-state`, `/components/versions`, and `/patterns`: no visible error text, console errors, or horizontal overflow.
+- Release completion:
+  - merged the 0.3.0 adoption-polish slice into `main`;
+  - waited for the `main` CI run to pass;
+  - tagged `v0.3.0` on the merged release commit;
+  - verified the release workflow passed through restore, build, test, pack, release artifact creation, publish configuration validation, and package publishing;
+  - verified `./tools/package-consumer-smoke.ps1 -PackageVersion 0.3.0` from the public package feed.
 
 - Final release-readiness pass:
   - bumped package metadata to `0.2.0`;

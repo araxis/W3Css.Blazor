@@ -5,7 +5,7 @@ Last updated: 2026-06-01
 ## Repository
 
 - Canonical branch: `main`.
-- Tags `v0.1.0` and `v0.2.0` mark published package releases; `0.3.0` is the current adoption-polish release target.
+- Tags `v0.1.0`, `v0.2.0`, and `v0.3.0` mark published package releases.
 - Solution: `W3Css.Blazor.slnx`.
 - SDK: `.NET 10.0.300` (`global.json`).
 
@@ -42,10 +42,9 @@ Last updated: 2026-06-01
 - README includes package version and MIT license badges.
 - Release workflow builds, tests, packs, creates release artifacts, and publishes packages on `v*` tag pushes when the publishing secret is configured.
 - First package release is published as `W3Css.Blazor` version `0.1.0`.
-- Current package release is published as `W3Css.Blazor` version `0.2.0`.
-- Package metadata target version `0.3.0` is staged for the next release.
-- Releases `v0.1.0` and `v0.2.0` are published with package artifacts.
-- Package consumer smoke tooling verifies install, component compilation, publish output, and bundled static assets from the public package feed; version `0.2.0` has passed this check.
+- Current package release is published as `W3Css.Blazor` version `0.3.0`.
+- Releases `v0.1.0`, `v0.2.0`, and `v0.3.0` are published with package artifacts.
+- Package consumer smoke tooling verifies install, component compilation, publish output, and bundled static assets from the public package feed; version `0.3.0` has passed this check.
 
 ## Current Progress
 
@@ -53,7 +52,8 @@ Last updated: 2026-06-01
 - The "themed by default" pass is complete for surface and primary intent defaults in most components.
 - Public API hardening is in progress; `W3Slide` now uses the shared component base and forwards unmatched attributes to the rendered active slide.
 - README, changelog, release notes, and memory release-state cleanup now reflect the published 0.2.0 release.
-- The 0.3.0 adoption-polish slice is in progress: Patterns docs, README adoption path, release notes, versions docs, and selected public XML documentation guard coverage have been added without changing vendored W3.CSS.
+- README, changelog, release notes, and memory release-state cleanup now reflect the published 0.3.0 release.
+- The 0.3.0 adoption-polish slice is complete: Patterns docs, README adoption path, release notes, versions docs, selected public XML documentation guard coverage, local package smoke, public package smoke, and top-page browser sweep all passed without changing vendored W3.CSS.
 - Documentation consistency review is complete for current component topic parameter tables; each implemented rendering surface now has explicit inherited attribute rows where applicable.
 - The small docs/API gap pass now covers `W3Table`, `W3Drawer`, `W3Menu`, and `W3ProgressCircular` parameter tables with focused docs smoke coverage.
 - The second docs/API gap pass now covers `W3DataTable`, `W3DateRangePicker`, `W3MessageBox`, `W3Modal`, and `W3Navbar` parameter tables with focused docs smoke coverage.

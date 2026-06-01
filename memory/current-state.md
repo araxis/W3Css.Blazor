@@ -84,5 +84,6 @@ Last updated: 2026-06-01
 - The drawer accessibility polish pass added explicit `AriaLabelledBy` support to `W3Drawer`, refreshed drawer keyboard and labeling docs, and verified the rendered drawer page.
 - The alert behavior polish pass added opt-in dismissible alerts with visible binding, dismissal callbacks, and configurable live-region announcements; refreshed alert docs and verified the rendered alert page.
 - The dialog action-spacing polish pass replaced modal action bars with a wrapping right-aligned action row, removed manual message-box button margins, refreshed modal/message-box docs, and verified rendered modal pages.
+- The app-bar layout polish pass added explicit slot-presence classes and title-fill behavior so navigation/actions align as trailing app-bar content without large auto-margin gaps.
 - Neutral terminology cleanup is complete; source, docs, tests, and memory no longer use external comparison-library names for the compatibility work.
 - Remaining planned work is optional: additional theme token expansion, visual quality sweeps, and `W3SwipeArea`-style pointer gesture support.

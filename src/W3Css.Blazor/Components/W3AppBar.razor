@@ -106,6 +106,10 @@
     private string CssClass => BuildClass(
         "w3-bar",
         "w3-app-bar",
+        ShowMenuButton || Leading is not null ? "w3-app-bar-has-leading" : null,
+        HasTitle ? "w3-app-bar-has-title" : null,
+        ChildContent is not null ? "w3-app-bar-has-nav" : null,
+        Actions is not null ? "w3-app-bar-has-actions" : null,
         Dense ? "w3-app-bar-dense" : null,
         Prominent ? "w3-app-bar-prominent" : null,
         Mobile ? "w3-app-bar-mobile" : null,

@@ -63,7 +63,7 @@ This model is intentionally similar to mature Blazor libraries, while keeping im
 | `W3Responsive` | Implemented | Overflow wrapper for wide content. |
 | `W3AppShell` | Implemented | App shell with sidebar/main/footer/header orchestration. |
 | `W3Sidebar` | Implemented | Sidebar helper for app/site layouts with overlay dismissal, Escape close behavior, and optional accessible labeling. |
-| `W3AppBar` | Implemented | App header composition with title, menu, nav, actions, and placement options. |
+| `W3AppBar` | Implemented | App header composition with title-fill layout, menu, trailing nav/actions, and placement options. |
 | `W3Toolbar` | Implemented | Dense action rows for editors, tables, and dashboards. |
 | `W3Divider` | Implemented | Divider utility and section breaks. |
 | `W3Stack` | Implemented | Simple vertical/horizontal spacing container. |

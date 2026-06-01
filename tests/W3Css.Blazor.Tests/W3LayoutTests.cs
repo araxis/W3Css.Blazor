@@ -206,6 +206,10 @@ public sealed class W3LayoutTests
 
         Assert.Contains("w3-bar", header.GetAttribute("class"));
         Assert.Contains("w3-app-bar", header.GetAttribute("class"));
+        Assert.Contains("w3-app-bar-has-leading", header.GetAttribute("class"));
+        Assert.Contains("w3-app-bar-has-title", header.GetAttribute("class"));
+        Assert.Contains("w3-app-bar-has-nav", header.GetAttribute("class"));
+        Assert.Contains("w3-app-bar-has-actions", header.GetAttribute("class"));
         Assert.Contains("w3-teal", header.GetAttribute("class"));
         Assert.Contains("w3-text-white", header.GetAttribute("class"));
         Assert.Contains("w3-card-4", header.GetAttribute("class"));

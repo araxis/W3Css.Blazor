@@ -40,7 +40,7 @@
 
 .w3-app-bar-title {
     align-items: flex-start;
-    flex: 0 1 auto;
+    flex: 1 1 12rem;
     flex-direction: column;
     justify-content: center;
     line-height: 1.25;
@@ -79,10 +79,17 @@
 
 .w3-app-bar-nav {
     flex: 0 1 auto;
+    justify-content: flex-end;
     overflow-x: auto;
 }
 
 .w3-app-bar-actions {
+    flex: 0 0 auto;
+    justify-content: flex-end;
+}
+
+.w3-app-bar:not(.w3-app-bar-has-title) .w3-app-bar-nav,
+.w3-app-bar:not(.w3-app-bar-has-title):not(.w3-app-bar-has-nav) .w3-app-bar-actions {
     margin-left: auto;
 }
 
@@ -123,6 +130,10 @@
 
     .w3-app-bar-mobile .w3-app-bar-title {
         flex: 1 1 auto;
+    }
+
+    .w3-app-bar-mobile .w3-app-bar-actions {
+        margin-left: auto;
     }
 
     .w3-app-bar-mobile .w3-app-bar-nav {

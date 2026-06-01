@@ -4,6 +4,17 @@ Last updated: 2026-06-01
 
 ## 2026-06-01
 
+- Continued the app-structure visual polish pass on `W3AppBar`:
+  - added explicit root classes for leading, title, navigation, and action slot presence;
+  - changed title layout to fill available horizontal space so navigation and actions behave as trailing app-bar content;
+  - kept no-title bars able to push navigation/actions to the trailing edge;
+  - added focused rendering coverage for the new slot-presence classes.
+- Verification:
+  - focused app-bar/docs tests: 3 passing;
+  - `dotnet test tests/W3Css.Blazor.Tests/W3Css.Blazor.Tests.csproj --configuration Release` (449 passing);
+  - `dotnet build W3Css.Blazor.slnx --configuration Release /nr:false` (0 warnings, 0 errors);
+  - `dotnet pack src/W3Css.Blazor/W3Css.Blazor.csproj --configuration Release --no-build`;
+  - browser-verified `/components/app-bar` after restarting the docs server on port 5016: the title fills available space, navigation/actions sit at the trailing edge, menu text/icon spacing remains readable, no visible error appears, and no horizontal overflow appears.
 - Continued the dialog visual polish pass on `W3Modal` and `W3MessageBox`:
   - replaced the modal `Actions` footer bar with a dedicated wrapping, right-aligned action row;
   - added component-scoped modal footer/action spacing without modifying the bundled W3.CSS source;

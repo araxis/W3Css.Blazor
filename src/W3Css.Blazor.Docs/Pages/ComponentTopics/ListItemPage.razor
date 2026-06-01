@@ -27,7 +27,10 @@
             </W3ListItem>
             <W3ListItem Href="components/tree-view" IconClass="fa fa-sitemap" Text="Tree view">
                 <EndContent>
-                    <span>Open</span>
+                    <W3ActionRow Label="Tree view actions" Gap="6">
+                        <W3Button Size="W3Size.Small" Border="true">Open</W3Button>
+                        <W3Button Size="W3Size.Small" Border="true">Pin</W3Button>
+                    </W3ActionRow>
                 </EndContent>
             </W3ListItem>
             <W3ListItem Text="Unavailable command" Disabled="true" IconClass="fa fa-ban">
@@ -122,15 +125,17 @@
 </W3ListItem>
 <W3ListItem Href="components/tree-view" IconClass="fa fa-sitemap" Text="Tree view">
     <EndContent>
-        <span>Open</span>
+        <W3ActionRow Label="Tree view actions" Gap="6">
+            <W3Button Size="W3Size.Small" Border="true">Open</W3Button>
+            <W3Button Size="W3Size.Small" Border="true">Pin</W3Button>
+        </W3ActionRow>
     </EndContent>
 </W3ListItem>
-    <W3ListItem Text="Unavailable command" Disabled="true" IconClass="fa fa-ban">
-        <span>Locked</span>
-        <EndContent>
-            <span>Locked</span>
-        </EndContent>
-    </W3ListItem>
+<W3ListItem Text="Unavailable command" Disabled="true" IconClass="fa fa-ban">
+    <EndContent>
+        <span class="w3-text-grey">Locked</span>
+    </EndContent>
+</W3ListItem>
 </W3List>
 """;
 

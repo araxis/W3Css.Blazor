@@ -14,9 +14,9 @@
             <W3Field TValue="string" Label="Full Name" For="@(() => _formModel.Name)" ForId="form-name">
                 <W3Input @bind-Value="_formModel.Name" Id="form-name" Placeholder="Jane Example" Border="true" />
             </W3Field>
-            <div class="w3-margin-top">
+            <W3ActionRow Label="Basic form actions" Class="w3-margin-top">
                 <W3Button Type="submit" Color="W3Color.Teal" TextColor="W3Color.White">Submit</W3Button>
-            </div>
+            </W3ActionRow>
         </W3Form>
         <p class="w3-small w3-text-gray">Submit count: @_submitCount</p>
     </DocExample>
@@ -26,11 +26,11 @@
             <W3Field TValue="string" Label="Team name" For="@(() => _busyFormModel.TeamName)" ForId="busy-team-name" HelpText="Submit is disabled while the save callback is running.">
                 <W3Input @bind-Value="_busyFormModel.TeamName" Id="busy-team-name" Placeholder="Design team" Border="true" />
             </W3Field>
-            <div class="w3-margin-top">
+            <W3ActionRow Label="Busy form actions" Class="w3-margin-top">
                 <W3Button Type="submit" Color="W3Color.Teal" TextColor="W3Color.White">
                     @(_isSaving ? "Saving..." : "Save")
                 </W3Button>
-            </div>
+            </W3ActionRow>
         </W3Form>
         <p class="w3-small w3-text-gray">@(_isSaving ? "Saving changes" : $"Saved {_saveCount} time(s)")</p>
     </DocExample>
@@ -79,7 +79,9 @@
     <W3Field TValue="string" Label="Full Name" For="@(() => _formModel.Name)" ForId="form-name">
         <W3Input @bind-Value="_formModel.Name" Id="form-name" Placeholder="Jane Example" Border="true" />
     </W3Field>
-    <W3Button Type="submit" Color="W3Color.Teal" TextColor="W3Color.White">Submit</W3Button>
+    <W3ActionRow Label="Basic form actions" Class="w3-margin-top">
+        <W3Button Type="submit" Color="W3Color.Teal" TextColor="W3Color.White">Submit</W3Button>
+    </W3ActionRow>
 </W3Form>
 """;
 
@@ -88,9 +90,11 @@
     <W3Field TValue="string" Label="Team name" For="@(() => model.TeamName)" ForId="busy-team-name" HelpText="Submit is disabled while the save callback is running.">
         <W3Input @bind-Value="model.TeamName" Id="busy-team-name" Placeholder="Design team" Border="true" />
     </W3Field>
-    <W3Button Type="submit" Color="W3Color.Teal" TextColor="W3Color.White">
-        @(isSaving ? "Saving..." : "Save")
-    </W3Button>
+    <W3ActionRow Label="Busy form actions" Class="w3-margin-top">
+        <W3Button Type="submit" Color="W3Color.Teal" TextColor="W3Color.White">
+            @(isSaving ? "Saving..." : "Save")
+        </W3Button>
+    </W3ActionRow>
 </W3Form>
 """;
 

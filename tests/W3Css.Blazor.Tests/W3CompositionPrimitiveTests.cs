@@ -141,4 +141,53 @@ public sealed class W3CompositionPrimitiveTests
         Assert.Equal("--w3-button-group-gap:4px;min-width: 10rem", group.GetAttribute("style"));
         Assert.Equal(2, cut.FindAll("button").Count);
     }
+
+    [Fact]
+    public void ActionRowRendersWrappingAlignedActionGroup()
+    {
+        using var context = new BunitContext();
+        var cut = context.Render<W3ActionRow>(parameters => parameters
+            .Add(p => p.Label, "Form actions")
+            .Add(p => p.Wrap, true)
+            .Add(p => p.JustifyStart, true)
+            .Add(p => p.Border, true)
+            .Add(p => p.Round, W3Round.Medium)
+            .Add(p => p.Gap, 12)
+            .Add(p => p.Color, W3Color.White)
+            .Add(p => p.TextColor, W3Color.Black)
+            .Add(p => p.Class, "actions-extra")
+            .Add(p => p.Style, "margin-top: 1rem;")
+            .Add(p => p.ChildContent, "<button class=\"w3-button\">Cancel</button><button class=\"w3-button w3-teal\">Save</button>"));
+
+        var row = cut.Find("[role='group']");
+
+        Assert.Equal("Form actions", row.GetAttribute("aria-label"));
+        Assert.Contains("w3-action-row", row.GetAttribute("class"));
+        Assert.Contains("w3-action-row-wrap", row.GetAttribute("class"));
+        Assert.Contains("w3-action-row-start", row.GetAttribute("class"));
+        Assert.Contains("w3-border", row.GetAttribute("class"));
+        Assert.Contains("w3-round", row.GetAttribute("class"));
+        Assert.Contains("w3-white", row.GetAttribute("class"));
+        Assert.Contains("w3-text-black", row.GetAttribute("class"));
+        Assert.Contains("actions-extra", row.GetAttribute("class"));
+        Assert.Equal("--w3-action-row-gap:12px;margin-top: 1rem", row.GetAttribute("style"));
+        Assert.Equal(2, cut.FindAll("button").Count);
+    }
+
+    [Fact]
+    public void ActionRowUsesLabelledByWhenProvided()
+    {
+        using var context = new BunitContext();
+        var cut = context.Render<W3ActionRow>(parameters => parameters
+            .Add(p => p.Label, "Ignored label")
+            .Add(p => p.AriaLabelledBy, "actions-heading")
+            .Add(p => p.JustifyCenter, true)
+            .Add(p => p.ChildContent, "Save"));
+
+        var row = cut.Find(".w3-action-row");
+
+        Assert.Null(row.GetAttribute("aria-label"));
+        Assert.Equal("actions-heading", row.GetAttribute("aria-labelledby"));
+        Assert.Contains("w3-action-row-center", row.GetAttribute("class"));
+    }
 }

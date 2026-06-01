@@ -1071,3 +1071,16 @@ Last updated: 2026-06-01
 - Wrapped `W3DataTable` row actions in a right-aligned, wrapping action group.
 - Added `RowActionsHeaderClass`, `RowActionsCellClass`, `RowActionsClass`, and `RowActionsGap` hooks.
 - Refreshed the data-table row-action docs example with multiple actions and extended table/docs smoke coverage.
+
+## 2026-06-01 - Reusable Action Row Polish
+
+- Added `W3ActionRow` as a reusable wrapping command row for forms, generic tables, list suffixes, and compact app surfaces.
+- Added alignment, wrapping, gap, label, role, class/style, color, border, and roundness hooks without modifying the vendored W3.CSS source.
+- Added a dedicated action-row docs page, catalog/nav entries, pager chain updates, and form/table/list examples that use the shared row instead of manual margin wrappers.
+- Added focused component/docs smoke coverage for action-row rendering, labelled-by behavior, route coverage, catalog links, and parameter documentation.
+- Verification:
+  - focused composition/docs tests: 126 passing;
+  - `dotnet build W3Css.Blazor.slnx --configuration Release /nr:false` (0 warnings, 0 errors);
+  - `dotnet test tests/W3Css.Blazor.Tests/W3Css.Blazor.Tests.csproj --configuration Release --no-build` (463 passing);
+  - `dotnet pack src/W3Css.Blazor/W3Css.Blazor.csproj --configuration Release --no-build`;
+  - browser-verified `/components/action-row`, `/components/form`, `/components/table`, and `/components/list-item` on port 5016: action rows render with expected 6-8px gaps, wrap behavior, no visible errors, and no horizontal overflow.

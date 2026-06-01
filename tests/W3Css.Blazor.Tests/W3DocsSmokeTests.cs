@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using AccordionPage = W3Css.Blazor.Docs.Pages.ComponentTopics.AccordionPage;
+using ActionRowPage = W3Css.Blazor.Docs.Pages.ComponentTopics.ActionRowPage;
 using AnimationsPage = W3Css.Blazor.Docs.Pages.ComponentTopics.AnimationsPage;
 using AppBarPage = W3Css.Blazor.Docs.Pages.ComponentTopics.AppBarPage;
 using AppShellPage = W3Css.Blazor.Docs.Pages.ComponentTopics.AppShellPage;
@@ -156,6 +157,7 @@ public sealed class W3DocsSmokeTests
     [InlineData(typeof(ToggleIconButtonPage), "/components/toggle-icon-button")]
     [InlineData(typeof(FabPage), "/components/fab")]
     [InlineData(typeof(ButtonGroupPage), "/components/button-group")]
+    [InlineData(typeof(ActionRowPage), "/components/action-row")]
     [InlineData(typeof(ChipPage), "/components/chip")]
     [InlineData(typeof(RadioGroupPage), "/components/radio-group")]
     [InlineData(typeof(LinkPage), "/components/link")]
@@ -252,6 +254,7 @@ public sealed class W3DocsSmokeTests
         Assert.NotEmpty(cut.FindAll("a[href='components/icon-button']"));
         Assert.NotEmpty(cut.FindAll("a[href='components/fab']"));
         Assert.NotEmpty(cut.FindAll("a[href='components/button-group']"));
+        Assert.NotEmpty(cut.FindAll("a[href='components/action-row']"));
         Assert.NotEmpty(cut.FindAll("a[href='components/chip']"));
         Assert.NotEmpty(cut.FindAll("a[href='components/radio-group']"));
         Assert.NotEmpty(cut.FindAll("a[href='components/chip-set']"));
@@ -828,6 +831,10 @@ public sealed class W3DocsSmokeTests
 
         var buttonGroupPage = context.Render<ButtonGroupPage>();
         Assert.Contains("Extra attributes on the button group root", buttonGroupPage.Markup);
+
+        var actionRowPage = context.Render<ActionRowPage>();
+        Assert.Contains("Extra attributes on the action-row root", actionRowPage.Markup);
+        Assert.Contains("Allows actions to wrap", actionRowPage.Markup);
 
         var iconButtonPage = context.Render<IconButtonPage>();
         Assert.Contains("Button background color class", iconButtonPage.Markup);

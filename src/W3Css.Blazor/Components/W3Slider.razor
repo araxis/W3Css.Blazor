@@ -1,5 +1,6 @@
 @typeparam TValue
 @using System.Globalization
+@using Microsoft.AspNetCore.Components.Forms
 @inherits W3FormComponentBase<TValue>
 
 <input @attributes="AdditionalAttributes"
@@ -12,6 +13,9 @@
        max="@MaxAsString"
        step="@Step"
        disabled="@Disabled"
+       aria-label="@Label"
+       aria-valuetext="@ValueText"
+       aria-invalid="@AriaInvalid"
        value="@CurrentValueAsString"
        @oninput="HandleInput"
        @onchange="HandleChange" />
@@ -20,9 +24,16 @@
     private string SliderCssClass => BuildControlClass("w3-input");
     private string? MinAsString => FormatNumber(Min);
     private string? MaxAsString => FormatNumber(Max);
+    private string? AriaInvalid => EditContext?.GetValidationMessages(FieldIdentifier).Any() == true ? "true" : null;
 
     [Parameter]
     public string? Id { get; set; }
+
+    [Parameter]
+    public string? Label { get; set; }
+
+    [Parameter]
+    public string? ValueText { get; set; }
 
     [Parameter]
     public TValue? Min { get; set; }

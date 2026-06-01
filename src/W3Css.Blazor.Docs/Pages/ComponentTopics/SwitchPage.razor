@@ -1,4 +1,5 @@
 @page "/components/switch"
+@using System.ComponentModel.DataAnnotations
 
 <PageTitle>W3Switch</PageTitle>
 
@@ -7,7 +8,7 @@
     <DocPager PreviousHref="components/rating" PreviousText="Rating" NextHref="components/toggle-group" NextText="Toggle Group" />
 
     <p class="w3-large">`W3Switch` renders an accessible switch-style checkbox for app settings and feature toggles.</p>
-    <p>The component keeps a real checkbox input under the hood, adds `role="switch"`, and uses isolated CSS for the toggle shape without touching the vendored W3.CSS file.</p>
+    <p>The component keeps a real checkbox input under the hood, adds `role="switch"`, and uses isolated CSS for the toggle shape without touching the vendored W3.CSS file. Add `novalidate` on the form when validation messages should handle required feedback.</p>
 
     <DocExample Title="Setting Toggle" Description="Use a switch when the setting turns something on or off immediately." Code="@BasicCode">
         <EditForm Model="@SwitchModel">
@@ -34,6 +35,20 @@
         </W3Panel>
     </DocExample>
 
+    <DocExample Title="Required Switch" Description="Use Required with a validation attribute when a workflow needs an explicit enabled state." Code="@RequiredCode">
+        <EditForm Model="@RequiredSwitchModel" OnValidSubmit="HandleRequiredSubmit" OnInvalidSubmit="HandleRequiredSubmit" novalidate>
+            <DataAnnotationsValidator />
+            <W3Field TValue="bool" For="@(() => RequiredSwitchModel.Enabled)" HelpText="Required before continuing.">
+                <W3Switch Id="required-switch"
+                          @bind-Value="RequiredSwitchModel.Enabled"
+                          Label="Enable workspace sync"
+                          Required="true"
+                          OnColor="W3Color.Teal" />
+            </W3Field>
+            <W3Button Type="submit" Color="W3Color.Teal" TextColor="W3Color.White">Validate</W3Button>
+        </EditForm>
+    </DocExample>
+
     <section class="doc-section">
         <h2>Parameters</h2>
         <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
@@ -51,6 +66,7 @@
                 <tr><td>OffColor</td><td>W3Color</td><td>LightGrey</td><td>Track background while unchecked</td></tr>
                 <tr><td>TrackClass</td><td>string?</td><td>null</td><td>Extra track classes</td></tr>
                 <tr><td>LabelClass</td><td>string?</td><td>null</td><td>Extra label classes</td></tr>
+                <tr><td>Required</td><td>bool</td><td>false</td><td>`required` and `aria-required` attributes</td></tr>
                 <tr><td>Disabled</td><td>bool</td><td>false</td><td>`disabled` attribute and disabled styling</td></tr>
                 <tr><td>Border</td><td>bool</td><td>false</td><td>`w3-border` on the track</td></tr>
                 <tr><td>Color</td><td>W3Color</td><td>None</td><td>Inherited form-control color; use OnColor and OffColor for the visible track</td></tr>
@@ -75,6 +91,7 @@
 
 @code {
     private readonly SwitchExampleModel SwitchModel = new();
+    private readonly RequiredSwitchExampleModel RequiredSwitchModel = new();
 
     private const string BasicCode = """
 <W3Switch Id="switch-notifications"
@@ -98,10 +115,50 @@
 </W3Panel>
 """;
 
+    private const string RequiredCode = """
+@using System.ComponentModel.DataAnnotations
+
+<EditForm Model="@model" OnValidSubmit="HandleSubmit" OnInvalidSubmit="HandleSubmit" novalidate>
+    <DataAnnotationsValidator />
+    <W3Field TValue="bool" For="@(() => model.Enabled)" HelpText="Required before continuing.">
+        <W3Switch Id="required-switch"
+                  @bind-Value="model.Enabled"
+                  Label="Enable workspace sync"
+                  Required="true"
+                  OnColor="W3Color.Teal" />
+    </W3Field>
+    <W3Button Type="submit" Color="W3Color.Teal" TextColor="W3Color.White">Validate</W3Button>
+</EditForm>
+
+@code {
+    private readonly RequiredSwitchExampleModel model = new();
+
+    private void HandleSubmit()
+    {
+    }
+
+    private sealed class RequiredSwitchExampleModel
+    {
+        [Range(typeof(bool), "true", "true", ErrorMessage = "Enable workspace sync to continue.")]
+        public bool Enabled { get; set; }
+    }
+}
+""";
+
     private sealed class SwitchExampleModel
     {
         public bool Notifications { get; set; } = true;
         public bool CompactMode { get; set; } = true;
         public bool PublicProfile { get; set; }
+    }
+
+    private sealed class RequiredSwitchExampleModel
+    {
+        [Range(typeof(bool), "true", "true", ErrorMessage = "Enable workspace sync to continue.")]
+        public bool Enabled { get; set; }
+    }
+
+    private void HandleRequiredSubmit()
+    {
     }
 }

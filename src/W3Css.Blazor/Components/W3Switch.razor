@@ -1,4 +1,5 @@
 @using W3Css.Blazor.Internal
+@using Microsoft.AspNetCore.Components.Forms
 @inherits W3FormComponentBase<bool>
 
 <label class="@RootCssClass" style="@Style">
@@ -9,7 +10,10 @@
            class="@InputCssClass"
            role="switch"
            aria-checked="@AriaChecked"
+           aria-required="@AriaRequired"
+           aria-invalid="@AriaInvalid"
            disabled="@Disabled"
+           required="@Required"
            checked="@CurrentValue"
            @onchange="EventCallback.Factory.CreateBinder<bool>(this, value => CurrentValue = value, CurrentValue)" />
     <span class="@TrackCssClass" aria-hidden="true">
@@ -24,11 +28,14 @@
 @code {
     private bool HasLabel => ChildContent is not null || !string.IsNullOrWhiteSpace(Label);
     private string AriaChecked => CurrentValue ? "true" : "false";
+    private string? AriaRequired => Required ? "true" : null;
+    private string? AriaInvalid => EditContext?.GetValidationMessages(FieldIdentifier).Any() == true ? "true" : null;
 
     private string RootCssClass => new W3ClassBuilder()
         .Add("w3-switch")
         .AddIf(CurrentValue, "w3-switch-on")
         .AddIf(Disabled, "w3-disabled")
+        .Add(CssClass)
         .Add(Class)
         .ToString();
 
@@ -64,6 +71,9 @@
 
     [Parameter]
     public string? TrackClass { get; set; }
+
+    [Parameter]
+    public bool Required { get; set; }
 
     [Parameter]
     public W3Color OnColor { get; set; } = W3Color.Primary;

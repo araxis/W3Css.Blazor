@@ -1,0 +1,110 @@
+@namespace W3Css.Blazor.Tests
+@using System.ComponentModel.DataAnnotations
+@using Microsoft.AspNetCore.Components.Forms
+@using W3Css.Blazor.Components
+
+<EditForm EditContext="@EditContext">
+    <DataAnnotationsValidator />
+
+    <W3Field TValue="int"
+             Label="Volume"
+             ForId="required-slider"
+             For="@(() => Model.Volume)"
+             HelpText="Choose a volume.">
+        <W3Slider TValue="int"
+                  Id="required-slider"
+                  @bind-Value="Model.Volume"
+                  Label="Volume"
+                  ValueText="@($"{Model.Volume} percent")"
+                  Min="0"
+                  Max="100"
+                  Step="5" />
+    </W3Field>
+
+    <W3Field TValue="bool"
+             For="@(() => Model.Enabled)"
+             HelpText="Required before continuing.">
+        <W3Switch Id="required-switch"
+                  @bind-Value="Model.Enabled"
+                  Label="Enable sync"
+                  Required="true" />
+    </W3Field>
+
+    <W3Field TValue="int"
+             Label="Satisfaction"
+             For="@(() => Model.Score)"
+             HelpText="Choose a score.">
+        <W3Rating Value="@Model.Score"
+                  ValueChanged="@((int next) => Model.Score = next)"
+                  ValueExpression="@(() => Model.Score)"
+                  Label="Satisfaction score"
+                  Required="true"
+                  Clearable="true"
+                  ShowValue="true" />
+    </W3Field>
+
+    <W3Field TValue="string"
+             Label="Accent color"
+             ForId="required-color"
+             For="@(() => Model.Accent)"
+             HelpText="Choose a color.">
+        <W3ColorInput Id="required-color"
+                      @bind-Value="Model.Accent"
+                      Required="true"
+                      Label="Accent color" />
+    </W3Field>
+
+    <W3Field TValue="string"
+             Label="Reviewer"
+             ForId="required-reviewer"
+             For="@(() => Model.Reviewer)"
+             HelpText="Choose a reviewer.">
+        <W3Autocomplete TValue="string"
+                        Id="required-reviewer"
+                        @bind-Value="Model.Reviewer"
+                        Items="People"
+                        Placeholder="Search reviewers"
+                        Required="true" />
+    </W3Field>
+</EditForm>
+
+@code {
+    private static readonly string[] People =
+    [
+        "Ada Lovelace",
+        "Grace Hopper",
+        "Linus Torvalds"
+    ];
+
+    public InputUxValidationModel Model { get; } = new();
+
+    public EditContext EditContext { get; private set; } = default!;
+
+    protected override void OnInitialized()
+    {
+        EditContext = new EditContext(Model);
+    }
+
+    public bool Validate()
+    {
+        return EditContext.Validate();
+    }
+
+    public sealed class InputUxValidationModel
+    {
+        [Range(1, 100, ErrorMessage = "Choose a volume.")]
+        public int Volume { get; set; }
+
+        [Range(typeof(bool), "true", "true", ErrorMessage = "Enable sync to continue.")]
+        public bool Enabled { get; set; }
+
+        [Range(1, 5, ErrorMessage = "Choose a satisfaction score.")]
+        public int Score { get; set; }
+
+        [Required(ErrorMessage = "Choose an accent color.")]
+        public string? Accent { get; set; }
+
+        [Required(ErrorMessage = "Select a reviewer.")]
+        public string? Reviewer { get; set; }
+    }
+}

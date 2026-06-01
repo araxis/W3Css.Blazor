@@ -65,12 +65,19 @@ public sealed class W3FormUtilityCompatibilityTests
         var cut = context.Render<W3ColorInput>(parameters => parameters
             .Add(c => c.ShowPalette, true)
             .Add(c => c.Palette, new[] { "#ff0000", "#00ff00" })
+            .Add(c => c.Required, true)
+            .Add(c => c.Label, "Theme color")
             .Add(c => c.Value, "#000000")
             .Add(c => c.ValueChanged, (string? v) => value = v)
             .Add(c => c.ValueExpression, () => value));
 
         var swatches = cut.FindAll(".w3-color-input-swatch");
         Assert.Equal(2, swatches.Count);
+        Assert.All(cut.FindAll("input"), input =>
+        {
+            Assert.True(input.HasAttribute("required"));
+            Assert.Equal("true", input.GetAttribute("aria-required"));
+        });
 
         swatches[0].Click();
         Assert.Equal("#ff0000", value);

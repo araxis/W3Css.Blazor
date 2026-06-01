@@ -1,4 +1,5 @@
 @typeparam TValue
+@using Microsoft.AspNetCore.Components.Forms
 @using W3Css.Blazor.Internal
 @inherits W3FormComponentBase<TValue?>
 
@@ -12,12 +13,17 @@
            placeholder="@Placeholder"
            disabled="@Disabled"
            readonly="@ReadOnly"
+           required="@Required"
            role="combobox"
            autocomplete="off"
            aria-autocomplete="list"
            aria-expanded="@AriaExpanded"
            aria-controls="@ListboxId"
            aria-activedescendant="@ActiveDescendantId"
+           aria-required="@AriaRequired"
+           aria-invalid="@AriaInvalid"
+           aria-disabled="@AriaDisabled"
+           aria-readonly="@AriaReadOnly"
            value="@SearchText"
            @onfocus="HandleFocusAsync"
            @oninput="HandleInputAsync"
@@ -82,6 +88,10 @@
     private string? ActiveDescendantId => IsOpen && activeIndex >= 0 ? GetOptionId(activeIndex) : null;
     private string ResolvedId => Id ?? $"w3-autocomplete-{FieldIdentifier.FieldName}";
     private string AriaExpanded => IsOpen ? "true" : "false";
+    private string? AriaRequired => Required ? "true" : null;
+    private string? AriaInvalid => EditContext?.GetValidationMessages(FieldIdentifier).Any() == true ? "true" : null;
+    private string? AriaDisabled => Disabled ? "true" : null;
+    private string? AriaReadOnly => ReadOnly ? "true" : null;
     private bool IsOpen => isOpen && !Disabled && !ReadOnly;
 
     private IReadOnlyList<TValue> VisibleItems => GetVisibleItems();
@@ -144,6 +154,9 @@
 
     [Parameter]
     public bool ReadOnly { get; set; }
+
+    [Parameter]
+    public bool Required { get; set; }
 
     [Parameter]
     public bool OpenOnFocus { get; set; } = true;

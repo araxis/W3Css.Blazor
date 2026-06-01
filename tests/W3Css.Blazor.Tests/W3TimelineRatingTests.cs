@@ -75,8 +75,10 @@ public sealed class W3TimelineRatingTests
         var cut = context.Render<W3Rating>(parameters => parameters
             .Add(p => p.Value, value)
             .Add(p => p.ValueChanged, next => value = next)
+            .Add(p => p.ValueExpression, () => value)
             .Add(p => p.Max, 5)
             .Add(p => p.Label, "Satisfaction")
+            .Add(p => p.Required, true)
             .Add(p => p.Clearable, true)
             .Add(p => p.ShowValue, true)
             .Add(p => p.Gap, 4)
@@ -87,6 +89,7 @@ public sealed class W3TimelineRatingTests
         var buttons = cut.FindAll("button[role='radio']");
 
         Assert.Equal("Satisfaction", group.GetAttribute("aria-label"));
+        Assert.Equal("true", group.GetAttribute("aria-required"));
         Assert.Equal("false", group.GetAttribute("aria-readonly"));
         Assert.Equal("false", group.GetAttribute("aria-disabled"));
         Assert.Contains("rating-extra", group.GetAttribute("class"));

@@ -594,6 +594,7 @@ public sealed class W3DocsSmokeTests
         Assert.Contains("Extra attributes on the progress track", progressPage.Markup);
 
         var ratingPage = context.Render<RatingPage>();
+        Assert.Contains("Required Rating", ratingPage.Markup);
         Assert.Contains("Extra attributes on the rating group", ratingPage.Markup);
 
         var stepperPage = context.Render<StepperPage>();
@@ -875,23 +876,29 @@ public sealed class W3DocsSmokeTests
         Assert.Contains("Extra attributes on the time input", timeInputPage.Markup);
 
         var sliderPage = context.Render<SliderPage>();
+        Assert.Contains("ValueText", sliderPage.Markup);
         Assert.Contains("Extra attributes on the range input", sliderPage.Markup);
 
         var switchPage = context.Render<SwitchPage>();
+        Assert.Contains("Required Switch", switchPage.Markup);
         Assert.Contains("Primary", switchPage.Markup);
         Assert.Contains("Extra attributes on the checkbox input", switchPage.Markup);
 
         var colorInputPage = context.Render<ColorInputPage>();
+        Assert.Contains("Required", colorInputPage.Markup);
         Assert.Contains("Extra attributes on the picker root or native color input", colorInputPage.Markup);
 
         var fileInputPage = context.Render<FileInputPage>();
+        Assert.Contains("AriaLabel", fileInputPage.Markup);
         Assert.Contains("Extra attributes on the file input", fileInputPage.Markup);
 
         var autocompletePage = context.Render<AutocompletePage>();
+        Assert.Contains("Required Autocomplete", autocompletePage.Markup);
         Assert.Contains("Surface", autocompletePage.Markup);
         Assert.Contains("Extra attributes on the autocomplete input", autocompletePage.Markup);
 
         var dropZonePage = context.Render<DropZonePage>();
+        Assert.Contains("Required", dropZonePage.Markup);
         Assert.Contains("Drop-zone background color class", dropZonePage.Markup);
         Assert.Contains("Extra attributes on the drop-zone root", dropZonePage.Markup);
     }

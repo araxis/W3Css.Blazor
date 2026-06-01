@@ -20,6 +20,7 @@ public sealed class W3DropZoneTests
             .Add(p => p.Name, "assets")
             .Add(p => p.Accept, ".png,.jpg")
             .Add(p => p.Multiple, true)
+            .Add(p => p.Required, true)
             .Add(p => p.Label, "Drop assets")
             .Add(p => p.Description, "or choose files")
             .Add(p => p.AcceptHint, "PNG or JPG")
@@ -35,6 +36,7 @@ public sealed class W3DropZoneTests
         var browseButton = cut.Find(".w3-drop-zone-browse");
 
         Assert.Equal("false", zone.GetAttribute("aria-disabled"));
+        Assert.Equal("true", zone.GetAttribute("aria-required"));
         Assert.Contains("w3-drop-zone", zone.GetAttribute("class"));
         Assert.Contains("w3-padding-large", zone.GetAttribute("class"));
         Assert.Contains("w3-border", zone.GetAttribute("class"));
@@ -50,6 +52,8 @@ public sealed class W3DropZoneTests
         Assert.Equal("assets", input.GetAttribute("name"));
         Assert.Equal(".png,.jpg", input.GetAttribute("accept"));
         Assert.True(input.HasAttribute("multiple"));
+        Assert.True(input.HasAttribute("required"));
+        Assert.Equal("true", input.GetAttribute("aria-required"));
         Assert.Equal("Drop assets", input.GetAttribute("aria-label"));
         Assert.Contains("w3-drop-zone-input", input.GetAttribute("class"));
         Assert.Equal("asset-drop", browseButton.GetAttribute("for"));
@@ -145,6 +149,7 @@ public sealed class W3DropZoneTests
             InputFileContent.CreateFromText("second", "second.svg"));
 
         Assert.Equal(["first.png", "second.svg"], selectedFileNames);
+        Assert.Equal("Selected files", cut.Find("ul").GetAttribute("aria-label"));
         Assert.Contains("first.png", cut.Markup);
         Assert.Contains("second.svg", cut.Markup);
     }

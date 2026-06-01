@@ -53,18 +53,34 @@ The bundle is just these two concatenated; you can link them individually instea
 ## First Components
 
 ```razor
-<W3Button Color="W3Color.Teal" Round="W3Round.Medium">Save</W3Button>
+<W3ThemeProvider Theme="W3Theme.Default">
+    <W3Button Color="W3Color.Primary" Round="W3Round.Medium">Save</W3Button>
 
-<W3Alert Kind="W3AlertKind.Success" Title="Saved">
-    Your changes were saved.
-</W3Alert>
+    <W3Alert Kind="W3AlertKind.Success" Title="Saved">
+        Your changes were saved.
+    </W3Alert>
 
-<W3Card Depth="W3CardDepth.Four" Round="W3Round.Medium">
-    <p>Card content</p>
-</W3Card>
+    <W3Card Depth="W3CardDepth.Four" Round="W3Round.Medium">
+        <p>Card content</p>
 
-<W3Image Src="logo.svg" Alt="Application logo" Width="96" Height="96" Responsive="true" />
+        <Actions>
+            <W3Button Border="true">Cancel</W3Button>
+            <W3Button Color="W3Color.Primary" TextColor="W3Color.White">Save</W3Button>
+        </Actions>
+    </W3Card>
+
+    <W3ActionRow Label="Table actions" JustifyStart="true">
+        <W3Button Border="true">Edit</W3Button>
+        <W3Button Border="true">Archive</W3Button>
+    </W3ActionRow>
+
+    <W3Image Src="logo.svg" Alt="Application logo" Width="96" Height="96" Responsive="true" />
+</W3ThemeProvider>
 ```
+
+For app screens, start with the layout and data primitives that already handle the
+repetitive spacing work: `W3AppShell`, `W3AppBar`, `W3Card`, `W3DataTable`,
+`W3Form`, and `W3ActionRow`.
 
 ## Repository Layout
 
@@ -95,10 +111,10 @@ Pass `-PackageVersion 0.1.0` to check a specific published version.
 
 Branch names:
 
-- `feature/<short-topic>`
+- `work/<short-topic>`
 - `fix/<short-topic>`
 - `docs/<short-topic>`
-- `release/<version>`
+- `chore/<short-topic>`
 
 Commit examples:
 

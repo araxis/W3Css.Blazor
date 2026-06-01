@@ -1084,3 +1084,11 @@ Last updated: 2026-06-01
   - `dotnet test tests/W3Css.Blazor.Tests/W3Css.Blazor.Tests.csproj --configuration Release --no-build` (463 passing);
   - `dotnet pack src/W3Css.Blazor/W3Css.Blazor.csproj --configuration Release --no-build`;
   - browser-verified `/components/action-row`, `/components/form`, `/components/table`, and `/components/list-item` on port 5016: action rows render with expected 6-8px gaps, wrap behavior, no visible errors, and no horizontal overflow.
+
+## 2026-06-01 - Release Quality Docs Sweep
+
+- Refreshed README quick-start examples to show the current themed app primitives, action spacing, and neutral branch flow.
+- Updated changelog and memory files so the first public release is treated as complete and current `main` is documented as post-0.1.0 work.
+- Made the release workflow resolve an omitted manual version from the project file instead of carrying a stale default.
+- Added release-quality tests that guard README branch guidance, post-release memory wording, and neutral comparison-library language in public docs.
+- Verified focused release-quality tests, Release build, 466-test Release suite, and package creation.

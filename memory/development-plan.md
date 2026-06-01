@@ -1,6 +1,6 @@
 # Step-by-Step Development Plan
 
-Last updated: 2026-05-31
+Last updated: 2026-06-01
 
 ## Phase 1: Foundation (Complete)
 
@@ -19,13 +19,10 @@ Last updated: 2026-05-31
 - Categorized component catalog, per-topic documentation pages, API tables, navigation and pager chains, and source links.
 - Doc smoke checks and route coverage for changed routes.
 
-## Phase 5: Package And Release Readiness (In Progress)
+## Phase 5: Package And Release Readiness (Complete)
 
-- Package metadata and release automation are in place.
-- Current release blocker items:
-  - Push the current `main` commits.
-  - Push tag `v0.1.0` only after confirming the NuGet publish secret/path is ready.
-  - NuGet publish credential validation in actual release run.
+- Package metadata, release automation, first public package release, and consumer smoke tooling are in place.
+- Future releases should be planned as normal version-bump and release-note slices.
 
 ## Phase 6: W3.CSS-Loyal Consolidation (Complete)
 
@@ -34,11 +31,9 @@ Last updated: 2026-05-31
   - Feature folds into canonical components (`W3Table.Dense`, `W3ColorInput.ShowPalette`, `W3Tabs` close/add, `W3Modal.Actions`).
   - Alias shims that duplicate canonical concepts were intentionally removed.
 
-## Phase 7: Theming, Defaults, And Ease Of Use (In Progress)
+## Phase 7: Theming, Defaults, And Ease Of Use (Complete)
 
-- Theme-token MVP shipped, semantic status tokens shipped, and themed-by-default polish completed for most components.
-- Remaining work is optional but valuable:
-  - optional focus-ring/theming polish.
+- Theme-token MVP, semantic status tokens, themed-by-default polish, and focus-ring/theming polish are shipped.
 
 ## Current Status Check
 
@@ -46,5 +41,5 @@ Last updated: 2026-05-31
   - `dotnet build W3Css.Blazor.slnx --configuration Release`
   - `dotnet test tests/W3Css.Blazor.Tests/W3Css.Blazor.Tests.csproj --configuration Release --no-build`
 
-- Components implemented: 124 component files plus docs topic coverage.
-- Test coverage: 416 passing tests.
+- Components implemented: 126 component files plus docs topic coverage.
+- Test coverage: 466 passing tests.

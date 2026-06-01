@@ -75,6 +75,9 @@
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 
+    /// <summary>
+    /// Value of the active tab panel. Two-way bindable with <see cref="ActiveValueChanged"/>.
+    /// </summary>
     [Parameter]
     public string? ActiveValue { get; set; }
 

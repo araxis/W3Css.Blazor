@@ -280,6 +280,9 @@
         .Add(ErrorTextColor.ToTextClass())
         .ToString();
 
+    /// <summary>
+    /// Items rendered by the table after optional filtering, sorting, and paging.
+    /// </summary>
     [Parameter]
     public IEnumerable<TItem>? Items { get; set; }
 
@@ -289,6 +292,9 @@
     [Parameter]
     public RenderFragment? Toolbar { get; set; }
 
+    /// <summary>
+    /// Optional template rendered in the actions column for each row.
+    /// </summary>
     [Parameter]
     public RenderFragment<TItem>? RowActions { get; set; }
 
@@ -310,6 +316,9 @@
     [Parameter]
     public bool Loading { get; set; }
 
+    /// <summary>
+    /// Shows the built-in error state instead of table rows.
+    /// </summary>
     [Parameter]
     public bool Error { get; set; }
 
@@ -331,6 +340,9 @@
     [Parameter]
     public bool ShowEmptyIcon { get; set; } = true;
 
+    /// <summary>
+    /// Shows the built-in search field above the table.
+    /// </summary>
     [Parameter]
     public bool Searchable { get; set; } = true;
 

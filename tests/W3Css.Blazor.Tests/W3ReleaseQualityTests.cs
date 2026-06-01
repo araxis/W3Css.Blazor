@@ -4,7 +4,7 @@ namespace W3Css.Blazor.Tests;
 
 public sealed class W3ReleaseQualityTests
 {
-    private const string CurrentVersion = "0.2.0";
+    private const string CurrentVersion = "0.3.0";
 
     [Fact]
     public void ReadmeDocumentsCurrentAppPrimitivesAndBranchFlow()
@@ -26,7 +26,7 @@ public sealed class W3ReleaseQualityTests
         var developmentPlan = ReadRepositoryFile("memory", "development-plan.md");
         var projectMemory = ReadRepositoryFile("memory", "project-memory.md");
 
-        Assert.Contains("version `0.2.0`", currentState);
+        Assert.Contains("version `0.3.0`", currentState);
         Assert.Contains("Package And Release Readiness (Complete)", developmentPlan);
         Assert.Contains("Current package baseline", projectMemory);
         Assert.DoesNotContain("points at current `HEAD`", currentState);

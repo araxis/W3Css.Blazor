@@ -131,6 +131,9 @@
 
     private string SidebarAriaHidden => SidebarOpen ? "false" : "true";
 
+    /// <summary>
+    /// Content rendered in the shell header region.
+    /// </summary>
     [Parameter]
     public RenderFragment? Header { get; set; }
 
@@ -143,6 +146,9 @@
     [Parameter]
     public RenderFragment? Footer { get; set; }
 
+    /// <summary>
+    /// Controls whether the sidebar is visible.
+    /// </summary>
     [Parameter]
     public bool SidebarOpen { get; set; } = true;
 
@@ -158,6 +164,9 @@
     [Parameter]
     public bool SidebarAnimate { get; set; } = true;
 
+    /// <summary>
+    /// Sidebar width in pixels. Values less than or equal to zero fall back to the default width.
+    /// </summary>
     [Parameter]
     public int SidebarWidth { get; set; } = 260;
 

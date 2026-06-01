@@ -30,6 +30,9 @@
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 
+    /// <summary>
+    /// Accessible label applied to the action group when <see cref="AriaLabelledBy"/> is not set.
+    /// </summary>
     [Parameter]
     public string Label { get; set; } = "Actions";
 

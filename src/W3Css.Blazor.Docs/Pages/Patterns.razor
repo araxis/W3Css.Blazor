@@ -1,0 +1,343 @@
+@page "/patterns"
+@using System.ComponentModel.DataAnnotations
+@using Microsoft.AspNetCore.Components.Forms
+
+<PageTitle>Patterns</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>Patterns</h1>
+    <DocPager PreviousHref="installation" PreviousText="Installation" NextHref="components" NextText="Components" />
+
+    <p class="w3-large">End-to-end starting points for app and site screens built from the existing component set.</p>
+    <p>These patterns favor stable layout, visible loading/empty/error states, accessible labels, and action spacing that holds up in real workflows.</p>
+
+    <DocExample Title="App Shell Dashboard" Description="Use an app shell for persistent header/sidebar regions, then keep dashboard content in ordinary cards, tables, and action rows." Code="@AppShellDashboardCode">
+        <W3AppShell Contained="true"
+                    SidebarWidth="220"
+                    SidebarOpen="@dashboardSidebarOpen"
+                    SidebarOpenChanged="value => dashboardSidebarOpen = value"
+                    SidebarOverlay="true"
+                    HeaderColor="W3Color.Teal"
+                    HeaderTextColor="W3Color.White"
+                    SidebarColor="W3Color.White"
+                    MainClass="w3-padding-16"
+                    Style="min-height:420px">
+            <Header>
+                <W3AppBar Color="W3Color.Teal"
+                          TextColor="W3Color.White"
+                          Title="Operations"
+                          ShowMenuButton="true"
+                          MenuExpanded="@dashboardSidebarOpen"
+                          MenuControls="pattern-dashboard-sidebar"
+                          OnMenuClick="ToggleDashboardSidebar"
+                          ActionsClass="w3-hide-small">
+                    <Actions>
+                        <W3Button Border="true" TextColor="W3Color.White" Round="W3Round.Medium">Export</W3Button>
+                    </Actions>
+                </W3AppBar>
+            </Header>
+            <Sidebar>
+                <nav id="pattern-dashboard-sidebar" class="w3-bar-block" aria-label="Dashboard sections">
+                    <a class="w3-bar-item w3-button w3-teal" href="#">Overview</a>
+                    <a class="w3-bar-item w3-button" href="#">Reports</a>
+                    <a class="w3-bar-item w3-button" href="#">Settings</a>
+                </nav>
+            </Sidebar>
+            <ChildContent>
+                <W3Grid Padding="true" Style="grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));">
+                    @foreach (var metric in DashboardMetrics)
+                    {
+                        <W3Card Depth="W3CardDepth.Two" Round="W3Round.Medium" Class="w3-padding">
+                            <p class="w3-small w3-text-grey">@metric.Label</p>
+                            <p class="w3-xxlarge w3-margin-0">@metric.Value</p>
+                            <p>@metric.Detail</p>
+                        </W3Card>
+                    }
+                </W3Grid>
+
+                <W3DataTable TItem="DashboardTask"
+                             Items="DashboardTasks"
+                             Searchable="false"
+                             Pageable="false"
+                             AriaLabel="Dashboard tasks"
+                             Class="w3-margin-top">
+                    <ChildContent>
+                        <W3DataColumn TItem="DashboardTask" Title="Task" CellText="@((DashboardTask task) => task.Name)" />
+                        <W3DataColumn TItem="DashboardTask" Title="Owner" CellText="@((DashboardTask task) => task.Owner)" />
+                        <W3DataColumn TItem="DashboardTask" Title="State" CellText="@((DashboardTask task) => task.State)" />
+                    </ChildContent>
+                    <RowActions Context="task">
+                        <W3Button Size="W3Size.Small" Border="true" Round="W3Round.Medium">Open</W3Button>
+                    </RowActions>
+                </W3DataTable>
+            </ChildContent>
+        </W3AppShell>
+    </DocExample>
+
+    <DocExample Title="Validated Settings Form" Description="Use W3Form with Blazor validation, W3Field labels, and W3ActionRow for a footer that wraps cleanly on narrow screens." Code="@ValidatedSettingsFormCode">
+        <W3Form Model="@settings" OnValidSubmit="SaveSettings" Busy="@settingsSaving" Class="w3-card w3-padding w3-white">
+            <DataAnnotationsValidator />
+            <ValidationSummary class="w3-text-red" />
+
+            <W3Field TValue="string" Label="Workspace name" ForId="pattern-workspace" For="@(() => settings.WorkspaceName)" HelpText="Shown in the app header and browser title.">
+                <W3Input id="pattern-workspace" @bind-Value="settings.WorkspaceName" Placeholder="Design operations" />
+            </W3Field>
+
+            <W3Field TValue="string" Label="Notification email" ForId="pattern-email" For="@(() => settings.NotificationEmail)">
+                <W3Input id="pattern-email" Type="email" @bind-Value="settings.NotificationEmail" Placeholder="team@example.com" />
+            </W3Field>
+
+            <W3ActionRow Label="Settings form actions" JustifyStart="true" Class="w3-margin-top">
+                <W3Button Type="submit" Color="W3Color.Primary" TextColor="W3Color.White" Round="W3Round.Medium" Disabled="@settingsSaving">Save settings</W3Button>
+                <W3Button Border="true" Round="W3Round.Medium" Disabled="@settingsSaving">Cancel</W3Button>
+            </W3ActionRow>
+        </W3Form>
+    </DocExample>
+
+    <DocExample Title="Searchable Data Table With Empty/Error State" Description="Start with built-in search and row actions, then make empty and error states explicit so failure modes stay designed." Code="@SearchableTableCode">
+        <W3DataTable TItem="CustomerRow"
+                     Items="@FilteredCustomers"
+                     SearchText="@customerSearch"
+                     SearchTextChanged="value => customerSearch = value"
+                     SearchPlaceholder="Search customers"
+                     EmptyText="No customers found"
+                     EmptyDescription="Adjust the search or clear filters."
+                     Error="@customersFailed"
+                     ErrorText="Customers could not load"
+                     ErrorDescription="Retry the request or check the service status."
+                     PageSize="4"
+                     AriaLabel="Customers">
+            <Toolbar>
+                <W3ActionRow Label="Customer table actions" JustifyStart="true">
+                    <W3Button Border="true" Round="W3Round.Medium" OnClick="ToggleCustomerError">Toggle error</W3Button>
+                    <W3Button Border="true" Round="W3Round.Medium" OnClick="ClearCustomerSearch">Clear search</W3Button>
+                </W3ActionRow>
+            </Toolbar>
+            <ChildContent>
+                <W3DataColumn TItem="CustomerRow" Title="Customer" CellText="@((CustomerRow row) => row.Name)" SortKey="@((CustomerRow row) => row.Name)" />
+                <W3DataColumn TItem="CustomerRow" Title="Plan" CellText="@((CustomerRow row) => row.Plan)" />
+                <W3DataColumn TItem="CustomerRow" Title="Health" CellText="@((CustomerRow row) => row.Health)" />
+            </ChildContent>
+            <RowActions Context="customer">
+                <W3Button Size="W3Size.Small" Border="true" Round="W3Round.Medium">View</W3Button>
+                <W3Button Size="W3Size.Small" Color="W3Color.Primary" TextColor="W3Color.White" Round="W3Round.Medium">Message</W3Button>
+            </RowActions>
+        </W3DataTable>
+    </DocExample>
+
+    <DocExample Title="Modal/Message-Box Workflow With Action Spacing" Description="Use W3Modal for editable content and W3MessageBox for confirmation. Let W3ActionRow own footer spacing." Code="@ModalWorkflowCode">
+        <W3ActionRow Label="Record workflow actions" JustifyStart="true">
+            <W3Button Color="W3Color.Primary" TextColor="W3Color.White" Round="W3Round.Medium" OnClick="() => editOpen = true">Edit record</W3Button>
+            <W3Button Border="true" Round="W3Round.Medium" OnClick="() => confirmArchiveOpen = true">Archive</W3Button>
+        </W3ActionRow>
+
+        <W3Modal Id="pattern-edit-modal"
+                 Title="Edit record"
+                 @bind-Open="editOpen"
+                 ContentStyle="max-width:560px">
+            <ChildContent>
+                <W3Field TValue="string" Label="Display name" ForId="pattern-display-name">
+                    <W3Input id="pattern-display-name" @bind-Value="recordName" />
+                </W3Field>
+            </ChildContent>
+            <Actions>
+                <W3Button Border="true" Round="W3Round.Medium" OnClick="() => editOpen = false">Cancel</W3Button>
+                <W3Button Color="W3Color.Primary" TextColor="W3Color.White" Round="W3Round.Medium" OnClick="SaveRecord">Save</W3Button>
+            </Actions>
+        </W3Modal>
+
+        <W3MessageBox @bind-Visible="confirmArchiveOpen"
+                      Title="Archive record?"
+                      Message="Archived records stay searchable but leave the active queue."
+                      YesText="Archive"
+                      NoText="Keep active"
+                      CancelText="Cancel"
+                      OnResult="HandleArchiveResult" />
+
+        <p class="doc-muted">Last workflow result: @workflowResult</p>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Related Topics</h2>
+        <div class="w3-bar w3-border w3-white">
+            <NavLink class="w3-bar-item w3-button" href="components/theming">Theming</NavLink>
+            <NavLink class="w3-bar-item w3-button" href="components/app-shell">App Shell</NavLink>
+            <NavLink class="w3-bar-item w3-button" href="components/form">Form</NavLink>
+            <NavLink class="w3-bar-item w3-button" href="components/data-table">Data Table</NavLink>
+            <NavLink class="w3-bar-item w3-button" href="components/modal">Modal</NavLink>
+            <NavLink class="w3-bar-item w3-button" href="components/empty-state">Empty State</NavLink>
+        </div>
+    </section>
+
+    <DocPager PreviousHref="installation" PreviousText="Installation" NextHref="components" NextText="Components" />
+</W3Container>
+
+@code {
+    private bool dashboardSidebarOpen = true;
+    private readonly SettingsModel settings = new() { WorkspaceName = "Design operations", NotificationEmail = "team@example.com" };
+    private bool settingsSaving;
+    private string? customerSearch;
+    private bool customersFailed;
+    private bool editOpen;
+    private bool confirmArchiveOpen;
+    private string recordName = "Quarterly review";
+    private string workflowResult = "none yet";
+
+    private static readonly Metric[] DashboardMetrics =
+    [
+        new("Open tasks", "12", "4 waiting for review"),
+        new("Cycle time", "2.4d", "Down 18%"),
+        new("Release health", "Good", "No blockers")
+    ];
+
+    private static readonly DashboardTask[] DashboardTasks =
+    [
+        new("Review landing copy", "Nora", "In review"),
+        new("Ship settings panel", "Omar", "Ready"),
+        new("Audit data states", "Iris", "Queued")
+    ];
+
+    private static readonly CustomerRow[] Customers =
+    [
+        new("Northwind Studio", "Team", "Healthy"),
+        new("Contoso Labs", "Business", "Watch"),
+        new("Fabrikam Works", "Starter", "Healthy"),
+        new("Adventure Supply", "Business", "Blocked")
+    ];
+
+    private IEnumerable<CustomerRow> FilteredCustomers => string.IsNullOrWhiteSpace(customerSearch)
+        ? Customers
+        : Customers.Where(customer =>
+            customer.Name.Contains(customerSearch, StringComparison.OrdinalIgnoreCase)
+            || customer.Plan.Contains(customerSearch, StringComparison.OrdinalIgnoreCase)
+            || customer.Health.Contains(customerSearch, StringComparison.OrdinalIgnoreCase));
+
+    private void ToggleDashboardSidebar(MouseEventArgs _) => dashboardSidebarOpen = !dashboardSidebarOpen;
+
+    private async Task SaveSettings(EditContext _)
+    {
+        settingsSaving = true;
+        await Task.Delay(50);
+        settingsSaving = false;
+    }
+
+    private void ToggleCustomerError(MouseEventArgs _) => customersFailed = !customersFailed;
+
+    private void ClearCustomerSearch(MouseEventArgs _) => customerSearch = null;
+
+    private void SaveRecord(MouseEventArgs _)
+    {
+        editOpen = false;
+        workflowResult = $"saved {recordName}";
+    }
+
+    private void HandleArchiveResult(bool? result)
+    {
+        workflowResult = result switch
+        {
+            true => "record archived",
+            false => "record kept active",
+            _ => "archive cancelled"
+        };
+    }
+
+    private sealed record Metric(string Label, string Value, string Detail);
+
+    private sealed record DashboardTask(string Name, string Owner, string State);
+
+    private sealed record CustomerRow(string Name, string Plan, string Health);
+
+    private sealed class SettingsModel
+    {
+        [Required]
+        public string? WorkspaceName { get; set; }
+
+        [Required]
+        [EmailAddress]
+        public string? NotificationEmail { get; set; }
+    }
+
+    private const string AppShellDashboardCode = """
+<W3AppShell Contained="true" SidebarWidth="220" @bind-SidebarOpen="sidebarOpen">
+    <Header>
+        <W3AppBar Title="Operations"
+                  ShowMenuButton="true"
+                  MenuExpanded="@sidebarOpen"
+                  OnMenuClick="() => sidebarOpen = !sidebarOpen" />
+    </Header>
+    <Sidebar>
+        <nav class="w3-bar-block" aria-label="Dashboard sections">
+            <a class="w3-bar-item w3-button w3-teal" href="#">Overview</a>
+            <a class="w3-bar-item w3-button" href="#">Reports</a>
+            <a class="w3-bar-item w3-button" href="#">Settings</a>
+        </nav>
+    </Sidebar>
+    <ChildContent>
+        <W3DataTable TItem="DashboardTask" Items="tasks" Searchable="false">
+            <ChildContent>
+                <W3DataColumn TItem="DashboardTask" Title="Task" CellText="@((DashboardTask task) => task.Name)" />
+                <W3DataColumn TItem="DashboardTask" Title="Owner" CellText="@((DashboardTask task) => task.Owner)" />
+                <W3DataColumn TItem="DashboardTask" Title="State" CellText="@((DashboardTask task) => task.State)" />
+            </ChildContent>
+        </W3DataTable>
+    </ChildContent>
+</W3AppShell>
+""";
+
+    private const string ValidatedSettingsFormCode = """
+<W3Form Model="@settings" OnValidSubmit="SaveSettings" Busy="@settingsSaving">
+    <DataAnnotationsValidator />
+    <ValidationSummary class="w3-text-red" />
+
+    <W3Field TValue="string" Label="Workspace name" ForId="workspace" For="@(() => settings.WorkspaceName)">
+        <W3Input id="workspace" @bind-Value="settings.WorkspaceName" />
+    </W3Field>
+
+    <W3ActionRow Label="Settings form actions" JustifyStart="true">
+        <W3Button Type="submit" Color="W3Color.Primary" TextColor="W3Color.White">Save settings</W3Button>
+        <W3Button Border="true">Cancel</W3Button>
+    </W3ActionRow>
+</W3Form>
+""";
+
+    private const string SearchableTableCode = """
+<W3DataTable TItem="CustomerRow"
+             Items="customers"
+             SearchPlaceholder="Search customers"
+             EmptyText="No customers found"
+             Error="@customersFailed"
+             ErrorText="Customers could not load">
+    <ChildContent>
+        <W3DataColumn TItem="CustomerRow" Title="Customer" CellText="@((CustomerRow row) => row.Name)" />
+        <W3DataColumn TItem="CustomerRow" Title="Plan" CellText="@((CustomerRow row) => row.Plan)" />
+    </ChildContent>
+    <RowActions Context="customer">
+        <W3Button Size="W3Size.Small" Border="true">View</W3Button>
+    </RowActions>
+</W3DataTable>
+""";
+
+    private const string ModalWorkflowCode = """
+<W3ActionRow Label="Record workflow actions" JustifyStart="true">
+    <W3Button Color="W3Color.Primary" TextColor="W3Color.White" OnClick="() => editOpen = true">Edit record</W3Button>
+    <W3Button Border="true" OnClick="() => confirmArchiveOpen = true">Archive</W3Button>
+</W3ActionRow>
+
+<W3Modal Title="Edit record" @bind-Open="editOpen">
+    <ChildContent>
+        <W3Input @bind-Value="recordName" />
+    </ChildContent>
+    <Actions>
+        <W3Button Border="true" OnClick="() => editOpen = false">Cancel</W3Button>
+        <W3Button Color="W3Color.Primary" TextColor="W3Color.White" OnClick="SaveRecord">Save</W3Button>
+    </Actions>
+</W3Modal>
+
+<W3MessageBox @bind-Visible="confirmArchiveOpen"
+              Title="Archive record?"
+              Message="Archived records stay searchable but leave the active queue."
+              YesText="Archive"
+              NoText="Keep active"
+              CancelText="Cancel" />
+""";
+}

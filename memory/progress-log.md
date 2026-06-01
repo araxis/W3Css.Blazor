@@ -4,6 +4,20 @@ Last updated: 2026-06-01
 
 ## 2026-06-01
 
+- Started the 0.3.0 adoption-polish release slice:
+  - bumped package metadata to `0.3.0`;
+  - added `docs/release-notes/0.3.0.md` and a matching changelog section;
+  - added a top-level Patterns docs guide for app shell dashboard, validated settings form, searchable data table, and modal/message-box workflows;
+  - improved README onboarding with a first app screen sample and direct adoption links;
+  - added selected public XML documentation summaries and a guard test for high-use public APIs;
+  - updated Versions docs, nav, component index adoption links, and memory files.
+- Verification for the 0.3.0 adoption-polish slice:
+  - `dotnet build W3Css.Blazor.slnx --configuration Release /nr:false` (0 warnings, 0 errors);
+  - `dotnet test W3Css.Blazor.slnx --configuration Release --no-build /nr:false` (493 passing);
+  - `dotnet pack src/W3Css.Blazor/W3Css.Blazor.csproj --configuration Release --no-build --output artifacts/packages /nr:false`;
+  - `pwsh ./tools/package-consumer-smoke.ps1 -PackageVersion 0.3.0 -PackageSource artifacts/packages`;
+  - browser sweep for `/`, `/components`, `/components/theming`, `/components/app-shell`, `/components/form`, `/components/data-table`, `/components/modal`, `/components/empty-state`, `/components/versions`, and `/patterns`: no visible error text, console errors, or horizontal overflow.
+
 - Final release-readiness pass:
   - bumped package metadata to `0.2.0`;
   - added `docs/release-notes/0.2.0.md` and a matching changelog section;

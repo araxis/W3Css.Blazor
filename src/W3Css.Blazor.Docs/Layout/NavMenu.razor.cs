@@ -109,6 +109,7 @@ public partial class NavMenu : IAsyncDisposable
         [
             new("", "Overview", NavLinkMatch.All, "home start"),
             new("installation", "Installation", Keywords: "setup install nuget stylesheet"),
+            new("patterns", "Patterns", Keywords: "recipes examples samples dashboard form table modal"),
             new("components", "Components", Keywords: "catalog index all"),
         ]),
         new("Customization",

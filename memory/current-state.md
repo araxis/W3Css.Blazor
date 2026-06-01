@@ -17,7 +17,7 @@ Last updated: 2026-06-01
 - Current docs routes in `src/W3Css.Blazor.Docs/Pages/ComponentTopics`: 119 pages.
 - Tests in project source: 58 `.cs` test files.
 - Test suite status:
-  - `dotnet test tests/W3Css.Blazor.Tests/W3Css.Blazor.Tests.csproj --configuration Release` -> **453 passing tests**.
+  - `dotnet test tests/W3Css.Blazor.Tests/W3Css.Blazor.Tests.csproj --configuration Release` -> **459 passing tests**.
 - Build status:
   - `dotnet build W3Css.Blazor.slnx --configuration Release` → **0 warnings, 0 errors**.
 
@@ -30,7 +30,7 @@ Last updated: 2026-06-01
   - Data display: `W3Table`, `W3DataTable`, `W3DataColumn`, `W3List`, `W3ListItem`, `W3Timeline`, `W3TimelineItem`, `W3TreeView`, `W3Chart`.
   - Feedback and overlays: `W3Alert`, `W3Spinner`, `W3MessageBox`, `W3Modal`, `W3Toast`, `W3ToastProvider`, `W3ToastService`, `W3ToastMessage`, `W3ToastOptions`, `W3ToastPosition`, `W3Overlay`, `W3FocusTrap`, `W3Skeleton`.
   - Content/media/utilities: `W3Image`, `W3ImageList`, `W3ImageListItem`, `W3Slideshow`, `W3Slide`, `W3Chat`, `W3ChatMessage`, `W3Code`, `W3Note`, `W3Quote`, `W3Icon`, `W3Highlighter`, `W3Button`, `W3IconButton`, `W3ToggleIconButton`, `W3Fab`, `W3Tag`, `W3Chip`, `W3ChipSet`, `W3Badge`, `W3Avatar`, `W3AvatarGroup`, `W3Footer`, `W3Spacer`, `W3Progress`, `W3ProgressCircular`, `W3Stack`, `W3Divider`, `W3Skeleton`.
-  - Theme support: `W3Theme` and `W3ThemeProvider` with bundled `w3-theme.css`.
+  - Theme support: `W3Theme` and `W3ThemeProvider` with bundled `w3-theme.css`, brand tokens, surface tokens, status tokens, dark mode, focus tokens, and radius/font controls.
 
 ## Standards and Packaging
 
@@ -87,4 +87,5 @@ Last updated: 2026-06-01
 - The app-bar layout polish pass added explicit slot-presence classes and title-fill behavior so navigation/actions align as trailing app-bar content without large auto-margin gaps.
 - The swipe-area feature pass added `W3SwipeArea`, `W3SwipeDirection`, and `W3SwipeEventArgs` for pointer gesture surfaces with directional callbacks, docs, and bUnit coverage.
 - Neutral terminology cleanup is complete; source, docs, tests, and memory no longer use external comparison-library names for the compatibility work.
-- Remaining planned work is optional: additional theme token expansion and visual quality sweeps.
+- The semantic theme-token expansion added provider-controlled Info/Success/Warning/Danger/Note tokens that match existing W3.CSS status colors by default and can be reused through `W3Color` values, alert kinds, toasts, text, borders, and hover utilities.
+- Remaining planned work is optional: visual quality sweeps.

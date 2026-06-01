@@ -179,7 +179,7 @@ This model is intentionally similar to mature Blazor libraries, while keeping im
 
 | Feature | Status | Notes |
 | --- | --- | --- |
-| Theme token system | Implemented (MVP) | `W3Theme` + `W3ThemeProvider` emit CSS variables + token classes; `W3Color.Primary/Secondary/Accent/Surface` adopt the theme. One place → reskin everything, arbitrary hex, dark mode, and tokenized keyboard focus rings. Non-breaking/opt-in; "themed by default" is the next phase. See [[decisions]]. |
+| Theme token system | Implemented | `W3Theme` + `W3ThemeProvider` emit CSS variables + token classes; `W3Color.Primary/Secondary/Accent/Surface/Info/Success/Warning/Danger/Note` adopt the theme. One place → reskin everything, arbitrary hex, dark mode, semantic status colors, and tokenized keyboard focus rings. Non-breaking/opt-in; see [[decisions]]. |
 | W3.CSS static file bundling | Implemented | W3.CSS 5.01 bundle in package assets. |
 | Docs-only icon/font/theme support | Implemented | Icons and fonts are loaded only in docs examples; not bundled by default. |
 | Icon strategy | Implemented | Consumer-provided icon classes via `W3Icon`. |
@@ -225,7 +225,7 @@ This model is intentionally similar to mature Blazor libraries, while keeping im
 | Content display and timeline | Implemented | Tree, chat, timeline, data table, rating, drop zone, and gallery coverage. |
 | Feedback and loading | Implemented | Spinner, skeleton, toast, file, autocomplete, and alert coverage. |
 | Package validation | Implemented | `dotnet pack` generates `W3Css.Blazor.0.1.0.nupkg`; CI uploads package artifact. |
-| Test count | Implemented | `dotnet test` reports 449 passing tests. |
+| Test count | Implemented | `dotnet test` reports 459 passing tests. |
 
 ## Component Compatibility Backlog
 

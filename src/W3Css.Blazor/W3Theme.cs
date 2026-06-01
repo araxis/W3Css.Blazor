@@ -42,6 +42,36 @@ public sealed record W3Theme
     /// <summary>Themed border color.</summary>
     public string Border { get; init; } = "#e0e0e0";
 
+    /// <summary>Information status color.</summary>
+    public string Info { get; init; } = "#0a6fc2";
+
+    /// <summary>Foreground color used on top of <see cref="Info"/>.</summary>
+    public string OnInfo { get; init; } = "#ffffff";
+
+    /// <summary>Success status color.</summary>
+    public string Success { get; init; } = "#008a00";
+
+    /// <summary>Foreground color used on top of <see cref="Success"/>.</summary>
+    public string OnSuccess { get; init; } = "#ffffff";
+
+    /// <summary>Warning status color.</summary>
+    public string Warning { get; init; } = "#ffb305";
+
+    /// <summary>Foreground color used on top of <see cref="Warning"/>.</summary>
+    public string OnWarning { get; init; } = "#000000";
+
+    /// <summary>Danger status color.</summary>
+    public string Danger { get; init; } = "#dd0000";
+
+    /// <summary>Foreground color used on top of <see cref="Danger"/>.</summary>
+    public string OnDanger { get; init; } = "#ffffff";
+
+    /// <summary>Note status color.</summary>
+    public string Note { get; init; } = "#fff599";
+
+    /// <summary>Foreground color used on top of <see cref="Note"/>.</summary>
+    public string OnNote { get; init; } = "#000000";
+
     /// <summary>Default corner radius exposed as <c>--w3-radius</c>.</summary>
     public string Radius { get; init; } = "4px";
 
@@ -83,6 +113,16 @@ public sealed record W3Theme
         Background = "#15171a",
         OnBackground = "#e6e8eb",
         Border = "#3a3a3a",
+        Info = "#64b5f6",
+        OnInfo = "#061b2f",
+        Success = "#81c784",
+        OnSuccess = "#06220a",
+        Warning = "#ffd54f",
+        OnWarning = "#251a00",
+        Danger = "#ef9a9a",
+        OnDanger = "#2a0606",
+        Note = "#fff59d",
+        OnNote = "#1f1a00",
         FocusColor = "var(--w3-primary)"
     };
 }

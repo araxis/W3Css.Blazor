@@ -410,6 +410,11 @@ internal static class W3ClassMaps
             W3Color.Secondary => "secondary",
             W3Color.Accent => "accent",
             W3Color.Surface => "surface",
+            W3Color.Info => "info",
+            W3Color.Success => "success",
+            W3Color.Warning => "warning",
+            W3Color.Danger => "danger",
+            W3Color.Note => "note",
             _ => null
         };
     }

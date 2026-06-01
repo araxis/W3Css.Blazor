@@ -1045,3 +1045,11 @@ Last updated: 2026-06-01
 - Removed stale low-risk backlog rows from the docs catalog because no queued second-round component gaps remain.
 - Added focused component tests and docs smoke coverage for the new route and parameter table.
 - Verified focused docs/component tests, Release build, the 453-test Release suite, package creation, and `/components/swipe-area` in the in-app browser with swipe interaction, no console errors, and no horizontal overflow.
+
+## 2026-06-01 - Semantic Theme Token Pass
+
+- Expanded `W3Theme` with Info, Success, Warning, Danger, and Note status colors plus matching foreground tokens.
+- Added status token classes to the bundled theme stylesheet for background, text, border, and hover utility use while preserving current W3.CSS defaults.
+- Added `W3Color.Info`, `W3Color.Success`, `W3Color.Warning`, `W3Color.Danger`, and `W3Color.Note` so semantic colors can be used anywhere color parameters are accepted.
+- Updated `W3ThemeProvider` variable output, regenerated the single-file stylesheet bundle, refreshed theming docs, and added focused theme/docs smoke coverage.
+- Verified focused theme/docs tests, Release build, the 459-test Release suite, package creation, and `/components/theming` in the in-app browser with rendered status-token examples, no console errors, and no horizontal overflow.

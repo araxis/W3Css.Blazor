@@ -373,6 +373,10 @@ public sealed class W3DocsSmokeTests
         Assert.Contains("FocusColor", cut.Markup);
         Assert.Contains("--w3-focus-color", cut.Markup);
         Assert.Contains("keyboard focus rings", cut.Markup);
+        Assert.Contains("Info / OnInfo", cut.Markup);
+        Assert.Contains("--w3-success", cut.Markup);
+        Assert.Contains("W3Color.Danger", cut.Markup);
+        Assert.Contains("Status tokens keep alerts", cut.Markup);
     }
 
     [Fact]

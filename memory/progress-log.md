@@ -12,6 +12,11 @@ Last updated: 2026-06-01
   - expanded package consumer smoke tooling so a clean consumer project can install from either a local package folder or the public feed and compile current app primitives: theme provider, card actions, data table, action row, and empty state;
   - added release-quality tests for package version alignment and consumer smoke coverage;
   - verified a locally packed `W3Css.Blazor.0.2.0.nupkg` with the package consumer smoke script against `artifacts/packages`.
+- Release completion:
+  - merged the 0.2.0 release-readiness slice into `main`;
+  - tagged `v0.2.0` on the merged release commit;
+  - verified the release workflow passed through restore, build, test, pack, release artifact creation, publish configuration validation, and package publishing;
+  - verified `./tools/package-consumer-smoke.ps1 -PackageVersion 0.2.0` from the public package feed.
 
 - Continued the app-structure visual polish pass on `W3AppBar`:
   - added explicit root classes for leading, title, navigation, and action slot presence;

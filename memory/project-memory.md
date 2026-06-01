@@ -35,11 +35,11 @@ Last updated: 2026-06-01
 
 ## Current Priority
 
-1. Release completion:
-   - merge the 0.2.0 release-readiness slice.
-   - tag `v0.2.0`, publish package artifacts, and verify consumer smoke checks.
-2. Future quality:
+1. Post-release quality:
    - continue small visual/API quality sweeps as normal PR slices.
+   - keep README, changelog, release notes, and memory aligned after each release.
+2. Future releases:
+   - bump package version, add release notes, tag, publish package artifacts, and verify consumer smoke checks.
 
 ## Memory Files
 

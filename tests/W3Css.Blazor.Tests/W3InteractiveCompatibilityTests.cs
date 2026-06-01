@@ -29,6 +29,14 @@ public sealed class W3InteractiveCompatibilityTests
         Assert.Null(cut.Find("[role='dialog']").GetAttribute("aria-label"));
         Assert.Contains("Delete item?", cut.Markup);
         Assert.Contains("This action cannot be undone.", cut.Markup);
+        Assert.Contains("w3-modal-actions", cut.Find(".w3-modal-actions").GetAttribute("class"));
+        Assert.All(
+            cut.FindAll(".w3-message-box-action"),
+            button =>
+            {
+                Assert.DoesNotContain("w3-bar-item", button.GetAttribute("class"));
+                Assert.DoesNotContain("w3-margin-right", button.GetAttribute("class"));
+            });
 
         cut.FindAll("button").First(button => button.TextContent.Trim() == "Delete").Click();
 

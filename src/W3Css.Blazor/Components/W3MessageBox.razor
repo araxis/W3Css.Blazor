@@ -27,13 +27,13 @@
     <Actions>
         @if (!string.IsNullOrWhiteSpace(CancelText))
         {
-            <W3Button Class="w3-bar-item w3-margin-right" Border="true" OnClick="CancelAsync">@CancelText</W3Button>
+            <W3Button Class="w3-message-box-action" Border="true" OnClick="CancelAsync">@CancelText</W3Button>
         }
         @if (!string.IsNullOrWhiteSpace(NoText))
         {
-            <W3Button Class="w3-bar-item w3-margin-right" Border="true" OnClick="NoAsync">@NoText</W3Button>
+            <W3Button Class="w3-message-box-action" Border="true" OnClick="NoAsync">@NoText</W3Button>
         }
-        <W3Button Class="w3-bar-item" Color="@YesColor" TextColor="@YesTextColor" OnClick="YesAsync">@YesText</W3Button>
+        <W3Button Class="w3-message-box-action" Color="@YesColor" TextColor="@YesTextColor" OnClick="YesAsync">@YesText</W3Button>
     </Actions>
 </W3Modal>
 

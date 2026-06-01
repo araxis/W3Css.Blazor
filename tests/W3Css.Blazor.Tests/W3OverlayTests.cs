@@ -410,7 +410,7 @@ public sealed class W3OverlayTests
     }
 
     [Fact]
-    public void ModalRendersActionsFooterInABar()
+    public void ModalRendersActionsFooterInActionRow()
     {
         using var context = new BunitContext();
         var open = true;
@@ -428,12 +428,16 @@ public sealed class W3OverlayTests
             })));
 
         var modal = cut.Find("[role='dialog']");
-        var footer = cut.Find(".w3-bar");
+        var footer = cut.Find(".w3-modal-footer");
+        var actionsRow = cut.Find(".w3-modal-actions");
 
         Assert.Contains("w3-modal", modal.GetAttribute("class"));
         Assert.Contains("w3-card-4", cut.Find(".w3-modal-content").GetAttribute("class"));
-        Assert.Contains("w3-bar", footer.GetAttribute("class"));
+        Assert.Contains("w3-modal-footer", footer.GetAttribute("class"));
+        Assert.Contains("w3-light-grey", footer.GetAttribute("class"));
+        Assert.Contains("w3-text-black", footer.GetAttribute("class"));
+        Assert.Contains("w3-modal-actions", actionsRow.GetAttribute("class"));
         Assert.Contains("Delete this item permanently?", cut.Markup);
-        Assert.Contains("Delete", footer.TextContent);
+        Assert.Contains("Delete", actionsRow.TextContent);
     }
 }

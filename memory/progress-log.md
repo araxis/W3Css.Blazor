@@ -4,6 +4,17 @@ Last updated: 2026-06-01
 
 ## 2026-06-01
 
+- Continued the dialog visual polish pass on `W3Modal` and `W3MessageBox`:
+  - replaced the modal `Actions` footer bar with a dedicated wrapping, right-aligned action row;
+  - added component-scoped modal footer/action spacing without modifying the bundled W3.CSS source;
+  - removed manual message-box button bar-item and margin classes so modal action spacing is owned in one place;
+  - refreshed modal and message-box docs wording and added focused rendering coverage for the new action-row classes.
+- Verification:
+  - focused overlay/message-box/docs tests: 22 passing;
+  - `dotnet test tests/W3Css.Blazor.Tests/W3Css.Blazor.Tests.csproj --configuration Release` (449 passing);
+  - `dotnet build W3Css.Blazor.slnx --configuration Release` (0 warnings, 0 errors);
+  - `dotnet pack src/W3Css.Blazor/W3Css.Blazor.csproj --configuration Release --no-build`;
+  - browser-verified `/components/modal` and `/components/message-box` after restarting the docs server on port 5016: footer buttons are consistently spaced, right-aligned, wrapped by the action row, no visible error appears, and no horizontal overflow appears.
 - Continued the feedback behavior polish pass on `W3Alert`:
   - added opt-in dismissible alerts with a close button, `Visible` binding, `VisibleChanged`, and `OnDismiss`;
   - added configurable `AriaLive` announcements for alert surfaces;

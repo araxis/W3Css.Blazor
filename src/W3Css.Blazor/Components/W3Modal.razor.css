@@ -1,0 +1,43 @@
+.w3-modal-footer {
+    box-sizing: border-box;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+.w3-modal-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    width: 100%;
+}
+
+.w3-modal-footer ::deep .w3-button,
+.w3-modal-footer ::deep .w3-btn {
+    float: none !important;
+    margin: 0 !important;
+}
+
+.w3-modal-actions ::deep .w3-bar-item {
+    float: none;
+    width: auto;
+}
+
+@media (max-width: 600px) {
+    .w3-modal-footer,
+    .w3-modal-actions {
+        justify-content: stretch;
+    }
+
+    .w3-modal-actions ::deep .w3-button,
+    .w3-modal-actions ::deep .w3-btn {
+        flex: 1 1 auto;
+        min-width: 7rem;
+    }
+}

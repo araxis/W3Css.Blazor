@@ -160,8 +160,8 @@ This model is intentionally similar to mature Blazor libraries, while keeping im
 
 | Component | Status | Notes |
 | --- | --- | --- |
-| `W3Modal` | Implemented | Blazor-controlled modal with backdrop, close handling, explicit accessible labeling, and an `Actions` footer convenience. |
-| `W3MessageBox` | Implemented | Confirm/alert prompt with `@bind-Visible`, explicit accessible labeling, and `bool?` Yes/No/Cancel result. |
+| `W3Modal` | Implemented | Blazor-controlled modal with backdrop, close handling, explicit accessible labeling, and a wrapping right-aligned `Actions` footer convenience. |
+| `W3MessageBox` | Implemented | Confirm/alert prompt with `@bind-Visible`, explicit accessible labeling, consistent modal action spacing, and `bool?` Yes/No/Cancel result. |
 | `W3Tooltip` | Implemented | CSS-first tooltip wrapper. |
 | `W3Popover` | Implemented | Action/detail overlays with anchored popover behavior, content-control linkage, and Escape close behavior. |
 | `W3Drawer` | Implemented | Side drawer for temporary/persistent overlays with Escape dismissal and explicit accessible labeling. |

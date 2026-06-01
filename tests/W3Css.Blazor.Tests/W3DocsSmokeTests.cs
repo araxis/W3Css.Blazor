@@ -735,6 +735,8 @@ public sealed class W3DocsSmokeTests
 
         var popoverPage = context.Render<PopoverPage>();
         Assert.Contains("Surface / Black", popoverPage.Markup);
+        Assert.Contains("Keyboard Interaction", popoverPage.Markup);
+        Assert.Contains("Escape", popoverPage.Markup);
         Assert.Contains("Extra attributes on the root wrapper", popoverPage.Markup);
 
         var focusTrapPage = context.Render<FocusTrapPage>();

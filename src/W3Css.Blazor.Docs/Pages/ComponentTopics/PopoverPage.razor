@@ -8,6 +8,7 @@
 
     <p class="w3-large">`W3Popover` renders click-controlled contextual content for filters, quick actions, and compact detail panels.</p>
     <p>Use it when the content is more interactive or structured than a tooltip but lighter than a modal.</p>
+    <p>Keyboard users can close an open popover with Escape and return focus to the trigger.</p>
 
     <DocExample Title="Filter Popover" Code="@FilterCode">
         <W3Popover Label="Open filters"
@@ -43,6 +44,19 @@
             </ChildContent>
         </W3Popover>
     </DocExample>
+
+    <section class="doc-section">
+        <h2>Keyboard Interaction</h2>
+        <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
+            <thead>
+                <tr><th>Key</th><th>Behavior</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Enter / Space</td><td>Uses the native button behavior to toggle the popover trigger.</td></tr>
+                <tr><td>Escape</td><td>Closes the open popover and returns focus to the trigger.</td></tr>
+            </tbody>
+        </W3Table>
+    </section>
 
     <section class="doc-section">
         <h2>Parameters</h2>

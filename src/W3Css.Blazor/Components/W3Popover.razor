@@ -1,13 +1,18 @@
+@using Microsoft.AspNetCore.Components.Web
+@using Microsoft.JSInterop
 @using W3Css.Blazor.Internal
 @inherits W3ComponentBase
 
 <div @attributes="AdditionalAttributes"
      class="@CssClass"
-     style="@StyleValue">
+     style="@StyleValue"
+     @onkeydown="HandleKeyDownAsync">
     <button type="button"
+            @ref="TriggerElement"
             class="@TriggerCssClass"
             aria-haspopup="dialog"
             aria-expanded="@AriaExpanded"
+            aria-controls="@ContentId"
             disabled="@Disabled"
             @onclick="ToggleAsync">
         @if (TriggerContent is not null)
@@ -27,7 +32,8 @@
              @onclick="CloseAsync"></div>
     }
 
-    <div class="@ContentCssClass"
+    <div id="@ContentId"
+         class="@ContentCssClass"
          style="@ContentStyleValue"
          role="dialog"
          aria-label="@Label"
@@ -38,6 +44,10 @@
 </div>
 
 @code {
+    private readonly string contentId = $"w3-popover-{Guid.NewGuid():N}";
+
+    private ElementReference TriggerElement { get; set; }
+
     private string CssClass => BuildClass(
         "w3-popover",
         $"w3-popover-{Placement.ToString().ToLowerInvariant()}",
@@ -71,6 +81,8 @@
     private string AriaExpanded => Open ? "true" : "false";
 
     private string AriaHidden => Open ? "false" : "true";
+
+    private string ContentId => contentId;
 
     [Parameter]
     public string Label { get; set; } = "Open popover";
@@ -136,19 +148,51 @@
             return;
         }
 
-        Open = !Open;
-        await OpenChanged.InvokeAsync(Open);
+        await SetOpenAsync(!Open);
     }
 
     private async Task CloseAsync()
     {
-        if (!Open)
+        await SetOpenAsync(false);
+    }
+
+    private async Task HandleKeyDownAsync(KeyboardEventArgs args)
+    {
+        if (Disabled)
         {
             return;
         }
 
-        Open = false;
-        await OpenChanged.InvokeAsync(false);
+        if (args.Key == "Escape" && Open)
+        {
+            await SetOpenAsync(false);
+            await TryFocusTriggerAsync();
+        }
+    }
+
+    private async Task SetOpenAsync(bool open)
+    {
+        if (Open == open)
+        {
+            return;
+        }
+
+        Open = open;
+        await OpenChanged.InvokeAsync(open);
+    }
+
+    private async Task TryFocusTriggerAsync()
+    {
+        try
+        {
+            await TriggerElement.FocusAsync();
+        }
+        catch (InvalidOperationException)
+        {
+        }
+        catch (JSException)
+        {
+        }
     }
 
     private static string? CombineStyle(params string?[] styles)

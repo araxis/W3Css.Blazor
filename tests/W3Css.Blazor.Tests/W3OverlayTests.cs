@@ -125,10 +125,12 @@ public sealed class W3OverlayTests
         Assert.Contains("popover-extra", root.GetAttribute("class"));
         Assert.Equal("margin-left: 2rem", root.GetAttribute("style"));
         Assert.Equal("false", button.GetAttribute("aria-expanded"));
+        Assert.Equal("dialog", button.GetAttribute("aria-haspopup"));
         Assert.Contains("w3-teal", button.GetAttribute("class"));
         Assert.Contains("w3-text-white", button.GetAttribute("class"));
         Assert.Contains("popover-trigger-extra", button.GetAttribute("class"));
         Assert.Equal("true", content.GetAttribute("aria-hidden"));
+        Assert.Equal(button.GetAttribute("aria-controls"), content.GetAttribute("id"));
         Assert.DoesNotContain("w3-show", content.GetAttribute("class"));
 
         button.Click();
@@ -148,6 +150,34 @@ public sealed class W3OverlayTests
         cut.Find(".w3-popover-close-layer").Click();
 
         Assert.False(open);
+    }
+
+    [Fact]
+    public void PopoverClosesWithEscapeAndReturnsTriggerFocus()
+    {
+        using var context = new BunitContext();
+        context.JSInterop.Mode = JSRuntimeMode.Loose;
+
+        var open = true;
+        var cut = context.Render<W3Popover>(parameters => parameters
+            .Add(p => p.Label, "Open filters")
+            .Add(p => p.Open, open)
+            .Add(p => p.OpenChanged, EventCallback.Factory.Create<bool>(this, value => open = value))
+            .Add(p => p.ChildContent, "Filter body"));
+
+        Assert.Contains("w3-popover-open", cut.Find(".w3-popover").GetAttribute("class"));
+        Assert.Equal("true", cut.Find("button").GetAttribute("aria-expanded"));
+
+        cut.Find("[role='dialog']").KeyDown(new KeyboardEventArgs { Key = "Escape" });
+
+        cut.WaitForAssertion(() =>
+        {
+            Assert.False(open);
+            Assert.DoesNotContain("w3-popover-open", cut.Find(".w3-popover").GetAttribute("class"));
+            Assert.DoesNotContain("w3-show", cut.Find("[role='dialog']").GetAttribute("class"));
+            Assert.Equal("false", cut.Find("button").GetAttribute("aria-expanded"));
+            Assert.Equal("true", cut.Find("[role='dialog']").GetAttribute("aria-hidden"));
+        });
     }
 
     [Fact]

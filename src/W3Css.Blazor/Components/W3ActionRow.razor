@@ -1,0 +1,77 @@
+@using W3Css.Blazor.Internal
+@inherits W3ComponentBase
+
+<div @attributes="AdditionalAttributes"
+     class="@CssClass"
+     style="@StyleValue"
+     role="@Role"
+     aria-label="@AriaLabel"
+     aria-labelledby="@AriaLabelledBy">
+    @ChildContent
+</div>
+
+@code {
+    private string CssClass => BuildClass(
+        "w3-action-row",
+        Wrap ? "w3-action-row-wrap" : null,
+        JustifyStart ? "w3-action-row-start" : null,
+        JustifyCenter ? "w3-action-row-center" : null,
+        JustifyBetween ? "w3-action-row-between" : null,
+        !JustifyStart && !JustifyCenter && !JustifyBetween ? "w3-action-row-end" : null,
+        Border ? "w3-border" : null,
+        Round.ToClass(),
+        Color.ToBackgroundClass(),
+        TextColor.ToTextClass());
+
+    private string? StyleValue => CombineStyle(Gap >= 0 ? $"--w3-action-row-gap:{Gap}px" : null, Style);
+
+    private string? AriaLabel => string.IsNullOrWhiteSpace(AriaLabelledBy) ? Label : null;
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public string Label { get; set; } = "Actions";
+
+    [Parameter]
+    public string? AriaLabelledBy { get; set; }
+
+    [Parameter]
+    public string Role { get; set; } = "group";
+
+    [Parameter]
+    public bool Wrap { get; set; } = true;
+
+    [Parameter]
+    public bool JustifyStart { get; set; }
+
+    [Parameter]
+    public bool JustifyCenter { get; set; }
+
+    [Parameter]
+    public bool JustifyBetween { get; set; }
+
+    [Parameter]
+    public bool Border { get; set; }
+
+    [Parameter]
+    public W3Round Round { get; set; } = W3Round.None;
+
+    [Parameter]
+    public int Gap { get; set; } = 8;
+
+    [Parameter]
+    public W3Color Color { get; set; } = W3Color.None;
+
+    [Parameter]
+    public W3Color TextColor { get; set; } = W3Color.None;
+
+    private static string? CombineStyle(params string?[] styles)
+    {
+        var style = string.Join(';', styles
+            .Where(value => !string.IsNullOrWhiteSpace(value))
+            .Select(value => value!.Trim().TrimEnd(';')));
+
+        return string.IsNullOrWhiteSpace(style) ? null : style;
+    }
+}

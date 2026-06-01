@@ -1,0 +1,28 @@
+.w3-action-row {
+    align-items: center;
+    display: flex;
+    gap: var(--w3-action-row-gap, 8px);
+    justify-content: flex-end;
+    min-width: 0;
+    max-width: 100%;
+}
+
+.w3-action-row-wrap {
+    flex-wrap: wrap;
+}
+
+.w3-action-row-start {
+    justify-content: flex-start;
+}
+
+.w3-action-row-center {
+    justify-content: center;
+}
+
+.w3-action-row-between {
+    justify-content: space-between;
+}
+
+.w3-action-row-end {
+    justify-content: flex-end;
+}

@@ -230,6 +230,7 @@ public partial class NavMenu : IAsyncDisposable
             new("components/toggle-icon-button", "Toggle Icon Button"),
             new("components/fab", "Floating Action Button", Keywords: "fab"),
             new("components/button-group", "Button Group"),
+            new("components/action-row", "Action Row", Keywords: "actions buttons commands footer form"),
             new("components/alert", "Alert"),
             new("components/table", "Table", Keywords: "simple table"),
             new("components/data-table", "Data Table", Keywords: "datagrid data grid sortable"),

@@ -12,12 +12,42 @@
     <DocExample Title="Striped Table" Code="@StripedCode">
         <W3Table Striped="true" Bordered="true" Hoverable="true" Responsive="true" aria-label="Component status">
             <thead>
-                <tr><th>Component</th><th>Status</th><th>Notes</th></tr>
+                <tr><th>Component</th><th>Status</th><th>Notes</th><th>Actions</th></tr>
             </thead>
             <tbody>
-                <tr><td>W3Button</td><td>Implemented</td><td>Button class wrapper.</td></tr>
-                <tr><td>W3Badge</td><td>Implemented</td><td>Small count wrapper.</td></tr>
-                <tr><td>W3Table</td><td>Implemented</td><td>Responsive wrapper option.</td></tr>
+                <tr>
+                    <td>W3Button</td>
+                    <td>Implemented</td>
+                    <td>Button class wrapper.</td>
+                    <td>
+                        <W3ActionRow Label="Button row actions" Gap="6">
+                            <W3Button Size="W3Size.Small" Border="true">Open</W3Button>
+                            <W3Button Size="W3Size.Small" Border="true">Edit</W3Button>
+                        </W3ActionRow>
+                    </td>
+                </tr>
+                <tr>
+                    <td>W3Badge</td>
+                    <td>Implemented</td>
+                    <td>Small count wrapper.</td>
+                    <td>
+                        <W3ActionRow Label="Badge row actions" Gap="6">
+                            <W3Button Size="W3Size.Small" Border="true">Open</W3Button>
+                            <W3Button Size="W3Size.Small" Border="true">Edit</W3Button>
+                        </W3ActionRow>
+                    </td>
+                </tr>
+                <tr>
+                    <td>W3Table</td>
+                    <td>Implemented</td>
+                    <td>Responsive wrapper option.</td>
+                    <td>
+                        <W3ActionRow Label="Table row actions" Gap="6">
+                            <W3Button Size="W3Size.Small" Border="true">Open</W3Button>
+                            <W3Button Size="W3Size.Small" Border="true">Edit</W3Button>
+                        </W3ActionRow>
+                    </td>
+                </tr>
             </tbody>
         </W3Table>
     </DocExample>
@@ -65,12 +95,42 @@
     private const string StripedCode = """
 <W3Table Striped="true" Bordered="true" Hoverable="true" Responsive="true" aria-label="Component status">
     <thead>
-        <tr><th>Component</th><th>Status</th><th>Notes</th></tr>
+        <tr><th>Component</th><th>Status</th><th>Notes</th><th>Actions</th></tr>
     </thead>
     <tbody>
-        <tr><td>W3Button</td><td>Implemented</td><td>Button class wrapper.</td></tr>
-        <tr><td>W3Badge</td><td>Implemented</td><td>Small count wrapper.</td></tr>
-        <tr><td>W3Table</td><td>Implemented</td><td>Responsive wrapper option.</td></tr>
+        <tr>
+            <td>W3Button</td>
+            <td>Implemented</td>
+            <td>Button class wrapper.</td>
+            <td>
+                <W3ActionRow Label="Button row actions" Gap="6">
+                    <W3Button Size="W3Size.Small" Border="true">Open</W3Button>
+                    <W3Button Size="W3Size.Small" Border="true">Edit</W3Button>
+                </W3ActionRow>
+            </td>
+        </tr>
+        <tr>
+            <td>W3Badge</td>
+            <td>Implemented</td>
+            <td>Small count wrapper.</td>
+            <td>
+                <W3ActionRow Label="Badge row actions" Gap="6">
+                    <W3Button Size="W3Size.Small" Border="true">Open</W3Button>
+                    <W3Button Size="W3Size.Small" Border="true">Edit</W3Button>
+                </W3ActionRow>
+            </td>
+        </tr>
+        <tr>
+            <td>W3Table</td>
+            <td>Implemented</td>
+            <td>Responsive wrapper option.</td>
+            <td>
+                <W3ActionRow Label="Table row actions" Gap="6">
+                    <W3Button Size="W3Size.Small" Border="true">Open</W3Button>
+                    <W3Button Size="W3Size.Small" Border="true">Edit</W3Button>
+                </W3ActionRow>
+            </td>
+        </tr>
     </tbody>
 </W3Table>
 """;

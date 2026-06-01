@@ -4,6 +4,17 @@ Last updated: 2026-06-01
 
 ## 2026-06-01
 
+- Continued the keyboard interaction polish pass on `W3Sidebar`:
+  - added Escape close behavior when focus is inside the sidebar;
+  - made the open sidebar surface focusable with `tabindex="0"`;
+  - added optional `Label` support for sidebar `aria-label`;
+  - documented the sidebar keyboard interaction table and added focused overlay/docs coverage.
+- Verification:
+  - focused sidebar/docs tests: 7 passing;
+  - `dotnet test tests/W3Css.Blazor.Tests/W3Css.Blazor.Tests.csproj --configuration Release` (444 passing);
+  - `dotnet build W3Css.Blazor.slnx --configuration Release` (0 warnings, 0 errors);
+  - `dotnet pack src/W3Css.Blazor/W3Css.Blazor.csproj --configuration Release --no-build`;
+  - browser-verified `/components/sidebar` after restarting the docs server on port 5016: the keyboard section renders, the sidebar opens with a focusable labeled surface, Escape closes it, no visible error appears, and no horizontal overflow appears.
 - Continued the keyboard interaction polish pass on `W3Popover`:
   - added Escape close behavior with focus returned to the trigger;
   - connected trigger `aria-controls` to a generated popover content id;

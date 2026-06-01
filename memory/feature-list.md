@@ -62,7 +62,7 @@ This model is intentionally similar to mature Blazor libraries, while keeping im
 | `W3Direction` | Implemented | Direction utility composition (`ltr`/`rtl`). |
 | `W3Responsive` | Implemented | Overflow wrapper for wide content. |
 | `W3AppShell` | Implemented | App shell with sidebar/main/footer/header orchestration. |
-| `W3Sidebar` | Implemented | Sidebar helper for app/site layouts. |
+| `W3Sidebar` | Implemented | Sidebar helper for app/site layouts with overlay dismissal, Escape close behavior, and optional accessible labeling. |
 | `W3AppBar` | Implemented | App header composition with title, menu, nav, actions, and placement options. |
 | `W3Toolbar` | Implemented | Dense action rows for editors, tables, and dashboards. |
 | `W3Divider` | Implemented | Divider utility and section breaks. |
@@ -224,7 +224,7 @@ This model is intentionally similar to mature Blazor libraries, while keeping im
 | Content display and timeline | Implemented | Tree, chat, timeline, data table, rating, drop zone, and gallery coverage. |
 | Feedback and loading | Implemented | Spinner, skeleton, toast, file, autocomplete, and alert coverage. |
 | Package validation | Implemented | `dotnet pack` generates `W3Css.Blazor.0.1.0.nupkg`; CI uploads package artifact. |
-| Test count | Implemented | `dotnet test` reports 443 passing tests. |
+| Test count | Implemented | `dotnet test` reports 444 passing tests. |
 
 ## Component Compatibility Backlog
 

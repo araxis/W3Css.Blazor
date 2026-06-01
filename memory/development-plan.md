@@ -35,10 +35,10 @@ Last updated: 2026-06-01
 
 - Theme-token MVP, semantic status tokens, themed-by-default polish, and focus-ring/theming polish are shipped.
 
-## Phase 8: Adoption Polish (In Progress)
+## Phase 8: Adoption Polish (Complete)
 
 - 0.3.0 stays non-breaking and avoids broad new component surface.
-- Adds first-screen adoption patterns, README onboarding improvements, selected public XML documentation guard coverage, package/release metadata, and browser verification for top adoption pages.
+- Added first-screen adoption patterns, README onboarding improvements, selected public XML documentation guard coverage, package/release metadata, local/public package smoke verification, and browser verification for top adoption pages.
 
 ## Current Status Check
 

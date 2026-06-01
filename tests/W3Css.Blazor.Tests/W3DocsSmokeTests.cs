@@ -679,6 +679,9 @@ public sealed class W3DocsSmokeTests
 
         var paginationPage = context.Render<PaginationPage>();
         Assert.Contains("Primary", paginationPage.Markup);
+        Assert.Contains("Keyboard Interaction", paginationPage.Markup);
+        Assert.Contains("ArrowRight", paginationPage.Markup);
+        Assert.Contains("Home", paginationPage.Markup);
         Assert.Contains("Extra attributes on the pagination nav", paginationPage.Markup);
 
         var sidebarPage = context.Render<SidebarPage>();

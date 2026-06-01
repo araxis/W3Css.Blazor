@@ -4,7 +4,8 @@
 <nav @attributes="AdditionalAttributes"
      class="@CssClass"
      style="@Style"
-     aria-label="@AriaLabel">
+     aria-label="@AriaLabel"
+     @onkeydown="HandleKeyDownAsync">
     @if (ShowPreviousNext)
     {
         <button type="button"
@@ -91,5 +92,30 @@
 
         CurrentPage = page;
         await CurrentPageChanged.InvokeAsync(page);
+    }
+
+    private async Task HandleKeyDownAsync(KeyboardEventArgs args)
+    {
+        switch (args.Key)
+        {
+            case "ArrowRight":
+            case "Right":
+            case "ArrowDown":
+            case "Down":
+                await SelectPageAsync(CurrentPage + 1);
+                break;
+            case "ArrowLeft":
+            case "Left":
+            case "ArrowUp":
+            case "Up":
+                await SelectPageAsync(CurrentPage - 1);
+                break;
+            case "Home":
+                await SelectPageAsync(1);
+                break;
+            case "End":
+                await SelectPageAsync(PageCount);
+                break;
+        }
     }
 }

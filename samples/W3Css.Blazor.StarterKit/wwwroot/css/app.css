@@ -85,6 +85,19 @@ body {
     min-height: 150px;
 }
 
+.starter-dashboard-charts {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.starter-chart-card h2 {
+    margin-top: 0;
+}
+
+.starter-chart {
+    display: block;
+    width: 100%;
+}
+
 .doc-muted {
     color: #667085;
 }
@@ -112,6 +125,26 @@ body {
 .w3-theme-root[data-w3-dark='true'] .w3-data-table-sort {
     background-color: #223132 !important;
     color: var(--w3-on-surface) !important;
+}
+
+.w3-theme-root[data-w3-dark='true'] .w3-data-table-toolbar,
+.w3-theme-root[data-w3-dark='true'] .w3-data-table-footer {
+    background-color: var(--w3-surface) !important;
+    color: var(--w3-on-surface) !important;
+    border-color: var(--w3-border) !important;
+}
+
+.w3-theme-root[data-w3-dark='true'] .w3-chart-grid {
+    stroke: var(--w3-border);
+}
+
+.w3-theme-root[data-w3-dark='true'] .w3-chart-axis {
+    stroke: #6f8283;
+}
+
+.w3-theme-root[data-w3-dark='true'] .w3-chart-label {
+    fill: var(--w3-on-surface) !important;
+    opacity: 0.85;
 }
 
 .w3-theme-root[data-w3-dark='true'] .w3-input,

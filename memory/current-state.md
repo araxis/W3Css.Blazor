@@ -57,6 +57,7 @@ Last updated: 2026-06-02
 - The 0.3.0 adoption-polish slice is complete: Patterns docs, README adoption path, release notes, versions docs, selected public XML documentation guard coverage, local package smoke, public package smoke, and top-page browser sweep all passed without changing vendored W3.CSS.
 - The 0.4.0 quality-hardening release is complete: broad public API XML documentation guards, docs/API parity guards, browser sweep tooling, release notes, versions docs, README links, local package smoke, public package smoke, browser sweep, and memory updates passed without changing vendored W3.CSS.
 - The 0.5.0 starter-kit adoption release is complete: sample app, starter-kit docs, component-index starter path, README links, release notes, expanded package smoke coverage, docs browser sweep, starter app browser verification, tag workflow, and public package smoke all passed without changing vendored W3.CSS.
+- The starter-kit dashboard now includes meaningful chart examples and dark-mode table-toolbar contrast polish for the sample app.
 - Documentation consistency review is complete for current component topic parameter tables; each implemented rendering surface now has explicit inherited attribute rows where applicable.
 - The small docs/API gap pass now covers `W3Table`, `W3Drawer`, `W3Menu`, and `W3ProgressCircular` parameter tables with focused docs smoke coverage.
 - The second docs/API gap pass now covers `W3DataTable`, `W3DateRangePicker`, `W3MessageBox`, `W3Modal`, and `W3Navbar` parameter tables with focused docs smoke coverage.

@@ -1321,3 +1321,8 @@ Last updated: 2026-06-02
 - Strengthened `W3Chart` grid and axis strokes by deriving them from `currentColor`, keeping chart structure readable across light and dark themes without starter-specific CSS.
 - Added release-quality guards so the bundled package stylesheet keeps the improved chart stroke rules.
 - Browser verification on the starter dashboard confirmed light mode uses the package stylesheet only, has no horizontal overflow, and renders grid/axis strokes from the light chart text color.
+
+## 2026-06-02 - 0.5.1 Patch Release Preparation
+
+- Kept the already published `v0.5.0` tag intact and prepared `0.5.1` as the patch release for the starter-kit polish work merged after `0.5.0`.
+- Updated package metadata, README release link, Versions docs, changelog, release notes, and memory files for `0.5.1`.

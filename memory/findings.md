@@ -21,8 +21,8 @@ Last updated: 2026-05-31
 - Local W3.CSS animation classes now have typed component coverage through `W3Animate`, `W3Animation`, and the `W3Input` animation parameter.
 - Local W3.CSS hover background, hover text, and hover border color classes now have typed component coverage through `W3HoverColor`.
 - Local W3.CSS direction classes now have typed component coverage through `W3Direction` and `W3TextDirection`.
-- W3.CSS icon guidance expects a consuming page to include an external icon library; the library should not bundle an icon font by default.
-- Icon library pass-through now has component coverage through `W3Icon`; consumers still provide the icon library stylesheet.
+- W3.CSS icon guidance expects a consuming page to provide icon assets; W3Css.Blazor now avoids that adoption gap with a small built-in SVG catalog instead of bundling an icon font.
+- Icon pass-through still has component coverage through `W3Icon.IconClass`, while `W3IconName` is the preferred out-of-box path.
 - W3.CSS dark mode guidance is centered on toggling dark color classes such as `w3-black`; the current implementation uses `W3ThemeProvider` + theme tokens plus default component token-aware colors instead of JavaScript class toggling.
 - W3.CSS filter examples combine styled inputs with table, list, or dropdown content; in Blazor the filtering belongs in C# state while W3.CSS remains responsible for the input and result styling.
 - W3.CSS validation guidance is about checking CSS correctness and vendor extension warnings; W3Css.Blazor adapts the topic by documenting standard Blazor form validation styled with W3.CSS utilities.

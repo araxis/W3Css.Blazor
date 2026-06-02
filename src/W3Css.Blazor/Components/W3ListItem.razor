@@ -58,7 +58,7 @@
     {
         var index = 0;
 
-        if (StartContent is not null || !string.IsNullOrWhiteSpace(ResolvedStartIconClass))
+        if (StartContent is not null || HasStartIcon)
         {
             builder.OpenElement(index++, "span");
             builder.AddAttribute(index++, "class", "w3-list-item-start");
@@ -69,9 +69,11 @@
             }
             else
             {
-                builder.OpenElement(index++, "span");
-                builder.AddAttribute(index++, "class", StartIconClass);
-                builder.CloseElement();
+                builder.OpenComponent<W3Icon>(index++);
+                builder.AddAttribute(index++, nameof(W3Icon.IconName), StartIconName);
+                builder.AddAttribute(index++, nameof(W3Icon.IconClass), ResolvedStartIconClass);
+                builder.AddAttribute(index++, "Class", "w3-list-item-icon");
+                builder.CloseComponent();
             }
 
             builder.CloseElement();
@@ -123,10 +125,7 @@
             .ToString();
     }
 
-    private string StartIconClass => new W3ClassBuilder()
-        .Add("w3-list-item-icon")
-        .Add(ResolvedStartIconClass)
-        .ToString();
+    private bool HasStartIcon => StartIconName != W3IconName.None || !string.IsNullOrWhiteSpace(ResolvedStartIconClass);
 
     private string ResolvedStartIconClass => IconClass ?? StartIconClassName ?? string.Empty;
 
@@ -148,7 +147,13 @@
     public string? Text { get; set; }
 
     /// <summary>
-    /// Gets or sets the start icon class name value.
+    /// Gets or sets the built-in start icon.
+    /// </summary>
+    [Parameter]
+    public W3IconName StartIconName { get; set; } = W3IconName.None;
+
+    /// <summary>
+    /// Gets or sets the start external icon class name value.
     /// </summary>
     [Parameter]
     public string? StartIconClassName { get; set; }
@@ -166,7 +171,7 @@
     public RenderFragment? EndContent { get; set; }
 
     /// <summary>
-    /// Gets or sets the icon class value.
+    /// Gets or sets the start external icon class value.
     /// </summary>
     [Parameter]
     public string? IconClass { get; set; }

@@ -12,16 +12,16 @@
 
     <DocExample Title="Command Menu" Description="Menu items close the menu after selection by default, while disabled items remain non-interactive." Code="@CommandCode">
         <W3Menu Label="Actions"
-                IconClass="fa fa-ellipsis-v"
+                IconName="W3IconName.MoreVertical"
                 TriggerColor="W3Color.Teal"
                 TriggerTextColor="W3Color.White"
                 Placement="W3MenuPlacement.BottomEnd"
                 @bind-Open="CommandMenuOpen">
-            <W3MenuItem IconClass="fa fa-pencil" Text="Rename" Description="Change the visible page name" Shortcut="R" OnClick="@(_ => Rename())" />
-            <W3MenuItem IconClass="fa fa-copy" Text="Duplicate" Description="Create a copy in the same workspace" Shortcut="D" OnClick="@(_ => Duplicate())" />
+            <W3MenuItem IconName="W3IconName.Edit" Text="Rename" Description="Change the visible page name" Shortcut="R" OnClick="@(_ => Rename())" />
+            <W3MenuItem IconName="W3IconName.Copy" Text="Duplicate" Description="Create a copy in the same workspace" Shortcut="D" OnClick="@(_ => Duplicate())" />
             <W3MenuDivider />
-            <W3MenuItem IconClass="fa fa-trash" Text="Delete" Destructive="true" Shortcut="Del" OnClick="@(_ => Delete())" />
-            <W3MenuItem IconClass="fa fa-lock" Text="Publish locked" Disabled="true" />
+            <W3MenuItem IconName="W3IconName.Delete" Text="Delete" Destructive="true" Shortcut="Del" OnClick="@(_ => Delete())" />
+            <W3MenuItem IconName="W3IconName.Lock" Text="Publish locked" Disabled="true" />
         </W3Menu>
         <p class="w3-small w3-margin-top">Last action: @LastAction</p>
     </DocExample>
@@ -36,9 +36,9 @@
                     <span class="w3-hide-small">More</span>
                 </TriggerContent>
                 <ChildContent>
-                    <W3MenuItem IconClass="fa fa-history" Text="Version history" Href="components/versions" />
-                    <W3MenuItem IconClass="fa fa-download" Text="Export" Description="Download a static package" />
-                    <W3MenuItem IconClass="fa fa-cog" Text="Settings" CloseOnClick="false" />
+                    <W3MenuItem IconName="W3IconName.Archive" Text="Version history" Href="components/versions" />
+                    <W3MenuItem IconName="W3IconName.Download" Text="Export" Description="Download a static package" />
+                    <W3MenuItem IconName="W3IconName.Settings" Text="Settings" CloseOnClick="false" />
                 </ChildContent>
             </W3Menu>
         </W3Toolbar>
@@ -54,11 +54,11 @@
                     <td>landing-page.html</td>
                     <td><W3Tag Color="W3Color.PaleGreen" TextColor="W3Color.Black">Ready</W3Tag></td>
                     <td class="w3-right-align">
-                        <W3Menu Label="Landing page actions" IconClass="fa fa-ellipsis-v" IconOnly="true" FixedPosition="true" ShowCaret="false" TriggerBorder="true" Placement="W3MenuPlacement.BottomEnd" MinWidth="160">
-                            <W3MenuItem Dense="true" IconClass="fa fa-eye" Text="Open" />
-                            <W3MenuItem Dense="true" IconClass="fa fa-pencil" Text="Edit" />
+                        <W3Menu Label="Landing page actions" IconName="W3IconName.MoreVertical" IconOnly="true" FixedPosition="true" ShowCaret="false" TriggerBorder="true" Placement="W3MenuPlacement.BottomEnd" MinWidth="160">
+                            <W3MenuItem Dense="true" IconName="W3IconName.Eye" Text="Open" />
+                            <W3MenuItem Dense="true" IconName="W3IconName.Edit" Text="Edit" />
                             <W3MenuDivider />
-                            <W3MenuItem Dense="true" IconClass="fa fa-trash" Text="Remove" Destructive="true" />
+                            <W3MenuItem Dense="true" IconName="W3IconName.Delete" Text="Remove" Destructive="true" />
                         </W3Menu>
                     </td>
                 </tr>
@@ -76,7 +76,8 @@
                 <tr><td>Id</td><td>string?</td><td>generated</td><td>Menu panel id for `aria-controls`</td></tr>
                 <tr><td>Label</td><td>string</td><td>Menu</td><td>Trigger text and fallback menu label</td></tr>
                 <tr><td>MenuLabel</td><td>string?</td><td>null</td><td>Optional `aria-label` on the menu panel</td></tr>
-                <tr><td>IconClass</td><td>string?</td><td>null</td><td>Optional trigger icon class</td></tr>
+                <tr><td>IconName</td><td>W3IconName</td><td>None</td><td>Built-in trigger icon</td></tr>
+                <tr><td>IconClass</td><td>string?</td><td>null</td><td>Optional external trigger icon class</td></tr>
                 <tr><td>TriggerContent</td><td>RenderFragment?</td><td>null</td><td>Custom trigger button content</td></tr>
                 <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Menu items and dividers</td></tr>
                 <tr><td>Open / OpenChanged</td><td>bool / EventCallback&lt;bool&gt;</td><td>false / empty</td><td>`w3-show` and controlled open state</td></tr>
@@ -113,7 +114,8 @@
                 <tr><td>W3MenuItem</td><td>Description</td><td>string?</td><td>Secondary helper text under the label</td></tr>
                 <tr><td>W3MenuItem</td><td>Shortcut / EndContent</td><td>string? / RenderFragment?</td><td>Right-aligned shortcut or custom suffix</td></tr>
                 <tr><td>W3MenuItem</td><td>Href / Target</td><td>string?</td><td>Renders an anchor item when `Href` is set</td></tr>
-                <tr><td>W3MenuItem</td><td>IconClass</td><td>string?</td><td>Left icon class</td></tr>
+                <tr><td>W3MenuItem</td><td>IconName</td><td>W3IconName</td><td>Built-in left icon</td></tr>
+                <tr><td>W3MenuItem</td><td>IconClass</td><td>string?</td><td>Optional external left icon class</td></tr>
                 <tr><td>W3MenuItem</td><td>OnClick</td><td>EventCallback&lt;MouseEventArgs&gt;</td><td>Callback raised when the item is selected</td></tr>
                 <tr><td>W3MenuItem</td><td>Dense</td><td>bool</td><td>Compact row sizing</td></tr>
                 <tr><td>W3MenuItem</td><td>Destructive</td><td>bool</td><td>Danger styling for destructive commands</td></tr>

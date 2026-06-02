@@ -25,13 +25,13 @@
 
     <DocExample Title="Dense Audit Trail" Code="@AuditCode">
         <W3Timeline Dense="true" Label="Audit trail" LineColor="W3Color.PaleBlue" MarkerColor="W3Color.Indigo">
-            <W3TimelineItem IconClass="fa fa-check" Title="Imported" Time="08:42" Completed="true">
+            <W3TimelineItem IconName="W3IconName.Check" Title="Imported" Time="08:42" Completed="true">
                 128 records accepted.
             </W3TimelineItem>
-            <W3TimelineItem IconClass="fa fa-user" Title="Reviewed" Time="09:15" Active="true">
+            <W3TimelineItem IconName="W3IconName.User" Title="Reviewed" Time="09:15" Active="true">
                 Manual review assigned to design operations.
             </W3TimelineItem>
-            <W3TimelineItem IconClass="fa fa-clock-o" Title="Waiting" Time="09:40" MarkerColor="W3Color.Grey">
+            <W3TimelineItem IconName="W3IconName.Tasks" Title="Waiting" Time="09:40" MarkerColor="W3Color.Grey">
                 Export is queued.
             </W3TimelineItem>
         </W3Timeline>
@@ -75,7 +75,8 @@
                 <tr><td>Time</td><td>string?</td><td>null</td><td>Visible `time` text</td></tr>
                 <tr><td>DateTime</td><td>string?</td><td>null</td><td>`datetime` attribute on the `time` element</td></tr>
                 <tr><td>Marker</td><td>string?</td><td>null</td><td>Short marker text</td></tr>
-                <tr><td>IconClass</td><td>string?</td><td>null</td><td>Optional marker icon class</td></tr>
+                <tr><td>IconName</td><td>W3IconName</td><td>None</td><td>Optional built-in marker icon</td></tr>
+                <tr><td>IconClass</td><td>string?</td><td>null</td><td>Optional external marker icon class</td></tr>
                 <tr><td>MarkerContent</td><td>RenderFragment?</td><td>null</td><td>Custom marker content</td></tr>
                 <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Item body</td></tr>
                 <tr><td>Active</td><td>bool</td><td>false</td><td>State class for the current event</td></tr>
@@ -114,13 +115,13 @@
 
     private const string AuditCode = """
 <W3Timeline Dense="true" Label="Audit trail" LineColor="W3Color.PaleBlue" MarkerColor="W3Color.Indigo">
-    <W3TimelineItem IconClass="fa fa-check" Title="Imported" Time="08:42" Completed="true">
+    <W3TimelineItem IconName="W3IconName.Check" Title="Imported" Time="08:42" Completed="true">
         128 records accepted.
     </W3TimelineItem>
-    <W3TimelineItem IconClass="fa fa-user" Title="Reviewed" Time="09:15" Active="true">
+    <W3TimelineItem IconName="W3IconName.User" Title="Reviewed" Time="09:15" Active="true">
         Manual review assigned to design operations.
     </W3TimelineItem>
-    <W3TimelineItem IconClass="fa fa-clock-o" Title="Waiting" Time="09:40" MarkerColor="W3Color.Grey">
+    <W3TimelineItem IconName="W3IconName.Tasks" Title="Waiting" Time="09:40" MarkerColor="W3Color.Grey">
         Export is queued.
     </W3TimelineItem>
 </W3Timeline>

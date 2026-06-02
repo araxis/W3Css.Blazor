@@ -16,9 +16,9 @@
     {
         @ChildContent
     }
-    else if (!string.IsNullOrWhiteSpace(IconClass))
+    else if (IconName != W3IconName.None || !string.IsNullOrWhiteSpace(IconClass))
     {
-        <span class="@IconClass" aria-hidden="true"></span>
+        <W3Icon IconName="@IconName" IconClass="@IconClass" />
     }
     else
     {
@@ -71,7 +71,13 @@
     public bool Smooth { get; set; } = true;
 
     /// <summary>
-    /// Optional leading icon class used when no child content is supplied.
+    /// Built-in icon used when no child content is supplied.
+    /// </summary>
+    [Parameter]
+    public W3IconName IconName { get; set; } = W3IconName.ArrowUp;
+
+    /// <summary>
+    /// Optional external icon class used when no child content is supplied.
     /// </summary>
     [Parameter]
     public string? IconClass { get; set; }

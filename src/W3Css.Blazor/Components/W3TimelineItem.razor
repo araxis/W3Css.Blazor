@@ -10,9 +10,9 @@
             {
                 @MarkerContent
             }
-            else if (!string.IsNullOrWhiteSpace(IconClass))
+            else if (IconName != W3IconName.None || !string.IsNullOrWhiteSpace(IconClass))
             {
-                <span class="@IconClass" aria-hidden="true"></span>
+                <W3Icon IconName="@IconName" IconClass="@IconClass" />
             }
             else if (!string.IsNullOrWhiteSpace(Marker))
             {
@@ -136,7 +136,13 @@
     public string? Marker { get; set; }
 
     /// <summary>
-    /// Gets or sets the icon class value.
+    /// Gets or sets the built-in marker icon.
+    /// </summary>
+    [Parameter]
+    public W3IconName IconName { get; set; } = W3IconName.None;
+
+    /// <summary>
+    /// Gets or sets the external marker icon class.
     /// </summary>
     [Parameter]
     public string? IconClass { get; set; }

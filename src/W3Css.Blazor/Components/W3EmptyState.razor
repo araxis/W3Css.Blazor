@@ -8,9 +8,18 @@
          aria-label="@AriaLabel"
          aria-labelledby="@AriaLabelledBy"
          aria-live="@AriaLive">
-    @if (ShowIcon && !string.IsNullOrWhiteSpace(EffectiveIcon))
+    @if (ShowIcon && HasIcon)
     {
-        <div class="@IconCssClass" aria-hidden="true">@EffectiveIcon</div>
+        <div class="@IconCssClass" aria-hidden="true">
+            @if (IconName != W3IconName.None)
+            {
+                <W3Icon IconName="@IconName" />
+            }
+            else
+            {
+                @EffectiveIcon
+            }
+        </div>
     }
 
     <div class="w3-empty-state-body">
@@ -68,6 +77,8 @@
 
     private string EffectiveIcon => string.IsNullOrWhiteSpace(Icon) ? ResolveDefaultIcon() : Icon;
 
+    private bool HasIcon => IconName != W3IconName.None || !string.IsNullOrWhiteSpace(EffectiveIcon);
+
     /// <summary>
     /// Gets or sets the title value.
     /// </summary>
@@ -81,7 +92,13 @@
     public string? Description { get; set; }
 
     /// <summary>
-    /// Gets or sets the icon value.
+    /// Gets or sets the built-in icon override.
+    /// </summary>
+    [Parameter]
+    public W3IconName IconName { get; set; } = W3IconName.None;
+
+    /// <summary>
+    /// Gets or sets the text icon fallback.
     /// </summary>
     [Parameter]
     public string? Icon { get; set; }

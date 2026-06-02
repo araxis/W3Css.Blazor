@@ -6,21 +6,21 @@
     <h1>W3Icon</h1>
     <DocPager PreviousHref="components/avatar-group" PreviousText="Avatar Group" NextHref="components/image" NextText="Image" />
 
-    <p class="w3-large">`W3Icon` renders an inline icon element for the icon library you choose.</p>
-    <p>The component does not bundle an icon font. Add the icon stylesheet to your app, then pass the library classes through `IconClass`.</p>
+    <p class="w3-large">`W3Icon` renders built-in inline SVG icons with W3.CSS color and size utilities.</p>
+    <p>Use `IconName` for first-party icons that work without extra assets. `IconClass` remains available for app-owned icon styles.</p>
 
     <DocExample Title="Icon Buttons" Code="@ButtonCode">
         <div class="w3-bar w3-border w3-white">
             <W3Button Class="w3-bar-item">
-                <W3Icon IconClass="fa fa-home" Class="w3-margin-right" />
+                <W3Icon IconName="W3IconName.Home" Class="w3-margin-right" />
                 Home
             </W3Button>
             <W3Button Class="w3-bar-item">
-                <W3Icon IconClass="fa fa-search" Class="w3-margin-right" />
+                <W3Icon IconName="W3IconName.Search" Class="w3-margin-right" />
                 Search
             </W3Button>
             <W3Button Class="w3-bar-item">
-                <W3Icon IconClass="fa fa-refresh" Class="w3-margin-right" />
+                <W3Icon IconName="W3IconName.Refresh" Class="w3-margin-right" />
                 Refresh
             </W3Button>
         </div>
@@ -28,22 +28,23 @@
 
     <DocExample Title="Sized And Accessible Icons" Code="@AccessibleCode">
         <p>
-            <W3Icon IconClass="fa fa-home" Size="W3Size.XXLarge" TextColor="W3Color.Teal" Label="Home" Class="w3-margin-right" />
-            <W3Icon IconClass="fa fa-search" Size="W3Size.XXLarge" TextColor="W3Color.Blue" Label="Search" Class="w3-margin-right" />
-            <W3Icon IconClass="fa fa-trash" Size="W3Size.XXLarge" TextColor="W3Color.Red" Label="Delete" />
+            <W3Icon IconName="W3IconName.Home" Size="W3Size.XXLarge" TextColor="W3Color.Teal" Label="Home" Class="w3-margin-right" />
+            <W3Icon IconName="W3IconName.Search" Size="W3Size.XXLarge" TextColor="W3Color.Blue" Label="Search" Class="w3-margin-right" />
+            <W3Icon IconName="W3IconName.Delete" Size="W3Size.XXLarge" TextColor="W3Color.Red" Label="Delete" />
         </p>
     </DocExample>
 
     <section class="doc-section">
-        <h2>Library Setup</h2>
+        <h2>Built-in Catalog</h2>
         <W3Table Striped="true" Bordered="true" Responsive="true" Class="doc-reference-table">
             <thead>
-                <tr><th>Library</th><th>Include</th><th>Use with `W3Icon`</th></tr>
+                <tr><th>Group</th><th>Names</th></tr>
             </thead>
             <tbody>
-                <tr><td>Font Awesome</td><td>`font-awesome.min.css`</td><td>`IconClass="fa fa-home"`</td></tr>
-                <tr><td>Google Material Icons</td><td>`https://fonts.googleapis.com/icon?family=Material+Icons`</td><td>`IconClass="material-icons"` with child content such as `home`</td></tr>
-                <tr><td>Bootstrap Icons</td><td>Your selected Bootstrap Icons stylesheet</td><td>`IconClass="bi bi-search"`</td></tr>
+                <tr><td>Navigation</td><td>`Home`, `Menu`, `Search`, `ChevronLeft`, `ChevronRight`, `ArrowUp`, `ArrowDown`</td></tr>
+                <tr><td>Actions</td><td>`Add`, `Edit`, `Save`, `Delete`, `Copy`, `Download`, `Upload`, `Refresh`, `Undo`, `Redo`</td></tr>
+                <tr><td>Status</td><td>`Info`, `Success`, `Warning`, `Error`, `Bell`, `Lock`, `Star`, `StarOutline`</td></tr>
+                <tr><td>App</td><td>`Dashboard`, `Table`, `Tasks`, `Workflow`, `Settings`, `Users`, `Monitor`, `Sun`, `Moon`</td></tr>
             </tbody>
         </W3Table>
     </section>
@@ -55,9 +56,10 @@
                 <tr><th>Name</th><th>Type</th><th>Default</th><th>Maps to</th></tr>
             </thead>
             <tbody>
-                <tr><td>IconClass</td><td>string?</td><td>null</td><td>Classes from the selected icon library</td></tr>
+                <tr><td>IconName</td><td>W3IconName</td><td>None</td><td>Built-in SVG icon name</td></tr>
+                <tr><td>IconClass</td><td>string?</td><td>null</td><td>Optional app-owned icon classes</td></tr>
                 <tr><td>Label</td><td>string?</td><td>null</td><td>`role="img"` and `aria-label`; omitted icons render `aria-hidden="true"`</td></tr>
-                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Inner text for icon sets such as Material Icons</td></tr>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Custom icon content when not using `IconName`</td></tr>
                 <tr><td>Size</td><td>W3Size</td><td>Default</td><td>W3.CSS size class</td></tr>
                 <tr><td>TextColor</td><td>W3Color</td><td>None</td><td>Text color class</td></tr>
                 <tr><td>Class</td><td>string?</td><td>null</td><td>Additional classes on the icon element</td></tr>
@@ -79,36 +81,36 @@
     private const string ButtonCode = """
 <div class="w3-bar w3-border w3-white">
     <W3Button Class="w3-bar-item">
-        <W3Icon IconClass="fa fa-home" Class="w3-margin-right" />
+        <W3Icon IconName="W3IconName.Home" Class="w3-margin-right" />
         Home
     </W3Button>
 
     <W3Button Class="w3-bar-item">
-        <W3Icon IconClass="fa fa-search" Class="w3-margin-right" />
+        <W3Icon IconName="W3IconName.Search" Class="w3-margin-right" />
         Search
     </W3Button>
 
     <W3Button Class="w3-bar-item">
-        <W3Icon IconClass="fa fa-refresh" Class="w3-margin-right" />
+        <W3Icon IconName="W3IconName.Refresh" Class="w3-margin-right" />
         Refresh
     </W3Button>
 </div>
 """;
 
     private const string AccessibleCode = """
-<W3Icon IconClass="fa fa-home"
+<W3Icon IconName="W3IconName.Home"
         Size="W3Size.XXLarge"
         TextColor="W3Color.Teal"
         Label="Home"
         Class="w3-margin-right" />
 
-<W3Icon IconClass="fa fa-search"
+<W3Icon IconName="W3IconName.Search"
         Size="W3Size.XXLarge"
         TextColor="W3Color.Blue"
         Label="Search"
         Class="w3-margin-right" />
 
-<W3Icon IconClass="fa fa-trash"
+<W3Icon IconName="W3IconName.Delete"
         Size="W3Size.XXLarge"
         TextColor="W3Color.Red"
         Label="Delete" />

@@ -69,19 +69,21 @@ else
 
     private string IconCssClass => new W3ClassBuilder()
         .Add("w3-menu-item-icon")
-        .Add(IconClass)
         .ToString();
+
+    private bool HasIcon => IconName != W3IconName.None || !string.IsNullOrWhiteSpace(IconClass);
 
     private RenderFragment ItemContent => builder =>
     {
         var sequence = 0;
 
-        if (!string.IsNullOrWhiteSpace(IconClass))
+        if (HasIcon)
         {
-            builder.OpenElement(sequence++, "span");
+            builder.OpenComponent<W3Icon>(sequence++);
+            builder.AddAttribute(sequence++, nameof(W3Icon.IconName), IconName);
+            builder.AddAttribute(sequence++, nameof(W3Icon.IconClass), IconClass);
             builder.AddAttribute(sequence++, "class", IconCssClass);
-            builder.AddAttribute(sequence++, "aria-hidden", "true");
-            builder.CloseElement();
+            builder.CloseComponent();
         }
 
         builder.OpenElement(sequence++, "span");
@@ -169,7 +171,13 @@ else
     public string? Target { get; set; }
 
     /// <summary>
-    /// Gets or sets the icon class value.
+    /// Gets or sets the built-in icon name.
+    /// </summary>
+    [Parameter]
+    public W3IconName IconName { get; set; } = W3IconName.None;
+
+    /// <summary>
+    /// Gets or sets icon classes from an external icon stylesheet.
     /// </summary>
     [Parameter]
     public string? IconClass { get; set; }

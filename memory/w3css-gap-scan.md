@@ -105,7 +105,7 @@ The library now covers the main component-like basics, including slideshow, dire
 - Text and fonts: alignment, wide text, bold, italic, and font-family utilities are modeled through `W3Text`; broader default and custom font guidance is documented on the Fonts page.
 - Effects: opacity, grayscale, sepia, hover opacity, hover filters, hover shadow, and hover none utilities are modeled through `W3Effect`.
 - Direction: left-to-right and right-to-left utilities are modeled through `W3Direction` and `W3TextDirection`.
-- Icons: consumer-provided icon classes are modeled through `W3Icon`, and docs explain how to include the selected icon library.
+- Icons: built-in `W3IconName` SVG icons are modeled through `W3Icon`, with `IconClass` retained for app-owned icon styles.
 - Display: display containers, positioned content, visibility helpers, and fixed top/bottom guidance are covered.
 - Animations: top, bottom, left, right, opacity, zoom, fading, spin, and input animation classes are modeled through `W3Animate`, `W3Animation`, and `W3Input`.
 - Images: image-specific effects are covered for `W3Image`.

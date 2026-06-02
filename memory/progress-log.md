@@ -1216,7 +1216,7 @@ Last updated: 2026-06-02
 
 ## 2026-06-02 - Starter Theme Icon And Chart Padding Polish
 
-- Replaced starter theme-mode letters with CSS-drawn sun, moon, and system icons while keeping the starter app free of extra icon dependencies.
+- Replaced starter theme-mode letters with dependency-free theme icon states while keeping the starter app free of extra icon dependencies.
 - Increased the starter theme icon button vertical padding and added explicit chart-card top/bottom body padding.
 - Added release-quality guards for the starter theme icon classes and chart padding rules.
 - Verification:
@@ -1272,3 +1272,13 @@ Last updated: 2026-06-02
   - `dotnet build W3Css.Blazor.slnx --configuration Release /nr:false` (0 warnings, 0 errors);
   - `dotnet test W3Css.Blazor.slnx --configuration Release --no-build /nr:false` (481 passing);
   - browser-verified `/workflow` on port 5024 with no console errors, no horizontal overflow, no starter theme icon CSS, no starter theme toggle class, and a 0px height delta between app-bar actions.
+
+## 2026-06-02 - Built-In Icon Catalog Polish
+
+- Added the first-party `W3IconName` catalog and inline SVG rendering path to `W3Icon`, while keeping `IconClass` compatibility for app-owned styles.
+- Extended built-in icon support through icon-capable components including app bar, menu/menu item, nav menu item, bottom navigation item, icon button, toggle icon button, FAB, chip, toggle item, list item, timeline item, scroll-to-top, empty state, and rating.
+- Updated the starter kit theme toggle to use Sun, Moon, and Monitor built-in icons through multi-state `W3ToggleIconButton`.
+- Refreshed icon docs and component API tables so examples now work without an external icon stylesheet.
+- Verification:
+  - `dotnet build W3Css.Blazor.slnx --configuration Release /nr:false` (0 warnings, 0 errors);
+  - `dotnet test W3Css.Blazor.slnx --configuration Release --no-build /nr:false` (484 passing).

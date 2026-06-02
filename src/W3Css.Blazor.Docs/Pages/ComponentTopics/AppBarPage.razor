@@ -59,9 +59,9 @@
             <Sidebar>
                 <W3NavMenu Label="App shell navigation" Compact="true" ActiveColor="W3Color.Teal">
                     <W3NavMenuGroup Title="Workspace" Expanded="true">
-                        <W3NavMenuItem Href="components/app-shell" Text="App Shell" IconClass="fa fa-columns" />
-                        <W3NavMenuItem Href="components/app-bar" Text="App Bar" IconClass="fa fa-window-maximize" Active="true" />
-                        <W3NavMenuItem Href="components/nav-menu" Text="Nav Menu" IconClass="fa fa-list" />
+                        <W3NavMenuItem Href="components/app-shell" Text="App Shell" IconName="W3IconName.Columns" />
+                        <W3NavMenuItem Href="components/app-bar" Text="App Bar" IconName="W3IconName.Dashboard" Active="true" />
+                        <W3NavMenuItem Href="components/nav-menu" Text="Nav Menu" IconName="W3IconName.List" />
                     </W3NavMenuGroup>
                 </W3NavMenu>
             </Sidebar>
@@ -121,7 +121,8 @@
                 <tr><td>ShowMenuButton</td><td>bool</td><td>false</td><td>Renders a W3.CSS button for menu toggles</td></tr>
                 <tr><td>MenuButtonAriaLabel</td><td>string</td><td>Toggle navigation</td><td>Menu button accessible label</td></tr>
                 <tr><td>MenuText</td><td>string</td><td>Menu</td><td>Menu button text when no custom content is provided</td></tr>
-                <tr><td>MenuIconClass</td><td>string?</td><td>fa fa-bars</td><td>Optional icon class inside the menu button</td></tr>
+                <tr><td>MenuIconName</td><td>W3IconName</td><td>Menu</td><td>Built-in icon inside the menu button</td></tr>
+                <tr><td>MenuIconClass</td><td>string?</td><td>null</td><td>Optional external icon class inside the menu button</td></tr>
                 <tr><td>MenuIconOnly</td><td>bool</td><td>false</td><td>Hides menu text while keeping the aria label</td></tr>
                 <tr><td>MenuExpanded</td><td>bool?</td><td>null</td><td><code>aria-expanded</code> on the menu button</td></tr>
                 <tr><td>MenuControls</td><td>string?</td><td>null</td><td><code>aria-controls</code> on the menu button</td></tr>

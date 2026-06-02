@@ -15,9 +15,9 @@
                         aria-expanded="@MenuExpandedValue"
                         aria-controls="@MenuControls"
                         @onclick="OnMenuClick">
-                    @if (!string.IsNullOrWhiteSpace(MenuIconClass))
+                    @if (HasMenuIcon)
                     {
-                        <span class="@MenuIconClass" aria-hidden="true"></span>
+                        <W3Icon IconName="@MenuIconName" IconClass="@MenuIconClass" Class="w3-app-bar-menu-icon" />
                     }
 
                     @if (MenuButtonContent is not null)
@@ -148,6 +148,8 @@
 
     private string? MenuExpandedValue => MenuExpanded?.ToString().ToLowerInvariant();
 
+    private bool HasMenuIcon => MenuIconName != W3IconName.None || !string.IsNullOrWhiteSpace(MenuIconClass);
+
     /// <summary>
     /// Gets or sets the leading value.
     /// </summary>
@@ -233,10 +235,16 @@
     public string MenuText { get; set; } = "Menu";
 
     /// <summary>
-    /// Gets or sets the menu icon class value.
+    /// Gets or sets the built-in menu icon name.
     /// </summary>
     [Parameter]
-    public string? MenuIconClass { get; set; } = "fa fa-bars";
+    public W3IconName MenuIconName { get; set; } = W3IconName.Menu;
+
+    /// <summary>
+    /// Gets or sets menu icon classes from an external icon stylesheet.
+    /// </summary>
+    [Parameter]
+    public string? MenuIconClass { get; set; }
 
     /// <summary>
     /// Gets or sets the menu icon only value.

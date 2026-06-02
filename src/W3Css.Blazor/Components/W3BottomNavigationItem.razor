@@ -11,10 +11,10 @@
           aria-label="@EffectiveAriaLabel"
           aria-disabled="true"
           aria-current="@AriaCurrent">
-        @if (!string.IsNullOrWhiteSpace(IconClass))
+        @if (HasIcon)
         {
             <span class="w3-bottom-navigation-item-icon-wrap">
-                <span class="@IconCssClass" aria-hidden="true"></span>
+                <W3Icon IconName="@IconName" IconClass="@IconClass" Class="@IconCssClass" />
                 @if (!string.IsNullOrWhiteSpace(Badge))
                 {
                     <span class="@BadgeCssClass">@Badge</span>
@@ -48,10 +48,10 @@ else if (!string.IsNullOrWhiteSpace(Href))
        aria-label="@EffectiveAriaLabel"
        aria-current="@AriaCurrent"
        @onclick="HandleClickAsync">
-        @if (!string.IsNullOrWhiteSpace(IconClass))
+        @if (HasIcon)
         {
             <span class="w3-bottom-navigation-item-icon-wrap">
-                <span class="@IconCssClass" aria-hidden="true"></span>
+                <W3Icon IconName="@IconName" IconClass="@IconClass" Class="@IconCssClass" />
                 @if (!string.IsNullOrWhiteSpace(Badge))
                 {
                     <span class="@BadgeCssClass">@Badge</span>
@@ -84,10 +84,10 @@ else
             aria-label="@EffectiveAriaLabel"
             aria-pressed="@AriaPressed"
             @onclick="HandleClickAsync">
-        @if (!string.IsNullOrWhiteSpace(IconClass))
+        @if (HasIcon)
         {
             <span class="w3-bottom-navigation-item-icon-wrap">
-                <span class="@IconCssClass" aria-hidden="true"></span>
+                <W3Icon IconName="@IconName" IconClass="@IconClass" Class="@IconCssClass" />
                 @if (!string.IsNullOrWhiteSpace(Badge))
                 {
                     <span class="@BadgeCssClass">@Badge</span>
@@ -118,6 +118,7 @@ else
 
     private bool IsActive => Active || Owner?.IsActive(Value) == true;
     private bool ShowLabel => Owner?.ShowLabels != false;
+    private bool HasIcon => IconName != W3IconName.None || !string.IsNullOrWhiteSpace(IconClass);
     private string? AriaCurrent => IsActive ? "page" : null;
     private string? AriaPressed => string.IsNullOrWhiteSpace(Href) ? IsActive.ToString().ToLowerInvariant() : null;
     private string EffectiveAriaLabel => AriaLabel ?? Text ?? "Bottom navigation item";
@@ -135,7 +136,6 @@ else
 
     private string IconCssClass => new W3ClassBuilder()
         .Add("w3-bottom-navigation-item-icon")
-        .Add(IconClass)
         .ToString();
 
     private string LabelCssClass => new W3ClassBuilder()
@@ -181,7 +181,13 @@ else
     public string? Target { get; set; }
 
     /// <summary>
-    /// Gets or sets the icon class value.
+    /// Gets or sets the built-in icon name.
+    /// </summary>
+    [Parameter]
+    public W3IconName IconName { get; set; } = W3IconName.None;
+
+    /// <summary>
+    /// Gets or sets icon classes from an external icon stylesheet.
     /// </summary>
     [Parameter]
     public string? IconClass { get; set; }

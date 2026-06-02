@@ -10,7 +10,7 @@
         title="@Title"
         disabled="@Disabled"
         @onclick="HandleClickAsync">
-    <W3Icon IconClass="@IconClass" Class="@IconCssClass">@IconContent</W3Icon>
+    <W3Icon IconName="@IconName" IconClass="@IconClass" Class="@IconCssClass">@IconContent</W3Icon>
     @if (Extended && ChildContent is not null)
     {
         <span class="w3-fab-label">@ChildContent</span>
@@ -54,7 +54,13 @@
     public string? Title { get; set; }
 
     /// <summary>
-    /// Gets or sets the icon class value.
+    /// Gets or sets the built-in icon name.
+    /// </summary>
+    [Parameter]
+    public W3IconName IconName { get; set; } = W3IconName.None;
+
+    /// <summary>
+    /// Gets or sets icon classes from an external icon stylesheet.
     /// </summary>
     [Parameter]
     public string? IconClass { get; set; }

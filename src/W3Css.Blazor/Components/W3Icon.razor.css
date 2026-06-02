@@ -1,0 +1,13 @@
+.w3-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    vertical-align: -0.125em;
+}
+
+.w3-icon-svg {
+    width: 1em;
+    height: 1em;
+    flex: 0 0 auto;
+}

@@ -11,7 +11,7 @@
         title="@EffectiveTitle"
         disabled="@Disabled"
         @onclick="HandleClickAsync">
-    <W3Icon IconClass="@EffectiveIconClass" Class="@IconCssClass">
+    <W3Icon IconName="@EffectiveIconName" IconClass="@EffectiveIconClass" Class="@IconCssClass">
         @if (!string.IsNullOrWhiteSpace(EffectiveIconText))
         {
             @EffectiveIconText
@@ -75,6 +75,8 @@
 
     private string? EffectiveTitle => CurrentState?.Title ?? Title;
 
+    private W3IconName EffectiveIconName => CurrentState?.IconName ?? IconName;
+
     private string? EffectiveIconClass => CurrentState?.IconClass ?? IconClass;
 
     private string? EffectiveIconElementClass => CurrentState?.IconElementClass ?? IconElementClass;
@@ -96,7 +98,13 @@
     public string? Title { get; set; }
 
     /// <summary>
-    /// Gets or sets the icon class value.
+    /// Gets or sets the built-in icon name.
+    /// </summary>
+    [Parameter]
+    public W3IconName IconName { get; set; } = W3IconName.None;
+
+    /// <summary>
+    /// Gets or sets icon classes from an external icon stylesheet.
     /// </summary>
     [Parameter]
     public string? IconClass { get; set; }

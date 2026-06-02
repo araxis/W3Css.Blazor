@@ -10,12 +10,12 @@
     <p>Use it when one action should stay highly available, such as creating an item, adding a node, opening capture, or starting a workflow.</p>
 
     <DocExample Title="Primary FABs" Description="Icon-only FABs still require a `Label`; the icon remains decorative for assistive technology." Code="@PrimaryCode">
-        <W3Fab Label="Create item" Title="Create" IconClass="fa fa-plus" Class="w3-margin-right" />
-        <W3Fab Label="Open command palette" Title="Commands" IconClass="fa fa-bolt" Mini="true" Color="W3Color.Black" TextColor="W3Color.White" />
+        <W3Fab Label="Create item" Title="Create" IconName="W3IconName.Add" Class="w3-margin-right" />
+        <W3Fab Label="Open command palette" Title="Commands" IconName="W3IconName.Bolt" Mini="true" Color="W3Color.Black" TextColor="W3Color.White" />
     </DocExample>
 
     <DocExample Title="Extended FAB" Description="Use `Extended` when the primary command needs a short visible verb beside the icon." Code="@ExtendedCode">
-        <W3Fab Label="Create workflow" Title="Create workflow" IconClass="fa fa-plus" Extended="true" Color="W3Color.Green" TextColor="W3Color.White">New workflow</W3Fab>
+        <W3Fab Label="Create workflow" Title="Create workflow" IconName="W3IconName.Workflow" Extended="true" Color="W3Color.Green" TextColor="W3Color.White">New workflow</W3Fab>
     </DocExample>
 
     <DocExample Title="Anchored App Action" Description="Use `Position` inside a relatively positioned app preview, or add `Fixed` to anchor the FAB to the viewport." Code="@AnchoredCode">
@@ -31,7 +31,7 @@
                     <p class="w3-small w3-margin-bottom">Needs owner</p>
                 </W3Panel>
             </div>
-            <W3Fab Label="Create task" Title="Create task" IconClass="fa fa-plus" Position="W3FabPosition.BottomRight" Offset="18" />
+            <W3Fab Label="Create task" Title="Create task" IconName="W3IconName.Add" Position="W3FabPosition.BottomRight" Offset="18" />
         </div>
     </DocExample>
 
@@ -44,9 +44,10 @@
             <tbody>
                 <tr><td>Label</td><td>string</td><td>Floating action</td><td>Required button `aria-label` fallback</td></tr>
                 <tr><td>Title</td><td>string?</td><td>null</td><td>Optional native title tooltip</td></tr>
-                <tr><td>IconClass</td><td>string?</td><td>null</td><td>Classes passed to the inner `W3Icon`</td></tr>
+                <tr><td>IconName</td><td>W3IconName</td><td>None</td><td>Built-in icon passed to the inner `W3Icon`</td></tr>
+                <tr><td>IconClass</td><td>string?</td><td>null</td><td>Optional app-owned classes passed to the inner `W3Icon`</td></tr>
                 <tr><td>IconElementClass</td><td>string?</td><td>null</td><td>Additional class on the inner icon element</td></tr>
-                <tr><td>IconContent</td><td>RenderFragment?</td><td>null</td><td>Icon text for icon fonts such as Material Icons</td></tr>
+                <tr><td>IconContent</td><td>RenderFragment?</td><td>null</td><td>Custom icon content when not using `IconName`</td></tr>
                 <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Visible label content when `Extended` is true</td></tr>
                 <tr><td>Extended</td><td>bool</td><td>false</td><td>Shows a rounded label button instead of a circle</td></tr>
                 <tr><td>Mini</td><td>bool</td><td>false</td><td>Smaller square/circle FAB sizing</td></tr>
@@ -77,19 +78,19 @@
 
 @code {
     private const string PrimaryCode = """
-<W3Fab Label="Create item" Title="Create" IconClass="fa fa-plus" />
-<W3Fab Label="Open command palette" Title="Commands" IconClass="fa fa-bolt" Mini="true" Color="W3Color.Black" TextColor="W3Color.White" />
+<W3Fab Label="Create item" Title="Create" IconName="W3IconName.Add" />
+<W3Fab Label="Open command palette" Title="Commands" IconName="W3IconName.Bolt" Mini="true" Color="W3Color.Black" TextColor="W3Color.White" />
 """;
 
     private const string ExtendedCode = """
-<W3Fab Label="Create workflow" Title="Create workflow" IconClass="fa fa-plus" Extended="true" Color="W3Color.Green" TextColor="W3Color.White">
+<W3Fab Label="Create workflow" Title="Create workflow" IconName="W3IconName.Workflow" Extended="true" Color="W3Color.Green" TextColor="W3Color.White">
     New workflow
 </W3Fab>
 """;
 
     private const string AnchoredCode = """
 <div class="w3-display-container" style="position:relative; min-height:220px;">
-    <W3Fab Label="Create task" Title="Create task" IconClass="fa fa-plus" Position="W3FabPosition.BottomRight" Offset="18" />
+    <W3Fab Label="Create task" Title="Create task" IconName="W3IconName.Add" Position="W3FabPosition.BottomRight" Offset="18" />
 </div>
 """;
 }

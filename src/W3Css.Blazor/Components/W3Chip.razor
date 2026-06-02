@@ -10,9 +10,9 @@
         aria-selected="@AriaSelected"
         disabled="@IsDisabled"
         @onclick="SelectAsync">
-    @if (!string.IsNullOrWhiteSpace(IconClass))
+    @if (HasIcon)
     {
-        <span class="@IconClass" aria-hidden="true"></span>
+        <W3Icon IconName="@IconName" IconClass="@IconClass" />
     }
     <span class="w3-chip-label">@ChildContent</span>
 </button>
@@ -26,6 +26,8 @@
     private bool IsDisabled => Disabled || Owner?.Disabled == true;
 
     private string AriaSelected => IsSelected ? "true" : "false";
+
+    private bool HasIcon => IconName != W3IconName.None || !string.IsNullOrWhiteSpace(IconClass);
 
     private string CssClass => BuildClass(
         "w3-chip",
@@ -60,7 +62,13 @@
     public RenderFragment? ChildContent { get; set; }
 
     /// <summary>
-    /// Gets or sets the icon class value.
+    /// Gets or sets the built-in leading icon.
+    /// </summary>
+    [Parameter]
+    public W3IconName IconName { get; set; } = W3IconName.None;
+
+    /// <summary>
+    /// Gets or sets the external leading icon class.
     /// </summary>
     [Parameter]
     public string? IconClass { get; set; }

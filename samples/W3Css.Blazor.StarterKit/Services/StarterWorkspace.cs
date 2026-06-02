@@ -78,9 +78,18 @@ public sealed class StarterWorkspace
 
     public IReadOnlyList<W3ToggleIconButtonState> ThemeModeStates { get; } =
     [
-        new(nameof(StarterThemeMode.Light), "Theme mode: Light", "L", title: "Use light mode"),
-        new(nameof(StarterThemeMode.Dark), "Theme mode: Dark", "D", title: "Use dark mode"),
-        new(nameof(StarterThemeMode.Auto), "Theme mode: Auto", "A", title: "Follow system theme")
+        new(nameof(StarterThemeMode.Light), "Theme mode: Light", title: "Use light mode")
+        {
+            IconElementClass = "starter-theme-icon starter-theme-icon-sun"
+        },
+        new(nameof(StarterThemeMode.Dark), "Theme mode: Dark", title: "Use dark mode")
+        {
+            IconElementClass = "starter-theme-icon starter-theme-icon-moon"
+        },
+        new(nameof(StarterThemeMode.Auto), "Theme mode: Auto", title: "Follow system theme")
+        {
+            IconElementClass = "starter-theme-icon starter-theme-icon-system"
+        }
     ];
 
     public string ThemeModeValue => ThemeMode.ToString();

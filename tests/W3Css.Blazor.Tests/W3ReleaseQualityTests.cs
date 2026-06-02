@@ -88,7 +88,7 @@ public sealed class W3ReleaseQualityTests
         Assert.Contains("W3MessageBox", workflow);
         Assert.Contains("\"\\u2600\"", workspace);
         Assert.Contains("\"\\u263E\"", workspace);
-        Assert.Contains("\"\\u25D0\"", workspace);
+        Assert.Contains("\"\\u2699\"", workspace);
         Assert.DoesNotContain("starter-theme-toggle", layout);
         Assert.DoesNotContain("starter-theme-icon", workspace);
         Assert.DoesNotContain("starter-theme-icon", styles);

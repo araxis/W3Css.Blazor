@@ -48,13 +48,14 @@ Last updated: 2026-06-02
 - Add automated browser quality sweep tooling for adoption and high-risk interactive docs routes.
 - Published `v0.4.0` after main CI, release workflow, and public package smoke passed.
 
-## Phase 10: Starter Kit Adoption (Locally Complete)
+## Phase 10: Starter Kit Adoption (Complete)
 
 - 0.5.0 stays non-breaking and avoids broad new component surface.
 - Added a runnable Blazor WebAssembly starter kit sample under `samples/W3Css.Blazor.StarterKit`.
 - Added `/starter-kit` docs and reframed the component index around a starter path instead of an empty backlog.
 - Expanded clean consumer package smoke coverage to compile starter-kit primitives.
 - Browser-verified the starter sample routes, customer search, settings save, modal edit, message-box archive workflow, and mobile overflow.
+- Published `v0.5.0` after PR CI, main CI, Pages, release workflow, and public package smoke passed.
 
 ## Current Status Check
 

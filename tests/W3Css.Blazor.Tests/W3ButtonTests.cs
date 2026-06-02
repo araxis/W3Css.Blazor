@@ -227,7 +227,7 @@ public sealed class W3ButtonTests
 
         Assert.Equal("Theme mode: Light", button.GetAttribute("aria-label"));
         Assert.Null(button.GetAttribute("aria-pressed"));
-        Assert.Contains("w3-icon-button-pressed", button.GetAttribute("class"));
+        Assert.DoesNotContain("w3-icon-button-pressed", button.GetAttribute("class"));
         Assert.Equal("L", cut.Find("i").TextContent.Trim());
 
         button.Click();

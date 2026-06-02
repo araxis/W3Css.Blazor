@@ -33,7 +33,7 @@
         "w3-icon-button",
         Circle ? "w3-icon-button-circle w3-circle" : null,
         Border ? "w3-border" : null,
-        Active ? "w3-icon-button-pressed" : null,
+        _pressedState ? "w3-icon-button-pressed" : null,
         Color.ToBackgroundClass(),
         TextColor.ToTextClass(),
         Size.ToClass(),
@@ -68,8 +68,6 @@
     }
 
     private bool _pressedState => PressedChanged.HasDelegate ? Pressed : _pressed;
-
-    private bool Active => HasStates || _pressedState;
 
     private string EffectiveLabel => CurrentState is { } state && !string.IsNullOrWhiteSpace(state.Label)
         ? state.Label

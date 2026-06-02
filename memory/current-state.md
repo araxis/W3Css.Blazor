@@ -59,6 +59,7 @@ Last updated: 2026-06-02
 - The 0.5.0 starter-kit adoption release is complete: sample app, starter-kit docs, component-index starter path, README links, release notes, expanded package smoke coverage, docs browser sweep, starter app browser verification, tag workflow, and public package smoke all passed without changing vendored W3.CSS.
 - The starter-kit dashboard now includes meaningful customer-derived chart examples and a single multi-state theme toggle for Light/Dark/Auto.
 - The starter-kit theme toggle uses CSS-drawn sun, moon, and system icons with no extra icon dependency, and dashboard chart cards have explicit top/bottom body padding.
+- Multi-state `W3ToggleIconButton` no longer receives the binary pressed-ring class by default; the starter theme toggle uses a subtle themed border instead of a white inset ring.
 - Reusable dark-theme hover contrast now covers W3.CSS hoverable table/list rows and striped even rows inside `W3ThemeProvider`, so table hover readability is fixed at the library level.
 - Reusable dark-theme modal footer contrast now covers default `W3Modal`/`W3MessageBox` action footers inside `W3ThemeProvider`, so light-grey W3.CSS footer defaults do not create light strips in dark dialogs.
 - `W3DataTable` footer spacing now keeps horizontal padding, and `W3ToggleIconButton` supports optional multi-state cycling while preserving its existing binary toggle behavior.

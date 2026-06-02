@@ -1243,3 +1243,13 @@ Last updated: 2026-06-02
   - `dotnet test W3Css.Blazor.slnx --configuration Release --no-build /nr:false` (481 passing);
   - `dotnet pack src/W3Css.Blazor/W3Css.Blazor.csproj --configuration Release --no-build --output artifacts/packages /nr:false`;
   - browser-verified `/workflow` on port 5024 with no console errors, no horizontal overflow, readable Cancel button, dark modal footer background, and loaded shared modal-footer dark rule.
+
+## 2026-06-02 - Multi-State Toggle Ring Polish
+
+- Stopped applying the binary pressed visual class to multi-state `W3ToggleIconButton` instances while preserving binary toggle pressed behavior.
+- Removed the starter theme toggle's white inset ring and replaced it with a subtle themed border.
+- Added starter quality guards for the calmer theme toggle styling.
+- Verification:
+  - `dotnet build W3Css.Blazor.slnx --configuration Release /nr:false` (0 warnings, 0 errors);
+  - `dotnet test W3Css.Blazor.slnx --configuration Release --no-build /nr:false` (481 passing);
+  - browser-verified `/workflow` on port 5024 with no console errors, no horizontal overflow, no multi-state pressed class, no box shadow, and no white inset ring.

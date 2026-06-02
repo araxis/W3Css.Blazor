@@ -57,6 +57,7 @@ Last updated: 2026-06-02
 - Starter readiness now requires the sample to run without custom source CSS; reusable theme, table, form, chart, and app-bar fixes belong in the package.
 - Browser-verified the starter sample routes, customer search, settings save, modal edit, message-box archive workflow, and mobile overflow.
 - Published `v0.5.0` after PR CI, main CI, Pages, release workflow, and public package smoke passed.
+- Published `v0.5.1` after PR CI, main CI, Pages, release workflow, and public package smoke passed.
 
 ## Current Status Check
 
@@ -64,7 +65,7 @@ Last updated: 2026-06-02
   - `dotnet build W3Css.Blazor.slnx --configuration Release`
   - `dotnet test W3Css.Blazor.slnx --configuration Release --no-build /nr:false`
   - `dotnet pack src/W3Css.Blazor/W3Css.Blazor.csproj --configuration Release --no-build --output artifacts/packages /nr:false`
-  - `pwsh ./tools/package-consumer-smoke.ps1 -PackageVersion 0.5.0 -PackageSource artifacts/packages`
+  - `pwsh ./tools/package-consumer-smoke.ps1 -PackageVersion 0.5.1 -PackageSource artifacts/packages`
   - `pwsh ./tools/docs-browser-sweep.ps1 -BaseUrl http://localhost:5022 -StartServer`
 
 - Components implemented: 127 component files plus docs topic coverage.

@@ -1223,3 +1223,13 @@ Last updated: 2026-06-02
   - `dotnet build W3Css.Blazor.slnx --configuration Release /nr:false` (0 warnings, 0 errors);
   - `dotnet test W3Css.Blazor.slnx --configuration Release --no-build /nr:false` (481 passing);
   - browser-verified the starter dashboard on port 5024 with no console errors, no horizontal overflow, 18px chart-card vertical padding, and sun/moon/system theme icon states.
+
+## 2026-06-02 - Dark Striped Table Hover Polish
+
+- Moved dark striped-row surface handling into the shared theme stylesheet so `W3Table` and `W3DataTable` do not need sample-specific stripe overrides in dark theme scope.
+- Added a stronger dark hover selector for hoverable striped even rows, keeping hover readable across all visible data rows.
+- Removed the starter sample's dark striped-row override that could win over the shared hover rule.
+- Verification:
+  - `dotnet build W3Css.Blazor.slnx --configuration Release /nr:false` (0 warnings, 0 errors);
+  - `dotnet test W3Css.Blazor.slnx --configuration Release --no-build /nr:false` (481 passing);
+  - browser-verified `/customers` on port 5024 with no console errors, no horizontal overflow, loaded shared dark striped-hover selectors, and no starter striped-row override.

@@ -162,8 +162,7 @@ body {
 
 .w3-theme-root[data-w3-dark='true'] .w3-white,
 .w3-theme-root[data-w3-dark='true'] .w3-card,
-.w3-theme-root[data-w3-dark='true'] .w3-table-all,
-.w3-theme-root[data-w3-dark='true'] .w3-striped tbody tr:nth-child(even) {
+.w3-theme-root[data-w3-dark='true'] .w3-table-all {
     background-color: var(--w3-surface) !important;
     color: var(--w3-on-surface) !important;
 }

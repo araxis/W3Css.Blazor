@@ -1188,3 +1188,10 @@ Last updated: 2026-06-02
   - pushed tag `v0.5.0`;
   - release workflow passed and published `W3Css.Blazor` `0.5.0`;
   - public package smoke passed for `0.5.0`.
+
+## 2026-06-02 - Starter Kit Theme Mode Fix
+
+- Added sample app theme modes for Light, Dark, and Auto in the starter-kit app bar.
+- Auto mode follows the browser system color-scheme preference through a sample-only `matchMedia` listener.
+- Added starter-sample dark token values and dark-mode contrast overrides for dashboard cards, tables, inputs, and recovery actions.
+- Browser-verified Light, Dark, and Auto behavior on the starter dashboard with no horizontal overflow.

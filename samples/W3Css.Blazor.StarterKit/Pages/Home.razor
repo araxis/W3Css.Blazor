@@ -30,13 +30,13 @@
 
     <W3Grid Padding="true" Class="starter-dashboard-charts w3-margin-top">
         <W3Card Depth="W3CardDepth.Two" Round="W3Round.Medium" BodyClass="starter-chart-card">
-            <h2 class="w3-large">Weekly throughput</h2>
-            <p class="doc-muted">Completed work compared with new intake.</p>
-            <W3Chart ChartType="W3ChartType.Line"
-                     Series="@Workspace.ThroughputSeries"
-                     Labels="@Workspace.ThroughputLabels"
+            <h2 class="w3-large">Customer plan mix</h2>
+            <p class="doc-muted">Accounts grouped by their current subscription plan.</p>
+            <W3Chart ChartType="W3ChartType.Bar"
+                     Series="@Workspace.CustomerPlanSeries"
+                     Labels="@Workspace.CustomerPlanLabels"
                      Height="240"
-                     AriaLabel="Weekly throughput by day"
+                     AriaLabel="Customer accounts by plan"
                      Class="starter-chart" />
         </W3Card>
 

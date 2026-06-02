@@ -1202,3 +1202,14 @@ Last updated: 2026-06-02
 - Fixed the starter sample dark-mode data-table toolbar/footer surface so table actions no longer render as a light strip in dark mode.
 - Added sample-only dark chart grid/axis contrast polish while leaving package APIs and the bundled W3.CSS source unchanged.
 - Verified starter-kit Release build, the 479-test Release suite, whitespace checks, and dashboard browser rendering.
+
+## 2026-06-02 - Table Hover And Theme Toggle Polish
+
+- Fixed dark-mode hover readability for W3.CSS hoverable tables/lists through the library theme stylesheet instead of only styling the starter sample.
+- Added horizontal footer padding to `W3DataTable` so pagination/count rows do not touch the table edge.
+- Extended `W3ToggleIconButton` with optional multi-state cycling and documented the Light/Dark/Auto starter theme use case.
+- Updated the starter dashboard to use a single multi-state theme icon button and customer-derived chart values for plan mix and health.
+- Verification:
+  - `dotnet build W3Css.Blazor.slnx --configuration Release /nr:false` (0 warnings, 0 errors);
+  - `dotnet test W3Css.Blazor.slnx --configuration Release --no-build /nr:false` (481 passing);
+  - browser-verified the starter dashboard on port 5024 with no console errors, no horizontal overflow, derived chart headings, padded data-table footer, and loaded dark hover contrast rules.

@@ -50,7 +50,7 @@ Last updated: 2026-06-02
 ## Repository Standards
 
 - Default branch target: `main`.
-- Package version currently pinned at `0.5.2`.
+- Package version currently pinned at `0.5.3`.
 - `PackageProjectUrl`/`RepositoryUrl`/`RepositoryType` and release metadata are set from repo properties.
 
 ## Architecture Defaults

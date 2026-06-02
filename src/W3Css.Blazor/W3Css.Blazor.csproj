@@ -5,7 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <PackageId>W3Css.Blazor</PackageId>
-    <Version>0.5.2</Version>
+    <Version>0.5.3</Version>
     <Title>W3Css.Blazor</Title>
     <Description>Lightweight Blazor components built on W3.CSS.</Description>
     <Authors>W3Css.Blazor contributors</Authors>
@@ -15,7 +15,7 @@
     <PackageProjectUrl>$(RepositoryUrl)</PackageProjectUrl>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>$(RepositoryUrl)</RepositoryUrl>
-    <PackageReleaseNotes>See docs/release-notes/0.5.2.md</PackageReleaseNotes>
+    <PackageReleaseNotes>See docs/release-notes/0.5.3.md</PackageReleaseNotes>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <IsPackable>true</IsPackable>
   </PropertyGroup>

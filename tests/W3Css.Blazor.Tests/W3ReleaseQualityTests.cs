@@ -89,6 +89,8 @@ public sealed class W3ReleaseQualityTests
         Assert.Contains("starter-theme-icon-sun", workspace);
         Assert.Contains("starter-theme-icon-moon", workspace);
         Assert.Contains("starter-theme-icon-system", workspace);
+        Assert.Contains("box-shadow: none;", styles);
+        Assert.Contains("border-color: rgba(255, 255, 255, 0.46) !important;", styles);
         Assert.Contains("padding-top: 18px;", styles);
         Assert.Contains("padding-bottom: 18px;", styles);
     }

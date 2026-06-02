@@ -1336,3 +1336,9 @@ Last updated: 2026-06-02
   - `dotnet build W3Css.Blazor.slnx --configuration Release /nr:false` (0 warnings, 0 errors);
   - `dotnet test W3Css.Blazor.slnx --configuration Release --no-build /nr:false` (486 passing);
   - browser-verified the starter app on `/customers` can select Dashboard, navigates to `/`, marks Dashboard active, and reports no console errors or horizontal overflow.
+
+## 2026-06-02 - 0.5.2 Patch Release Preparation
+
+- Prepared `0.5.2` as the patch release for the reusable nav menu root-link fix merged after `0.5.1`.
+- Updated package metadata, README release link, Versions docs, changelog, release notes, starter label, and memory files for `0.5.2`.
+- Kept the vendored W3.CSS source unchanged.

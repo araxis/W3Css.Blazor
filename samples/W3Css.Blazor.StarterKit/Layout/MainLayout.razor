@@ -1,8 +1,10 @@
 @inherits LayoutComponentBase
 @inject StarterWorkspace Workspace
 @inject W3ToastService Toasts
+@inject IJSRuntime JS
+@implements IAsyncDisposable
 
-<W3ThemeProvider Theme="Workspace.Theme">
+<W3ThemeProvider Theme="Workspace.Theme" Dark="@Workspace.DarkThemeEnabled">
     <W3AppShell SidebarOpen="@sidebarOpen"
                 SidebarOpenChanged="value => sidebarOpen = value"
                 SidebarOverlay="false"
@@ -21,8 +23,31 @@
                       MenuExpanded="@sidebarOpen"
                       MenuControls="starter-sidebar"
                       OnMenuClick="ToggleSidebar"
-                      ActionsClass="w3-hide-small">
+                      ActionsClass="starter-appbar-actions">
                 <Actions>
+                    <div class="starter-theme-switch" role="radiogroup" aria-label="Theme mode">
+                        <W3Button Border="true"
+                                  Round="W3Round.Medium"
+                                  TextColor="W3Color.White"
+                                  Class="@ThemeModeButtonClass(StarterThemeMode.Light)"
+                                  role="radio"
+                                  aria-checked="@ThemeModeChecked(StarterThemeMode.Light)"
+                                  OnClick="@(_ => SetThemeMode(StarterThemeMode.Light))">Light</W3Button>
+                        <W3Button Border="true"
+                                  Round="W3Round.Medium"
+                                  TextColor="W3Color.White"
+                                  Class="@ThemeModeButtonClass(StarterThemeMode.Dark)"
+                                  role="radio"
+                                  aria-checked="@ThemeModeChecked(StarterThemeMode.Dark)"
+                                  OnClick="@(_ => SetThemeMode(StarterThemeMode.Dark))">Dark</W3Button>
+                        <W3Button Border="true"
+                                  Round="W3Round.Medium"
+                                  TextColor="W3Color.White"
+                                  Class="@ThemeModeButtonClass(StarterThemeMode.Auto)"
+                                  role="radio"
+                                  aria-checked="@ThemeModeChecked(StarterThemeMode.Auto)"
+                                  OnClick="@(_ => SetThemeMode(StarterThemeMode.Auto))">Auto</W3Button>
+                    </div>
                     <W3Button Border="true" TextColor="W3Color.White" Round="W3Round.Medium" OnClick="ShowReleaseToast">0.5.0 Ready</W3Button>
                 </Actions>
             </W3AppBar>
@@ -45,14 +70,64 @@
 
 @code {
     private bool sidebarOpen = true;
+    private IJSObjectReference? themeModule;
+    private DotNetObjectReference<MainLayout>? dotNetReference;
 
     private void ToggleSidebar(MouseEventArgs _)
     {
         sidebarOpen = !sidebarOpen;
     }
 
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender)
+        {
+            return;
+        }
+
+        themeModule = await JS.InvokeAsync<IJSObjectReference>("import", "./starterTheme.js");
+        dotNetReference = DotNetObjectReference.Create(this);
+        var prefersDark = await themeModule.InvokeAsync<bool>("initializeThemePreference", dotNetReference);
+        Workspace.SetSystemPrefersDark(prefersDark);
+        StateHasChanged();
+    }
+
+    private void SetThemeMode(StarterThemeMode mode)
+    {
+        Workspace.SetThemeMode(mode);
+    }
+
+    [JSInvokable]
+    public Task SetSystemPrefersDark(bool prefersDark)
+    {
+        Workspace.SetSystemPrefersDark(prefersDark);
+        StateHasChanged();
+        return Task.CompletedTask;
+    }
+
+    private string ThemeModeButtonClass(StarterThemeMode mode)
+    {
+        return Workspace.ThemeMode == mode ? "starter-theme-mode-active" : "starter-theme-mode";
+    }
+
+    private string ThemeModeChecked(StarterThemeMode mode)
+    {
+        return Workspace.ThemeMode == mode ? "true" : "false";
+    }
+
     private void ShowReleaseToast(MouseEventArgs _)
     {
         Toasts.ShowSuccess("Starter kit release path is wired.", "0.5.0");
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (themeModule is not null)
+        {
+            await themeModule.InvokeVoidAsync("disposeThemePreference");
+            await themeModule.DisposeAsync();
+        }
+
+        dotNetReference?.Dispose();
     }
 }

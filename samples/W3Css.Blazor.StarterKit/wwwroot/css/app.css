@@ -3,6 +3,14 @@ body {
     min-height: 100%;
 }
 
+.w3-theme-root {
+    min-height: 100vh;
+}
+
+.w3-theme-root[data-w3-dark='true'] {
+    color-scheme: dark;
+}
+
 .valid.modified:not([type=checkbox]) {
     outline: 1px solid #26b050;
 }
@@ -17,6 +25,30 @@ body {
 
 .starter-main {
     padding: 24px;
+}
+
+.starter-appbar-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.starter-theme-switch {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.starter-theme-mode {
+    opacity: 0.82;
+}
+
+.starter-theme-mode-active {
+    background: rgba(255, 255, 255, 0.2) !important;
+    box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.7);
+    opacity: 1;
 }
 
 .starter-sidebar {
@@ -55,6 +87,47 @@ body {
 
 .doc-muted {
     color: #667085;
+}
+
+.w3-theme-root[data-w3-dark='true'] .doc-muted {
+    color: #b5c3c2;
+}
+
+.w3-theme-root[data-w3-dark='true'] .w3-white,
+.w3-theme-root[data-w3-dark='true'] .w3-card,
+.w3-theme-root[data-w3-dark='true'] .w3-table-all,
+.w3-theme-root[data-w3-dark='true'] .w3-striped tbody tr:nth-child(even) {
+    background-color: var(--w3-surface) !important;
+    color: var(--w3-on-surface) !important;
+}
+
+.w3-theme-root[data-w3-dark='true'] .w3-table-all,
+.w3-theme-root[data-w3-dark='true'] .w3-border,
+.w3-theme-root[data-w3-dark='true'] .w3-card {
+    border-color: var(--w3-border) !important;
+}
+
+.w3-theme-root[data-w3-dark='true'] thead.w3-light-grey,
+.w3-theme-root[data-w3-dark='true'] thead.w3-light-grey.w3-text-black,
+.w3-theme-root[data-w3-dark='true'] .w3-data-table-sort {
+    background-color: #223132 !important;
+    color: var(--w3-on-surface) !important;
+}
+
+.w3-theme-root[data-w3-dark='true'] .w3-input,
+.w3-theme-root[data-w3-dark='true'] .w3-select {
+    background-color: #101818;
+    color: var(--w3-on-background);
+    border-color: var(--w3-border) !important;
+}
+
+.w3-theme-root[data-w3-dark='true'] .w3-button:not(.w3-primary):not(.starter-theme-mode):not(.starter-theme-mode-active) {
+    color: var(--w3-on-surface);
+}
+
+.w3-theme-root[data-w3-dark='true'] .w3-pale-green,
+.w3-theme-root[data-w3-dark='true'] .w3-pale-green .w3-button {
+    color: #101818 !important;
 }
 
 #blazor-error-ui {
@@ -133,5 +206,10 @@ code {
 
     .starter-page-heading {
         display: block;
+    }
+
+    .starter-appbar-actions {
+        justify-content: flex-start;
+        padding: 8px 16px;
     }
 }

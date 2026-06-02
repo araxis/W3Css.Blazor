@@ -12,7 +12,35 @@ public sealed class StarterWorkspace
         Accent = "#ffb305",
         Background = "#f4f7f7",
         Border = "#d8e3e3",
-        Radius = "6px"
+        Radius = "6px",
+        Dark = W3Theme.DefaultDark with
+        {
+            Primary = "#14b8a6",
+            OnPrimary = "#062925",
+            Secondary = "#8fb3ff",
+            Accent = "#ffd166",
+            Surface = "#172121",
+            OnSurface = "#eef7f6",
+            Background = "#0f1718",
+            OnBackground = "#e5f0ef",
+            Border = "#314546",
+            Info = "#7cc7ff",
+            Success = "#86d993",
+            Warning = "#ffd166",
+            Danger = "#ff9b9b",
+            Note = "#273b3c"
+        }
+    };
+
+    public StarterThemeMode ThemeMode { get; private set; } = StarterThemeMode.Auto;
+
+    public bool SystemPrefersDark { get; private set; }
+
+    public bool DarkThemeEnabled => ThemeMode switch
+    {
+        StarterThemeMode.Light => false,
+        StarterThemeMode.Dark => true,
+        _ => SystemPrefersDark
     };
 
     public StarterSettings Settings { get; private set; } = StarterSettings.CreateDefault();
@@ -56,6 +84,16 @@ public sealed class StarterWorkspace
     public void ResetSettings()
     {
         Settings = StarterSettings.CreateDefault();
+    }
+
+    public void SetThemeMode(StarterThemeMode mode)
+    {
+        ThemeMode = mode;
+    }
+
+    public void SetSystemPrefersDark(bool prefersDark)
+    {
+        SystemPrefersDark = prefersDark;
     }
 
     public void UpdateWorkflowRecord(string? name, string? owner)
@@ -116,3 +154,10 @@ public sealed record WorkItem(string Name, string Owner, string State);
 public sealed record CustomerAccount(string Name, string Plan, string Health, string Owner);
 
 public sealed record WorkflowRecord(string Name, string Status, string Owner);
+
+public enum StarterThemeMode
+{
+    Light,
+    Dark,
+    Auto
+}

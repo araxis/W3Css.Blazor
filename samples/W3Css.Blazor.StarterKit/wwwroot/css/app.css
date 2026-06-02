@@ -35,70 +35,6 @@ body {
     gap: 8px;
 }
 
-.starter-theme-toggle {
-    background: rgba(255, 255, 255, 0.14) !important;
-    border-color: rgba(255, 255, 255, 0.46) !important;
-    box-shadow: none;
-    min-width: 2.875rem;
-}
-
-.starter-theme-icon {
-    display: inline-block;
-    height: 1rem;
-    position: relative;
-    width: 1rem;
-}
-
-.starter-theme-icon::before,
-.starter-theme-icon::after {
-    content: "";
-    position: absolute;
-}
-
-.starter-theme-icon-sun::before {
-    background: currentColor;
-    border-radius: 50%;
-    box-shadow:
-        0 -0.45rem 0 -0.24rem currentColor,
-        0 0.45rem 0 -0.24rem currentColor,
-        -0.45rem 0 0 -0.24rem currentColor,
-        0.45rem 0 0 -0.24rem currentColor,
-        -0.32rem -0.32rem 0 -0.26rem currentColor,
-        0.32rem -0.32rem 0 -0.26rem currentColor,
-        -0.32rem 0.32rem 0 -0.26rem currentColor,
-        0.32rem 0.32rem 0 -0.26rem currentColor;
-    height: 0.52rem;
-    inset: 0.24rem;
-    width: 0.52rem;
-}
-
-.starter-theme-icon-moon::before {
-    border-radius: 50%;
-    box-shadow: -0.22rem 0 0 0 currentColor;
-    height: 0.82rem;
-    left: 0.36rem;
-    top: 0.08rem;
-    width: 0.82rem;
-}
-
-.starter-theme-icon-system::before {
-    border: 0.13rem solid currentColor;
-    border-radius: 0.12rem;
-    height: 0.58rem;
-    left: 0.08rem;
-    top: 0.12rem;
-    width: 0.84rem;
-}
-
-.starter-theme-icon-system::after {
-    background: currentColor;
-    box-shadow: 0 0.18rem 0 0 currentColor;
-    height: 0.14rem;
-    left: 0.34rem;
-    top: 0.74rem;
-    width: 0.32rem;
-}
-
 .starter-sidebar {
     padding-top: 8px;
 }
@@ -206,7 +142,7 @@ body {
     border-color: var(--w3-border) !important;
 }
 
-.w3-theme-root[data-w3-dark='true'] .w3-button:not(.w3-primary):not(.starter-theme-toggle) {
+.w3-theme-root[data-w3-dark='true'] .w3-button:not(.w3-primary) {
     color: var(--w3-on-surface);
 }
 

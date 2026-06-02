@@ -18,7 +18,7 @@ Last updated: 2026-06-02
 - Starter sample: `samples/W3Css.Blazor.StarterKit` is included in the solution and builds against the local library project.
 - Tests in project source: 71 `.cs` test files.
 - Test suite status:
-  - `dotnet test W3Css.Blazor.slnx --configuration Release --no-build /nr:false` -> **481 passing tests**.
+  - `dotnet test W3Css.Blazor.slnx --configuration Release --no-build /nr:false` -> **484 passing tests**.
 - Build status:
   - `dotnet build W3Css.Blazor.slnx --configuration Release` → **0 warnings, 0 errors**.
 
@@ -58,9 +58,10 @@ Last updated: 2026-06-02
 - The 0.4.0 quality-hardening release is complete: broad public API XML documentation guards, docs/API parity guards, browser sweep tooling, release notes, versions docs, README links, local package smoke, public package smoke, browser sweep, and memory updates passed without changing vendored W3.CSS.
 - The 0.5.0 starter-kit adoption release is complete: sample app, starter-kit docs, component-index starter path, README links, release notes, expanded package smoke coverage, docs browser sweep, starter app browser verification, tag workflow, and public package smoke all passed without changing vendored W3.CSS.
 - The starter-kit dashboard now includes meaningful customer-derived chart examples and a single multi-state theme toggle for Light/Dark/Auto.
-- The starter-kit theme toggle uses CSS-drawn sun, moon, and system icons with no extra icon dependency, and dashboard chart cards have explicit top/bottom body padding.
+- Built-in icons are now first-class through `W3IconName` + `W3Icon`; icon-capable components can render bundled SVG icons without external icon assets while preserving `IconClass` compatibility.
+- The starter-kit theme toggle uses built-in Sun, Moon, and Monitor icons through multi-state `W3ToggleIconButton`, and dashboard chart cards have explicit top/bottom body padding.
 - Multi-state `W3ToggleIconButton` no longer receives the binary pressed-ring class by default; the starter theme toggle uses a subtle themed border instead of a white inset ring.
-- Starter app-bar actions now keep the theme toggle and release button at the same rendered height using out-of-box `W3ToggleIconButton` classes and `IconText`, with no starter-specific icon CSS.
+- Starter app-bar actions now keep the theme toggle and release button at the same rendered height using out-of-box `W3ToggleIconButton` classes and built-in `W3IconName` states, with no starter-specific icon CSS.
 - Reusable dark-theme hover contrast now covers W3.CSS hoverable table/list rows and striped even rows inside `W3ThemeProvider`, so table hover readability is fixed at the library level.
 - Reusable dark-theme modal footer contrast now covers default `W3Modal`/`W3MessageBox` action footers inside `W3ThemeProvider`, so light-grey W3.CSS footer defaults do not create light strips in dark dialogs.
 - `W3DataTable` footer spacing now keeps horizontal padding, and `W3ToggleIconButton` supports optional multi-state cycling while preserving its existing binary toggle behavior.

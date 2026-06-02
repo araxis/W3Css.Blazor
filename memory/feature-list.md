@@ -75,9 +75,9 @@ This model is intentionally similar to mature Blazor libraries, while keeping im
 | Component | Status | Notes |
 | --- | --- | --- |
 | `W3Button` | Implemented | Core button wrapper with W3.CSS semantics and callbacks. |
-| `W3IconButton` | Implemented | Compact icon-only button action slot. |
-| `W3ToggleIconButton` | Implemented | Stateful icon toggle with accessible pressed state and optional two-way binding. |
-| `W3Fab` | Implemented | Floating action button with shape and color variants. |
+| `W3IconButton` | Implemented | Compact icon-only button action slot with built-in icon support. |
+| `W3ToggleIconButton` | Implemented | Stateful icon toggle with accessible pressed state, optional two-way binding, multi-state cycling, and built-in icon states. |
+| `W3Fab` | Implemented | Floating action button with shape, color variants, and built-in icon support. |
 | `W3Badge` | Implemented | Compact semantic status marker. |
 | `W3Tag` | Implemented | Small labeled tag/chip style marker. |
 | `W3Chip` | Implemented | Standalone chip with typography and color variants. |
@@ -95,7 +95,7 @@ This model is intentionally similar to mature Blazor libraries, while keeping im
 | `W3Quote` | Implemented | Citation-style quote component. |
 | `W3Avatar` | Implemented | Avatar with initials/image/fallback behavior. |
 | `W3AvatarGroup` | Implemented | Overlapping avatar row for compact participant displays. |
-| `W3Icon` | Implemented | Lightweight wrapper for icon classes. |
+| `W3Icon` | Implemented | Built-in inline SVG icon renderer with optional external class compatibility. |
 
 ## Inputs And Forms
 
@@ -181,8 +181,8 @@ This model is intentionally similar to mature Blazor libraries, while keeping im
 | --- | --- | --- |
 | Theme token system | Implemented | `W3Theme` + `W3ThemeProvider` emit CSS variables + token classes; `W3Color.Primary/Secondary/Accent/Surface/Info/Success/Warning/Danger/Note` adopt the theme. One place → reskin everything, arbitrary hex, dark mode, semantic status colors, and tokenized keyboard focus rings. Non-breaking/opt-in; see [[decisions]]. |
 | W3.CSS static file bundling | Implemented | W3.CSS 5.01 bundle in package assets. |
-| Docs-only icon/font/theme support | Implemented | Icons and fonts are loaded only in docs examples; not bundled by default. |
-| Icon strategy | Implemented | Consumer-provided icon classes via `W3Icon`. |
+| Docs-only font/theme support | Implemented | Fonts and docs support assets are loaded only in docs examples; not bundled by default. |
+| Icon strategy | Implemented | First-party `W3IconName` catalog rendered by `W3Icon`, plus optional external class compatibility through `IconClass`. |
 | Project mark for docs | Implemented | SVG mark in docs assets. |
 | Core guidance topics | Implemented | Defaults, Fonts, Colors, Color Schemes, Trends, Case Study, Material Design, Versions, Dark Mode, Mobile, Visibility, Borders, Round, Spacing, Text Fonts, Effects, Animations, Hover Colors, Direction, Filters, Validation. |
 

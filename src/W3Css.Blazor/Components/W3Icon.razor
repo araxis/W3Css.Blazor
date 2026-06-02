@@ -1,32 +1,65 @@
+@using Microsoft.AspNetCore.Components
 @using W3Css.Blazor.Internal
 @inherits W3ComponentBase
 
-@if (HasLabel)
+@if (HasBuiltInIcon)
 {
-    <i @attributes="AdditionalAttributes"
-       class="@CssClass"
-       style="@Style"
-       role="img"
-       aria-label="@Label">@ChildContent</i>
+    <svg @attributes="AdditionalAttributes"
+         class="@CssClass"
+         style="@Style"
+         viewBox="0 0 24 24"
+         fill="none"
+         stroke="currentColor"
+         stroke-width="2"
+         stroke-linecap="round"
+         stroke-linejoin="round"
+         role="@RoleValue"
+         aria-label="@Label"
+         aria-hidden="@AriaHiddenValue"
+         focusable="false">
+        @((MarkupString)W3IconCatalog.GetMarkup(IconName))
+    </svg>
 }
 else
 {
-    <i @attributes="AdditionalAttributes"
-       class="@CssClass"
-       style="@Style"
-       aria-hidden="true">@ChildContent</i>
+    @if (HasLabel)
+    {
+        <i @attributes="AdditionalAttributes"
+           class="@CssClass"
+           style="@Style"
+           role="img"
+           aria-label="@Label">@ChildContent</i>
+    }
+    else
+    {
+        <i @attributes="AdditionalAttributes"
+           class="@CssClass"
+           style="@Style"
+           aria-hidden="true">@ChildContent</i>
+    }
 }
 
 @code {
     private bool HasLabel => !string.IsNullOrWhiteSpace(Label);
+    private bool HasBuiltInIcon => IconName != W3IconName.None;
+    private string? RoleValue => HasLabel ? "img" : null;
+    private string? AriaHiddenValue => HasLabel ? null : "true";
 
     private string CssClass => BuildClass(
+        "w3-icon",
+        HasBuiltInIcon ? "w3-icon-svg" : null,
         IconClass,
         Size.ToClass(),
         TextColor.ToTextClass());
 
     /// <summary>
-    /// Gets or sets the icon class value.
+    /// Gets or sets the built-in icon name.
+    /// </summary>
+    [Parameter]
+    public W3IconName IconName { get; set; } = W3IconName.None;
+
+    /// <summary>
+    /// Gets or sets icon classes from an external icon stylesheet.
     /// </summary>
     [Parameter]
     public string? IconClass { get; set; }

@@ -9,9 +9,9 @@
         aria-pressed="@AriaPressed"
         disabled="@IsDisabled"
         @onclick="SelectAsync">
-    @if (!string.IsNullOrWhiteSpace(IconClass))
+    @if (HasIcon)
     {
-        <span class="@IconClass" aria-hidden="true"></span>
+        <W3Icon IconName="@IconName" IconClass="@IconClass" />
     }
     @ChildContent
 </button>
@@ -26,6 +26,8 @@
     private bool IsDisabled => Disabled || Owner?.Disabled == true;
 
     private string AriaPressed => IsSelected ? "true" : "false";
+
+    private bool HasIcon => IconName != W3IconName.None || !string.IsNullOrWhiteSpace(IconClass);
 
     private string CssClass => BuildClass(
         "w3-toggle-item",
@@ -59,7 +61,13 @@
     public RenderFragment? ChildContent { get; set; }
 
     /// <summary>
-    /// Optional leading icon class.
+    /// Built-in leading icon.
+    /// </summary>
+    [Parameter]
+    public W3IconName IconName { get; set; } = W3IconName.None;
+
+    /// <summary>
+    /// Optional external leading icon class.
     /// </summary>
     [Parameter]
     public string? IconClass { get; set; }

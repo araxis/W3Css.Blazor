@@ -11,9 +11,9 @@
 
     <DocExample Title="Formatting Toggle" Description="Each button keeps its own pressed state when no binding is supplied." Code="@FormattingCode">
         <W3Toolbar Label="Formatting" Border="true" Round="W3Round.Medium" Gap="4">
-            <W3ToggleIconButton Label="Bold" Border="true" IconClass="fa fa-bold" />
-            <W3ToggleIconButton Label="Italic" Border="true" IconClass="fa fa-italic" />
-            <W3ToggleIconButton Label="Underline" Border="true" IconClass="fa fa-underline" />
+            <W3ToggleIconButton Label="Follow items" Border="true" IconName="W3IconName.Bell" />
+            <W3ToggleIconButton Label="Lock editing" Border="true" IconName="W3IconName.Lock" />
+            <W3ToggleIconButton Label="Show details" Border="true" IconName="W3IconName.Eye" />
         </W3Toolbar>
     </DocExample>
 
@@ -44,9 +44,10 @@
             <tbody>
                 <tr><td>Label</td><td>string</td><td>Icon action</td><td>Required accessibility label.</td></tr>
                 <tr><td>Title</td><td>string?</td><td>null</td><td>Optional tooltip title.</td></tr>
-                <tr><td>IconClass</td><td>string?</td><td>null</td><td>CSS class for icon content.</td></tr>
+                <tr><td>IconName</td><td>W3IconName</td><td>None</td><td>Built-in icon.</td></tr>
+                <tr><td>IconClass</td><td>string?</td><td>null</td><td>Optional app-owned icon class.</td></tr>
                 <tr><td>IconElementClass</td><td>string?</td><td>null</td><td>Additional icon class.</td></tr>
-                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Icon text if not using `IconClass`.</td></tr>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Custom icon content when not using `IconName`.</td></tr>
                 <tr><td>Pressed</td><td>bool</td><td>false</td><td>Current pressed state.</td></tr>
                 <tr><td>PressedChanged</td><td>EventCallback&lt;bool&gt;</td><td>none</td><td>Raised when pressed state changes.</td></tr>
                 <tr><td>States</td><td>IReadOnlyList&lt;W3ToggleIconButtonState&gt;?</td><td>null</td><td>Optional multi-state values cycled on click.</td></tr>
@@ -83,16 +84,16 @@
 
     private static IReadOnlyList<W3ToggleIconButtonState> ThemeStates { get; } =
     [
-        new("Light", "Theme mode: Light", "L"),
-        new("Dark", "Theme mode: Dark", "D"),
-        new("Auto", "Theme mode: Auto", "A")
+        new("Light", "Theme mode: Light", W3IconName.Sun),
+        new("Dark", "Theme mode: Dark", W3IconName.Moon),
+        new("Auto", "Theme mode: Auto", W3IconName.Monitor)
     ];
 
     private const string FormattingCode = """
 <W3Toolbar Label="Formatting" Border="true" Round="W3Round.Medium" Gap="4">
-    <W3ToggleIconButton Label="Bold" Border="true" IconClass="fa fa-bold" />
-    <W3ToggleIconButton Label="Italic" Border="true" IconClass="fa fa-italic" />
-    <W3ToggleIconButton Label="Underline" Border="true" IconClass="fa fa-underline" />
+    <W3ToggleIconButton Label="Follow items" Border="true" IconName="W3IconName.Bell" />
+    <W3ToggleIconButton Label="Lock editing" Border="true" IconName="W3IconName.Lock" />
+    <W3ToggleIconButton Label="Show details" Border="true" IconName="W3IconName.Eye" />
 </W3Toolbar>
 """;
 
@@ -109,9 +110,9 @@
 
     private static IReadOnlyList<W3ToggleIconButtonState> themeStates =
     [
-        new("Light", "Theme mode: Light", "L"),
-        new("Dark", "Theme mode: Dark", "D"),
-        new("Auto", "Theme mode: Auto", "A")
+        new("Light", "Theme mode: Light", W3IconName.Sun),
+        new("Dark", "Theme mode: Dark", W3IconName.Moon),
+        new("Auto", "Theme mode: Auto", W3IconName.Monitor)
     ];
 }
 """;

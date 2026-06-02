@@ -25,9 +25,9 @@
         }
         else
         {
-            @if (!string.IsNullOrWhiteSpace(IconClass))
+            @if (HasIcon)
             {
-                <span class="@IconCssClass" aria-hidden="true"></span>
+                <W3Icon IconName="@IconName" IconClass="@IconClass" Class="@IconCssClass" />
             }
             @if (!HideTriggerLabel)
             {
@@ -107,7 +107,6 @@
 
     private string IconCssClass => new W3ClassBuilder()
         .Add("w3-menu-trigger-icon")
-        .Add(IconClass)
         .ToString();
 
     private string? StyleValue => CombineStyle($"--w3-menu-min-width:{Math.Max(0, MinWidth)}px", Style);
@@ -118,7 +117,9 @@
 
     private string EffectiveMenuLabel => string.IsNullOrWhiteSpace(MenuLabel) ? Label : MenuLabel;
 
-    private bool HideTriggerLabel => IconOnly && !string.IsNullOrWhiteSpace(IconClass);
+    private bool HasIcon => IconName != W3IconName.None || !string.IsNullOrWhiteSpace(IconClass);
+
+    private bool HideTriggerLabel => IconOnly && HasIcon;
 
     private bool currentOpen;
     private bool? lastOpenParameter;
@@ -144,7 +145,13 @@
     public string? MenuLabel { get; set; }
 
     /// <summary>
-    /// Gets or sets the icon class value.
+    /// Gets or sets the built-in icon name.
+    /// </summary>
+    [Parameter]
+    public W3IconName IconName { get; set; } = W3IconName.None;
+
+    /// <summary>
+    /// Gets or sets icon classes from an external icon stylesheet.
     /// </summary>
     [Parameter]
     public string? IconClass { get; set; }

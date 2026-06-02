@@ -11,9 +11,9 @@
 
     <DocExample Title="Actionable Menu Items" Description="A flat action list keeps click handlers and disabled states local to each row." Code="@ActionsCode">
         <W3List Border="true" Color="W3Color.White" Class="w3-padding-0">
-            <W3ListItem Text="Inbox" IconClass="fa fa-envelope-o" Divider="true" OnClick="SetInboxAction" />
-            <W3ListItem Text="Drafts" IconClass="fa fa-pencil" Divider="true" Active="true" />
-            <W3ListItem Text="Settings" IconClass="fa fa-cog" OnClick="SetSettingsAction" />
+            <W3ListItem Text="Inbox" StartIconName="W3IconName.Mail" Divider="true" OnClick="SetInboxAction" />
+            <W3ListItem Text="Drafts" StartIconName="W3IconName.Edit" Divider="true" Active="true" />
+            <W3ListItem Text="Settings" StartIconName="W3IconName.Settings" OnClick="SetSettingsAction" />
         </W3List>
         <p class="w3-small">Last action: <strong>@(string.IsNullOrWhiteSpace(ActiveAction) ? "None" : ActiveAction)</strong></p>
     </DocExample>
@@ -65,8 +65,9 @@
             <tbody>
                 <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Row label and rich text</td></tr>
                 <tr><td>Text</td><td>string?</td><td>null</td><td>Fallback row text when no child content</td></tr>
-                <tr><td>IconClass</td><td>string?</td><td>null</td><td>Start icon CSS class (alias: StartIconClassName)</td></tr>
-                <tr><td>StartIconClassName</td><td>string?</td><td>null</td><td>Alias for icon class on the start slot</td></tr>
+                <tr><td>StartIconName</td><td>W3IconName</td><td>None</td><td>Built-in icon on the start slot</td></tr>
+                <tr><td>IconClass</td><td>string?</td><td>null</td><td>Start external icon class (alias: StartIconClassName)</td></tr>
+                <tr><td>StartIconClassName</td><td>string?</td><td>null</td><td>Alias for external icon class on the start slot</td></tr>
                 <tr><td>StartContent</td><td>RenderFragment?</td><td>null</td><td>Custom start content</td></tr>
                 <tr><td>EndContent</td><td>RenderFragment?</td><td>null</td><td>Custom end content (badges, status chips)</td></tr>
                 <tr><td>Href</td><td>string?</td><td>null</td><td>Creates link mode</td></tr>
@@ -110,9 +111,9 @@
 
     private const string ActionsCode = """
 <W3List Border="true" Color="W3Color.White" Class="w3-padding-0">
-    <W3ListItem Text="Inbox" IconClass="fa fa-envelope-o" Divider="true" OnClick="SetInboxAction" />
-    <W3ListItem Text="Drafts" IconClass="fa fa-pencil" Divider="true" Active="true" />
-    <W3ListItem Text="Settings" IconClass="fa fa-cog" OnClick="SetSettingsAction" />
+    <W3ListItem Text="Inbox" StartIconName="W3IconName.Mail" Divider="true" OnClick="SetInboxAction" />
+    <W3ListItem Text="Drafts" StartIconName="W3IconName.Edit" Divider="true" Active="true" />
+    <W3ListItem Text="Settings" StartIconName="W3IconName.Settings" OnClick="SetSettingsAction" />
 </W3List>
 """;
 

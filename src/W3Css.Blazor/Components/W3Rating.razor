@@ -24,7 +24,7 @@
                 disabled="@IsInteractionDisabled"
                 @onclick="() => SetValueAsync(rating)"
                 @onkeydown="HandleKeyDownAsync">
-            <span class="@GetIconClass(rating)" aria-hidden="true"></span>
+            <W3Icon IconName="@GetIconName(rating)" IconClass="@GetIconClass(rating)" />
         </button>
     }
     @if (ShowValue)
@@ -70,7 +70,12 @@
             .ToString();
     }
 
-    private string GetIconClass(int rating)
+    private W3IconName GetIconName(int rating)
+    {
+        return rating <= ClampedValue ? IconName : EmptyIconName;
+    }
+
+    private string? GetIconClass(int rating)
     {
         return rating <= ClampedValue ? IconClass : EmptyIconClass;
     }
@@ -214,16 +219,28 @@
     public bool ShowValue { get; set; }
 
     /// <summary>
-    /// Gets or sets the icon class value.
+    /// Gets or sets the selected built-in icon.
     /// </summary>
     [Parameter]
-    public string IconClass { get; set; } = "fa fa-star";
+    public W3IconName IconName { get; set; } = W3IconName.Star;
 
     /// <summary>
-    /// Gets or sets the empty icon class value.
+    /// Gets or sets the unselected built-in icon.
     /// </summary>
     [Parameter]
-    public string EmptyIconClass { get; set; } = "fa fa-star-o";
+    public W3IconName EmptyIconName { get; set; } = W3IconName.StarOutline;
+
+    /// <summary>
+    /// Gets or sets the selected external icon class override.
+    /// </summary>
+    [Parameter]
+    public string? IconClass { get; set; }
+
+    /// <summary>
+    /// Gets or sets the unselected external icon class override.
+    /// </summary>
+    [Parameter]
+    public string? EmptyIconClass { get; set; }
 
     /// <summary>
     /// Gets or sets the background color class.

@@ -100,6 +100,7 @@ public sealed class W3TimelineRatingTests
         Assert.Contains("w3-text-amber", buttons[0].GetAttribute("class"));
         Assert.Contains("w3-text-grey", buttons[4].GetAttribute("class"));
         Assert.Contains("2 / 5", cut.Find(".w3-rating-value").TextContent);
+        Assert.Equal(5, cut.FindAll("svg.w3-icon-svg").Count);
 
         buttons[2].Click();
 

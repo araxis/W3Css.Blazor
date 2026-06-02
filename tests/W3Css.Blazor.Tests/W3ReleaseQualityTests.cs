@@ -86,9 +86,12 @@ public sealed class W3ReleaseQualityTests
         Assert.Contains("W3EmptyState", dashboard);
         Assert.Contains("W3Modal", workflow);
         Assert.Contains("W3MessageBox", workflow);
-        Assert.Contains("\"\\u2600\"", workspace);
-        Assert.Contains("\"\\u263E\"", workspace);
-        Assert.Contains("\"\\u2699\"", workspace);
+        Assert.Contains("W3IconName.Sun", workspace);
+        Assert.Contains("W3IconName.Moon", workspace);
+        Assert.Contains("W3IconName.Monitor", workspace);
+        Assert.DoesNotContain(string.Concat("\"", "\\", "u2600", "\""), workspace);
+        Assert.DoesNotContain(string.Concat("\"", "\\", "u263E", "\""), workspace);
+        Assert.DoesNotContain(string.Concat("\"", "\\", "u2699", "\""), workspace);
         Assert.DoesNotContain("starter-theme-toggle", layout);
         Assert.DoesNotContain("starter-theme-icon", workspace);
         Assert.DoesNotContain("starter-theme-icon", styles);

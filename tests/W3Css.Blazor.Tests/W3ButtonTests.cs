@@ -114,6 +114,24 @@ public sealed class W3ButtonTests
     }
 
     [Fact]
+    public void IconButtonRendersBuiltInIconName()
+    {
+        using var context = new BunitContext();
+        var cut = context.Render<W3IconButton>(parameters => parameters
+            .Add(p => p.Label, "Save")
+            .Add(p => p.IconName, W3IconName.Save)
+            .Add(p => p.IconElementClass, "custom-icon"));
+
+        var icon = cut.Find("svg");
+
+        Assert.Equal("Save", cut.Find("button").GetAttribute("aria-label"));
+        Assert.Contains("w3-icon-svg", icon.GetAttribute("class"));
+        Assert.Contains("w3-icon-button-icon", icon.GetAttribute("class"));
+        Assert.Contains("custom-icon", icon.GetAttribute("class"));
+        Assert.Equal("true", icon.GetAttribute("aria-hidden"));
+    }
+
+    [Fact]
     public void IconButtonSupportsTogglePressedDisabledAndClickCallback()
     {
         using var context = new BunitContext();
@@ -237,6 +255,35 @@ public sealed class W3ButtonTests
         button.Click();
         Assert.Equal("Theme mode: Auto", button.GetAttribute("aria-label"));
         Assert.Equal("A", cut.Find("i").TextContent.Trim());
+    }
+
+    [Fact]
+    public void ToggleIconButtonCanCycleThroughBuiltInStateIcons()
+    {
+        using var context = new BunitContext();
+        var states = new[]
+        {
+            new W3ToggleIconButtonState("Light", "Theme mode: Light", W3IconName.Sun),
+            new W3ToggleIconButtonState("Dark", "Theme mode: Dark", W3IconName.Moon),
+            new W3ToggleIconButtonState("Auto", "Theme mode: Auto", W3IconName.Monitor)
+        };
+
+        var cut = context.Render<W3ToggleIconButton>(parameters => parameters
+            .Add(p => p.States, states)
+            .Add(p => p.Value, "Light"));
+
+        Assert.Single(cut.FindAll("svg.w3-icon-svg"));
+        Assert.Equal("Theme mode: Light", cut.Find("button").GetAttribute("aria-label"));
+
+        cut.Find("button").Click();
+
+        Assert.Single(cut.FindAll("svg.w3-icon-svg"));
+        Assert.Equal("Theme mode: Dark", cut.Find("button").GetAttribute("aria-label"));
+
+        cut.Find("button").Click();
+
+        Assert.Single(cut.FindAll("svg.w3-icon-svg"));
+        Assert.Equal("Theme mode: Auto", cut.Find("button").GetAttribute("aria-label"));
     }
 
     [Fact]

@@ -11,10 +11,10 @@
 
     <DocExample Title="Toolbar Actions" Description="Every icon button needs a `Label`; the icon itself stays decorative for screen readers." Code="@ToolbarCode">
         <W3Toolbar Label="Document actions" Border="true" Round="W3Round.Medium" Gap="4">
-            <W3IconButton Label="Save" Title="Save" IconClass="fa fa-save" Color="W3Color.Teal" TextColor="W3Color.White" />
-            <W3IconButton Label="Undo" Title="Undo" IconClass="fa fa-undo" Border="true" />
-            <W3IconButton Label="Redo" Title="Redo" IconClass="fa fa-repeat" Border="true" />
-            <W3IconButton Label="Delete" Title="Delete" IconClass="fa fa-trash" TextColor="W3Color.Red" Border="true" />
+            <W3IconButton Label="Save" Title="Save" IconName="W3IconName.Save" Color="W3Color.Teal" TextColor="W3Color.White" />
+            <W3IconButton Label="Undo" Title="Undo" IconName="W3IconName.Undo" Border="true" />
+            <W3IconButton Label="Redo" Title="Redo" IconName="W3IconName.Redo" Border="true" />
+            <W3IconButton Label="Delete" Title="Delete" IconName="W3IconName.Delete" TextColor="W3Color.Red" Border="true" />
         </W3Toolbar>
     </DocExample>
 
@@ -36,9 +36,9 @@
                     <td>hero-banner.jpg</td>
                     <td><W3Tag Color="W3Color.PaleGreen" TextColor="W3Color.Black">Ready</W3Tag></td>
                     <td>
-                        <W3IconButton Label="Preview hero banner" Title="Preview" IconClass="fa fa-eye" Circle="true" Border="true" Class="w3-margin-right" />
-                        <W3IconButton Label="Edit hero banner" Title="Edit" IconClass="fa fa-pencil" Circle="true" Border="true" Class="w3-margin-right" />
-                        <W3IconButton Label="Remove hero banner" Title="Remove" IconClass="fa fa-trash" Circle="true" TextColor="W3Color.Red" Border="true" />
+                        <W3IconButton Label="Preview hero banner" Title="Preview" IconName="W3IconName.Eye" Circle="true" Border="true" Class="w3-margin-right" />
+                        <W3IconButton Label="Edit hero banner" Title="Edit" IconName="W3IconName.Edit" Circle="true" Border="true" Class="w3-margin-right" />
+                        <W3IconButton Label="Remove hero banner" Title="Remove" IconName="W3IconName.Delete" Circle="true" TextColor="W3Color.Red" Border="true" />
                     </td>
                 </tr>
             </tbody>
@@ -54,9 +54,10 @@
             <tbody>
                 <tr><td>Label</td><td>string</td><td>Icon action</td><td>Required button `aria-label` fallback</td></tr>
                 <tr><td>Title</td><td>string?</td><td>null</td><td>Optional native title tooltip</td></tr>
-                <tr><td>IconClass</td><td>string?</td><td>null</td><td>Classes passed to the inner `W3Icon`</td></tr>
+                <tr><td>IconName</td><td>W3IconName</td><td>None</td><td>Built-in icon passed to the inner `W3Icon`</td></tr>
+                <tr><td>IconClass</td><td>string?</td><td>null</td><td>Optional app-owned classes passed to the inner `W3Icon`</td></tr>
                 <tr><td>IconElementClass</td><td>string?</td><td>null</td><td>Additional class on the inner icon element</td></tr>
-                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Icon text for icon fonts such as Material Icons, or custom icon content</td></tr>
+                <tr><td>ChildContent</td><td>RenderFragment?</td><td>null</td><td>Custom icon content when not using `IconName`</td></tr>
                 <tr><td>Color</td><td>W3Color</td><td>None</td><td>Button background color class</td></tr>
                 <tr><td>TextColor</td><td>W3Color</td><td>None</td><td>Button text color class</td></tr>
                 <tr><td>Size</td><td>W3Size</td><td>Default</td><td>Button size class</td></tr>
@@ -78,7 +79,7 @@
     <section class="doc-section">
         <h2>Related</h2>
         <p><NavLink href="components/button">Button</NavLink> covers text commands, and <NavLink href="components/toolbar">Toolbar</NavLink> groups icon buttons into action rows.</p>
-        <p><NavLink href="components/icons">Icons</NavLink> explains icon-library setup.</p>
+        <p><NavLink href="components/icons">Icons</NavLink> lists the built-in icon catalog.</p>
     </section>
 
     <DocPager PreviousHref="components/button" PreviousText="Button" NextHref="components/toggle-icon-button" NextText="Toggle Icon Button" />
@@ -87,10 +88,10 @@
 @code {
     private const string ToolbarCode = """
 <W3Toolbar Label="Document actions" Border="true" Round="W3Round.Medium" Gap="4">
-    <W3IconButton Label="Save" Title="Save" IconClass="fa fa-save" Color="W3Color.Teal" TextColor="W3Color.White" />
-    <W3IconButton Label="Undo" Title="Undo" IconClass="fa fa-undo" Border="true" />
-    <W3IconButton Label="Redo" Title="Redo" IconClass="fa fa-repeat" Border="true" />
-    <W3IconButton Label="Delete" Title="Delete" IconClass="fa fa-trash" TextColor="W3Color.Red" Border="true" />
+    <W3IconButton Label="Save" Title="Save" IconName="W3IconName.Save" Color="W3Color.Teal" TextColor="W3Color.White" />
+    <W3IconButton Label="Undo" Title="Undo" IconName="W3IconName.Undo" Border="true" />
+    <W3IconButton Label="Redo" Title="Redo" IconName="W3IconName.Redo" Border="true" />
+    <W3IconButton Label="Delete" Title="Delete" IconName="W3IconName.Delete" TextColor="W3Color.Red" Border="true" />
 </W3Toolbar>
 """;
 
@@ -103,8 +104,8 @@
 """;
 
     private const string RowCode = """
-<W3IconButton Label="Preview hero banner" Title="Preview" IconClass="fa fa-eye" Circle="true" Border="true" />
-<W3IconButton Label="Edit hero banner" Title="Edit" IconClass="fa fa-pencil" Circle="true" Border="true" />
-<W3IconButton Label="Remove hero banner" Title="Remove" IconClass="fa fa-trash" Circle="true" TextColor="W3Color.Red" Border="true" />
+<W3IconButton Label="Preview hero banner" Title="Preview" IconName="W3IconName.Eye" Circle="true" Border="true" />
+<W3IconButton Label="Edit hero banner" Title="Edit" IconName="W3IconName.Edit" Circle="true" Border="true" />
+<W3IconButton Label="Remove hero banner" Title="Remove" IconName="W3IconName.Delete" Circle="true" TextColor="W3Color.Red" Border="true" />
 """;
 }

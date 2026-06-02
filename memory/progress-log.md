@@ -1262,3 +1262,13 @@ Last updated: 2026-06-02
   - `dotnet build W3Css.Blazor.slnx --configuration Release /nr:false` (0 warnings, 0 errors);
   - `dotnet test W3Css.Blazor.slnx --configuration Release --no-build /nr:false` (481 passing);
   - browser-verified `/workflow` on port 5024 with no console errors, no horizontal overflow, and a 0px height delta between the theme toggle and release button.
+
+## 2026-06-02 - Starter Theme Icon Out-Of-Box Polish
+
+- Replaced starter-specific CSS-drawn theme icons with `W3ToggleIconButtonState.IconText` values so the theme control works without custom icon CSS.
+- Removed the starter theme toggle class and all starter theme icon CSS.
+- Added release-quality guards that fail if the starter sample reintroduces theme icon CSS or the old custom toggle class.
+- Verification:
+  - `dotnet build W3Css.Blazor.slnx --configuration Release /nr:false` (0 warnings, 0 errors);
+  - `dotnet test W3Css.Blazor.slnx --configuration Release --no-build /nr:false` (481 passing);
+  - browser-verified `/workflow` on port 5024 with no console errors, no horizontal overflow, no starter theme icon CSS, no starter theme toggle class, and a 0px height delta between app-bar actions.

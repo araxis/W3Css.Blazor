@@ -16,27 +16,24 @@
         </div>
     </div>
 
-    @if (HasAction || ShowCloseButton)
+    @if (ShowCloseButton)
+    {
+        <button type="button"
+                class="w3-button w3-toast-close"
+                aria-label="@CloseButtonLabel"
+                @onclick="DismissAsync">
+            &times;
+        </button>
+    }
+
+    @if (HasAction)
     {
         <div class="w3-toast-actions">
-            @if (HasAction)
-            {
-                <button type="button"
-                        class="w3-button w3-toast-action"
-                        @onclick="InvokeActionAsync">
-                    @ActionText
-                </button>
-            }
-
-            @if (ShowCloseButton)
-            {
-                <button type="button"
-                        class="w3-button w3-toast-close"
-                        aria-label="@CloseButtonLabel"
-                        @onclick="DismissAsync">
-                    &times;
-                </button>
-            }
+            <button type="button"
+                    class="w3-button w3-toast-action"
+                    @onclick="InvokeActionAsync">
+                @ActionText
+            </button>
         </div>
     }
 </div>
@@ -49,6 +46,7 @@
         "w3-panel",
         Kind.ToClass(),
         Round.ToClass(),
+        ShowCloseButton ? "w3-toast-dismissible" : null,
         Card ? "w3-card-4" : null,
         Animate ? "w3-animate-right" : null);
 

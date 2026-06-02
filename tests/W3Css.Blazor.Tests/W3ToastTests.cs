@@ -30,6 +30,7 @@ public sealed class W3ToastTests
         Assert.Contains("w3-panel", toast.GetAttribute("class"));
         Assert.Contains("w3-success", toast.GetAttribute("class"));
         Assert.Contains("w3-round-large", toast.GetAttribute("class"));
+        Assert.Contains("w3-toast-dismissible", toast.GetAttribute("class"));
         Assert.Contains("w3-card-4", toast.GetAttribute("class"));
         Assert.Contains("w3-animate-right", toast.GetAttribute("class"));
         Assert.Contains("toast-extra", toast.GetAttribute("class"));
@@ -37,6 +38,8 @@ public sealed class W3ToastTests
         Assert.Equal("status", toast.GetAttribute("role"));
         Assert.Equal("polite", toast.GetAttribute("aria-live"));
         Assert.Equal("Dismiss saved toast", cut.Find(".w3-toast-close").GetAttribute("aria-label"));
+        Assert.Empty(cut.FindAll(".w3-toast-actions .w3-toast-close"));
+        Assert.Equal("button", toast.Children[1].TagName.ToLowerInvariant());
         Assert.Contains("Saved", toast.TextContent);
         Assert.Contains("Project settings were saved.", toast.TextContent);
 

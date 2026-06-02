@@ -1182,3 +1182,9 @@ Last updated: 2026-06-02
   - `pwsh ./tools/package-consumer-smoke.ps1 -PackageVersion 0.5.0 -PackageSource artifacts/packages`;
   - `pwsh ./tools/docs-browser-sweep.ps1 -BaseUrl http://localhost:5022 -StartServer`;
   - browser-verified the starter kit dashboard, settings, customers, and workflow routes on port 5024 with customer search, settings save, modal edit/save, message-box archive, no horizontal overflow, no error UI, and no unintended app-shell overlay.
+- Release completion:
+  - PR #56 passed branch CI and was merged to `main`;
+  - main CI and Pages passed;
+  - pushed tag `v0.5.0`;
+  - release workflow passed and published `W3Css.Blazor` `0.5.0`;
+  - public package smoke passed for `0.5.0`.

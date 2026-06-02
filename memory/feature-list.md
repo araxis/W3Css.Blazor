@@ -227,7 +227,7 @@ This model is intentionally similar to mature Blazor libraries, while keeping im
 | Overlay behavior | Implemented | Modal, tooltip, toast, sidebar, focus trap, menu, overlay interactions, and backdrop composition. |
 | Content display and timeline | Implemented | Tree, chat, timeline, data table, rating, drop zone, and gallery coverage. |
 | Feedback and loading | Implemented | Spinner, skeleton, toast, file, autocomplete, and alert coverage. |
-| Package validation | Implemented | `dotnet pack` generates `W3Css.Blazor.0.5.0.nupkg`; CI uploads package artifacts and local package smoke passed for 0.5.0 with starter-kit primitives. |
+| Package validation | Implemented | `dotnet pack` generates `W3Css.Blazor.0.5.0.nupkg`; CI uploads package artifacts and local/public package smoke passed for 0.5.0 with starter-kit primitives. |
 | Test count | Implemented | `dotnet test` reports 479 passing tests. |
 
 ## Component Compatibility Backlog

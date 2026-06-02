@@ -5,7 +5,7 @@ Last updated: 2026-06-02
 ## Repository
 
 - Canonical branch: `main`.
-- Tags `v0.1.0`, `v0.2.0`, `v0.3.0`, and `v0.4.0` mark published package releases.
+- Tags `v0.1.0`, `v0.2.0`, `v0.3.0`, `v0.4.0`, and `v0.5.0` mark published package releases.
 - Solution: `W3Css.Blazor.slnx`.
 - SDK: `.NET 10.0.300` (`global.json`).
 
@@ -43,9 +43,9 @@ Last updated: 2026-06-02
 - README includes package version and MIT license badges.
 - Release workflow builds, tests, packs, creates release artifacts, and publishes packages on `v*` tag pushes when the publishing secret is configured.
 - First package release is published as `W3Css.Blazor` version `0.1.0`.
-- Current package release is published as `W3Css.Blazor` version `0.4.0`; package metadata targets `0.5.0`.
-- Releases `v0.1.0`, `v0.2.0`, `v0.3.0`, and `v0.4.0` are published with package artifacts.
-- Package consumer smoke tooling verifies install, component compilation, publish output, bundled static assets, and starter-kit primitives; version `0.5.0` has passed against the local package artifact.
+- Current package release is published as `W3Css.Blazor` version `0.5.0`; package metadata targets `0.5.0`.
+- Releases `v0.1.0`, `v0.2.0`, `v0.3.0`, `v0.4.0`, and `v0.5.0` are published with package artifacts.
+- Package consumer smoke tooling verifies install, component compilation, publish output, bundled static assets, and starter-kit primitives; version `0.5.0` has passed against both the local package artifact and the public package feed.
 
 ## Current Progress
 
@@ -56,7 +56,7 @@ Last updated: 2026-06-02
 - README, changelog, release notes, and memory release-state cleanup now reflect the published 0.3.0 release.
 - The 0.3.0 adoption-polish slice is complete: Patterns docs, README adoption path, release notes, versions docs, selected public XML documentation guard coverage, local package smoke, public package smoke, and top-page browser sweep all passed without changing vendored W3.CSS.
 - The 0.4.0 quality-hardening release is complete: broad public API XML documentation guards, docs/API parity guards, browser sweep tooling, release notes, versions docs, README links, local package smoke, public package smoke, browser sweep, and memory updates passed without changing vendored W3.CSS.
-- The 0.5.0 starter-kit adoption slice is locally complete: sample app, starter-kit docs, component-index starter path, README links, release notes, expanded package smoke coverage, docs browser sweep, and starter app browser verification all passed without changing vendored W3.CSS.
+- The 0.5.0 starter-kit adoption release is complete: sample app, starter-kit docs, component-index starter path, README links, release notes, expanded package smoke coverage, docs browser sweep, starter app browser verification, tag workflow, and public package smoke all passed without changing vendored W3.CSS.
 - Documentation consistency review is complete for current component topic parameter tables; each implemented rendering surface now has explicit inherited attribute rows where applicable.
 - The small docs/API gap pass now covers `W3Table`, `W3Drawer`, `W3Menu`, and `W3ProgressCircular` parameter tables with focused docs smoke coverage.
 - The second docs/API gap pass now covers `W3DataTable`, `W3DateRangePicker`, `W3MessageBox`, `W3Modal`, and `W3Navbar` parameter tables with focused docs smoke coverage.

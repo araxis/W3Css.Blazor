@@ -112,6 +112,13 @@
    surfaces don't show harsh light-grey edges. Light mode is untouched. */
 .w3-theme-root[data-w3-dark="true"] .w3-border { border-color: var(--w3-border) !important; }
 
+.w3-theme-root[data-w3-dark="true"] .w3-modal-footer.w3-light-grey,
+.w3-theme-root[data-w3-dark="true"] .w3-modal-footer.w3-light-grey.w3-text-black {
+    background-color: var(--w3-surface) !important;
+    color: var(--w3-on-surface) !important;
+    border-color: var(--w3-border) !important;
+}
+
 .w3-theme-root[data-w3-dark="true"] .w3-striped tbody tr:nth-child(even) {
     background-color: var(--w3-surface) !important;
     color: var(--w3-on-surface) !important;

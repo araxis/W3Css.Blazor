@@ -32,14 +32,17 @@ Add the stylesheet to the host page — one file is all you need:
 <link rel="stylesheet" href="_content/W3Css.Blazor/w3css-blazor.css" />
 ```
 
-`w3css-blazor.css` bundles the base W3.CSS framework **and** the design-token layer
-(CSS variables + token classes), so themed colors and dark mode resolve out of the
-box. Brand the whole app from one place by wrapping it in `W3ThemeProvider`.
+`w3css-blazor.css` bundles the base W3.CSS framework, the design-token layer
+(CSS variables + token classes), and the package component styles, so layout,
+icons, themed colors, and dark mode resolve out of the box. Brand the whole app
+from one place by wrapping it in `W3ThemeProvider`.
 
 <details>
 <summary>Prefer the two files separately?</summary>
 
-The bundle is just these two concatenated; you can link them individually instead:
+The base framework and token layer are also available separately. Use this path
+only when your host app already includes the package component styles through its
+own generated scoped stylesheet:
 
 ```html
 <link rel="stylesheet" href="_content/W3Css.Blazor/w3css/5/w3.css" />

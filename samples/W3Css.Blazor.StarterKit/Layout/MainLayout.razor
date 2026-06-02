@@ -13,7 +13,7 @@
                 HeaderTextColor="W3Color.White"
                 SidebarColor="W3Color.Surface"
                 SidebarTextColor="W3Color.Black"
-                MainClass="starter-main">
+                MainClass="w3-padding-24">
         <Header>
             <W3AppBar Color="W3Color.Primary"
                       TextColor="W3Color.White"
@@ -22,8 +22,7 @@
                       ShowMenuButton="true"
                       MenuExpanded="@sidebarOpen"
                       MenuControls="starter-sidebar"
-                      OnMenuClick="ToggleSidebar"
-                      ActionsClass="starter-appbar-actions">
+                      OnMenuClick="ToggleSidebar">
                 <Actions>
                     <W3ToggleIconButton States="@Workspace.ThemeModeStates"
                                         Value="@Workspace.ThemeModeValue"
@@ -36,12 +35,17 @@
             </W3AppBar>
         </Header>
         <Sidebar>
-            <nav id="starter-sidebar" class="w3-bar-block starter-sidebar" aria-label="Starter kit sections">
-                <NavLink class="w3-bar-item w3-button" Match="NavLinkMatch.All" href="">Dashboard</NavLink>
-                <NavLink class="w3-bar-item w3-button" href="settings">Settings</NavLink>
-                <NavLink class="w3-bar-item w3-button" href="customers">Customers</NavLink>
-                <NavLink class="w3-bar-item w3-button" href="workflow">Workflow</NavLink>
-            </nav>
+            <W3NavMenu id="starter-sidebar"
+                       Label="Starter kit sections"
+                       Border="false"
+                       Color="W3Color.Surface"
+                       ActiveColor="W3Color.Primary"
+                       ActiveTextColor="W3Color.White">
+                <W3NavMenuItem Match="NavLinkMatch.All" Href="" Text="Dashboard" IconName="W3IconName.Dashboard" />
+                <W3NavMenuItem Href="settings" Text="Settings" IconName="W3IconName.Settings" />
+                <W3NavMenuItem Href="customers" Text="Customers" IconName="W3IconName.Users" />
+                <W3NavMenuItem Href="workflow" Text="Workflow" IconName="W3IconName.Workflow" />
+            </W3NavMenu>
         </Sidebar>
         <ChildContent>
             @Body

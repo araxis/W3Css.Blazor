@@ -18,7 +18,7 @@ Last updated: 2026-06-02
 - Starter sample: `samples/W3Css.Blazor.StarterKit` is included in the solution and builds against the local library project.
 - Tests in project source: 71 `.cs` test files.
 - Test suite status:
-  - `dotnet test W3Css.Blazor.slnx --configuration Release --no-build /nr:false` -> **484 passing tests**.
+  - `dotnet test W3Css.Blazor.slnx --configuration Release --no-build /nr:false` -> **485 passing tests**.
 - Build status:
   - `dotnet build W3Css.Blazor.slnx --configuration Release` → **0 warnings, 0 errors**.
 
@@ -45,7 +45,7 @@ Last updated: 2026-06-02
 - First package release is published as `W3Css.Blazor` version `0.1.0`.
 - Current package release is published as `W3Css.Blazor` version `0.5.0`; package metadata targets `0.5.0`.
 - Releases `v0.1.0`, `v0.2.0`, `v0.3.0`, `v0.4.0`, and `v0.5.0` are published with package artifacts.
-- Package consumer smoke tooling verifies install, component compilation, publish output, bundled static assets, and starter-kit primitives; version `0.5.0` has passed against both the local package artifact and the public package feed.
+- Package consumer smoke tooling verifies install, component compilation, publish output, bundled static assets, component styles inside the bundled stylesheet, and starter-kit primitives; local smoke uses an isolated per-run package cache so repeated same-version artifact checks do not reuse stale packages.
 
 ## Current Progress
 
@@ -62,8 +62,14 @@ Last updated: 2026-06-02
 - The starter-kit theme toggle uses built-in Sun, Moon, and Monitor icons through multi-state `W3ToggleIconButton`, and dashboard chart cards have explicit top/bottom body padding.
 - Multi-state `W3ToggleIconButton` no longer receives the binary pressed-ring class by default; the starter theme toggle uses a subtle themed border instead of a white inset ring.
 - Starter app-bar actions now keep the theme toggle and release button at the same rendered height using out-of-box `W3ToggleIconButton` classes and built-in `W3IconName` states, with no starter-specific icon CSS.
+- Starter kit readiness now requires zero starter source CSS: the sample links only `_content/W3Css.Blazor/w3css-blazor.css`, uses package/W3 utility primitives for layout, and has a release-quality guard against source CSS or hidden generated stylesheet links returning.
+- The bundled `_content/W3Css.Blazor/w3css-blazor.css` now includes W3.CSS, theme tokens, and generated package component scoped CSS so app bars, nav menus, icons, and other component layouts work from the single documented stylesheet.
+- `W3AppShell` now marks sidebar layouts with `w3-app-shell-has-sidebar` and keeps the shell header sticky in that state, so the fixed W3.CSS sidebar stays visually attached to its header while the page scrolls.
+- `W3Chart` now derives grid and axis strokes from the current chart text color with stronger opacity, so chart structure remains readable in both light and dark theme modes without app-specific CSS.
+- Reusable dark-theme surfaces, tables, form controls, data-table chrome, row hover contrast, app-bar action wrapping, and chart sizing/color behavior now live in the package stylesheet/component CSS instead of the starter app.
 - Reusable dark-theme hover contrast now covers W3.CSS hoverable table/list rows and striped even rows inside `W3ThemeProvider`, so table hover readability is fixed at the library level.
 - Reusable dark-theme modal footer contrast now covers default `W3Modal`/`W3MessageBox` action footers inside `W3ThemeProvider`, so light-grey W3.CSS footer defaults do not create light strips in dark dialogs.
+- `W3Chart` axis labels now emit essential SVG text styling directly so labels inherit the themed text color even when rendered through the manual SVG text builder path.
 - `W3DataTable` footer spacing now keeps horizontal padding, and `W3ToggleIconButton` supports optional multi-state cycling while preserving its existing binary toggle behavior.
 - Documentation consistency review is complete for current component topic parameter tables; each implemented rendering surface now has explicit inherited attribute rows where applicable.
 - The small docs/API gap pass now covers `W3Table`, `W3Drawer`, `W3Menu`, and `W3ProgressCircular` parameter tables with focused docs smoke coverage.

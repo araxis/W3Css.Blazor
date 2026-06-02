@@ -50,6 +50,7 @@
 
     private string RootCssClass => BuildClass(
         "w3-app-shell",
+        Sidebar is not null ? "w3-app-shell-has-sidebar" : null,
         Color.ToBackgroundClass(),
         TextColor.ToTextClass());
 

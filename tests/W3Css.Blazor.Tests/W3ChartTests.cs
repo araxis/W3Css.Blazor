@@ -107,6 +107,22 @@ public sealed class W3ChartTests
     }
 
     [Fact]
+    public void AxisLabelsUseCurrentTextColorWithoutScopedCss()
+    {
+        using var context = new BunitContext();
+
+        var cut = context.Render<W3Chart>(parameters => parameters
+            .Add(c => c.ChartType, W3ChartType.Bar)
+            .Add(c => c.Labels, new[] { "Q1" })
+            .Add(c => c.Series, new[] { new W3ChartSeries("A", new double[] { 3 }) }));
+
+        var label = cut.Find(".w3-chart-label");
+        Assert.Equal("currentColor", label.GetAttribute("fill"));
+        Assert.Equal("11", label.GetAttribute("font-size"));
+        Assert.Equal("0.78", label.GetAttribute("opacity"));
+    }
+
+    [Fact]
     public void RendersDonutSlicesAndHole()
     {
         using var context = new BunitContext();

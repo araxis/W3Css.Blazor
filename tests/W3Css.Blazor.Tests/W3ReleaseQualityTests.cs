@@ -49,6 +49,7 @@ public sealed class W3ReleaseQualityTests
     public void ConsumerSmokeCoversCurrentAppPrimitives()
     {
         var smoke = ReadRepositoryFile("tools", "package-consumer-smoke.ps1");
+        var bundle = ReadRepositoryFile("src", "W3Css.Blazor", "wwwroot", "w3css-blazor.css");
 
         Assert.Contains("W3ThemeProvider", smoke);
         Assert.Contains("W3Card", smoke);
@@ -62,6 +63,16 @@ public sealed class W3ReleaseQualityTests
         Assert.Contains("W3ToastProvider", smoke);
         Assert.Contains("AddW3CssBlazor", smoke);
         Assert.Contains("PackageSource", smoke);
+        Assert.Contains("component scoped CSS", smoke);
+        Assert.Contains("W3AppBar.razor.rz.scp.css", smoke);
+        Assert.Contains("W3NavMenuItem.razor.rz.scp.css", smoke);
+        Assert.Contains("w3-icon-svg", smoke);
+        Assert.Contains("component scoped CSS", bundle);
+        Assert.Contains("W3AppBar.razor.rz.scp.css", bundle);
+        Assert.Contains("W3NavMenuItem.razor.rz.scp.css", bundle);
+        Assert.Contains("w3-icon-svg", bundle);
+        Assert.Contains("color-mix(in srgb, currentColor 24%, transparent)", bundle);
+        Assert.Contains("color-mix(in srgb, currentColor 36%, transparent)", bundle);
     }
 
     [Fact]
@@ -73,15 +84,26 @@ public sealed class W3ReleaseQualityTests
         var dashboard = ReadRepositoryFile("samples", "W3Css.Blazor.StarterKit", "Pages", "Home.razor");
         var workflow = ReadRepositoryFile("samples", "W3Css.Blazor.StarterKit", "Pages", "Workflow.razor");
         var workspace = ReadRepositoryFile("samples", "W3Css.Blazor.StarterKit", "Services", "StarterWorkspace.cs");
-        var styles = ReadRepositoryFile("samples", "W3Css.Blazor.StarterKit", "wwwroot", "css", "app.css");
         var index = ReadRepositoryFile("samples", "W3Css.Blazor.StarterKit", "wwwroot", "index.html");
+        var sampleRoot = PathFromRepositoryRoot("samples", "W3Css.Blazor.StarterKit");
+        var sourceCssFiles = Directory.EnumerateFiles(sampleRoot, "*.css", SearchOption.AllDirectories)
+            .Where(path => !path.Contains($"{Path.DirectorySeparatorChar}bin{Path.DirectorySeparatorChar}", StringComparison.OrdinalIgnoreCase))
+            .Where(path => !path.Contains($"{Path.DirectorySeparatorChar}obj{Path.DirectorySeparatorChar}", StringComparison.OrdinalIgnoreCase))
+            .ToArray();
 
         Assert.Contains("samples/W3Css.Blazor.StarterKit/W3Css.Blazor.StarterKit.csproj", solution);
         Assert.Contains(@"..\..\src\W3Css.Blazor\W3Css.Blazor.csproj", project);
         Assert.Contains("_content/W3Css.Blazor/w3css-blazor.css", index);
+        Assert.DoesNotContain("css/app.css", index);
+        Assert.DoesNotContain("W3Css.Blazor.StarterKit.styles.css", index);
+        Assert.Empty(sourceCssFiles);
         Assert.Contains("W3ThemeProvider", layout);
         Assert.Contains("W3AppShell", layout);
+        Assert.Contains("W3NavMenu", layout);
         Assert.Contains("W3ToastProvider", layout);
+        Assert.Contains("W3Row", dashboard);
+        Assert.Contains("W3Column", dashboard);
+        Assert.Contains("W3Stack", dashboard);
         Assert.Contains("W3DataTable", dashboard);
         Assert.Contains("W3EmptyState", dashboard);
         Assert.Contains("W3Modal", workflow);
@@ -94,13 +116,9 @@ public sealed class W3ReleaseQualityTests
         Assert.DoesNotContain(string.Concat("\"", "\\", "u2699", "\""), workspace);
         Assert.DoesNotContain("starter-theme-toggle", layout);
         Assert.DoesNotContain("starter-theme-icon", workspace);
-        Assert.DoesNotContain("starter-theme-icon", styles);
-        Assert.DoesNotContain("box-shadow: none;", styles);
-        Assert.DoesNotContain("border-color: rgba(255, 255, 255, 0.46) !important;", styles);
-        Assert.DoesNotContain("padding-bottom: 0.7rem", styles);
-        Assert.DoesNotContain("padding-top: 0.7rem", styles);
-        Assert.Contains("padding-top: 18px;", styles);
-        Assert.Contains("padding-bottom: 18px;", styles);
+        Assert.DoesNotContain("class=\"starter", layout);
+        Assert.DoesNotContain("class=\"starter", dashboard);
+        Assert.DoesNotContain("ContentStyle=", workflow);
     }
 
     [Fact]

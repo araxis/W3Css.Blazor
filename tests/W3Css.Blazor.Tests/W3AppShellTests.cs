@@ -52,6 +52,7 @@ public sealed class W3AppShellTests
         Assert.Contains("Footer content", footer.TextContent);
         Assert.Contains("w3-white", root.GetAttribute("class"));
         Assert.Contains("w3-text-black", root.GetAttribute("class"));
+        Assert.Contains("w3-app-shell-has-sidebar", root.GetAttribute("class"));
         Assert.Contains("shell-extra", root.GetAttribute("class"));
         Assert.Equal("min-height: 32rem", root.GetAttribute("style"));
         Assert.Contains("w3-teal", header.GetAttribute("class"));

@@ -4,8 +4,8 @@
 
 <PageTitle>Starter Kit Workflow</PageTitle>
 
-<section class="starter-page">
-    <div class="starter-page-heading">
+<W3Container Class="w3-padding-24">
+    <W3Stack Horizontal="true" Wrap="true" AlignCenter="true" JustifyBetween="true" Gap="16">
         <div>
             <h1>Workflow</h1>
             <p class="w3-large">A modal editing flow paired with a message-box confirmation.</p>
@@ -14,9 +14,9 @@
             <W3Button Color="W3Color.Primary" TextColor="W3Color.White" Round="W3Round.Medium" OnClick="OpenEdit">Edit record</W3Button>
             <W3Button Border="true" Round="W3Round.Medium" OnClick="OpenArchive">Archive</W3Button>
         </W3ActionRow>
-    </div>
+    </W3Stack>
 
-    <W3Card Depth="W3CardDepth.Two" Round="W3Round.Medium" HeaderColor="W3Color.Surface">
+    <W3Card Depth="W3CardDepth.Two" Round="W3Round.Medium" HeaderColor="W3Color.Surface" BodyClass="w3-padding-16" Class="w3-margin-top">
         <Header>
             <h2 class="w3-large">Current record</h2>
         </Header>
@@ -24,14 +24,13 @@
             <p><strong>Name:</strong> @Workspace.WorkflowRecord.Name</p>
             <p><strong>Status:</strong> @Workspace.WorkflowRecord.Status</p>
             <p><strong>Owner:</strong> @Workspace.WorkflowRecord.Owner</p>
-            <p class="doc-muted">Last result: @Workspace.LastWorkflowResult</p>
+            <p class="w3-opacity">Last result: @Workspace.LastWorkflowResult</p>
         </ChildContent>
     </W3Card>
 
     <W3Modal Id="starter-edit-modal"
              Title="Edit record"
-             @bind-Open="editOpen"
-             ContentStyle="max-width:560px">
+             @bind-Open="editOpen">
         <ChildContent>
             <W3Field TValue="string" Label="Display name" ForId="record-name">
                 <W3Input id="record-name" @bind-Value="draftName" />
@@ -53,7 +52,7 @@
                   NoText="Keep active"
                   CancelText="Cancel"
                   OnResult="HandleArchiveResult" />
-</section>
+</W3Container>
 
 @code {
     private bool editOpen;

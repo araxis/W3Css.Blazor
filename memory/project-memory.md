@@ -5,8 +5,8 @@ Last updated: 2026-06-02
 ## Snapshot
 
 - Repo target: Blazor component suite over W3.CSS (small, CSS-first, practical defaults).
-- Branch: `work/0.5.1-starter-polish`.
-- Current package baseline: published `0.5.0`; metadata targets `0.5.1` for the starter-kit polish patch release.
+- Branch: `work/0.5.1-release-memory`.
+- Current package baseline: published `0.5.1`.
 - .NET target: `net10.0` (`10.0.300` SDK).
 - Current state:
   - 127 component `.razor` files.
@@ -37,7 +37,7 @@ Last updated: 2026-06-02
 ## Current Priority
 
 1. 0.5.1 starter kit polish:
-   - package-level starter sample styling, release metadata, package smoke coverage, and browser verification are ready for release.
+   - package-level starter sample styling, release metadata, package smoke coverage, browser verification, tag workflow, release workflow, and public package smoke are complete.
 2. Future releases:
    - plan normal version-bump, release-note, tag, publish, and consumer-smoke slices.
 

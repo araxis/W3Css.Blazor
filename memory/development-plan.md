@@ -68,4 +68,4 @@ Last updated: 2026-06-02
   - `pwsh ./tools/docs-browser-sweep.ps1 -BaseUrl http://localhost:5022 -StartServer`
 
 - Components implemented: 127 component files plus docs topic coverage.
-- Test coverage: 485 passing tests for the current 0.5.0 starter-kit readiness slice.
+- Test coverage: 485 passing tests for the current starter-kit readiness slice.

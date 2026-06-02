@@ -2,6 +2,19 @@
 
 All notable changes to W3Css.Blazor will be documented in this file.
 
+## 0.5.1 - 2026-06-02
+
+### Starter Kit Polish
+
+- Removed the starter sample's remaining source stylesheet dependency so it runs from the package stylesheet and W3 utility classes.
+- Strengthened package-level app shell, app bar, icon, modal, data table, chart, and dark-theme styling used by the starter sample.
+- Hardened package consumer smoke coverage so local package checks use an isolated package cache and verify bundled component styles.
+
+### Release Quality
+
+- Updated package metadata, README adoption links, versions documentation, release notes, and memory files for 0.5.1.
+- Kept the vendored W3.CSS source unchanged.
+
 ## 0.5.0 - 2026-06-02
 
 ### Starter Kit Adoption

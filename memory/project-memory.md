@@ -5,14 +5,14 @@ Last updated: 2026-06-02
 ## Snapshot
 
 - Repo target: Blazor component suite over W3.CSS (small, CSS-first, practical defaults).
-- Branch: `feature/starter-no-custom-css`.
-- Current package baseline: published `0.5.0`.
+- Branch: `work/0.5.1-starter-polish`.
+- Current package baseline: published `0.5.0`; metadata targets `0.5.1` for the starter-kit polish patch release.
 - .NET target: `net10.0` (`10.0.300` SDK).
 - Current state:
   - 127 component `.razor` files.
   - 121 docs topic pages plus top-level Patterns and Starter Kit guides.
   - Starter sample app under `samples/W3Css.Blazor.StarterKit` with no source CSS; it links only the bundled package stylesheet.
-  - 485 passing tests for the current 0.5.0 starter-kit readiness slice.
+  - 485 passing tests for the current starter-kit readiness slice.
   - Build: `dotnet build W3Css.Blazor.slnx --configuration Release` (0 warnings, 0 errors).
 
 ## Architecture
@@ -36,8 +36,8 @@ Last updated: 2026-06-02
 
 ## Current Priority
 
-1. 0.5.0 starter kit adoption:
-   - sample app, docs route, README links, release metadata, package smoke coverage, browser verification, tag workflow, and public package smoke are complete.
+1. 0.5.1 starter kit polish:
+   - package-level starter sample styling, release metadata, package smoke coverage, and browser verification are ready for release.
 2. Future releases:
    - plan normal version-bump, release-note, tag, publish, and consumer-smoke slices.
 

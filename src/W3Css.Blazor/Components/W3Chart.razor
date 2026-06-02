@@ -180,7 +180,10 @@
         builder.AddAttribute(2, "y", F(label.Y));
         builder.AddAttribute(3, "text-anchor", label.Anchor);
         builder.AddAttribute(4, "class", "w3-chart-label");
-        builder.AddContent(5, label.Text);
+        builder.AddAttribute(5, "fill", "currentColor");
+        builder.AddAttribute(6, "font-size", "11");
+        builder.AddAttribute(7, "opacity", "0.78");
+        builder.AddContent(8, label.Text);
         builder.CloseElement();
     };
 }

@@ -47,8 +47,28 @@ $workspace = Join-Path $WorkRoot "consumer-$PackageVersion-$(Get-Date -Format 'y
 $appDir = Join-Path $workspace 'PackageConsumerSmoke'
 $projectFile = Join-Path $appDir 'PackageConsumerSmoke.csproj'
 $publishDir = Join-Path $workspace 'publish'
+$packagesDir = Join-Path $workspace 'packages'
+$nugetConfigPath = Join-Path $workspace 'NuGet.Config'
+$resolvedPackageSource = $PackageSource
+if ($PackageSource -notmatch '^[a-zA-Z][a-zA-Z0-9+.-]*://' -and -not [System.IO.Path]::IsPathRooted($PackageSource)) {
+    $candidateSource = Join-Path $repoRoot $PackageSource
+    if (Test-Path $candidateSource) {
+        $resolvedPackageSource = (Resolve-Path $candidateSource).Path
+    }
+}
 
 New-Item -Path $workspace -ItemType Directory -Force | Out-Null
+$escapedPackageSource = [System.Security.SecurityElement]::Escape($resolvedPackageSource)
+Set-Content -Path $nugetConfigPath -NoNewline -Value @"
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <packageSources>
+    <clear />
+    <add key="package-under-test" value="$escapedPackageSource" />
+    <add key="nuget" value="https://api.nuget.org/v3/index.json" protocolVersion="3" />
+  </packageSources>
+</configuration>
+"@
 
 try {
     Write-Step "Creating disposable consumer app in $workspace"
@@ -64,7 +84,7 @@ try {
         $appDir
     )
 
-    Write-Step "Installing $PackageId $PackageVersion from $PackageSource"
+    Write-Step "Installing $PackageId $PackageVersion from $resolvedPackageSource"
     Invoke-Checked 'dotnet' @(
         'add',
         $projectFile,
@@ -73,7 +93,8 @@ try {
         '--version',
         $PackageVersion,
         '--source',
-        $PackageSource
+        $resolvedPackageSource,
+        '--no-restore'
     )
 
     $importsPath = Join-Path $appDir '_Imports.razor'
@@ -213,7 +234,7 @@ try {
 }
 '@
 
-    Invoke-Checked 'dotnet' @('restore', $projectFile)
+    Invoke-Checked 'dotnet' @('restore', $projectFile, '--packages', $packagesDir, '--configfile', $nugetConfigPath)
     Invoke-Checked 'dotnet' @('build', $projectFile, '--configuration', $Configuration, '--no-restore')
     Invoke-Checked 'dotnet' @('publish', $projectFile, '--configuration', $Configuration, '--no-restore', '--output', $publishDir)
 
@@ -225,6 +246,10 @@ try {
     $bundle = Get-Content -Path $bundlePath -Raw
     if (-not $bundle.Contains('w3-button') -or -not $bundle.Contains('--w3-')) {
         throw "Published stylesheet did not include the expected W3.CSS and theme token content: $bundlePath"
+    }
+
+    if (-not $bundle.Contains('component scoped CSS') -or -not $bundle.Contains('W3AppBar.razor.rz.scp.css') -or -not $bundle.Contains('W3NavMenuItem.razor.rz.scp.css') -or -not $bundle.Contains('w3-icon-svg')) {
+        throw "Published stylesheet did not include expected package component styles: $bundlePath"
     }
 
     Write-Step "Package consumer smoke passed for $PackageId $PackageVersion"

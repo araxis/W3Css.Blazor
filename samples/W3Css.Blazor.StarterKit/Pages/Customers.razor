@@ -4,8 +4,8 @@
 
 <PageTitle>Starter Kit Customers</PageTitle>
 
-<section class="starter-page">
-    <div class="starter-page-heading">
+<W3Container Class="w3-padding-24">
+    <W3Stack Horizontal="true" Wrap="true" AlignCenter="true" JustifyBetween="true" Gap="16">
         <div>
             <h1>Customers</h1>
             <p class="w3-large">A searchable data table with empty, error, and row action states.</p>
@@ -14,7 +14,7 @@
             <W3Button Border="true" Round="W3Round.Medium" OnClick="ToggleError">Toggle error</W3Button>
             <W3Button Border="true" Round="W3Round.Medium" OnClick="ClearSearch">Clear search</W3Button>
         </W3ActionRow>
-    </div>
+    </W3Stack>
 
     <W3DataTable TItem="CustomerAccount"
                  Items="@Workspace.Customers"
@@ -39,7 +39,7 @@
             <W3Button Size="W3Size.Small" Color="W3Color.Primary" TextColor="W3Color.White" Round="W3Round.Medium" OnClick="@(_ => MessageCustomer(customer))">Message</W3Button>
         </RowActions>
     </W3DataTable>
-</section>
+</W3Container>
 
 @code {
     private void ToggleError(MouseEventArgs _)

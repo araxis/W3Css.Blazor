@@ -42,6 +42,10 @@
     color: var(--w3-on-background);
 }
 
+.w3-theme-root[data-w3-dark="true"] {
+    color-scheme: dark;
+}
+
 .w3-primary { background-color: var(--w3-primary) !important; color: var(--w3-on-primary) !important; }
 .w3-text-primary { color: var(--w3-primary) !important; }
 .w3-border-primary { border-color: var(--w3-primary) !important; }
@@ -108,9 +112,55 @@
     outline: none !important;
 }
 
-/* In a dark theme scope, neutral borders adopt the themed border so dark
-   surfaces don't show harsh light-grey edges. Light mode is untouched. */
-.w3-theme-root[data-w3-dark="true"] .w3-border { border-color: var(--w3-border) !important; }
+/* In a dark theme scope, common W3.CSS neutral surfaces adopt the theme
+   tokens so apps do not need per-screen dark overrides. Light mode is untouched. */
+.w3-theme-root[data-w3-dark="true"] .w3-white,
+.w3-theme-root[data-w3-dark="true"] .w3-card,
+.w3-theme-root[data-w3-dark="true"] .w3-card-2,
+.w3-theme-root[data-w3-dark="true"] .w3-card-4,
+.w3-theme-root[data-w3-dark="true"] .w3-table,
+.w3-theme-root[data-w3-dark="true"] .w3-table-all,
+.w3-theme-root[data-w3-dark="true"] .w3-responsive {
+    background-color: var(--w3-surface) !important;
+    color: var(--w3-on-surface) !important;
+}
+
+.w3-theme-root[data-w3-dark="true"] .w3-light-grey,
+.w3-theme-root[data-w3-dark="true"] .w3-light-gray {
+    background-color: var(--w3-surface) !important;
+    color: var(--w3-on-surface) !important;
+}
+
+.w3-theme-root[data-w3-dark="true"] .w3-text-grey,
+.w3-theme-root[data-w3-dark="true"] .w3-text-gray {
+    color: color-mix(in srgb, var(--w3-on-surface) 70%, transparent) !important;
+}
+
+.w3-theme-root[data-w3-dark="true"] .w3-border,
+.w3-theme-root[data-w3-dark="true"] .w3-bordered tr,
+.w3-theme-root[data-w3-dark="true"] .w3-table-all tr {
+    border-color: var(--w3-border) !important;
+}
+
+.w3-theme-root[data-w3-dark="true"] .w3-input,
+.w3-theme-root[data-w3-dark="true"] .w3-select,
+.w3-theme-root[data-w3-dark="true"] .w3-check,
+.w3-theme-root[data-w3-dark="true"] .w3-radio {
+    background-color: var(--w3-background) !important;
+    color: var(--w3-on-background) !important;
+    border-color: var(--w3-border) !important;
+}
+
+.w3-theme-root[data-w3-dark="true"] .w3-input::placeholder {
+    color: color-mix(in srgb, var(--w3-on-background) 58%, transparent);
+}
+
+.w3-theme-root[data-w3-dark="true"] .w3-data-table-toolbar,
+.w3-theme-root[data-w3-dark="true"] .w3-data-table-footer {
+    background-color: var(--w3-surface);
+    color: var(--w3-on-surface);
+    border-color: var(--w3-border);
+}
 
 .w3-theme-root[data-w3-dark="true"] .w3-modal-footer.w3-light-grey,
 .w3-theme-root[data-w3-dark="true"] .w3-modal-footer.w3-light-grey.w3-text-black {
@@ -120,7 +170,7 @@
 }
 
 .w3-theme-root[data-w3-dark="true"] .w3-striped tbody tr:nth-child(even) {
-    background-color: var(--w3-surface) !important;
+    background-color: color-mix(in srgb, var(--w3-surface) 88%, var(--w3-border)) !important;
     color: var(--w3-on-surface) !important;
 }
 
@@ -129,6 +179,6 @@
 .w3-theme-root[data-w3-dark="true"] .w3-hoverable tbody tr:hover,
 .w3-theme-root[data-w3-dark="true"] .w3-hoverable.w3-striped tbody tr:nth-child(even):hover,
 .w3-theme-root[data-w3-dark="true"] .w3-ul.w3-hoverable li:hover {
-    background-color: var(--w3-border) !important;
+    background-color: color-mix(in srgb, var(--w3-primary) 28%, var(--w3-surface)) !important;
     color: var(--w3-on-surface) !important;
 }

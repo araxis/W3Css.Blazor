@@ -4,15 +4,15 @@
 
 <PageTitle>Starter Kit Settings</PageTitle>
 
-<section class="starter-page">
-    <div class="starter-page-heading">
+<W3Container Class="w3-padding-24">
+    <W3Stack Horizontal="true" Wrap="true" AlignCenter="true" JustifyBetween="true" Gap="16">
         <div>
             <h1>Settings</h1>
             <p class="w3-large">A validated form with field help, validation messages, and wrapping actions.</p>
         </div>
-    </div>
+    </W3Stack>
 
-    <W3Form Model="Workspace.Settings" OnValidSubmit="SaveSettings" Busy="@saving" Class="w3-card w3-padding w3-white">
+    <W3Form Model="Workspace.Settings" OnValidSubmit="SaveSettings" Busy="@saving" Class="w3-card w3-padding w3-surface w3-margin-top">
         <DataAnnotationsValidator />
         <ValidationSummary class="w3-text-red" />
 
@@ -37,7 +37,7 @@
             <W3Button Border="true" Round="W3Round.Medium" Disabled="@saving" OnClick="ResetSettings">Reset</W3Button>
         </W3ActionRow>
     </W3Form>
-</section>
+</W3Container>
 
 @code {
     private bool saving;

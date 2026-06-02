@@ -11,6 +11,11 @@
     z-index: 4;
 }
 
+.w3-app-shell-has-sidebar > .w3-app-shell-header {
+    position: sticky;
+    top: 0;
+}
+
 .w3-app-shell-main {
     min-height: inherit;
 }

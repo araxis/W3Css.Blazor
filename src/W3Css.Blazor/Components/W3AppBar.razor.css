@@ -85,6 +85,7 @@
 
 .w3-app-bar-actions {
     flex: 0 0 auto;
+    flex-wrap: wrap;
     gap: 8px;
     justify-content: flex-end;
     padding-right: 8px;

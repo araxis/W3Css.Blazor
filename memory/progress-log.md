@@ -1282,3 +1282,42 @@ Last updated: 2026-06-02
 - Verification:
   - `dotnet build W3Css.Blazor.slnx --configuration Release /nr:false` (0 warnings, 0 errors);
   - `dotnet test W3Css.Blazor.slnx --configuration Release --no-build /nr:false` (484 passing).
+
+## 2026-06-02 - Starter No-Custom-CSS Readiness
+
+- Removed the starter kit source stylesheet and generated stylesheet link so the sample loads only `_content/W3Css.Blazor/w3css-blazor.css`.
+- Rewrote starter layout/page markup to use package components and W3 utility classes instead of starter-only classes.
+- Moved reusable dark theme surface, table, input, data-table, row hover, chart, and app-bar action behavior into package CSS.
+- Added release-quality guards that fail if starter source CSS or hidden stylesheet links return.
+- Verification:
+  - `dotnet build W3Css.Blazor.slnx --configuration Release /nr:false` (0 warnings, 0 errors);
+  - `dotnet test W3Css.Blazor.slnx --configuration Release --no-build /nr:false` (484 passing);
+  - `dotnet pack src/W3Css.Blazor/W3Css.Blazor.csproj --configuration Release --no-build --output artifacts/packages /nr:false` created `W3Css.Blazor.0.5.0.nupkg`;
+  - `pwsh ./tools/package-consumer-smoke.ps1 -PackageVersion 0.5.0 -PackageSource artifacts/packages` passed;
+  - browser-verified the starter dashboard/customers/workflow/settings routes on port 5024 with only the package stylesheet, no starter classes, no horizontal overflow, no console errors, and a dark workflow modal using package theme colors.
+
+## 2026-06-02 - Complete Package Stylesheet Readiness
+
+- Fixed the package stylesheet bundle so `_content/W3Css.Blazor/w3css-blazor.css` includes W3.CSS, theme tokens, and generated package component scoped CSS.
+- This keeps the starter kit honest: it can load only the documented package stylesheet while still receiving app bar, nav menu, icon, overlay, and other component layout styles.
+- Fixed `W3Chart` axis labels to emit `fill="currentColor"` directly, because those SVG text nodes are rendered through the manual builder path and cannot rely on scoped CSS alone.
+- Hardened package consumer smoke to restore into an isolated per-run package folder using a temporary NuGet config, preventing stale same-version package cache reuse during local artifact checks.
+- Updated install/theming/starter docs and package smoke guards so the single-file stylesheet promise cannot silently regress.
+- Verification:
+  - `dotnet build W3Css.Blazor.slnx --configuration Release /nr:false` (0 warnings, 0 errors);
+  - `dotnet test W3Css.Blazor.slnx --configuration Release --no-build /nr:false` (485 passing);
+  - `dotnet pack src/W3Css.Blazor/W3Css.Blazor.csproj --configuration Release --no-build --output artifacts/packages /nr:false` created `W3Css.Blazor.0.5.0.nupkg`;
+  - `pwsh ./tools/package-consumer-smoke.ps1 -PackageVersion 0.5.0 -PackageSource artifacts/packages` passed with the isolated package cache;
+  - browser-verified the starter dashboard on port 5024 with only `_content/W3Css.Blazor/w3css-blazor.css`, no horizontal overflow, aligned app-bar actions, readable nav icons, no console errors, and chart labels inheriting the dark theme text color.
+
+## 2026-06-02 - App Shell Scroll Attachment Polish
+
+- Fixed `W3AppShell` sidebar layouts so the header remains sticky when a shell has a fixed W3.CSS sidebar, preventing the sidebar from floating under an empty top gap after page scroll.
+- The fix is package-level: the starter app still uses no custom CSS and continues to load only `_content/W3Css.Blazor/w3css-blazor.css`.
+- Browser verification on the starter dashboard confirmed the header stays at the viewport top, the sidebar remains attached beneath it, and the page has no horizontal overflow or console errors.
+
+## 2026-06-02 - Chart Light-Mode Contrast Polish
+
+- Strengthened `W3Chart` grid and axis strokes by deriving them from `currentColor`, keeping chart structure readable across light and dark themes without starter-specific CSS.
+- Added release-quality guards so the bundled package stylesheet keeps the improved chart stroke rules.
+- Browser verification on the starter dashboard confirmed light mode uses the package stylesheet only, has no horizontal overflow, and renders grid/axis strokes from the light chart text color.

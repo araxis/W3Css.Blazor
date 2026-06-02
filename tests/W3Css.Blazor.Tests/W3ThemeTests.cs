@@ -139,7 +139,7 @@ public sealed class W3ThemeTests
         Assert.Contains(".w3-theme-root[data-w3-dark=\"true\"] .w3-hoverable tbody tr:hover", css);
         Assert.Contains(".w3-theme-root[data-w3-dark=\"true\"] .w3-hoverable.w3-striped tbody tr:nth-child(even):hover", css);
         Assert.Contains("border-color: var(--w3-border) !important;", css);
-        Assert.Contains("background-color: var(--w3-border) !important;", css);
+        Assert.Contains("background-color: color-mix(in srgb, var(--w3-primary) 28%, var(--w3-surface)) !important;", css);
         Assert.Contains("color: var(--w3-on-surface) !important;", css);
     }
 }

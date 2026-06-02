@@ -54,6 +54,7 @@ Last updated: 2026-06-02
 - Added a runnable Blazor WebAssembly starter kit sample under `samples/W3Css.Blazor.StarterKit`.
 - Added `/starter-kit` docs and reframed the component index around a starter path instead of an empty backlog.
 - Expanded clean consumer package smoke coverage to compile starter-kit primitives.
+- Starter readiness now requires the sample to run without custom source CSS; reusable theme, table, form, chart, and app-bar fixes belong in the package.
 - Browser-verified the starter sample routes, customer search, settings save, modal edit, message-box archive workflow, and mobile overflow.
 - Published `v0.5.0` after PR CI, main CI, Pages, release workflow, and public package smoke passed.
 
@@ -67,4 +68,4 @@ Last updated: 2026-06-02
   - `pwsh ./tools/docs-browser-sweep.ps1 -BaseUrl http://localhost:5022 -StartServer`
 
 - Components implemented: 127 component files plus docs topic coverage.
-- Test coverage: 479 passing tests for the 0.5.0 starter-kit slice.
+- Test coverage: 485 passing tests for the current 0.5.0 starter-kit readiness slice.

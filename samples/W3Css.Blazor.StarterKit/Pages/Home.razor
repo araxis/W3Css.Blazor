@@ -5,8 +5,8 @@
 
 <PageTitle>Starter Kit Dashboard</PageTitle>
 
-<section class="starter-page">
-    <div class="starter-page-heading">
+<W3Container Class="w3-padding-24">
+    <W3Stack Horizontal="true" Wrap="true" AlignCenter="true" JustifyBetween="true" Gap="16">
         <div>
             <h1>Dashboard</h1>
             <p class="w3-large">A first app screen built from the package primitives.</p>
@@ -15,43 +15,47 @@
             <W3Button Border="true" Round="W3Round.Medium" OnClick="RefreshDashboard">Refresh</W3Button>
             <W3Button Color="W3Color.Primary" TextColor="W3Color.White" Round="W3Round.Medium" OnClick="CreateTask">New task</W3Button>
         </W3ActionRow>
-    </div>
+    </W3Stack>
 
-    <W3Grid Padding="true" Class="starter-metrics">
+    <W3Row Padding="true" Class="w3-margin-top">
         @foreach (var metric in Workspace.Metrics)
         {
-            <W3Card @key="metric.Label" Depth="W3CardDepth.Two" Round="W3Round.Medium" BodyClass="starter-metric">
-                <p class="w3-small w3-text-grey">@metric.Label</p>
-                <p class="w3-xxlarge w3-margin-0">@metric.Value</p>
-                <p>@metric.Detail</p>
-            </W3Card>
+            <W3Column @key="metric.Label" Small="12" Medium="4" Large="4" Class="w3-margin-bottom">
+                <W3Card Depth="W3CardDepth.Two" Round="W3Round.Medium" BodyClass="w3-padding-16">
+                    <p class="w3-small w3-text-grey">@metric.Label</p>
+                    <p class="w3-xxlarge w3-margin-0">@metric.Value</p>
+                    <p>@metric.Detail</p>
+                </W3Card>
+            </W3Column>
         }
-    </W3Grid>
+    </W3Row>
 
-    <W3Grid Padding="true" Class="starter-dashboard-charts w3-margin-top">
-        <W3Card Depth="W3CardDepth.Two" Round="W3Round.Medium" BodyClass="starter-chart-card">
-            <h2 class="w3-large">Customer plan mix</h2>
-            <p class="doc-muted">Accounts grouped by their current subscription plan.</p>
-            <W3Chart ChartType="W3ChartType.Bar"
-                     Series="@Workspace.CustomerPlanSeries"
-                     Labels="@Workspace.CustomerPlanLabels"
-                     Height="240"
-                     AriaLabel="Customer accounts by plan"
-                     Class="starter-chart" />
-        </W3Card>
+    <W3Row Padding="true" Class="w3-margin-top">
+        <W3Column Small="12" Medium="6" Large="6" Class="w3-margin-bottom">
+            <W3Card Depth="W3CardDepth.Two" Round="W3Round.Medium" BodyClass="w3-padding-24">
+                <h2 class="w3-large">Customer plan mix</h2>
+                <p class="w3-opacity">Accounts grouped by their current subscription plan.</p>
+                <W3Chart ChartType="W3ChartType.Bar"
+                         Series="@Workspace.CustomerPlanSeries"
+                         Labels="@Workspace.CustomerPlanLabels"
+                         Height="240"
+                         AriaLabel="Customer accounts by plan" />
+            </W3Card>
+        </W3Column>
 
-        <W3Card Depth="W3CardDepth.Two" Round="W3Round.Medium" BodyClass="starter-chart-card">
-            <h2 class="w3-large">Customer health</h2>
-            <p class="doc-muted">Current accounts grouped by adoption state.</p>
-            <W3Chart ChartType="W3ChartType.Donut"
-                     Series="@Workspace.CustomerHealthSeries"
-                     Labels="@Workspace.CustomerHealthLabels"
-                     Height="240"
-                     HoleColor="var(--w3-surface)"
-                     AriaLabel="Customer health distribution"
-                     Class="starter-chart" />
-        </W3Card>
-    </W3Grid>
+        <W3Column Small="12" Medium="6" Large="6" Class="w3-margin-bottom">
+            <W3Card Depth="W3CardDepth.Two" Round="W3Round.Medium" BodyClass="w3-padding-24">
+                <h2 class="w3-large">Customer health</h2>
+                <p class="w3-opacity">Current accounts grouped by adoption state.</p>
+                <W3Chart ChartType="W3ChartType.Donut"
+                         Series="@Workspace.CustomerHealthSeries"
+                         Labels="@Workspace.CustomerHealthLabels"
+                         Height="240"
+                         HoleColor="var(--w3-surface)"
+                         AriaLabel="Customer health distribution" />
+            </W3Card>
+        </W3Column>
+    </W3Row>
 
     <W3DataTable TItem="WorkItem"
                  Items="@Workspace.WorkItems"
@@ -84,7 +88,7 @@
             <NavLink class="w3-button w3-primary w3-round-medium" href="customers">Open customers</NavLink>
         </Actions>
     </W3EmptyState>
-</section>
+</W3Container>
 
 @code {
     private void RefreshDashboard(MouseEventArgs _)

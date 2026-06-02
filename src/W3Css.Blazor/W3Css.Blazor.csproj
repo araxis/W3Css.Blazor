@@ -39,13 +39,13 @@
   </ItemGroup>
 
   <!--
-    Single-file convenience bundle: the vendored W3.CSS framework + the theme token
-    layer, concatenated into one stylesheet so consumers can link a single file
-    (_content/W3Css.Blazor/w3css-blazor.css). The two source files stay separate
-    (w3.css is kept pristine, never edited) and remain individually linkable for
-    consumers who want finer control. The bundle is committed so it is always present
-    as a static web asset at checkout time; this target regenerates it on every build
-    (WriteOnlyWhenDifferent) so it can never drift from its two sources.
+    Single-file convenience bundle: the vendored W3.CSS framework, theme token
+    layer, and generated component scoped CSS concatenated into one stylesheet so
+    consumers can link a single file (_content/W3Css.Blazor/w3css-blazor.css).
+    The source files stay separate (w3.css is kept pristine, never edited) and
+    remain individually linkable for consumers who want finer control. The bundle
+    is committed so it is always present as a static web asset at checkout time;
+    this target regenerates it after scoped CSS generation so it can never drift.
   -->
   <UsingTask TaskName="ConcatCssFiles"
              TaskFactory="RoslynCodeTaskFactory"
@@ -61,6 +61,11 @@
         sb.Append(Header).Append('\n');
         foreach (var path in Inputs)
         {
+            if (!System.IO.File.Exists(path))
+            {
+                continue;
+            }
+
             sb.Append(System.IO.File.ReadAllText(path)).Append('\n');
         }
         var content = sb.ToString();
@@ -73,11 +78,10 @@
   </UsingTask>
 
   <Target Name="BundleW3CssTheme"
-          BeforeTargets="ResolveStaticWebAssetsInputs;BeforeBuild;BeforeCompile"
-          Inputs="$(MSBuildProjectDirectory)\wwwroot\w3css\5\w3.css;$(MSBuildProjectDirectory)\wwwroot\w3-theme.css"
-          Outputs="$(MSBuildProjectDirectory)\wwwroot\w3css-blazor.css">
-    <ConcatCssFiles Header="/* W3Css.Blazor — generated bundle (w3css/5/w3.css + w3-theme.css). Do not edit. */"
-                    Inputs="$(MSBuildProjectDirectory)\wwwroot\w3css\5\w3.css;$(MSBuildProjectDirectory)\wwwroot\w3-theme.css"
+          AfterTargets="BundleScopedCssFiles"
+          BeforeTargets="ResolveStaticWebAssetsInputs;ResolveBuildStaticWebAssets;GenerateBuildCompressedStaticWebAssets">
+    <ConcatCssFiles Header="/* W3Css.Blazor - generated bundle (w3css/5/w3.css + w3-theme.css + component scoped CSS). Do not edit. */"
+                    Inputs="$(MSBuildProjectDirectory)\wwwroot\w3css\5\w3.css;$(MSBuildProjectDirectory)\wwwroot\w3-theme.css;$(IntermediateOutputPath)scopedcss\projectbundle\$(AssemblyName).bundle.scp.css"
                     Output="$(MSBuildProjectDirectory)\wwwroot\w3css-blazor.css" />
   </Target>
 

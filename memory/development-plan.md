@@ -58,7 +58,7 @@ Last updated: 2026-06-02
 - Browser-verified the starter sample routes, customer search, settings save, modal edit, message-box archive workflow, and mobile overflow.
 - Published `v0.5.0` after PR CI, main CI, Pages, release workflow, and public package smoke passed.
 - Published `v0.5.1` after PR CI, main CI, Pages, release workflow, and public package smoke passed.
-- Preparing `0.5.2` as a patch release for the reusable nav menu root-link fix.
+- Published `v0.5.2` after PR CI, main CI, Pages, release workflow, and public package smoke passed.
 
 ## Current Status Check
 
@@ -66,7 +66,7 @@ Last updated: 2026-06-02
   - `dotnet build W3Css.Blazor.slnx --configuration Release`
   - `dotnet test W3Css.Blazor.slnx --configuration Release --no-build /nr:false`
   - `dotnet pack src/W3Css.Blazor/W3Css.Blazor.csproj --configuration Release --no-build --output artifacts/packages /nr:false`
-  - `pwsh ./tools/package-consumer-smoke.ps1 -PackageVersion 0.5.2 -PackageSource artifacts/packages`
+  - `pwsh ./tools/package-consumer-smoke.ps1 -PackageVersion 0.5.2`
   - `pwsh ./tools/docs-browser-sweep.ps1 -BaseUrl http://localhost:5022 -StartServer`
 
 - Components implemented: 127 component files plus docs topic coverage.

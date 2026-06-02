@@ -1342,3 +1342,4 @@ Last updated: 2026-06-02
 - Prepared `0.5.2` as the patch release for the reusable nav menu root-link fix merged after `0.5.1`.
 - Updated package metadata, README release link, Versions docs, changelog, release notes, starter label, and memory files for `0.5.2`.
 - Kept the vendored W3.CSS source unchanged.
+- Merged the `0.5.2` patch release, pushed `v0.5.2`, verified PR CI, main CI, Pages, release workflow, public feed indexing, and public package smoke for `0.5.2`.

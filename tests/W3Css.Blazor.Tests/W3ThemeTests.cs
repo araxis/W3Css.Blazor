@@ -133,9 +133,12 @@ public sealed class W3ThemeTests
         Assert.Contains(":focus-visible", css);
         Assert.Contains("outline: var(--w3-focus-width) solid var(--w3-focus-color) !important;", css);
         Assert.Contains("[aria-disabled=\"true\"]", css);
+        Assert.Contains(".w3-theme-root[data-w3-dark=\"true\"] .w3-modal-footer.w3-light-grey", css);
+        Assert.Contains(".w3-theme-root[data-w3-dark=\"true\"] .w3-modal-footer.w3-light-grey.w3-text-black", css);
         Assert.Contains(".w3-theme-root[data-w3-dark=\"true\"] .w3-striped tbody tr:nth-child(even)", css);
         Assert.Contains(".w3-theme-root[data-w3-dark=\"true\"] .w3-hoverable tbody tr:hover", css);
         Assert.Contains(".w3-theme-root[data-w3-dark=\"true\"] .w3-hoverable.w3-striped tbody tr:nth-child(even):hover", css);
+        Assert.Contains("border-color: var(--w3-border) !important;", css);
         Assert.Contains("background-color: var(--w3-border) !important;", css);
         Assert.Contains("color: var(--w3-on-surface) !important;", css);
     }

@@ -1233,3 +1233,13 @@ Last updated: 2026-06-02
   - `dotnet build W3Css.Blazor.slnx --configuration Release /nr:false` (0 warnings, 0 errors);
   - `dotnet test W3Css.Blazor.slnx --configuration Release --no-build /nr:false` (481 passing);
   - browser-verified `/customers` on port 5024 with no console errors, no horizontal overflow, loaded shared dark striped-hover selectors, and no starter striped-row override.
+
+## 2026-06-02 - Dark Modal Footer Polish
+
+- Added shared dark-theme overrides for default `W3Modal` footer classes so `W3Modal` and `W3MessageBox` action footers use themed surface, text, and border colors in dark mode.
+- Kept the component API unchanged and left W3.CSS source untouched; the fix lives in the theme stylesheet and generated bundle.
+- Verification:
+  - `dotnet build W3Css.Blazor.slnx --configuration Release /nr:false` (0 warnings, 0 errors);
+  - `dotnet test W3Css.Blazor.slnx --configuration Release --no-build /nr:false` (481 passing);
+  - `dotnet pack src/W3Css.Blazor/W3Css.Blazor.csproj --configuration Release --no-build --output artifacts/packages /nr:false`;
+  - browser-verified `/workflow` on port 5024 with no console errors, no horizontal overflow, readable Cancel button, dark modal footer background, and loaded shared modal-footer dark rule.

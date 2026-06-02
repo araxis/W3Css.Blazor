@@ -13,10 +13,10 @@
         @ItemContent
     </span>
 }
-else if (!string.IsNullOrWhiteSpace(Href))
+else if (HasHref)
 {
     <a @attributes="AdditionalAttributes"
-       href="@Href"
+       href="@ResolvedHref"
        target="@Target"
        class="@CssClass"
        style="@Style"
@@ -43,7 +43,9 @@ else
 
     private bool IsActive => Active || IsRouteActive;
     private string? AriaCurrent => IsActive ? "page" : null;
-    private bool IsRouteActive => !string.IsNullOrWhiteSpace(Href) && IsActiveHref();
+    private bool HasHref => Href is not null && (Href.Length == 0 || !string.IsNullOrWhiteSpace(Href));
+    private string? ResolvedHref => Href?.Length == 0 ? Navigation.BaseUri : Href;
+    private bool IsRouteActive => HasHref && IsActiveHref();
 
     private string CssClass => BuildClass(
         "w3-bar-item",
@@ -284,7 +286,7 @@ else
     private bool IsActiveHref()
     {
         var currentUri = NormalizeUri(Navigation.Uri);
-        var targetUri = NormalizeUri(Navigation.ToAbsoluteUri(Href!).ToString());
+        var targetUri = NormalizeUri(Navigation.ToAbsoluteUri(ResolvedHref!).ToString());
 
         if (Match == NavLinkMatch.All)
         {

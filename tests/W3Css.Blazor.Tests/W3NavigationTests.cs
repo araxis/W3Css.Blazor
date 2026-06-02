@@ -1,6 +1,8 @@
 using Bunit;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Routing;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.Extensions.DependencyInjection;
 using W3Css.Blazor;
 using W3Css.Blazor.Components;
 
@@ -790,6 +792,33 @@ public sealed class W3NavigationTests
         Assert.Equal("true", item.GetAttribute("aria-disabled"));
         Assert.Contains("w3-disabled", item.GetAttribute("class"));
         Assert.Empty(cut.FindAll("a"));
+    }
+
+    [Fact]
+    public void NavMenuItemEmptyHrefTargetsApplicationRoot()
+    {
+        using var context = new BunitContext();
+        var navigation = context.Services.GetRequiredService<NavigationManager>();
+        var cut = context.Render<W3NavMenuItem>(parameters => parameters
+            .Add(p => p.Href, string.Empty)
+            .Add(p => p.Match, NavLinkMatch.All)
+            .Add(p => p.Text, "Dashboard"));
+
+        var item = cut.Find("a");
+
+        Assert.Equal(navigation.BaseUri, item.GetAttribute("href"));
+        Assert.Equal("page", item.GetAttribute("aria-current"));
+        Assert.Contains("w3-nav-menu-item-active", item.GetAttribute("class"));
+        Assert.Empty(cut.FindAll("button"));
+
+        navigation.NavigateTo("customers");
+
+        cut.WaitForAssertion(() =>
+        {
+            var updatedItem = cut.Find("a");
+            Assert.Null(updatedItem.GetAttribute("aria-current"));
+            Assert.DoesNotContain("w3-nav-menu-item-active", updatedItem.GetAttribute("class"));
+        });
     }
 
     [Fact]

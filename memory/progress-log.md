@@ -1327,3 +1327,12 @@ Last updated: 2026-06-02
 - Kept the already published `v0.5.0` tag intact and prepared `0.5.1` as the patch release for the starter-kit polish work merged after `0.5.0`.
 - Updated package metadata, README release link, Versions docs, changelog, release notes, and memory files for `0.5.1`.
 - Merged the `0.5.1` patch release, pushed `v0.5.1`, verified release/CI/Pages workflows, cleared stale package HTTP cache after feed propagation, and passed public package smoke for `0.5.1`.
+
+## 2026-06-02 - Nav Menu Root Link Fix
+
+- Fixed `W3NavMenuItem` so `Href=""` renders an app-root anchor instead of a command button/current-page empty link.
+- Refreshed the nav menu docs API note and added a route-active regression test for empty root links.
+- Verification:
+  - `dotnet build W3Css.Blazor.slnx --configuration Release /nr:false` (0 warnings, 0 errors);
+  - `dotnet test W3Css.Blazor.slnx --configuration Release --no-build /nr:false` (486 passing);
+  - browser-verified the starter app on `/customers` can select Dashboard, navigates to `/`, marks Dashboard active, and reports no console errors or horizontal overflow.

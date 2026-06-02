@@ -76,6 +76,21 @@ public sealed class StarterWorkspace
         new("Release health", "Good", "No blocked checks")
     ];
 
+    public IReadOnlyList<string> ThroughputLabels => ["Mon", "Tue", "Wed", "Thu", "Fri"];
+
+    public IReadOnlyList<W3ChartSeries> ThroughputSeries =>
+    [
+        new("Completed", [8, 11, 9, 14, 16], "#14b8a6"),
+        new("New intake", [6, 9, 12, 8, 10], "#ffd166")
+    ];
+
+    public IReadOnlyList<string> CustomerHealthLabels => ["Healthy", "Watch", "Blocked"];
+
+    public IReadOnlyList<W3ChartSeries> CustomerHealthSeries =>
+    [
+        new("Accounts", CustomerHealthLabels.Select(label => (double)Customers.Count(customer => customer.Health == label)).ToArray(), "#14b8a6")
+    ];
+
     public async Task SaveSettingsAsync()
     {
         await Task.Delay(150);

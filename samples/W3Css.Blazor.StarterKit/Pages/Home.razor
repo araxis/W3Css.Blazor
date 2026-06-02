@@ -20,7 +20,7 @@
     <W3Grid Padding="true" Class="starter-metrics">
         @foreach (var metric in Workspace.Metrics)
         {
-            <W3Card Depth="W3CardDepth.Two" Round="W3Round.Medium" BodyClass="starter-metric">
+            <W3Card @key="metric.Label" Depth="W3CardDepth.Two" Round="W3Round.Medium" BodyClass="starter-metric">
                 <p class="w3-small w3-text-grey">@metric.Label</p>
                 <p class="w3-xxlarge w3-margin-0">@metric.Value</p>
                 <p>@metric.Detail</p>
@@ -28,8 +28,33 @@
         }
     </W3Grid>
 
-        <W3DataTable TItem="WorkItem"
-                     Items="@Workspace.WorkItems"
+    <W3Grid Padding="true" Class="starter-dashboard-charts w3-margin-top">
+        <W3Card Depth="W3CardDepth.Two" Round="W3Round.Medium" BodyClass="starter-chart-card">
+            <h2 class="w3-large">Weekly throughput</h2>
+            <p class="doc-muted">Completed work compared with new intake.</p>
+            <W3Chart ChartType="W3ChartType.Line"
+                     Series="@Workspace.ThroughputSeries"
+                     Labels="@Workspace.ThroughputLabels"
+                     Height="240"
+                     AriaLabel="Weekly throughput by day"
+                     Class="starter-chart" />
+        </W3Card>
+
+        <W3Card Depth="W3CardDepth.Two" Round="W3Round.Medium" BodyClass="starter-chart-card">
+            <h2 class="w3-large">Customer health</h2>
+            <p class="doc-muted">Current accounts grouped by adoption state.</p>
+            <W3Chart ChartType="W3ChartType.Donut"
+                     Series="@Workspace.CustomerHealthSeries"
+                     Labels="@Workspace.CustomerHealthLabels"
+                     Height="240"
+                     HoleColor="var(--w3-surface)"
+                     AriaLabel="Customer health distribution"
+                     Class="starter-chart" />
+        </W3Card>
+    </W3Grid>
+
+    <W3DataTable TItem="WorkItem"
+                 Items="@Workspace.WorkItems"
                  Searchable="false"
                  Pageable="false"
                  AriaLabel="Open work items"

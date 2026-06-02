@@ -1195,3 +1195,10 @@ Last updated: 2026-06-02
 - Auto mode follows the browser system color-scheme preference through a sample-only `matchMedia` listener.
 - Added starter-sample dark token values and dark-mode contrast overrides for dashboard cards, tables, inputs, and recovery actions.
 - Browser-verified Light, Dark, and Auto behavior on the starter dashboard with no horizontal overflow.
+
+## 2026-06-02 - Starter Kit Dashboard Visual Fix
+
+- Added meaningful starter dashboard charts for weekly throughput and customer health using the existing package chart component.
+- Fixed the starter sample dark-mode data-table toolbar/footer surface so table actions no longer render as a light strip in dark mode.
+- Added sample-only dark chart grid/axis contrast polish while leaving package APIs and the bundled W3.CSS source unchanged.
+- Verified starter-kit Release build, the 479-test Release suite, whitespace checks, and dashboard browser rendering.

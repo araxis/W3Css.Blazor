@@ -365,9 +365,15 @@ hr{border:0;border-top:1px solid #eee;margin:20px 0}
    surfaces don't show harsh light-grey edges. Light mode is untouched. */
 .w3-theme-root[data-w3-dark="true"] .w3-border { border-color: var(--w3-border) !important; }
 
+.w3-theme-root[data-w3-dark="true"] .w3-striped tbody tr:nth-child(even) {
+    background-color: var(--w3-surface) !important;
+    color: var(--w3-on-surface) !important;
+}
+
 /* W3.CSS hoverable tables/lists use a light-grey hover by default. In dark
    theme scope, keep hover contrast readable without editing the vendored file. */
 .w3-theme-root[data-w3-dark="true"] .w3-hoverable tbody tr:hover,
+.w3-theme-root[data-w3-dark="true"] .w3-hoverable.w3-striped tbody tr:nth-child(even):hover,
 .w3-theme-root[data-w3-dark="true"] .w3-ul.w3-hoverable li:hover {
     background-color: var(--w3-border) !important;
     color: var(--w3-on-surface) !important;

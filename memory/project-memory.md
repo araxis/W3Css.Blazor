@@ -5,8 +5,8 @@ Last updated: 2026-06-02
 ## Snapshot
 
 - Repo target: Blazor component suite over W3.CSS (small, CSS-first, practical defaults).
-- Branch: `work/0.5.2-patch-release`.
-- Current package baseline: published `0.5.1`; preparing `0.5.2`.
+- Branch: `work/0.5.2-release-memory`.
+- Current package baseline: published `0.5.2`.
 - .NET target: `net10.0` (`10.0.300` SDK).
 - Current state:
   - 127 component `.razor` files.
@@ -37,7 +37,7 @@ Last updated: 2026-06-02
 ## Current Priority
 
 1. 0.5.2 navigation patch:
-   - package metadata, release notes, local package smoke, tag workflow, release workflow, and public package smoke are the active release slice.
+   - package metadata, release notes, local package smoke, tag workflow, release workflow, and public package smoke are complete.
 2. Future releases:
    - plan normal version-bump, release-note, tag, publish, and consumer-smoke slices.
 

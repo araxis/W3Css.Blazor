@@ -2,6 +2,19 @@
 
 All notable changes to W3Css.Blazor will be documented in this file.
 
+## 0.5.3 - 2026-06-02
+
+### Toast Spacing Patch
+
+- Fixed `W3Toast` close-button spacing so the close action participates in the toast grid layout instead of floating over panel padding.
+- Regenerated the bundled package stylesheet so the single documented stylesheet includes the toast layout polish.
+- Added release-quality coverage for the toast grid and padding rules in the package stylesheet bundle.
+
+### Release Quality
+
+- Updated package metadata, README adoption links, versions documentation, release notes, starter label, and memory files for 0.5.3.
+- Kept the vendored W3.CSS source unchanged.
+
 ## 0.5.2 - 2026-06-02
 
 ### Navigation Patch

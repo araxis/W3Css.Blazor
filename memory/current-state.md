@@ -5,7 +5,7 @@ Last updated: 2026-06-02
 ## Repository
 
 - Canonical branch: `main`.
-- Tags `v0.1.0`, `v0.2.0`, `v0.3.0`, `v0.4.0`, `v0.5.0`, `v0.5.1`, and `v0.5.2` mark published package releases.
+- Tags `v0.1.0`, `v0.2.0`, `v0.3.0`, `v0.4.0`, `v0.5.0`, `v0.5.1`, and `v0.5.2` mark published package releases; `0.5.3` is being prepared as a patch release.
 - Solution: `W3Css.Blazor.slnx`.
 - SDK: `.NET 10.0.300` (`global.json`).
 
@@ -37,13 +37,13 @@ Last updated: 2026-06-02
 
 - W3.CSS source file is not modified.
 - Package metadata is set to:
-  - Version `0.5.2`.
+  - Version `0.5.3`.
   - `Directory.Build.props` repository URL + type (`https://github.com/araxis/W3Css.Blazor`).
   - `PackageProjectUrl`, `RepositoryUrl`, `RepositoryType`, and release notes in `src/W3Css.Blazor/W3Css.Blazor.csproj`.
 - README includes package version and MIT license badges.
 - Release workflow builds, tests, packs, creates release artifacts, and publishes packages on `v*` tag pushes when the publishing secret is configured.
 - First package release is published as `W3Css.Blazor` version `0.1.0`.
-- Current package release is published as `W3Css.Blazor` version `0.5.2`; package metadata targets `0.5.2`.
+- Current package release is published as `W3Css.Blazor` version `0.5.2`; package metadata targets `0.5.3` for the next patch release.
 - Releases `v0.1.0`, `v0.2.0`, `v0.3.0`, `v0.4.0`, `v0.5.0`, `v0.5.1`, and `v0.5.2` are published with package artifacts.
 - Package consumer smoke tooling verifies install, component compilation, publish output, bundled static assets, component styles inside the bundled stylesheet, and starter-kit primitives; local smoke uses an isolated per-run package cache so repeated same-version artifact checks do not reuse stale packages.
 

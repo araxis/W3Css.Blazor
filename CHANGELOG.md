@@ -2,6 +2,18 @@
 
 All notable changes to W3Css.Blazor will be documented in this file.
 
+## 0.5.2 - 2026-06-02
+
+### Navigation Patch
+
+- Fixed `W3NavMenuItem` root links so `Href=""` renders an app-root anchor and remains selectable from nested routes.
+- Added regression coverage for root-link active state and refreshed the nav menu docs note.
+
+### Release Quality
+
+- Updated package metadata, README adoption links, versions documentation, release notes, starter label, and memory files for 0.5.2.
+- Kept the vendored W3.CSS source unchanged.
+
 ## 0.5.1 - 2026-06-02
 
 ### Starter Kit Polish

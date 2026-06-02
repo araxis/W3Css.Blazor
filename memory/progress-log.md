@@ -1343,3 +1343,9 @@ Last updated: 2026-06-02
 - Updated package metadata, README release link, Versions docs, changelog, release notes, starter label, and memory files for `0.5.2`.
 - Kept the vendored W3.CSS source unchanged.
 - Merged the `0.5.2` patch release, pushed `v0.5.2`, verified PR CI, main CI, Pages, release workflow, public feed indexing, and public package smoke for `0.5.2`.
+
+## 2026-06-02 - Toast Close Spacing Polish
+
+- Fixed `W3Toast` package CSS so the close button participates in the toast grid layout instead of floating over the panel padding.
+- Regenerated the bundled package stylesheet and added a release-quality guard for the toast grid/padding rules.
+- Browser-verified the starter dashboard toast on port 5024 with consistent close-button inset, no console errors, and no horizontal overflow.

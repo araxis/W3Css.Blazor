@@ -72,6 +72,8 @@ public sealed class W3ReleaseQualityTests
         var layout = ReadRepositoryFile("samples", "W3Css.Blazor.StarterKit", "Layout", "MainLayout.razor");
         var dashboard = ReadRepositoryFile("samples", "W3Css.Blazor.StarterKit", "Pages", "Home.razor");
         var workflow = ReadRepositoryFile("samples", "W3Css.Blazor.StarterKit", "Pages", "Workflow.razor");
+        var workspace = ReadRepositoryFile("samples", "W3Css.Blazor.StarterKit", "Services", "StarterWorkspace.cs");
+        var styles = ReadRepositoryFile("samples", "W3Css.Blazor.StarterKit", "wwwroot", "css", "app.css");
         var index = ReadRepositoryFile("samples", "W3Css.Blazor.StarterKit", "wwwroot", "index.html");
 
         Assert.Contains("samples/W3Css.Blazor.StarterKit/W3Css.Blazor.StarterKit.csproj", solution);
@@ -84,6 +86,11 @@ public sealed class W3ReleaseQualityTests
         Assert.Contains("W3EmptyState", dashboard);
         Assert.Contains("W3Modal", workflow);
         Assert.Contains("W3MessageBox", workflow);
+        Assert.Contains("starter-theme-icon-sun", workspace);
+        Assert.Contains("starter-theme-icon-moon", workspace);
+        Assert.Contains("starter-theme-icon-system", workspace);
+        Assert.Contains("padding-top: 18px;", styles);
+        Assert.Contains("padding-bottom: 18px;", styles);
     }
 
     [Fact]

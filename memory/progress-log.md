@@ -1213,3 +1213,13 @@ Last updated: 2026-06-02
   - `dotnet build W3Css.Blazor.slnx --configuration Release /nr:false` (0 warnings, 0 errors);
   - `dotnet test W3Css.Blazor.slnx --configuration Release --no-build /nr:false` (481 passing);
   - browser-verified the starter dashboard on port 5024 with no console errors, no horizontal overflow, derived chart headings, padded data-table footer, and loaded dark hover contrast rules.
+
+## 2026-06-02 - Starter Theme Icon And Chart Padding Polish
+
+- Replaced starter theme-mode letters with CSS-drawn sun, moon, and system icons while keeping the starter app free of extra icon dependencies.
+- Increased the starter theme icon button vertical padding and added explicit chart-card top/bottom body padding.
+- Added release-quality guards for the starter theme icon classes and chart padding rules.
+- Verification:
+  - `dotnet build W3Css.Blazor.slnx --configuration Release /nr:false` (0 warnings, 0 errors);
+  - `dotnet test W3Css.Blazor.slnx --configuration Release --no-build /nr:false` (481 passing);
+  - browser-verified the starter dashboard on port 5024 with no console errors, no horizontal overflow, 18px chart-card vertical padding, and sun/moon/system theme icon states.

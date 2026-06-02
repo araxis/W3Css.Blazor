@@ -1355,3 +1355,4 @@ Last updated: 2026-06-02
 - Prepared `0.5.3` as the patch release for the reusable toast close-spacing fix merged after `0.5.2`.
 - Updated package metadata, README release link, Versions docs, changelog, release notes, starter label, release-quality tests, and memory files for `0.5.3`.
 - Kept the vendored W3.CSS source unchanged.
+- Merged the `0.5.3` patch release, pushed `v0.5.3`, verified PR CI, main CI, Pages, release workflow, public feed indexing, and public package smoke for `0.5.3`.

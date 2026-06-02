@@ -90,10 +90,23 @@ try {
         Set-Content -Path $indexPath -Value $indexHtml -NoNewline
     }
 
+    $programPath = Join-Path $appDir 'Program.cs'
+    $program = Get-Content -Path $programPath -Raw
+    if ($program -notmatch 'using W3Css\.Blazor;') {
+        $program = $program -replace 'using Microsoft.AspNetCore.Components.WebAssembly.Hosting;', "using Microsoft.AspNetCore.Components.WebAssembly.Hosting;`nusing W3Css.Blazor;"
+    }
+    if ($program -notmatch 'AddW3CssBlazor') {
+        $program = $program -replace '(builder\.Services\.AddScoped\(sp => new HttpClient \{ BaseAddress = new Uri\(builder\.HostEnvironment\.BaseAddress\) \}\);)', "`$1`nbuilder.Services.AddW3CssBlazor();"
+    }
+    Set-Content -Path $programPath -Value $program -NoNewline
+
     $pagesDir = Join-Path $appDir 'Pages'
     New-Item -Path $pagesDir -ItemType Directory -Force | Out-Null
     Set-Content -Path (Join-Path $pagesDir 'W3Smoke.razor') -Value @'
 @page "/w3-smoke"
+@using System.ComponentModel.DataAnnotations
+@using Microsoft.AspNetCore.Components.Forms
+@inject W3ToastService Toasts
 
 <PageTitle>W3Css.Blazor package smoke</PageTitle>
 
@@ -134,17 +147,69 @@ try {
                       Description="Current app primitives compile in a clean consumer project."
                       Kind="W3EmptyStateKind.Success"
                       Class="w3-margin-top" />
+
+        <W3Form Model="@settings" OnValidSubmit="SaveSettings" Class="w3-card w3-padding w3-white w3-margin-top">
+            <DataAnnotationsValidator />
+            <W3Field TValue="string" Label="Workspace name" ForId="smoke-workspace" For="@(() => settings.WorkspaceName)">
+                <W3Input id="smoke-workspace" @bind-Value="settings.WorkspaceName" />
+            </W3Field>
+            <W3ActionRow Label="Smoke form actions" JustifyStart="true">
+                <W3Button Type="submit" Color="W3Color.Primary" TextColor="W3Color.White">Save</W3Button>
+                <W3Button Border="true" OnClick="() => modalOpen = true">Open modal</W3Button>
+                <W3Button Border="true" OnClick="() => confirmOpen = true">Confirm</W3Button>
+            </W3ActionRow>
+        </W3Form>
+
+        <W3Modal Title="Smoke modal" @bind-Open="modalOpen">
+            <ChildContent>
+                <p>Modal content from the package consumer app.</p>
+            </ChildContent>
+            <Actions>
+                <W3Button Border="true" OnClick="() => modalOpen = false">Close</W3Button>
+            </Actions>
+        </W3Modal>
+
+        <W3MessageBox @bind-Visible="confirmOpen"
+                      Title="Confirm smoke action?"
+                      Message="Message-box workflow compiles in the clean consumer app."
+                      YesText="Confirm"
+                      NoText="Skip"
+                      CancelText="Cancel"
+                      OnResult="HandleConfirmResult" />
     </W3Container>
+
+    <W3ToastProvider />
 </W3ThemeProvider>
 
 @code {
+    private readonly SmokeSettings settings = new() { WorkspaceName = "Smoke workspace" };
+    private bool modalOpen;
+    private bool confirmOpen;
+
     private static readonly ProjectRow[] Projects =
     [
         new("Dashboard", "Ready"),
         new("Backlog", "Review")
     ];
 
+    private async Task SaveSettings(EditContext _)
+    {
+        Toasts.ShowSuccess("Settings form compiled and submitted.", "Package smoke");
+        await Task.CompletedTask;
+    }
+
+    private void HandleConfirmResult(bool? result)
+    {
+        Toasts.ShowInfo(result?.ToString() ?? "Canceled", "Message box");
+    }
+
     private sealed record ProjectRow(string Name, string Status);
+
+    private sealed class SmokeSettings
+    {
+        [Required]
+        public string WorkspaceName { get; set; } = string.Empty;
+    }
 }
 '@
 

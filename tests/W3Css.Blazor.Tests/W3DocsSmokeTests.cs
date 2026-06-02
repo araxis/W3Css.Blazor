@@ -93,6 +93,7 @@ using FooterPage = W3Css.Blazor.Docs.Pages.ComponentTopics.FooterPage;
 using AvatarGroupPage = W3Css.Blazor.Docs.Pages.ComponentTopics.AvatarGroupPage;
 using MessageBoxPage = W3Css.Blazor.Docs.Pages.ComponentTopics.MessageBoxPage;
 using PatternsPage = W3Css.Blazor.Docs.Pages.Patterns;
+using StarterKitPage = W3Css.Blazor.Docs.Pages.StarterKitPage;
 using ToggleGroupPage = W3Css.Blazor.Docs.Pages.ComponentTopics.ToggleGroupPage;
 using MaskPage = W3Css.Blazor.Docs.Pages.ComponentTopics.MaskPage;
 using NotePage = W3Css.Blazor.Docs.Pages.ComponentTopics.NotePage;
@@ -119,6 +120,7 @@ namespace W3Css.Blazor.Tests;
 public sealed class W3DocsSmokeTests
 {
     [Theory]
+    [InlineData(typeof(StarterKitPage), "/starter-kit")]
     [InlineData(typeof(PatternsPage), "/patterns")]
     [InlineData(typeof(ComponentsIndexPage), "/components")]
     [InlineData(typeof(NavbarPage), "/components/navbar")]
@@ -238,7 +240,8 @@ public sealed class W3DocsSmokeTests
 
         Assert.Contains("W3Css.Blazor Components", cut.Markup);
         Assert.Contains("Component Categories", cut.Markup);
-        Assert.Contains("Product Readiness Backlog", cut.Markup);
+        Assert.Contains("Starter Path", cut.Markup);
+        Assert.NotEmpty(cut.FindAll("a[href='starter-kit']"));
         Assert.NotEmpty(cut.FindAll("a[href='patterns']"));
         Assert.NotEmpty(cut.FindAll("a[href='components/navbar']"));
         Assert.NotEmpty(cut.FindAll("a[href='components/versions']"));

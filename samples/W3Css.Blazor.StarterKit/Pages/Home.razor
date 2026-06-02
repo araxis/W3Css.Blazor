@@ -1,0 +1,79 @@
+@page "/"
+@page "/dashboard"
+@inject StarterWorkspace Workspace
+@inject W3ToastService Toasts
+
+<PageTitle>Starter Kit Dashboard</PageTitle>
+
+<section class="starter-page">
+    <div class="starter-page-heading">
+        <div>
+            <h1>Dashboard</h1>
+            <p class="w3-large">A first app screen built from the package primitives.</p>
+        </div>
+        <W3ActionRow Label="Dashboard actions">
+            <W3Button Border="true" Round="W3Round.Medium" OnClick="RefreshDashboard">Refresh</W3Button>
+            <W3Button Color="W3Color.Primary" TextColor="W3Color.White" Round="W3Round.Medium" OnClick="CreateTask">New task</W3Button>
+        </W3ActionRow>
+    </div>
+
+    <W3Grid Padding="true" Class="starter-metrics">
+        @foreach (var metric in Workspace.Metrics)
+        {
+            <W3Card Depth="W3CardDepth.Two" Round="W3Round.Medium" BodyClass="starter-metric">
+                <p class="w3-small w3-text-grey">@metric.Label</p>
+                <p class="w3-xxlarge w3-margin-0">@metric.Value</p>
+                <p>@metric.Detail</p>
+            </W3Card>
+        }
+    </W3Grid>
+
+        <W3DataTable TItem="WorkItem"
+                     Items="@Workspace.WorkItems"
+                 Searchable="false"
+                 Pageable="false"
+                 AriaLabel="Open work items"
+                 Class="w3-margin-top">
+        <Toolbar>
+            <W3ActionRow Label="Work item actions" JustifyStart="true">
+                <W3Button Border="true" Round="W3Round.Medium" OnClick="RefreshDashboard">Reload queue</W3Button>
+            </W3ActionRow>
+        </Toolbar>
+        <ChildContent>
+            <W3DataColumn TItem="WorkItem" Title="Task" CellText="@((WorkItem item) => item.Name)" />
+            <W3DataColumn TItem="WorkItem" Title="Owner" CellText="@((WorkItem item) => item.Owner)" />
+            <W3DataColumn TItem="WorkItem" Title="State" CellText="@((WorkItem item) => item.State)" />
+        </ChildContent>
+        <RowActions Context="item">
+            <W3Button Size="W3Size.Small" Border="true" Round="W3Round.Medium" OnClick="@(_ => OpenTask(item))">Open</W3Button>
+        </RowActions>
+    </W3DataTable>
+
+    <W3EmptyState Title="Starter kit ready"
+                  Description="Use this screen as a copyable baseline for shell, data, action spacing, and status feedback."
+                  Kind="W3EmptyStateKind.Success"
+                  Compact="true"
+                  Class="w3-margin-top">
+        <Actions>
+            <NavLink class="w3-button w3-border w3-round-medium" href="settings">Review settings</NavLink>
+            <NavLink class="w3-button w3-primary w3-round-medium" href="customers">Open customers</NavLink>
+        </Actions>
+    </W3EmptyState>
+</section>
+
+@code {
+    private void RefreshDashboard(MouseEventArgs _)
+    {
+        Toasts.ShowInfo("Dashboard data refreshed.", "Dashboard");
+    }
+
+    private void CreateTask(MouseEventArgs _)
+    {
+        Toasts.ShowSuccess("New task action is wired.", "Action ready");
+    }
+
+    private void OpenTask(WorkItem item)
+    {
+        Toasts.ShowInfo($"{item.Name} opened.", "Task");
+    }
+}

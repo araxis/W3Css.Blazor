@@ -1,6 +1,6 @@
 # Feature List
 
-Last updated: 2026-06-01
+Last updated: 2026-06-02
 
 Status values:
 
@@ -18,7 +18,7 @@ Status values:
 | Common component base | Implemented | Supports `Class`, `Style`, and `AdditionalAttributes`. |
 | Shared style enums | Implemented | Includes color, size, roundness, card depth, alert kind, toast position, image effect, display position, visibility, cell alignment, animation, text direction, border side, border bar, padding, top padding, margin, text alignment, text style, font family, effect style, and hover effect. |
 | XML documentation | Implemented | Exported public APIs and component parameters are documented and protected by broad guard-test coverage. |
-| Package metadata | Implemented | Version is pinned to `0.4.0`; repository URL and package policy are populated in project and release metadata. |
+| Package metadata | Implemented | Version is pinned to `0.5.0`; repository URL and package policy are populated in project and release metadata. |
 
 ## Component Category Model
 
@@ -210,6 +210,8 @@ This model is intentionally similar to mature Blazor libraries, while keeping im
 | Component topic pages | Implemented | Current topics documented with examples, code blocks, references, and related links. |
 | API reference | Implemented | Per-component parameter tables for implemented surfaces. |
 | Patterns guide | Implemented | Top-level adoption guide with app shell dashboard, validated settings form, searchable data table, and modal/message-box workflows. |
+| Starter kit guide | Implemented | Top-level adoption guide for the runnable starter sample app and its routes/files. |
+| Starter sample app | Implemented | `samples/W3Css.Blazor.StarterKit` demonstrates shell, settings, customers, workflow, modal/message-box, and toast usage against the local project. |
 | Roadmap | Implemented | Phase-driven expansion plan and readiness markers. |
 | GitHub Pages workflow | Implemented | Auto publishes docs from `main`. |
 | Docs smoke tests | Implemented | Route metadata and key interaction coverage. |
@@ -225,8 +227,8 @@ This model is intentionally similar to mature Blazor libraries, while keeping im
 | Overlay behavior | Implemented | Modal, tooltip, toast, sidebar, focus trap, menu, overlay interactions, and backdrop composition. |
 | Content display and timeline | Implemented | Tree, chat, timeline, data table, rating, drop zone, and gallery coverage. |
 | Feedback and loading | Implemented | Spinner, skeleton, toast, file, autocomplete, and alert coverage. |
-| Package validation | Implemented | `dotnet pack` generates `W3Css.Blazor.0.4.0.nupkg`; CI uploads package artifacts and local/public package smoke has passed for 0.4.0. |
-| Test count | Implemented | `dotnet test` reports 477 passing tests. |
+| Package validation | Implemented | `dotnet pack` generates `W3Css.Blazor.0.5.0.nupkg`; CI uploads package artifacts and local package smoke passed for 0.5.0 with starter-kit primitives. |
+| Test count | Implemented | `dotnet test` reports 479 passing tests. |
 
 ## Component Compatibility Backlog
 

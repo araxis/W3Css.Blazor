@@ -1,0 +1,58 @@
+@inherits LayoutComponentBase
+@inject StarterWorkspace Workspace
+@inject W3ToastService Toasts
+
+<W3ThemeProvider Theme="Workspace.Theme">
+    <W3AppShell SidebarOpen="@sidebarOpen"
+                SidebarOpenChanged="value => sidebarOpen = value"
+                SidebarOverlay="false"
+                SidebarWidth="240"
+                HeaderColor="W3Color.Primary"
+                HeaderTextColor="W3Color.White"
+                SidebarColor="W3Color.Surface"
+                SidebarTextColor="W3Color.Black"
+                MainClass="starter-main">
+        <Header>
+            <W3AppBar Color="W3Color.Primary"
+                      TextColor="W3Color.White"
+                      Title="Starter Kit"
+                      Subtitle="W3Css.Blazor adoption sample"
+                      ShowMenuButton="true"
+                      MenuExpanded="@sidebarOpen"
+                      MenuControls="starter-sidebar"
+                      OnMenuClick="ToggleSidebar"
+                      ActionsClass="w3-hide-small">
+                <Actions>
+                    <W3Button Border="true" TextColor="W3Color.White" Round="W3Round.Medium" OnClick="ShowReleaseToast">0.5.0 Ready</W3Button>
+                </Actions>
+            </W3AppBar>
+        </Header>
+        <Sidebar>
+            <nav id="starter-sidebar" class="w3-bar-block starter-sidebar" aria-label="Starter kit sections">
+                <NavLink class="w3-bar-item w3-button" Match="NavLinkMatch.All" href="">Dashboard</NavLink>
+                <NavLink class="w3-bar-item w3-button" href="settings">Settings</NavLink>
+                <NavLink class="w3-bar-item w3-button" href="customers">Customers</NavLink>
+                <NavLink class="w3-bar-item w3-button" href="workflow">Workflow</NavLink>
+            </nav>
+        </Sidebar>
+        <ChildContent>
+            @Body
+        </ChildContent>
+    </W3AppShell>
+
+    <W3ToastProvider Position="W3ToastPosition.TopRight" />
+</W3ThemeProvider>
+
+@code {
+    private bool sidebarOpen = true;
+
+    private void ToggleSidebar(MouseEventArgs _)
+    {
+        sidebarOpen = !sidebarOpen;
+    }
+
+    private void ShowReleaseToast(MouseEventArgs _)
+    {
+        Toasts.ShowSuccess("Starter kit release path is wired.", "0.5.0");
+    }
+}

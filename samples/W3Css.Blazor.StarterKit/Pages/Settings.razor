@@ -1,0 +1,58 @@
+@page "/settings"
+@inject StarterWorkspace Workspace
+@inject W3ToastService Toasts
+
+<PageTitle>Starter Kit Settings</PageTitle>
+
+<section class="starter-page">
+    <div class="starter-page-heading">
+        <div>
+            <h1>Settings</h1>
+            <p class="w3-large">A validated form with field help, validation messages, and wrapping actions.</p>
+        </div>
+    </div>
+
+    <W3Form Model="Workspace.Settings" OnValidSubmit="SaveSettings" Busy="@saving" Class="w3-card w3-padding w3-white">
+        <DataAnnotationsValidator />
+        <ValidationSummary class="w3-text-red" />
+
+        <W3Field TValue="string" Label="Workspace name" ForId="workspace-name" For="@(() => Workspace.Settings.WorkspaceName)" HelpText="Shown in the app header and dashboard cards.">
+            <W3Input id="workspace-name" @bind-Value="Workspace.Settings.WorkspaceName" Placeholder="Operations hub" />
+        </W3Field>
+
+        <W3Field TValue="string" Label="Notification email" ForId="notification-email" For="@(() => Workspace.Settings.NotificationEmail)" HelpText="Used for sample save and workflow notifications.">
+            <W3Input id="notification-email" Type="email" @bind-Value="Workspace.Settings.NotificationEmail" Placeholder="team@example.com" />
+        </W3Field>
+
+        <W3Field TValue="string" Label="Default region" ForId="default-region" For="@(() => Workspace.Settings.DefaultRegion)">
+            <W3Select id="default-region" TValue="string" @bind-Value="Workspace.Settings.DefaultRegion" Placeholder="Choose region">
+                <W3SelectItem TValue="string" Value="@("North")">North</W3SelectItem>
+                <W3SelectItem TValue="string" Value="@("West")">West</W3SelectItem>
+                <W3SelectItem TValue="string" Value="@("Central")">Central</W3SelectItem>
+            </W3Select>
+        </W3Field>
+
+        <W3ActionRow Label="Settings form actions" JustifyStart="true" Class="w3-margin-top">
+            <W3Button Type="submit" Color="W3Color.Primary" TextColor="W3Color.White" Round="W3Round.Medium" Disabled="@saving">Save settings</W3Button>
+            <W3Button Border="true" Round="W3Round.Medium" Disabled="@saving" OnClick="ResetSettings">Reset</W3Button>
+        </W3ActionRow>
+    </W3Form>
+</section>
+
+@code {
+    private bool saving;
+
+    private async Task SaveSettings(EditContext _)
+    {
+        saving = true;
+        await Workspace.SaveSettingsAsync();
+        saving = false;
+        Toasts.ShowSuccess("Settings saved.", "Settings");
+    }
+
+    private void ResetSettings(MouseEventArgs _)
+    {
+        Workspace.ResetSettings();
+        Toasts.ShowInfo("Settings restored.", "Settings");
+    }
+}

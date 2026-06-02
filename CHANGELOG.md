@@ -2,6 +2,20 @@
 
 All notable changes to W3Css.Blazor will be documented in this file.
 
+## 0.5.0 - 2026-06-02
+
+### Starter Kit Adoption
+
+- Added a runnable `samples/W3Css.Blazor.StarterKit` Blazor WebAssembly app with dashboard, settings, customers, and workflow routes.
+- Added starter-kit docs covering setup, expected files, sample routes, and related adoption guidance.
+- Reframed the component index around a starter path instead of an empty readiness backlog.
+
+### Release Quality
+
+- Expanded package consumer smoke coverage to compile starter-kit primitives including forms, fields, modals, message boxes, and toast provider wiring.
+- Updated package metadata, README adoption links, versions documentation, release notes, and memory files for 0.5.0.
+- Kept the vendored W3.CSS source unchanged.
+
 ## 0.4.0 - 2026-06-01
 
 ### Quality Hardening

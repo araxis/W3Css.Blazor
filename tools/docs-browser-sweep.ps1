@@ -4,6 +4,7 @@ param(
     [int]$TimeoutSeconds = 90,
     [string[]]$Routes = @(
         "/",
+        "/starter-kit",
         "/components",
         "/patterns",
         "/components/theming",

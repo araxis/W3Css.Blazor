@@ -1,6 +1,6 @@
 # Step-by-Step Development Plan
 
-Last updated: 2026-06-01
+Last updated: 2026-06-02
 
 ## Phase 1: Foundation (Complete)
 
@@ -48,14 +48,22 @@ Last updated: 2026-06-01
 - Add automated browser quality sweep tooling for adoption and high-risk interactive docs routes.
 - Published `v0.4.0` after main CI, release workflow, and public package smoke passed.
 
+## Phase 10: Starter Kit Adoption (Locally Complete)
+
+- 0.5.0 stays non-breaking and avoids broad new component surface.
+- Added a runnable Blazor WebAssembly starter kit sample under `samples/W3Css.Blazor.StarterKit`.
+- Added `/starter-kit` docs and reframed the component index around a starter path instead of an empty backlog.
+- Expanded clean consumer package smoke coverage to compile starter-kit primitives.
+- Browser-verified the starter sample routes, customer search, settings save, modal edit, message-box archive workflow, and mobile overflow.
+
 ## Current Status Check
 
 - Verification now passes on the current HEAD:
   - `dotnet build W3Css.Blazor.slnx --configuration Release`
   - `dotnet test W3Css.Blazor.slnx --configuration Release --no-build /nr:false`
   - `dotnet pack src/W3Css.Blazor/W3Css.Blazor.csproj --configuration Release --no-build --output artifacts/packages /nr:false`
-  - `pwsh ./tools/package-consumer-smoke.ps1 -PackageVersion 0.4.0 -PackageSource artifacts/packages`
-  - `pwsh ./tools/docs-browser-sweep.ps1 -BaseUrl http://localhost:5017 -StartServer`
+  - `pwsh ./tools/package-consumer-smoke.ps1 -PackageVersion 0.5.0 -PackageSource artifacts/packages`
+  - `pwsh ./tools/docs-browser-sweep.ps1 -BaseUrl http://localhost:5022 -StartServer`
 
 - Components implemented: 127 component files plus docs topic coverage.
-- Test coverage: 477 passing tests for the 0.4.0 release.
+- Test coverage: 479 passing tests for the 0.5.0 starter-kit slice.

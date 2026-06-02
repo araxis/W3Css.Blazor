@@ -4,7 +4,7 @@ namespace W3Css.Blazor.Tests;
 
 public sealed class W3ReleaseQualityTests
 {
-    private const string CurrentVersion = "0.4.0";
+    private const string CurrentVersion = "0.5.0";
 
     [Fact]
     public void ReadmeDocumentsCurrentAppPrimitivesAndBranchFlow()
@@ -26,7 +26,7 @@ public sealed class W3ReleaseQualityTests
         var developmentPlan = ReadRepositoryFile("memory", "development-plan.md");
         var projectMemory = ReadRepositoryFile("memory", "project-memory.md");
 
-        Assert.Contains("version `0.4.0`", currentState);
+        Assert.Contains("metadata targets `0.5.0`", currentState);
         Assert.Contains("Package And Release Readiness (Complete)", developmentPlan);
         Assert.Contains("Current package baseline", projectMemory);
         Assert.DoesNotContain("points at current `HEAD`", currentState);
@@ -41,7 +41,7 @@ public sealed class W3ReleaseQualityTests
 
         Assert.Contains($"<Version>{CurrentVersion}</Version>", project);
         Assert.Contains($"docs/release-notes/{CurrentVersion}.md", project);
-        Assert.Contains($"## {CurrentVersion} - 2026-06-01", changelog);
+        Assert.Contains($"## {CurrentVersion} - 2026-06-02", changelog);
         Assert.True(File.Exists(releaseNotesPath), $"Release notes file is missing: {releaseNotesPath}");
     }
 
@@ -55,7 +55,35 @@ public sealed class W3ReleaseQualityTests
         Assert.Contains("W3DataTable", smoke);
         Assert.Contains("W3ActionRow", smoke);
         Assert.Contains("W3EmptyState", smoke);
+        Assert.Contains("W3Form", smoke);
+        Assert.Contains("W3Field", smoke);
+        Assert.Contains("W3Modal", smoke);
+        Assert.Contains("W3MessageBox", smoke);
+        Assert.Contains("W3ToastProvider", smoke);
+        Assert.Contains("AddW3CssBlazor", smoke);
         Assert.Contains("PackageSource", smoke);
+    }
+
+    [Fact]
+    public void StarterKitSampleIsIncludedAndUsesPackagePrimitives()
+    {
+        var solution = ReadRepositoryFile("W3Css.Blazor.slnx");
+        var project = ReadRepositoryFile("samples", "W3Css.Blazor.StarterKit", "W3Css.Blazor.StarterKit.csproj");
+        var layout = ReadRepositoryFile("samples", "W3Css.Blazor.StarterKit", "Layout", "MainLayout.razor");
+        var dashboard = ReadRepositoryFile("samples", "W3Css.Blazor.StarterKit", "Pages", "Home.razor");
+        var workflow = ReadRepositoryFile("samples", "W3Css.Blazor.StarterKit", "Pages", "Workflow.razor");
+        var index = ReadRepositoryFile("samples", "W3Css.Blazor.StarterKit", "wwwroot", "index.html");
+
+        Assert.Contains("samples/W3Css.Blazor.StarterKit/W3Css.Blazor.StarterKit.csproj", solution);
+        Assert.Contains(@"..\..\src\W3Css.Blazor\W3Css.Blazor.csproj", project);
+        Assert.Contains("_content/W3Css.Blazor/w3css-blazor.css", index);
+        Assert.Contains("W3ThemeProvider", layout);
+        Assert.Contains("W3AppShell", layout);
+        Assert.Contains("W3ToastProvider", layout);
+        Assert.Contains("W3DataTable", dashboard);
+        Assert.Contains("W3EmptyState", dashboard);
+        Assert.Contains("W3Modal", workflow);
+        Assert.Contains("W3MessageBox", workflow);
     }
 
     [Fact]
@@ -66,6 +94,7 @@ public sealed class W3ReleaseQualityTests
         foreach (var route in new[]
         {
             "/",
+            "/starter-kit",
             "/components",
             "/patterns",
             "/components/theming",

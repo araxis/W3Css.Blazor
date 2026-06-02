@@ -1,0 +1,66 @@
+@page "/customers"
+@inject StarterWorkspace Workspace
+@inject W3ToastService Toasts
+
+<PageTitle>Starter Kit Customers</PageTitle>
+
+<section class="starter-page">
+    <div class="starter-page-heading">
+        <div>
+            <h1>Customers</h1>
+            <p class="w3-large">A searchable data table with empty, error, and row action states.</p>
+        </div>
+        <W3ActionRow Label="Customer table actions">
+            <W3Button Border="true" Round="W3Round.Medium" OnClick="ToggleError">Toggle error</W3Button>
+            <W3Button Border="true" Round="W3Round.Medium" OnClick="ClearSearch">Clear search</W3Button>
+        </W3ActionRow>
+    </div>
+
+    <W3DataTable TItem="CustomerAccount"
+                 Items="@Workspace.Customers"
+                 SearchText="@Workspace.CustomerSearch"
+                 SearchTextChanged="@((string? value) => Workspace.CustomerSearch = value)"
+                 SearchPlaceholder="Search customers"
+                 EmptyText="No customers found"
+                 EmptyDescription="Try a different customer, plan, or health term."
+                 Error="@Workspace.CustomersFailed"
+                 ErrorText="Customers could not load"
+                 ErrorDescription="Toggle the error state again to return to table results."
+                 PageSize="4"
+                 AriaLabel="Customer accounts">
+        <ChildContent>
+            <W3DataColumn TItem="CustomerAccount" Title="Customer" CellText="@((CustomerAccount customer) => customer.Name)" SortKey="@((CustomerAccount customer) => customer.Name)" />
+            <W3DataColumn TItem="CustomerAccount" Title="Plan" CellText="@((CustomerAccount customer) => customer.Plan)" />
+            <W3DataColumn TItem="CustomerAccount" Title="Health" CellText="@((CustomerAccount customer) => customer.Health)" />
+            <W3DataColumn TItem="CustomerAccount" Title="Owner" CellText="@((CustomerAccount customer) => customer.Owner)" />
+        </ChildContent>
+        <RowActions Context="customer">
+            <W3Button Size="W3Size.Small" Border="true" Round="W3Round.Medium" OnClick="@(_ => ViewCustomer(customer))">View</W3Button>
+            <W3Button Size="W3Size.Small" Color="W3Color.Primary" TextColor="W3Color.White" Round="W3Round.Medium" OnClick="@(_ => MessageCustomer(customer))">Message</W3Button>
+        </RowActions>
+    </W3DataTable>
+</section>
+
+@code {
+    private void ToggleError(MouseEventArgs _)
+    {
+        Workspace.CustomersFailed = !Workspace.CustomersFailed;
+        Toasts.ShowInfo(Workspace.CustomersFailed ? "Error state enabled." : "Customer table restored.", "Customers");
+    }
+
+    private void ClearSearch(MouseEventArgs _)
+    {
+        Workspace.CustomerSearch = null;
+        Toasts.ShowInfo("Search cleared.", "Customers");
+    }
+
+    private void ViewCustomer(CustomerAccount customer)
+    {
+        Toasts.ShowInfo($"{customer.Name} selected.", "Customer");
+    }
+
+    private void MessageCustomer(CustomerAccount customer)
+    {
+        Toasts.ShowSuccess($"Message queued for {customer.Owner}.", customer.Name);
+    }
+}

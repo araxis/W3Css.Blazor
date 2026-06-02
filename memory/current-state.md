@@ -66,6 +66,7 @@ Last updated: 2026-06-02
 - Starter kit readiness now requires zero starter source CSS: the sample links only `_content/W3Css.Blazor/w3css-blazor.css`, uses package/W3 utility primitives for layout, and has a release-quality guard against source CSS or hidden generated stylesheet links returning.
 - The bundled `_content/W3Css.Blazor/w3css-blazor.css` now includes W3.CSS, theme tokens, and generated package component scoped CSS so app bars, nav menus, icons, and other component layouts work from the single documented stylesheet.
 - `W3AppShell` now marks sidebar layouts with `w3-app-shell-has-sidebar` and keeps the shell header sticky in that state, so the fixed W3.CSS sidebar stays visually attached to its header while the page scrolls.
+- `W3NavMenuItem` now treats `Href=""` as an application-root link by rendering the app base URI, so Blazor-style dashboard/root links navigate correctly from nested routes.
 - `W3Chart` now derives grid and axis strokes from the current chart text color with stronger opacity, so chart structure remains readable in both light and dark theme modes without app-specific CSS.
 - Reusable dark-theme surfaces, tables, form controls, data-table chrome, row hover contrast, app-bar action wrapping, and chart sizing/color behavior now live in the package stylesheet/component CSS instead of the starter app.
 - Reusable dark-theme hover contrast now covers W3.CSS hoverable table/list rows and striped even rows inside `W3ThemeProvider`, so table hover readability is fixed at the library level.

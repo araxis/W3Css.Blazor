@@ -60,6 +60,7 @@ Last updated: 2026-06-02
 - The starter-kit dashboard now includes meaningful customer-derived chart examples and a single multi-state theme toggle for Light/Dark/Auto.
 - The starter-kit theme toggle uses CSS-drawn sun, moon, and system icons with no extra icon dependency, and dashboard chart cards have explicit top/bottom body padding.
 - Multi-state `W3ToggleIconButton` no longer receives the binary pressed-ring class by default; the starter theme toggle uses a subtle themed border instead of a white inset ring.
+- Starter app-bar actions now keep the theme toggle and release button at the same rendered height by using the shared W3 button vertical padding.
 - Reusable dark-theme hover contrast now covers W3.CSS hoverable table/list rows and striped even rows inside `W3ThemeProvider`, so table hover readability is fixed at the library level.
 - Reusable dark-theme modal footer contrast now covers default `W3Modal`/`W3MessageBox` action footers inside `W3ThemeProvider`, so light-grey W3.CSS footer defaults do not create light strips in dark dialogs.
 - `W3DataTable` footer spacing now keeps horizontal padding, and `W3ToggleIconButton` supports optional multi-state cycling while preserving its existing binary toggle behavior.

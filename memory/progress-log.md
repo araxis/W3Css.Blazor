@@ -1253,3 +1253,12 @@ Last updated: 2026-06-02
   - `dotnet build W3Css.Blazor.slnx --configuration Release /nr:false` (0 warnings, 0 errors);
   - `dotnet test W3Css.Blazor.slnx --configuration Release --no-build /nr:false` (481 passing);
   - browser-verified `/workflow` on port 5024 with no console errors, no horizontal overflow, no multi-state pressed class, no box shadow, and no white inset ring.
+
+## 2026-06-02 - Starter App-Bar Action Height Polish
+
+- Removed the starter theme toggle's custom vertical padding so it uses the same rendered height as the adjacent W3 button in app-bar actions.
+- Added release-quality guards to prevent the removed custom padding from returning.
+- Verification:
+  - `dotnet build W3Css.Blazor.slnx --configuration Release /nr:false` (0 warnings, 0 errors);
+  - `dotnet test W3Css.Blazor.slnx --configuration Release --no-build /nr:false` (481 passing);
+  - browser-verified `/workflow` on port 5024 with no console errors, no horizontal overflow, and a 0px height delta between the theme toggle and release button.

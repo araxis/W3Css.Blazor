@@ -12,6 +12,11 @@
         <h2>Adoption Path</h2>
         <W3Grid Padding="true" Style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
             <W3Panel Color="W3Color.PaleBlue" TextColor="W3Color.Black" Border="true" Round="W3Round.Medium" Class="w3-padding">
+                <h3 class="w3-large">Starter Kit</h3>
+                <p>Run the sample app to see shell, forms, data, modal workflows, and toast feedback together.</p>
+                <NavLink href="starter-kit">Open starter kit</NavLink>
+            </W3Panel>
+            <W3Panel Color="W3Color.White" TextColor="W3Color.Black" Border="true" Round="W3Round.Medium" Class="w3-padding">
                 <h3 class="w3-large">Patterns</h3>
                 <p>Start from complete app-screen recipes for shell, forms, tables, and modal workflows.</p>
                 <NavLink href="patterns">Open patterns</NavLink>
@@ -62,41 +67,24 @@
     </section>
 
     <section class="doc-section">
-        <h2>Product Readiness Backlog</h2>
+        <h2>Starter Path</h2>
         <W3Panel Color="W3Color.PaleYellow" TextColor="W3Color.Black" LeftBar="true" Border="true" Round="W3Round.Medium">
-            <p>These candidates enrich site and app building without changing the vendored W3.CSS file. Each should compose existing components, W3.CSS classes, native HTML inputs, or small Blazor-owned state before adding any isolated CSS.</p>
+            <p>The component surface is broad enough for normal app and site starts. Begin with the starter kit, then use patterns and component topics when you need a focused example or API reference.</p>
         </W3Panel>
 
-        <W3Table Striped="true" Bordered="true" Hoverable="true" Responsive="true" aria-label="Product readiness backlog">
+        <W3Table Striped="true" Bordered="true" Hoverable="true" Responsive="true" aria-label="Starter path">
             <thead>
                 <tr>
-                    <th>Candidate</th>
-                    <th>Category</th>
-                    <th>Why It Matters</th>
-                    <th>W3.CSS-First Approach</th>
-                    <th>Priority</th>
+                    <th>Step</th>
+                    <th>Use</th>
+                    <th>Where to go</th>
                 </tr>
             </thead>
             <tbody>
-                @if (ExpansionBacklog.Length == 0)
-                {
-                    <tr>
-                        <td colspan="5">No low-risk second-round component gaps are currently queued.</td>
-                    </tr>
-                }
-                else
-                {
-                    @foreach (var item in ExpansionBacklog)
-                    {
-                        <tr>
-                            <td><code>@item.Name</code></td>
-                            <td>@item.Category</td>
-                            <td>@item.Why</td>
-                            <td>@item.Approach</td>
-                            <td>@item.Priority</td>
-                        </tr>
-                    }
-                }
+                <tr><td>Run</td><td>Build and inspect a real app shell with forms, tables, overlays, and toasts.</td><td><NavLink href="starter-kit">Starter Kit</NavLink></td></tr>
+                <tr><td>Copy</td><td>Lift complete app-screen recipes into your own routes.</td><td><NavLink href="patterns">Patterns</NavLink></td></tr>
+                <tr><td>Customize</td><td>Apply brand tokens, focus colors, status colors, and dark surfaces.</td><td><NavLink href="components/theming">Theming</NavLink></td></tr>
+                <tr><td>Verify</td><td>Check package version, stylesheet paths, release notes, and smoke commands.</td><td><NavLink href="components/versions">Versions</NavLink></td></tr>
             </tbody>
         </W3Table>
     </section>
@@ -278,13 +266,7 @@
         ])
     ];
 
-    private static readonly ExpansionCandidate[] ExpansionBacklog =
-    [
-    ];
-
     private sealed record ComponentCategory(string Name, string Description, ComponentTopic[] Topics);
 
     private sealed record ComponentTopic(string Name, string Use, string Status, string Href);
-
-    private sealed record ExpansionCandidate(string Name, string Category, string Why, string Approach, string Priority);
 }

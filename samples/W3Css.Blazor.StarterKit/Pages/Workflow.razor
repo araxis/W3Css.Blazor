@@ -1,0 +1,93 @@
+@page "/workflow"
+@inject StarterWorkspace Workspace
+@inject W3ToastService Toasts
+
+<PageTitle>Starter Kit Workflow</PageTitle>
+
+<section class="starter-page">
+    <div class="starter-page-heading">
+        <div>
+            <h1>Workflow</h1>
+            <p class="w3-large">A modal editing flow paired with a message-box confirmation.</p>
+        </div>
+        <W3ActionRow Label="Workflow actions">
+            <W3Button Color="W3Color.Primary" TextColor="W3Color.White" Round="W3Round.Medium" OnClick="OpenEdit">Edit record</W3Button>
+            <W3Button Border="true" Round="W3Round.Medium" OnClick="OpenArchive">Archive</W3Button>
+        </W3ActionRow>
+    </div>
+
+    <W3Card Depth="W3CardDepth.Two" Round="W3Round.Medium" HeaderColor="W3Color.Surface">
+        <Header>
+            <h2 class="w3-large">Current record</h2>
+        </Header>
+        <ChildContent>
+            <p><strong>Name:</strong> @Workspace.WorkflowRecord.Name</p>
+            <p><strong>Status:</strong> @Workspace.WorkflowRecord.Status</p>
+            <p><strong>Owner:</strong> @Workspace.WorkflowRecord.Owner</p>
+            <p class="doc-muted">Last result: @Workspace.LastWorkflowResult</p>
+        </ChildContent>
+    </W3Card>
+
+    <W3Modal Id="starter-edit-modal"
+             Title="Edit record"
+             @bind-Open="editOpen"
+             ContentStyle="max-width:560px">
+        <ChildContent>
+            <W3Field TValue="string" Label="Display name" ForId="record-name">
+                <W3Input id="record-name" @bind-Value="draftName" />
+            </W3Field>
+            <W3Field TValue="string" Label="Owner" ForId="record-owner">
+                <W3Input id="record-owner" @bind-Value="draftOwner" />
+            </W3Field>
+        </ChildContent>
+        <Actions>
+            <W3Button Border="true" Round="W3Round.Medium" OnClick="CancelEdit">Cancel</W3Button>
+            <W3Button Color="W3Color.Primary" TextColor="W3Color.White" Round="W3Round.Medium" OnClick="SaveRecord">Save</W3Button>
+        </Actions>
+    </W3Modal>
+
+    <W3MessageBox @bind-Visible="archiveOpen"
+                  Title="Archive record?"
+                  Message="Archived records leave the active queue but remain visible in history."
+                  YesText="Archive"
+                  NoText="Keep active"
+                  CancelText="Cancel"
+                  OnResult="HandleArchiveResult" />
+</section>
+
+@code {
+    private bool editOpen;
+    private bool archiveOpen;
+    private string? draftName;
+    private string? draftOwner;
+
+    private void OpenEdit(MouseEventArgs _)
+    {
+        draftName = Workspace.WorkflowRecord.Name;
+        draftOwner = Workspace.WorkflowRecord.Owner;
+        editOpen = true;
+    }
+
+    private void OpenArchive(MouseEventArgs _)
+    {
+        archiveOpen = true;
+    }
+
+    private void CancelEdit(MouseEventArgs _)
+    {
+        editOpen = false;
+    }
+
+    private void SaveRecord(MouseEventArgs _)
+    {
+        Workspace.UpdateWorkflowRecord(draftName, draftOwner);
+        editOpen = false;
+        Toasts.ShowSuccess("Record updated.", "Workflow");
+    }
+
+    private void HandleArchiveResult(bool? result)
+    {
+        Workspace.ApplyArchiveResult(result);
+        Toasts.ShowInfo(Workspace.LastWorkflowResult, "Workflow");
+    }
+}

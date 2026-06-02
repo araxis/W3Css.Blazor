@@ -1,6 +1,17 @@
 # Progress Log
 
-Last updated: 2026-06-01
+Last updated: 2026-06-02
+
+## 2026-06-02
+
+- Started the 0.5.0 starter-kit adoption slice:
+  - bumped package metadata to `0.5.0`;
+  - added `docs/release-notes/0.5.0.md` and a matching changelog section;
+  - added `samples/W3Css.Blazor.StarterKit`, a runnable Blazor WebAssembly sample app with dashboard, settings, customers, and workflow routes;
+  - added `/starter-kit` docs and linked it from installation, nav search, README, and component-index adoption paths;
+  - replaced the empty component-index readiness backlog with a starter path;
+  - expanded package consumer smoke coverage to compile starter-kit primitives including form, field, modal, message-box, and toast provider wiring;
+  - added `/starter-kit` to the browser sweep route set.
 
 ## 2026-06-01
 
@@ -361,7 +372,7 @@ Last updated: 2026-06-01
 ## 2026-05-29
 
 - Opened a dedicated **component compatibility** track: identify every reference library user-facing component not yet wrapped/aliased in the library and close the gaps W3.CSS-first.
-- Recorded the parity plan in the docs site itself: populated the previously empty `Product Readiness Backlog` (`ExpansionBacklog`) in `src/W3Css.Blazor.Docs/Pages/Components.razor` with the remaining reference library candidates (`W3MessageBox`, `W3ToggleGroup`/`W3ToggleItem`, `W3ColorPicker`, `W3Mask`, `W3DynamicTabs`, `W3Hidden`, `W3ScrollToTop`, `W3PageContentNavigation`, `W3SwipeArea` [Later], `W3Chart` [Later]).
+- Recorded the parity plan in the docs site itself: populated the previously empty readiness table (`ExpansionBacklog`) in `src/W3Css.Blazor.Docs/Pages/Components.razor` with the remaining reference library candidates (`W3MessageBox`, `W3ToggleGroup`/`W3ToggleItem`, `W3ColorPicker`, `W3Mask`, `W3DynamicTabs`, `W3Hidden`, `W3ScrollToTop`, `W3PageContentNavigation`, `W3SwipeArea` [Later], `W3Chart` [Later]).
 - Implemented the first parity slice — layout/content primitives (all CSS-first, no JS):
   - `W3Spacer` — flex filler; `src/W3Css.Blazor/Components/W3Spacer.razor` + `.razor.css`.
   - `W3Footer` — semantic `<footer>` with color/border/fixed (`w3-bottom`) options; `W3Footer.razor` + `.razor.css`.
@@ -377,7 +388,7 @@ Last updated: 2026-06-01
   - `W3MessageBox` — inline `@bind-Visible` confirm/alert over `W3Dialog`/`W3Modal`; `bool?` result (Yes=true, No=false, Cancel/dismiss=null) plus `OnYes`/`OnNo`/`OnCancel`. `src/W3Css.Blazor/Components/W3MessageBox.razor`.
   - `W3ToggleGroup<TValue>` + `W3ToggleItem<TValue>` — single/multi segmented selector using the `W3ChipSet`/`W3Chip` cascading owner/item pattern over `w3-bar`/`w3-button`, items expose `aria-pressed`. `W3ToggleGroup.razor` + `W3ToggleItem.razor`.
   - Docs topics `/components/message-box` (interactive Yes/No/Cancel demo) and `/components/toggle-group` (single + multi demos); pagers Dialog → **Message Box** → Tooltip and Switch → **Toggle Group** → Color Input.
-  - Registered in `Components.razor` catalog + `NavMenu.razor`; removed both from the docs `Product Readiness Backlog`.
+  - Registered in `Components.razor` catalog + `NavMenu.razor`; removed both from the docs readiness table.
   - Tests: route + index-link coverage in `W3DocsSmokeTests.cs`; behavior tests in `tests/W3Css.Blazor.Tests/W3InteractiveCompatibilityTests.cs`.
   - Verification: `dotnet build … -c Release` ✅ (0 errors); `dotnet test … --no-build` ✅ (**379 tests**).
 - Implemented the third parity slice — masked input, full color picker, dynamic tabs (CSS-first, no JS):
@@ -1156,3 +1167,18 @@ Last updated: 2026-06-01
 - Integrated the default empty/error surfaces into `W3DataTable`, including error-state parameters and custom error content.
 - Added a dedicated Empty State docs page, docs navigation/catalog entries, pager chain updates, and refreshed data-table state examples.
 - Verified focused component/docs tests, Release build, the 470-test Release suite, and package creation.
+
+## 2026-06-02 - Starter Kit Adoption Slice
+
+- Added `samples/W3Css.Blazor.StarterKit`, a runnable Blazor WebAssembly starter app that references the local library and demonstrates app shell, app bar, sidebar navigation, dashboard cards, data table, form/field inputs, action rows, modal, message box, empty state, and toast feedback.
+- Added the `/starter-kit` docs route with setup steps, expected files, sample routes, and adoption links to Patterns, Theming, Installation, and Versions.
+- Reframed the component index from an empty backlog section to a starter path, updated README onboarding, added `docs/release-notes/0.5.0.md`, and bumped package metadata/changelog/version docs to `0.5.0`.
+- Expanded package consumer smoke coverage so a clean app compiles starter-kit primitives from the local package artifact.
+- Fixed starter-sample adoption issues found during browser verification: explicit data-table binding for customer search and persistent app-shell sidebar behavior.
+- Verification:
+  - `dotnet build W3Css.Blazor.slnx --configuration Release /nr:false` (0 warnings, 0 errors);
+  - `dotnet test W3Css.Blazor.slnx --configuration Release --no-build /nr:false` (479 passing);
+  - `dotnet pack src/W3Css.Blazor/W3Css.Blazor.csproj --configuration Release --no-build --output artifacts/packages /nr:false`;
+  - `pwsh ./tools/package-consumer-smoke.ps1 -PackageVersion 0.5.0 -PackageSource artifacts/packages`;
+  - `pwsh ./tools/docs-browser-sweep.ps1 -BaseUrl http://localhost:5022 -StartServer`;
+  - browser-verified the starter kit dashboard, settings, customers, and workflow routes on port 5024 with customer search, settings save, modal edit/save, message-box archive, no horizontal overflow, no error UI, and no unintended app-shell overlay.

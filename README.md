@@ -104,12 +104,23 @@ For app screens, start with the layout and data primitives that already handle t
 repetitive spacing work: `W3AppShell`, `W3AppBar`, `W3Card`, `W3DataTable`,
 `W3Form`, `W3EmptyState`, and `W3ActionRow`.
 
+## Run The Starter Kit
+
+The repository includes a small Blazor WebAssembly starter app that wires the package into a dashboard, settings form, customer table, and modal workflow:
+
+```bash
+dotnet run --project samples/W3Css.Blazor.StarterKit
+```
+
+The sample uses a local project reference during development and the same bundled stylesheet path that package consumers use.
+
 ## Adoption Links
 
+- [Starter Kit](src/W3Css.Blazor.Docs/Pages/StarterKitPage.razor): runnable sample app with shell, forms, data, modal workflow, and toast feedback.
 - [Patterns](src/W3Css.Blazor.Docs/Pages/Patterns.razor): complete dashboard, form, table, and modal workflows.
 - [Theming](src/W3Css.Blazor.Docs/Pages/ComponentTopics/ThemingPage.razor): brand tokens, dark surfaces, and focus/status colors.
 - [Versions](src/W3Css.Blazor.Docs/Pages/ComponentTopics/VersionsPage.razor): package version, bundled stylesheet paths, and upgrade checks.
-- [0.4.0 release notes](docs/release-notes/0.4.0.md): quality-hardening release details.
+- [0.5.0 release notes](docs/release-notes/0.5.0.md): starter-kit adoption release details.
 - [Package smoke script](tools/package-consumer-smoke.ps1): clean consumer-app package validation.
 
 ## Repository Layout
@@ -135,7 +146,7 @@ Run the package consumer smoke check after publishing a version:
 pwsh ./tools/package-consumer-smoke.ps1
 ```
 
-Pass `-PackageVersion 0.4.0` to check a specific published version.
+Pass `-PackageVersion 0.5.0` to check a specific published version.
 Pass `-PackageSource artifacts/packages` to check a locally packed version before tagging.
 
 Run the browser quality sweep against a running docs site:

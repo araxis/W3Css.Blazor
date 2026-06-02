@@ -80,7 +80,7 @@ public sealed class StarterWorkspace
     [
         new(nameof(StarterThemeMode.Light), "Theme mode: Light", "\u2600", title: "Use light mode"),
         new(nameof(StarterThemeMode.Dark), "Theme mode: Dark", "\u263E", title: "Use dark mode"),
-        new(nameof(StarterThemeMode.Auto), "Theme mode: Auto", "\u25D0", title: "Follow system theme")
+        new(nameof(StarterThemeMode.Auto), "Theme mode: Auto", "\u2699", title: "Follow system theme")
     ];
 
     public string ThemeModeValue => ThemeMode.ToString();

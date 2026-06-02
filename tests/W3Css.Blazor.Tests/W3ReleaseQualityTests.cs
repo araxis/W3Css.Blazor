@@ -73,6 +73,9 @@ public sealed class W3ReleaseQualityTests
         Assert.Contains("w3-icon-svg", bundle);
         Assert.Contains("color-mix(in srgb, currentColor 24%, transparent)", bundle);
         Assert.Contains("color-mix(in srgb, currentColor 36%, transparent)", bundle);
+        Assert.Contains(".w3-toast", bundle);
+        Assert.Contains("grid-template-columns: minmax(0, 1fr) auto", bundle);
+        Assert.Contains("padding: 0.75rem 1rem", bundle);
     }
 
     [Fact]

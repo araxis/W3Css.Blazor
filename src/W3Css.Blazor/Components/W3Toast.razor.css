@@ -1,10 +1,11 @@
 .w3-toast {
     margin: 0;
     position: relative;
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 0.75rem;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+    gap: 0.5rem 0.75rem;
+    padding: 0.75rem 1rem;
     width: 100%;
 }
 
@@ -15,10 +16,12 @@
 }
 
 .w3-toast-dismissible {
-    padding-right: 3rem;
+    padding-right: 0.75rem;
 }
 
 .w3-toast-main {
+    grid-column: 1;
+    grid-row: 1;
     min-width: 0;
 }
 
@@ -32,10 +35,12 @@
 }
 
 .w3-toast-actions {
+    grid-column: 1 / -1;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
+    justify-content: flex-end;
     gap: 0.25rem;
-    flex: 0 0 auto;
+    margin-top: 0.25rem;
 }
 
 .w3-toast-action {
@@ -44,9 +49,8 @@
 }
 
 .w3-toast-close {
-    position: absolute;
-    top: 0.35rem;
-    right: 0.45rem;
+    grid-column: 2;
+    grid-row: 1;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -61,7 +65,7 @@
 @media (max-width: 480px) {
     .w3-toast {
         align-items: stretch;
-        flex-direction: column;
+        grid-template-columns: minmax(0, 1fr) auto;
     }
 
     .w3-toast-actions {

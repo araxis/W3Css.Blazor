@@ -18,7 +18,7 @@ Last updated: 2026-06-02
 - Starter sample: `samples/W3Css.Blazor.StarterKit` is included in the solution and builds against the local library project.
 - Tests in project source: 71 `.cs` test files.
 - Test suite status:
-  - `dotnet test W3Css.Blazor.slnx --configuration Release --no-build /nr:false` -> **479 passing tests**.
+  - `dotnet test W3Css.Blazor.slnx --configuration Release --no-build /nr:false` -> **481 passing tests**.
 - Build status:
   - `dotnet build W3Css.Blazor.slnx --configuration Release` → **0 warnings, 0 errors**.
 
@@ -57,7 +57,9 @@ Last updated: 2026-06-02
 - The 0.3.0 adoption-polish slice is complete: Patterns docs, README adoption path, release notes, versions docs, selected public XML documentation guard coverage, local package smoke, public package smoke, and top-page browser sweep all passed without changing vendored W3.CSS.
 - The 0.4.0 quality-hardening release is complete: broad public API XML documentation guards, docs/API parity guards, browser sweep tooling, release notes, versions docs, README links, local package smoke, public package smoke, browser sweep, and memory updates passed without changing vendored W3.CSS.
 - The 0.5.0 starter-kit adoption release is complete: sample app, starter-kit docs, component-index starter path, README links, release notes, expanded package smoke coverage, docs browser sweep, starter app browser verification, tag workflow, and public package smoke all passed without changing vendored W3.CSS.
-- The starter-kit dashboard now includes meaningful chart examples and dark-mode table-toolbar contrast polish for the sample app.
+- The starter-kit dashboard now includes meaningful customer-derived chart examples and a single multi-state theme toggle for Light/Dark/Auto.
+- Reusable dark-theme hover contrast now covers W3.CSS hoverable table/list rows inside `W3ThemeProvider`, so table hover readability is fixed at the library level.
+- `W3DataTable` footer spacing now keeps horizontal padding, and `W3ToggleIconButton` supports optional multi-state cycling while preserving its existing binary toggle behavior.
 - Documentation consistency review is complete for current component topic parameter tables; each implemented rendering surface now has explicit inherited attribute rows where applicable.
 - The small docs/API gap pass now covers `W3Table`, `W3Drawer`, `W3Menu`, and `W3ProgressCircular` parameter tables with focused docs smoke coverage.
 - The second docs/API gap pass now covers `W3DataTable`, `W3DateRangePicker`, `W3MessageBox`, `W3Modal`, and `W3Navbar` parameter tables with focused docs smoke coverage.

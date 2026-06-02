@@ -35,20 +35,11 @@ body {
     gap: 8px;
 }
 
-.starter-theme-switch {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-}
-
-.starter-theme-mode {
-    opacity: 0.82;
-}
-
-.starter-theme-mode-active {
+.starter-theme-toggle {
     background: rgba(255, 255, 255, 0.2) !important;
-    box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.7);
-    opacity: 1;
+    box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.72);
+    font-weight: 700;
+    min-width: 2.75rem;
 }
 
 .starter-sidebar {
@@ -154,7 +145,7 @@ body {
     border-color: var(--w3-border) !important;
 }
 
-.w3-theme-root[data-w3-dark='true'] .w3-button:not(.w3-primary):not(.starter-theme-mode):not(.starter-theme-mode-active) {
+.w3-theme-root[data-w3-dark='true'] .w3-button:not(.w3-primary):not(.starter-theme-toggle) {
     color: var(--w3-on-surface);
 }
 

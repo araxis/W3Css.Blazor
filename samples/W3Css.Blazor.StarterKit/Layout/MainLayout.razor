@@ -25,29 +25,13 @@
                       OnMenuClick="ToggleSidebar"
                       ActionsClass="starter-appbar-actions">
                 <Actions>
-                    <div class="starter-theme-switch" role="radiogroup" aria-label="Theme mode">
-                        <W3Button Border="true"
-                                  Round="W3Round.Medium"
-                                  TextColor="W3Color.White"
-                                  Class="@ThemeModeButtonClass(StarterThemeMode.Light)"
-                                  role="radio"
-                                  aria-checked="@ThemeModeChecked(StarterThemeMode.Light)"
-                                  OnClick="@(_ => SetThemeMode(StarterThemeMode.Light))">Light</W3Button>
-                        <W3Button Border="true"
-                                  Round="W3Round.Medium"
-                                  TextColor="W3Color.White"
-                                  Class="@ThemeModeButtonClass(StarterThemeMode.Dark)"
-                                  role="radio"
-                                  aria-checked="@ThemeModeChecked(StarterThemeMode.Dark)"
-                                  OnClick="@(_ => SetThemeMode(StarterThemeMode.Dark))">Dark</W3Button>
-                        <W3Button Border="true"
-                                  Round="W3Round.Medium"
-                                  TextColor="W3Color.White"
-                                  Class="@ThemeModeButtonClass(StarterThemeMode.Auto)"
-                                  role="radio"
-                                  aria-checked="@ThemeModeChecked(StarterThemeMode.Auto)"
-                                  OnClick="@(_ => SetThemeMode(StarterThemeMode.Auto))">Auto</W3Button>
-                    </div>
+                    <W3ToggleIconButton States="@Workspace.ThemeModeStates"
+                                        Value="@Workspace.ThemeModeValue"
+                                        ValueChanged="SetThemeModeValue"
+                                        Border="true"
+                                        TextColor="W3Color.White"
+                                        Round="W3Round.Medium"
+                                        Class="starter-theme-toggle" />
                     <W3Button Border="true" TextColor="W3Color.White" Round="W3Round.Medium" OnClick="ShowReleaseToast">0.5.0 Ready</W3Button>
                 </Actions>
             </W3AppBar>
@@ -92,9 +76,9 @@
         StateHasChanged();
     }
 
-    private void SetThemeMode(StarterThemeMode mode)
+    private void SetThemeModeValue(string? value)
     {
-        Workspace.SetThemeMode(mode);
+        Workspace.SetThemeModeValue(value);
     }
 
     [JSInvokable]
@@ -103,16 +87,6 @@
         Workspace.SetSystemPrefersDark(prefersDark);
         StateHasChanged();
         return Task.CompletedTask;
-    }
-
-    private string ThemeModeButtonClass(StarterThemeMode mode)
-    {
-        return Workspace.ThemeMode == mode ? "starter-theme-mode-active" : "starter-theme-mode";
-    }
-
-    private string ThemeModeChecked(StarterThemeMode mode)
-    {
-        return Workspace.ThemeMode == mode ? "true" : "false";
     }
 
     private void ShowReleaseToast(MouseEventArgs _)

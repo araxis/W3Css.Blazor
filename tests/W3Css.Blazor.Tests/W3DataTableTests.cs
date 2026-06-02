@@ -227,6 +227,20 @@ public sealed class W3DataTableTests
         Assert.Contains("w3-pale-green", cut.FindAll("tbody tr")[1].GetAttribute("class"));
     }
 
+    [Fact]
+    public void DataTableFooterKeepsHorizontalPadding()
+    {
+        var css = File.ReadAllText(Path.Combine(
+            GetRepositoryRoot(),
+            "src",
+            "W3Css.Blazor",
+            "Components",
+            "W3DataTable.razor.css"));
+
+        Assert.Contains(".w3-data-table-footer", css);
+        Assert.Contains("padding: 0.75rem;", css);
+    }
+
     private static RenderFragment ColumnDefinitions()
     {
         return builder =>
@@ -268,6 +282,23 @@ public sealed class W3DataTableTests
         new("Borealis", "Grace", 7),
         new("Cygnus", "Linus", 4)
     ];
+
+    private static string GetRepositoryRoot()
+    {
+        var directory = new DirectoryInfo(AppContext.BaseDirectory);
+
+        while (directory is not null)
+        {
+            if (File.Exists(Path.Combine(directory.FullName, "W3Css.Blazor.slnx")))
+            {
+                return directory.FullName;
+            }
+
+            directory = directory.Parent;
+        }
+
+        throw new DirectoryNotFoundException("Could not locate the repository root.");
+    }
 
     private sealed record ProjectRow(string Name, string Owner, int Tasks);
 }

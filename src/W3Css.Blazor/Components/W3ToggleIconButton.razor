@@ -8,22 +8,32 @@
         style="@Style"
         aria-label="@EffectiveLabel"
         aria-pressed="@AriaPressed"
-        title="@Title"
+        title="@EffectiveTitle"
         disabled="@Disabled"
         @onclick="HandleClickAsync">
-    <W3Icon IconClass="@IconClass" Class="@IconCssClass">@ChildContent</W3Icon>
+    <W3Icon IconClass="@EffectiveIconClass" Class="@IconCssClass">
+        @if (!string.IsNullOrWhiteSpace(EffectiveIconText))
+        {
+            @EffectiveIconText
+        }
+        else
+        {
+            @ChildContent
+        }
+    </W3Icon>
 </button>
 
 @code {
     private bool _pressed;
     private bool _initialized;
+    private string? _value;
 
     private string CssClass => BuildClass(
         "w3-button",
         "w3-icon-button",
         Circle ? "w3-icon-button-circle w3-circle" : null,
         Border ? "w3-border" : null,
-        _pressedState ? "w3-icon-button-pressed" : null,
+        Active ? "w3-icon-button-pressed" : null,
         Color.ToBackgroundClass(),
         TextColor.ToTextClass(),
         Size.ToClass(),
@@ -32,14 +42,48 @@
 
     private string IconCssClass => new W3ClassBuilder()
         .Add("w3-icon-button-icon")
-        .Add(IconElementClass)
+        .Add(EffectiveIconElementClass)
         .ToString();
 
-    private string EffectiveLabel => string.IsNullOrWhiteSpace(Label) ? "Icon action" : Label;
+    private IReadOnlyList<W3ToggleIconButtonState> EffectiveStates => States ?? [];
+
+    private bool HasStates => EffectiveStates.Count > 0;
+
+    private W3ToggleIconButtonState? CurrentState => HasStates
+        ? EffectiveStates.FirstOrDefault(state => string.Equals(state.Value, CurrentValue, StringComparison.Ordinal))
+            ?? EffectiveStates[0]
+        : null;
+
+    private string? CurrentValue
+    {
+        get
+        {
+            if (ValueChanged.HasDelegate)
+            {
+                return Value;
+            }
+
+            return _value ?? Value;
+        }
+    }
 
     private bool _pressedState => PressedChanged.HasDelegate ? Pressed : _pressed;
 
-    private string? AriaPressed => _pressedState.ToString().ToLowerInvariant();
+    private bool Active => HasStates || _pressedState;
+
+    private string EffectiveLabel => CurrentState is { } state && !string.IsNullOrWhiteSpace(state.Label)
+        ? state.Label
+        : string.IsNullOrWhiteSpace(Label) ? "Icon action" : Label;
+
+    private string? EffectiveTitle => CurrentState?.Title ?? Title;
+
+    private string? EffectiveIconClass => CurrentState?.IconClass ?? IconClass;
+
+    private string? EffectiveIconElementClass => CurrentState?.IconElementClass ?? IconElementClass;
+
+    private string? EffectiveIconText => CurrentState?.IconText;
+
+    private string? AriaPressed => HasStates ? null : _pressedState.ToString().ToLowerInvariant();
 
     /// <summary>
     /// Gets or sets the accessible label text.
@@ -120,6 +164,24 @@
     public bool Pressed { get; set; }
 
     /// <summary>
+    /// Gets or sets the available states for multi-state cycling.
+    /// </summary>
+    [Parameter]
+    public IReadOnlyList<W3ToggleIconButtonState>? States { get; set; }
+
+    /// <summary>
+    /// Gets or sets the current state value when <see cref="States"/> is supplied.
+    /// </summary>
+    [Parameter]
+    public string? Value { get; set; }
+
+    /// <summary>
+    /// Gets or sets the callback raised when the multi-state value changes.
+    /// </summary>
+    [Parameter]
+    public EventCallback<string?> ValueChanged { get; set; }
+
+    /// <summary>
     /// Gets or sets the rendered button type.
     /// </summary>
     [Parameter]
@@ -139,6 +201,11 @@
 
     protected override void OnParametersSet()
     {
+        if (HasStates && string.IsNullOrWhiteSpace(_value))
+        {
+            _value = CurrentState?.Value ?? EffectiveStates[0].Value;
+        }
+
         if (!_initialized || PressedChanged.HasDelegate)
         {
             _pressed = Pressed;
@@ -153,6 +220,22 @@
             return;
         }
 
+        if (HasStates)
+        {
+            var nextValue = GetNextStateValue();
+            if (ValueChanged.HasDelegate)
+            {
+                await ValueChanged.InvokeAsync(nextValue);
+            }
+            else
+            {
+                _value = nextValue;
+            }
+
+            await OnClick.InvokeAsync(args);
+            return;
+        }
+
         var next = !_pressedState;
         if (PressedChanged.HasDelegate)
         {
@@ -164,5 +247,16 @@
         }
 
         await OnClick.InvokeAsync(args);
+    }
+
+    private string GetNextStateValue()
+    {
+        var states = EffectiveStates;
+        var currentIndex = states
+            .Select((state, index) => new { state, index })
+            .FirstOrDefault(pair => string.Equals(pair.state.Value, CurrentState?.Value, StringComparison.Ordinal))
+            ?.index ?? 0;
+        var nextIndex = (currentIndex + 1) % states.Count;
+        return states[nextIndex].Value;
     }
 }

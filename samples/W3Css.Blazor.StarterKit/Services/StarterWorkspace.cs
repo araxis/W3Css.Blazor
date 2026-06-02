@@ -76,12 +76,20 @@ public sealed class StarterWorkspace
         new("Release health", "Good", "No blocked checks")
     ];
 
-    public IReadOnlyList<string> ThroughputLabels => ["Mon", "Tue", "Wed", "Thu", "Fri"];
-
-    public IReadOnlyList<W3ChartSeries> ThroughputSeries =>
+    public IReadOnlyList<W3ToggleIconButtonState> ThemeModeStates { get; } =
     [
-        new("Completed", [8, 11, 9, 14, 16], "#14b8a6"),
-        new("New intake", [6, 9, 12, 8, 10], "#ffd166")
+        new(nameof(StarterThemeMode.Light), "Theme mode: Light", "L", title: "Use light mode"),
+        new(nameof(StarterThemeMode.Dark), "Theme mode: Dark", "D", title: "Use dark mode"),
+        new(nameof(StarterThemeMode.Auto), "Theme mode: Auto", "A", title: "Follow system theme")
+    ];
+
+    public string ThemeModeValue => ThemeMode.ToString();
+
+    public IReadOnlyList<string> CustomerPlanLabels => ["Starter", "Team", "Business"];
+
+    public IReadOnlyList<W3ChartSeries> CustomerPlanSeries =>
+    [
+        new("Accounts", CustomerPlanLabels.Select(label => (double)Customers.Count(customer => customer.Plan == label)).ToArray())
     ];
 
     public IReadOnlyList<string> CustomerHealthLabels => ["Healthy", "Watch", "Blocked"];
@@ -104,6 +112,14 @@ public sealed class StarterWorkspace
     public void SetThemeMode(StarterThemeMode mode)
     {
         ThemeMode = mode;
+    }
+
+    public void SetThemeModeValue(string? value)
+    {
+        if (Enum.TryParse<StarterThemeMode>(value, ignoreCase: false, out var mode))
+        {
+            SetThemeMode(mode);
+        }
     }
 
     public void SetSystemPrefersDark(bool prefersDark)

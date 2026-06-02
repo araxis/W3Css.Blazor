@@ -208,6 +208,38 @@ public sealed class W3ButtonTests
     }
 
     [Fact]
+    public void ToggleIconButtonCanCycleThroughMultipleStates()
+    {
+        using var context = new BunitContext();
+        var states = new[]
+        {
+            new W3ToggleIconButtonState("Light", "Theme mode: Light", "L"),
+            new W3ToggleIconButtonState("Dark", "Theme mode: Dark", "D"),
+            new W3ToggleIconButtonState("Auto", "Theme mode: Auto", "A")
+        };
+
+        var cut = context.Render<W3ToggleIconButton>(parameters => parameters
+            .Add(p => p.States, states)
+            .Add(p => p.Value, "Light")
+            .Add(p => p.Border, true));
+
+        var button = cut.Find("button");
+
+        Assert.Equal("Theme mode: Light", button.GetAttribute("aria-label"));
+        Assert.Null(button.GetAttribute("aria-pressed"));
+        Assert.Contains("w3-icon-button-pressed", button.GetAttribute("class"));
+        Assert.Equal("L", cut.Find("i").TextContent.Trim());
+
+        button.Click();
+        Assert.Equal("Theme mode: Dark", button.GetAttribute("aria-label"));
+        Assert.Equal("D", cut.Find("i").TextContent.Trim());
+
+        button.Click();
+        Assert.Equal("Theme mode: Auto", button.GetAttribute("aria-label"));
+        Assert.Equal("A", cut.Find("i").TextContent.Trim());
+    }
+
+    [Fact]
     public void FabRendersAccessibleFloatingActionButton()
     {
         using var context = new BunitContext();

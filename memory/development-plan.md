@@ -1,6 +1,6 @@
 # Step-by-Step Development Plan
 
-Last updated: 2026-06-02
+Last updated: 2026-06-04
 
 ## Phase 1: Foundation (Complete)
 
@@ -61,12 +61,13 @@ Last updated: 2026-06-02
 - Published `v0.5.2` after PR CI, main CI, Pages, release workflow, and public package smoke passed.
 - Published `v0.5.3` after PR CI, main CI, Pages, release workflow, and public package smoke passed.
 
-## Phase 11: Quality Automation (In Progress)
+## Phase 11: Quality Automation (Complete)
 
 - 0.6.0 stays non-breaking and avoids broad new component surface.
 - Add starter-kit browser sweep tooling for dashboard, settings, customers, and workflow routes.
 - Harden package smoke coverage for bundled app shell, nav menu, icon, chart, toast, modal/footer, and action-row CSS.
 - Tighten release guardrails so package metadata, changelog, release notes, README, Versions docs, release-quality tests, and verification commands stay aligned.
+- Published `v0.6.0` after PR CI, main CI, Pages, release workflow, public feed indexing, and public package smoke passed.
 
 ## Current Status Check
 
@@ -79,4 +80,4 @@ Last updated: 2026-06-02
   - `pwsh ./tools/starter-browser-sweep.ps1 -BaseUrl http://localhost:5037 -StartServer`
 
 - Components implemented: 127 component files plus docs topic coverage.
-- Test coverage: 486 passing tests for the current starter-kit readiness slice.
+- Test coverage: 488 passing tests for the current quality automation slice.

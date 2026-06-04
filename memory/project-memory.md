@@ -1,18 +1,18 @@
 # W3Css.Blazor Project Memory
 
-Last updated: 2026-06-02
+Last updated: 2026-06-04
 
 ## Snapshot
 
 - Repo target: Blazor component suite over W3.CSS (small, CSS-first, practical defaults).
-- Branch: `work/0.6.0-quality-automation`.
-- Current package baseline: published `0.5.3`.
+- Branch: `work/0.6.0-release-memory`.
+- Current package baseline: published `0.6.0`.
 - .NET target: `net10.0` (`10.0.300` SDK).
 - Current state:
   - 127 component `.razor` files.
   - 121 docs topic pages plus top-level Patterns and Starter Kit guides.
   - Starter sample app under `samples/W3Css.Blazor.StarterKit` with no source CSS; it links only the bundled package stylesheet.
-  - 486 passing tests for the current starter-kit readiness slice.
+  - 488 passing tests for the current quality automation slice.
   - Build: `dotnet build W3Css.Blazor.slnx --configuration Release` (0 warnings, 0 errors).
 
 ## Architecture
@@ -37,10 +37,8 @@ Last updated: 2026-06-02
 ## Current Priority
 
 1. 0.6.0 quality automation:
-   - package metadata, release notes, starter browser sweep tooling, package smoke CSS assertions, release guardrails, docs, and memory are being prepared.
-2. Published baseline:
-   - `0.5.3` is the current published package and remains the release baseline until `0.6.0` is merged, tagged, and published.
-3. Future releases:
+   - package metadata, release notes, starter browser sweep tooling, package smoke CSS assertions, release guardrails, docs, tag workflow, release workflow, and public package smoke are complete.
+2. Future releases:
    - plan normal version-bump, release-note, tag, publish, and consumer-smoke slices.
 
 ## Memory Files

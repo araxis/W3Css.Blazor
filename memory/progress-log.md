@@ -1364,3 +1364,4 @@ Last updated: 2026-06-02
 - Hardened package consumer smoke coverage for bundled app shell, nav menu, icon, chart contrast, toast spacing, modal/footer contrast, and action-row CSS markers.
 - Updated package metadata, README release link, Versions docs, changelog, release notes, starter label, release-quality tests, and memory files for `0.6.0`.
 - Kept the vendored W3.CSS source unchanged.
+- Merged the `0.6.0` quality automation release, pushed `v0.6.0`, verified PR CI, main CI, Pages, release workflow, public feed indexing, and public package smoke for `0.6.0`.

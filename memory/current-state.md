@@ -14,7 +14,7 @@ Last updated: 2026-06-04
 - W3.CSS 5.01 is shipped in `src/W3Css.Blazor/wwwroot/w3css/5/w3.css`.
 - Current components in `src/W3Css.Blazor/Components`:
   - 127 `.razor` component files present.
-- Current docs routes in `src/W3Css.Blazor.Docs/Pages/ComponentTopics`: 121 pages, plus top-level Patterns and Starter Kit adoption pages.
+- Current docs routes in `src/W3Css.Blazor.Docs/Pages/ComponentTopics`: 121 pages, plus top-level Starter Kit, Gallery, and Patterns adoption pages.
 - Starter sample: `samples/W3Css.Blazor.StarterKit` is included in the solution and builds against the local library project.
 - Tests in project source: 71 `.cs` test files.
 - Test suite status:
@@ -37,13 +37,13 @@ Last updated: 2026-06-04
 
 - W3.CSS source file is not modified.
 - Package metadata is set to:
-  - Version `0.6.0`.
+  - Version `0.7.0`.
   - `Directory.Build.props` repository URL + type (`https://github.com/araxis/W3Css.Blazor`).
   - `PackageProjectUrl`, `RepositoryUrl`, `RepositoryType`, and release notes in `src/W3Css.Blazor/W3Css.Blazor.csproj`.
 - README includes package version and MIT license badges.
 - Release workflow builds, tests, packs, creates release artifacts, and publishes packages on `v*` tag pushes when the publishing secret is configured.
 - First package release is published as `W3Css.Blazor` version `0.1.0`.
-- Current package release is published as `W3Css.Blazor` version `0.6.0`; package metadata targets `0.6.0`.
+- Current package release is published as `W3Css.Blazor` version `0.6.0`; package metadata targets `0.7.0`.
 - Releases `v0.1.0`, `v0.2.0`, `v0.3.0`, `v0.4.0`, `v0.5.0`, `v0.5.1`, `v0.5.2`, `v0.5.3`, and `v0.6.0` are published with package artifacts.
 - Package consumer smoke tooling verifies install, component compilation, publish output, bundled static assets, component styles inside the bundled stylesheet, and starter-kit primitives; local smoke uses an isolated per-run package cache so repeated same-version artifact checks do not reuse stale packages.
 
@@ -61,6 +61,7 @@ Last updated: 2026-06-04
 - The 0.5.2 navigation patch release is complete: reusable nav menu root-link fix, release notes, release workflow, and public package smoke passed without changing vendored W3.CSS.
 - The 0.5.3 toast spacing patch release is complete: reusable toast close-spacing fix, release notes, release workflow, and public package smoke passed without changing vendored W3.CSS.
 - The 0.6.0 quality automation release is complete: starter-kit browser sweep tooling, package smoke CSS assertions, release guardrails, docs, tag workflow, release workflow, and public package smoke passed without changing vendored W3.CSS.
+- The 0.7.0 live gallery release slice is in progress: package metadata targets `0.7.0`, `/gallery` adds live copyable app/site examples, docs adoption links point to Gallery, and release verification remains pending.
 - The starter-kit dashboard now includes meaningful customer-derived chart examples and a single multi-state theme toggle for Light/Dark/Auto.
 - Built-in icons are now first-class through `W3IconName` + `W3Icon`; icon-capable components can render bundled SVG icons without external icon assets while preserving `IconClass` compatibility.
 - The starter-kit theme toggle uses built-in Sun, Moon, and Monitor icons through multi-state `W3ToggleIconButton`, and dashboard chart cards have explicit top/bottom body padding.

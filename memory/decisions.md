@@ -50,7 +50,7 @@ Last updated: 2026-06-02
 ## Repository Standards
 
 - Default branch target: `main`.
-- Package version currently pinned at `0.6.0` for the next quality automation release.
+- Package version currently targets `0.7.0` for the live gallery release slice.
 - `PackageProjectUrl`/`RepositoryUrl`/`RepositoryType` and release metadata are set from repo properties.
 
 ## Architecture Defaults

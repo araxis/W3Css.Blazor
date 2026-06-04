@@ -1,0 +1,579 @@
+@page "/gallery"
+@using System.ComponentModel.DataAnnotations
+@using Microsoft.AspNetCore.Components.Forms
+
+<PageTitle>Gallery</PageTitle>
+
+<W3Container Class="w3-padding-32">
+    <h1>Gallery</h1>
+    <DocPager PreviousHref="starter-kit" PreviousText="Starter Kit" NextHref="patterns" NextText="Patterns" />
+
+    <p class="w3-large">Live, copyable examples for app screens and site sections built from the package primitives.</p>
+    <p>Every preview uses Razor components and W3 utility classes only; no screenshot assets or gallery-only component APIs are required.</p>
+
+    <section class="doc-section">
+        <h2>App Examples</h2>
+        <p class="doc-muted">Use these when the screen has persistent navigation, forms, data state, and app workflow actions.</p>
+    </section>
+
+    <DocExample Title="Operations Dashboard" Description="A compact dashboard shell with navigation, metrics, and a work queue." Code="@OperationsDashboardCode">
+        <p class="doc-muted">Uses: W3ThemeProvider, W3AppShell, W3AppBar, W3Card, W3DataTable, W3ActionRow, W3Grid, W3Icon.</p>
+        <W3ThemeProvider Theme="galleryTheme">
+            <W3AppShell Contained="true"
+                        SidebarWidth="220"
+                        SidebarOpen="@dashboardSidebarOpen"
+                        SidebarOpenChanged="value => dashboardSidebarOpen = value"
+                        SidebarOverlay="true"
+                        HeaderColor="W3Color.Primary"
+                        HeaderTextColor="W3Color.White"
+                        SidebarColor="W3Color.Surface"
+                        MainClass="w3-padding-16"
+                        Style="min-height:460px">
+                <Header>
+                    <W3AppBar Color="W3Color.Primary"
+                              TextColor="W3Color.White"
+                              Title="Operations"
+                              ShowMenuButton="true"
+                              MenuExpanded="@dashboardSidebarOpen"
+                              MenuControls="gallery-dashboard-sidebar"
+                              OnMenuClick="ToggleDashboardSidebar">
+                        <Actions>
+                            <W3Button Border="true" TextColor="W3Color.White" Round="W3Round.Medium">Export</W3Button>
+                        </Actions>
+                    </W3AppBar>
+                </Header>
+                <Sidebar>
+                    <W3NavMenu Id="gallery-dashboard-sidebar" Label="Gallery dashboard navigation">
+                        <W3NavMenuItem Href="#" Text="Overview" IconName="W3IconName.Dashboard" Active="true" />
+                        <W3NavMenuItem Href="#" Text="Customers" IconName="W3IconName.Users" />
+                        <W3NavMenuItem Href="#" Text="Workflow" IconName="W3IconName.Workflow" />
+                    </W3NavMenu>
+                </Sidebar>
+                <ChildContent>
+                    <W3Grid Padding="true" Style="grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));">
+                        @foreach (var metric in DashboardMetrics)
+                        {
+                            <W3Card Depth="W3CardDepth.Two" Round="W3Round.Medium" Class="w3-padding">
+                                <W3Icon IconName="@metric.Icon" TextColor="W3Color.Primary" Class="w3-margin-right" />
+                                <span class="w3-small w3-text-grey">@metric.Label</span>
+                                <p class="w3-xxlarge w3-margin-0">@metric.Value</p>
+                                <p>@metric.Detail</p>
+                            </W3Card>
+                        }
+                    </W3Grid>
+
+                    <W3DataTable TItem="WorkQueueRow"
+                                 Items="WorkQueue"
+                                 Searchable="false"
+                                 Pageable="false"
+                                 AriaLabel="Operations work queue"
+                                 Class="w3-margin-top">
+                        <ChildContent>
+                            <W3DataColumn TItem="WorkQueueRow" Title="Task" CellText="@((WorkQueueRow row) => row.Task)" />
+                            <W3DataColumn TItem="WorkQueueRow" Title="Owner" CellText="@((WorkQueueRow row) => row.Owner)" />
+                            <W3DataColumn TItem="WorkQueueRow" Title="State" CellText="@((WorkQueueRow row) => row.State)" />
+                        </ChildContent>
+                        <RowActions Context="row">
+                            <W3Button Size="W3Size.Small" Border="true" Round="W3Round.Medium">Open</W3Button>
+                        </RowActions>
+                    </W3DataTable>
+                </ChildContent>
+            </W3AppShell>
+        </W3ThemeProvider>
+    </DocExample>
+
+    <DocExample Title="Settings Form" Description="A validated settings card with fields, select input, and action spacing." Code="@SettingsFormCode">
+        <p class="doc-muted">Uses: W3Form, W3Field, W3Select, W3ActionRow, W3Card, W3Icon.</p>
+        <W3Card Depth="W3CardDepth.Two" Round="W3Round.Medium" Class="w3-padding">
+            <W3Form Model="@settings" OnValidSubmit="SaveSettings">
+                <DataAnnotationsValidator />
+                <ValidationSummary class="w3-text-red" />
+
+                <W3Field TValue="string" Label="Workspace name" ForId="gallery-workspace" For="@(() => settings.WorkspaceName)">
+                    <W3Input Id="gallery-workspace" @bind-Value="settings.WorkspaceName" Placeholder="Operations workspace" Border="true" Round="W3Round.Medium" />
+                </W3Field>
+
+                <W3Field TValue="string" Label="Alert email" ForId="gallery-email" For="@(() => settings.AlertEmail)">
+                    <W3Input Id="gallery-email" Type="email" @bind-Value="settings.AlertEmail" Placeholder="ops@example.com" Border="true" Round="W3Round.Medium" />
+                </W3Field>
+
+                <W3Field TValue="string" Label="Review cadence" ForId="gallery-cadence" For="@(() => settings.Cadence)">
+                    <W3Select TValue="string" Id="gallery-cadence" @bind-Value="settings.Cadence" Border="true" Round="W3Round.Medium">
+                        <W3SelectItem TValue="string" Value="@("Daily")">Daily</W3SelectItem>
+                        <W3SelectItem TValue="string" Value="@("Weekly")">Weekly</W3SelectItem>
+                        <W3SelectItem TValue="string" Value="@("Monthly")">Monthly</W3SelectItem>
+                    </W3Select>
+                </W3Field>
+
+                <W3ActionRow Label="Gallery settings actions" JustifyStart="true" Class="w3-margin-top">
+                    <W3Button Type="submit" Color="W3Color.Primary" TextColor="W3Color.White" Round="W3Round.Medium">
+                        <W3Icon IconName="W3IconName.Save" Class="w3-margin-right" />
+                        Save settings
+                    </W3Button>
+                    <W3Button Border="true" Round="W3Round.Medium">Cancel</W3Button>
+                </W3ActionRow>
+            </W3Form>
+            <p class="doc-muted">Saved count: @settingsSaveCount</p>
+        </W3Card>
+    </DocExample>
+
+    <DocExample Title="Searchable Table With Empty/Error States" Description="A customer list with built-in search, row actions, and explicit recovery states." Code="@SearchableTableCode">
+        <p class="doc-muted">Uses: W3DataTable, W3Modal, W3ActionRow, W3EmptyState, W3Icon, W3Button.</p>
+        <W3DataTable TItem="GalleryCustomer"
+                     Items="@FilteredGalleryCustomers"
+                     SearchText="@customerSearch"
+                     SearchTextChanged="value => customerSearch = value"
+                     SearchPlaceholder="Search customers"
+                     EmptyText="No customers found"
+                     EmptyDescription="Clear the search or add a customer."
+                     Error="@customerLoadFailed"
+                     ErrorText="Customers could not load"
+                     ErrorDescription="Retry the request or check service status."
+                     PageSize="4"
+                     AriaLabel="Gallery customers">
+            <Toolbar>
+                <W3ActionRow Label="Customer table actions" JustifyStart="true">
+                    <W3Button Border="true" Round="W3Round.Medium" OnClick="ToggleCustomerError">Toggle error</W3Button>
+                    <W3Button Border="true" Round="W3Round.Medium" OnClick="ShowCustomerEmptyState">Show empty</W3Button>
+                    <W3Button Border="true" Round="W3Round.Medium" OnClick="ClearCustomerSearch">Clear search</W3Button>
+                </W3ActionRow>
+            </Toolbar>
+            <ChildContent>
+                <W3DataColumn TItem="GalleryCustomer" Title="Customer" CellText="@((GalleryCustomer row) => row.Name)" SortKey="@((GalleryCustomer row) => row.Name)" />
+                <W3DataColumn TItem="GalleryCustomer" Title="Plan" CellText="@((GalleryCustomer row) => row.Plan)" />
+                <W3DataColumn TItem="GalleryCustomer" Title="Health" CellText="@((GalleryCustomer row) => row.Health)" />
+            </ChildContent>
+            <RowActions Context="customer">
+                <W3Button Size="W3Size.Small" Border="true" Round="W3Round.Medium" OnClick="args => OpenCustomer(customer)">View</W3Button>
+                <W3Button Size="W3Size.Small" Color="W3Color.Primary" TextColor="W3Color.White" Round="W3Round.Medium">Message</W3Button>
+            </RowActions>
+        </W3DataTable>
+
+        <W3Modal Id="gallery-customer-modal"
+                 Title="Customer detail"
+                 @bind-Open="customerDetailOpen"
+                 ContentStyle="max-width:520px">
+            <ChildContent>
+                @if (selectedGalleryCustomer is not null)
+                {
+                    <W3EmptyState IconName="W3IconName.Users"
+                                  Title="@selectedGalleryCustomer.Name"
+                                  Description="@($"{selectedGalleryCustomer.Plan} plan, {selectedGalleryCustomer.Health} health")"
+                                  Compact="true" />
+                }
+            </ChildContent>
+            <Actions>
+                <W3Button Border="true" Round="W3Round.Medium" OnClick="args => customerDetailOpen = false">Close</W3Button>
+            </Actions>
+        </W3Modal>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Site Examples</h2>
+        <p class="doc-muted">Use these when the page is content-led but still needs reusable cards, grids, forms, and icons.</p>
+    </section>
+
+    <DocExample Title="Product Landing Section" Description="A first-viewport product section with a clear offer, calls to action, and proof cards." Code="@ProductLandingCode">
+        <p class="doc-muted">Uses: W3ThemeProvider, W3Grid, W3Card, W3Stack, W3Icon, W3ActionRow.</p>
+        <W3ThemeProvider Theme="galleryTheme">
+            <section class="w3-surface w3-padding-32">
+                <W3Grid Padding="true" Style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); align-items: center;">
+                    <div>
+                        <p class="w3-text-primary w3-wide">W3Css.Blazor</p>
+                        <h2>Build a useful app screen before adding custom styling.</h2>
+                        <p class="w3-large">Start from package primitives, theme tokens, and W3 utility classes, then adapt the copy and colors for your product.</p>
+                        <W3ActionRow Label="Product landing actions" JustifyStart="true" Class="w3-margin-top">
+                            <W3Button Color="W3Color.Primary" TextColor="W3Color.White" Round="W3Round.Medium">Start project</W3Button>
+                            <W3Button Border="true" Round="W3Round.Medium">View gallery</W3Button>
+                        </W3ActionRow>
+                    </div>
+                    <W3Grid Padding="true" Style="grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));">
+                        <W3Card Depth="W3CardDepth.Two" Round="W3Round.Medium" Class="w3-padding">
+                            <W3Icon IconName="W3IconName.Dashboard" TextColor="W3Color.Primary" />
+                            <h3 class="w3-large">App shell</h3>
+                            <p>Header, navigation, and working content regions.</p>
+                        </W3Card>
+                        <W3Card Depth="W3CardDepth.Two" Round="W3Round.Medium" Class="w3-padding">
+                            <W3Icon IconName="W3IconName.Table" TextColor="W3Color.Primary" />
+                            <h3 class="w3-large">Data state</h3>
+                            <p>Search, empty, error, and row actions in one place.</p>
+                        </W3Card>
+                    </W3Grid>
+                </W3Grid>
+            </section>
+        </W3ThemeProvider>
+    </DocExample>
+
+    <DocExample Title="Pricing And Features Section" Description="A responsive pricing/features block with ordinary cards and action rows." Code="@PricingFeaturesCode">
+        <p class="doc-muted">Uses: W3Grid, W3Card, W3Tag, W3ActionRow, W3Icon.</p>
+        <W3Grid Padding="true" Style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
+            @foreach (var plan in PricingPlans)
+            {
+                <W3Card Depth="W3CardDepth.Two" Round="W3Round.Medium" HeaderColor="@plan.HeaderColor" HeaderTextColor="W3Color.White">
+                    <Header>
+                        <h3 class="w3-large">@plan.Name</h3>
+                    </Header>
+                    <ChildContent>
+                        <p class="w3-xxlarge w3-margin-0">@plan.Price</p>
+                        <ul class="w3-ul">
+                            @foreach (var feature in plan.Features)
+                            {
+                                <li><W3Icon IconName="W3IconName.Check" TextColor="W3Color.Success" Class="w3-margin-right" />@feature</li>
+                            }
+                        </ul>
+                    </ChildContent>
+                    <Footer>
+                        <W3ActionRow Label="@($"{plan.Name} plan actions")" JustifyStart="true">
+                            <W3Button Border="true" Round="W3Round.Medium">Choose @plan.Name</W3Button>
+                        </W3ActionRow>
+                    </Footer>
+                </W3Card>
+            }
+        </W3Grid>
+    </DocExample>
+
+    <DocExample Title="Contact And FAQ Section" Description="A contact form beside common questions, built from the same field and accordion primitives." Code="@ContactFaqCode">
+        <p class="doc-muted">Uses: W3Form, W3Field, W3ActionRow, W3Accordion, W3Card, W3Icon.</p>
+        <W3Grid Padding="true" Style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+            <W3Card Depth="W3CardDepth.Two" Round="W3Round.Medium" Class="w3-padding">
+                <h3 class="w3-large">Contact the team</h3>
+                <W3Form Model="@contact" OnValidSubmit="SendContact">
+                    <DataAnnotationsValidator />
+                    <W3Field TValue="string" Label="Name" ForId="gallery-contact-name" For="@(() => contact.Name)">
+                        <W3Input Id="gallery-contact-name" @bind-Value="contact.Name" Border="true" Round="W3Round.Medium" />
+                    </W3Field>
+                    <W3Field TValue="string" Label="Message" ForId="gallery-contact-message" For="@(() => contact.Message)">
+                        <W3TextArea Id="gallery-contact-message" @bind-Value="contact.Message" Border="true" Round="W3Round.Medium" Rows="4" />
+                    </W3Field>
+                    <W3ActionRow Label="Contact actions" JustifyStart="true" Class="w3-margin-top">
+                        <W3Button Type="submit" Color="W3Color.Primary" TextColor="W3Color.White" Round="W3Round.Medium">
+                            <W3Icon IconName="W3IconName.Mail" Class="w3-margin-right" />
+                            Send
+                        </W3Button>
+                    </W3ActionRow>
+                </W3Form>
+                <p class="doc-muted">Sent count: @contactSendCount</p>
+            </W3Card>
+
+            <W3Card Depth="W3CardDepth.Two" Round="W3Round.Medium" Class="w3-padding">
+                <h3 class="w3-large">FAQ</h3>
+                <W3Accordion>
+                    <W3AccordionItem Title="Can the examples be copied?" @bind-Expanded="faqFirstOpen">
+                        <p>Yes. Each entry keeps its code beside the live preview.</p>
+                    </W3AccordionItem>
+                    <W3AccordionItem Title="Do the sections need custom CSS?">
+                        <p>No. They use package components and W3 utility classes.</p>
+                    </W3AccordionItem>
+                    <W3AccordionItem Title="Can colors change?">
+                        <p>Yes. Wrap the region in W3ThemeProvider or use W3 color parameters.</p>
+                    </W3AccordionItem>
+                </W3Accordion>
+            </W3Card>
+        </W3Grid>
+    </DocExample>
+
+    <section class="doc-section">
+        <h2>Related Topics</h2>
+        <div class="w3-bar w3-border w3-white">
+            <NavLink class="w3-bar-item w3-button" href="starter-kit">Starter Kit</NavLink>
+            <NavLink class="w3-bar-item w3-button" href="patterns">Patterns</NavLink>
+            <NavLink class="w3-bar-item w3-button" href="components/theming">Theming</NavLink>
+            <NavLink class="w3-bar-item w3-button" href="components/data-table">Data Table</NavLink>
+            <NavLink class="w3-bar-item w3-button" href="components/form">Form</NavLink>
+            <NavLink class="w3-bar-item w3-button" href="components/icons">Icons</NavLink>
+        </div>
+    </section>
+
+    <DocPager PreviousHref="starter-kit" PreviousText="Starter Kit" NextHref="patterns" NextText="Patterns" />
+</W3Container>
+
+@code {
+    private readonly W3Theme galleryTheme = W3Theme.Default with
+    {
+        Primary = "#009688",
+        Secondary = "#0f766e",
+        Accent = "#ffb305"
+    };
+
+    private bool dashboardSidebarOpen = true;
+    private readonly GallerySettings settings = new()
+    {
+        WorkspaceName = "Operations workspace",
+        AlertEmail = "ops@example.com",
+        Cadence = "Weekly"
+    };
+    private int settingsSaveCount;
+    private string? customerSearch;
+    private bool customerLoadFailed;
+    private bool customerDetailOpen;
+    private GalleryCustomer? selectedGalleryCustomer;
+    private readonly ContactModel contact = new() { Name = "Nora", Message = "I want to evaluate this for a product site." };
+    private int contactSendCount;
+    private bool faqFirstOpen = true;
+
+    private static readonly DashboardMetric[] DashboardMetrics =
+    [
+        new("Open tasks", "12", "4 waiting for review", W3IconName.Tasks),
+        new("Customers", "28", "6 active trials", W3IconName.Users),
+        new("Health", "Good", "No blocked checks", W3IconName.Success)
+    ];
+
+    private static readonly WorkQueueRow[] WorkQueue =
+    [
+        new("Review settings form", "Nora", "Ready"),
+        new("Audit data states", "Iris", "Queued"),
+        new("Ship starter workflow", "Omar", "In review")
+    ];
+
+    private static readonly GalleryCustomer[] GalleryCustomers =
+    [
+        new("Northwind Studio", "Team", "Healthy"),
+        new("Contoso Labs", "Business", "Watch"),
+        new("Fabrikam Works", "Starter", "Healthy"),
+        new("Adventure Supply", "Business", "Blocked")
+    ];
+
+    private static readonly PricingPlan[] PricingPlans =
+    [
+        new("Starter", "$19", W3Color.Teal, ["Project shell", "Basic forms", "Theme tokens"]),
+        new("Team", "$49", W3Color.Indigo, ["Data tables", "Modal workflows", "Starter kit"]),
+        new("Business", "$99", W3Color.Black, ["Gallery examples", "Release checks", "Package smoke"])
+    ];
+
+    private IEnumerable<GalleryCustomer> FilteredGalleryCustomers => string.IsNullOrWhiteSpace(customerSearch)
+        ? GalleryCustomers
+        : GalleryCustomers.Where(customer =>
+            customer.Name.Contains(customerSearch, StringComparison.OrdinalIgnoreCase)
+            || customer.Plan.Contains(customerSearch, StringComparison.OrdinalIgnoreCase)
+            || customer.Health.Contains(customerSearch, StringComparison.OrdinalIgnoreCase));
+
+    private void ToggleDashboardSidebar(MouseEventArgs _) => dashboardSidebarOpen = !dashboardSidebarOpen;
+
+    private void SaveSettings(EditContext _)
+    {
+        settingsSaveCount++;
+    }
+
+    private void ToggleCustomerError(MouseEventArgs _) => customerLoadFailed = !customerLoadFailed;
+
+    private void ShowCustomerEmptyState(MouseEventArgs _) => customerSearch = "no matching customer";
+
+    private void ClearCustomerSearch(MouseEventArgs _)
+    {
+        customerSearch = null;
+        customerLoadFailed = false;
+    }
+
+    private void OpenCustomer(GalleryCustomer customer)
+    {
+        selectedGalleryCustomer = customer;
+        customerDetailOpen = true;
+    }
+
+    private void SendContact(EditContext _)
+    {
+        contactSendCount++;
+    }
+
+    private sealed record DashboardMetric(string Label, string Value, string Detail, W3IconName Icon);
+
+    private sealed record WorkQueueRow(string Task, string Owner, string State);
+
+    private sealed record GalleryCustomer(string Name, string Plan, string Health);
+
+    private sealed record PricingPlan(string Name, string Price, W3Color HeaderColor, string[] Features);
+
+    private sealed class GallerySettings
+    {
+        [Required]
+        public string? WorkspaceName { get; set; }
+
+        [Required]
+        [EmailAddress]
+        public string? AlertEmail { get; set; }
+
+        [Required]
+        public string? Cadence { get; set; }
+    }
+
+    private sealed class ContactModel
+    {
+        [Required]
+        public string? Name { get; set; }
+
+        [Required]
+        public string? Message { get; set; }
+    }
+
+    private const string OperationsDashboardCode = """
+<W3ThemeProvider Theme="theme">
+    <W3AppShell Contained="true" SidebarOpen="@sidebarOpen" HeaderColor="W3Color.Primary">
+        <Header>
+            <W3AppBar Color="W3Color.Primary"
+                      TextColor="W3Color.White"
+                      Title="Operations"
+                      ShowMenuButton="true"
+                      OnMenuClick="ToggleSidebar">
+                <Actions>
+                    <W3Button Border="true" TextColor="W3Color.White">Export</W3Button>
+                </Actions>
+            </W3AppBar>
+        </Header>
+        <Sidebar>
+            <W3NavMenu Label="Dashboard navigation">
+                <W3NavMenuItem Href="#" Text="Overview" IconName="W3IconName.Dashboard" Active="true" />
+                <W3NavMenuItem Href="#" Text="Customers" IconName="W3IconName.Users" />
+            </W3NavMenu>
+        </Sidebar>
+        <ChildContent>
+            <W3Grid Padding="true" Style="grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));">
+                <W3Card Class="w3-padding">
+                    <W3Icon IconName="W3IconName.Tasks" TextColor="W3Color.Primary" />
+                    <p class="w3-xxlarge w3-margin-0">12</p>
+                    <p>Open tasks</p>
+                </W3Card>
+            </W3Grid>
+
+            <W3DataTable TItem="WorkQueueRow" Items="rows" Searchable="false" Pageable="false">
+                <ChildContent>
+                    <W3DataColumn TItem="WorkQueueRow" Title="Task" CellText="@((WorkQueueRow row) => row.Task)" />
+                    <W3DataColumn TItem="WorkQueueRow" Title="Owner" CellText="@((WorkQueueRow row) => row.Owner)" />
+                </ChildContent>
+                <RowActions Context="row">
+                    <W3Button Size="W3Size.Small" Border="true">Open</W3Button>
+                </RowActions>
+            </W3DataTable>
+        </ChildContent>
+    </W3AppShell>
+</W3ThemeProvider>
+""";
+
+    private const string SettingsFormCode = """
+<W3Card Class="w3-padding">
+    <W3Form Model="@settings" OnValidSubmit="SaveSettings">
+        <DataAnnotationsValidator />
+        <ValidationSummary class="w3-text-red" />
+
+        <W3Field TValue="string" Label="Workspace name" ForId="workspace" For="@(() => settings.WorkspaceName)">
+            <W3Input Id="workspace" @bind-Value="settings.WorkspaceName" Border="true" />
+        </W3Field>
+
+        <W3Field TValue="string" Label="Alert email" ForId="alert-email" For="@(() => settings.AlertEmail)">
+            <W3Input Id="alert-email" Type="email" @bind-Value="settings.AlertEmail" Border="true" />
+        </W3Field>
+
+        <W3ActionRow Label="Settings actions" JustifyStart="true">
+            <W3Button Type="submit" Color="W3Color.Primary" TextColor="W3Color.White">
+                <W3Icon IconName="W3IconName.Save" Class="w3-margin-right" />
+                Save settings
+            </W3Button>
+            <W3Button Border="true">Cancel</W3Button>
+        </W3ActionRow>
+    </W3Form>
+</W3Card>
+""";
+
+    private const string SearchableTableCode = """
+<W3DataTable TItem="Customer"
+             Items="@filteredCustomers"
+             @bind-SearchText="customerSearch"
+             SearchPlaceholder="Search customers"
+             EmptyText="No customers found"
+             Error="@customerLoadFailed"
+             ErrorText="Customers could not load">
+    <Toolbar>
+        <W3ActionRow Label="Customer table actions" JustifyStart="true">
+            <W3Button Border="true" OnClick="ToggleError">Toggle error</W3Button>
+            <W3Button Border="true" OnClick="ClearSearch">Clear search</W3Button>
+        </W3ActionRow>
+    </Toolbar>
+    <ChildContent>
+        <W3DataColumn TItem="Customer" Title="Customer" CellText="@((Customer row) => row.Name)" />
+        <W3DataColumn TItem="Customer" Title="Plan" CellText="@((Customer row) => row.Plan)" />
+        <W3DataColumn TItem="Customer" Title="Health" CellText="@((Customer row) => row.Health)" />
+    </ChildContent>
+    <RowActions Context="customer">
+        <W3Button Size="W3Size.Small" Border="true" OnClick="args => OpenCustomer(customer)">View</W3Button>
+    </RowActions>
+</W3DataTable>
+
+<W3Modal Title="Customer detail" @bind-Open="customerDetailOpen">
+    <ChildContent>
+        <W3EmptyState IconName="W3IconName.Users"
+                      Title="@selectedCustomer.Name"
+                      Description="@selectedCustomer.Plan" />
+    </ChildContent>
+    <Actions>
+        <W3Button Border="true" OnClick="args => customerDetailOpen = false">Close</W3Button>
+    </Actions>
+</W3Modal>
+""";
+
+    private const string ProductLandingCode = """
+<W3ThemeProvider Theme="theme">
+    <section class="w3-surface w3-padding-32">
+        <W3Grid Padding="true" Style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));">
+            <div>
+                <p class="w3-text-primary w3-wide">W3Css.Blazor</p>
+                <h2>Build a useful app screen before adding custom styling.</h2>
+                <p class="w3-large">Start from package primitives, theme tokens, and W3 utility classes.</p>
+                <W3ActionRow Label="Landing actions" JustifyStart="true">
+                    <W3Button Color="W3Color.Primary" TextColor="W3Color.White">Start project</W3Button>
+                    <W3Button Border="true">View gallery</W3Button>
+                </W3ActionRow>
+            </div>
+            <W3Card Class="w3-padding">
+                <W3Icon IconName="W3IconName.Dashboard" TextColor="W3Color.Primary" />
+                <h3>App shell</h3>
+                <p>Header, navigation, and working content regions.</p>
+            </W3Card>
+        </W3Grid>
+    </section>
+</W3ThemeProvider>
+""";
+
+    private const string PricingFeaturesCode = """
+<W3Grid Padding="true" Style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
+    <W3Card HeaderColor="W3Color.Teal" HeaderTextColor="W3Color.White">
+        <Header><h3>Starter</h3></Header>
+        <ChildContent>
+            <p class="w3-xxlarge">$19</p>
+            <ul class="w3-ul">
+                <li><W3Icon IconName="W3IconName.Check" TextColor="W3Color.Success" /> Project shell</li>
+                <li><W3Icon IconName="W3IconName.Check" TextColor="W3Color.Success" /> Theme tokens</li>
+            </ul>
+        </ChildContent>
+        <Footer>
+            <W3ActionRow Label="Plan actions" JustifyStart="true">
+                <W3Button Border="true">Choose Starter</W3Button>
+            </W3ActionRow>
+        </Footer>
+    </W3Card>
+</W3Grid>
+""";
+
+    private const string ContactFaqCode = """
+<W3Grid Padding="true" Style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+    <W3Card Class="w3-padding">
+        <W3Form Model="@contact" OnValidSubmit="SendContact">
+            <DataAnnotationsValidator />
+            <W3Field TValue="string" Label="Name" ForId="contact-name" For="@(() => contact.Name)">
+                <W3Input Id="contact-name" @bind-Value="contact.Name" Border="true" />
+            </W3Field>
+            <W3ActionRow Label="Contact actions" JustifyStart="true">
+                <W3Button Type="submit" Color="W3Color.Primary" TextColor="W3Color.White">
+                    <W3Icon IconName="W3IconName.Mail" Class="w3-margin-right" />
+                    Send
+                </W3Button>
+            </W3ActionRow>
+        </W3Form>
+    </W3Card>
+
+    <W3Accordion>
+        <W3AccordionItem Title="Can the examples be copied?">
+            <p>Yes. Each entry keeps its code beside the live preview.</p>
+        </W3AccordionItem>
+    </W3Accordion>
+</W3Grid>
+""";
+}

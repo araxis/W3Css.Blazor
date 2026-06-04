@@ -1,6 +1,15 @@
 # Progress Log
 
-Last updated: 2026-06-02
+Last updated: 2026-06-04
+
+## 2026-06-04
+
+- Started the 0.7.0 live-gallery release slice:
+  - bumped package metadata to `0.7.0`;
+  - added `docs/release-notes/0.7.0.md` and a matching changelog section;
+  - added a top-level `/gallery` docs route with live copyable app and site examples;
+  - linked Gallery from docs navigation/search, home adoption actions, component index, starter guidance, patterns, and README;
+  - added docs smoke and browser sweep coverage for the Gallery route.
 
 ## 2026-06-02
 

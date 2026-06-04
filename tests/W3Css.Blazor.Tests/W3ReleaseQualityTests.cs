@@ -4,7 +4,7 @@ namespace W3Css.Blazor.Tests;
 
 public sealed class W3ReleaseQualityTests
 {
-    private const string CurrentVersion = "0.6.0";
+    private const string CurrentVersion = "0.7.0";
 
     [Fact]
     public void ReadmeDocumentsCurrentAppPrimitivesAndBranchFlow()
@@ -14,6 +14,7 @@ public sealed class W3ReleaseQualityTests
         Assert.Contains("W3ThemeProvider", readme);
         Assert.Contains("W3DataTable", readme);
         Assert.Contains("W3ActionRow", readme);
+        Assert.Contains("Gallery", readme);
         Assert.Contains($"{CurrentVersion} release notes", readme);
         Assert.Contains("starter-browser-sweep.ps1", readme);
         Assert.Contains("work/<short-topic>", readme);
@@ -176,6 +177,7 @@ public sealed class W3ReleaseQualityTests
         {
             "/",
             "/starter-kit",
+            "/gallery",
             "/components",
             "/patterns",
             "/components/theming",

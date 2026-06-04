@@ -2,6 +2,19 @@
 
 All notable changes to W3Css.Blazor will be documented in this file.
 
+## 0.7.0 - 2026-06-04
+
+### Live Gallery
+
+- Added a top-level Gallery docs route with live, copyable app-screen and site-section examples.
+- Linked Gallery from docs navigation, search, the home page, component adoption path, starter guidance, patterns, and README adoption links.
+- Extended docs smoke and browser sweep coverage so the Gallery route and adoption entry points remain verified.
+
+### Release Quality
+
+- Updated package metadata, README adoption links, versions documentation, release notes, and memory files for 0.7.0.
+- Kept the vendored W3.CSS source unchanged.
+
 ## 0.6.0 - 2026-06-04
 
 ### Quality Automation

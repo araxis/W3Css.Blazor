@@ -18,7 +18,7 @@ Status values:
 | Common component base | Implemented | Supports `Class`, `Style`, and `AdditionalAttributes`. |
 | Shared style enums | Implemented | Includes color, size, roundness, card depth, alert kind, toast position, image effect, display position, visibility, cell alignment, animation, text direction, border side, border bar, padding, top padding, margin, text alignment, text style, font family, effect style, and hover effect. |
 | XML documentation | Implemented | Exported public APIs and component parameters are documented and protected by broad guard-test coverage. |
-| Package metadata | Implemented | Version is pinned to `0.6.0` for the next quality automation release; repository URL and package policy are populated in project and release metadata. |
+| Package metadata | Implemented | Version targets `0.7.0` for the live gallery release; repository URL and package policy are populated in project and release metadata. |
 
 ## Component Category Model
 
@@ -227,7 +227,7 @@ This model is intentionally similar to mature Blazor libraries, while keeping im
 | Overlay behavior | Implemented | Modal, tooltip, toast, sidebar, focus trap, menu, overlay interactions, and backdrop composition. |
 | Content display and timeline | Implemented | Tree, chat, timeline, data table, rating, drop zone, and gallery coverage. |
 | Feedback and loading | Implemented | Spinner, skeleton, toast, file, autocomplete, and alert coverage. |
-| Package validation | Implemented | `dotnet pack` generates `W3Css.Blazor.0.6.0.nupkg`; CI uploads package artifacts, local/public package smoke passed for 0.6.0 with bundled CSS marker checks, and starter browser sweep tooling verifies the sample routes/interactions. |
+| Package validation | Implemented | `dotnet pack` generates the current package artifact; CI uploads package artifacts, local/public package smoke passed for 0.6.0 with bundled CSS marker checks, and starter browser sweep tooling verifies the sample routes/interactions. |
 | Test count | Implemented | `dotnet test` reports 488 passing tests. |
 
 ## Component Compatibility Backlog

@@ -5,14 +5,14 @@ Last updated: 2026-06-04
 ## Snapshot
 
 - Repo target: Blazor component suite over W3.CSS (small, CSS-first, practical defaults).
-- Branch: `work/0.6.0-release-memory`.
+- Branch: `work/0.7.0-live-gallery`.
 - Current package baseline: published `0.6.0`.
 - .NET target: `net10.0` (`10.0.300` SDK).
 - Current state:
   - 127 component `.razor` files.
-  - 121 docs topic pages plus top-level Patterns and Starter Kit guides.
+  - 121 docs topic pages plus top-level Starter Kit, Gallery, and Patterns guides.
   - Starter sample app under `samples/W3Css.Blazor.StarterKit` with no source CSS; it links only the bundled package stylesheet.
-  - 488 passing tests for the current quality automation slice.
+  - Test verification is pending for the current live gallery slice.
   - Build: `dotnet build W3Css.Blazor.slnx --configuration Release` (0 warnings, 0 errors).
 
 ## Architecture
@@ -36,8 +36,8 @@ Last updated: 2026-06-04
 
 ## Current Priority
 
-1. 0.6.0 quality automation:
-   - package metadata, release notes, starter browser sweep tooling, package smoke CSS assertions, release guardrails, docs, tag workflow, release workflow, and public package smoke are complete.
+1. 0.7.0 live gallery:
+   - package metadata, release notes, `/gallery`, adoption links, docs smoke coverage, browser sweep coverage, and release verification are in progress.
 2. Future releases:
    - plan normal version-bump, release-note, tag, publish, and consumer-smoke slices.
 

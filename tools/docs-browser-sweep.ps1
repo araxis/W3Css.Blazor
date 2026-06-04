@@ -5,6 +5,7 @@ param(
     [string[]]$Routes = @(
         "/",
         "/starter-kit",
+        "/gallery",
         "/components",
         "/patterns",
         "/components/theming",

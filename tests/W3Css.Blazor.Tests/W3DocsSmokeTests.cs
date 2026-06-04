@@ -90,6 +90,7 @@ using ChartPage = W3Css.Blazor.Docs.Pages.ComponentTopics.ChartPage;
 using ThemingPage = W3Css.Blazor.Docs.Pages.ComponentTopics.ThemingPage;
 using SpacerPage = W3Css.Blazor.Docs.Pages.ComponentTopics.SpacerPage;
 using FooterPage = W3Css.Blazor.Docs.Pages.ComponentTopics.FooterPage;
+using GalleryPage = W3Css.Blazor.Docs.Pages.Gallery;
 using AvatarGroupPage = W3Css.Blazor.Docs.Pages.ComponentTopics.AvatarGroupPage;
 using MessageBoxPage = W3Css.Blazor.Docs.Pages.ComponentTopics.MessageBoxPage;
 using PatternsPage = W3Css.Blazor.Docs.Pages.Patterns;
@@ -121,6 +122,7 @@ public sealed class W3DocsSmokeTests
 {
     [Theory]
     [InlineData(typeof(StarterKitPage), "/starter-kit")]
+    [InlineData(typeof(GalleryPage), "/gallery")]
     [InlineData(typeof(PatternsPage), "/patterns")]
     [InlineData(typeof(ComponentsIndexPage), "/components")]
     [InlineData(typeof(NavbarPage), "/components/navbar")]
@@ -242,6 +244,7 @@ public sealed class W3DocsSmokeTests
         Assert.Contains("Component Categories", cut.Markup);
         Assert.Contains("Starter Path", cut.Markup);
         Assert.NotEmpty(cut.FindAll("a[href='starter-kit']"));
+        Assert.NotEmpty(cut.FindAll("a[href='gallery']"));
         Assert.NotEmpty(cut.FindAll("a[href='patterns']"));
         Assert.NotEmpty(cut.FindAll("a[href='components/navbar']"));
         Assert.NotEmpty(cut.FindAll("a[href='components/versions']"));
@@ -365,6 +368,34 @@ public sealed class W3DocsSmokeTests
         Assert.NotEmpty(cut.FindAll("a[href='components/theming']"));
         Assert.NotEmpty(cut.FindAll("a[href='components/app-shell']"));
         Assert.NotEmpty(cut.FindAll("a[href='components/data-table']"));
+    }
+
+    [Fact]
+    public void GalleryPageRendersLiveAppAndSiteExamples()
+    {
+        using var context = new BunitContext();
+        var cut = context.Render<GalleryPage>();
+
+        Assert.Contains("Gallery", cut.Markup);
+        Assert.Contains("Operations Dashboard", cut.Markup);
+        Assert.Contains("Settings Form", cut.Markup);
+        Assert.Contains("Searchable Table With Empty/Error States", cut.Markup);
+        Assert.Contains("Product Landing Section", cut.Markup);
+        Assert.Contains("Pricing And Features Section", cut.Markup);
+        Assert.Contains("Contact And FAQ Section", cut.Markup);
+        Assert.Contains("Uses:", cut.Markup);
+        Assert.Contains("W3ThemeProvider", cut.Markup);
+        Assert.Contains("W3AppShell", cut.Markup);
+        Assert.Contains("W3Card", cut.Markup);
+        Assert.Contains("W3DataTable", cut.Markup);
+        Assert.Contains("W3Form", cut.Markup);
+        Assert.Contains("W3ActionRow", cut.Markup);
+        Assert.Contains("W3Grid", cut.Markup);
+        Assert.Contains("W3Stack", cut.Markup);
+        Assert.Contains("W3Icon", cut.Markup);
+        Assert.NotEmpty(cut.FindAll("a[href='starter-kit']"));
+        Assert.NotEmpty(cut.FindAll("a[href='patterns']"));
+        Assert.NotEmpty(cut.FindAll("a[href='components/theming']"));
     }
 
     [Fact]

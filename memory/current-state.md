@@ -5,7 +5,7 @@ Last updated: 2026-06-04
 ## Repository
 
 - Canonical branch: `main`.
-- Tags `v0.1.0`, `v0.2.0`, `v0.3.0`, `v0.4.0`, `v0.5.0`, `v0.5.1`, `v0.5.2`, `v0.5.3`, and `v0.6.0` mark published package releases.
+- Tags `v0.1.0`, `v0.2.0`, `v0.3.0`, `v0.4.0`, `v0.5.0`, `v0.5.1`, `v0.5.2`, `v0.5.3`, `v0.6.0`, and `v0.7.0` mark published package releases.
 - Solution: `W3Css.Blazor.slnx`.
 - SDK: `.NET 10.0.300` (`global.json`).
 
@@ -18,7 +18,7 @@ Last updated: 2026-06-04
 - Starter sample: `samples/W3Css.Blazor.StarterKit` is included in the solution and builds against the local library project.
 - Tests in project source: 71 `.cs` test files.
 - Test suite status:
-  - `dotnet test W3Css.Blazor.slnx --configuration Release --no-build /nr:false` -> **488 passing tests**.
+  - `dotnet test W3Css.Blazor.slnx --configuration Release --no-build /nr:false` -> **490 passing tests**.
 - Build status:
   - `dotnet build W3Css.Blazor.slnx --configuration Release` → **0 warnings, 0 errors**.
 
@@ -43,8 +43,8 @@ Last updated: 2026-06-04
 - README includes package version and MIT license badges.
 - Release workflow builds, tests, packs, creates release artifacts, and publishes packages on `v*` tag pushes when the publishing secret is configured.
 - First package release is published as `W3Css.Blazor` version `0.1.0`.
-- Current package release is published as `W3Css.Blazor` version `0.6.0`; package metadata targets `0.7.0`.
-- Releases `v0.1.0`, `v0.2.0`, `v0.3.0`, `v0.4.0`, `v0.5.0`, `v0.5.1`, `v0.5.2`, `v0.5.3`, and `v0.6.0` are published with package artifacts.
+- Current package release is published as `W3Css.Blazor` version `0.7.0`; package metadata targets `0.7.0`.
+- Releases `v0.1.0`, `v0.2.0`, `v0.3.0`, `v0.4.0`, `v0.5.0`, `v0.5.1`, `v0.5.2`, `v0.5.3`, `v0.6.0`, and `v0.7.0` are published with package artifacts.
 - Package consumer smoke tooling verifies install, component compilation, publish output, bundled static assets, component styles inside the bundled stylesheet, and starter-kit primitives; local smoke uses an isolated per-run package cache so repeated same-version artifact checks do not reuse stale packages.
 
 ## Current Progress
@@ -61,7 +61,7 @@ Last updated: 2026-06-04
 - The 0.5.2 navigation patch release is complete: reusable nav menu root-link fix, release notes, release workflow, and public package smoke passed without changing vendored W3.CSS.
 - The 0.5.3 toast spacing patch release is complete: reusable toast close-spacing fix, release notes, release workflow, and public package smoke passed without changing vendored W3.CSS.
 - The 0.6.0 quality automation release is complete: starter-kit browser sweep tooling, package smoke CSS assertions, release guardrails, docs, tag workflow, release workflow, and public package smoke passed without changing vendored W3.CSS.
-- The 0.7.0 live gallery release slice is in progress: package metadata targets `0.7.0`, `/gallery` adds live copyable app/site examples, docs adoption links point to Gallery, and release verification remains pending.
+- The 0.7.0 live gallery release is complete: `/gallery` adds live copyable app/site examples, docs adoption links point to Gallery, release workflow passed, and public package smoke passed after clearing a stale local NuGet HTTP cache.
 - The starter-kit dashboard now includes meaningful customer-derived chart examples and a single multi-state theme toggle for Light/Dark/Auto.
 - Built-in icons are now first-class through `W3IconName` + `W3Icon`; icon-capable components can render bundled SVG icons without external icon assets while preserving `IconClass` compatibility.
 - The starter-kit theme toggle uses built-in Sun, Moon, and Monitor icons through multi-state `W3ToggleIconButton`, and dashboard chart cards have explicit top/bottom body padding.

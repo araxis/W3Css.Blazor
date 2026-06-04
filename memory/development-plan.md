@@ -69,13 +69,14 @@ Last updated: 2026-06-04
 - Tighten release guardrails so package metadata, changelog, release notes, README, Versions docs, release-quality tests, and verification commands stay aligned.
 - Published `v0.6.0` after PR CI, main CI, Pages, release workflow, public feed indexing, and public package smoke passed.
 
-## Phase 12: Live Gallery (In Progress)
+## Phase 12: Live Gallery (Complete)
 
 - 0.7.0 stays non-breaking and avoids broad new component surface.
 - Add a top-level `/gallery` docs route with live copyable app-screen and site-section examples.
 - Link Gallery from docs navigation/search, home adoption actions, component index, starter guidance, patterns, and README.
 - Keep examples honest: package primitives and W3 utility classes only, no screenshots, no gallery-only APIs, and no vendored W3.CSS edits.
 - Add docs smoke and browser sweep coverage for the Gallery route and adoption entry points.
+- Published `v0.7.0` after PR CI, main CI, Pages, release workflow, public feed indexing, and public package smoke passed.
 
 ## Current Status Check
 
@@ -88,4 +89,4 @@ Last updated: 2026-06-04
   - `pwsh ./tools/starter-browser-sweep.ps1 -BaseUrl http://localhost:5037 -StartServer`
 
 - Components implemented: 127 component files plus docs topic coverage.
-- Test coverage: pending for the current live gallery slice.
+- Test coverage: 490 passing tests for the current live gallery slice.

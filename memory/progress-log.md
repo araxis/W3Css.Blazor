@@ -10,6 +10,12 @@ Last updated: 2026-06-04
   - added a top-level `/gallery` docs route with live copyable app and site examples;
   - linked Gallery from docs navigation/search, home adoption actions, component index, starter guidance, patterns, and README;
   - added docs smoke and browser sweep coverage for the Gallery route.
+- Release completion:
+  - merged the 0.7.0 live-gallery slice into `main`;
+  - waited for PR CI, main CI, and Pages to pass;
+  - tagged `v0.7.0` on the merged release commit;
+  - verified the release workflow passed through restore, build, test, pack, release artifact creation, publish configuration validation, and package publishing;
+  - verified `./tools/package-consumer-smoke.ps1 -PackageVersion 0.7.0` from the public package feed after clearing a stale local NuGet HTTP cache.
 
 ## 2026-06-02
 

@@ -5,7 +5,7 @@ Last updated: 2026-06-02
 ## Snapshot
 
 - Repo target: Blazor component suite over W3.CSS (small, CSS-first, practical defaults).
-- Branch: `work/0.5.3-release-memory`.
+- Branch: `work/0.6.0-quality-automation`.
 - Current package baseline: published `0.5.3`.
 - .NET target: `net10.0` (`10.0.300` SDK).
 - Current state:
@@ -36,9 +36,11 @@ Last updated: 2026-06-02
 
 ## Current Priority
 
-1. 0.5.3 toast spacing patch:
-   - package metadata, release notes, local package smoke, tag workflow, release workflow, and public package smoke are complete.
-2. Future releases:
+1. 0.6.0 quality automation:
+   - package metadata, release notes, starter browser sweep tooling, package smoke CSS assertions, release guardrails, docs, and memory are being prepared.
+2. Published baseline:
+   - `0.5.3` is the current published package and remains the release baseline until `0.6.0` is merged, tagged, and published.
+3. Future releases:
    - plan normal version-bump, release-note, tag, publish, and consumer-smoke slices.
 
 ## Memory Files

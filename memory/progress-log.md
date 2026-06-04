@@ -1356,3 +1356,11 @@ Last updated: 2026-06-02
 - Updated package metadata, README release link, Versions docs, changelog, release notes, starter label, release-quality tests, and memory files for `0.5.3`.
 - Kept the vendored W3.CSS source unchanged.
 - Merged the `0.5.3` patch release, pushed `v0.5.3`, verified PR CI, main CI, Pages, release workflow, public feed indexing, and public package smoke for `0.5.3`.
+
+## 2026-06-04 - 0.6.0 Quality Automation Preparation
+
+- Prepared `0.6.0` as a non-breaking quality automation release over the published `0.5.3` baseline.
+- Added starter-kit browser sweep tooling for dashboard, settings, customers, and workflow routes, including console-error, horizontal-overflow, theme toggle, toast layout, table search, modal, and message-box checks.
+- Hardened package consumer smoke coverage for bundled app shell, nav menu, icon, chart contrast, toast spacing, modal/footer contrast, and action-row CSS markers.
+- Updated package metadata, README release link, Versions docs, changelog, release notes, starter label, release-quality tests, and memory files for `0.6.0`.
+- Kept the vendored W3.CSS source unchanged.

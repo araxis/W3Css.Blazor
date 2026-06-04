@@ -4,7 +4,7 @@ namespace W3Css.Blazor.Tests;
 
 public sealed class W3ReleaseQualityTests
 {
-    private const string CurrentVersion = "0.5.3";
+    private const string CurrentVersion = "0.6.0";
 
     [Fact]
     public void ReadmeDocumentsCurrentAppPrimitivesAndBranchFlow()
@@ -14,6 +14,8 @@ public sealed class W3ReleaseQualityTests
         Assert.Contains("W3ThemeProvider", readme);
         Assert.Contains("W3DataTable", readme);
         Assert.Contains("W3ActionRow", readme);
+        Assert.Contains($"{CurrentVersion} release notes", readme);
+        Assert.Contains("starter-browser-sweep.ps1", readme);
         Assert.Contains("work/<short-topic>", readme);
         Assert.DoesNotContain("feature/<short-topic>", readme);
         Assert.DoesNotContain("release/<version>", readme);
@@ -41,8 +43,35 @@ public sealed class W3ReleaseQualityTests
 
         Assert.Contains($"<Version>{CurrentVersion}</Version>", project);
         Assert.Contains($"docs/release-notes/{CurrentVersion}.md", project);
-        Assert.Contains($"## {CurrentVersion} - 2026-06-02", changelog);
+        Assert.Contains($"## {CurrentVersion} - 2026-06-04", changelog);
         Assert.True(File.Exists(releaseNotesPath), $"Release notes file is missing: {releaseNotesPath}");
+    }
+
+    [Fact]
+    public void ReleaseDocsAndVersionsPageStayAlignedWithCurrentVersion()
+    {
+        var readme = ReadRepositoryFile("README.md");
+        var versionsPage = ReadRepositoryFile("src", "W3Css.Blazor.Docs", "Pages", "ComponentTopics", "VersionsPage.razor");
+        var releaseNotes = ReadRepositoryFile("docs", "release-notes", $"{CurrentVersion}.md");
+
+        Assert.Contains($"docs/release-notes/{CurrentVersion}.md", readme);
+        Assert.Contains($"Package: W3Css.Blazor {CurrentVersion}", versionsPage);
+        Assert.Contains($"-PackageVersion {CurrentVersion} -PackageSource artifacts/packages", versionsPage);
+        Assert.Contains("Release Verification Checklist", versionsPage);
+        Assert.Contains($"# W3Css.Blazor {CurrentVersion}", releaseNotes);
+
+        foreach (var command in new[]
+        {
+            "dotnet build W3Css.Blazor.slnx --configuration Release /nr:false",
+            "dotnet test W3Css.Blazor.slnx --configuration Release --no-build /nr:false",
+            "dotnet pack src/W3Css.Blazor/W3Css.Blazor.csproj --configuration Release --no-build --output artifacts/packages /nr:false",
+            $"pwsh ./tools/package-consumer-smoke.ps1 -PackageVersion {CurrentVersion} -PackageSource artifacts/packages",
+            "pwsh ./tools/docs-browser-sweep.ps1 -BaseUrl http://localhost:5036 -StartServer",
+            "pwsh ./tools/starter-browser-sweep.ps1 -BaseUrl http://localhost:5037 -StartServer",
+        })
+        {
+            Assert.Contains(command, releaseNotes);
+        }
     }
 
     [Fact]
@@ -76,6 +105,20 @@ public sealed class W3ReleaseQualityTests
         Assert.Contains(".w3-toast", bundle);
         Assert.Contains("grid-template-columns: minmax(0, 1fr) auto", bundle);
         Assert.Contains("padding: 0.75rem 1rem", bundle);
+        Assert.Contains("w3-app-shell-has-sidebar", smoke);
+        Assert.Contains("w3-nav-menu-item", smoke);
+        Assert.Contains("color-mix(in srgb, currentColor 24%, transparent)", smoke);
+        Assert.Contains("color-mix(in srgb, currentColor 36%, transparent)", smoke);
+        Assert.Contains(".w3-modal-footer", smoke);
+        Assert.Contains("var(--w3-on-surface)", smoke);
+        Assert.Contains(".w3-action-row", smoke);
+        Assert.Contains("gap: var(--w3-action-row-gap, 8px)", smoke);
+        Assert.Contains("w3-app-shell-has-sidebar", bundle);
+        Assert.Contains("w3-nav-menu-item", bundle);
+        Assert.Contains(".w3-modal-footer", bundle);
+        Assert.Contains("var(--w3-on-surface)", bundle);
+        Assert.Contains(".w3-action-row", bundle);
+        Assert.Contains("gap: var(--w3-action-row-gap, 8px)", bundle);
     }
 
     [Fact]
@@ -162,6 +205,29 @@ public sealed class W3ReleaseQualityTests
 
         Assert.Contains("consoleErrors", sweep);
         Assert.Contains("scrollWidth", sweep);
+    }
+
+    [Fact]
+    public void StarterBrowserSweepCoversStarterRoutesAndInteractions()
+    {
+        var sweep = ReadRepositoryFile("tools", "starter-browser-sweep.ps1");
+
+        foreach (var route in new[] { "/", "/settings", "/customers", "/workflow" })
+        {
+            Assert.Contains($"path: '{route}'", sweep);
+        }
+
+        Assert.Contains("consoleErrors", sweep);
+        Assert.Contains("scrollWidth", sweep);
+        Assert.Contains("Theme mode:", sweep);
+        Assert.Contains("button[aria-controls=\"starter-sidebar\"]", sweep);
+        Assert.Contains("Dashboard data refreshed.", sweep);
+        Assert.Contains("Search customers", sweep);
+        Assert.Contains("1-1 of 1", sweep);
+        Assert.Contains("Edit record", sweep);
+        Assert.Contains("Archive record?", sweep);
+        Assert.Contains("w3-toast-close", sweep);
+        Assert.Contains("StartServer", sweep);
     }
 
     [Fact]

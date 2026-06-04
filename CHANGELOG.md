@@ -2,6 +2,19 @@
 
 All notable changes to W3Css.Blazor will be documented in this file.
 
+## 0.6.0 - 2026-06-04
+
+### Quality Automation
+
+- Added a starter-kit browser sweep that verifies dashboard, settings, customers, and workflow routes with console-error, horizontal-overflow, theme-toggle, toast, search, modal, and message-box checks.
+- Hardened package consumer smoke coverage so the published bundle must include key package CSS for app shell, nav menu, icons, chart contrast, toast spacing, modal/footer contrast, and action-row spacing.
+- Extended release-quality guards for version alignment, release-note verification commands, starter sweep coverage, and release documentation consistency.
+
+### Release Quality
+
+- Updated package metadata, README adoption links, versions documentation, release notes, starter label, and memory files for 0.6.0.
+- Kept the vendored W3.CSS source unchanged.
+
 ## 0.5.3 - 2026-06-02
 
 ### Toast Spacing Patch

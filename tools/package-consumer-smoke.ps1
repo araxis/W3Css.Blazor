@@ -252,6 +252,27 @@ try {
         throw "Published stylesheet did not include expected package component styles: $bundlePath"
     }
 
+    $requiredBundleMarkers = @(
+        'w3-app-shell-has-sidebar',
+        'w3-nav-menu-item',
+        'w3-icon-svg',
+        'color-mix(in srgb, currentColor 24%, transparent)',
+        'color-mix(in srgb, currentColor 36%, transparent)',
+        '.w3-toast',
+        'grid-template-columns: minmax(0, 1fr) auto',
+        'padding: 0.75rem 1rem',
+        '.w3-modal-footer',
+        'var(--w3-on-surface)',
+        '.w3-action-row',
+        'gap: var(--w3-action-row-gap, 8px)'
+    )
+
+    foreach ($marker in $requiredBundleMarkers) {
+        if (-not $bundle.Contains($marker)) {
+            throw "Published stylesheet did not include expected package CSS marker '$marker': $bundlePath"
+        }
+    }
+
     Write-Step "Package consumer smoke passed for $PackageId $PackageVersion"
 }
 finally {

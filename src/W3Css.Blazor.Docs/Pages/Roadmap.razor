@@ -20,39 +20,40 @@
     <section class="doc-section">
         <h2>Component Category Model</h2>
         <p>The catalog is organized for both sites and apps: foundation and themes, site composition, layout and surfaces, actions and content, data display, inputs and forms, navigation, feedback and overlays, and utilities.</p>
-        <p><NavLink href="components">Components</NavLink> shows the current category map and product-readiness backlog.</p>
+        <p><NavLink href="components">Components</NavLink> shows the current category map and the adoption path for starter apps, gallery examples, patterns, theming, and version checks.</p>
     </section>
 
     <section class="doc-section">
-        <h2>Product Readiness Expansion</h2>
-        <W3Table Striped="true" Bordered="true" Hoverable="true" Responsive="true" aria-label="Product readiness roadmap">
+        <h2>Product Readiness Status</h2>
+        <p>The main app/site component surface is implemented. Future releases should stay small, tested, and focused on adoption polish, quality sweeps, or clearly missing W3.CSS-first capabilities.</p>
+        <W3Table Striped="true" Bordered="true" Hoverable="true" Responsive="true" aria-label="Product readiness status">
             <thead>
                 <tr>
-                    <th>Phase</th>
+                    <th>Area</th>
                     <th>Focus</th>
-                    <th>Candidate Components</th>
+                    <th>Implemented Components</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>Shells and navigation</td>
                     <td>Make complete app and site frames fast to assemble.</td>
-                    <td><code>W3AppShell</code>, <code>W3AppBar</code>, <code>W3Breadcrumb</code>, and <code>W3NavMenu</code> implemented first, followed by <code>W3Toolbar</code>.</td>
+                    <td><code>W3AppShell</code>, <code>W3AppBar</code>, <code>W3Breadcrumb</code>, <code>W3NavMenu</code>, and <code>W3Toolbar</code>.</td>
                 </tr>
                 <tr>
                     <td>Richer inputs</td>
                     <td>Fill common form gaps while staying native and validation-friendly.</td>
-                    <td><code>W3NumberInput</code>, <code>W3DateInput</code>, <code>W3TimeInput</code>, <code>W3Slider</code>, <code>W3Switch</code>, <code>W3ColorInput</code>, <code>W3FileInput</code>, and <code>W3Autocomplete</code> implemented first.</td>
+                    <td><code>W3NumberInput</code>, <code>W3DateInput</code>, <code>W3TimeInput</code>, <code>W3Slider</code>, <code>W3Switch</code>, <code>W3ColorInput</code>, <code>W3FileInput</code>, and <code>W3Autocomplete</code>.</td>
                 </tr>
                 <tr>
                     <td>Data and workflow</td>
                     <td>Support dashboards, admin apps, activity feeds, and step-based flows.</td>
-                    <td><code>W3DataTable</code>, <code>W3TreeView</code>, and <code>W3Stepper</code> implemented first, followed by <code>W3Timeline</code>.</td>
+                    <td><code>W3DataTable</code>, <code>W3TreeView</code>, <code>W3Stepper</code>, <code>W3Timeline</code>, and <code>W3Chart</code>.</td>
                 </tr>
                 <tr>
                     <td>Feedback and app polish</td>
                     <td>Improve loading, transient messages, people/content markers, and grouped actions.</td>
-                    <td><code>W3Spinner</code> and <code>W3Toast</code> implemented first, followed by <code>W3Skeleton</code>, <code>W3Avatar</code>, <code>W3ChipSet</code>, and <code>W3ButtonGroup</code>.</td>
+                    <td><code>W3Spinner</code>, <code>W3Toast</code>, <code>W3Skeleton</code>, <code>W3Avatar</code>, <code>W3ChipSet</code>, and <code>W3ButtonGroup</code>.</td>
                 </tr>
             </tbody>
         </W3Table>

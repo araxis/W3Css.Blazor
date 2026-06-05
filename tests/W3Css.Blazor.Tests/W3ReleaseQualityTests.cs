@@ -4,7 +4,7 @@ namespace W3Css.Blazor.Tests;
 
 public sealed class W3ReleaseQualityTests
 {
-    private const string CurrentVersion = "0.7.0";
+    private const string CurrentVersion = "0.8.0";
 
     [Fact]
     public void ReadmeDocumentsCurrentAppPrimitivesAndBranchFlow()
@@ -44,7 +44,7 @@ public sealed class W3ReleaseQualityTests
 
         Assert.Contains($"<Version>{CurrentVersion}</Version>", project);
         Assert.Contains($"docs/release-notes/{CurrentVersion}.md", project);
-        Assert.Contains($"## {CurrentVersion} - 2026-06-04", changelog);
+        Assert.Contains($"## {CurrentVersion} - 2026-06-05", changelog);
         Assert.True(File.Exists(releaseNotesPath), $"Release notes file is missing: {releaseNotesPath}");
     }
 
@@ -68,7 +68,7 @@ public sealed class W3ReleaseQualityTests
             "dotnet pack src/W3Css.Blazor/W3Css.Blazor.csproj --configuration Release --no-build --output artifacts/packages /nr:false",
             $"pwsh ./tools/package-consumer-smoke.ps1 -PackageVersion {CurrentVersion} -PackageSource artifacts/packages",
             "pwsh ./tools/docs-browser-sweep.ps1 -BaseUrl http://localhost:5036 -StartServer",
-            "pwsh ./tools/starter-browser-sweep.ps1 -BaseUrl http://localhost:5037 -StartServer",
+            "pwsh ./tools/starter-browser-sweep.ps1 -BaseUrl http://localhost:5038 -StartServer",
         })
         {
             Assert.Contains(command, releaseNotes);
@@ -131,6 +131,7 @@ public sealed class W3ReleaseQualityTests
         var dashboard = ReadRepositoryFile("samples", "W3Css.Blazor.StarterKit", "Pages", "Home.razor");
         var workflow = ReadRepositoryFile("samples", "W3Css.Blazor.StarterKit", "Pages", "Workflow.razor");
         var workspace = ReadRepositoryFile("samples", "W3Css.Blazor.StarterKit", "Services", "StarterWorkspace.cs");
+        var release = ReadRepositoryFile("samples", "W3Css.Blazor.StarterKit", "StarterKitRelease.cs");
         var index = ReadRepositoryFile("samples", "W3Css.Blazor.StarterKit", "wwwroot", "index.html");
         var sampleRoot = PathFromRepositoryRoot("samples", "W3Css.Blazor.StarterKit");
         var sourceCssFiles = Directory.EnumerateFiles(sampleRoot, "*.css", SearchOption.AllDirectories)
@@ -148,6 +149,12 @@ public sealed class W3ReleaseQualityTests
         Assert.Contains("W3AppShell", layout);
         Assert.Contains("W3NavMenu", layout);
         Assert.Contains("W3ToastProvider", layout);
+        Assert.Contains("StarterKitRelease.VersionLabel", layout);
+        Assert.Contains($"Version = \"{CurrentVersion}\"", release);
+        Assert.Contains("VersionLabel = Version + \" Ready\"", release);
+        Assert.Contains("StarterKitRelease.Version", layout);
+        Assert.DoesNotContain("0.6.0", layout);
+        Assert.DoesNotContain("0.6.0", release);
         Assert.Contains("W3Row", dashboard);
         Assert.Contains("W3Column", dashboard);
         Assert.Contains("W3Stack", dashboard);
@@ -222,6 +229,8 @@ public sealed class W3ReleaseQualityTests
         Assert.Contains("consoleErrors", sweep);
         Assert.Contains("scrollWidth", sweep);
         Assert.Contains("Theme mode:", sweep);
+        Assert.Contains("0.8.0 Ready", sweep);
+        Assert.Contains("Starter kit release path is wired.", sweep);
         Assert.Contains("button[aria-controls=\"starter-sidebar\"]", sweep);
         Assert.Contains("Dashboard data refreshed.", sweep);
         Assert.Contains("Search customers", sweep);

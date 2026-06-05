@@ -2,6 +2,19 @@
 
 All notable changes to W3Css.Blazor will be documented in this file.
 
+## 0.8.0 - 2026-06-05
+
+### Adoption Polish
+
+- Prepared a non-breaking polish release focused on starter-kit, gallery, patterns, theming, and release-documentation quality.
+- Fixed the starter kit release action so its visible label and toast now follow the current package version from one sample-local constant.
+- Refreshed roadmap and component-index copy around the current adoption path instead of an active component backlog.
+
+### Release Quality
+
+- Updated package metadata, README release links, versions documentation, release notes, browser sweep assertions, and memory files for 0.8.0.
+- Kept the vendored W3.CSS source unchanged.
+
 ## 0.7.0 - 2026-06-04
 
 ### Live Gallery

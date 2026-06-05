@@ -1,6 +1,6 @@
 # Decisions
 
-Last updated: 2026-06-02
+Last updated: 2026-06-05
 
 ## Identity And Targets
 
@@ -50,7 +50,7 @@ Last updated: 2026-06-02
 ## Repository Standards
 
 - Default branch target: `main`.
-- Package version currently targets `0.7.0` for the live gallery release slice.
+- Package version currently targets `0.8.0` for the polish release preparation slice.
 - `PackageProjectUrl`/`RepositoryUrl`/`RepositoryType` and release metadata are set from repo properties.
 
 ## Architecture Defaults

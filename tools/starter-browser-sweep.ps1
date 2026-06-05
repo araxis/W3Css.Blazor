@@ -151,6 +151,11 @@ for (const viewport of viewports) {
     expect(toastLayout.closeRight, 'toast close button right inset').toBeGreaterThanOrEqual(8);
     expect(toastLayout.width, 'toast should stay within viewport').toBeLessThanOrEqual(viewport.width);
 
+    await page.getByRole('button', { name: '0.8.0 Ready' }).click();
+    const releaseToast = page.locator('.w3-toast').filter({ hasText: 'Starter kit release path is wired.' }).first();
+    await expect(releaseToast, 'starter release toast').toBeVisible();
+    await expect(releaseToast, 'starter release toast title').toContainText('0.8.0');
+
     await gotoRoute(page, '/customers');
     await closeMobileSidebar(page, viewport);
     await page.getByPlaceholder('Search customers').fill('Northwind');

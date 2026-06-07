@@ -11,6 +11,7 @@ public sealed class W3InteractiveCompatibilityTests
     public void MessageBoxShowsContentAndReportsYesResult()
     {
         using var context = new BunitContext();
+        context.JSInterop.Mode = JSRuntimeMode.Loose;
         bool? result = null;
         var visible = true;
 
@@ -48,6 +49,7 @@ public sealed class W3InteractiveCompatibilityTests
     public void MessageBoxForwardsExplicitAccessibleLabelsToModal()
     {
         using var context = new BunitContext();
+        context.JSInterop.Mode = JSRuntimeMode.Loose;
 
         var labelledBox = context.Render<W3MessageBox>(parameters => parameters
             .Add(m => m.Visible, true)
@@ -74,6 +76,7 @@ public sealed class W3InteractiveCompatibilityTests
     public void MessageBoxReportsNoAndCancelResults()
     {
         using var context = new BunitContext();
+        context.JSInterop.Mode = JSRuntimeMode.Loose;
 
         bool? noResult = true;
         var noBox = context.Render<W3MessageBox>(parameters => parameters
@@ -102,6 +105,7 @@ public sealed class W3InteractiveCompatibilityTests
     public void MessageBoxHidesOptionalButtonsWhenTextIsNull()
     {
         using var context = new BunitContext();
+        context.JSInterop.Mode = JSRuntimeMode.Loose;
 
         var cut = context.Render<W3MessageBox>(parameters => parameters
             .Add(m => m.Visible, true)
@@ -119,6 +123,7 @@ public sealed class W3InteractiveCompatibilityTests
     public void MessageBoxForwardsAdditionalAttributesToModal()
     {
         using var context = new BunitContext();
+        context.JSInterop.Mode = JSRuntimeMode.Loose;
 
         var cut = context.Render<W3MessageBox>(parameters => parameters
             .Add(m => m.Visible, true)
@@ -133,6 +138,7 @@ public sealed class W3InteractiveCompatibilityTests
     public void ToggleGroupSingleSelectMarksPressedAndRaisesChange()
     {
         using var context = new BunitContext();
+        context.JSInterop.Mode = JSRuntimeMode.Loose;
         string? selected = "list";
 
         var cut = context.Render<W3ToggleGroup<string>>(parameters => parameters
@@ -158,6 +164,7 @@ public sealed class W3InteractiveCompatibilityTests
     public void ToggleGroupMultiSelectAccumulatesAndRemovesValues()
     {
         using var context = new BunitContext();
+        context.JSInterop.Mode = JSRuntimeMode.Loose;
         IReadOnlyCollection<string> values = new List<string>();
 
         var cut = context.Render<W3ToggleGroup<string>>(parameters => parameters

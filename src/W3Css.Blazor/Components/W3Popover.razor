@@ -2,6 +2,8 @@
 @using Microsoft.JSInterop
 @using W3Css.Blazor.Internal
 @inherits W3ComponentBase
+@implements IAsyncDisposable
+@inject IJSRuntime JS
 
 <div @attributes="AdditionalAttributes"
      class="@CssClass"
@@ -33,6 +35,7 @@
     }
 
     <div id="@ContentId"
+         @ref="contentElement"
          class="@ContentCssClass"
          style="@ContentStyleValue"
          role="dialog"
@@ -47,6 +50,10 @@
     private readonly string contentId = $"w3-popover-{Guid.NewGuid():N}";
 
     private ElementReference TriggerElement { get; set; }
+
+    private ElementReference contentElement;
+
+    private W3FocusTrapInterop? focusTrap;
 
     private string CssClass => BuildClass(
         "w3-popover",
@@ -137,6 +144,12 @@
     /// </summary>
     [Parameter]
     public bool CloseOnOutsideClick { get; set; } = true;
+
+    /// <summary>
+    /// Gets or sets whether keyboard focus is trapped within the open popover. Focus returns to the trigger on Escape.
+    /// </summary>
+    [Parameter]
+    public bool TrapFocus { get; set; } = true;
 
     /// <summary>
     /// Gets or sets the placement value.
@@ -259,5 +272,19 @@
             .Select(value => value!.Trim().TrimEnd(';')));
 
         return string.IsNullOrWhiteSpace(style) ? null : style;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        focusTrap ??= new W3FocusTrapInterop(JS);
+        await focusTrap.SyncAsync(contentElement, Open && TrapFocus, autoFocus: true, restoreFocus: false);
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (focusTrap is not null)
+        {
+            await focusTrap.DisposeAsync();
+        }
     }
 }

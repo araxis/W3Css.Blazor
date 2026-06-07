@@ -12,6 +12,7 @@ public sealed class W3StepperTests
     public void StepperRendersStepsActivePanelAndProgress()
     {
         using var context = new BunitContext();
+        context.JSInterop.Mode = JSRuntimeMode.Loose;
         var cut = context.Render<W3Stepper>(parameters => parameters
             .Add(p => p.Label, "Checkout")
             .Add(p => p.ActiveValue, "shipping")
@@ -69,6 +70,7 @@ public sealed class W3StepperTests
     public void StepperActivatesClickedStep()
     {
         using var context = new BunitContext();
+        context.JSInterop.Mode = JSRuntimeMode.Loose;
         var active = "cart";
         string? activated = null;
         var cut = context.Render<W3Stepper>(parameters => parameters
@@ -90,6 +92,7 @@ public sealed class W3StepperTests
     public void StepperSupportsKeyboardNavigationAcrossActivatableSteps()
     {
         using var context = new BunitContext();
+        context.JSInterop.Mode = JSRuntimeMode.Loose;
         var active = "cart";
         var cut = context.Render<W3Stepper>(parameters => parameters
             .Add(p => p.ActiveValue, active)
@@ -133,12 +136,17 @@ public sealed class W3StepperTests
 
         cut.Find("button[aria-current='step']").KeyDown(new KeyboardEventArgs { Key = "Home" });
         Assert.Equal("cart", active);
+
+        var stepButtons = cut.FindAll(".w3-stepper-button");
+        Assert.Equal("0", stepButtons[0].GetAttribute("tabindex"));
+        Assert.Equal("-1", stepButtons[2].GetAttribute("tabindex"));
     }
 
     [Fact]
     public void LinearStepperDisablesFutureIncompleteStepsAndSupportsErrorState()
     {
         using var context = new BunitContext();
+        context.JSInterop.Mode = JSRuntimeMode.Loose;
         var active = "shipping";
         var cut = context.Render<W3Stepper>(parameters => parameters
             .Add(p => p.ActiveValue, active)
@@ -181,6 +189,7 @@ public sealed class W3StepperTests
     public void LinearStepperKeyboardRespectsFutureIncompleteSteps()
     {
         using var context = new BunitContext();
+        context.JSInterop.Mode = JSRuntimeMode.Loose;
         var active = "shipping";
         var cut = context.Render<W3Stepper>(parameters => parameters
             .Add(p => p.ActiveValue, active)

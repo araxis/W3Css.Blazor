@@ -1,11 +1,11 @@
 # Current State
 
-Last updated: 2026-06-04
+Last updated: 2026-06-05
 
 ## Repository
 
 - Canonical branch: `main`.
-- Tags `v0.1.0`, `v0.2.0`, `v0.3.0`, `v0.4.0`, `v0.5.0`, `v0.5.1`, `v0.5.2`, `v0.5.3`, `v0.6.0`, and `v0.7.0` mark published package releases.
+- Tags `v0.1.0`, `v0.2.0`, `v0.3.0`, `v0.4.0`, `v0.5.0`, `v0.5.1`, `v0.5.2`, `v0.5.3`, `v0.6.0`, and `v0.7.0` mark published package releases; `0.9.0` is prepared locally and awaits merge/tag/publish.
 - Solution: `W3Css.Blazor.slnx`.
 - SDK: `.NET 10.0.300` (`global.json`).
 
@@ -37,13 +37,13 @@ Last updated: 2026-06-04
 
 - W3.CSS source file is not modified.
 - Package metadata is set to:
-  - Version `0.7.0`.
+  - Version `0.8.0`.
   - `Directory.Build.props` repository URL + type (`https://github.com/araxis/W3Css.Blazor`).
   - `PackageProjectUrl`, `RepositoryUrl`, `RepositoryType`, and release notes in `src/W3Css.Blazor/W3Css.Blazor.csproj`.
 - README includes package version and MIT license badges.
 - Release workflow builds, tests, packs, creates release artifacts, and publishes packages on `v*` tag pushes when the publishing secret is configured.
 - First package release is published as `W3Css.Blazor` version `0.1.0`.
-- Current package release is published as `W3Css.Blazor` version `0.7.0`; package metadata targets `0.7.0`.
+- Current package release is published as `W3Css.Blazor` version `0.7.0`; package metadata targets `0.9.0`.
 - Releases `v0.1.0`, `v0.2.0`, `v0.3.0`, `v0.4.0`, `v0.5.0`, `v0.5.1`, `v0.5.2`, `v0.5.3`, `v0.6.0`, and `v0.7.0` are published with package artifacts.
 - Package consumer smoke tooling verifies install, component compilation, publish output, bundled static assets, component styles inside the bundled stylesheet, and starter-kit primitives; local smoke uses an isolated per-run package cache so repeated same-version artifact checks do not reuse stale packages.
 
@@ -62,6 +62,7 @@ Last updated: 2026-06-04
 - The 0.5.3 toast spacing patch release is complete: reusable toast close-spacing fix, release notes, release workflow, and public package smoke passed without changing vendored W3.CSS.
 - The 0.6.0 quality automation release is complete: starter-kit browser sweep tooling, package smoke CSS assertions, release guardrails, docs, tag workflow, release workflow, and public package smoke passed without changing vendored W3.CSS.
 - The 0.7.0 live gallery release is complete: `/gallery` adds live copyable app/site examples, docs adoption links point to Gallery, release workflow passed, and public package smoke passed after clearing a stale local NuGet HTTP cache.
+- The 0.8.0 polish release preparation is locally verified: package metadata/release notes target `0.8.0`, starter release-label drift is guarded by a sample-local version constant and browser-sweep assertion, roadmap/component index copy now points to the current Starter Kit -> Gallery -> Patterns -> Theming -> Versions adoption path, and local build/test/pack/smoke/browser sweeps passed.
 - The starter-kit dashboard now includes meaningful customer-derived chart examples and a single multi-state theme toggle for Light/Dark/Auto.
 - Built-in icons are now first-class through `W3IconName` + `W3Icon`; icon-capable components can render bundled SVG icons without external icon assets while preserving `IconClass` compatibility.
 - The starter-kit theme toggle uses built-in Sun, Moon, and Monitor icons through multi-state `W3ToggleIconButton`, and dashboard chart cards have explicit top/bottom body padding.
@@ -122,3 +123,7 @@ Last updated: 2026-06-04
 - The reusable action-row polish added `W3ActionRow` for forms, generic tables, list suffixes, and dialog/card-style command areas that need consistent wrapping gaps.
 - The empty-state pattern pass added `W3EmptyState`, a dedicated docs page, and `W3DataTable` zero-result/error integration for reusable app recovery states.
 - Remaining planned work is optional: visual quality sweeps and future version slices as needed.
+- The 0.9.0 "Robustness and Reach" slice is planned (development-plan Phase 14) and in progress on branch `work/0.9.0-robustness-reach`: multi-target the packable library to `net8.0;net9.0;net10.0`, add SourceLink/symbols/icon and a CI bundle-drift gate, wire focus-trap + body-scroll-lock into overlays, complete tree/tooltip keyboard accessibility, harden data-table/pagination at scale, and make toast/theme/JS-teardown robust.
+- 0.9.0 sub-slice 1 (multi-target net8/9/10 + SourceLink + snupkg + package icon + CI warnings-as-errors and bundle-drift gate) is implemented and verified across all three target frameworks, 492 tests, and the package consumer smoke. Full `IsTrimmable` was deferred because the generic input components reproduce the framework `InputBase<TValue>` `BindConverter` IL2091 pattern.
+- 0.9.0 sub-slice 2 wires the existing focus-trap module plus a new reference-counted body scroll-lock (`wwwroot/w3ScrollLock.js`) into `W3Modal`, `W3Drawer` (temporary variant only), and `W3Popover`, using each overlay's existing container as the trap root so no wrapper element changes layout. New `TrapFocus`/`LockScroll` parameters default on and can be opted out; interop lives in internal `W3FocusTrapInterop`/`W3ScrollLockInterop` helpers that reuse one connection, do nothing while closed, and swallow disconnect/disposed exceptions on teardown.
+- 0.9.0 sub-slice 3 (accessibility completion) is partly done: `W3Tabs` and `W3Stepper` now apply roving tabindex (active item `tabindex=0`, others `-1`) and move focus to the newly activated item on arrow/Home/End via a shared `wwwroot/w3Focus.js` + internal `W3FocusInterop` focus-by-id helper; `W3Tooltip` gained a `role=tooltip` text element, an `aria-describedby` link, and a `:focus-within` reveal (scoped `W3Tooltip.razor.css`); and `W3TreeView` nodes are now keyed by position path, fixing the duplicate-sibling-label render-key collision while keeping value for expansion/selection. `W3TreeView` keyboard navigation is now implemented, completing sub-slice 3: a per-render pre-pass flattens the visible nodes; roving tabindex keeps one tab stop; ArrowUp/Down move between visible nodes, ArrowRight expands a collapsed parent or moves to the first child, ArrowLeft collapses an expanded parent or moves to the parent, and Home/End jump to the first/last node, with focus following via the shared `W3FocusInterop` helper. 0.9.0 sub-slice 4 (performance at scale) is done: `W3DataTable` memoizes the filtered/sorted view (cache keyed by items reference, search, sort column/direction, filter, and visible-column signature), backs selection with a HashSet plus an optional `Comparer`, and adds an `ItemKey` for stable row `@key`; `W3Pagination` renders a windowed page list (`BoundaryCount`/`SiblingCount` with ellipsis) instead of one button per page. `Virtualize` for the table was deferred: pagination already bounds rendered rows, and Blazor `Virtualize` inside `<tbody>` emits invalid spacer elements, so it would need a table-markup redesign. 0.9.0 sub-slice 5 (runtime robustness) is done: `W3FocusTrap` now delegates to the shared `W3FocusTrapInterop` helper (skips redundant updates, swallows JSDisconnected/ObjectDisposed on teardown) and `W3Menu`'s connect/update/dispose interop is guarded the same way; `W3ToastService` is thread-safe (all mutations locked, `Toasts` returns a snapshot, the changed event fires outside the lock); and `W3ThemeProvider` scopes its emitted CSS variables to a per-instance `data-w3-theme-id` so nested/sibling providers theme independently. All five 0.9.0 sub-slices are complete (498→500 tests). Remaining: the 0.9.0 close-out — bump version to 0.9.0, write `docs/release-notes/0.9.0.md`, update CHANGELOG/README/Versions docs and the release-quality version guard, sync memory, then build/test/pack/package-consumer-smoke (incl. a net8 consumer)/docs+starter browser sweeps, merge to `main`, tag `v0.9.0`.

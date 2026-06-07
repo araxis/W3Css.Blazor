@@ -147,6 +147,8 @@
                 <tr><td>SelectedItem</td><td>TItem?</td><td>null</td><td>Bindable selected row</td></tr>
                 <tr><td>SelectedItemChanged</td><td>EventCallback&lt;TItem?&gt;</td><td>empty</td><td>Selection binding callback</td></tr>
                 <tr><td>SelectedItems</td><td>IEnumerable&lt;TItem&gt;?</td><td>null</td><td>Optional selected item set for multi-row selection wrappers</td></tr>
+                <tr><td>ItemKey</td><td>Func&lt;TItem, object&gt;?</td><td>null</td><td>Stable per-row key for diffing and selection</td></tr>
+                <tr><td>Comparer</td><td>IEqualityComparer&lt;TItem&gt;?</td><td>null</td><td>Equality comparer for matching selected rows</td></tr>
                 <tr><td>RowClicked</td><td>EventCallback&lt;TItem&gt;</td><td>empty</td><td>Row click callback</td></tr>
                 <tr><td>SelectedColor</td><td>W3Color</td><td>PaleBlue</td><td>Selected row background class</td></tr>
                 <tr><td>Color</td><td>W3Color</td><td>Surface</td><td>`W3Table` background color</td></tr>

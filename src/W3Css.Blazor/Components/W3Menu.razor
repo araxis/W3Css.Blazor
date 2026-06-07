@@ -308,30 +308,39 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (!FixedPosition)
+        try
         {
-            await DisposeMenuReferenceAsync();
+            if (!FixedPosition)
+            {
+                await DisposeMenuReferenceAsync();
+                await FocusPendingItemAsync();
+                return;
+            }
+
+            Module ??= await JS.InvokeAsync<IJSObjectReference>("import", "./_content/W3Css.Blazor/w3Menu.js");
+
+            var options = new
+            {
+                open = currentOpen,
+                placement = Placement.ToString()
+            };
+
+            if (MenuReference is null)
+            {
+                MenuReference = await Module.InvokeAsync<IJSObjectReference>("connect", RootElement, TriggerElement, PanelElement, options);
+                await FocusPendingItemAsync();
+                return;
+            }
+
+            await MenuReference.InvokeVoidAsync("update", options);
             await FocusPendingItemAsync();
-            return;
         }
-
-        Module ??= await JS.InvokeAsync<IJSObjectReference>("import", "./_content/W3Css.Blazor/w3Menu.js");
-
-        var options = new
+        catch (JSDisconnectedException)
         {
-            open = currentOpen,
-            placement = Placement.ToString()
-        };
-
-        if (MenuReference is null)
-        {
-            MenuReference = await Module.InvokeAsync<IJSObjectReference>("connect", RootElement, TriggerElement, PanelElement, options);
-            await FocusPendingItemAsync();
-            return;
         }
-
-        await MenuReference.InvokeVoidAsync("update", options);
-        await FocusPendingItemAsync();
+        catch (ObjectDisposedException)
+        {
+        }
     }
 
     protected override void OnParametersSet()
@@ -600,9 +609,21 @@
             return;
         }
 
-        await MenuReference.InvokeVoidAsync("dispose");
-        await MenuReference.DisposeAsync();
-        MenuReference = null;
+        try
+        {
+            await MenuReference.InvokeVoidAsync("dispose");
+            await MenuReference.DisposeAsync();
+        }
+        catch (JSDisconnectedException)
+        {
+        }
+        catch (ObjectDisposedException)
+        {
+        }
+        finally
+        {
+            MenuReference = null;
+        }
     }
 
     public async ValueTask DisposeAsync()
@@ -611,7 +632,16 @@
 
         if (Module is not null)
         {
-            await Module.DisposeAsync();
+            try
+            {
+                await Module.DisposeAsync();
+            }
+            catch (JSDisconnectedException)
+            {
+            }
+            catch (ObjectDisposedException)
+            {
+            }
         }
     }
 }

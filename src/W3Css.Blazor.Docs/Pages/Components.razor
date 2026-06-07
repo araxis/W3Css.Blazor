@@ -41,7 +41,7 @@
 
     <section class="doc-section">
         <h2>Component Categories</h2>
-        <p>The catalog is grouped around how a team builds real pages: foundation, layout, content, data, forms, navigation, feedback, overlays, media, and utility styling. The categories borrow the mental model used by larger Blazor libraries while keeping each W3Css.Blazor component tied to W3.CSS classes, native HTML, or Blazor state.</p>
+        <p>The catalog is grouped around how a team builds real pages: foundation, layout, content, data, forms, navigation, feedback, overlays, media, and utility styling. The current surface is ready for normal app and site starts while keeping each W3Css.Blazor component tied to W3.CSS classes, native HTML, or Blazor state.</p>
 
         @foreach (var category in Categories)
         {
@@ -74,7 +74,7 @@
     <section class="doc-section">
         <h2>Starter Path</h2>
         <W3Panel Color="W3Color.PaleYellow" TextColor="W3Color.Black" LeftBar="true" Border="true" Round="W3Round.Medium">
-            <p>The component surface is broad enough for normal app and site starts. Begin with the starter kit, then use patterns and component topics when you need a focused example or API reference.</p>
+            <p>The component surface is broad enough for normal app and site starts. Begin with the starter kit, browse the gallery, copy a pattern, tune the theme, and verify the package/version details before release.</p>
         </W3Panel>
 
         <W3Table Striped="true" Bordered="true" Hoverable="true" Responsive="true" aria-label="Starter path">
@@ -86,11 +86,11 @@
                 </tr>
             </thead>
             <tbody>
-                <tr><td>Run</td><td>Build and inspect a real app shell with forms, tables, overlays, and toasts.</td><td><NavLink href="starter-kit">Starter Kit</NavLink></td></tr>
-                <tr><td>Browse</td><td>Compare live app and site examples before choosing a starting point.</td><td><NavLink href="gallery">Gallery</NavLink></td></tr>
-                <tr><td>Copy</td><td>Lift complete app-screen recipes into your own routes.</td><td><NavLink href="patterns">Patterns</NavLink></td></tr>
-                <tr><td>Customize</td><td>Apply brand tokens, focus colors, status colors, and dark surfaces.</td><td><NavLink href="components/theming">Theming</NavLink></td></tr>
-                <tr><td>Verify</td><td>Check package version, stylesheet paths, release notes, and smoke commands.</td><td><NavLink href="components/versions">Versions</NavLink></td></tr>
+                <tr><td>Starter Kit</td><td>Build and inspect a real app shell with forms, tables, overlays, and toasts.</td><td><NavLink href="starter-kit">Run the sample</NavLink></td></tr>
+                <tr><td>Gallery</td><td>Compare live app and site examples before choosing a starting point.</td><td><NavLink href="gallery">Browse examples</NavLink></td></tr>
+                <tr><td>Patterns</td><td>Lift complete app-screen recipes into your own routes.</td><td><NavLink href="patterns">Copy recipes</NavLink></td></tr>
+                <tr><td>Theming</td><td>Apply brand tokens, focus colors, status colors, and dark surfaces.</td><td><NavLink href="components/theming">Tune tokens</NavLink></td></tr>
+                <tr><td>Versions</td><td>Check package version, stylesheet paths, release notes, and smoke commands.</td><td><NavLink href="components/versions">Verify release details</NavLink></td></tr>
             </tbody>
         </W3Table>
     </section>

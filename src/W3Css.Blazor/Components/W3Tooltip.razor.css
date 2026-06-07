@@ -1,0 +1,5 @@
+/* Reveal the tooltip text when the trigger (or any focusable child) receives
+   keyboard focus, not only on pointer hover, so keyboard users can read it. */
+.w3-tooltip:focus-within .w3-text {
+    display: inline-block;
+}

@@ -9,11 +9,12 @@
 
 @{
     var visibleColumns = VisibleColumns;
-    var viewItems = BuildViewItems(visibleColumns);
+    var viewItems = GetViewItems(visibleColumns);
     var pageCount = GetPageCount(viewItems.Count);
     var currentPage = GetEffectiveCurrentPage(pageCount);
     var pageItems = GetPageItems(viewItems, currentPage).ToList();
     var columnSpan = visibleColumns.Count + (RowActions is null ? 0 : 1);
+    currentSelectedLookup = BuildSelectedLookup();
 }
 
 <section @attributes="AdditionalAttributes"
@@ -159,7 +160,7 @@
                 {
                     @foreach (var item in pageItems)
                     {
-                        <tr @key="item"
+                        <tr @key="GetRowKey(item)"
                             class="@GetRowCssClass(item)"
                             aria-selected="@GetAriaSelected(item)"
                             @onclick="() => OnRowClickAsync(item)">
@@ -217,6 +218,15 @@
 
 @code {
     private readonly List<W3DataColumn<TItem>> columns = [];
+
+    private HashSet<TItem>? currentSelectedLookup;
+    private List<TItem>? cachedViewItems;
+    private object? cachedItemsReference;
+    private string? cachedSearchText;
+    private W3DataColumn<TItem>? cachedSortColumn;
+    private bool cachedSortDescending;
+    private object? cachedFilterReference;
+    private int cachedColumnsSignature;
 
     private string SearchInputId => $"{IdPrefix}-search";
 
@@ -509,6 +519,18 @@
     public IEnumerable<TItem>? SelectedItems { get; set; }
 
     /// <summary>
+    /// Selects a stable key for each row. Defaults to the item itself; provide this when items are value types or can repeat so row diffing and selection stay correct.
+    /// </summary>
+    [Parameter]
+    public Func<TItem, object>? ItemKey { get; set; }
+
+    /// <summary>
+    /// Equality comparer used to match selected rows. Defaults to the type's default comparer.
+    /// </summary>
+    [Parameter]
+    public IEqualityComparer<TItem>? Comparer { get; set; }
+
+    /// <summary>
     /// Gets or sets the row clicked value.
     /// </summary>
     [Parameter]
@@ -724,6 +746,61 @@
 
     private bool SortDescending { get; set; }
 
+    private object? GetRowKey(TItem item)
+    {
+        return ItemKey is not null ? ItemKey(item) : item;
+    }
+
+    private HashSet<TItem>? BuildSelectedLookup()
+    {
+        if (!Selectable || SelectedItems is null)
+        {
+            return null;
+        }
+
+        return new HashSet<TItem>(SelectedItems, Comparer ?? EqualityComparer<TItem>.Default);
+    }
+
+    // Memoize the filtered/sorted view so ordinary re-renders (row clicks, hover,
+    // parent renders) do not re-run the full filter and sort over every item. The
+    // cache is keyed by the inputs that actually change the result set.
+    private List<TItem> GetViewItems(IReadOnlyList<W3DataColumn<TItem>> visibleColumns)
+    {
+        var columnsSignature = GetColumnsSignature(visibleColumns);
+
+        if (cachedViewItems is not null
+            && ReferenceEquals(cachedItemsReference, Items)
+            && string.Equals(cachedSearchText, SearchText, StringComparison.Ordinal)
+            && ReferenceEquals(cachedSortColumn, SortColumn)
+            && cachedSortDescending == SortDescending
+            && ReferenceEquals(cachedFilterReference, Filter)
+            && cachedColumnsSignature == columnsSignature)
+        {
+            return cachedViewItems;
+        }
+
+        cachedViewItems = BuildViewItems(visibleColumns);
+        cachedItemsReference = Items;
+        cachedSearchText = SearchText;
+        cachedSortColumn = SortColumn;
+        cachedSortDescending = SortDescending;
+        cachedFilterReference = Filter;
+        cachedColumnsSignature = columnsSignature;
+        return cachedViewItems;
+    }
+
+    private static int GetColumnsSignature(IReadOnlyList<W3DataColumn<TItem>> visibleColumns)
+    {
+        var hash = new HashCode();
+
+        foreach (var column in visibleColumns)
+        {
+            hash.Add(column);
+        }
+
+        return hash.ToHashCode();
+    }
+
     private List<TItem> BuildViewItems(IReadOnlyList<W3DataColumn<TItem>> visibleColumns)
     {
         var viewItems = (Items ?? []).Where(item => MatchesFilter(item, visibleColumns));
@@ -832,13 +909,12 @@
 
     private bool IsSelected(TItem item)
     {
-        if (SelectedItems is not null)
+        if (currentSelectedLookup is not null)
         {
-            var comparer = EqualityComparer<TItem>.Default;
-            return SelectedItems.Any(selected => comparer.Equals(selected, item));
+            return currentSelectedLookup.Contains(item);
         }
 
-        return EqualityComparer<TItem>.Default.Equals(SelectedItem, item);
+        return (Comparer ?? EqualityComparer<TItem>.Default).Equals(SelectedItem, item);
     }
 
     private string GetSortButtonClass(W3DataColumn<TItem> column)

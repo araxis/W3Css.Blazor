@@ -30,7 +30,7 @@
                                         Border="true"
                                         TextColor="W3Color.White"
                                         Round="W3Round.Medium" />
-                    <W3Button Border="true" TextColor="W3Color.White" Round="W3Round.Medium" OnClick="ShowReleaseToast">0.6.0 Ready</W3Button>
+                    <W3Button Border="true" TextColor="W3Color.White" Round="W3Round.Medium" OnClick="ShowReleaseToast">@StarterKitRelease.VersionLabel</W3Button>
                 </Actions>
             </W3AppBar>
         </Header>
@@ -94,7 +94,7 @@
 
     private void ShowReleaseToast(MouseEventArgs _)
     {
-        Toasts.ShowSuccess("Starter kit release path is wired.", "0.6.0");
+        Toasts.ShowSuccess("Starter kit release path is wired.", StarterKitRelease.Version);
     }
 
     public async ValueTask DisposeAsync()

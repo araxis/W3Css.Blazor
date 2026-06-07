@@ -1,6 +1,24 @@
 # Progress Log
 
-Last updated: 2026-06-04
+Last updated: 2026-06-05
+
+## 2026-06-05
+
+- Started the 0.8.0 polish release preparation slice:
+  - bumped package metadata and release documentation anchors to `0.8.0`;
+  - added `docs/release-notes/0.8.0.md` and a matching changelog section;
+  - fixed the starter app-bar release action so its label and toast use one sample-local version constant;
+  - extended release-quality and starter browser-sweep coverage so starter release-label drift is caught;
+  - refreshed Roadmap and Components copy around the current Starter Kit -> Gallery -> Patterns -> Theming -> Versions adoption path;
+  - kept public component/API surface unchanged and left vendored W3.CSS untouched.
+- Verification:
+  - `dotnet build W3Css.Blazor.slnx --configuration Release /nr:false` (0 warnings, 0 errors);
+  - `dotnet test W3Css.Blazor.slnx --configuration Release --no-build /nr:false` (490 passing);
+  - `dotnet pack src/W3Css.Blazor/W3Css.Blazor.csproj --configuration Release --no-build --output artifacts/packages /nr:false`;
+  - `pwsh ./tools/package-consumer-smoke.ps1 -PackageVersion 0.8.0 -PackageSource artifacts/packages`;
+  - `pwsh ./tools/docs-browser-sweep.ps1 -BaseUrl http://localhost:5036 -StartServer`;
+  - `pwsh ./tools/starter-browser-sweep.ps1 -BaseUrl http://localhost:5038 -StartServer`.
+- `5037` was not used for the starter sweep because a local system service already owns that port on this workstation.
 
 ## 2026-06-04
 

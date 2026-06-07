@@ -12,6 +12,7 @@ public sealed class W3OverlayTests
     public void ModalRendersOpenStateAndClosesFromButton()
     {
         using var context = new BunitContext();
+        context.JSInterop.Mode = JSRuntimeMode.Loose;
         var open = true;
         var cut = context.Render<W3Modal>(parameters => parameters
             .Add(p => p.Id, "details")
@@ -55,6 +56,7 @@ public sealed class W3OverlayTests
     public void ModalSupportsExplicitAccessibleLabelWithoutTitle()
     {
         using var context = new BunitContext();
+        context.JSInterop.Mode = JSRuntimeMode.Loose;
         var cut = context.Render<W3Modal>(parameters => parameters
             .Add(p => p.Open, true)
             .Add(p => p.AriaLabel, "Preferences")
@@ -72,6 +74,7 @@ public sealed class W3OverlayTests
     public void ModalSupportsCustomLabelledByReference()
     {
         using var context = new BunitContext();
+        context.JSInterop.Mode = JSRuntimeMode.Loose;
         var cut = context.Render<W3Modal>(parameters => parameters
             .Add(p => p.Open, true)
             .Add(p => p.AriaLabelledBy, "custom-modal-heading")
@@ -88,6 +91,7 @@ public sealed class W3OverlayTests
     public void ModalCanCloseFromEscape()
     {
         using var context = new BunitContext();
+        context.JSInterop.Mode = JSRuntimeMode.Loose;
         var open = true;
         var cut = context.Render<W3Modal>(parameters => parameters
             .Add(p => p.Open, open)
@@ -103,6 +107,7 @@ public sealed class W3OverlayTests
     public void TooltipRendersHoverText()
     {
         using var context = new BunitContext();
+        context.JSInterop.Mode = JSRuntimeMode.Loose;
         var cut = context.Render<W3Tooltip>(parameters => parameters
             .Add(p => p.Text, "More details")
             .Add(p => p.Color, W3Color.Black)
@@ -133,6 +138,7 @@ public sealed class W3OverlayTests
     public void PopoverTogglesAndClosesFromOutsideLayer()
     {
         using var context = new BunitContext();
+        context.JSInterop.Mode = JSRuntimeMode.Loose;
         var open = false;
         var cut = context.Render<W3Popover>(parameters => parameters
             .Add(p => p.Label, "Open filters")
@@ -220,6 +226,7 @@ public sealed class W3OverlayTests
     public void SidebarRendersOverlayAndClosesFromOverlayClick()
     {
         using var context = new BunitContext();
+        context.JSInterop.Mode = JSRuntimeMode.Loose;
         var open = true;
         var cut = context.Render<W3Sidebar>(parameters => parameters
             .Add(p => p.Open, open)
@@ -266,6 +273,7 @@ public sealed class W3OverlayTests
     public void SidebarClosesWithEscapeWhenFocusedInside()
     {
         using var context = new BunitContext();
+        context.JSInterop.Mode = JSRuntimeMode.Loose;
         var open = true;
         var cut = context.Render<W3Sidebar>(parameters => parameters
             .Add(p => p.Open, open)
@@ -288,6 +296,7 @@ public sealed class W3OverlayTests
     public void SidebarCanRenderOnRight()
     {
         using var context = new BunitContext();
+        context.JSInterop.Mode = JSRuntimeMode.Loose;
         var cut = context.Render<W3Sidebar>(parameters => parameters
             .Add(p => p.Position, W3SidebarPosition.Right)
             .Add(p => p.ChildContent, "Right side"));
@@ -299,6 +308,7 @@ public sealed class W3OverlayTests
     public void DrawerRendersTemporarySurfaceAndClosesFromOverlay()
     {
         using var context = new BunitContext();
+        context.JSInterop.Mode = JSRuntimeMode.Loose;
         var open = true;
         var cut = context.Render<W3Drawer>(parameters => parameters
             .Add(p => p.Id, "workspace-drawer")
@@ -362,6 +372,7 @@ public sealed class W3OverlayTests
     public void DrawerSupportsExplicitAccessibleLabels()
     {
         using var context = new BunitContext();
+        context.JSInterop.Mode = JSRuntimeMode.Loose;
         var labelled = context.Render<W3Drawer>(parameters => parameters
             .Add(p => p.Open, true)
             .Add(p => p.AriaLabel, "Workspace settings")
@@ -386,6 +397,7 @@ public sealed class W3OverlayTests
     public void DrawerSupportsPersistentFooterAndEscapeClose()
     {
         using var context = new BunitContext();
+        context.JSInterop.Mode = JSRuntimeMode.Loose;
         var open = true;
         var cut = context.Render<W3Drawer>(parameters => parameters
             .Add(p => p.Open, open)
@@ -413,6 +425,7 @@ public sealed class W3OverlayTests
     public void ModalRendersActionsFooterInActionRow()
     {
         using var context = new BunitContext();
+        context.JSInterop.Mode = JSRuntimeMode.Loose;
         var open = true;
 
         var cut = context.Render<W3Modal>(parameters => parameters
@@ -439,5 +452,44 @@ public sealed class W3OverlayTests
         Assert.Contains("w3-modal-actions", actionsRow.GetAttribute("class"));
         Assert.Contains("Delete this item permanently?", cut.Markup);
         Assert.Contains("Delete", actionsRow.TextContent);
+    }
+
+    [Fact]
+    public void ModalSupportsDisablingFocusTrapAndScrollLock()
+    {
+        using var context = new BunitContext();
+        context.JSInterop.Mode = JSRuntimeMode.Loose;
+        var open = true;
+        var cut = context.Render<W3Modal>(parameters => parameters
+            .Add(p => p.Open, open)
+            .Add(p => p.OpenChanged, EventCallback.Factory.Create<bool>(this, value => open = value))
+            .Add(p => p.Title, "Preferences")
+            .Add(p => p.TrapFocus, false)
+            .Add(p => p.LockScroll, false)
+            .Add(p => p.ChildContent, "Preferences body"));
+
+        var modal = cut.Find("[role='dialog']");
+        Assert.Contains("w3-show", modal.GetAttribute("class"));
+
+        modal.KeyDown(new KeyboardEventArgs { Key = "Escape" });
+
+        Assert.False(open);
+    }
+
+    [Fact]
+    public void PopoverSupportsDisablingFocusTrap()
+    {
+        using var context = new BunitContext();
+        context.JSInterop.Mode = JSRuntimeMode.Loose;
+        var open = true;
+        var cut = context.Render<W3Popover>(parameters => parameters
+            .Add(p => p.Label, "Open filters")
+            .Add(p => p.Open, open)
+            .Add(p => p.OpenChanged, EventCallback.Factory.Create<bool>(this, value => open = value))
+            .Add(p => p.TrapFocus, false)
+            .Add(p => p.ChildContent, "Filter body"));
+
+        Assert.Contains("w3-popover-open", cut.Find(".w3-popover").GetAttribute("class"));
+        Assert.Equal("false", cut.Find("[role='dialog']").GetAttribute("aria-hidden"));
     }
 }

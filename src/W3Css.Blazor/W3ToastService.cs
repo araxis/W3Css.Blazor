@@ -5,6 +5,7 @@ namespace W3Css.Blazor;
 /// </summary>
 public sealed class W3ToastService
 {
+    private readonly object gate = new();
     private readonly List<W3ToastMessage> messages = [];
 
     /// <summary>
@@ -13,9 +14,18 @@ public sealed class W3ToastService
     public event Action? ToastsChanged;
 
     /// <summary>
-    /// Current toast notifications.
+    /// Current toast notifications. Returns a snapshot so callers can enumerate it safely.
     /// </summary>
-    public IReadOnlyList<W3ToastMessage> Toasts => messages;
+    public IReadOnlyList<W3ToastMessage> Toasts
+    {
+        get
+        {
+            lock (gate)
+            {
+                return messages.ToArray();
+            }
+        }
+    }
 
     /// <summary>
     /// Shows a toast notification.
@@ -35,7 +45,11 @@ public sealed class W3ToastService
             options.ActionText,
             options.OnAction);
 
-        messages.Add(toast);
+        lock (gate)
+        {
+            messages.Add(toast);
+        }
+
         ToastsChanged?.Invoke();
 
         return toast;
@@ -78,7 +92,12 @@ public sealed class W3ToastService
     /// </summary>
     public void Dismiss(Guid id)
     {
-        var removed = messages.RemoveAll(message => message.Id == id) > 0;
+        bool removed;
+
+        lock (gate)
+        {
+            removed = messages.RemoveAll(message => message.Id == id) > 0;
+        }
 
         if (removed)
         {
@@ -91,13 +110,18 @@ public sealed class W3ToastService
     /// </summary>
     public void Clear()
     {
-        if (messages.Count == 0)
+        bool changed;
+
+        lock (gate)
         {
-            return;
+            changed = messages.Count > 0;
+            messages.Clear();
         }
 
-        messages.Clear();
-        ToastsChanged?.Invoke();
+        if (changed)
+        {
+            ToastsChanged?.Invoke();
+        }
     }
 }
 

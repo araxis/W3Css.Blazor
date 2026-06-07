@@ -1,5 +1,8 @@
+@using Microsoft.JSInterop
 @using W3Css.Blazor.Internal
 @inherits W3ComponentBase
+@implements IAsyncDisposable
+@inject IJSRuntime JS
 
 <CascadingValue Value="this" IsFixed="true">
     <section @attributes="AdditionalAttributes"
@@ -15,6 +18,7 @@
                         aria-selected="@ToAriaBool(active)"
                         aria-controls="@panel.PanelId"
                         id="@panel.TabId"
+                        tabindex="@(active ? 0 : -1)"
                         disabled="@panel.Disabled"
                         @onclick="() => ActivateAsync(panel)"
                         @onkeydown="args => HandleTabKeyDownAsync(panel, args)">
@@ -53,6 +57,8 @@
 
 @code {
     private readonly List<W3TabPanel> panels = [];
+
+    private W3FocusInterop? focusInterop;
 
     private W3TabPanel? ActivePanel => panels.FirstOrDefault(IsActive) ?? panels.FirstOrDefault(panel => !panel.Disabled);
 
@@ -245,18 +251,22 @@
             case "ArrowDown":
             case "Down":
                 await ActivateAdjacentAsync(1);
+                await FocusActiveTabAsync();
                 break;
             case "ArrowLeft":
             case "Left":
             case "ArrowUp":
             case "Up":
                 await ActivateAdjacentAsync(-1);
+                await FocusActiveTabAsync();
                 break;
             case "Home":
                 await ActivateBoundaryAsync(first: true);
+                await FocusActiveTabAsync();
                 break;
             case "End":
                 await ActivateBoundaryAsync(first: false);
+                await FocusActiveTabAsync();
                 break;
             case "Delete":
             case "Del":
@@ -266,6 +276,26 @@
                 }
 
                 break;
+        }
+    }
+
+    private async Task FocusActiveTabAsync()
+    {
+        var active = ActivePanel;
+        if (active is null)
+        {
+            return;
+        }
+
+        focusInterop ??= new W3FocusInterop(JS);
+        await focusInterop.FocusIdAsync(active.TabId);
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (focusInterop is not null)
+        {
+            await focusInterop.DisposeAsync();
         }
     }
 

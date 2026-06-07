@@ -1,5 +1,6 @@
 using Bunit;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using W3Css.Blazor;
 using W3Css.Blazor.Components;
 
@@ -128,6 +129,70 @@ public sealed class W3TreeViewTests
             .Add(p => p.EmptyText, "No tree nodes"));
 
         Assert.Contains("No tree nodes", empty.Find(".w3-tree-view-empty").TextContent);
+    }
+
+    [Fact]
+    public void TreeViewRendersDuplicateSiblingLabelsWithoutKeyCollision()
+    {
+        using var context = new BunitContext();
+        var nodes = new[]
+        {
+            new TreeNode("dup-1", "Folder", "Folder"),
+            new TreeNode("dup-2", "Folder", "Folder"),
+        };
+        var cut = context.Render<W3TreeView<TreeNode>>(parameters => parameters
+            .Add(p => p.Items, nodes)
+            .Add(p => p.TextSelector, node => node.Name));
+
+        Assert.Equal(2, cut.FindAll("li[role='treeitem']").Count);
+
+        // Two siblings resolve to the same value (no ValueSelector); the position
+        // based render key must keep their @keys distinct so re-rendering after a
+        // state change does not throw a duplicate key exception.
+        cut.FindAll(".w3-tree-view-label")[1].Click();
+
+        Assert.Equal(2, cut.FindAll("li[role='treeitem']").Count);
+    }
+
+    [Fact]
+    public void TreeViewSupportsKeyboardNavigationAndExpansion()
+    {
+        using var context = new BunitContext();
+        context.JSInterop.Mode = JSRuntimeMode.Loose;
+        IReadOnlyCollection<string> expanded = ["components"];
+        var cut = context.Render<W3TreeView<TreeNode>>(parameters => parameters
+            .Add(p => p.Items, Nodes)
+            .Add(p => p.TextSelector, node => node.Name)
+            .Add(p => p.ValueSelector, node => node.Id)
+            .Add(p => p.ChildrenSelector, node => node.Children)
+            .Add(p => p.ExpandedValues, expanded)
+            .Add(p => p.ExpandedValuesChanged, EventCallback.Factory.Create<IReadOnlyCollection<string>>(this, values => expanded = values)));
+
+        // Roving tabindex: the first node is the single tab stop.
+        var labels = cut.FindAll(".w3-tree-view-label");
+        Assert.Equal("0", labels[0].GetAttribute("tabindex"));
+        Assert.Equal("-1", labels[1].GetAttribute("tabindex"));
+
+        // ArrowDown moves the roving tab stop to the next visible node.
+        labels[0].KeyDown(new KeyboardEventArgs { Key = "ArrowDown" });
+        labels = cut.FindAll(".w3-tree-view-label");
+        Assert.Equal("-1", labels[0].GetAttribute("tabindex"));
+        Assert.Equal("0", labels[1].GetAttribute("tabindex"));
+
+        // ArrowLeft on a leaf child moves the tab stop back to its parent.
+        labels[1].KeyDown(new KeyboardEventArgs { Key = "ArrowLeft" });
+        labels = cut.FindAll(".w3-tree-view-label");
+        Assert.Equal("0", labels[0].GetAttribute("tabindex"));
+
+        // ArrowLeft on an expanded parent collapses it.
+        labels[0].KeyDown(new KeyboardEventArgs { Key = "ArrowLeft" });
+        Assert.DoesNotContain("components", expanded);
+        Assert.DoesNotContain("API Reference", cut.Markup);
+
+        // ArrowRight on a collapsed parent expands it again.
+        cut.FindAll(".w3-tree-view-label")[0].KeyDown(new KeyboardEventArgs { Key = "ArrowRight" });
+        Assert.Contains("components", expanded);
+        Assert.Contains("API Reference", cut.Markup);
     }
 
     private static readonly TreeNode[] Nodes =

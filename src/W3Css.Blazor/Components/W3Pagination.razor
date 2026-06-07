@@ -16,16 +16,23 @@
         </button>
     }
 
-    @for (var page = 1; page <= PageCount; page++)
+    @foreach (var page in BuildPages())
     {
-        var current = page;
-        var active = current == CurrentPage;
-        <button type="button"
-                class="@GetPageClass(active, false)"
-                aria-current="@(active ? "page" : null)"
-                @onclick="() => SelectPageAsync(current)">
-            @current
-        </button>
+        if (page is null)
+        {
+            <span class="w3-button w3-bar-item w3-disabled w3-pagination-ellipsis" aria-hidden="true">&hellip;</span>
+        }
+        else
+        {
+            var current = page.Value;
+            var active = current == CurrentPage;
+            <button type="button"
+                    class="@GetPageClass(active, false)"
+                    aria-current="@(active ? "page" : null)"
+                    @onclick="() => SelectPageAsync(current)">
+                @current
+            </button>
+        }
     }
 
     @if (ShowPreviousNext)
@@ -101,6 +108,93 @@
     /// </summary>
     [Parameter]
     public W3Color ActiveTextColor { get; set; } = W3Color.White;
+
+    /// <summary>
+    /// Number of always-visible pages at the start and end of the pager.
+    /// </summary>
+    [Parameter]
+    public int BoundaryCount { get; set; } = 1;
+
+    /// <summary>
+    /// Number of pages shown on each side of the current page.
+    /// </summary>
+    [Parameter]
+    public int SiblingCount { get; set; } = 1;
+
+    // Windowed page list: boundary pages, the current page with its siblings,
+    // and an ellipsis (null) wherever there is a gap, so a large page count does
+    // not render one button per page. Mirrors the well-known MUI pagination model.
+    private IReadOnlyList<int?> BuildPages()
+    {
+        var count = PageCount;
+
+        if (count <= 0)
+        {
+            return [];
+        }
+
+        var boundary = Math.Max(0, BoundaryCount);
+        var sibling = Math.Max(0, SiblingCount);
+        var current = Math.Clamp(CurrentPage, 1, count);
+
+        var startPages = Range(1, Math.Min(boundary, count));
+        var endPages = Range(Math.Max(count - boundary + 1, boundary + 1), count);
+
+        var siblingsStart = Math.Max(
+            Math.Min(current - sibling, count - boundary - (sibling * 2) - 1),
+            boundary + 2);
+
+        var siblingsEnd = Math.Min(
+            Math.Max(current + sibling, boundary + (sibling * 2) + 2),
+            endPages.Count > 0 ? endPages[0] - 2 : count - 1);
+
+        var pages = new List<int?>();
+        pages.AddRange(startPages.Select(page => (int?)page));
+
+        if (siblingsStart > boundary + 2)
+        {
+            pages.Add(null);
+        }
+        else if (boundary + 1 < count - boundary)
+        {
+            pages.Add(boundary + 1);
+        }
+
+        for (var page = siblingsStart; page <= siblingsEnd; page++)
+        {
+            pages.Add(page);
+        }
+
+        if (siblingsEnd < count - boundary - 1)
+        {
+            pages.Add(null);
+        }
+        else if (count - boundary > boundary)
+        {
+            pages.Add(count - boundary);
+        }
+
+        pages.AddRange(endPages.Select(page => (int?)page));
+
+        return pages;
+    }
+
+    private static List<int> Range(int start, int end)
+    {
+        if (end < start)
+        {
+            return [];
+        }
+
+        var values = new List<int>(end - start + 1);
+
+        for (var value = start; value <= end; value++)
+        {
+            values.Add(value);
+        }
+
+        return values;
+    }
 
     private string GetPageClass(bool active, bool disabled)
     {

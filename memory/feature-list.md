@@ -1,6 +1,6 @@
 # Feature List
 
-Last updated: 2026-06-04
+Last updated: 2026-06-05
 
 Status values:
 
@@ -18,7 +18,7 @@ Status values:
 | Common component base | Implemented | Supports `Class`, `Style`, and `AdditionalAttributes`. |
 | Shared style enums | Implemented | Includes color, size, roundness, card depth, alert kind, toast position, image effect, display position, visibility, cell alignment, animation, text direction, border side, border bar, padding, top padding, margin, text alignment, text style, font family, effect style, and hover effect. |
 | XML documentation | Implemented | Exported public APIs and component parameters are documented and protected by broad guard-test coverage. |
-| Package metadata | Implemented | Version targets `0.7.0` for the live gallery release; repository URL and package policy are populated in project and release metadata. |
+| Package metadata | Implemented | Version targets `0.8.0` for the polish release preparation; repository URL and package policy are populated in project and release metadata. |
 
 ## Component Category Model
 
@@ -206,7 +206,7 @@ This model is intentionally similar to mature Blazor libraries, while keeping im
 | Area | Status | Notes |
 | --- | --- | --- |
 | Overview and installation | Implemented | Core onboarding and package usage. |
-| Components index | Implemented | Categorized topics, next/previous navigation, backlog sections. |
+| Components index | Implemented | Categorized topics, next/previous navigation, and the Starter Kit -> Gallery -> Patterns -> Theming -> Versions adoption path. |
 | Component topic pages | Implemented | Current topics documented with examples, code blocks, references, and related links. |
 | API reference | Implemented | Per-component parameter tables for implemented surfaces. |
 | Patterns guide | Implemented | Top-level adoption guide with app shell dashboard, validated settings form, searchable data table, and modal/message-box workflows. |
@@ -227,8 +227,8 @@ This model is intentionally similar to mature Blazor libraries, while keeping im
 | Overlay behavior | Implemented | Modal, tooltip, toast, sidebar, focus trap, menu, overlay interactions, and backdrop composition. |
 | Content display and timeline | Implemented | Tree, chat, timeline, data table, rating, drop zone, and gallery coverage. |
 | Feedback and loading | Implemented | Spinner, skeleton, toast, file, autocomplete, and alert coverage. |
-| Package validation | Implemented | `dotnet pack` generates the current package artifact; CI uploads package artifacts, local/public package smoke passed for 0.7.0 with bundled CSS marker checks, and starter browser sweep tooling verifies the sample routes/interactions. |
-| Test count | Implemented | `dotnet test` reports 488 passing tests. |
+| Package validation | Implemented | `dotnet pack` generates the current package artifact; CI uploads package artifacts, local package smoke targets 0.8.0 with bundled CSS marker checks, public package smoke last passed for 0.7.0, and starter browser sweep tooling verifies the sample routes/interactions. |
+| Test count | Implemented | `dotnet test` reports 490 passing tests. |
 
 ## Component Compatibility Backlog
 

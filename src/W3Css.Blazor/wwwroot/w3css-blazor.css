@@ -3023,6 +3023,12 @@ span.w3-nav-menu-item[b-a4j7bqaba4] {
 .w3-toolbar-actions[b-dmndhi46k1] {
     justify-content: flex-end;
 }
+/* _content/W3Css.Blazor/Components/W3Tooltip.razor.rz.scp.css */
+/* Reveal the tooltip text when the trigger (or any focusable child) receives
+   keyboard focus, not only on pointer hover, so keyboard users can read it. */
+.w3-tooltip:focus-within .w3-text[b-jo5zavvypz] {
+    display: inline-block;
+}
 /* _content/W3Css.Blazor/Components/W3TreeView.razor.rz.scp.css */
 .w3-tree-view[b-gvu4ne3f6z] {
     list-style: none;

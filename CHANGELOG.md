@@ -2,6 +2,35 @@
 
 All notable changes to W3Css.Blazor will be documented in this file.
 
+## 0.9.0 - 2026-06-07
+
+### Robustness And Reach
+
+- Multi-targeted the package to `net8.0`, `net9.0`, and `net10.0` so LTS apps can install it, and added SourceLink, symbol packages, a package icon, warnings-as-errors in CI, and a bundle-drift gate.
+- Wired focus trapping and a reference-counted body scroll lock into `W3Modal`, `W3Drawer`, and `W3Popover` behind opt-out `TrapFocus` and `LockScroll` parameters.
+- Completed keyboard accessibility: roving tabindex with focus-follow on `W3Tabs` and `W3Stepper`, full keyboard navigation for `W3TreeView`, and a focus-revealed `role="tooltip"` for `W3Tooltip`.
+- Scaled the data grid: `W3DataTable` memoizes its filtered and sorted view and gains an `ItemKey` and selection `Comparer`, and `W3Pagination` windows page buttons with `BoundaryCount` and `SiblingCount`.
+- Hardened runtime behavior: JS teardown tolerates disconnect, `W3ToastService` is thread-safe, and `W3ThemeProvider` scopes its tokens per instance for nested themes.
+- Fixed `W3TreeView` to key nodes by position so duplicate sibling labels no longer collide on re-render.
+
+### Release Quality
+
+- Updated package metadata, README release links, versions documentation, release notes, browser sweep assertions, and memory files for 0.9.0.
+- Kept the vendored W3.CSS source unchanged and preserved existing parameter defaults.
+
+## 0.8.0 - 2026-06-05
+
+### Adoption Polish
+
+- Prepared a non-breaking polish release focused on starter-kit, gallery, patterns, theming, and release-documentation quality.
+- Fixed the starter kit release action so its visible label and toast now follow the current package version from one sample-local constant.
+- Refreshed roadmap and component-index copy around the current adoption path instead of an active component backlog.
+
+### Release Quality
+
+- Updated package metadata, README release links, versions documentation, release notes, browser sweep assertions, and memory files for 0.8.0.
+- Kept the vendored W3.CSS source unchanged.
+
 ## 0.7.0 - 2026-06-04
 
 ### Live Gallery

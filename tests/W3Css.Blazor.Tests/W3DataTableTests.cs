@@ -241,6 +241,43 @@ public sealed class W3DataTableTests
         Assert.Contains("padding: 0.75rem;", css);
     }
 
+    [Fact]
+    public void DataTableUsesCustomComparerForSelection()
+    {
+        using var context = new BunitContext();
+
+        // A different instance that is equal by Name only (different Owner/Tasks)
+        // than a row in Rows. Default record equality would not match it.
+        var selection = new[] { new ProjectRow("Borealis", "Someone else", 999) };
+        var cut = context.Render<W3DataTable<ProjectRow>>(parameters => parameters
+            .Add(p => p.Items, Rows)
+            .Add(p => p.PageSize, 0)
+            .Add(p => p.Selectable, true)
+            .Add(p => p.SelectedItems, selection)
+            .Add(p => p.Comparer, new ProjectNameComparer())
+            .Add(p => p.ChildContent, ColumnDefinitions()));
+
+        var rows = cut.FindAll("tbody tr");
+        var borealis = rows.Single(row => row.TextContent.Contains("Borealis"));
+        var other = rows.First(row => !row.TextContent.Contains("Borealis"));
+
+        Assert.Equal("true", borealis.GetAttribute("aria-selected"));
+        Assert.Equal("false", other.GetAttribute("aria-selected"));
+    }
+
+    private sealed class ProjectNameComparer : IEqualityComparer<ProjectRow>
+    {
+        public bool Equals(ProjectRow? x, ProjectRow? y)
+        {
+            return string.Equals(x?.Name, y?.Name, StringComparison.Ordinal);
+        }
+
+        public int GetHashCode(ProjectRow obj)
+        {
+            return obj.Name.GetHashCode(StringComparison.Ordinal);
+        }
+    }
+
     private static RenderFragment ColumnDefinitions()
     {
         return builder =>

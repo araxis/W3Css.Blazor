@@ -123,3 +123,4 @@ Last updated: 2026-06-05
 - The reusable action-row polish added `W3ActionRow` for forms, generic tables, list suffixes, and dialog/card-style command areas that need consistent wrapping gaps.
 - The empty-state pattern pass added `W3EmptyState`, a dedicated docs page, and `W3DataTable` zero-result/error integration for reusable app recovery states.
 - Remaining planned work is optional: visual quality sweeps and future version slices as needed.
+- The 0.9.0 "Robustness and Reach" slice is planned (development-plan Phase 14) and in progress on branch `work/0.9.0-robustness-reach`: multi-target the packable library to `net8.0;net9.0;net10.0`, add SourceLink/symbols/icon/trimming and a CI bundle-drift gate, wire focus-trap + body-scroll-lock into overlays, complete tree/tooltip keyboard accessibility, harden data-table/pagination at scale, and make toast/theme/JS-teardown robust.

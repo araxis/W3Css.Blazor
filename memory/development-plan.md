@@ -85,6 +85,17 @@ Last updated: 2026-06-05
 - Keep the starter sample source-CSS-free and keep the vendored W3.CSS source unchanged.
 - Local verification passed; publish after merge to `main`, tag `v0.8.0`, release workflow success, public feed indexing, and public package smoke.
 
+## Phase 14: Robustness And Reach (0.9.0)
+
+- 0.9.0 stays non-breaking; new behavior is additive and defaults preserve current output.
+- Distribution and reach: multi-target the packable library to `net8.0;net9.0;net10.0`, add SourceLink, symbol packages (`snupkg`), a package icon, warnings-as-errors in CI, and a CI gate that fails when the committed `w3css-blazor.css` bundle drifts from a fresh build. Full trimming/AOT annotations are deferred: the generic input components (`W3Select`, `W3SelectItem`, `W3Slider`, `W3RadioGroup`, `W3NumberInput`) use the same `BindConverter` pattern as the framework's own `InputBase<TValue>`, which raises IL2091 without `[DynamicallyAccessedMembers]` on `TValue`; annotating it needs code-behind partials and would push a viral generic constraint onto consumers, so it belongs in its own slice rather than an over-promised `IsTrimmable`.
+- Overlay accessibility: wire the existing `W3FocusTrap` and a reference-counted body-scroll-lock into `W3Modal`, `W3Drawer`, and `W3Popover` behind opt-out parameters that default to on; preserve existing Escape/backdrop behavior.
+- Accessibility completion: add keyboard navigation to `W3TreeView`, roving tabindex to `W3Tabs`/`W3Stepper`, and focus/`role="tooltip"` semantics to `W3Tooltip`.
+- Performance at scale: memoize the `W3DataTable` filtered/sorted view, add optional virtualization and a key/comparer hook, and window `W3Pagination` page buttons with ellipsis.
+- Runtime robustness: guard JS teardown against disconnect, make `W3ToastService` thread-safe, and add instance-scoped `W3ThemeProvider` tokens for nested themes.
+- Sequencing: distribution/multi-target first (validates every later change across all target frameworks), then overlay accessibility, accessibility completion, performance, runtime robustness, then release close-out.
+- Close-out: 0.9.0 release notes, changelog, README links, Versions docs, release-quality version guard, memory sync, package consumer smoke (including a net8 consumer), docs and starter browser sweeps, then tag `v0.9.0`.
+
 ## Current Status Check
 
 - Verification now passes on the current HEAD:

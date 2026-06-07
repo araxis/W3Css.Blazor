@@ -14,6 +14,7 @@ public sealed class W3NavigationTests
     public void TabsRenderActivePanelAndSwitchOnClick()
     {
         using var context = new BunitContext();
+        context.JSInterop.Mode = JSRuntimeMode.Loose;
         var active = "overview";
         var cut = context.Render<W3Tabs>(parameters => parameters
             .Add(p => p.ActiveValue, active)
@@ -70,6 +71,7 @@ public sealed class W3NavigationTests
     public void TabsSupportKeyboardNavigationAcrossEnabledTabs()
     {
         using var context = new BunitContext();
+        context.JSInterop.Mode = JSRuntimeMode.Loose;
         var active = "overview";
         var cut = context.Render<W3Tabs>(parameters => parameters
             .Add(p => p.ActiveValue, active)
@@ -110,12 +112,17 @@ public sealed class W3NavigationTests
 
         overviewTab.KeyDown(new KeyboardEventArgs { Key = "Home" });
         Assert.Equal("overview", active);
+
+        var tabButtons = cut.FindAll("button[role='tab']");
+        Assert.Equal("0", tabButtons[0].GetAttribute("tabindex"));
+        Assert.Equal("-1", tabButtons[2].GetAttribute("tabindex"));
     }
 
     [Fact]
     public void TabsDeleteKeyClosesCloseableFocusedTab()
     {
         using var context = new BunitContext();
+        context.JSInterop.Mode = JSRuntimeMode.Loose;
         string? closed = null;
         var cut = context.Render<W3Tabs>(parameters => parameters
             .Add(p => p.ActiveValue, "overview")
@@ -145,6 +152,7 @@ public sealed class W3NavigationTests
     public void AccordionRendersWrapperClasses()
     {
         using var context = new BunitContext();
+        context.JSInterop.Mode = JSRuntimeMode.Loose;
         var cut = context.Render<W3Accordion>(parameters => parameters
             .Add(p => p.Color, W3Color.White)
             .Add(p => p.TextColor, W3Color.Black)
@@ -166,6 +174,7 @@ public sealed class W3NavigationTests
     public void AccordionItemTogglesExpandedState()
     {
         using var context = new BunitContext();
+        context.JSInterop.Mode = JSRuntimeMode.Loose;
         var expanded = false;
         var cut = context.Render<W3AccordionItem>(parameters => parameters
             .Add(p => p.Title, "Section")
@@ -201,6 +210,7 @@ public sealed class W3NavigationTests
     public void DropdownTogglesContentVisibility()
     {
         using var context = new BunitContext();
+        context.JSInterop.Mode = JSRuntimeMode.Loose;
         var open = false;
         var cut = context.Render<W3Dropdown>(parameters => parameters
             .Add(p => p.Label, "Menu")
@@ -245,6 +255,7 @@ public sealed class W3NavigationTests
     public void DropdownClosesFromOutsideClickLayer()
     {
         using var context = new BunitContext();
+        context.JSInterop.Mode = JSRuntimeMode.Loose;
         var open = true;
         var cut = context.Render<W3Dropdown>(parameters => parameters
             .Add(p => p.Label, "Menu")
@@ -266,6 +277,7 @@ public sealed class W3NavigationTests
     public void DropdownSupportsKeyboardOpenAndEscapeClose()
     {
         using var context = new BunitContext();
+        context.JSInterop.Mode = JSRuntimeMode.Loose;
         context.JSInterop.Mode = JSRuntimeMode.Loose;
 
         var open = false;
@@ -300,6 +312,7 @@ public sealed class W3NavigationTests
     public void MenuRendersCommandItemsAndClosesOnSelection()
     {
         using var context = new BunitContext();
+        context.JSInterop.Mode = JSRuntimeMode.Loose;
         var open = false;
         var clicked = false;
 
@@ -393,6 +406,7 @@ public sealed class W3NavigationTests
     public void MenuItemSupportsHrefDenseEndContentAndCloseOptOut()
     {
         using var context = new BunitContext();
+        context.JSInterop.Mode = JSRuntimeMode.Loose;
         var open = false;
         var clicked = false;
 
@@ -441,6 +455,7 @@ public sealed class W3NavigationTests
     public void MenuSupportsKeyboardNavigationAcrossSelectableItems()
     {
         using var context = new BunitContext();
+        context.JSInterop.Mode = JSRuntimeMode.Loose;
         context.JSInterop.Mode = JSRuntimeMode.Loose;
 
         var open = false;
@@ -523,6 +538,7 @@ public sealed class W3NavigationTests
     {
         using var context = new BunitContext();
         context.JSInterop.Mode = JSRuntimeMode.Loose;
+        context.JSInterop.Mode = JSRuntimeMode.Loose;
 
         var cut = context.Render<W3Menu>(parameters => parameters
             .Add(p => p.Label, "Landing page actions")
@@ -552,6 +568,7 @@ public sealed class W3NavigationTests
     public void NavbarRendersActiveMobileItemsAndChangesActiveValue()
     {
         using var context = new BunitContext();
+        context.JSInterop.Mode = JSRuntimeMode.Loose;
         var active = "home";
         var cut = context.Render<W3Navbar>(parameters => parameters
             .Add(p => p.Label, "Primary")
@@ -611,6 +628,7 @@ public sealed class W3NavigationTests
     public void NavbarItemCanRenderDisabledButton()
     {
         using var context = new BunitContext();
+        context.JSInterop.Mode = JSRuntimeMode.Loose;
         var clicked = false;
         var cut = context.Render<W3NavbarItem>(parameters => parameters
             .Add(p => p.Value, "save")
@@ -642,6 +660,7 @@ public sealed class W3NavigationTests
     public void NavbarComposesDropdownWithMobileItems()
     {
         using var context = new BunitContext();
+        context.JSInterop.Mode = JSRuntimeMode.Loose;
         var open = false;
         var cut = context.Render<W3Navbar>(parameters => parameters
             .Add(p => p.Mobile, true)
@@ -683,6 +702,7 @@ public sealed class W3NavigationTests
     public void NavMenuRendersGroupedLinksHeaderAndActiveItem()
     {
         using var context = new BunitContext();
+        context.JSInterop.Mode = JSRuntimeMode.Loose;
         var cut = context.Render<W3NavMenu>(parameters => parameters
             .Add(p => p.Label, "Workspace")
             .Add(p => p.Border, true)
@@ -744,6 +764,7 @@ public sealed class W3NavigationTests
     public void NavMenuGroupTogglesAndButtonItemClicks()
     {
         using var context = new BunitContext();
+        context.JSInterop.Mode = JSRuntimeMode.Loose;
         var expanded = false;
         var clicked = false;
         var cut = context.Render<W3NavMenu>(parameters => parameters
@@ -781,6 +802,7 @@ public sealed class W3NavigationTests
     public void NavMenuItemDisabledLinkRendersNonInteractiveText()
     {
         using var context = new BunitContext();
+        context.JSInterop.Mode = JSRuntimeMode.Loose;
         var cut = context.Render<W3NavMenuItem>(parameters => parameters
             .Add(p => p.Href, "components")
             .Add(p => p.Disabled, true)
@@ -798,6 +820,7 @@ public sealed class W3NavigationTests
     public void NavMenuItemEmptyHrefTargetsApplicationRoot()
     {
         using var context = new BunitContext();
+        context.JSInterop.Mode = JSRuntimeMode.Loose;
         var navigation = context.Services.GetRequiredService<NavigationManager>();
         var cut = context.Render<W3NavMenuItem>(parameters => parameters
             .Add(p => p.Href, string.Empty)
@@ -825,6 +848,7 @@ public sealed class W3NavigationTests
     public void BottomNavigationRendersActiveItemAndChangesValue()
     {
         using var context = new BunitContext();
+        context.JSInterop.Mode = JSRuntimeMode.Loose;
         var value = "home";
         var clicked = false;
         var cut = context.Render<W3BottomNavigation>(parameters => parameters
@@ -894,6 +918,7 @@ public sealed class W3NavigationTests
     public void BottomNavigationSupportsLinksHiddenLabelsAndDisabledItems()
     {
         using var context = new BunitContext();
+        context.JSInterop.Mode = JSRuntimeMode.Loose;
         var cut = context.Render<W3BottomNavigation>(parameters => parameters
             .Add(p => p.ShowLabels, false)
             .Add(p => p.Value, "components")
@@ -942,6 +967,7 @@ public sealed class W3NavigationTests
     public void BottomNavigationSupportsKeyboardNavigationAcrossSelectableItems()
     {
         using var context = new BunitContext();
+        context.JSInterop.Mode = JSRuntimeMode.Loose;
         var value = "home";
         var cut = context.Render<W3BottomNavigation>(parameters => parameters
             .Add(p => p.Value, value)
@@ -991,6 +1017,7 @@ public sealed class W3NavigationTests
     public void BreadcrumbRendersSemanticLinksAndCurrentItem()
     {
         using var context = new BunitContext();
+        context.JSInterop.Mode = JSRuntimeMode.Loose;
         var cut = context.Render<W3Breadcrumb>(parameters => parameters
             .Add(p => p.Label, "Project path")
             .Add(p => p.Separator, ">")
@@ -1044,6 +1071,7 @@ public sealed class W3NavigationTests
     public void BreadcrumbItemCanRenderDisabledTextAndButtonLinks()
     {
         using var context = new BunitContext();
+        context.JSInterop.Mode = JSRuntimeMode.Loose;
         var clicked = false;
         var cut = context.Render<W3Breadcrumb>(parameters => parameters
             .Add(p => p.ChildContent, builder =>
@@ -1085,6 +1113,7 @@ public sealed class W3NavigationTests
     public void PaginationChangesPage()
     {
         using var context = new BunitContext();
+        context.JSInterop.Mode = JSRuntimeMode.Loose;
         var page = 2;
         var cut = context.Render<W3Pagination>(parameters => parameters
             .Add(p => p.PageCount, 4)
@@ -1119,6 +1148,7 @@ public sealed class W3NavigationTests
     public void PaginationSupportsKeyboardNavigation()
     {
         using var context = new BunitContext();
+        context.JSInterop.Mode = JSRuntimeMode.Loose;
         var page = 2;
         var cut = context.Render<W3Pagination>(parameters => parameters
             .Add(p => p.PageCount, 4)
@@ -1151,6 +1181,7 @@ public sealed class W3NavigationTests
     public void ProgressRendersClampedWidthAndLabel()
     {
         using var context = new BunitContext();
+        context.JSInterop.Mode = JSRuntimeMode.Loose;
         var cut = context.Render<W3Progress>(parameters => parameters
             .Add(p => p.Value, 125)
             .Add(p => p.Max, 100)
@@ -1180,6 +1211,7 @@ public sealed class W3NavigationTests
     public void ProgressUsesEmptyBarClassAtZero()
     {
         using var context = new BunitContext();
+        context.JSInterop.Mode = JSRuntimeMode.Loose;
         var cut = context.Render<W3Progress>(parameters => parameters
             .Add(p => p.Value, 0)
             .Add(p => p.ShowLabel, true));

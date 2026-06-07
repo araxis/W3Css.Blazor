@@ -1,6 +1,9 @@
 @using System.Globalization
+@using Microsoft.JSInterop
 @using W3Css.Blazor.Internal
 @inherits W3ComponentBase
+@implements IAsyncDisposable
+@inject IJSRuntime JS
 
 <CascadingValue Value="this" IsFixed="true">
     <section @attributes="AdditionalAttributes"
@@ -32,6 +35,7 @@
                         role="listitem">
                         <button type="button"
                                 id="@step.StepId"
+                                tabindex="@(active ? 0 : -1)"
                                 class="@GetButtonCssClass(active, completed, error)"
                                 disabled="@(!canActivate)"
                                 aria-current="@GetAriaCurrent(active)"
@@ -75,6 +79,8 @@
 
 @code {
     private readonly List<W3Step> steps = [];
+
+    private W3FocusInterop? focusInterop;
 
     private W3Step? ActiveStep => steps.FirstOrDefault(IsActive) ?? steps.FirstOrDefault(step => !step.Disabled);
 
@@ -390,19 +396,43 @@
             case "ArrowDown":
             case "Down":
                 await ActivateAdjacentAsync(step, 1);
+                await FocusActiveStepAsync();
                 break;
             case "ArrowLeft":
             case "Left":
             case "ArrowUp":
             case "Up":
                 await ActivateAdjacentAsync(step, -1);
+                await FocusActiveStepAsync();
                 break;
             case "Home":
                 await ActivateBoundaryAsync(first: true);
+                await FocusActiveStepAsync();
                 break;
             case "End":
                 await ActivateBoundaryAsync(first: false);
+                await FocusActiveStepAsync();
                 break;
+        }
+    }
+
+    private async Task FocusActiveStepAsync()
+    {
+        var active = ActiveStep;
+        if (active is null)
+        {
+            return;
+        }
+
+        focusInterop ??= new W3FocusInterop(JS);
+        await focusInterop.FocusIdAsync(active.StepId);
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (focusInterop is not null)
+        {
+            await focusInterop.DisposeAsync();
         }
     }
 

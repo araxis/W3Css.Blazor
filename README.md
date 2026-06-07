@@ -124,7 +124,7 @@ The sample uses a local project reference during development and the same bundle
 - [Patterns](src/W3Css.Blazor.Docs/Pages/Patterns.razor): complete dashboard, form, table, and modal workflows.
 - [Theming](src/W3Css.Blazor.Docs/Pages/ComponentTopics/ThemingPage.razor): brand tokens, dark surfaces, and focus/status colors.
 - [Versions](src/W3Css.Blazor.Docs/Pages/ComponentTopics/VersionsPage.razor): package version, bundled stylesheet paths, and upgrade checks.
-- [0.8.0 release notes](docs/release-notes/0.8.0.md): polish release details.
+- [0.9.0 release notes](docs/release-notes/0.9.0.md): robustness and reach release details.
 - [Package smoke script](tools/package-consumer-smoke.ps1): clean consumer-app package validation.
 
 ## Repository Layout

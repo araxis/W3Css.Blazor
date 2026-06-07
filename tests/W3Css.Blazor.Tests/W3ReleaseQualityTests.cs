@@ -4,7 +4,7 @@ namespace W3Css.Blazor.Tests;
 
 public sealed class W3ReleaseQualityTests
 {
-    private const string CurrentVersion = "0.8.0";
+    private const string CurrentVersion = "0.9.0";
 
     [Fact]
     public void ReadmeDocumentsCurrentAppPrimitivesAndBranchFlow()
@@ -44,7 +44,7 @@ public sealed class W3ReleaseQualityTests
 
         Assert.Contains($"<Version>{CurrentVersion}</Version>", project);
         Assert.Contains($"docs/release-notes/{CurrentVersion}.md", project);
-        Assert.Contains($"## {CurrentVersion} - 2026-06-05", changelog);
+        Assert.Contains($"## {CurrentVersion} - 2026-06-07", changelog);
         Assert.True(File.Exists(releaseNotesPath), $"Release notes file is missing: {releaseNotesPath}");
     }
 
@@ -229,7 +229,7 @@ public sealed class W3ReleaseQualityTests
         Assert.Contains("consoleErrors", sweep);
         Assert.Contains("scrollWidth", sweep);
         Assert.Contains("Theme mode:", sweep);
-        Assert.Contains("0.8.0 Ready", sweep);
+        Assert.Contains("0.9.0 Ready", sweep);
         Assert.Contains("Starter kit release path is wired.", sweep);
         Assert.Contains("button[aria-controls=\"starter-sidebar\"]", sweep);
         Assert.Contains("Dashboard data refreshed.", sweep);

@@ -25,7 +25,7 @@
 
     <DocExample Title="Packaged Stylesheet" Description="Consumers should reference the package static web asset instead of a floating CDN URL." Code="@PackagedStylesheetCode">
         <W3Panel Color="W3Color.PaleBlue" TextColor="W3Color.Black" LeftBar="true" Border="true" Round="W3Round.Medium">
-            <p>The NuGet package version is `0.8.0` and the bundled W3.CSS file is served from the package static asset path.</p>
+            <p>The NuGet package version is `0.9.0` and the bundled W3.CSS file is served from the package static asset path.</p>
             <p>The current vendored stylesheet header identifies W3.CSS 5.01 dated March 11 2026.</p>
         </W3Panel>
     </DocExample>
@@ -39,7 +39,7 @@
                 <tr><td>Build</td><td>`dotnet build W3Css.Blazor.slnx --configuration Release /nr:false`</td></tr>
                 <tr><td>Tests</td><td>`dotnet test W3Css.Blazor.slnx --configuration Release --no-build /nr:false`</td></tr>
                 <tr><td>Package</td><td>`dotnet pack src/W3Css.Blazor/W3Css.Blazor.csproj --configuration Release --no-build --output artifacts/packages /nr:false`</td></tr>
-                <tr><td>Package smoke</td><td>`pwsh ./tools/package-consumer-smoke.ps1 -PackageVersion 0.8.0 -PackageSource artifacts/packages`</td></tr>
+                <tr><td>Package smoke</td><td>`pwsh ./tools/package-consumer-smoke.ps1 -PackageVersion 0.9.0 -PackageSource artifacts/packages`</td></tr>
                 <tr><td>Docs browser sweep</td><td>`pwsh ./tools/docs-browser-sweep.ps1 -BaseUrl http://localhost:5036 -StartServer`</td></tr>
                 <tr><td>Starter browser sweep</td><td>`pwsh ./tools/starter-browser-sweep.ps1 -BaseUrl http://localhost:5038 -StartServer`</td></tr>
             </tbody>
@@ -142,7 +142,7 @@
     private const string PackagedStylesheetCode = """
 <link rel="stylesheet" href="_content/W3Css.Blazor/w3css/5/w3.css" />
 
-<!-- Package: W3Css.Blazor 0.8.0 -->
+<!-- Package: W3Css.Blazor 0.9.0 -->
 <!-- Bundled stylesheet: W3.CSS 5.01 March 11 2026 -->
 """;
 
@@ -150,7 +150,7 @@
 dotnet build W3Css.Blazor.slnx --configuration Release /nr:false
 dotnet test W3Css.Blazor.slnx --configuration Release --no-build /nr:false
 dotnet pack src/W3Css.Blazor/W3Css.Blazor.csproj --configuration Release --no-build --output artifacts/packages /nr:false
-pwsh ./tools/package-consumer-smoke.ps1 -PackageVersion 0.8.0 -PackageSource artifacts/packages
+pwsh ./tools/package-consumer-smoke.ps1 -PackageVersion 0.9.0 -PackageSource artifacts/packages
 pwsh ./tools/docs-browser-sweep.ps1 -BaseUrl http://localhost:5036 -StartServer
 pwsh ./tools/starter-browser-sweep.ps1 -BaseUrl http://localhost:5038 -StartServer
 """;

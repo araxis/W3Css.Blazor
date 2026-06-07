@@ -29,11 +29,12 @@ jobs:
 
       - name: Verify bundled stylesheet is not stale
         run: |
-          # The build regenerates the committed bundle. Scoped-CSS scope ids
-          # (b-XXXX) are not stable across build environments, so compare the CSS
-          # content with those ids removed to catch real staleness without
+          # The build regenerates the committed bundle. Blazor scoped-css scope
+          # ids (b-XXXX, used in both [b-XXXX] selectors and -b-XXXX keyframe and
+          # animation names) are not stable across build environments, so compare
+          # the CSS content with those ids removed to catch real staleness without
           # flagging environment-specific hashes.
-          strip='s/\[b-[a-z0-9]+\]//g'
+          strip='s/\[b-[a-z0-9]+\]//g; s/-b-[a-z0-9]+//g'
           git show HEAD:src/W3Css.Blazor/wwwroot/w3css-blazor.css | sed -E "$strip" > /tmp/bundle-committed.css
           sed -E "$strip" src/W3Css.Blazor/wwwroot/w3css-blazor.css > /tmp/bundle-built.css
           diff /tmp/bundle-committed.css /tmp/bundle-built.css

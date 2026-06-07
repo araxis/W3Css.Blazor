@@ -28,7 +28,15 @@ jobs:
         run: dotnet build W3Css.Blazor.slnx --configuration Release --no-restore
 
       - name: Verify bundled stylesheet is not stale
-        run: git diff --exit-code -- src/W3Css.Blazor/wwwroot/w3css-blazor.css
+        run: |
+          # The build regenerates the committed bundle. Scoped-CSS scope ids
+          # (b-XXXX) are not stable across build environments, so compare the CSS
+          # content with those ids removed to catch real staleness without
+          # flagging environment-specific hashes.
+          strip='s/\[b-[a-z0-9]+\]//g'
+          git show HEAD:src/W3Css.Blazor/wwwroot/w3css-blazor.css | sed -E "$strip" > /tmp/bundle-committed.css
+          sed -E "$strip" src/W3Css.Blazor/wwwroot/w3css-blazor.css > /tmp/bundle-built.css
+          diff /tmp/bundle-committed.css /tmp/bundle-built.css
 
       - name: Test
         run: dotnet test W3Css.Blazor.slnx --configuration Release --no-build --logger trx

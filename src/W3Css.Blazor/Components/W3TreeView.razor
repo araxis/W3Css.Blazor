@@ -1,11 +1,17 @@
 @typeparam TItem
 @using System.Globalization
 @using Microsoft.AspNetCore.Components.Rendering
+@using Microsoft.JSInterop
 @using W3Css.Blazor.Internal
 @inherits W3ComponentBase
+@implements IAsyncDisposable
+@inject IJSRuntime JS
 
 @{
     var rootItems = RootItems;
+    visibleNodes.Clear();
+    BuildVisibleNodes(rootItems, 1, null);
+    effectiveFocusedKey = ResolveFocusedKey();
 }
 
 <ul @attributes="AdditionalAttributes"
@@ -27,6 +33,12 @@
     private readonly HashSet<string> expandedValues = new(StringComparer.Ordinal);
     private IReadOnlyCollection<string>? previousExpandedValues;
     private bool initializedExpansion;
+
+    private readonly string treeId = $"w3-tree-{Guid.NewGuid():N}";
+    private readonly List<TreeNodeInfo> visibleNodes = [];
+    private string? focusedKey;
+    private string? effectiveFocusedKey;
+    private W3FocusInterop? focusInterop;
 
     private IReadOnlyList<TItem> RootItems => Items?.ToArray() ?? [];
 
@@ -321,7 +333,7 @@
             builder.CloseElement();
         }
 
-        AddLabel(builder, ref sequence, item, selected, disabled);
+        AddLabel(builder, ref sequence, item, nodeKey, selected, disabled);
 
         builder.CloseElement();
 
@@ -350,6 +362,7 @@
         builder.OpenElement(sequence++, "button");
         builder.AddAttribute(sequence++, "type", "button");
         builder.AddAttribute(sequence++, "class", GetToggleCssClass());
+        builder.AddAttribute(sequence++, "tabindex", "-1");
         builder.AddAttribute(sequence++, "aria-label", $"{(expanded ? "Collapse" : "Expand")} {text}");
         builder.AddAttribute(sequence++, "disabled", disabled);
         builder.AddAttribute(sequence++, "onclick", EventCallback.Factory.Create<MouseEventArgs>(this, (_)
@@ -358,7 +371,7 @@
         builder.CloseElement();
     }
 
-    private void AddLabel(RenderTreeBuilder builder, ref int sequence, TItem item, bool selected, bool disabled)
+    private void AddLabel(RenderTreeBuilder builder, ref int sequence, TItem item, string nodeKey, bool selected, bool disabled)
     {
         var href = HrefSelector?.Invoke(item);
         var target = TargetSelector?.Invoke(item);
@@ -377,9 +390,13 @@
             builder.AddAttribute(sequence++, "disabled", disabled);
         }
 
+        builder.AddAttribute(sequence++, "id", NodeDomId(nodeKey));
         builder.AddAttribute(sequence++, "class", GetLabelCssClass(selected));
+        builder.AddAttribute(sequence++, "tabindex", IsFocused(nodeKey) ? "0" : "-1");
         builder.AddAttribute(sequence++, "onclick", EventCallback.Factory.Create<MouseEventArgs>(this, (_)
-            => SelectItemAsync(item)));
+            => OnLabelClickAsync(nodeKey, item)));
+        builder.AddAttribute(sequence++, "onkeydown", EventCallback.Factory.Create<KeyboardEventArgs>(this, args
+            => HandleNodeKeyDownAsync(nodeKey, args)));
         AddLabelContent(builder, ref sequence, item);
         builder.CloseElement();
     }
@@ -555,4 +572,193 @@
             .Add(LabelClass)
             .ToString();
     }
+
+    private void BuildVisibleNodes(IEnumerable<TItem> items, int level, string? parentKey)
+    {
+        var index = 0;
+
+        foreach (var item in items)
+        {
+            var nodeKey = BuildNodeKey(parentKey, index);
+            index++;
+
+            var value = GetItemValue(item);
+            var children = GetChildren(item);
+            var hasChildren = children.Count > 0;
+            var expanded = hasChildren && expandedValues.Contains(value);
+
+            visibleNodes.Add(new TreeNodeInfo(nodeKey, value, level, hasChildren, expanded, IsDisabled(item), parentKey));
+
+            if (hasChildren && expanded)
+            {
+                BuildVisibleNodes(children, level + 1, nodeKey);
+            }
+        }
+    }
+
+    private string? ResolveFocusedKey()
+    {
+        if (focusedKey is not null)
+        {
+            var current = visibleNodes.FirstOrDefault(node => node.Key == focusedKey);
+
+            if (current is not null && !current.Disabled)
+            {
+                return focusedKey;
+            }
+        }
+
+        var selected = visibleNodes.FirstOrDefault(node => !node.Disabled && IsSelected(node.Value));
+
+        return selected?.Key ?? visibleNodes.FirstOrDefault(node => !node.Disabled)?.Key;
+    }
+
+    private bool IsFocused(string nodeKey)
+    {
+        return string.Equals(nodeKey, effectiveFocusedKey, StringComparison.Ordinal);
+    }
+
+    private string NodeDomId(string nodeKey)
+    {
+        return $"{treeId}-node-{nodeKey.Replace('/', '-')}";
+    }
+
+    private Task OnLabelClickAsync(string nodeKey, TItem item)
+    {
+        focusedKey = nodeKey;
+        return SelectItemAsync(item);
+    }
+
+    private async Task HandleNodeKeyDownAsync(string nodeKey, KeyboardEventArgs args)
+    {
+        var index = visibleNodes.FindIndex(node => node.Key == nodeKey);
+
+        if (index < 0)
+        {
+            return;
+        }
+
+        var node = visibleNodes[index];
+        focusedKey = nodeKey;
+
+        switch (args.Key)
+        {
+            case "ArrowDown":
+            case "Down":
+                await FocusNodeAtAsync(NextFocusableIndex(index, 1));
+                break;
+            case "ArrowUp":
+            case "Up":
+                await FocusNodeAtAsync(NextFocusableIndex(index, -1));
+                break;
+            case "ArrowRight":
+            case "Right":
+                if (node.HasChildren && !node.Expanded)
+                {
+                    await SetExpandedAsync(node.Value, true);
+                }
+                else if (node.HasChildren && node.Expanded)
+                {
+                    await FocusNodeAtAsync(NextFocusableIndex(index, 1));
+                }
+
+                break;
+            case "ArrowLeft":
+            case "Left":
+                if (node.HasChildren && node.Expanded)
+                {
+                    await SetExpandedAsync(node.Value, false);
+                }
+                else
+                {
+                    await FocusNodeKeyAsync(node.ParentKey);
+                }
+
+                break;
+            case "Home":
+                await FocusNodeAtAsync(FirstFocusableIndex());
+                break;
+            case "End":
+                await FocusNodeAtAsync(LastFocusableIndex());
+                break;
+        }
+    }
+
+    private int NextFocusableIndex(int from, int direction)
+    {
+        for (var i = from + direction; i >= 0 && i < visibleNodes.Count; i += direction)
+        {
+            if (!visibleNodes[i].Disabled)
+            {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    private int FirstFocusableIndex()
+    {
+        return visibleNodes.FindIndex(node => !node.Disabled);
+    }
+
+    private int LastFocusableIndex()
+    {
+        return visibleNodes.FindLastIndex(node => !node.Disabled);
+    }
+
+    private async Task FocusNodeAtAsync(int index)
+    {
+        if (index < 0 || index >= visibleNodes.Count)
+        {
+            return;
+        }
+
+        var key = visibleNodes[index].Key;
+        focusedKey = key;
+        focusInterop ??= new W3FocusInterop(JS);
+        await focusInterop.FocusIdAsync(NodeDomId(key));
+    }
+
+    private async Task FocusNodeKeyAsync(string? nodeKey)
+    {
+        if (nodeKey is null)
+        {
+            return;
+        }
+
+        var index = visibleNodes.FindIndex(node => node.Key == nodeKey);
+
+        if (index >= 0)
+        {
+            await FocusNodeAtAsync(index);
+        }
+    }
+
+    private async Task SetExpandedAsync(string value, bool expanded)
+    {
+        var changed = expanded ? expandedValues.Add(value) : expandedValues.Remove(value);
+
+        if (changed)
+        {
+            await ExpandedValuesChanged.InvokeAsync(expandedValues.ToArray());
+        }
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (focusInterop is not null)
+        {
+            await focusInterop.DisposeAsync();
+        }
+    }
+
+    private sealed record TreeNodeInfo(
+        string Key,
+        string Value,
+        int Level,
+        bool HasChildren,
+        bool Expanded,
+        bool Disabled,
+        string? ParentKey);
 }

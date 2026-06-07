@@ -95,6 +95,7 @@ Last updated: 2026-06-05
 - Runtime robustness: guard JS teardown against disconnect, make `W3ToastService` thread-safe, and add instance-scoped `W3ThemeProvider` tokens for nested themes.
 - Sequencing: distribution/multi-target first (validates every later change across all target frameworks), then overlay accessibility, accessibility completion, performance, runtime robustness, then release close-out.
 - Close-out: 0.9.0 release notes, changelog, README links, Versions docs, release-quality version guard, memory sync, package consumer smoke (including a net8 consumer), docs and starter browser sweeps, then tag `v0.9.0`.
+- Local verification passed (build across net8/9/10, full test suite, pack, and package consumer smoke for 0.9.0); publish after merge to `main`, tag `v0.9.0`, release workflow success, public feed indexing, and public package smoke.
 
 ## Current Status Check
 

@@ -125,4 +125,18 @@ public sealed class W3ToastTests
         Assert.True(actionRan);
         cut.WaitForAssertion(() => Assert.Empty(service.Toasts));
     }
+
+    [Fact]
+    public void ToastServiceIsSafeUnderConcurrentMutations()
+    {
+        var service = new W3ToastService();
+
+        Parallel.For(0, 500, _ => service.Show("toast"));
+
+        Assert.Equal(500, service.Toasts.Count);
+
+        Parallel.ForEach(service.Toasts.ToArray(), toast => service.Dismiss(toast.Id));
+
+        Assert.Empty(service.Toasts);
+    }
 }

@@ -6,6 +6,7 @@
 <div @attributes="AdditionalAttributes"
      class="@CssClass"
      style="@Style"
+     data-w3-theme-id="@themeId"
      data-w3-dark="@DarkAttribute">
     <CascadingValue Value="ActiveTheme" IsFixed="false">
         @ChildContent
@@ -13,6 +14,11 @@
 </div>
 
 @code {
+    // Scopes the emitted CSS variables to this provider instance so nested or
+    // sibling providers can carry different themes instead of the last one in
+    // DOM order overriding every `.w3-theme-root` globally.
+    private readonly string themeId = $"w3-theme-{Guid.NewGuid():N}";
+
     // Owns the token layer W3.CSS lacks: emits CSS custom properties from the
     // theme and the small set of token utility classes (.w3-primary, .w3-surface,
     // ...) that resolve those variables. One W3Theme drives every themed component.
@@ -49,10 +55,11 @@
             // stylesheet (_content/W3Css.Blazor/w3-theme.css), so tokens also work
             // with sensible defaults when no provider is present.
             var dark = Theme.Dark ?? W3Theme.DefaultDark;
+            var scope = $".w3-theme-root[data-w3-theme-id='{themeId}']";
             var builder = new StringBuilder();
             builder.Append("<style>");
-            builder.Append(".w3-theme-root{").Append(Variables(Theme)).Append("font-family:").Append(Theme.FontFamily).Append(";}");
-            builder.Append(".w3-theme-root[data-w3-dark='true']{").Append(Variables(dark)).Append('}');
+            builder.Append(scope).Append('{').Append(Variables(Theme)).Append("font-family:").Append(Theme.FontFamily).Append(";}");
+            builder.Append(scope).Append("[data-w3-dark='true']{").Append(Variables(dark)).Append('}');
             builder.Append("</style>");
             return builder.ToString();
         }

@@ -16,9 +16,7 @@
 @code {
     private ElementReference RootElement { get; set; }
 
-    private IJSObjectReference? Module { get; set; }
-
-    private IJSObjectReference? FocusTrapReference { get; set; }
+    private W3FocusTrapInterop? focusTrap;
 
     private string CssClass => BuildClass("w3-focus-trap");
 
@@ -66,36 +64,15 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        Module ??= await JS.InvokeAsync<IJSObjectReference>("import", "./_content/W3Css.Blazor/w3FocusTrap.js");
-
-        var options = new
-        {
-            active = Active,
-            autoFocus = AutoFocus,
-            restoreFocus = RestoreFocus,
-            initialFocusSelector = InitialFocusSelector
-        };
-
-        if (FocusTrapReference is null)
-        {
-            FocusTrapReference = await Module.InvokeAsync<IJSObjectReference>("connect", RootElement, options);
-            return;
-        }
-
-        await FocusTrapReference.InvokeVoidAsync("update", options);
+        focusTrap ??= new W3FocusTrapInterop(JS);
+        await focusTrap.SyncAsync(RootElement, Active, AutoFocus, RestoreFocus, InitialFocusSelector);
     }
 
     public async ValueTask DisposeAsync()
     {
-        if (FocusTrapReference is not null)
+        if (focusTrap is not null)
         {
-            await FocusTrapReference.InvokeVoidAsync("dispose");
-            await FocusTrapReference.DisposeAsync();
-        }
-
-        if (Module is not null)
-        {
-            await Module.DisposeAsync();
+            await focusTrap.DisposeAsync();
         }
     }
 }

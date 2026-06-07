@@ -46,8 +46,12 @@ public sealed class W3ThemeTests
             })
             .Add(p => p.ChildContent, "content"));
 
+        var root = cut.Find("div.w3-theme-root");
+        var themeId = root.GetAttribute("data-w3-theme-id");
         var markup = cut.Markup;
-        Assert.Contains(".w3-theme-root{", markup);
+
+        Assert.False(string.IsNullOrEmpty(themeId));
+        Assert.Contains($".w3-theme-root[data-w3-theme-id='{themeId}']{{", markup);
         Assert.Contains("--w3-primary:#abcdef", markup);
         Assert.Contains("--w3-surface:#101010", markup);
         Assert.Contains("--w3-success:#009944", markup);
@@ -58,8 +62,6 @@ public sealed class W3ThemeTests
         Assert.Contains("--w3-focus-color:#fedcba", markup);
         Assert.Contains("--w3-focus-width:3px", markup);
         Assert.Contains("--w3-focus-offset:4px", markup);
-
-        var root = cut.Find("div.w3-theme-root");
         Assert.False(root.HasAttribute("data-w3-dark"));
         Assert.Contains("content", root.TextContent);
     }
@@ -74,10 +76,39 @@ public sealed class W3ThemeTests
             .Add(p => p.Dark, true)
             .Add(p => p.ChildContent, "x"));
 
-        Assert.Equal("true", cut.Find("div.w3-theme-root").GetAttribute("data-w3-dark"));
-        Assert.Contains(".w3-theme-root[data-w3-dark='true']{", cut.Markup);
+        var root = cut.Find("div.w3-theme-root");
+        var themeId = root.GetAttribute("data-w3-theme-id");
+
+        Assert.Equal("true", root.GetAttribute("data-w3-dark"));
+        Assert.Contains($".w3-theme-root[data-w3-theme-id='{themeId}'][data-w3-dark='true']{{", cut.Markup);
         Assert.Contains("--w3-primary:#eeeeee", cut.Markup);
         Assert.Contains("--w3-warning:#ffee77", cut.Markup);
+    }
+
+    [Fact]
+    public void NestedProvidersEmitDistinctScopedThemes()
+    {
+        using var context = new BunitContext();
+
+        var cut = context.Render<W3ThemeProvider>(parameters => parameters
+            .Add(p => p.Theme, new W3Theme { Primary = "#111111" })
+            .Add(p => p.ChildContent, builder =>
+            {
+                builder.OpenComponent<W3ThemeProvider>(0);
+                builder.AddAttribute(1, nameof(W3ThemeProvider.Theme), new W3Theme { Primary = "#222222" });
+                builder.AddAttribute(2, nameof(W3ThemeProvider.ChildContent), (RenderFragment)(content => content.AddContent(3, "inner")));
+                builder.CloseComponent();
+            }));
+
+        var roots = cut.FindAll("div.w3-theme-root");
+        Assert.Equal(2, roots.Count);
+
+        var outerId = roots[0].GetAttribute("data-w3-theme-id");
+        var innerId = roots[1].GetAttribute("data-w3-theme-id");
+
+        Assert.NotEqual(outerId, innerId);
+        Assert.Contains($".w3-theme-root[data-w3-theme-id='{outerId}']{{--w3-primary:#111111", cut.Markup);
+        Assert.Contains($".w3-theme-root[data-w3-theme-id='{innerId}']{{--w3-primary:#222222", cut.Markup);
     }
 
     [Fact]

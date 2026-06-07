@@ -130,6 +130,29 @@ public sealed class W3TreeViewTests
         Assert.Contains("No tree nodes", empty.Find(".w3-tree-view-empty").TextContent);
     }
 
+    [Fact]
+    public void TreeViewRendersDuplicateSiblingLabelsWithoutKeyCollision()
+    {
+        using var context = new BunitContext();
+        var nodes = new[]
+        {
+            new TreeNode("dup-1", "Folder", "Folder"),
+            new TreeNode("dup-2", "Folder", "Folder"),
+        };
+        var cut = context.Render<W3TreeView<TreeNode>>(parameters => parameters
+            .Add(p => p.Items, nodes)
+            .Add(p => p.TextSelector, node => node.Name));
+
+        Assert.Equal(2, cut.FindAll("li[role='treeitem']").Count);
+
+        // Two siblings resolve to the same value (no ValueSelector); the position
+        // based render key must keep their @keys distinct so re-rendering after a
+        // state change does not throw a duplicate key exception.
+        cut.FindAll(".w3-tree-view-label")[1].Click();
+
+        Assert.Equal(2, cut.FindAll("li[role='treeitem']").Count);
+    }
+
     private static readonly TreeNode[] Nodes =
     [
         new("components", "Components", "Guide", null, false, [

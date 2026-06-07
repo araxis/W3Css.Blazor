@@ -19,7 +19,7 @@
     }
     else
     {
-        @RenderNodes(rootItems, 1)
+        @RenderNodes(rootItems, 1, null)
     }
 </ul>
 
@@ -254,20 +254,28 @@
         }
     }
 
-    private RenderFragment RenderNodes(IEnumerable<TItem> items, int level)
+    private RenderFragment RenderNodes(IEnumerable<TItem> items, int level, string? parentKey)
     {
         return builder =>
         {
             var sequence = 0;
+            var index = 0;
 
             foreach (var item in items)
             {
-                AddNode(builder, ref sequence, item, level);
+                AddNode(builder, ref sequence, item, level, BuildNodeKey(parentKey, index));
+                index++;
             }
         };
     }
 
-    private void AddNode(RenderTreeBuilder builder, ref int sequence, TItem item, int level)
+    private static string BuildNodeKey(string? parentKey, int index)
+    {
+        var position = index.ToString(CultureInfo.InvariantCulture);
+        return parentKey is null ? position : $"{parentKey}/{position}";
+    }
+
+    private void AddNode(RenderTreeBuilder builder, ref int sequence, TItem item, int level, string nodeKey)
     {
         var value = GetItemValue(item);
         var text = GetItemText(item);
@@ -278,7 +286,7 @@
         var disabled = IsDisabled(item);
 
         builder.OpenElement(sequence++, "li");
-        builder.SetKey(value);
+        builder.SetKey(nodeKey);
         builder.AddAttribute(sequence++, "class", GetItemCssClass(hasChildren, expanded, selected, disabled));
         builder.AddAttribute(sequence++, "role", "treeitem");
         builder.AddAttribute(sequence++, "aria-level", level.ToString(CultureInfo.InvariantCulture));
@@ -323,9 +331,12 @@
             builder.AddAttribute(sequence++, "class", "w3-tree-view-group");
             builder.AddAttribute(sequence++, "role", "group");
 
+            var childIndex = 0;
+
             foreach (var child in children)
             {
-                AddNode(builder, ref sequence, child, level + 1);
+                AddNode(builder, ref sequence, child, level + 1, BuildNodeKey(nodeKey, childIndex));
+                childIndex++;
             }
 
             builder.CloseElement();

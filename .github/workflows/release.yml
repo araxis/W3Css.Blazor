@@ -34,7 +34,10 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v5
         with:
-          dotnet-version: 10.0.x
+          dotnet-version: |
+            8.0.x
+            9.0.x
+            10.0.x
 
       - name: Resolve release metadata
         id: release
@@ -123,6 +126,10 @@ jobs:
           PACKAGE_API_KEY: ${{ secrets.NUGET_API_KEY }}
         run: |
           dotnet nuget push artifacts/packages/*.nupkg \
+            --api-key "$PACKAGE_API_KEY" \
+            --source https://api.nuget.org/v3/index.json \
+            --skip-duplicate
+          dotnet nuget push artifacts/packages/*.snupkg \
             --api-key "$PACKAGE_API_KEY" \
             --source https://api.nuget.org/v3/index.json \
             --skip-duplicate

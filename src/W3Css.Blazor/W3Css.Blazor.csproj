@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
-    <TargetFramework>net10.0</TargetFramework>
+    <TargetFrameworks>net8.0;net9.0;net10.0</TargetFrameworks>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <PackageId>W3Css.Blazor</PackageId>
@@ -18,6 +18,9 @@
     <PackageReleaseNotes>See docs/release-notes/0.8.0.md</PackageReleaseNotes>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <IsPackable>true</IsPackable>
+    <PackageIcon>icon.png</PackageIcon>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
 
@@ -30,12 +33,26 @@
     <InternalsVisibleTo Include="W3Css.Blazor.Tests" />
   </ItemGroup>
 
-  <ItemGroup>
+  <!-- The shared-framework reference must match each target framework's major version. -->
+  <ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net9.0'">
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net10.0'">
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="10.0.8" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+    <None Include="icon.png" Pack="true" PackagePath="\" Visible="false" />
   </ItemGroup>
 
   <!--
@@ -78,6 +95,7 @@
   </UsingTask>
 
   <Target Name="BundleW3CssTheme"
+          Condition="'$(TargetFramework)' == 'net10.0'"
           AfterTargets="BundleScopedCssFiles"
           BeforeTargets="ResolveStaticWebAssetsInputs;ResolveBuildStaticWebAssets;GenerateBuildCompressedStaticWebAssets">
     <ConcatCssFiles Header="/* W3Css.Blazor - generated bundle (w3css/5/w3.css + w3-theme.css + component scoped CSS). Do not edit. */"

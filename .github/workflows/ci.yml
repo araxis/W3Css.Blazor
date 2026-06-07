@@ -16,13 +16,19 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v5
         with:
-          dotnet-version: 10.0.x
+          dotnet-version: |
+            8.0.x
+            9.0.x
+            10.0.x
 
       - name: Restore
         run: dotnet restore W3Css.Blazor.slnx
 
       - name: Build
         run: dotnet build W3Css.Blazor.slnx --configuration Release --no-restore
+
+      - name: Verify bundled stylesheet is not stale
+        run: git diff --exit-code -- src/W3Css.Blazor/wwwroot/w3css-blazor.css
 
       - name: Test
         run: dotnet test W3Css.Blazor.slnx --configuration Release --no-build --logger trx
@@ -34,4 +40,6 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: nuget-package
-          path: artifacts/packages/*.nupkg
+          path: |
+            artifacts/packages/*.nupkg
+            artifacts/packages/*.snupkg
